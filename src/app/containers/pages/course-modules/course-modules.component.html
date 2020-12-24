@@ -1,0 +1,33 @@
+
+    <div *ngFor="let item of modules;let i=index;">
+    <div class="card d-flex mb-3"  (click)="isCollapsed[i] = !isCollapsed[i]"
+    [attr.aria-expanded]="!isCollapsed[i] " aria-controls="collapseBasic{{i}}">
+    <div class="card-body">
+      <div class="d-flex flex-grow-1 min-width-zero font-weight-bolder ">
+        <h4 class="mb-4">{{item.name}}</h4>
+      </div>
+    </div>
+    </div>
+    <div class="mb-3 badge-light" id="collapseBasic{{i}}" [collapse]="isCollapsed[i]"  [isAnimated]="true">
+      <div class="p-4 border mt-4">
+        <span class="mb-2 ">
+        <i class="iconsminds-24-hour" style="font-size:20px;"></i>
+        <label>duration :</label> {{item.duration}}
+        </span>
+        <hr/>
+        <span class="mb-2">
+          <i class="iconsminds-24-hour" style="font-size:20px;"></i>
+         <label>until :</label> {{item.until}}
+        </span>
+        <hr/>
+        <span class="mb-2">
+          <i class="iconsminds-sand-watch-2"style="font-size:20px;"></i>
+          <label>sessions :</label>
+          <ng-container *ngFor="let session of item.sessions">
+            {{session.name}}
+          </ng-container>
+        </span>
+      </div>
+    </div>
+    </div>
+

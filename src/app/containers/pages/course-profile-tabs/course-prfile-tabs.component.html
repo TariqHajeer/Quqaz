@@ -1,0 +1,45 @@
+<div class="card mb-4">
+  <div class="card-body">
+    <div class="d-flex flex-row mb-3">
+      <tabset class="separator-tabs w-100">
+        <tab heading="{{'lms.overview' | translate  }}" >
+          <div class="form-group font-weight-bold"style="font-size: 1.2em;">
+
+                <h5 class="mb-4">{{'lms.about-the-course' | translate}}</h5>
+                <quill-editor [placeholder]="''"  [(ngModel)]="overView" ></quill-editor>
+
+          </div>
+
+          <div class="position-relative">
+            <app-player  class="video-js card-img video-content mb-3" [options]="{
+                preload: 'auto',
+                controls: true,
+                poster: '/assets/img/video/poster.jpg',
+                sources: [{src: 'https://skoobudy.com/Comp%201.mp4',
+                type: 'video/mp4'}]}">
+            </app-player>
+          </div>
+        </tab>
+        <tab heading="{{'lms.module' | translate | uppercase }}">
+
+      <app-course-modules></app-course-modules>
+        </tab>
+        <tab heading="{{'lms.sessions' | translate | uppercase }}">
+        </tab>
+        <tab heading="{{'lms.files' | translate | uppercase }}">
+        </tab>
+        <tab heading="{{'lms.members' | translate | uppercase }}">
+          <div  class="d-flex justify-content-around">
+          <app-course-members *ngFor="let item of members"  [data]="item"></app-course-members>
+        </div>
+        </tab>
+        <tab heading="{{'lms.notes' | translate | uppercase }}">
+        </tab>
+        <tab heading="{{'lms.discussion' | translate | uppercase }}">
+        </tab>
+        <tab heading="{{'lms.feedback' | translate | uppercase }}">
+        </tab>
+      </tabset>
+    </div>
+  </div>
+</div>
