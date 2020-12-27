@@ -14,7 +14,7 @@ export interface IMenuItem {
 
 const data: IMenuItem[] = [
 
-   
+
   //setting tab
   {
     icon: 'simple-icon-settings',
@@ -24,32 +24,37 @@ const data: IMenuItem[] = [
       {
         icon: 'iconsminds-map2',
         label: 'menu.setting.cities',
-        to: `${adminRoot}/setting/cities`,        
+        to: `${adminRoot}/setting/cities`,
+      },
+      {
+        icon: 'iconsminds-map2',
+        label: 'menu.setting.regions',
+        to: `${adminRoot}/setting/regions`,
       },
       {
         icon: 'simple-icon-layers',
         label: 'menu.setting.departments',
-        to: `${adminRoot}/setting/departments`,        
+        to: `${adminRoot}/setting/departments`,
       },
       {
         icon: 'iconsminds-inbox-out',
         label: 'menu.setting.exportTypes',
-        to: `${adminRoot}/setting/exportTypes`,        
+        to: `${adminRoot}/setting/exportTypes`,
       },
       {
         icon: 'iconsminds-inbox-into',
         label: 'menu.setting.importTypes',
-        to: `${adminRoot}/setting/importTypes`,        
+        to: `${adminRoot}/setting/importTypes`,
       },
       {
         icon: 'iconsminds-box-close',
         label: 'menu.setting.shipmentsTypes',
-        to: `${adminRoot}/setting/shipmentsTypes`,        
+        to: `${adminRoot}/setting/shipmentsTypes`,
       },
       {
         icon: 'iconsminds-coins',
         label: 'menu.setting.coins',
-        to: `${adminRoot}/setting/coins`,        
+        to: `${adminRoot}/setting/coins`,
       }
     ]
   },

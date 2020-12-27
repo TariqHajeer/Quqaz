@@ -5,11 +5,16 @@ import { CoinsComponent } from './coins/coins.component';
 import { DepartmentsComponent } from './departments/departments.component';
 import { ExportsTypesComponent } from './exports-types/exports-types.component';
 import { ImportsTypesComponent } from './imports-types/imports-types.component';
+import { RegionComponent } from './region/region.component';
 import { ShipmentsTypesComponent } from './shipments-types/shipments-types.component';
 const routes: Routes = [
   {
     path:'cities',
     component:CitiesComponent
+  },
+  {
+    path:'regions',
+    component:RegionComponent
   },
   {
     path:'departments',
@@ -31,7 +36,7 @@ const routes: Routes = [
     path:'coins',
     component:CoinsComponent
   }
-  
+
 ];
 
 @NgModule({

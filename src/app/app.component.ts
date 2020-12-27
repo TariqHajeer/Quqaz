@@ -22,7 +22,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.langService.init();
-    this._router.navigate(['app/HomePage']);
+  //  this._router.navigate(['app/HomePage']);
 
   //   let requestedUrl = this.location.path();
   //  console.log(this.authService.authenticatedUser);

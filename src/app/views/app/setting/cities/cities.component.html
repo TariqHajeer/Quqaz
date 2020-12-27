@@ -1,9 +1,39 @@
+<simple-notifications></simple-notifications>
+
 <div class="col-md-12 mb-4">
     <div class="card">
         <div class="card-body">
          <div class="d-flex justify-content-between">
           <h5 class="card-title">{{'menu.setting.cities' | translate}}</h5>
+
          </div>
+         <div class="row w-100 mb-3 align-items-end">
+          <div class="col-3">
+            <label>name</label>
+            <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="city.name" >
+          </div>
+
+          <ng-container *ngFor="let item of city.regions;let i= index">
+            <div class="col-2">
+            <label >regions{{i+1}}
+              <span (click)="deldetRegionFromCity(i)"><i class="text-danger iconsminds-close" style="font-size: 18px;"></i></span>
+
+            </label>
+
+              <input type="text" class="form-control"  [(ngModel)]="city.regions[i]" >
+
+            </div>
+          </ng-container>
+          <div class="col-2">
+            <label >regions</label>
+            <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="tempRegion" >
+          </div>
+          <span class="btn" (click)="addRegionToCity()"><i class="text-primary simple-icon-plus" style="font-size: 24px;"></i></span>
+          <span class="btn btn-primary mt-2 " (click)="addCity()">{{'forms.save'|translate}}</span>
+
+
+         </div>
+
       <ejs-grid #normalgrid   id='normalgrid'  (load)='load()'  [allowPaging]='true'
      [gridLines]="lines" [pageSettings]='pageSettings' [toolbar]='toolbar'
        [editSettings]='editSettings'[dataSource]='cities' rowHeight='38'
@@ -13,12 +43,26 @@
             [allowFiltering]='true'>
       <e-columns>
           <e-column   field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter' width='50' [isPrimaryKey]='true'></e-column>
-          <e-column   field='name' textAlign="Center" headerText="name" width='140'></e-column>
-  
+          <e-column   field='name' [allowEditing]='true' textAlign="Center" headerText="name" width='140'></e-column>
+          <e-column   field='regions' [allowEditing]='false' textAlign="Center" headerText="regions" width='140'>
+            <ng-template  #template let-data>
+              <div class="d-flex justify-content-center text-center my-2">
+                <div *ngFor="let reg of data.regions" class="my-1 text-center">
+                    <span class="badge badge-light mx-1">{{reg.name}}</span>
+                </div>
+            </div>
+             </ng-template>
+          </e-column>
+          <e-column   field='regions' [allowEditing]='false' textAlign="Center" headerText="regions" width='140'>
+            <ng-template  #template let-data>
+              <div>
+                    <span class="btn btn-xs badge-primary mx-1" (click)="setCueerntCity(data)">{{'forms.edit' | translate}}</span>
+            </div>
+          </ng-template>
+
+          </e-column>
       </e-columns>
   </ejs-grid>
         </div>
     </div>
   </div>
-  <simple-notifications></simple-notifications>
-  

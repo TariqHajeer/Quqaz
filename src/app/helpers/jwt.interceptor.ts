@@ -44,7 +44,7 @@ export class JwtInterceptor implements HttpInterceptor {
         if (token != null) {
           return req.clone({ setHeaders: { Authorization: 'Bearer ' + token } })
         } else {
-          this.authenticationService.signOut();
+         // this.authenticationService.signOut();
           return req.clone();
         }
       }
@@ -52,7 +52,7 @@ export class JwtInterceptor implements HttpInterceptor {
   handle400Error(error) {
     if (error && error.status === 400 && error.error && error.error.error === 'invalid_grant') {
       // If we get a 400 and the error message is 'invalid_grant', the token is no longer valid so logout.
-      return this.logoutUser();
+    //  return this.logoutUser();
     }
     return this.generalErrorHandling(error);
 

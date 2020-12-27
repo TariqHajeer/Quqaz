@@ -16,10 +16,11 @@ import { ImportsTypesComponent } from './imports-types/imports-types.component';
 import { ExportsTypesComponent } from './exports-types/exports-types.component';
 import { ShipmentsTypesComponent } from './shipments-types/shipments-types.component';
 import { CoinsComponent } from './coins/coins.component';
+import { RegionComponent } from './region/region.component';
 
 
 @NgModule({
-  declarations: [ CitiesComponent, DepartmentsComponent, ImportsTypesComponent, ExportsTypesComponent, ShipmentsTypesComponent, CoinsComponent],
+  declarations: [ CitiesComponent, DepartmentsComponent, ImportsTypesComponent, ExportsTypesComponent, ShipmentsTypesComponent, CoinsComponent, RegionComponent],
   imports: [
     CommonModule,
     SettingRoutingModule,

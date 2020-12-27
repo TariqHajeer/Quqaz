@@ -8,9 +8,10 @@ import {CustomService} from '../../../../services/custom.service'
   styleUrls: ['./cities.component.scss']
 })
 export class CitiesComponent implements OnInit {
-
+  city={name:'',regions:[]};
   constructor(private customService:CustomService,private notifications:NotificationsService) { }
   cities:any[]=[];
+  tempRegion:any;
   public stTime: any;
   public filter: Object;
   public filterSettings: Object;
@@ -21,10 +22,12 @@ export class CitiesComponent implements OnInit {
   public gridInstance: GridComponent;
   public toolbar: ToolbarItems[];
   public pageSettings: Object;
+  currentId:any;
+  currentMode='';
   ngOnInit(): void {
     this.getCities();
-    this.editSettings = { showDeleteConfirmDialog: true, allowAdding: true,allowEditing:true,allowEditOnDblClick:true, allowDeleting: true };
-    this.toolbar = ['Add','Search', 'Edit', 'Delete', 'Update', 'Cancel'];
+    this.editSettings = { showDeleteConfirmDialog: true, allowDeleting: true };
+    this.toolbar = ['Search', 'Delete', 'Update', 'Cancel'];
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
@@ -35,7 +38,60 @@ export class CitiesComponent implements OnInit {
     this.selectionSettings = { persistSelection: true, type: "Multiple" };
     this.lines = 'Horizontal';
   }
+  addRegionToCity(){
+    if(!this.tempRegion){
+      return;
+    }
+    this.city.regions.push(this.tempRegion);
+    this.tempRegion='';
+  }
+  setCueerntCity(data){
+    this.currentMode='edit'
+  this.city={name:'',regions:[]};
+    console.log(data);
+    this.currentId=data.id
+    this.city.name=data.name;
+    for(let item of data.regions){
+      this.city.regions.push(item.name)
+    }
+  }
+  addCity(){
+    console.log(this.city)
 
+    if(!this.city.name){
+      this.notifications.create('error', 'يجب اضافة الاسم', NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
+      return;
+    }
+    if(this.currentMode!='edit'){
+    this.customService.addOrUpdate('Country',this.city,'add').subscribe(
+      res=>{
+        console.log(res)
+        this.notifications.create('success', 'تم اضافة مدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+          this.getCities();
+  this.city={name:'',regions:[]};
+  this.currentMode='';
+
+    }
+    )}
+    else if(this.currentMode=='edit'){
+      let obj:any={id:Number.parseInt(this.currentId),name:this.city.name}
+      console.log(obj);
+      this.customService.addOrUpdate('Country',obj,'update').subscribe(
+        res=>{
+          console.log(res)
+          this.notifications.create('success', 'تم تعديل المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+  this.city={name:'',regions:[]};
+
+          this.getCities();
+          this.currentMode='';
+      }
+      )
+    }
+
+  }
+  deldetRegionFromCity(i){
+    this.city.regions.splice(i,1);
+  }
   load() {
     const rowHeight: number = this.gridInstance.getRowHeight();  // height of the each row
     const gridHeight: any = this.gridInstance.height;  // grid height
@@ -48,9 +104,10 @@ export class CitiesComponent implements OnInit {
 
     if (args.action=='add') {
       let obj:any={name:args.data['name']}
-
-        this.customService.addOrUpdate('Country',JSON.parse(obj),'add').subscribe(
+      console.log(obj)
+        this.customService.addOrUpdate('Country',obj,'add').subscribe(
           res=>{
+            console.log(res)
             if(res.result){
             this.notifications.create('success', 'تم اضافة مدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
               this.getCities();
@@ -59,16 +116,7 @@ export class CitiesComponent implements OnInit {
         )
     }
     else if (args.action === "edit") {
-      let obj:any={name:args.data['name']}
 
-      this.customService.addOrUpdate('Country',obj,'update',args.rowData['id']).subscribe(
-        res=>{if(res.result){
-          this.notifications.create('success', 'تم تعديل المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-          this.getCities();
-
-        }
-      }
-      )
     }
     if (args.requestType == 'delete') {
       let id = args.data[0].id;
@@ -93,6 +141,7 @@ getCities(){
   this.customService.getAll('Country').subscribe(
     res=>
     {
+      console.log(res);
       this.cities=res;
     }
   )

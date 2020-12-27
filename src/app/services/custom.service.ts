@@ -7,21 +7,21 @@ import { map,tap, catchError } from 'rxjs/operators';
 import { ConditionalExpr } from '@angular/compiler';
 import { redirectLoggedInTo } from '@angular/fire/auth-guard';
 @Injectable({
-  
+
   providedIn: 'root'
 })
 export class CustomService {
 
 
   constructor(private http:HttpClient) { }
-  baseUrl: string = 'http://127.0.0.1/';
+  baseUrl: string = 'http://localhost:5000/';
 
   addOrUpdate(apiName,item,status,id?):Observable<any>{
     let headers=new HttpHeaders({'Content-Type':'multipart/form-data'});
     if(status=='add')
-    return this.http.post(this.baseUrl+'api/'+apiName,item,);
+    return this.http.post(this.baseUrl+'api/'+apiName,item);
     else if(status=='update')
-    return this.http.post(this.baseUrl+'api/'+apiName+'/'+id+'/Update',item);
+    return this.http.patch(this.baseUrl+'api/'+apiName,item);
   }
 
 

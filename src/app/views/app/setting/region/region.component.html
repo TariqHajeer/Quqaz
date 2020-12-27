@@ -1,13 +1,15 @@
+<simple-notifications></simple-notifications>
+
 <div class="col-md-12 mb-4">
     <div class="card">
         <div class="card-body">
          <div class="d-flex justify-content-between">
-          <h5 class="card-title">{{'menu.setting.departments' | translate}}</h5>
+          <h5 class="card-title">{{'menu.setting.regions' | translate}}</h5>
          </div>
       <ejs-grid #normalgrid   id='normalgrid'  (load)='load()'  [allowPaging]='true'
      [gridLines]="lines" [pageSettings]='pageSettings' [toolbar]='toolbar'
-       [editSettings]='editSettings'[dataSource]='departments' rowHeight='38'
-         [allowSorting]='true' height='400' (actionComplete)="actionComplete($event)"
+       [editSettings]='editSettings'[dataSource]='regions' rowHeight='38'
+         [allowSorting]='true' height='400'
           [enableHover]='true' [selectionSettings]='selectionSettings'
            [filterSettings]='filterSettings' [allowSorting]='true'
             [allowFiltering]='true'>
@@ -20,4 +22,3 @@
         </div>
     </div>
   </div>
-  <simple-notifications></simple-notifications>

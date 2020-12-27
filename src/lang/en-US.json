@@ -29,7 +29,7 @@
     "setting":{
       "setting":"setting",
       "cities":"cities",
-
+      "regions":"regions",
       "departments":"departments",
       "exportTypes":" export types",
       "importTypes":"import types",

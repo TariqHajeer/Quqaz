@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { EditSettingsModel, GridComponent, ToolbarItems } from '@syncfusion/ej2-angular-grids';
+import { EditSettingsModel, GridComponent, SaveEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
+import { NotificationsService, NotificationType } from 'angular2-notifications';
+import { CustomService } from 'src/app/services/custom.service';
 
 @Component({
   selector: 'app-imports-types',
@@ -8,8 +10,8 @@ import { EditSettingsModel, GridComponent, ToolbarItems } from '@syncfusion/ej2-
 })
 export class ImportsTypesComponent implements OnInit {
 
-  constructor() { }
-  importTypes:any[]=[{id:1,name:'النوع الأول'},{id:2,name:'النوع الثاني'},{id:3,name:'النوع الثالث'}];
+  constructor(private customService:CustomService,private notifications:NotificationsService) { }
+  importTypes:any[]=[];
   public stTime: any;
   public filter: Object;
   public filterSettings: Object;
@@ -21,6 +23,7 @@ export class ImportsTypesComponent implements OnInit {
   public toolbar: ToolbarItems[];
   public pageSettings: Object;
   ngOnInit(): void {
+    this.getImportTypes();
     this.editSettings = { showDeleteConfirmDialog: true, allowAdding: true,allowEditing:true,allowEditOnDblClick:true, allowDeleting: true };
     this.toolbar = ['Add','Search', 'Edit', 'Delete', 'Update', 'Cancel'];
     this.filterSettings = { type: "CheckBox" };
@@ -41,6 +44,58 @@ export class ImportsTypesComponent implements OnInit {
     const pageResize: any = (gridHeight - (pageSize * rowHeight)) / rowHeight; // new page size is obtained here
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
+  getImportTypes(){
+    this.customService.getAll('IncomeType').subscribe(
+      res=>{
+        this.importTypes=res;
+      }
+    )
+  }
+  actionComplete(args: SaveEventArgs) {
+    console.log(args);
 
+    if (args.action=='add') {
+      let obj:any={name:args.data['name']}
+      console.log(obj)
+        this.customService.addOrUpdate('IncomeType',obj,'add').subscribe(
+          res=>{
+            console.log(res)
+            this.notifications.create('success', 'تم اضافة نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+              this.getImportTypes();
+
+        }
+        )
+    }
+    else if (args.action === "edit") {
+      let obj:any={id:Number.parseInt(args.data['id']),name:args.data['name']}
+      console.log(obj)
+
+      this.customService.addOrUpdate('IncomeType',obj,'update').subscribe(
+        res=>{
+          console.log(res)
+
+          this.notifications.create('success', 'تم تعديل نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+          this.getImportTypes();
+      }
+      )
+    }
+    if (args.requestType == 'delete') {
+      let id = args.data[0].id;
+      if(args.data['CanDelete']){
+      this.customService.delete('IncomeType',id).subscribe(
+        res=>{
+          if(res.result){
+          this.notifications.create('success', 'تم حذف نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
+          this.getImportTypes();
+        }
+        }
+      )
+    }
+    else {
+      this.gridInstance.refresh();
+    }
+
+    }
+  }
 
 }

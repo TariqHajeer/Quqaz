@@ -34,7 +34,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private localStorageService:LocalStorageService
   ) {
 
-    console.log(this.currentUserPermissions)
     this.subscription = this.sidebarService.getSidebar().subscribe(
       (res) => {
         this.sidebar = res;
@@ -80,7 +79,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
 
-    console.log(this.currentUserPermissions)
     setTimeout(() => {
       this.selectMenu();
       const { containerClassnames } = this.sidebar;

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -15,7 +15,9 @@ import { GridModule, ToolbarService, PdfExportService } from '@syncfusion/ej2-an
     SharedModule,
     LayoutContainersModule,
   ],
-  providers:[PdfExportService]
+  providers:[PdfExportService
+  ,{provide: LocationStrategy, useClass: HashLocationStrategy}
+],
 })
 export class AppModule { }
 
