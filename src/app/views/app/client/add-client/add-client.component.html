@@ -1,0 +1,66 @@
+<div class="col-md-12">
+  <form  (ngSubmit)="addOrEditClient()" class="row">
+    <div class="row w-100 align-items-end mb-3">
+      <div class="col-md-3">
+        <label>{{'client.name' | translate}}</label><span
+        class="text-danger text-one align-bottom mx-1">*</span>
+        <input type="text"  class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.name">
+        <div *ngIf="!client.name && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
+      </div>
+      <div class="col-md-3">
+        <label>{{'client.user-name' | translate}}</label>
+        <input type="text" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"  class="form-control"
+         [ngModelOptions]="{standalone: true}"
+         [(ngModel)]="client.userName">
+      </div>
+      <div class="col-md-3">
+        <label>{{'client.password' | translate}}</label>
+        <input type="password" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"  class="form-control"
+         [ngModelOptions]="{standalone: true}"
+         [(ngModel)]="client.password">
+      </div>
+      <div class="col-md-3">
+        <label>{{'client.region' | translate}}</label>
+        <ng-select   [(ngModel)]="client.regionId" [ngModelOptions]="{standalone: true}"
+        [closeOnSelect]="true">
+        <ng-option *ngFor="let region of regions" [value]="region.id">{{region.name}}</ng-option>
+      </ng-select>
+    </div>
+    <div class="col-md-3">
+      <label>{{'client.address' | translate}}</label>
+      <input type="text"  class="form-control"
+         [ngModelOptions]="{standalone: true}"
+         [(ngModel)]="client.address">
+  </div>
+  <div class="col-md-3">
+    <label>{{'client.first-date' | translate}}</label>
+    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.firstDate" bsDatepicker
+    [container]="'html'" [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
+</div>
+<div  *ngFor="let phone of client.phones;let i=index" class="col-md-3">
+  <ng-container>
+    <label>{{'client.phone' | translate}}-{{i+1}}</label>
+    <input type="text" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"  class="form-control"
+     [ngModelOptions]="{standalone: true}"
+     [(ngModel)]="client.phones[i]">
+    </ng-container>
+
+</div>
+<div class="col-md-3">
+  <label>{{'client.phone' | translate}}</label>
+  <input type="text" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"  class="form-control"
+   [ngModelOptions]="{standalone: true}"
+   [(ngModel)]="tempPhone">
+</div>
+
+<div class="col-2">
+  <button type="button" class="btn" (click)="addNewPhone()"><i class="iconsminds-add  text-primary" style="font-size: 22px;"></i></button>
+</div>
+    </div>
+    <div class="row w-100">
+      <div class="col-3">
+        <button type="submit" class="btn btn-primary"> {{'forms.save' | translate}}</button>
+      </div>
+    </div>
+  </form>
+</div>

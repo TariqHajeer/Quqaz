@@ -24,7 +24,7 @@ export interface IPasswordReset {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private localStorageKey: string = 'currnetUser';
+  private localStorageKey: string = 'kokazUser';
   private permissionlocalStorageKey: string = 'permissions';
 
 
@@ -32,7 +32,7 @@ export class AuthService {
     private rout:Router) {}
   baseUrl=environment.baseUrl;
   signIn(user: user):Observable<any> {
-    return this.http.post(this.baseUrl+'api/login',user) ;
+    return this.http.post(this.baseUrl+'api/EmployeeAuth',user) ;
   }
 
   signOut() {
@@ -64,8 +64,6 @@ export class AuthService {
   }
   private resetAuthenticated(): void {
     this.localStorageService.removeItem(this.localStorageKey);
-    this.localStorageService.removeItem('studentId');
-
   }
    getUser() {
   }

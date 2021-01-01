@@ -23,10 +23,24 @@
     "username": "اسم المستخدم",
     "code": "اعادة ارسال الكود"
   },
+  "client":{
+    "name":"الاسم",
+    "user-name":"اسم المستخدم",
+    "first-date":"تاريخ الانضمام",
+    "adderss":"العنوان",
+    "region":"المنطقة",
+    "note":"ملاحظات",
+    "password":"كلمة المرور",
+    "address":"العنوان",
+    "phones":"أرقام الهواتف",
+    "phone":"رقم الهاتف"
+
+  },
   "menu": {
 
     "home": "الرئيسية",
     "app": "Home",
+    "clients":"العملاء",
     "setting":{
       "setting":"الاعدادات",
       "cities":"المدن",
@@ -37,8 +51,8 @@
       "shipmentsTypes":"أنواع الشحنات",
       "coins":"العملات"
     },
-    "exports":"الصادرات",
-    "imports":"الواردات",
+    "outcome":"الصادرات",
+    "income":"الواردات",
     "employees":"الموظفين"
   },
   "pages": {

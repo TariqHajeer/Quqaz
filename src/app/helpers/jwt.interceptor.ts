@@ -13,14 +13,14 @@ export class JwtInterceptor implements HttpInterceptor {
 
       intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
         const currentUser = this.authenticationService.authenticatedUser;
-        let api_token:any=null;
+        let token:any=null;
         if(currentUser)
         {
-          if(currentUser.api_token){
-            api_token=currentUser.api_token;
+          if(currentUser.token){
+            token=currentUser.token;
           }
         }
-        return next.handle(this.addToken(req, api_token)).pipe(
+        return next.handle(this.addToken(req, token)).pipe(
           catchError(error => {
             if (error instanceof HttpErrorResponse) {
               switch ((<HttpErrorResponse>error).status) {
@@ -41,10 +41,11 @@ export class JwtInterceptor implements HttpInterceptor {
       }
 
       addToken(req: HttpRequest<any>, token: any): HttpRequest<any> {
+        console.log(token)
         if (token != null) {
           return req.clone({ setHeaders: { Authorization: 'Bearer ' + token } })
         } else {
-         // this.authenticationService.signOut();
+          this.authenticationService.signOut();
           return req.clone();
         }
       }

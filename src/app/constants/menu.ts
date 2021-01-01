@@ -58,17 +58,23 @@ const data: IMenuItem[] = [
       }
     ]
   },
- //imports tab
+   //clients
+ {
+  icon: 'simple-icon-people',
+  label: 'menu.clients',
+  to: `${adminRoot}/client`,
+},
+ //income tab
  {
   icon: 'iconsminds-inbox-into',
-  label: 'menu.imports',
-  to: `${adminRoot}/setting`,
+  label: 'menu.income',
+  to: `${adminRoot}/income`,
 },
- //exports tab
+ //outcom tab
  {
   icon: 'iconsminds-inbox-out',
-  label: 'menu.exports',
-  to: `${adminRoot}/setting`,
+  label: 'menu.outcome',
+  to: `${adminRoot}/outcome`,
 },
  //exports tab
  {

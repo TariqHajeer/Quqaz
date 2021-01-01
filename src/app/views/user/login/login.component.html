@@ -2,7 +2,6 @@
   <div class="position-relative image-side ">
     <p class=" text-white h2">تسجيل الدخول</p>
     <p class="white mb-0">
-كل ما تحتاجه لادارة المدرسة
       <!-- <a routerLink="/user/register" class="white white-underline-link">register</a>. -->
     </p>
   </div>
@@ -14,9 +13,9 @@
 
     <form #loginForm="ngForm" novalidate (ngSubmit)="onSubmit()">
       <label class="form-group has-float-label">
-        <input class="form-control" required email ngModel #email="ngModel" name="email" [(ngModel)]="emailModel" />
-        <span>{{ 'user.email' | translate }}</span>
-        <div *ngIf="!email.valid && loginForm.submitted" class="invalid-tooltip">Email is required!</div>
+        <input class="form-control" required  ngModel #userName="ngModel" name="userName" [(ngModel)]="userNameModel" />
+        <span>{{ 'user.user-name' | translate }}</span>
+        <div *ngIf="!userName.valid && loginForm.submitted" class="invalid-tooltip">userName is required!</div>
       </label>
       <label class="form-group has-float-label">
         <input class="form-control" type="password" placeholder="" required ngModel #password="ngModel" name="password"

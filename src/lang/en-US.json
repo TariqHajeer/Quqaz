@@ -22,10 +22,24 @@
     "username": "Username",
     "code": "Reset Code"
   },
+  "client":{
+    "name":"name",
+    "user-name":"user name",
+    "first-date":"first date",
+    "adderss":"adderss",
+    "region":"region",
+    "note":"note",
+    "password":"password",
+    "address":"address",
+    "phones":"phones",
+    "phone":"phone"
+  },
   "menu": {
 
     "home": "home",
     "app": "Home",
+    "clients":"clients",
+
     "setting":{
       "setting":"setting",
       "cities":"cities",
@@ -36,8 +50,8 @@
       "shipmentsTypes":"shipments types",
       "coins":"coins"
     },
-    "exports":"exports",
-    "imports":"imorts",
+    "exports":"outcomes",
+    "imports":"incomes",
     "employees":"employees"
 
   },

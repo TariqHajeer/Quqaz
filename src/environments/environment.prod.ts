@@ -5,7 +5,7 @@ import { UserPermission } from '../app/shared/auth.roles';
 
 export const environment = {
 
-  baseUrl:'http://code.skoobudy.com/',
+  baseUrl:'http://localhost:5000/',
   production: true,
   buyUrl : "https://1.envato.market/6NV1b",
   SCARF_ANALYTICS : false,

@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 })
 export class LoginComponent implements OnInit {
   @ViewChild('loginForm') loginForm: NgForm;
-  emailModel = '';
+  userNameModel = '';
   passwordModel = '';
 
   buttonDisabled = false;
@@ -33,19 +33,13 @@ export class LoginComponent implements OnInit {
     this.authService.signIn(this.loginForm.value).subscribe(
       response=>{
         console.log(response);
-        if(response.result){
-          console.log(response.data[0].user)
           this.notifications.create('success', 'تم تسجيل الدخول بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         //  this.authService.setAuthenticatedUser(response.data[0].user);
           this.router.navigate(['/app/HomePage']);
-          this.authService.setAuthenticatedUser(response.data[0].user);
-          this.authService.setPermission(response.data[0].permissions);
-        }
-        else{
-        this.notifications.create('Error', 'كلمة المرور او البريد الاكتروني خاطئ', NotificationType.Error, { theClass: 'primary', timeOut: 6000, showProgressBar: false });
-        this.buttonDisabled = false;
-        this.buttonState = '';
-        }
+          this.authService.setAuthenticatedUser(response);
+          this.authService.setPermission(response.privileges);
+
+
       },error=>{
         console.log(error);
         this.buttonDisabled = false;
