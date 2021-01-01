@@ -23,8 +23,6 @@ export class CustomService {
     else if(status=='update')
     return this.http.patch(this.baseUrl+'api/'+apiName,item);
   }
-
-
   exitsstudent(newstudent):Observable<any>{
     let item=new FormData();
     item.append('firstName',newstudent.firstName);

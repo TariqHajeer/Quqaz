@@ -14,7 +14,7 @@
           </div>
           <div class="col-3">
             <label>كلفة التوصيل</label>
-            <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="city.DeliveryCost" >
+            <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="city.deliveryCost" >
           </div>
           <ng-container *ngFor="let item of city.regions;let i= index">
             <div class="col-2">
@@ -47,7 +47,7 @@
       <e-columns>
           <e-column   field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter' width='50' [isPrimaryKey]='true'></e-column>
           <e-column   field='name' [allowEditing]='true' textAlign="Center" headerText="الاسم" width='140'></e-column>
-          <e-column   field='DeliveryCost' [allowEditing]='true' textAlign="Center" headerText="كلفة التوصيل" width='140'></e-column>
+          <e-column   field='deliveryCost' [allowEditing]='true' textAlign="Center" headerText="كلفة التوصيل" width='140'></e-column>
           <e-column   field='regions' [allowEditing]='false' textAlign="Center" headerText="المناطق" width='140'>
             <ng-template  #template let-data>
               <div class="d-flex justify-content-center text-center my-2">
