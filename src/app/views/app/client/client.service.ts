@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment.prod';
 import {Client} from './client.model'
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import {Client} from './client.model'
 export class ClientService {
 
   constructor(private http:HttpClient) { }
-  baseUrl: string = 'http://localhost:5000/';
+  baseUrl: string = environment.baseUrl;
 
 
   getClients():Observable<Client[]>{

@@ -8,7 +8,7 @@ import {CustomService} from '../../../../services/custom.service'
   styleUrls: ['./cities.component.scss']
 })
 export class CitiesComponent implements OnInit {
-  city={name:'',regions:[]};
+  city={name:'',DeliveryCost:0,regions:[]};
   constructor(private customService:CustomService,private notifications:NotificationsService) { }
   cities:any[]=[];
   tempRegion:any;
@@ -47,30 +47,29 @@ export class CitiesComponent implements OnInit {
   }
   setCueerntCity(data){
     this.currentMode='edit'
-  this.city={name:'',regions:[]};
+  this.city={name:'',DeliveryCost:0,regions:[]};
     console.log(data);
     this.currentId=data.id
     this.city.name=data.name;
-    for(let item of data.regions){
-      this.city.regions.push(item.name)
-    }
+    // for(let item of data.regions){
+    //   this.city.regions.push(item.name)
+    // }
   }
   addCity(){
     console.log(this.city)
-
     if(!this.city.name){
       this.notifications.create('error', 'يجب اضافة الاسم', NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       return;
     }
     if(this.currentMode!='edit'){
+      this.city.DeliveryCost = Number(this.city.DeliveryCost);
     this.customService.addOrUpdate('Country',this.city,'add').subscribe(
       res=>{
         console.log(res)
         this.notifications.create('success', 'تم اضافة مدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
           this.getCities();
-  this.city={name:'',regions:[]};
+  this.city={name:'',DeliveryCost:0,regions:[]};
   this.currentMode='';
-
     }
     )}
     else if(this.currentMode=='edit'){
@@ -80,8 +79,7 @@ export class CitiesComponent implements OnInit {
         res=>{
           console.log(res)
           this.notifications.create('success', 'تم تعديل المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-  this.city={name:'',regions:[]};
-
+  this.city={name:'',DeliveryCost:0,regions:[]};
           this.getCities();
           this.currentMode='';
       }
@@ -90,7 +88,9 @@ export class CitiesComponent implements OnInit {
 
   }
   deldetRegionFromCity(i){
-    this.city.regions.splice(i,1);
+    
+    var city= this.city.regions.splice(i,1);
+    console.log(city);
   }
   load() {
     const rowHeight: number = this.gridInstance.getRowHeight();  // height of the each row
@@ -143,6 +143,7 @@ getCities(){
     {
       console.log(res);
       this.cities=res;
+      console.log(this.cities);
     }
   )
 }
