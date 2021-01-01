@@ -98,7 +98,7 @@ export class CitiesComponent implements OnInit {
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
   actionComplete(args: SaveEventArgs) {
-    
+    alert('action');
     if (args.action=='add') {
       let obj:any={name:args.data['name']}
         this.customService.addOrUpdate('Country',obj,'add').subscribe(
