@@ -4,5 +4,5 @@ export class City {
     deliveryCost:string;
     canDelete:boolean;
     CanDeleteWithRegion:boolean
-    Regions:any;
+    regions:any;
 }

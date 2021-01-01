@@ -15,8 +15,8 @@
             [allowFiltering]='true'>
       <e-columns>
           <e-column   field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter' width='50' [isPrimaryKey]='true'></e-column>
-          <e-column   field='name' textAlign="Center" headerText="name" width='140'></e-column>
-          
+          <e-column   field='name' textAlign="Center" headerText="اسم المنطقة" width='140'></e-column>
+          <e-column   field='country.name' textAlign="Center" headerText="اسم المدينة" width='140'></e-column>
       </e-columns>
   </ejs-grid>
         </div>

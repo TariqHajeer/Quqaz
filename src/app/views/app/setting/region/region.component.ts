@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { EditSettingsModel, GridComponent, SaveEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { CustomService } from 'src/app/services/custom.service';
-
+import{Region} from '../../../../Models/Regions/region.model';
 @Component({
   selector: 'app-region',
   templateUrl: './region.component.html',
@@ -10,7 +10,7 @@ import { CustomService } from 'src/app/services/custom.service';
 })
 export class RegionComponent implements OnInit {
   constructor(private customService:CustomService,private notifications:NotificationsService) { }
-  regions:any[]=[];
+  regions:Region[]=[];
   public stTime: any;
   public filter: Object;
   public filterSettings: Object;

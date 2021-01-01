@@ -1,16 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { EditSettingsModel, GridComponent, SaveEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
+import { City } from 'src/app/Models/Cities/city.Model';
+import { CreateCity } from 'src/app/Models/Cities/create-city.Model';
 import {CustomService} from '../../../../services/custom.service'
+
 @Component({
   selector: 'app-cities',
   templateUrl: './cities.component.html',
   styleUrls: ['./cities.component.scss']
 })
 export class CitiesComponent implements OnInit {
-  city={name:'',deliveryCost:0,regions:[]};
+    //city={name:'',deliveryCost:0,regions:[]};
+    city=new CreateCity();
   constructor(private customService:CustomService,private notifications:NotificationsService) { }
-  cities:any[]=[];
+  cities:City[]=[];
   tempRegion:any;
   public stTime: any;
   public filter: Object;
@@ -56,7 +60,6 @@ export class CitiesComponent implements OnInit {
     // }
   }
   addCity(){
-    
     if(!this.city.name){
       this.notifications.create('error', 'يجب اضافة الاسم', NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       return;
