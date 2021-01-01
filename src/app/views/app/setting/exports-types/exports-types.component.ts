@@ -10,9 +10,9 @@ import { CustomService } from 'src/app/services/custom.service';
 })
 export class ExportsTypesComponent implements OnInit {
 
-  constructor(private customService:CustomService,private notifications:NotificationsService) { }
+  constructor(private customService: CustomService, private notifications: NotificationsService) { }
 
-  exportTypes:any[]=[];
+  exportTypes: any[] = [];
   public stTime: any;
   public filter: Object;
   public filterSettings: Object;
@@ -25,8 +25,8 @@ export class ExportsTypesComponent implements OnInit {
   public pageSettings: Object;
   ngOnInit(): void {
     this.getExportTypes();
-    this.editSettings = { showDeleteConfirmDialog: true, allowAdding: true,allowEditing:true,allowEditOnDblClick:true, allowDeleting: true };
-    this.toolbar = ['Add','Search', 'Edit', 'Delete', 'Update', 'Cancel'];
+    this.editSettings = { showDeleteConfirmDialog: true, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
+    this.toolbar = ['Add', 'Search', 'Edit', 'Delete', 'Update', 'Cancel'];
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
@@ -45,10 +45,10 @@ export class ExportsTypesComponent implements OnInit {
     const pageResize: any = (gridHeight - (pageSize * rowHeight)) / rowHeight; // new page size is obtained here
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
-  getExportTypes(){
+  getExportTypes() {
     this.customService.getAll('OutComeType').subscribe(
-      res=>{
-        this.exportTypes=res;
+      res => {
+        this.exportTypes = res;
         console.log(this.exportTypes)
       }
     )
@@ -56,46 +56,45 @@ export class ExportsTypesComponent implements OnInit {
   actionComplete(args: SaveEventArgs) {
     console.log(args);
 
-    if (args.action=='add') {
-      let obj:any={name:args.data['name']}
+    if (args.action == 'add') {
+      let obj: any = { name: args.data['name'] }
       console.log(obj)
-        this.customService.addOrUpdate('OutComeType',obj,'add').subscribe(
-          res=>{
-            console.log(res)
-            this.notifications.create('success', 'تم اضافة نوع الصادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-              this.getExportTypes();
+      this.customService.addOrUpdate('OutComeType', obj, 'add').subscribe(
+        res => {
+          console.log(res)
+          this.notifications.create('success', 'تم اضافة نوع الصادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+          this.getExportTypes();
 
         }
-        )
+      )
     }
     else if (args.action === "edit") {
-      let obj:any={id:Number.parseInt(args.data['id']),name:args.data['name']}
+      let obj: any = { id: Number.parseInt(args.data['id']), name: args.data['name'] }
       console.log(obj)
 
-      this.customService.addOrUpdate('OutComeType',obj,'update').subscribe(
-        res=>{
-          console.log(res)
+      this.customService.addOrUpdate('OutComeType', obj, 'update').subscribe(
+        res => {
 
           this.notifications.create('success', 'تم تعديل نوع الصادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
           this.getExportTypes();
-      }
+        }
       )
     }
     if (args.requestType == 'delete') {
       let id = args.data[0].id;
-      if(args.data['CanDelete']){
-      this.customService.delete('OutComeType',id).subscribe(
-        res=>{
-          if(res.result){
-          this.notifications.create('success', 'تم حذف نوع الصادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
-          this.getExportTypes();
-        }
-        }
-      )
-    }
-    else {
-      this.gridInstance.refresh();
-    }
+      if (args.data['CanDelete']) {
+        this.customService.delete('OutComeType', id).subscribe(
+          res => {
+            if (res.result) {
+              this.notifications.create('success', 'تم حذف نوع الصادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
+              this.getExportTypes();
+            }
+          }
+        )
+      }
+      else {
+        this.gridInstance.refresh();
+      }
 
     }
   }

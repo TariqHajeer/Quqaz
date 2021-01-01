@@ -10,8 +10,8 @@ import { CustomService } from 'src/app/services/custom.service';
 })
 export class ImportsTypesComponent implements OnInit {
 
-  constructor(private customService:CustomService,private notifications:NotificationsService) { }
-  importTypes:any[]=[];
+  constructor(private customService: CustomService, private notifications: NotificationsService) { }
+  importTypes: any[] = [];
   public stTime: any;
   public filter: Object;
   public filterSettings: Object;
@@ -24,8 +24,8 @@ export class ImportsTypesComponent implements OnInit {
   public pageSettings: Object;
   ngOnInit(): void {
     this.getImportTypes();
-    this.editSettings = { showDeleteConfirmDialog: true, allowAdding: true,allowEditing:true,allowEditOnDblClick:true, allowDeleting: true };
-    this.toolbar = ['Add','Search', 'Edit', 'Delete', 'Update', 'Cancel'];
+    this.editSettings = { showDeleteConfirmDialog: true, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
+    this.toolbar = ['Add', 'Search', 'Edit', 'Delete', 'Update', 'Cancel'];
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
@@ -44,56 +44,53 @@ export class ImportsTypesComponent implements OnInit {
     const pageResize: any = (gridHeight - (pageSize * rowHeight)) / rowHeight; // new page size is obtained here
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
-  getImportTypes(){
+  getImportTypes() {
     this.customService.getAll('IncomeType').subscribe(
-      res=>{
-        this.importTypes=res;
+      res => {
+        this.importTypes = res;
       }
     )
   }
   actionComplete(args: SaveEventArgs) {
-    console.log(args);
 
-    if (args.action=='add') {
-      let obj:any={name:args.data['name']}
+    if (args.action == 'add') {
+      let obj: any = { name: args.data['name'] }
       console.log(obj)
-        this.customService.addOrUpdate('IncomeType',obj,'add').subscribe(
-          res=>{
-            console.log(res)
-            this.notifications.create('success', 'تم اضافة نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-              this.getImportTypes();
+      this.customService.addOrUpdate('IncomeType', obj, 'add').subscribe(
+        res => {
+          console.log(res)
+          this.notifications.create('success', 'تم اضافة نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+          this.getImportTypes();
 
         }
-        )
+      )
     }
     else if (args.action === "edit") {
-      let obj:any={id:Number.parseInt(args.data['id']),name:args.data['name']}
+      let obj: any = { id: Number.parseInt(args.data['id']), name: args.data['name'] }
       console.log(obj)
 
-      this.customService.addOrUpdate('IncomeType',obj,'update').subscribe(
-        res=>{
+      this.customService.addOrUpdate('IncomeType', obj, 'update').subscribe(
+        res => {
           console.log(res)
 
           this.notifications.create('success', 'تم تعديل نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
           this.getImportTypes();
-      }
+        }
       )
     }
     if (args.requestType == 'delete') {
       let id = args.data[0].id;
-      if(args.data['CanDelete']){
-      this.customService.delete('IncomeType',id).subscribe(
-        res=>{
-          if(res.result){
-          this.notifications.create('success', 'تم حذف نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
-          this.getImportTypes();
-        }
-        }
-      )
-    }
-    else {
-      this.gridInstance.refresh();
-    }
+      if (args.data['CanDelete']) {
+        this.customService.delete('IncomeType', id).subscribe(
+          res => {
+            this.notifications.create('success', 'تم حذف نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
+            this.getImportTypes();
+          }
+        )
+      }
+      else {
+        this.gridInstance.refresh();
+      }
 
     }
   }
