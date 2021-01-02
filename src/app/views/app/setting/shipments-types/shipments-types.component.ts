@@ -3,7 +3,7 @@ import { ActionEventArgs, EditSettingsModel, GridComponent, SaveEventArgs, Toolb
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { from } from 'rxjs';
 import { CustomService } from 'src/app/services/custom.service';
-import{OrderType} from '../../../../Models/OrderTypes/order-type.model';
+import { OrderType } from '../../../../Models/OrderTypes/order-type.model';
 @Component({
   selector: 'app-shipments-types',
   templateUrl: './shipments-types.component.html',
@@ -56,57 +56,49 @@ export class ShipmentsTypesComponent implements OnInit {
     )
   }
   actionComplete(args: SaveEventArgs) {
-    
+
     if (args.action == 'add') {
       let obj: any = { name: args.data['name'] }
-      this.customService.addOrUpdate('OrderType', obj, 'add').subscribe(
+      this.customService.addOrUpdate(this.apiName, obj, 'add').subscribe(
         res => {
           this.notifications.create('success', 'تم اضافة نوع الشحنة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
           this.getOrderTypes();
 
-        },
-        err=>{
-          console.clear();
-          console.log(err);
-          args.cancel =true;
+        }, err => {
+          this.getOrderTypes();
         }
       )
     }
     else if (args.action === "edit") {
       let obj: any = { id: Number.parseInt(args.data['id']), name: args.data['name'] }
-      
+
 
       this.customService.addOrUpdate(this.apiName, obj, 'update').subscribe(
         res => {
           this.notifications.create('success', 'تم تعديل نوع الشحنة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
           this.getOrderTypes();
         },
-        err=>{
-          
+        err => {
+
         }
       )
     }
     if (args.requestType == 'delete') {
-      let id = args.data[0].id;
-      if (args.data['CanDelete']) {
-        this.customService.delete(this.apiName, id).subscribe(
-          res => {
-            if (res.result) {
-              this.notifications.create('success', 'تم حذف نوع الشحنة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
-              this.getOrderTypes();
-            }
-          }
-        )
-      }
-      else {
-        this.gridInstance.refresh();
-      }
+      let id = args.data[0].id
+      this.customService.delete(this.apiName, id).subscribe(
+        res => {
+          
+            this.notifications.create('success', 'تم حذف نوع الشحنة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
+            // this.getOrderTypes();
+        }
+      )
+
 
     }
   }
   onActionBegin(args: ActionEventArgs) {
     console.log(args);
-    let name= args.data["name"].trim();
+    let name = args.data["name"].trim();
     if (args.action == "add") {
       if (args.requestType == "save") {
         if (this.orderTypes.filter(c => c.name == name).length > 0) {
@@ -121,15 +113,15 @@ export class ShipmentsTypesComponent implements OnInit {
     }
     if (args.action == "edit") {
       var id = args.data["id"];
-      if (name== "") {
+      if (name == "") {
         this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
         args.cancel = true;
       }
-      if(this.orderTypes.filter(c=>c.name==name&&c.id!=id).length>0){
+      if (this.orderTypes.filter(c => c.name == name && c.id != id).length > 0) {
         this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
-        args.cancel= true;
+        args.cancel = true;
       }
-    
+
     }
     if (args.requestType == "delete") {
       let orderType = args.data[0] as OrderType;

@@ -16,7 +16,7 @@ export class CustomService {
   constructor(private http:HttpClient) { }
   baseUrl: string = environment.baseUrl;
 
-  addOrUpdate(apiName,item,status,id?):Observable<any>{
+    addOrUpdate(apiName,item,status,id?):Observable<any>{
     let headers=new HttpHeaders({'Content-Type':'multipart/form-data'});
     if(status=='add')
     return this.http.post(this.baseUrl+'api/'+apiName,item);

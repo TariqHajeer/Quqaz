@@ -66,14 +66,12 @@ export class CoinsComponent implements OnInit {
       )
     }
     else if (args.action == "edit") {
-      console.log(coin);
       this.customService.addOrUpdate(this.apiName, coin, 'update').subscribe(res => {
         this.notifications.create('', 'تم التعديل', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       });
     }
 
     else if (args.requestType == "delete") {
-
       this.customService.delete(this.apiName, coin.id).subscribe(res => {
         this.notifications.create('', 'تم الحذف', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       });
