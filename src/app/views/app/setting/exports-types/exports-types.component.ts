@@ -13,7 +13,6 @@ export class ExportsTypesComponent implements OnInit {
 
   constructor(private customService: CustomService, private notifications: NotificationsService) { }
 
-
   exportTypes: any[] = [];
   public stTime: any;
   public filter: Object;
@@ -100,8 +99,10 @@ export class ExportsTypesComponent implements OnInit {
       if (args.data['CanDelete']) {
         this.customService.delete('OutComeType', id).subscribe(
           res => {
-            this.notifications.create('success', 'تم حذف نوع الصادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
-            this.getExportTypes();
+            if (res.result) {
+              this.notifications.create('success', 'تم حذف نوع الصادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
+              this.getExportTypes();
+            }
           }
         )
       }

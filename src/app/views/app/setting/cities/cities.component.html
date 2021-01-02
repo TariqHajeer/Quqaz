@@ -18,7 +18,7 @@
           </div>
           <ng-container *ngFor="let item of city.regions;let i= index">
             <div class="col-2">
-            <label >regions{{i+1}}
+            <label >منقطة{{i+1}}
               <span (click)="deldetRegionFromCity(i)"><i class="text-danger iconsminds-close" style="font-size: 18px;"></i></span>
 
             </label>
@@ -33,8 +33,6 @@
           </div>
           <span class="btn" (click)="addRegionToCity()"><i class="text-primary simple-icon-plus" style="font-size: 24px;"></i></span>
           <span class="btn btn-primary mt-2 " (click)="addCity()">{{'forms.save'|translate}}</span>
-
-
          </div>
 
       <ejs-grid #normalgrid   id='normalgrid'[enableRtl]='true'  (load)='load()'  [allowPaging]='true'
