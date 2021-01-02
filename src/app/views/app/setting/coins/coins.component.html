@@ -10,7 +10,8 @@
          [allowSorting]='true' height='400' 
           [enableHover]='true' [selectionSettings]='selectionSettings'
            [filterSettings]='filterSettings' [allowSorting]='true'
-            [allowFiltering]='true'(actionComplete)="actionComplete($event)"(actionBegin)="onActionBegin($event)" 
+            [allowFiltering]='true'
+            (actionComplete)="actionComplete($event)"(actionBegin)="onActionBegin($event)" 
             >
       <e-columns>
           <e-column   field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter' width='50' [isPrimaryKey]='true'></e-column>

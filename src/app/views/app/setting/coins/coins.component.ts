@@ -62,7 +62,7 @@ export class CoinsComponent implements OnInit {
         res => {
           this.notifications.create('success', 'تم اضافة نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
           this.coins.push(res);
-        }
+        },
       )
     }
     else if (args.action == "edit") {
@@ -81,10 +81,9 @@ export class CoinsComponent implements OnInit {
     }
   }
   onActionBegin(args: ActionEventArgs) {
-    args.data["name"]= args.data["name"].trim();
+     let name= args.data["name"].trim();
     if (args.action == "add") {
       if (args.requestType == "save") {
-        var name = args.data["name"];
         if (this.coins.filter(c => c.name == name).length > 0) {
           this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
           args.cancel = true;
@@ -95,8 +94,7 @@ export class CoinsComponent implements OnInit {
         }
       }
     }
-    if (args.action = "edit") {
-      var name = args.data["name"];
+    if (args.action == "edit") {
       var id = args.data["id"];
       if (name== "") {
         this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });

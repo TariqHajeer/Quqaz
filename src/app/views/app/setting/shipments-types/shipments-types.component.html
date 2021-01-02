@@ -7,10 +7,12 @@
     <ejs-grid #normalgrid   id='normalgrid'  (load)='load()'  [allowPaging]='true'
    [gridLines]="lines" [pageSettings]='pageSettings' [toolbar]='toolbar'
      [editSettings]='editSettings'[dataSource]='orderTypes' rowHeight='38'
-       [allowSorting]='true' height='400'  (actionComplete)="actionComplete($event)"
+       [allowSorting]='true' height='400'
         [enableHover]='true' [selectionSettings]='selectionSettings'
          [filterSettings]='filterSettings' [allowSorting]='true'
-          [allowFiltering]='true'>
+          [allowFiltering]='true'
+          (actionComplete)="actionComplete($event)"(actionBegin)="onActionBegin($event)"
+          >
     <e-columns>
         <e-column   field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter' width='50' [isPrimaryKey]='true'></e-column>
         <e-column   field='name' textAlign="Center" headerText="name" width='140'></e-column>
