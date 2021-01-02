@@ -11,7 +11,7 @@ import { UpdateCoin } from '../../../../Models/Coins/update-coin.model';
   styleUrls: ['./coins.component.scss']
 })
 export class CoinsComponent implements OnInit {
-
+  apiName = "Currency";
   constructor(private customService: CustomService, private notifications: NotificationsService) { }
 
   // coins:any[]=[{id:1,name:'دولار'},{id:2,name:'درهم عراقي'},{id:3,name:'ليرة لبناني'}];
@@ -28,7 +28,7 @@ export class CoinsComponent implements OnInit {
   public pageSettings: Object;
   ngOnInit(): void {
     this.Get();
-    this.editSettings = { showDeleteConfirmDialog: true, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
+    this.editSettings = { showDeleteConfirmDialog: false, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
     this.toolbar = ['Add', 'Search', 'Edit', 'Delete', 'Update', 'Cancel'];
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
@@ -49,34 +49,70 @@ export class CoinsComponent implements OnInit {
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
   Get() {
-    this.customService.getAll("Currency").subscribe(res => {
+    console.log(this.apiName);
+    this.customService.getAll(this.apiName).subscribe(res => {
       this.coins = res;
     });
   }
   actionComplete(args: SaveEventArgs) {
+    let coin = args.data[0] as Coin;
     if (args.action == 'add') {
       let obj: any = { name: args.data['name'] }
-      console.log(obj)
-      this.customService.addOrUpdate('Currency', obj, 'add').subscribe(
+      this.customService.addOrUpdate(this.apiName, obj, 'add').subscribe(
         res => {
           this.notifications.create('success', 'تم اضافة نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-          this.Get();
+          this.coins.push(res);
         }
       )
     }
+    else if (args.action == "edit") {
+      console.log(coin);
+      this.customService.addOrUpdate(this.apiName, coin, 'update').subscribe(res => {
+        this.notifications.create('', 'تم التعديل', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      });
+    }
+
+    else if (args.requestType == "delete") {
+
+      this.customService.delete(this.apiName, coin.id).subscribe(res => {
+        this.notifications.create('', 'تم الحذف', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      });
+
+    }
   }
   onActionBegin(args: ActionEventArgs) {
+    args.data["name"]= args.data["name"].trim();
     if (args.action == "add") {
-      if(args.requestType=="save"){
-        var name= args.data["name"];
-        if(this.coins.filter(c=>c.name==name).length>0){
-          this.notifications.create('', 'يوجد اسم مماثل', NotificationType.Warn, {  timeOut: 6000, showProgressBar: false });          
-          args.cancel =true;
+      if (args.requestType == "save") {
+        var name = args.data["name"];
+        if (this.coins.filter(c => c.name == name).length > 0) {
+          this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+          args.cancel = true;
         }
-        if(args.data["name"]==""){
-          this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, {  timeOut: 6000, showProgressBar: false });          
-        args.cancel =true;
+        if (name == "") {
+          this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+          args.cancel = true;
         }
+      }
+    }
+    if (args.action = "edit") {
+      var name = args.data["name"];
+      var id = args.data["id"];
+      if (name== "") {
+        this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+        args.cancel = true;
+      }
+      if(this.coins.filter(c=>c.name==name&&c.id!=id).length>0){
+        this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+        args.cancel= true;
+      }
+    
+    }
+    if (args.requestType == "delete") {
+      let coin = args.data[0] as Coin;
+      if (!coin.canDelete) {
+        this.notifications.create('', 'لا يمكن الحذف', NotificationType.Error, { timeOut: 6000, showProgressBar: false });
+        args.cancel = true;
       }
     }
   }

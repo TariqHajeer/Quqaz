@@ -103,6 +103,7 @@ export class CitiesComponent implements OnInit {
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
   actionComplete(args: SaveEventArgs) {
+
     if (args.action == 'add') {
       let obj: any = { name: args.data['name'] }
       this.customService.addOrUpdate('Country', obj, 'add').subscribe(
@@ -117,9 +118,11 @@ export class CitiesComponent implements OnInit {
     else if (args.action === "edit") {
 
     }
+    console.log(args);
     if (args.requestType == 'delete') {
       let id = args.data[0].id;
-      if (args.data['CanDelete']) {
+      console.log(args.data[0]);
+      if (args.data['canDelete']||args.data["canDeleteWithRegion"]) {
         this.customService.delete('Country', id).subscribe(
           res => {
             if (res.result) {

@@ -10,6 +10,7 @@ import { CustomService } from 'src/app/services/custom.service';
 })
 export class ShipmentsTypesComponent implements OnInit {
 
+  apiName="OrderType";
   constructor(private customService:CustomService,private notifications:NotificationsService) { }
   orderTypes:any[]=[];
   public stTime: any;
@@ -25,8 +26,8 @@ export class ShipmentsTypesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getOrderTypes();
-    this.editSettings = { };
-    this.toolbar = ['Search',];
+    this.editSettings == { showDeleteConfirmDialog: false, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
+    this.toolbar = ['Add', 'Search', 'Edit', 'Delete', 'Update', 'Cancel'];
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
@@ -47,9 +48,10 @@ export class ShipmentsTypesComponent implements OnInit {
   }
 
   getOrderTypes(){
-  this.customService.getAll('orderTypes').subscribe(
+  this.customService.getAll(this.apiName).subscribe(
     res=>
     {
+      console.log(res);
       console.log(res);
       this.orderTypes=res;
     }
@@ -74,7 +76,7 @@ actionComplete(args: SaveEventArgs) {
     let obj:any={id:Number.parseInt(args.data['id']),name:args.data['name']}
     console.log(obj)
 
-    this.customService.addOrUpdate('OrderType',obj,'update').subscribe(
+    this.customService.addOrUpdate(this.apiName,obj,'update').subscribe(
       res=>{
         console.log(res)
 
@@ -86,7 +88,7 @@ actionComplete(args: SaveEventArgs) {
   if (args.requestType == 'delete') {
     let id = args.data[0].id;
     if(args.data['CanDelete']){
-    this.customService.delete('OrderType',id).subscribe(
+    this.customService.delete(this.apiName,id).subscribe(
       res=>{
         if(res.result){
         this.notifications.create('success', 'تم حذف نوع الشحنة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });

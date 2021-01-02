@@ -33,23 +33,6 @@ export class CustomService {
     return this.http.post(this.baseUrl+'api/StudentExist',item);
 
   }
-
-  Updatemark(exam_id,student_id,mark):Observable<any>{
-    let headers=new HttpHeaders({'Content-Type':'multipart/form-data'});
-   let item =new FormData();
-item.append('student_id',student_id);
-item.append('exam_id',exam_id);
-item.append('mark',mark);
-
-    return this.http.post(this.baseUrl+'api/Mark/Update',item);
-  }
-  Updatehealth(id,healthInfo):Observable<any>{
-let form=new FormData();
-form.append('student_id',id);
-form.append('healthInfo',healthInfo);
-
-    return this.http.post(this.baseUrl+'api/Student/HealthInformation',form);
-  }
   delete(apiName,id):Observable<any>
   {
     return this.http.delete(this.baseUrl+'api/'+apiName+'/'+id);
