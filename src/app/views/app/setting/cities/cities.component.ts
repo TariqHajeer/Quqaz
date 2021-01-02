@@ -24,14 +24,16 @@ export class CitiesComponent implements OnInit {
   public lines: any;
   @ViewChild('normalgrid')
   public gridInstance: GridComponent;
-  public toolbar: ToolbarItems[];
+  public toolbar: Object[];
   public pageSettings: Object;
   currentId:any;
   currentMode='';
   ngOnInit(): void {
     this.getCities();
-    this.editSettings = { showDeleteConfirmDialog: true, allowDeleting: true };
-    this.toolbar = ['Search', 'Delete', 'Update', 'Cancel'];
+    this.editSettings = {allowDeleting: true };
+    this.toolbar = [
+      { text: 'حذف', tooltipText: 'حذف', prefixIcon: 'e-delete', id: 'normalgrid_delete' },'Search'
+      ]
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
@@ -127,7 +129,7 @@ export class CitiesComponent implements OnInit {
     }
     else {
       this.gridInstance.refresh();
-      
+
     }
 
     }

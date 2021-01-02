@@ -37,7 +37,7 @@
 
          </div>
 
-      <ejs-grid #normalgrid   id='normalgrid'  (load)='load()'  [allowPaging]='true'
+      <ejs-grid #normalgrid   id='normalgrid'[enableRtl]='true'  (load)='load()'  [allowPaging]='true'
      [gridLines]="lines" [pageSettings]='pageSettings' [toolbar]='toolbar'
        [editSettings]='editSettings'[dataSource]='cities' rowHeight='38'
          [allowSorting]='true' height='400' (actionComplete)="actionComplete($event)"

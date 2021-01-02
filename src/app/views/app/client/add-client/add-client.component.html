@@ -34,7 +34,7 @@
   </div>
   <div class="col-md-3">
     <label>{{'client.first-date' | translate}}</label>
-    <input type="date" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.firstDate" bsDatepicker
+    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.firstDate" bsDatepicker
     [container]="'html'" [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
 </div>
 <div  *ngFor="let phone of client.phones;let i=index" class="col-md-3">
