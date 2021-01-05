@@ -1,1 +1,140 @@
-<p>groups works!</p>
+<div class="row">
+  <div class="col-md-12 mb-4">
+    <div class="card">
+      <div class="card-body">
+
+        <div class="row w-100 mb-3 align-items-end">
+          <div class="col-3" [hidden]="!hiddenbtnSave">
+            <label>الاسم</label>
+            <input type="text" class="form-control" [(ngModel)]="CreateGroup.Name">
+          </div>
+          <div class="col-3" [hidden]="!hiddenbtnSave">
+            <label>السماحيات</label>
+            <ng-select [(ngModel)]="CreateGroup.PrivilegesId">
+              <ng-option *ngFor="let Privilege of Privileges" [value]="Privilege.Id">{{Privilege.Name}}</ng-option>
+            </ng-select>
+          </div>
+          <!--edit form-->
+          <div class="col-3">
+            <label>الاسم</label>
+            <input type="text" class="form-control" [hidden]="hiddenbtnSave" [(ngModel)]="UpdateGroup.Name">
+          </div>
+          <div class="col-3" [hidden]="hiddenbtnSave">
+            <label>السماحيات</label>
+            <ng-select [(ngModel)]="UpdateGroup.Privileges">
+              <ng-option *ngFor="let Privilege of Privileges" [value]="Privilege.Id">{{Privilege.Name}}</ng-option>
+            </ng-select>
+          </div>
+          <span class="btn" (click)="AddGroup()"><i class="text-primary simple-icon-plus"
+              style="font-size: 24px;"></i></span>
+          <span class="btn btn-primary mt-2 " [hidden]="hiddenbtnSave" (click)="saveGroup()">save</span>
+          <span class="btn btn-primary mt-2 " [hidden]="hiddenbtnSave" (click)="CancleEditGroup()">cancle</span>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-5 mb-4">
+    <div class="card">
+      <div class="card-body">
+
+        <th scope="col">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            class="bi bi-collection-fill" viewBox="0 0 16 16">
+            <path
+              d="M0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z" />
+          </svg>
+          Groups
+
+        </th>
+        <br>
+        <div style="overflow:auto; max-height:300px;">
+          <table class="table table-hover">
+
+            <tbody>
+              <tr *ngFor="let group of Groups" (click)="selectrow(group)">
+
+                <td>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-collection-fill" viewBox="0 0 16 16">
+                    <path
+                      d="M0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z" />
+                  </svg>
+                  {{group.Name}}
+                  <br>
+                  <small> Role {{group.PrivilegesId.length}} , user 1</small>
+                </td>
+                <td>
+                  <span class="btn btn-primary mt-2 " (click)="EditGroup(group)">edit</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
+                    viewBox="0 0 16 16">
+                    <path
+                      d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                  </svg>
+                </td>
+              </tr>
+
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-7 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <div style="overflow:auto; max-height:300px;">
+          <table class="table ">
+            <thead>
+              <tr>
+                <th scope="col">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-shield-shaded" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                      d="M8 14.933a.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067v13.866zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z" />
+                  </svg>
+                  Role
+                </th>
+                <th scope="col">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-people" viewBox="0 0 16 16">
+                    <path
+                      d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" />
+                  </svg>
+                  Users
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let Privilege of GetPrivilege()">
+                <td>
+                  <div class="custom-control custom-checkbox mr-sm-2">
+                    <input type="checkbox" class="custom-control-input" [checked]="true" id="customControlAutosizing">
+                    <label class="custom-control-label" for="customControlAutosizing">check role</label>
+                  </div>
+                  {{Privilege.Name}}
+                </td>
+                <td>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-person" viewBox="0 0 16 16">
+                    <path
+                      d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+                  </svg>
+                  user 1
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
