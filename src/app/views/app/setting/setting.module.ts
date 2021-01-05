@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { SettingRoutingModule } from './setting-routing.module';
 
-import { GridAllModule, GridModule } from '@syncfusion/ej2-angular-grids';
+import { GridAllModule, GridModule, ToolbarService } from '@syncfusion/ej2-angular-grids';
 import { TranslateModule } from '@ngx-translate/core';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -35,6 +35,8 @@ import { GroupsComponent } from './groups/groups.component';
     NgSelectModule,
     ModalModule.forRoot(),
 
-  ]
+  ],
+  providers: [ToolbarService]
+
 })
 export class SettingModule { }
