@@ -57,15 +57,14 @@
   <div class="navbar-right">
     <div class="header-icons d-inline-block align-middle">
 
-      <div class="d-none d-md-inline-block align-text-bottom mr-1">
+  <!--    <div class="d-none d-md-inline-block align-text-bottom mr-1">
         <div class="custom-control custom-switch" tooltip="Dark Mode" placement="left">
           <input type="checkbox" class="custom-control-input" id="darkModeSwitch" [checked]="isDarkModeActive"
             (change)="onDarkModeChange($event)">
           <label class="custom-control-label" for="darkModeSwitch"></label>
         </div>
-      </div>
-
-      <div class="position-relative d-none d-sm-inline-block">
+      </div>-->
+<!-- <div class="position-relative d-none d-sm-inline-block">
         <div dropdown>
           <button dropdownToggle type="button" class="header-icon btn btn-empty">
             <i class="simple-icon-grid"></i>
@@ -104,7 +103,8 @@
           </div>
         </div>
       </div>
-
+-->
+     
       <!-- <div class="position-relative d-inline-block">
 
         <div dropdown>
@@ -168,19 +168,21 @@
             </perfect-scrollbar>
           </div>
         </div>
-      </div> -->
-
-      <button class="header-icon btn btn-empty d-none d-sm-inline-block" type="button" id="fullScreenButton"
+      </div> 
+         <button class="header-icon btn btn-empty d-none d-sm-inline-block" type="button" id="fullScreenButton"
         (click)="fullScreenClick()">
         <i *ngIf="!isFullScreen" class="simple-icon-size-fullscreen"></i>
         <i *ngIf="isFullScreen" class="simple-icon-size-actual"></i>
       </button>
+    -->
+
+ 
 
     </div>
 
     <div class="user d-inline-block" dropdown>
       <button class="btn btn-empty p-0" type="button" dropdownToggle>
-        <span class="name">{{displayName}}</span>
+        <span class="name">{{userName.name}}name</span>
         <span>
           <img alt="Profile Picture" src="/assets/img/profiles/l-1.jpg" />
         </span>

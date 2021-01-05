@@ -1,5 +1,5 @@
 export class Group {
-    Id:number
-    Name:string
-    PrivilegesId:number[]
+    id:number
+    name:string
+    privilegesId:number[]
 }
