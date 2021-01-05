@@ -4,7 +4,7 @@
          <div class="d-flex justify-content-between">
           <h5 class="card-title">{{'menu.setting.importTypes' | translate}}</h5>
          </div>
-      <ejs-grid #normalgrid   id='normalgrid' [enableRtl]='true' (load)='load()'  [allowPaging]='true'
+      <ejs-grid  #normalgrid   id='normalgrid' [enableRtl]='true' (load)='load()'  [allowPaging]='true'
      [gridLines]="lines" [pageSettings]='pageSettings' [toolbar]='toolbar'
        [editSettings]='editSettings'[dataSource]='importTypes' rowHeight='38'
          [allowSorting]='true' height='400' (actionComplete)="actionComplete($event)"

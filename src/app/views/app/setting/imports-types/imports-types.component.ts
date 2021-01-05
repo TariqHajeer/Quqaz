@@ -23,8 +23,9 @@ export class ImportsTypesComponent implements OnInit {
   public toolbar: Object[];
   public pageSettings: Object;
   ngOnInit(): void {
+    
     this.getImportTypes();
-    this.editSettings = { showDeleteConfirmDialog: true, allowAdding: true,allowEditing:true,allowEditOnDblClick:true, allowDeleting: true };
+    this.editSettings = { showDeleteConfirmDialog: false, allowAdding: true,allowEditing:true,allowEditOnDblClick:true, allowDeleting: true };
     this.toolbar = [
       { text: 'اضافة', tooltipText: 'اضافة', prefixIcon: 'e-add', id: 'normalgrid_add' },
       { text: 'تعديل', tooltipText: 'تعديل', prefixIcon: 'e-edit', id: 'normalgrid_edit' },
@@ -39,7 +40,9 @@ export class ImportsTypesComponent implements OnInit {
     this.gridInstance.on('data-ready', function () {
       this.dReady = true;
     });
-    this.selectionSettings = { persistSelection: true, type: "Multiple" };
+    
+    
+    this.selectionSettings = { persistSelection: true, type: "Multiple"};
     this.lines = 'Horizontal';
   }
 

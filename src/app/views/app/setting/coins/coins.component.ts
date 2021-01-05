@@ -110,6 +110,10 @@ export class CoinsComponent implements OnInit {
         this.notifications.create('', 'لا يمكن الحذف', NotificationType.Error, { timeOut: 6000, showProgressBar: false });
         args.cancel = true;
       }
+      if(!confirm("هل انت متأكد من الحذف")){
+        args.cancel= true;
+      
+      }
     }
   }
 
