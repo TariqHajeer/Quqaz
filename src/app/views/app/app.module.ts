@@ -7,6 +7,7 @@ import { LayoutContainersModule } from 'src/app/containers/layout/layout.contain
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from 'src/app/helpers/jwt.interceptor';
 import { GridModule, ToolbarService, PdfExportService } from '@syncfusion/ej2-angular-grids';
+import{UsersModule}from '../app/users/users.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -14,6 +15,7 @@ import { GridModule, ToolbarService, PdfExportService } from '@syncfusion/ej2-an
     AppRoutingModule,
     SharedModule,
     LayoutContainersModule,
+    UsersModule
   ],
   providers:[PdfExportService
   ,{provide: LocationStrategy, useClass: HashLocationStrategy}

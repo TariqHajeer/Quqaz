@@ -4,7 +4,8 @@ import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/auth.service';
 import { environment } from 'src/environments/environment';
-
+import { User } from 'src/app/Models/user.model'
+import { from } from 'rxjs';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html'
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  user: User
   onSubmit() {
     // if (!this.loginForm.valid || this.buttonDisabled) {
     //   return;
@@ -31,16 +32,17 @@ export class LoginComponent implements OnInit {
     this.buttonState = 'show-spinner';
 
     this.authService.signIn(this.loginForm.value).subscribe(
-      response=>{
+      response => {
+        this.user=response as User
         console.log(response);
-          this.notifications.create('success', 'تم تسجيل الدخول بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+        this.notifications.create('success', 'تم تسجيل الدخول بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         //  this.authService.setAuthenticatedUser(response.data[0].user);
-          this.router.navigate(['/app/HomePage']);
-          this.authService.setAuthenticatedUser(response);
-          this.authService.setPermission(response.privileges);
+        this.router.navigate(['/app/HomePage']);
+        this.authService.setAuthenticatedUser( this.user);
+        this.authService.setPermission(this.user.privileges);
 
 
-      },error=>{
+      }, error => {
         console.log(error);
         this.buttonDisabled = false;
         this.buttonState = '';

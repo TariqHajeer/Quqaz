@@ -1,0 +1,61 @@
+<div class="col-md-12 mb-4">
+  <div class="card">
+    <div class="card-body">
+      <div class="d-flex justify-content-between">
+        <h5 class="card-title">المستخدمون</h5>
+        <button class="btn  mb-3" (click)="addUserModal.show();addNewClicked()"><i class="iconsminds-add  text-primary"
+            style="font-size: 38px;"></i></button>
+      </div>
+
+      <ejs-grid #normalgrid id='normalgrid' (load)='load()' [allowPaging]='true' [gridLines]="lines"
+        [pageSettings]='pageSettings' [toolbar]='toolbar' [editSettings]='editSettings' [dataSource]='users'
+        rowHeight='38' [allowSorting]='true' height='400' [enableHover]='true' [selectionSettings]='selectionSettings'
+        [filterSettings]='filterSettings' [allowSorting]='true' [allowFiltering]='true'>
+        <e-columns>
+          <e-column field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter' width='50'
+            [isPrimaryKey]='true'></e-column>
+          <e-column field='Name' [allowEditing]='true' textAlign="Center" headerText="الاسم" width='140'></e-column>
+          <e-column field='UserName' [allowEditing]='false' textAlign="Center" headerText="اسم المستخدم" width='140'></e-column>
+          <e-column field='Department' [allowEditing]='false' textAlign="Center" headerText="القسم" width='140'></e-column>
+          <e-column field='Experince' [allowEditing]='false' textAlign="Center" headerText="التجربة" width='140'></e-column>
+          <e-column field='Address' [allowEditing]='false' textAlign="Center" headerText="العنوان" width='140'></e-column>
+          <e-column field='HireDate' [allowEditing]='false' textAlign="Center" headerText="تاريخ التوظيف" width='140'></e-column>
+          <e-column field='Note' [allowEditing]='false' textAlign="Center" headerText="ملاحظات" width='140'></e-column>
+            <e-column field='Country' [allowEditing]='false' textAlign="Center" headerText="المدينة" width='140'></e-column>
+            <e-column field='Salary' [allowEditing]='false' textAlign="Center" headerText="الراتب" width='140'></e-column>
+            <e-column field='Groups' [allowEditing]='false' textAlign="Center" headerText="المجموعات" width='140'></e-column>
+            <e-column field='Phones' [allowEditing]='false' textAlign="Center" headerText="ارقام الهاتف" width='140'>
+
+              <ng-template #template>
+                <div class="text-center">
+                  <button class="btn" (click)="onEditClicked(); addUserModal.show()"><i
+                      class="simple-icon-pencil text-primary" style="font-size: 20px;"></i></button>
+                </div>
+              </ng-template>
+            </e-column>
+        </e-columns>
+      </ejs-grid>
+
+    </div>
+  </div>
+</div>
+
+<div bsModal #addUserModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-md modal-right " style="max-width: 90%;">
+    <div class="modal-content modal-lg">
+      <div class="modal-header">
+        <h4 *ngIf="addClicked" id="dialog-sizes-name1" class="modal-title pull-left">اضافة مستخدم</h4>
+        <h4 *ngIf="editClicked" id="dialog-sizes-name1" class="modal-title pull-left">تعديل مستخدم</h4>
+
+        <button type="button" class="close pull-right" (click)="addUserModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="font-size: 15px;">
+        <app-add-user (addFinish)="addFinish();addUserModal.hide()" [addClicked]="addClicked"
+          [editClicked]="editClicked" [currentUserId]="currentUserId"></app-add-user>
+      </div>
+    </div>
+  </div>
+</div>

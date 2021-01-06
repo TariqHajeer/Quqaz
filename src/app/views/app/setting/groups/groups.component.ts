@@ -33,7 +33,6 @@ export class GroupsComponent implements OnInit {
   GetAllGroups() {
     this.GroupService.GetAll().subscribe(res => {
       this.Groups = res
-      console.log(res)
     })
   }
   GetById(id) {

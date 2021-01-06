@@ -56,6 +56,12 @@ const data: IMenuItem[] = [
         label: 'menu.setting.coins',
         to: `${adminRoot}/setting/coins`,
       }
+      ,
+      {
+        icon: 'simple-icon-layers',
+        label: 'المجموعات',
+        to: `${adminRoot}/setting/group`,
+      }
     ]
   },
    //clients
@@ -82,11 +88,11 @@ const data: IMenuItem[] = [
   label: 'menu.employees',
   to: `${adminRoot}/setting`,
 },
- //employees
+ //users
  {
   icon: 'simple-icon-people',
-  label: 'menu.employees',
-  to: `${adminRoot}/setting`,
+  label: 'المستخدمون',
+  to: `${adminRoot}/user`,
 },
 
 

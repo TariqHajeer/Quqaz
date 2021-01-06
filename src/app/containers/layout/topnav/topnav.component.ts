@@ -6,6 +6,7 @@ import { LangService, Language } from "src/app/shared/lang.service";
 import { environment } from "src/environments/environment";
 import { getThemeColor, setThemeColor } from "src/app/utils/util";
 import { AuthService } from 'src/app/shared/auth.service';
+import { User } from 'src/app/Models/user.model';
 
 @Component({
   selector: "app-topnav",
