@@ -7,26 +7,27 @@ import { UserService } from 'src/app/services/user.service';
 import { Group } from 'src/app/Models/Group/group.model';
 import { CreateOutCome } from 'src/app/Models/OutCome/create-out-come.model';
 import { Coin } from 'src/app/Models/Coins/coin.model';
+import { createOutput } from '@angular/compiler/src/core';
 
 @Component({
   selector: 'app-add-out-come',
   templateUrl: './add-out-come.component.html',
   styleUrls: ['./add-out-come.component.scss']
 })
-export class AddOutComeComponent implements OnInit , OnChanges {
+export class AddOutComeComponent implements OnInit, OnChanges {
 
   constructor(public UserService: UserService,
-     public GroupService: GroupService, 
-     private customService: CustomService,
-      private notifications: NotificationsService,
-      ) { }
+    public GroupService: GroupService,
+    private customService: CustomService,
+    private notifications: NotificationsService,
+  ) { }
   @Input() currentUserId;
   @Input() editClicked;
   @Input() addClicked;
   @Output() addFinish = new EventEmitter<any>();
   submitted = false;
   CreateOutCome: CreateOutCome
-
+  OutComes: CreateOutCome[] = []
   ngOnInit(): void {
     this.CreateOutCome = new CreateOutCome()
     this.Getcoins()
@@ -35,8 +36,8 @@ export class AddOutComeComponent implements OnInit , OnChanges {
   coins: Coin[];
   exportTypes: any[] = [];
 
- Getcoins() {
-   
+  Getcoins() {
+
     this.customService.getAll("Currency").subscribe(res => {
       this.coins = res;
     });
@@ -45,7 +46,7 @@ export class AddOutComeComponent implements OnInit , OnChanges {
     this.customService.getAll('OutComeType').subscribe(
       res => {
         this.exportTypes = res;
-       
+
       }
     )
   }
@@ -53,16 +54,20 @@ export class AddOutComeComponent implements OnInit , OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
 
   }
-
+  addOutComeInTable() {
+this.OutComes.push(this.CreateOutCome)
+this.CreateOutCome=new CreateOutCome()
+  }
   addOrEditUser() {
     this.submitted = true;
-   
-    
+
+
+
   }
 
 
 
-  
- 
+
+
 }
 
