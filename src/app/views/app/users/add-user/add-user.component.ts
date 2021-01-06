@@ -27,6 +27,7 @@ export class AddUserComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.getCountry()
     this.getDepartments()
+    this.GetAllGroups()
     this.CreateUser = new CreateUser()
     this.CreateUser.Phones = []
   }
@@ -38,6 +39,7 @@ export class AddUserComponent implements OnInit, OnChanges {
 
   addOrEditUser() {
     this.submitted = true;
+    console.log(this.CreateUser)
     this.UserService.Creat(this.CreateUser).subscribe(
       res => {
         if (this.addClicked) {

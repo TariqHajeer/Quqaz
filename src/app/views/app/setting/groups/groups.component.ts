@@ -85,6 +85,7 @@ export class GroupsComponent implements OnInit {
       this.Groups=this.Groups.filter(g=>g!=group);
       this.Group=new Group()
       this.privilegesInGroup=[]
+      this.hiddenbtnSave=true
     })
   }
   validation(group):boolean{

@@ -58,7 +58,7 @@ export class ViewUserComponent implements OnInit {
   getUser(){
      this.UserService.GetAll().subscribe(res=>{
        this.users=res
-       console.log(res)
+      
      })
   }
   onEditClicked(id){
