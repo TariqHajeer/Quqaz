@@ -52,7 +52,7 @@
       </div>
       <div class="col-md-3">
         <label>تاريخ التوظيف</label>
-        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.HireDate"
+        <input readonly type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.HireDate"
           bsDatepicker [container]="'html'" [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
       </div>
       <div class="col-md-3">
