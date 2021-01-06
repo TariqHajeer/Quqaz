@@ -6,7 +6,7 @@ import { LangService, Language } from "src/app/shared/lang.service";
 import { environment } from "src/environments/environment";
 import { getThemeColor, setThemeColor } from "src/app/utils/util";
 import { AuthService } from 'src/app/shared/auth.service';
-import { User } from 'src/app/Models/user.model';
+import { UserLogin } from 'src/app/Models/userlogin.model';
 
 @Component({
   selector: "app-topnav",
@@ -70,7 +70,7 @@ export class TopnavComponent implements OnInit, OnDestroy {
     this.langService.language = lang.code;
     this.currentLanguage = this.langService.languageShorthand;
   }
-  userName:any=localStorage.getItem('kokazUser')
+  userName:any=JSON.parse(localStorage.getItem('kokazUser'))as UserLogin
 
   async ngOnInit() {
     // this.displayName=JSON.parse(localStorage.getItem('currnetUser')).email;

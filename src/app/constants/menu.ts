@@ -91,7 +91,7 @@ const data: IMenuItem[] = [
  //users
  {
   icon: 'simple-icon-people',
-  label: 'المستخدمون',
+  label: 'menu.employees',
   to: `${adminRoot}/user`,
 },
 

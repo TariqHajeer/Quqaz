@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { EditSettingsModel, GridComponent, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { NotificationsService } from 'angular2-notifications';
 import { CustomService } from 'src/app/services/custom.service';
-import { Client } from '../../client/client.model';
-import { ClientService } from '../../client/client.service';
+import { User } from 'src/app/Models/user/user.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-view-user',
@@ -12,7 +12,7 @@ import { ClientService } from '../../client/client.service';
 })
 export class ViewUserComponent implements OnInit {
 
-  constructor(private customService:CustomService,private notifications:NotificationsService) { }
+  constructor(public UserService:UserService,private customService:CustomService,private notifications:NotificationsService) { }
   
   tempRegion:any;
   public stTime: any;
@@ -25,12 +25,12 @@ export class ViewUserComponent implements OnInit {
   public gridInstance: GridComponent;
   public toolbar: ToolbarItems[];
   public pageSettings: Object;
-  users:any[]=[];
+  users:User[]=[];
   editClicked:any;
   addClicked:any;
   currentUserId:any;
   ngOnInit(): void {
-    this.getClients();
+    this.getUser();
     this.editSettings = { showDeleteConfirmDialog: true, allowDeleting: true };
     this.toolbar = ['Search', 'Delete',];
     this.filterSettings = { type: "CheckBox" };
@@ -53,10 +53,13 @@ export class ViewUserComponent implements OnInit {
   addNewClicked(){
     this.addClicked=true;
     this.editClicked=false;
-    this.getClients();
+    this.getUser();
   }
-  getClients(){
-     
+  getUser(){
+     this.UserService.GetAll().subscribe(res=>{
+       this.users=res
+       console.log(res)
+     })
   }
   onEditClicked(id){
     this.addClicked=false;
