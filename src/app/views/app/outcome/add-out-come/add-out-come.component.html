@@ -1,1 +1,56 @@
-<p>add-out-come works!</p>
+<div class="col-md-12">
+    <form  class="row" (ngSubmit)="addOrEditUser()">
+      <div class="row w-100 align-items-end mb-3">
+        <div class="col-md-3">
+            <label>أنواع الصادرات<span class="text-danger text-one align-bottom mx-1">*</span></label>
+            <ng-select [(ngModel)]="CreateOutCome.OutComeTypeId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
+              <ng-option *ngFor="let exportType of exportTypes" [value]="exportType.id">{{exportType.name}}</ng-option>
+            </ng-select>
+            <div *ngIf="!CreateOutCome.OutComeTypeId && submitted" class="invalid-tooltip">القسم حقل مطلوب</div>
+    
+          </div>
+     
+        <div class="col-md-3">
+          <label>الكمية<span class="text-danger text-one align-bottom mx-1">*</span></label>
+          <input type="text" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
+            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateOutCome.Amount">
+            <div *ngIf="!CreateOutCome.Amount && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
+        </div>
+        <div class="col-md-3">
+            <label>المبلغ المصروف<span class="text-danger text-one align-bottom mx-1">*</span></label>
+            <ng-select [(ngModel)]="CreateOutCome.CurrencyId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
+              <ng-option *ngFor="let coin of coins" [value]="coin.id">{{coin.name}}</ng-option>
+            </ng-select>
+            <div *ngIf="!CreateOutCome.CurrencyId && submitted" class="invalid-tooltip">القسم حقل مطلوب</div>
+    
+          </div>
+      
+         
+      
+        <div class="col-md-3">
+          <label>تاريخ </label>
+          <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateOutCome.Date"
+            bsDatepicker [container]="'html'" [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
+        </div>
+        <div class="col-md-3">
+          <label>السبب</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
+            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateOutCome.Reason">
+        </div>
+       
+        <div class="col-md-3">
+          <label>ملاحظات</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
+            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateOutCome.Note">
+        </div>
+  
+  
+  
+      </div>
+      <div class="row w-100">
+        <div class="col-3">
+          <button type="submit" class="btn btn-primary"> حفظ</button>
+        </div>
+      </div>
+    </form>
+  </div>

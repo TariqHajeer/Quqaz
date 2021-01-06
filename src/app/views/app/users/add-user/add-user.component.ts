@@ -6,6 +6,7 @@ import { GroupService } from 'src/app/services/group.service';
 import { UserService } from 'src/app/services/user.service';
 import { CreateUser } from 'src/app/Models/user/create-user'
 import { Group } from 'src/app/Models/Group/group.model';
+import { ViewUserComponent } from '../view-user/view-user.component';
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
@@ -13,7 +14,11 @@ import { Group } from 'src/app/Models/Group/group.model';
 })
 export class AddUserComponent implements OnInit, OnChanges {
 
-  constructor(public UserService: UserService, public GroupService: GroupService, private customService: CustomService, private notifications: NotificationsService) { }
+  constructor(public UserService: UserService,
+     public GroupService: GroupService, 
+     private customService: CustomService,
+      private notifications: NotificationsService,
+      ) { }
   @Input() currentUserId;
   @Input() editClicked;
   @Input() addClicked;

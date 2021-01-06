@@ -52,4 +52,12 @@ export class ViewOutComeComponent implements OnInit {
       }
     )
   }
+  addNewClicked(){
+    this.addClicked=true;
+    this.editClicked=false;
+    
+  }
+  addFinish(){
+
+  }
 }

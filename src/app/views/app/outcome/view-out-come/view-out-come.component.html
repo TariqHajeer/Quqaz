@@ -3,6 +3,8 @@
     <div class="card-body">
       <div class="d-flex justify-content-between">
         <h5 class="card-title">{{'menu.outcome' | translate}}</h5>
+        <button class="btn  mb-3" (click)="addUserModal.show();addNewClicked()"><i class="iconsminds-add  text-primary"
+          style="font-size: 38px;"></i></button>
 </div>
 
   <ejs-grid #normalgrid   id='normalgrid'  (load)='load()'  [allowPaging]='true'
@@ -25,23 +27,22 @@
 </div>
 </div>
 </div>
-<!--
-<div bsModal #addClientModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+<div bsModal #addUserModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
   aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog modal-md modal-right " style="max-width: 90%;">
     <div class="modal-content modal-lg">
       <div class="modal-header">
-        <h4 *ngIf="addClicked" id="dialog-sizes-name1" class="modal-title pull-left">اضافة عميل</h4>
-        <h4 *ngIf="editClicked" id="dialog-sizes-name1" class="modal-title pull-left">تعديل عميل</h4>
+        <h4 *ngIf="addClicked" id="dialog-sizes-name1" class="modal-title pull-left">اضافة مستخدم</h4>
+        <h4 *ngIf="editClicked" id="dialog-sizes-name1" class="modal-title pull-left">تعديل مستخدم</h4>
 
-        <button type="button" class="close pull-right" (click)="addClientModal.hide()" aria-label="Close">
+        <button type="button" class="close pull-right" (click)="addUserModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body" style="font-size: 15px;">
-        <app-add-client (addFinish)="addFinish();addClientModal.hide()" [addClicked]="addClicked"
-          [editClicked]="editClicked" [currentClientId]="currentClientId"></app-add-client>
+        <app-add-out-come (addFinish)="addFinish();addUserModal.hide()" [addClicked]="addClicked"
+         ></app-add-out-come>
       </div>
     </div>
   </div>
-</div> -->
+</div>
