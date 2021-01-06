@@ -15,27 +15,31 @@
         <label>الاسم<span class="text-danger text-one align-bottom mx-1">*</span></label>
         <input type="text" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
           class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Name">
-
+          <div *ngIf="!CreateUser.Name && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
       </div>
       <div class="col-md-3">
-        <label>اسم المستخدم</label>
+        <label>اسم المستخدم<span class="text-danger text-one align-bottom mx-1">*</span></label>
         <input type="text" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
           class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.UserName">
+          <div *ngIf="!CreateUser.UserName && submitted" class="invalid-tooltip">اسم المستخدم حقل مطلوب</div>
       </div>
       <div class="col-md-3">
-        <label>كلمة السر</label>
+        <label>كلمة السر <span class="text-danger text-one align-bottom mx-1">*</span></label>
         <input type="password"
           oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
           class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Password">
+          <div *ngIf="!CreateUser.Password && submitted" class="invalid-tooltip">كلمة السر  حقل مطلوب</div>
       </div>
       <div class="col-md-3">
-        <label>القسم</label>
+        <label>القسم<span class="text-danger text-one align-bottom mx-1">*</span></label>
         <ng-select [(ngModel)]="CreateUser.DepartmentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
           <ng-option *ngFor="let department of departments" [value]="department.id">{{department.name}}</ng-option>
         </ng-select>
+        <div *ngIf="!CreateUser.DepartmentId && submitted" class="invalid-tooltip">القسم حقل مطلوب</div>
+
       </div>
       <div class="col-md-3">
-        <label>المجموعات</label>
+        <label>المجموعات <span class="text-danger text-one align-bottom mx-1">*</span></label>
         <ng-select multiple="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" [selectableGroup]="true"
           [searchable]="true" [(ngModel)]="CreateUser.GroupsId" [ngModelOptions]="{standalone: true}"
           [closeOnSelect]="true">

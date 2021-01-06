@@ -82,18 +82,19 @@ const data: IMenuItem[] = [
   label: 'menu.outcome',
   to: `${adminRoot}/outcome`,
 },
+//users
+{
+  icon: 'simple-icon-people',
+  label: 'menu.employees',
+  to: `${adminRoot}/user`,
+},
  //exports tab
  {
   icon: 'iconsminds-inbox-out',
   label: 'menu.employees',
   to: `${adminRoot}/setting`,
 },
- //users
- {
-  icon: 'simple-icon-people',
-  label: 'menu.employees',
-  to: `${adminRoot}/user`,
-},
+ 
 
 
 

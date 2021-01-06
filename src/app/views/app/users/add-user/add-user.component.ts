@@ -45,10 +45,10 @@ export class AddUserComponent implements OnInit, OnChanges {
         if (this.addClicked) {
           this.notifications.create('success', 'تم اضافة موظف بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         }
-        else if (!this.editClicked) {
+        //else if (!this.editClicked) {
          // this.notifications.create('success', 'تم تعديل موظف بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 
-        }
+        //}
       }
     )
   }
