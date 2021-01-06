@@ -46,10 +46,6 @@ export class AddOutComeComponent implements OnInit, OnChanges {
     this.customService.getAll('OutComeType').subscribe(
       res => {
         this.exportTypes = res;
-<<<<<<< HEAD
-=======
-
->>>>>>> 18587650e3f1490949e5bf29bdce04d53a65711c
       }
     )
   }

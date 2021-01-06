@@ -25,21 +25,17 @@ export class ViewUserComponent implements OnInit {
   public gridInstance: GridComponent;
   public toolbar: ToolbarItems[];
   public pageSettings: Object;
-  users:User[]=[];
   editClicked:any;
   addClicked:any;
   currentUserId:any;
   ngOnInit(): void {
     this.getUser();
     this.editSettings = { showDeleteConfirmDialog: true, allowDeleting: true };
-    this.toolbar = ['Search', 'Delete',];
+    this.toolbar = ['Search' ];
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
     this.pageSettings = { pageSize: 5,pageSizes:true };
-    this.gridInstance.on('data-ready', function () {
-      this.dReady = true;
-    });
     this.selectionSettings = { persistSelection: true, type: "Multiple" };
     this.lines = 'Horizontal';
   }
@@ -56,10 +52,8 @@ export class ViewUserComponent implements OnInit {
     this.getUser();
   }
   getUser(){
-     this.UserService.GetAll().subscribe(res=>{
-       this.users=res
-      
-     })
+
+      this.UserService.GetAll();
   }
   onEditClicked(id){
     this.addClicked=false;

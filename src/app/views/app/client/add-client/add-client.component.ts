@@ -67,7 +67,6 @@ export class AddClientComponent implements OnInit, OnChanges {
         }
         else if(!this.editClicked) {
           this.notifications.create('success', 'تم تعديل عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-
         }
         this.init();
       }

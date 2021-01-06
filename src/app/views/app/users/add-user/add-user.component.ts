@@ -29,6 +29,7 @@ export class AddUserComponent implements OnInit, OnChanges {
   departments: any[] = [];
   Groups: Group[] = []
   tempPhone: string;
+  nameIsRepeated:boolean=false;
   ngOnInit(): void {
     this.getCountry()
     this.getDepartments()
@@ -39,9 +40,10 @@ export class AddUserComponent implements OnInit, OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
   }
-
+  checkName(){
+    
+  }
   addOrEditUser() {
     this.submitted = true;
     this.UserService.Creat(this.CreateUser).subscribe(
@@ -49,15 +51,11 @@ export class AddUserComponent implements OnInit, OnChanges {
         if (this.addClicked) {
           this.notifications.create('success', 'تم اضافة موظف بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         }
-        //else if (!this.editClicked) {
-         // this.notifications.create('success', 'تم تعديل موظف بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-        //}
+
       }
     )
   }
-  test(){
-    this.notifications.create('success', 'تم اضافة موظف بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-  }
+
 
   getDepartments() {
     this.customService.getAll('Department').subscribe(
