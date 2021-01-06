@@ -56,7 +56,6 @@ export class AddClientComponent implements OnInit, OnChanges {
   }
 
   addOrEditClient() {
-    console.log(this.client);
     this.submitted = true;
     if (this.tempPhone)
       this.client.phones.push(this.tempPhone)

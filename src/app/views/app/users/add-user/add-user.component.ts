@@ -39,12 +39,11 @@ export class AddUserComponent implements OnInit, OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges): void {
-
+    console.log(changes);
   }
 
   addOrEditUser() {
     this.submitted = true;
-    console.log(this.CreateUser)
     this.UserService.Creat(this.CreateUser).subscribe(
       res => {
         if (this.addClicked) {
@@ -52,10 +51,12 @@ export class AddUserComponent implements OnInit, OnChanges {
         }
         //else if (!this.editClicked) {
          // this.notifications.create('success', 'تم تعديل موظف بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-
         //}
       }
     )
+  }
+  test(){
+    this.notifications.create('success', 'تم اضافة موظف بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
   }
 
   getDepartments() {

@@ -24,12 +24,20 @@ export class CoinsComponent implements OnInit {
   public lines: any;
   @ViewChild('normalgrid')
   public gridInstance: GridComponent;
-  public toolbar: ToolbarItems[];
+  public toolbar: Object[];
   public pageSettings: Object;
   ngOnInit(): void {
     this.Get();
-    this.editSettings = { showDeleteConfirmDialog: false, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
-    this.toolbar = ['Add', 'Search', 'Edit', 'Delete', 'Update', 'Cancel'];
+    this.editSettings = { showDeleteConfirmDialog: true, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
+    this.toolbar = [
+      { text: 'اضافة', tooltipText: 'اضافة', prefixIcon: 'e-add', id: 'normalgrid_add' },
+      { text: 'تعديل', tooltipText: 'تعديل', prefixIcon: 'e-edit', id: 'normalgrid_edit' },
+      { text: 'حذف', tooltipText: 'حذف', prefixIcon: 'e-delete', id: 'normalgrid_delete' },
+      { text: 'حفظ', tooltipText: 'حفظ', prefixIcon: 'e-update', id: 'normalgrid_update' },
+      { text: 'تراجع', tooltipText: 'تراجع', prefixIcon: 'e-cancel', id: 'normalgrid_cancel' },
+      'Search'];
+    // this.toolbar = ['Add', 'Search', 'Edit', 'Delete', 'Update', 'Cancel'];
+    
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
@@ -49,7 +57,6 @@ export class CoinsComponent implements OnInit {
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
   Get() {
-    console.log(this.apiName);
     this.customService.getAll(this.apiName).subscribe(res => {
       this.coins = res;
     });
@@ -109,10 +116,6 @@ export class CoinsComponent implements OnInit {
       if (!coin.canDelete) {
         this.notifications.create('', 'لا يمكن الحذف', NotificationType.Error, { timeOut: 6000, showProgressBar: false });
         args.cancel = true;
-      }
-      if(!confirm("هل انت متأكد من الحذف")){
-        args.cancel= true;
-      
       }
     }
   }
