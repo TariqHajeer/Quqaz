@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { EditSettingsModel, GridComponent, SaveEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
+import { ActionEventArgs, EditSettingsModel, GridComponent, SaveEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { CustomService } from 'src/app/services/custom.service';
 
@@ -25,7 +25,7 @@ export class ExportsTypesComponent implements OnInit {
   public normalgrid;
   public toolbar: Object[];
   public pageSettings: Object;
-
+  apiName:string = "OutComeType";
   ngOnInit(): void {
     this.getExportTypes();
     this.editSettings = { showDeleteConfirmDialog: true, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
@@ -105,4 +105,48 @@ export class ExportsTypesComponent implements OnInit {
       }
     }
   }
+  onActionBegin(args: ActionEventArgs) {
+    let name = args.data["name"].trim();
+    if (args.action == "add") {
+      if (args.requestType == "save") {
+        if (this.exportTypes.filter(c => c.name == name).length > 0) {
+          this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+          args.cancel = true;
+        }
+        if (name == "") {
+          this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+          args.cancel = true;
+        } else {
+          let obj: any = { name: args.data['name'] }
+          this.customService.addOrUpdate(this.apiName, obj, 'add').subscribe(
+            res => {
+              this.notifications.create('success', 'تم اضافة نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+              (this.gridInstance.dataSource as object[]).unshift(res);
+              this.gridInstance.refresh();
+            }
+          )
+        }
+      }
+    }
+    if (args.action == "edit") {
+      var id = args.data["id"];
+      if (name == "") {
+        this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+        args.cancel = true;
+      }
+      if (this.exportTypes.filter(c => c.name == name && c.id != id).length > 0) {
+        this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+        args.cancel = true;
+      }
+
+    }
+    if (args.requestType == "delete") {
+      let coin = args.data[0];
+      if (!coin.canDelete) {
+        this.notifications.create('', 'لا يمكن الحذف', NotificationType.Error, { timeOut: 6000, showProgressBar: false });
+        args.cancel = true;
+      }
+    }
+  }
+
 }

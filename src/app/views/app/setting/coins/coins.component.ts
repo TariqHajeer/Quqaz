@@ -37,7 +37,7 @@ export class CoinsComponent implements OnInit {
       { text: 'تراجع', tooltipText: 'تراجع', prefixIcon: 'e-cancel', id: 'normalgrid_cancel' },
       'Search'];
     // this.toolbar = ['Add', 'Search', 'Edit', 'Delete', 'Update', 'Cancel'];
-    
+
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
@@ -63,17 +63,8 @@ export class CoinsComponent implements OnInit {
   }
   actionComplete(args: SaveEventArgs) {
     let coin = args.data[0] as Coin;
-    if (args.action == 'add') {
-      let obj: any = { name: args.data['name'] }
-      this.customService.addOrUpdate(this.apiName, obj, 'add').subscribe(
-        res => {
-          this.notifications.create('success', 'تم اضافة نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-          
-          this.coins.push(res);
-        },
-      )
-    }
-    else if (args.action == "edit") {
+
+    if (args.action == "edit") {
       this.customService.addOrUpdate(this.apiName, coin, 'update').subscribe(res => {
         this.notifications.create('', 'تم التعديل', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       });
@@ -87,7 +78,7 @@ export class CoinsComponent implements OnInit {
     }
   }
   onActionBegin(args: ActionEventArgs) {
-     let name= args.data["name"].trim();
+    let name = args.data["name"].trim();
     if (args.action == "add") {
       if (args.requestType == "save") {
         if (this.coins.filter(c => c.name == name).length > 0) {
@@ -97,20 +88,29 @@ export class CoinsComponent implements OnInit {
         if (name == "") {
           this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
           args.cancel = true;
+        } else {
+          let obj: any = { name: args.data['name'] }
+          this.customService.addOrUpdate(this.apiName, obj, 'add').subscribe(
+            res => {
+              this.notifications.create('success', 'تم اضافة نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+              (this.gridInstance.dataSource as Coin[]).unshift(res as Coin);
+              this.gridInstance.refresh();
+            }
+          )
         }
       }
     }
     if (args.action == "edit") {
       var id = args.data["id"];
-      if (name== "") {
+      if (name == "") {
         this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
         args.cancel = true;
       }
-      if(this.coins.filter(c=>c.name==name&&c.id!=id).length>0){
+      if (this.coins.filter(c => c.name == name && c.id != id).length > 0) {
         this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
-        args.cancel= true;
+        args.cancel = true;
       }
-    
+
     }
     if (args.requestType == "delete") {
       let coin = args.data[0] as Coin;
