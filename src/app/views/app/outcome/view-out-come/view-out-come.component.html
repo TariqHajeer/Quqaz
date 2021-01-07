@@ -5,6 +5,8 @@
         <h5 class="card-title">{{'menu.outcome' | translate}}</h5>
         <button class="btn  mb-3" (click)="addUserModal.show();addNewClicked()"><i class="iconsminds-add  text-primary"
           style="font-size: 38px;"></i></button>
+          <button (click)="AddMoreOutcome()" class="btn btn-primary"> اضافة متعددة</button>
+
 </div>
 
   <ejs-grid #normalgrid   id='normalgrid'  (load)='load()'  [allowPaging]='true'

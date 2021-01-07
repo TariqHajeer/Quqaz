@@ -12,10 +12,11 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { AddMoreOutcomeComponent } from './add-more-outcome/add-more-outcome.component';
 
 
 @NgModule({
-  declarations: [ViewOutComeComponent, AddOutComeComponent],
+  declarations: [ViewOutComeComponent, AddOutComeComponent, AddMoreOutcomeComponent],
   imports: [
     CommonModule,
     OutcomeRoutingModule,

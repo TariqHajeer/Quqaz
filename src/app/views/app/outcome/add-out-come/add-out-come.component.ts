@@ -2,12 +2,9 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { from } from 'rxjs';
 import { CustomService } from 'src/app/services/custom.service';
-import { GroupService } from 'src/app/services/group.service';
-import { UserService } from 'src/app/services/user.service';
-import { Group } from 'src/app/Models/Group/group.model';
+import { OutcomeService } from 'src/app/views/app/outcome/outcome.service';
 import { CreateOutCome } from 'src/app/Models/OutCome/create-out-come.model';
 import { Coin } from 'src/app/Models/Coins/coin.model';
-import { createOutput } from '@angular/compiler/src/core';
 
 @Component({
   selector: 'app-add-out-come',
@@ -16,8 +13,7 @@ import { createOutput } from '@angular/compiler/src/core';
 })
 export class AddOutComeComponent implements OnInit, OnChanges {
 
-  constructor(public UserService: UserService,
-    public GroupService: GroupService,
+  constructor(public OutcomeService: OutcomeService,
     private customService: CustomService,
     private notifications: NotificationsService,
   ) { }
@@ -27,7 +23,6 @@ export class AddOutComeComponent implements OnInit, OnChanges {
   @Output() addFinish = new EventEmitter<any>();
   submitted = false;
   CreateOutCome: CreateOutCome
-  OutComes: CreateOutCome[] = []
   ngOnInit(): void {
     this.CreateOutCome = new CreateOutCome()
     this.Getcoins()
@@ -54,15 +49,9 @@ export class AddOutComeComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
 
   }
-  addOutComeInTable() {
-this.OutComes.push(this.CreateOutCome)
-this.CreateOutCome=new CreateOutCome()
-  }
+ 
   addOrEditUser() {
     this.submitted = true;
-
-
-
   }
 
 

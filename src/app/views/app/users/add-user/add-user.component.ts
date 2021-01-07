@@ -6,7 +6,6 @@ import { GroupService } from 'src/app/services/group.service';
 import { UserService } from 'src/app/services/user.service';
 import { CreateUser } from 'src/app/Models/user/create-user'
 import { Group } from 'src/app/Models/Group/group.model';
-import { ViewUserComponent } from '../view-user/view-user.component';
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
@@ -83,4 +82,7 @@ export class AddUserComponent implements OnInit, OnChanges {
     this.CreateUser.Phones.push(this.tempPhone);
     this.tempPhone = '';
   }
+//  NameIsNullOrDuplicate(array:[],name){
+
+//  }
 }
