@@ -1,85 +1,37 @@
 
 
-<div class="row">
-    <div class="col-md-12 mb-4">
-      <div class="card">
+<div class="col-md-12 mb-4">
+    <div class="card">
         <div class="card-body">
-            <form class="row" (ngSubmit)="addOrEditUser()">
-                <div class="row w-100 align-items-end mb-3">
-                    <div class="col-md-3">
-                        <label>نوع الصادرات<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                        <ng-select [(ngModel)]="CreateOutCome.OutComeTypeId" [ngModelOptions]="{standalone: true}"
-                            [closeOnSelect]="true">
-                            <ng-option *ngFor="let exportType of exportTypes" [value]="exportType.id">{{exportType.name}}
-                            </ng-option>
-                        </ng-select>
-                        <div *ngIf="!CreateOutCome.OutComeTypeId && submitted" class="invalid-tooltip">نوع الصادرات حقل مطلوب</div>
-        
-                    </div>
-        
-                    <div class="col-md-3">
-                        <label>الكمية<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                        <input type="text"
-                            oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
-                            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateOutCome.Amount">
-                        <div *ngIf="!CreateOutCome.Amount && submitted" class="invalid-tooltip">الكمية حقل مطلوب</div>
-                    </div>
-                    <div class="col-md-3">
-                        <label>نوع العملة<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                        <ng-select [(ngModel)]="CreateOutCome.CurrencyId" [ngModelOptions]="{standalone: true}"
-                            [closeOnSelect]="true">
-                            <ng-option *ngFor="let coin of coins" [value]="coin.id">{{coin.name}}</ng-option>
-                        </ng-select>
-                        <div *ngIf="!CreateOutCome.CurrencyId && submitted" class="invalid-tooltip">نوع العملة حقل مطلوب</div>
-        
-                    </div>
-                    <div class="col-md-3">
-                        <label>السبب</label>
-                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateOutCome.Reason">
-                    </div>
-                    <div class="col-md-3">
-                        <label>تاريخ </label>
-                        <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
-                            [(ngModel)]="CreateOutCome.Date" bsDatepicker [container]="'html'"
-                            [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
-                    </div>
-                    <div class="col-md-3">
-                        <label>ملاحظات</label>
-                        <input type="text"class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateOutCome.Note">
-                    </div>
-                    <button type="submit" class="btn btn-primary" (click)="addOutComeInTable()"> اضافة</button>
-        
-                </div>
-                <div class="row w-100">
-                    <table class="table">
-                        <thead>
-                            <th>نوع الصادرات</th>
-                            <th>الكمية</th>
-                            <th>نوع العملة</th>
-                            <th>السبب</th>
-                            <th>تاريخ</th>
-                            <th>ملاحظات</th>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let outcome of OutComes" >
-                                <td>{{outcome.OutComeTypeId}}</td>
-                                <td>{{outcome.Amount}}</td>
-                                <td>{{outcome.CurrencyId}}</td>
-                                <td>{{outcome.Reason}}</td>
-                                <td>{{outcome.Date| date: 'yyyy/MM/dd'}}</td>
-                                <td>{{outcome.Note}}</td>
-                                
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="row w-100">
-                    <div class="col-3">
-                        <button type="submit" class="btn btn-primary"> حفظ</button>
-                    </div>
-                </div>
-            </form>
+            <div class="d-flex justify-content-between">
+                <h5 class="card-title">الصادرات</h5>
+            </div>
+            <ejs-grid #normalgrid id='normalgrid' (load)='load()' [allowPaging]='true' [gridLines]="lines"
+                [pageSettings]='pageSettings' [toolbar]='toolbar' [editSettings]='editSettings' [dataSource]='OutComes'
+                rowHeight='38' [allowSorting]='true' height='400' [enableHover]='true'
+                [selectionSettings]='selectionSettings' [filterSettings]='filterSettings' [allowSorting]='true'
+                [allowFiltering]='true' (actionComplete)="actionComplete($event)">
+                <e-columns>
+                    <e-column field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter'
+                        width='50' [isPrimaryKey]='true'></e-column>
+                    <e-column field='OutComeTypeId' textAlign="Center" headerText="نوع الصادرات" width='175'
+                        editType='dropdownedit'></e-column>
+                    <e-column field='Amount' textAlign="Center" headerText="المبلغ المصروف" width='175'></e-column>
+                    <e-column field='CurrencyId' textAlign="Center" headerText="العملة" width='140'
+                        editType='dropdownedit'></e-column>
+                    <e-column field='Date' textAlign="Center" headerText="التاريخ" width='140'
+                    editType='DatePickerEdit'></e-column>
+                    <e-column field='Reason' textAlign="Center" headerText="السبب" width='140'></e-column>
+                    <e-column field='Note' textAlign="Center" headerText="ملاحظات" width='200'></e-column>
+
+                </e-columns>
+            </ejs-grid>
+        </div>
+    </div>
 </div>
+<div class="row w-100">
+    <div class="col-3">
+        <button type="submit" class="btn btn-primary"> حفظ</button>
+    </div>
 </div>
-</div>
-</div>  
+<simple-notifications></simple-notifications>
