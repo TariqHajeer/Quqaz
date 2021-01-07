@@ -27,23 +27,21 @@ export class LoginComponent implements OnInit {
     // if (!this.loginForm.valid || this.buttonDisabled) {
     //   return;
     // }
-    console.log(this.loginForm.value);
+
     this.buttonDisabled = true;
     this.buttonState = 'show-spinner';
 
     this.authService.signIn(this.loginForm.value).subscribe(
       response => {
         this.user=response as UserLogin
-        console.log(response);
-        this.notifications.create('success', 'تم تسجيل الدخول بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+        // this.notifications.create('success', 'تم تسجيل الدخول بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         //  this.authService.setAuthenticatedUser(response.data[0].user);
         this.router.navigate(['/app/HomePage']);
-        this.authService.setAuthenticatedUser( this.user);
-        this.authService.setPermission(this.user.privileges);
+        this.authService.setAuthenticatedUser(response);
+        this.authService.setPermission(response.privileges);
 
 
       }, error => {
-        console.log(error);
         this.buttonDisabled = false;
         this.buttonState = '';
         this.notifications.create('Error', error.message, NotificationType.Error, { theClass: 'primary', timeOut: 6000, showProgressBar: false });

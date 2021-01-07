@@ -16,23 +16,22 @@ export class AppComponent implements OnInit, AfterViewInit {
   isMultiColorActive = true;
   constructor(private langService: LangService, private renderer: Renderer2,
     private location: Location,
-    private authService:AuthService,private _router: Router) {
+    private authService: AuthService, private _router: Router) {
 
   }
 
   ngOnInit() {
     this.langService.init();
 
-  //   let requestedUrl = this.location.path();
-  //  console.log(this.authService.authenticatedUser);
+    let requestedUrl = this.location.path();
 
-  //   if(Object.keys(this.authService.authenticatedUser).length === 0 && this.authService.authenticatedUser.constructor === Object) {
-  //     console.log("not auth");
-  //     this._router.navigate(['']);
-  //   }
-  //   else if(requestedUrl == '') {
-  //  this._router.navigate(['app/HomePage']);
-  // }
+
+    if (Object.keys(this.authService.authenticatedUser).length === 0 && this.authService.authenticatedUser.constructor === Object) {
+      this._router.navigate(['']);
+    }
+    else if (requestedUrl == '') {
+      this._router.navigate(['app/HomePage']);
+    }
   }
 
   ngAfterViewInit() {
