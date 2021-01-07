@@ -28,7 +28,7 @@ export class CoinsComponent implements OnInit {
   public pageSettings: Object;
   ngOnInit(): void {
     this.Get();
-    this.editSettings = { showDeleteConfirmDialog: true, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
+    this.editSettings = { showDeleteConfirmDialog: false, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
     this.toolbar = [
       { text: 'اضافة', tooltipText: 'اضافة', prefixIcon: 'e-add', id: 'normalgrid_add' },
       { text: 'تعديل', tooltipText: 'تعديل', prefixIcon: 'e-edit', id: 'normalgrid_edit' },
@@ -68,6 +68,7 @@ export class CoinsComponent implements OnInit {
       this.customService.addOrUpdate(this.apiName, obj, 'add').subscribe(
         res => {
           this.notifications.create('success', 'تم اضافة نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+          
           this.coins.push(res);
         },
       )
