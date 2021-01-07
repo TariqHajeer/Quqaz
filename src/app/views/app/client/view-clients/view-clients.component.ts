@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { EditSettingsModel, GridComponent, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { NotificationsService } from 'angular2-notifications';
 import { Client } from '../client.model';
-import {ClientService} from '../client.service'
+import { ClientService } from '../client.service'
 @Component({
   selector: 'app-view-clients',
   templateUrl: './view-clients.component.html',
@@ -10,9 +10,9 @@ import {ClientService} from '../client.service'
 })
 export class ViewClientsComponent implements OnInit {
 
-  constructor(private clientService:ClientService,private notifications:NotificationsService) { }
-  cities:any[]=[];
-  tempRegion:any;
+  constructor(private clientService: ClientService, private notifications: NotificationsService) { }
+  cities: any[] = [];
+  tempRegion: any;
   public stTime: any;
   public filter: Object;
   public filterSettings: Object;
@@ -23,10 +23,10 @@ export class ViewClientsComponent implements OnInit {
   public gridInstance: GridComponent;
   public toolbar: ToolbarItems[];
   public pageSettings: Object;
-  clients:Client[]=[];
-  editClicked:any;
-  addClicked:any;
-  currentClientId:any;
+  clients: Client[] = [];
+  editClicked: any;
+  addClicked: any;
+  currentClientId: any;
   ngOnInit(): void {
     this.getClients();
     this.editSettings = { showDeleteConfirmDialog: true, allowDeleting: true };
@@ -34,10 +34,7 @@ export class ViewClientsComponent implements OnInit {
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
-    this.pageSettings = { pageSize: 5,pageSizes:true };
-    this.gridInstance.on('data-ready', function () {
-      this.dReady = true;
-    });
+    this.pageSettings = { pageSize: 5, pageSizes: true };
     this.selectionSettings = { persistSelection: true, type: "Multiple" };
     this.lines = 'Horizontal';
   }
@@ -48,25 +45,24 @@ export class ViewClientsComponent implements OnInit {
     const pageResize: any = (gridHeight - (pageSize * rowHeight)) / rowHeight; // new page size is obtained here
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
-  addNewClicked(){
-    this.addClicked=true;
-    this.editClicked=false;
+  addNewClicked() {
+    this.addClicked = true;
+    this.editClicked = false;
     this.getClients();
   }
-  getClients(){
-     this.clientService.getClients().subscribe(
-       res=>{
-         this.clients=res;
-         console.log(this.clients)
-       }
-     )
+  getClients() {
+    this.clientService.getClients().subscribe(
+      res => {
+        this.clients = res;
+      }
+    )
   }
-  onEditClicked(id){
-    this.addClicked=false;
-    this.editClicked=true;
-    this.currentClientId=id;
+  onEditClicked(id) {
+    this.addClicked = false;
+    this.editClicked = true;
+    this.currentClientId = id;
   }
-  addFinish(){
-
+  addFinish(value) {
+    console.log(value);
   }
 }

@@ -48,7 +48,7 @@
         </button>
       </div>
       <div class="modal-body" style="font-size: 15px;">
-        <app-add-client (addFinish)="addFinish();addClientModal.hide()" [addClicked]="addClicked"
+        <app-add-client (addFinish)="addFinish($event);" [addClicked]="addClicked"
           [editClicked]="editClicked" [currentClientId]="currentClientId"></app-add-client>
       </div>
     </div>

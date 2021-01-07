@@ -56,6 +56,7 @@ export class AddClientComponent implements OnInit, OnChanges {
   }
 
   addOrEditClient() {
+     //this.addFinish.emit('s');
     this.submitted = true;
     if (this.tempPhone)
       this.client.phones.push(this.tempPhone)
@@ -76,7 +77,6 @@ export class AddClientComponent implements OnInit, OnChanges {
     this.customService.getAll('Region').subscribe(
       res => {
         this.regions = res;
-        console.log(this.regions)
       }
     )
   }
