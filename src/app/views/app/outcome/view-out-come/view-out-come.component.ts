@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { EditSettingsModel, GridComponent, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import {Outcome } from '../outcome.model'
 import {OutcomeService} from '../outcome.service'
@@ -10,7 +11,7 @@ import {OutcomeService} from '../outcome.service'
 })
 export class ViewOutComeComponent implements OnInit {
 
-  constructor(private outcomeService:OutcomeService) { }
+  constructor(private outcomeService:OutcomeService,public router:Router) { }
   public stTime: any;
   public filter: Object;
   public filterSettings: Object;
@@ -59,5 +60,8 @@ export class ViewOutComeComponent implements OnInit {
   }
   addFinish(){
 
+  }
+  AddMoreOutcome(){
+this.router.navigate(['app/outcome/addmore'])
   }
 }
