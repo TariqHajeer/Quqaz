@@ -42,7 +42,16 @@ export class AddUserComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
   }
   checkName(){
-    
+    console.log(this.UserService.users);
+       
+    if( this.UserService.users.filter(c=>c.name==this.CreateUser.Name).length>0){
+      
+      this.nameIsRepeated =true
+      console.log(this.nameIsRepeated);
+      return;
+    }
+    this.nameIsRepeated =false
+    console.log(this.nameIsRepeated);
   }
   addOrEditUser() {
     this.submitted = true;

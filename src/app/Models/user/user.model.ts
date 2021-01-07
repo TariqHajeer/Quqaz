@@ -1,8 +1,8 @@
 export class User {
-      Id:any 
-      Name:string 
-      Department
-      UserName :string
-      CanWorkAsAgent :boolean
-      Phones:string[]
+      id:any 
+      name:string 
+      department
+      userName :string
+      canWorkAsAgent :boolean
+      phones:string[]
 }
