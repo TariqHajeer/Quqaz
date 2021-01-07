@@ -3,6 +3,7 @@ export class User {
       name:string 
       department
       userName :string
-      canWorkAsAgent :boolean
+      canWorkAsAgent :boolean = true
       phones:string[]
+      employeeType:string = this.canWorkAsAgent==true?"مندوب":"عميل"
 }

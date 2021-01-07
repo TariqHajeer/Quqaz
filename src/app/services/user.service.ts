@@ -13,6 +13,14 @@ export class UserService {
   constructor(public http: HttpClient) { }
   GetAll() :void {
     this.http.get<any>(this.controler).subscribe(res=>{
+      let temp = res as User[];
+      for(let i =0 ; i<temp.length;i++){
+        if(temp[i].canWorkAsAgent){
+          temp[i].employeeType="مندوب";
+        }else{
+          temp[i].employeeType="موظف";
+        }
+      }
       this.users = res;
     })
   }

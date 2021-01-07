@@ -9,7 +9,7 @@
           <ng-option [value]="false"> موظف</ng-option>
         </ng-select>
       </div>
-      <div class="col-md-3"*ngIf="!CreateUser.CanWorkAsAgent">
+      <div class="col-md-3">
         <label>الاسم<span class="text-danger text-one align-bottom mx-1">*</span></label>
         <input type="text"
           class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Name" (ngModelChange)='checkName()'>
@@ -37,7 +37,7 @@
         <div *ngIf="!CreateUser.DepartmentId && submitted" class="invalid-tooltip">القسم حقل مطلوب</div>
 
       </div>
-      <div class="col-md-3">
+      <div class="col-md-3" *ngIf="!CreateUser.CanWorkAsAgent">
         <label>المجموعات <span class="text-danger text-one align-bottom mx-1">*</span></label>
         <ng-select multiple="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" [selectableGroup]="true"
           [searchable]="true" [(ngModel)]="CreateUser.GroupsId" [ngModelOptions]="{standalone: true}"
@@ -70,7 +70,7 @@
         </ng-select>
       </div>
       <div class="col-md-3"*ngIf="CreateUser.CanWorkAsAgent">
-        <label>الراتب</label>
+        <label>كلفة التوصيل</label>
         <input type="number" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
           class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Salary">
       </div>
