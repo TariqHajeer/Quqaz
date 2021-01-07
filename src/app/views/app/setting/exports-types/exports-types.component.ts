@@ -22,11 +22,11 @@ export class ExportsTypesComponent implements OnInit {
   public lines: any;
   @ViewChild('normalgrid')
   public gridInstance: GridComponent;
+  public normalgrid;
   public toolbar: Object[];
   public pageSettings: Object;
 
   ngOnInit(): void {
-
     this.getExportTypes();
     this.editSettings = { showDeleteConfirmDialog: true, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
     this.toolbar = [
@@ -40,15 +40,14 @@ export class ExportsTypesComponent implements OnInit {
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
     this.pageSettings = { pageCount: 5 };
-    this.gridInstance.on('data-ready', function () {
-      this.dReady = true;
-    });
+
+    // this.gridInstance.on('data-ready', function () {
+    //   this.dReady = true;
+    // });
     this.selectionSettings = { persistSelection: true, type: "Multiple" };
     this.lines = 'Horizontal';
-    console.log(this.gridInstance.localeObj)
-    console.log('////////')
-
-
+    
+    
   }
 
   load() {
@@ -62,19 +61,16 @@ export class ExportsTypesComponent implements OnInit {
     this.customService.getAll('OutComeType').subscribe(
       res => {
         this.exportTypes = res;
-        console.log(this.exportTypes)
       }
     )
   }
   actionComplete(args: SaveEventArgs) {
-    console.log(args);
 
     if (args.action == 'add') {
       let obj: any = { name: args.data['name'] }
-      console.log(obj)
       this.customService.addOrUpdate('OutComeType', obj, 'add').subscribe(
         res => {
-          console.log(res)
+          
           this.notifications.create('success', 'تم اضافة نوع الصادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
           this.getExportTypes();
 
@@ -83,11 +79,9 @@ export class ExportsTypesComponent implements OnInit {
     }
     else if (args.action === "edit") {
       let obj: any = { id: Number.parseInt(args.data['id']), name: args.data['name'] }
-      console.log(obj)
 
       this.customService.addOrUpdate('OutComeType', obj, 'update').subscribe(
         res => {
-          console.log(res)
 
           this.notifications.create('success', 'تم تعديل نوع الصادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
           this.getExportTypes();

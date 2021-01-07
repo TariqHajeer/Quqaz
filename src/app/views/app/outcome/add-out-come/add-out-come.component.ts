@@ -41,13 +41,11 @@ export class AddOutComeComponent implements OnInit, OnChanges {
     this.customService.getAll('OutComeType').subscribe(
       res => {
         this.exportTypes = res;
-
       }
     )
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-
   }
  
   addOrEditUser() {

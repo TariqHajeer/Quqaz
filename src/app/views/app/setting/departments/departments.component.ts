@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { EditSettingsModel, GridComponent, SaveEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
+import { EditSettingsModel, GridComponent, SaveEventArgs} from '@syncfusion/ej2-angular-grids';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { CustomService } from 'src/app/services/custom.service';
 
@@ -20,22 +20,27 @@ export class DepartmentsComponent implements OnInit {
   public lines: any;
   @ViewChild('normalgrid')
   public gridInstance: GridComponent;
-  public toolbar: ToolbarItems[];
+  public toolbar: Object[];
   public pageSettings: Object;
   ngOnInit(): void {
     this.getDepartments();
     this.editSettings = { showDeleteConfirmDialog: true, allowAdding: true,allowEditing:true,allowEditOnDblClick:true, allowDeleting: true };
-    this.toolbar = ['Add','Search', 'Edit', 'Delete', 'Update', 'Cancel'];
+    this.toolbar = [
+      { text: 'اضافة', tooltipText: 'اضافة', prefixIcon: 'e-add', id: 'normalgrid_add' },
+      { text: 'تعديل', tooltipText: 'تعديل', prefixIcon: 'e-edit', id: 'normalgrid_edit' },
+      { text: 'حذف', tooltipText: 'حذف', prefixIcon: 'e-delete', id: 'normalgrid_delete' },
+      { text: 'حفظ', tooltipText: 'حفظ', prefixIcon: 'e-update', id: 'normalgrid_update' },
+      { text: 'تراجع', tooltipText: 'تراجع', prefixIcon: 'e-cancel', id: 'normalgrid_cancel' },
+     'Search'
+    ];
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
     this.pageSettings = { pageCount: 5 };
-    this.gridInstance.on('data-ready', function () {
-      this.dReady = true;
-    });
     this.selectionSettings = { persistSelection: true, type: "Multiple" };
     this.lines = 'Horizontal';
   }
+  
 
   load() {
     const rowHeight: number = this.gridInstance.getRowHeight();  // height of the each row
@@ -51,9 +56,8 @@ export class DepartmentsComponent implements OnInit {
       }
     )
   }
-
+  
   actionComplete(args: SaveEventArgs) {
-    console.log(args);
 
     if (args.action=='add') {
       let obj:any={name:args.data['name']}

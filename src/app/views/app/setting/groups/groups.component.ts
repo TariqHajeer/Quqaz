@@ -20,6 +20,7 @@ export class GroupsComponent implements OnInit {
   UpdateGroup: UpdateGroupDto
   Privileges: Privilege[]=[]
   privilegesInGroup: Privilege[]=[]
+  userInGroup:string[]=[];
   CheckedPrivilege: boolean[]
   Users: any[] = ['mohamad', 'samer']
   hiddenbtnSave: boolean = true;
@@ -44,7 +45,8 @@ export class GroupsComponent implements OnInit {
     })
   }
   AddGroup() {
-  if(this.validation(this.CreateGroup))return
+    debugger;
+  if(this.validation(this.CreateGroup))return;
     this.GroupService.Creat(this.CreateGroup).subscribe(res => {
       this.notifications.create('success', 'تم اضافة مجموعة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Group.name = this.CreateGroup.Name
@@ -58,6 +60,7 @@ export class GroupsComponent implements OnInit {
     this.privilegesInGroup=[]
     this.Group = group;
     this.privilegesInGroup= this.Privileges.filter(p => this.Group.privilegesId.includes(p.id))
+    this.userInGroup = this.Group.users;
   }
 
   EditGroup(group:Group) {
@@ -67,6 +70,7 @@ export class GroupsComponent implements OnInit {
     this.UpdateGroup.Privileges=group.privilegesId
   }
   saveGroup() {
+    debugger;
     if(this.validation(this.CreateGroup))return
     this.GroupService.Update(this.UpdateGroup).subscribe(res => {
       this.hiddenbtnSave = true
@@ -74,6 +78,7 @@ export class GroupsComponent implements OnInit {
       this.GetAllGroups()
       this.Group=new Group()
       this.privilegesInGroup=[]
+      this.userInGroup =[];
     })
   }
   CancleEditGroup() {
@@ -88,14 +93,20 @@ export class GroupsComponent implements OnInit {
       this.hiddenbtnSave=true
     })
   }
-  validation(group):boolean{
-    if(group.Name=='')
+  validation(group :CreateGroup):boolean{
+    if(group.Name==''||group.Name==undefined)
     {
       this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
       return true
-    }else if(this.Groups.filter(c => c.name == group.Name).length > 0){
+    }
+     if(this.Groups.filter(c => c.name == group.Name).length > 0){
       this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
       return true
-    }else return false
+    }
+    if(group.PrivilegesId==undefined||group.PrivilegesId.length==0){
+      this.notifications.create('', 'لا يوجد صلاحيات', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+      return true;
+    }
+    return true;
   }
 }

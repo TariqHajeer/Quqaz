@@ -28,6 +28,7 @@ export class AddUserComponent implements OnInit, OnChanges {
   departments: any[] = [];
   Groups: Group[] = []
   tempPhone: string;
+  nameIsRepeated:boolean=false;
   ngOnInit(): void {
     this.getCountry()
     this.getDepartments()
@@ -38,24 +39,22 @@ export class AddUserComponent implements OnInit, OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges): void {
-
   }
-
+  checkName(){
+    
+  }
   addOrEditUser() {
     this.submitted = true;
-    console.log(this.CreateUser)
     this.UserService.Creat(this.CreateUser).subscribe(
       res => {
         if (this.addClicked) {
           this.notifications.create('success', 'تم اضافة موظف بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         }
-        //else if (!this.editClicked) {
-         // this.notifications.create('success', 'تم تعديل موظف بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 
-        //}
       }
     )
   }
+
 
   getDepartments() {
     this.customService.getAll('Department').subscribe(
