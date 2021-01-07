@@ -5,6 +5,7 @@ import { CustomService } from 'src/app/services/custom.service';
 import { Coin } from 'src/app/Models/Coins/coin.model';
 import { CreateOutCome } from 'src/app/Models/OutCome/create-out-come.model';
 import { OutcomeService } from 'src/app/views/app/outcome/outcome.service';
+import { DropDownList } from '@syncfusion/ej2-dropdowns';
 import { Query, DataManager } from '@syncfusion/ej2-data';
 
 @Component({
@@ -61,7 +62,7 @@ export class AddMoreOutcomeComponent implements OnInit {
     this.getExportTypes()
   }
 
-  
+
   addOrEditUser() {
     this.submitted = true;
   }
@@ -79,6 +80,7 @@ export class AddMoreOutcomeComponent implements OnInit {
         }
       };
     });
+    this.coinsParams = { params: { popupHeight: '300px' } };
   }
   getExportTypes() {
     this.customService.getAll('OutComeType').subscribe(
@@ -87,7 +89,7 @@ export class AddMoreOutcomeComponent implements OnInit {
         this.exportTypesParams = {
           params: {
             allowFiltering: true,
-            dataSource: new DataManager(this.exportTypes ),
+            dataSource: new DataManager(this.exportTypes),
             fields: { text: 'نوع الصادرات', value: 'name' },
             query: new Query(),
             actionComplete: () => false
@@ -108,23 +110,26 @@ export class AddMoreOutcomeComponent implements OnInit {
 
 
   actionComplete(args: SaveEventArgs) {
-  
+
     if (args.action == 'add') {
-     
-          this.OutComes.push(this.CreateOutCome);
-          this.notifications.create('success', 'تم اضافة نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-  
+
+      this.OutComes.push(this.CreateOutCome);
+      this.notifications.create('success', 'تم اضافة صادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+
     }
     else if (args.action == "edit") {
-       this.notifications.create('', 'تم التعديل', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-     
+      this.notifications.create('', 'تم التعديل', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+
     }
 
     else if (args.requestType == "delete") {
-        this.notifications.create('', 'تم الحذف', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.notifications.create('', 'تم الحذف', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 
     }
   }
-  
 
+  AddOutcome() {
+    this.notifications.create('success', 'تم اضافة صادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    this.OutComes = []
+  }
 }

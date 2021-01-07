@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { OutcomeRoutingModule } from './outcome-routing.module';
@@ -31,6 +31,6 @@ import { AddMoreOutcomeComponent } from './add-more-outcome/add-more-outcome.com
     BsDatepickerModule.forRoot(),
     NgSelectModule,
 
-  ]
+  ], schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class OutcomeModule { }

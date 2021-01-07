@@ -1,37 +1,45 @@
 
-
-<div class="col-md-12 mb-4">
-    <div class="card">
-        <div class="card-body">
-            <div class="d-flex justify-content-between">
-                <h5 class="card-title">الصادرات</h5>
+<div class="row">
+  
+      
+  
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <h5 class="card-title">اضافة صادرات</h5>
+                </div>
+              
+    <div>
+        <button type="submit" class="btn btn-primary" (click)="AddOutcome()"> حفظ</button>
+    
+    </div>
+    <br>
+                <ejs-grid #normalgrid id='normalgrid' (load)='load()' [allowPaging]='true' [gridLines]="lines"
+                    [pageSettings]='pageSettings' [toolbar]='toolbar' [editSettings]='editSettings' [dataSource]='OutComes'
+                    rowHeight='38' [allowSorting]='true' height='400' [enableHover]='true'
+                    [selectionSettings]='selectionSettings' [filterSettings]='filterSettings' [allowSorting]='true'
+                    [allowFiltering]='true' (actionComplete)="actionComplete($event)">
+                    <e-columns>
+                        <e-column field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter'
+                            width='50' [isPrimaryKey]='true'></e-column>
+                        <e-column field='OutComeTypeId' textAlign="Center" headerText="نوع الصادرات" width='175'
+                            editType='dropdownedit'></e-column>
+                        <e-column field='Amount' textAlign="Center" headerText="المبلغ المصروف" width='175'></e-column>
+                        <e-column field='CurrencyId' textAlign="Center" headerText="العملة" width='140'
+                            editType='dropdownedit'></e-column>
+                        <e-column field='Date' textAlign="Center" headerText="التاريخ" width='140'
+                        editType='DatePickerEdit'[readOnlyInput]="true"></e-column>
+                        <e-column field='Reason' textAlign="Center" headerText="السبب" width='140'></e-column>
+                        <e-column field='Note' textAlign="Center" headerText="ملاحظات" width='200'></e-column>
+    
+                    </e-columns>
+                </ejs-grid>
             </div>
-            <ejs-grid #normalgrid id='normalgrid' (load)='load()' [allowPaging]='true' [gridLines]="lines"
-                [pageSettings]='pageSettings' [toolbar]='toolbar' [editSettings]='editSettings' [dataSource]='OutComes'
-                rowHeight='38' [allowSorting]='true' height='400' [enableHover]='true'
-                [selectionSettings]='selectionSettings' [filterSettings]='filterSettings' [allowSorting]='true'
-                [allowFiltering]='true' (actionComplete)="actionComplete($event)">
-                <e-columns>
-                    <e-column field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter'
-                        width='50' [isPrimaryKey]='true'></e-column>
-                    <e-column field='OutComeTypeId' textAlign="Center" headerText="نوع الصادرات" width='175'
-                        editType='dropdownedit'></e-column>
-                    <e-column field='Amount' textAlign="Center" headerText="المبلغ المصروف" width='175'></e-column>
-                    <e-column field='CurrencyId' textAlign="Center" headerText="العملة" width='140'
-                        editType='dropdownedit'></e-column>
-                    <e-column field='Date' textAlign="Center" headerText="التاريخ" width='140'
-                    editType='DatePickerEdit'></e-column>
-                    <e-column field='Reason' textAlign="Center" headerText="السبب" width='140'></e-column>
-                    <e-column field='Note' textAlign="Center" headerText="ملاحظات" width='200'></e-column>
-
-                </e-columns>
-            </ejs-grid>
         </div>
     </div>
+   
 </div>
-<div class="row w-100">
-    <div class="col-3">
-        <button type="submit" class="btn btn-primary"> حفظ</button>
-    </div>
-</div>
+
+
 <simple-notifications></simple-notifications>

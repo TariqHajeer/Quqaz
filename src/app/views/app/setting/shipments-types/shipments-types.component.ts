@@ -22,13 +22,20 @@ export class ShipmentsTypesComponent implements OnInit {
   public lines: any;
   @ViewChild('normalgrid')
   public gridInstance: GridComponent;
-  public toolbar: ToolbarItems[];
+  public toolbar: Object[];
   public pageSettings: Object;
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
     this.getOrderTypes();
     this.editSettings = { showDeleteConfirmDialog: false, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
-    this.toolbar = ['Add', 'Search', 'Edit', 'Delete', 'Update', 'Cancel'];
+   // this.toolbar = ['Add', 'Search', 'Edit', 'Delete', 'Update', 'Cancel'];
+   this.toolbar = [
+    { text: 'اضافة', tooltipText: 'اضافة', prefixIcon: 'e-add', id: 'normalgrid_add' },
+    { text: 'تعديل', tooltipText: 'تعديل', prefixIcon: 'e-edit', id: 'normalgrid_edit' },
+    { text: 'حذف', tooltipText: 'حذف', prefixIcon: 'e-delete', id: 'normalgrid_delete' },
+    { text: 'حفظ', tooltipText: 'حفظ', prefixIcon: 'e-update', id: 'normalgrid_update' },
+    { text: 'تراجع', tooltipText: 'تراجع', prefixIcon: 'e-cancel', id: 'normalgrid_cancel' },
+    'Search'];
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();

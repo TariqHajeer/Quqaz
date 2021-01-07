@@ -34,6 +34,7 @@ export class AddUserComponent implements OnInit, OnChanges {
     this.getDepartments()
     this.GetAllGroups()
     this.CreateUser = new CreateUser()
+    this.CreateUser.CanWorkAsAgent=false
     this.CreateUser.Phones = []
   }
 

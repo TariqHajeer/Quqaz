@@ -88,12 +88,7 @@ const data: IMenuItem[] = [
   label: 'menu.employees',
   to: `${adminRoot}/user`,
 },
- //exports tab
- {
-  icon: 'iconsminds-inbox-out',
-  label: 'menu.employees',
-  to: `${adminRoot}/setting`,
-},
+
  
 
 
