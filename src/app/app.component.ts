@@ -21,6 +21,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    if(localStorage.getItem('kokazUser')==null||localStorage.getItem('kokazUser')==undefined||localStorage.getItem('kokazUser')=='')
+    return this._router.navigate(['/user/login']);
     this.langService.init();
 
     let requestedUrl = this.location.path();
