@@ -12,9 +12,10 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 @NgModule({
-  declarations: [AddUserComponent, ViewUserComponent],
+  declarations: [AddUserComponent, ViewUserComponent, EditUserComponent],
   imports: [
     CommonModule,
     UsersRoutingModule,

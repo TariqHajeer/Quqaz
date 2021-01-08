@@ -30,6 +30,9 @@ export class UserService {
   Delete(id) {
     return this.http.delete(this.controler + id)
   }
+  Update(item) {
+    return this.http.patch(this.controler,item)
+  }
   AddPhone(item) {
     return this.http.put(this.controler + "AddPhone", item)
   }

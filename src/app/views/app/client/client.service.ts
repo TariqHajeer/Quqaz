@@ -11,7 +11,7 @@ export class ClientService {
 
   constructor(private http:HttpClient) { }
   baseUrl: string = environment.baseUrl;
-
+  controler=this.baseUrl+'api/Client/'
 
   getClients():Observable<Client[]>{
     return this.http.get<Client[]>(this.baseUrl+'api/Client').pipe(
@@ -35,7 +35,7 @@ export class ClientService {
     )
   }
   getClientById(id):Observable<Client>{
-    return this.http.get<Client>('api/Client/'+id).pipe(
+    return this.http.get<Client>(this.controler+id).pipe(
       map(
         (res:any)=>{
           return res;
@@ -44,12 +44,20 @@ export class ClientService {
     )
   }
   addClient(client):Observable<Client>{
-    return this.http.post<Client>(this.baseUrl+'api/Client',client).pipe(
+    return this.http.post<Client>(this.controler,client).pipe(
       map(
         (res:any) =>{
           return res;
         }
       )
     )
+  }
+  Update(item) {
+    return this.http.patch(this.controler,item)
+
+  }
+  Delete(id) {
+    return this.http.delete(this.controler+id)
+
   }
 }

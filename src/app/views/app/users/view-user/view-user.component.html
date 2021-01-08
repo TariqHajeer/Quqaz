@@ -10,7 +10,7 @@
       <ejs-grid #normalgrid id='normalgrid' (load)='load()' [allowPaging]='true' [gridLines]="lines"
         [pageSettings]='pageSettings' [toolbar]='toolbar' [editSettings]='editSettings' [dataSource]='UserService.users'
         rowHeight='38' [allowSorting]='true' height='400' [enableHover]='true' [selectionSettings]='selectionSettings'
-        [filterSettings]='filterSettings' [allowSorting]='true' [allowFiltering]='true'>
+        [filterSettings]='filterSettings' [allowSorting]='true' [allowFiltering]='true'(actionComplete)="actionComplete($event)">
         <e-columns>
           <e-column field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter' width='50'
             [isPrimaryKey]='true'></e-column>
@@ -19,7 +19,12 @@
           <e-column field='department.name' [allowEditing]='false' textAlign="Center" headerText="القسم" width='140'></e-column>
           <e-column field='employeeType' [allowEditing]='false' textAlign="Center" headerText="نوع الموظف" width='140'></e-column>
           <e-column field='phones' [allowEditing]='false' textAlign="Center" headerText="ارقام الهاتف" width='140'>
-            </e-column>
+            <ng-template #template>
+              <div class="text-center">
+                <button class="btn" (click)="onEditClicked(UserService.users);"><i class="simple-icon-pencil text-primary" style="font-size: 20px;"></i></button>
+              </div>
+            </ng-template>
+          </e-column>
         </e-columns>
       </ejs-grid>
 

@@ -22,6 +22,7 @@ export class DepartmentsComponent implements OnInit {
   public gridInstance: GridComponent;
   public toolbar: Object[];
   public pageSettings: Object;
+  apiName="Department"
   ngOnInit(): void {
     this.getDepartments();
     this.editSettings = { showDeleteConfirmDialog: false, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
@@ -50,7 +51,7 @@ export class DepartmentsComponent implements OnInit {
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
   getDepartments() {
-    this.customService.getAll('Department').subscribe(
+    this.customService.getAll(this.apiName).subscribe(
       res => {
         this.departments = res;
       }
@@ -60,53 +61,56 @@ export class DepartmentsComponent implements OnInit {
   actionComplete(args: SaveEventArgs) {
 
     if (args.action === "edit") {
+      console.log(args.cancel);
       let obj: any = { id: Number.parseInt(args.data['id']), name: args.data['name'] }
-      this.customService.addOrUpdate('Department', obj, 'update').subscribe(
+      this.customService.addOrUpdate(this.apiName, obj, 'update').subscribe(
         res => {
-          this.notifications.create('success', 'تم تعديل القسم بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+          this.notifications.create('success', 'تم تعديل القسم  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+        
         }
       )
     }
-    else if (args.requestType == 'delete') {
+    if (args.requestType == 'delete') {
       let id = args.data[0].id;
-      this.customService.delete('Department', id).subscribe(
+      this.customService.delete(this.apiName, id).subscribe(
         res => {
-          this.notifications.create('success', 'تم حذف القسم بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
+          this.notifications.create('success', 'تم حذف القسم  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
+         
         }
       )
-
+     
     }
   }
   onActionBegin(args: ActionEventArgs) {
 
     if (args.action == "add") {
       if (args.requestType == "save") {
-        args.cancel = true;
         let name = args.data["name"].trim();
-        if (this.departments.filter(c => c.name == name).length > 0) {
-          this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
-        }
-        else if (name == "") {
+        if (args.data["name"] == ""||args.data["name"]==undefined) {
           this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
-
-        } else {
-          let obj: any = { name: name };
-          this.customService.addOrUpdate('Department', obj, 'add').subscribe(
+          args.cancel = true;
+        }
+        else if (this.departments.filter(c => c.name == name).length > 0) {
+          this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+          args.cancel = true;
+        }
+        else {
+          let obj: any = { name: args.data['name'] }
+          args.cancel = true;
+          this.customService.addOrUpdate(this.apiName, obj, 'add').subscribe(
             res => {
-              this.notifications.create('success', 'تم اضافة القسم بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-              (this.gridInstance.dataSource as Department[]).unshift(res as Department);
+              this.notifications.create('success', 'تم اضافة القسم  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+
+              this.departments.push(res);
               this.gridInstance.refresh();
-            },
-            err => {
-              this.notifications.create('', 'حدث خطأ ما', NotificationType.Error, { timeOut: 6000, showProgressBar: false });
             }
           )
         }
       }
     }
     if (args.action == "edit") {
-      var id = args.data["id"];
       let name = args.data["name"].trim();
+      var id = args.data["id"];
       if (name == "") {
         this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
         args.cancel = true;
@@ -115,12 +119,10 @@ export class DepartmentsComponent implements OnInit {
         this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
         args.cancel = true;
       }
-
     }
     if (args.requestType == "delete") {
-      console.log(args.data[0]);
-      let department = args.data[0] as Department;
-      if (department.userCount != 0) {
+      let exportType = args.data[0];
+      if (!exportType.canDelete) {
         this.notifications.create('', 'لا يمكن الحذف', NotificationType.Error, { timeOut: 6000, showProgressBar: false });
         args.cancel = true;
       }

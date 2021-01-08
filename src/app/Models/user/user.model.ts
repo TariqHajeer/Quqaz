@@ -5,5 +5,6 @@ export class User {
       userName :string
       canWorkAsAgent :boolean = true
       phones:string[]
+      note
       employeeType:string = this.canWorkAsAgent==true?"مندوب":"عميل"
 }

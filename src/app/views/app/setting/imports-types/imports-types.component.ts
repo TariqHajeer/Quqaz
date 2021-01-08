@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { EditSettingsModel, GridComponent, SaveEventArgs, ToolbarItem, ToolbarItems } from '@syncfusion/ej2-angular-grids';
+import { ActionEventArgs, EditSettingsModel, GridComponent, SaveEventArgs, ToolbarItem, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { CustomService } from 'src/app/services/custom.service';
 
@@ -22,6 +22,7 @@ export class ImportsTypesComponent implements OnInit {
   public gridInstance: GridComponent;
   public toolbar: Object[];
   public pageSettings: Object;
+  apiName="IncomeType"
   ngOnInit(): void {
     
     this.getImportTypes();
@@ -54,7 +55,7 @@ export class ImportsTypesComponent implements OnInit {
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
   getImportTypes() {
-    this.customService.getAll('IncomeType').subscribe(
+    this.customService.getAll(this.apiName).subscribe(
       res => {
         this.importTypes = res;
       }
@@ -62,45 +63,71 @@ export class ImportsTypesComponent implements OnInit {
   }
   actionComplete(args: SaveEventArgs) {
 
-    if (args.action == 'add') {
-      let obj: any = { name: args.data['name'] }
-      console.log(obj)
-      this.customService.addOrUpdate('IncomeType', obj, 'add').subscribe(
-        res => {
-          console.log(res)
-          this.notifications.create('success', 'تم اضافة نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-          this.getImportTypes();
-
-        }
-      )
-    }
-    else if (args.action === "edit") {
+    if (args.action === "edit") {
+      console.log(args.cancel);
       let obj: any = { id: Number.parseInt(args.data['id']), name: args.data['name'] }
-      console.log(obj)
-
-      this.customService.addOrUpdate('IncomeType', obj, 'update').subscribe(
+      this.customService.addOrUpdate(this.apiName, obj, 'update').subscribe(
         res => {
-          console.log(res)
-
           this.notifications.create('success', 'تم تعديل نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-          this.getImportTypes();
+        
         }
       )
     }
     if (args.requestType == 'delete') {
       let id = args.data[0].id;
-      if (args.data['CanDelete']) {
-        this.customService.delete('IncomeType', id).subscribe(
-          res => {
-            this.notifications.create('success', 'تم حذف نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
-            this.getImportTypes();
-          }
-        )
-      }
-      else {
-        this.gridInstance.refresh();
-      }
+      this.customService.delete(this.apiName, id).subscribe(
+        res => {
+          this.notifications.create('success', 'تم حذف نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
+         
+        }
+      )
+     
+    }
+  }
+  onActionBegin(args: ActionEventArgs) {
+    if (args.action == "add") {
+      if (args.requestType == "save") {
+        let name = args.data["name"].trim();
+        if (args.data["name"] == ""||args.data["name"]==undefined) {
+          this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+          args.cancel = true;
+        }
+        else if (this.importTypes.filter(c => c.name == name).length > 0) {
+          this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+          args.cancel = true;
+        }
+        else {
+          let obj: any = { name: args.data['name'] }
+          args.cancel = true;
+          this.customService.addOrUpdate(this.apiName, obj, 'add').subscribe(
+            res => {
+              this.notifications.create('success', 'تم اضافة نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 
+              this.importTypes.push(res);
+              this.gridInstance.refresh();
+            }
+          )
+        }
+      }
+    }
+    if (args.action == "edit") {
+      let name = args.data["name"].trim();
+      var id = args.data["id"];
+      if (name == "") {
+        this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+        args.cancel = true;
+      }
+      if (this.importTypes.filter(c => c.name == name && c.id != id).length > 0) {
+        this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+        args.cancel = true;
+      }
+    }
+    if (args.requestType == "delete") {
+      let exportType = args.data[0];
+      if (!exportType.canDelete) {
+        this.notifications.create('', 'لا يمكن الحذف', NotificationType.Error, { timeOut: 6000, showProgressBar: false });
+        args.cancel = true;
+      }
     }
   }
 
