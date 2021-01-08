@@ -1,36 +1,35 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { CustomService } from 'src/app/services/custom.service';
 import { Client } from '../client.model';
 import { ClientService } from '../client.service';
 
 @Component({
-  selector: 'app-add-client',
-  templateUrl: './add-client.component.html',
-  styleUrls: ['./add-client.component.scss']
+  selector: 'app-edit-client',
+  templateUrl: './edit-client.component.html',
+  styleUrls: ['./edit-client.component.scss']
 })
-export class AddClientComponent implements OnInit, OnChanges {
+export class EditClientComponent implements OnInit {
 
   constructor(private customService: CustomService,private clientService:ClientService,
-    private notifications: NotificationsService) { }
+    private notifications: NotificationsService,
+    private getroute: ActivatedRoute,
+    private router:Router) { }
   client: Client;
   regions: any[] = [];
   tempPhone: any;
-  @Input() currentClientId;
-  @Input() editClicked;
-  @Input() addClicked;
-  @Output() addFinish = new EventEmitter<any>();
-  submitted = false;
+  id
+  submitted
   ngOnInit(): void {
+    this.getroute.params.subscribe(par => {
+      this.id = par['id'] as string
+    });
     this.init();
     this.getRegions();
+    this.getClientById()
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    if (this.currentClientId && !this.addClicked) {
-      this.getClientById();
-
-    }
-  }
+  
   init() {
     this.client = {
       id: null,
@@ -48,28 +47,21 @@ export class AddClientComponent implements OnInit, OnChanges {
   getClientById() {
     this.clientService.getClients().subscribe(
       res=>{
-        this.client=res.find(c=>c.id==this.currentClientId);
-        
+       this.client=res.find(c=>c.id==this.id)
       }
     )
   }
 
   addOrEditClient() {
-     //this.addFinish.emit('s');
-    this.submitted = true;
+   
     if (this.tempPhone)
       this.client.phones.push(this.tempPhone)
 
-    this.clientService.addClient(this.client).subscribe(
+    this.clientService.Update(this.client).subscribe(
       res => {
-        if (this.addClicked) {
-          this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-          this.tempPhone = '';
-        }
-        else if(!this.editClicked) {
-          this.notifications.create('success', 'تم تعديل عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-        }
-        this.init();
+         this.notifications.create('success', 'تم تعديل عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+        this.router.navigate(['/app/client'])
+
       }
     )
   }
@@ -85,4 +77,5 @@ export class AddClientComponent implements OnInit, OnChanges {
     this.client.phones.push(this.tempPhone);
     this.tempPhone = '';
   }
+
 }

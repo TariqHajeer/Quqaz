@@ -9,7 +9,7 @@
   <ejs-grid #normalgrid   id='normalgrid'  (load)='load()'  [allowPaging]='true'
   [gridLines]="lines" [pageSettings]='pageSettings' [toolbar]='toolbar'
     [editSettings]='editSettings'[dataSource]='clients' rowHeight='38'
-      [allowSorting]='true' height='400'
+      [allowSorting]='true' height='400'(actionComplete)="actionComplete($event)"
        [enableHover]='true' [selectionSettings]='selectionSettings'
         [filterSettings]='filterSettings' [allowSorting]='true'
          [allowFiltering]='true'>
@@ -17,14 +17,14 @@
        <e-column   field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter' width='50' [isPrimaryKey]='true'></e-column>
        <e-column   field='name' [allowEditing]='true' textAlign="Center" headerText="{{'client.name' | translate}}" width='140'></e-column>
        <e-column   field='userName' [allowEditing]='false' textAlign="Center" headerText="{{'client.user-name' | translate}}" width='170'></e-column>
-       <e-column   field='firstDate' [allowEditing]='false' textAlign="Center" headerText="{{'client.first-date' | translate}}" format='yMd' width='170'></e-column>
+       <e-column   field='firstDate' [allowEditing]='false' textAlign="Center" headerText="{{'client.first-date' | translate}}"  format='formatOptions' width='170'></e-column>
        <e-column   field='address' [allowEditing]='false' textAlign="Center" headerText="{{'client.adderss' | translate}}" width='140'></e-column>
        <e-column   field='regionName' [allowEditing]='false' textAlign="Center" headerText="{{'client.region' | translate}}" width='140'></e-column>
        <e-column   field='note' [allowEditing]='false' textAlign="Center" headerText="{{'client.note' | translate}}" width='140'></e-column>
        <e-column   field='action' [allowEditing]='false' textAlign="Center" headerText="action" width='140'>
         <ng-template #template>
           <div class="text-center">
-            <button class="btn" (click)="onEditClicked(); addClientModal.show()"><i class="simple-icon-pencil text-primary" style="font-size: 20px;"></i></button>
+            <button class="btn" (click)="onEditClicked(clients); addClientModal.show()"><i class="simple-icon-pencil text-primary" style="font-size: 20px;"></i></button>
           </div>
         </ng-template>
        </e-column>
@@ -54,3 +54,4 @@
     </div>
   </div>
 </div>
+<simple-notifications></simple-notifications>

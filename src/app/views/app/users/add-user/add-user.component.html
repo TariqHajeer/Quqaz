@@ -54,7 +54,7 @@
         <input readonly type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.HireDate"
           bsDatepicker [container]="'html'" [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
       </div>
-      <div class="col-md-3"*ngIf="!CreateUser.CanWorkAsAgent">
+      <div class="col-md-5"*ngIf="!CreateUser.CanWorkAsAgent">
         <label>الخبرة</label>
         <input type="text" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
           class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Experince">
@@ -74,7 +74,7 @@
         <input type="number" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
           class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Salary">
       </div>
-      <div class="col-md-3">
+      <div class="col-md-6">
         <label>ملاحظات</label>
         <input type="text" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
           class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Note">

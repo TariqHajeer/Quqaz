@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { EditSettingsModel, GridComponent, ToolbarItems } from '@syncfusion/ej2-angular-grids';
-import { NotificationsService } from 'angular2-notifications';
+import { EditSettingsModel, GridComponent, SaveEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
+import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { CustomService } from 'src/app/services/custom.service';
 import { User } from 'src/app/Models/user/user.model';
 import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-user',
@@ -12,7 +13,8 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ViewUserComponent implements OnInit {
 
-  constructor(public UserService:UserService,private customService:CustomService,private notifications:NotificationsService) { }
+  constructor(public UserService:UserService,private customService:CustomService,private notifications:NotificationsService,
+    public route:Router) { }
   
   tempRegion:any;
   public stTime: any;
@@ -23,7 +25,7 @@ export class ViewUserComponent implements OnInit {
   public lines: any;
   @ViewChild('normalgrid')
   public gridInstance: GridComponent;
-  public toolbar: ToolbarItems[];
+  public toolbar: Object[];
   public pageSettings: Object;
   editClicked:any;
   addClicked:any;
@@ -31,7 +33,9 @@ export class ViewUserComponent implements OnInit {
   ngOnInit(): void {
     this.getUser();
     this.editSettings = { showDeleteConfirmDialog: true, allowDeleting: true };
-    this.toolbar = ['Search' ];
+    this.toolbar = [
+      { text: 'حذف', tooltipText: 'حذف', prefixIcon: 'e-delete', id: 'normalgrid_delete' }
+      , 'Search'];
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
@@ -55,13 +59,28 @@ export class ViewUserComponent implements OnInit {
 
       this.UserService.GetAll();
   }
-  onEditClicked(id){
-    this.addClicked=false;
-    this.editClicked=true;
+  onEditClicked(data){
+   this.route.navigate(['/app/user/edit',data[0].id])
   
   }
   addFinish(){
 
   }
- 
+  actionComplete(args: SaveEventArgs) {
+    if (args.requestType == 'delete') {
+      let id = args.data[0].id;
+      if (args) {
+        this.UserService.Delete(id).subscribe(
+          res => {
+            this.notifications.create('success', 'تم حذف  العميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
+          }
+        )
+      }
+      else {
+        this.gridInstance.refresh();
+      }
+    }
+  }
+  
+  
 }
