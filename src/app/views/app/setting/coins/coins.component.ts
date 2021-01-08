@@ -62,38 +62,47 @@ export class CoinsComponent implements OnInit {
     });
   }
   actionComplete(args: SaveEventArgs) {
-    let coin = args.data[0] as Coin;
-
-    if (args.action == "edit") {
-      this.customService.addOrUpdate(this.apiName, coin, 'update').subscribe(res => {
-        this.notifications.create('', 'تم التعديل', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      });
+    if (args.action === "edit") {
+      console.log(args.cancel);
+      let obj: any = { id: Number.parseInt(args.data['id']), name: args.data['name'] }
+      this.customService.addOrUpdate(this.apiName, obj, 'update').subscribe(
+        res => {
+          this.notifications.create('success', 'تم تعديل  العملة  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+        
+        }
+      )
     }
-
-    else if (args.requestType == "delete") {
-      this.customService.delete(this.apiName, coin.id).subscribe(res => {
-        this.notifications.create('', 'تم الحذف', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      });
-
+    if (args.requestType == 'delete') {
+      let id = args.data[0].id;
+      this.customService.delete(this.apiName, id).subscribe(
+        res => {
+          this.notifications.create('success', 'تم حذف  العملة  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
+         
+        }
+      )
+     
     }
   }
   onActionBegin(args: ActionEventArgs) {
-    let name = args.data["name"].trim();
     if (args.action == "add") {
       if (args.requestType == "save") {
-        if (this.coins.filter(c => c.name == name).length > 0) {
+        let name = args.data["name"].trim();
+        if (args.data["name"] == ""||args.data["name"]==undefined) {
+          this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+          args.cancel = true;
+        }
+        else if (this.coins.filter(c => c.name == name).length > 0) {
           this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
           args.cancel = true;
         }
-        if (name == "") {
-          this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
-          args.cancel = true;
-        } else {
+        else {
           let obj: any = { name: args.data['name'] }
+          args.cancel = true;
           this.customService.addOrUpdate(this.apiName, obj, 'add').subscribe(
             res => {
-              this.notifications.create('success', 'تم اضافة نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-              (this.gridInstance.dataSource as Coin[]).unshift(res as Coin);
+              this.notifications.create('success', 'تم اضافة عملة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+
+              this.coins.push(res);
               this.gridInstance.refresh();
             }
           )
@@ -101,6 +110,7 @@ export class CoinsComponent implements OnInit {
       }
     }
     if (args.action == "edit") {
+      let name = args.data["name"].trim();
       var id = args.data["id"];
       if (name == "") {
         this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
@@ -110,11 +120,10 @@ export class CoinsComponent implements OnInit {
         this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
         args.cancel = true;
       }
-
     }
     if (args.requestType == "delete") {
-      let coin = args.data[0] as Coin;
-      if (!coin.canDelete) {
+      let exportType = args.data[0];
+      if (!exportType.canDelete) {
         this.notifications.create('', 'لا يمكن الحذف', NotificationType.Error, { timeOut: 6000, showProgressBar: false });
         args.cancel = true;
       }

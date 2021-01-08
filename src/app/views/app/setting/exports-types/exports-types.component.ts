@@ -25,10 +25,10 @@ export class ExportsTypesComponent implements OnInit {
   public normalgrid;
   public toolbar: Object[];
   public pageSettings: Object;
-  apiName: string = "OutComeType";
+  apiName:string = "OutComeType";
   ngOnInit(): void {
     this.getExportTypes();
-    this.editSettings = { showDeleteConfirmDialog: false, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
+    this.editSettings = { showDeleteConfirmDialog: true, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
     this.toolbar = [
       { text: 'اضافة', tooltipText: 'اضافة', prefixIcon: 'e-add', id: 'normalgrid_add' },
       { text: 'تعديل', tooltipText: 'تعديل', prefixIcon: 'e-edit', id: 'normalgrid_edit' },
@@ -46,8 +46,8 @@ export class ExportsTypesComponent implements OnInit {
     // });
     this.selectionSettings = { persistSelection: true, type: "Multiple" };
     this.lines = 'Horizontal';
-
-
+    
+    
   }
 
   load() {
@@ -58,7 +58,7 @@ export class ExportsTypesComponent implements OnInit {
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
   getExportTypes() {
-    this.customService.getAll(this.apiName).subscribe(
+    this.customService.getAll('OutComeType').subscribe(
       res => {
         this.exportTypes = res;
       }
@@ -66,11 +66,23 @@ export class ExportsTypesComponent implements OnInit {
   }
   actionComplete(args: SaveEventArgs) {
 
-    if (args.action === "edit") {
-      console.log(args.cancel);
-      let obj: any = { id: Number.parseInt(args.data['id']), name: args.data['name'] }
-      this.customService.addOrUpdate(this.apiName, obj, 'update').subscribe(
+    if (args.action == 'add') {
+      let obj: any = { name: args.data['name'] }
+      this.customService.addOrUpdate('OutComeType', obj, 'add').subscribe(
         res => {
+          
+          this.notifications.create('success', 'تم اضافة نوع الصادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+          this.getExportTypes();
+
+        }
+      )
+    }
+    else if (args.action === "edit") {
+      let obj: any = { id: Number.parseInt(args.data['id']), name: args.data['name'] }
+
+      this.customService.addOrUpdate('OutComeType', obj, 'update').subscribe(
+        res => {
+
           this.notifications.create('success', 'تم تعديل نوع الصادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
           this.getExportTypes();
         }
@@ -78,38 +90,38 @@ export class ExportsTypesComponent implements OnInit {
     }
     if (args.requestType == 'delete') {
       let id = args.data[0].id;
-      this.customService.delete(this.apiName, id).subscribe(
-        res => {
-          this.notifications.create('success', 'تم حذف نوع الصادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
-          this.getExportTypes();
-        }
-      )
-      // else {
-      //   this.gridInstance.refresh();
-      // }
+      if (args.data['CanDelete']) {
+        this.customService.delete('OutComeType', id).subscribe(
+          res => {
+            if (res.result) {
+              this.notifications.create('success', 'تم حذف نوع الصادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
+              this.getExportTypes();
+            }
+          }
+        )
+      }
+      else {
+        this.gridInstance.refresh();
+      }
     }
   }
   onActionBegin(args: ActionEventArgs) {
-
+    let name = args.data["name"].trim();
     if (args.action == "add") {
       if (args.requestType == "save") {
-        let name = args.data["name"].trim();
-        if (name == "") {
-          this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
-          args.cancel = true;
-        }
-        else if (this.exportTypes.filter(c => c.name == name).length > 0) {
+        if (this.exportTypes.filter(c => c.name == name).length > 0) {
           this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
           args.cancel = true;
         }
-        else {
-          let obj: any = { name: args.data['name'] }
+        if (name == "") {
+          this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
           args.cancel = true;
+        } else {
+          let obj: any = { name: args.data['name'] }
           this.customService.addOrUpdate(this.apiName, obj, 'add').subscribe(
             res => {
               this.notifications.create('success', 'تم اضافة نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-
-              this.exportTypes.push(res);
+              (this.gridInstance.dataSource as object[]).unshift(res);
               this.gridInstance.refresh();
             }
           )
@@ -117,7 +129,6 @@ export class ExportsTypesComponent implements OnInit {
       }
     }
     if (args.action == "edit") {
-      let name = args.data["name"].trim();
       var id = args.data["id"];
       if (name == "") {
         this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
@@ -127,10 +138,11 @@ export class ExportsTypesComponent implements OnInit {
         this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
         args.cancel = true;
       }
+
     }
     if (args.requestType == "delete") {
-      let exportType = args.data[0];
-      if (!exportType.canDelete) {
+      let coin = args.data[0];
+      if (!coin.canDelete) {
         this.notifications.create('', 'لا يمكن الحذف', NotificationType.Error, { timeOut: 6000, showProgressBar: false });
         args.cancel = true;
       }
