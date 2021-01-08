@@ -93,6 +93,10 @@ export class ExportsTypesComponent implements OnInit {
 
     if (args.action == "add") {
       if (args.requestType == "save") {
+        if(args.data["name"]==undefined){
+          this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+          args.cancel = true;
+        }
         let name = args.data["name"].trim();
         if (name == "") {
           this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
