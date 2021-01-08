@@ -30,9 +30,13 @@ export class CitiesComponent implements OnInit {
   currentMode = '';
   ngOnInit(): void {
     this.getCities();
-    this.editSettings = {allowDeleting: true };
+    this.editSettings = { showDeleteConfirmDialog: false, allowAdding: false, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
     this.toolbar = [
-      { text: 'حذف', tooltipText: 'حذف', prefixIcon: 'e-delete', id: 'normalgrid_delete' },'Search'
+      { text: 'حذف', tooltipText: 'حذف', prefixIcon: 'e-delete', id: 'normalgrid_delete' },
+      { text: 'تعديل', tooltipText: 'تعديل', prefixIcon: 'e-edit', id: 'normalgrid_edit' },
+      { text: 'حفظ', tooltipText: 'حفظ', prefixIcon: 'e-update', id: 'normalgrid_update' },
+      { text: 'تراجع', tooltipText: 'تراجع', prefixIcon: 'e-cancel', id: 'normalgrid_cancel' },
+      'Search'
       ]
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
@@ -104,43 +108,43 @@ export class CitiesComponent implements OnInit {
     const pageResize: any = (gridHeight - (pageSize * rowHeight)) / rowHeight; // new page size is obtained here
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
-  actionComplete(args: SaveEventArgs) {
+  // actionComplete(args: SaveEventArgs) {
 
-    if (args.action == 'add') {
-      let obj: any = { name: args.data['name'] }
-      this.customService.addOrUpdate('Country', obj, 'add').subscribe(
-        res => {
-          if (res.result) {
-            this.notifications.create('success', 'تم اضافة مدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-            this.getCities();
-          }
-        }
-      )
-    }
-    else if (args.action === "edit") {
+  //   if (args.action == 'add') {
+  //     let obj: any = { name: args.data['name'] }
+  //     this.customService.addOrUpdate('Country', obj, 'add').subscribe(
+  //       res => {
+  //         if (res.result) {
+  //           this.notifications.create('success', 'تم اضافة مدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+  //           this.getCities();
+  //         }
+  //       }
+  //     )
+  //   }
+  //   else if (args.action === "edit") {
 
-    }
-    console.log(args);
-    if (args.requestType == 'delete') {
-      let id = args.data[0].id;
-      console.log(args.data[0]);
-      if (args.data['canDelete']||args.data["canDeleteWithRegion"]) {
-        this.customService.delete('Country', id).subscribe(
-          res => {
-            if (res.result) {
-              this.notifications.create('success', 'تم حذف المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
-              this.getCities();
-            }
-          }
-        )
-      }
-      else {
-        this.gridInstance.refresh();
+  //   }
+  //   console.log(args);
+  //   if (args.requestType == 'delete') {
+  //     let id = args.data[0].id;
+  //     console.log(args.data[0]);
+  //     if (args.data['canDelete']||args.data["canDeleteWithRegion"]) {
+  //       this.customService.delete('Country', id).subscribe(
+  //         res => {
+  //           if (res.result) {
+  //             this.notifications.create('success', 'تم حذف المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
+  //             this.getCities();
+  //           }
+  //         }
+  //       )
+  //     }
+  //     else {
+  //       this.gridInstance.refresh();
 
-      }
+  //     }
 
-    }
-  }
+  //   }
+  // }
   getCities() {
     this.customService.getAll('Country').subscribe(
       res => {

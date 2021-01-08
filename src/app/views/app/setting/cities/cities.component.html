@@ -38,15 +38,16 @@
       <ejs-grid #normalgrid   id='normalgrid'[enableRtl]='true'  (load)='load()'  [allowPaging]='true'
      [gridLines]="lines" [pageSettings]='pageSettings' [toolbar]='toolbar'
        [editSettings]='editSettings'[dataSource]='cities' rowHeight='38'
-         [allowSorting]='true' height='400' (actionComplete)="actionComplete($event)"
+         [allowSorting]='true' height='400' 
           [enableHover]='true' [selectionSettings]='selectionSettings'
            [filterSettings]='filterSettings' [allowSorting]='true'
             [allowFiltering]='true'>
+            <!-- (actionComplete)="actionComplete($event)" -->
       <e-columns>
           <e-column   field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter' width='50' [isPrimaryKey]='true'></e-column>
           <e-column   field='name' [allowEditing]='true' textAlign="Center" headerText="الاسم" width='140'></e-column>
           <e-column   field='deliveryCost' [allowEditing]='true' textAlign="Center" headerText="كلفة التوصيل" width='140'></e-column>
-          <e-column   field='regions' [allowEditing]='false' textAlign="Center" headerText="المناطق" width='140'>
+          <e-column   field='regions' [allowEditing]='false' textAlign="Center" headerText="المناطق" width='140'  [allowEditing]= 'false'>
             <ng-template  #template let-data>
               <div class="d-flex justify-content-center text-center my-2">
                 <div *ngFor="let reg of data.regions" class="my-1 text-center">
@@ -55,13 +56,13 @@
             </div>
              </ng-template>
           </e-column>
-          <e-column   field='regions' [allowEditing]='false' textAlign="Center" headerText="" width='140'>
+          <!-- <e-column   field='regions' [allowEditing]='false' textAlign="Center" headerText="" width='140'>
             <ng-template  #template let-data>
               <div>
                     <span class="btn btn-xs badge-primary mx-1" (click)="setCueerntCity(data)">{{'forms.edit' | translate}}</span>
             </div>
           </ng-template>
-          </e-column>
+          </e-column> -->
       </e-columns>
   </ejs-grid>
         </div>
