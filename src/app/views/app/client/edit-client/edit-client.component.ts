@@ -22,10 +22,10 @@ export class EditClientComponent implements OnInit {
   id
   submitted
   ngOnInit(): void {
+    this.init();
     this.getroute.params.subscribe(par => {
       this.id = par['id'] as string
     });
-    this.init();
     this.getRegions();
     this.getClientById()
   }

@@ -10,7 +10,7 @@
       <div class="col-md-3">
         <label>{{'client.user-name' | translate}}</label>
         <input type="text" class="form-control"
-         [ngModelOptions]="{standalone: true}"
+         [ngModelOptions]="{standalone: true}"oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '').replace(/(\..*)\./g, '$1');"
          [(ngModel)]="client.userName">
       </div>
       <div class="col-md-3">
@@ -37,6 +37,12 @@
     <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.firstDate" bsDatepicker
     [container]="'html'" [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
 </div>
+<div class="col-md-3">
+  <label>{{'client.note' | translate}}</label>
+  <input type="text"  class="form-control"
+     [ngModelOptions]="{standalone: true}"
+     [(ngModel)]="client.note">
+</div>
 <div  *ngFor="let phone of client.phones;let i=index" class="col-md-3">
   <ng-container>
     <label>{{'client.phone' | translate}}-{{i+1}}</label>
@@ -55,6 +61,7 @@
 <div class="col-2">
   <button type="button" class="btn" (click)="addNewPhone()"><i class="iconsminds-add  text-primary" style="font-size: 22px;"></i></button>
 </div>
+
     </div>
     <div class="row w-100">
       <div class="col-3">
