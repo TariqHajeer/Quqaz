@@ -25,7 +25,7 @@ export class ExportsTypesComponent implements OnInit {
   public normalgrid;
   public toolbar: Object[];
   public pageSettings: Object;
-  apiName:string = "OutComeType";
+  apiName: string = "OutComeType";
   ngOnInit(): void {
     this.getExportTypes();
     this.editSettings = { showDeleteConfirmDialog: true, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
@@ -46,8 +46,8 @@ export class ExportsTypesComponent implements OnInit {
     // });
     this.selectionSettings = { persistSelection: true, type: "Multiple" };
     this.lines = 'Horizontal';
-    
-    
+
+
   }
 
   load() {
@@ -70,7 +70,7 @@ export class ExportsTypesComponent implements OnInit {
       let obj: any = { name: args.data['name'] }
       this.customService.addOrUpdate('OutComeType', obj, 'add').subscribe(
         res => {
-          
+
           this.notifications.create('success', 'تم اضافة نوع الصادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
           this.getExportTypes();
 
@@ -84,7 +84,7 @@ export class ExportsTypesComponent implements OnInit {
         res => {
 
           this.notifications.create('success', 'تم تعديل نوع الصادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-          this.getExportTypes();
+          // this.getExportTypes();
         }
       )
     }
@@ -93,10 +93,8 @@ export class ExportsTypesComponent implements OnInit {
       if (args.data['CanDelete']) {
         this.customService.delete('OutComeType', id).subscribe(
           res => {
-            if (res.result) {
               this.notifications.create('success', 'تم حذف نوع الصادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
-              this.getExportTypes();
-            }
+              // this.getExportTypes();
           }
         )
       }
@@ -109,14 +107,20 @@ export class ExportsTypesComponent implements OnInit {
     let name = args.data["name"].trim();
     if (args.action == "add") {
       if (args.requestType == "save") {
-        if (this.exportTypes.filter(c => c.name == name).length > 0) {
-          this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+        if (args.data["name"] == undefined) {
+          this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
           args.cancel = true;
         }
+        let name = args.data["name"].trim();
         if (name == "") {
           this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
           args.cancel = true;
-        } else {
+        }
+        else if (this.exportTypes.filter(c => c.name == name).length > 0) {
+          this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+          args.cancel = true;
+        }
+        else {
           let obj: any = { name: args.data['name'] }
           this.customService.addOrUpdate(this.apiName, obj, 'add').subscribe(
             res => {
