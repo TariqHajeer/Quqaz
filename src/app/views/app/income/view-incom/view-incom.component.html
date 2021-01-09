@@ -5,7 +5,66 @@
         <h5 class="card-title">{{'menu.income' | translate}}</h5>
       <button class="btn  mb-3" (click)="addIncomModal.show();addNewClicked()"><i class="iconsminds-add  text-primary" style="font-size: 38px;"></i></button>
 </div>
+<h5 class="card-title">بحث على حسب : </h5>
+<div class="row">
+  <div class="col-md-2">
+    <label>نوع الواردات</label>
+    <ng-select [(ngModel)]="filtering.Type" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+    (ngModelChange)="getIncomes()">
+      <ng-option *ngFor="let importType of importTypes" [value]="importType.id">{{importType.name}}
+      </ng-option>
+    </ng-select>
+  </div>
+  <div class="col-md-2">
+    <label>العملة</label>
+    <ng-select [(ngModel)]="filtering.CurrencyId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+    (ngModelChange)="getIncomes()">
+      <ng-option *ngFor="let coin of coins" [value]="coin.id">{{coin.name}}</ng-option>
+    </ng-select>
 
+  </div>
+  <div class="col-md-2">
+    <label> المبلغ الأدنى</label>
+    <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+      class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.MinAmount"
+      (ngModelChange)="getIncomes()">
+
+  </div>
+  <div class="col-md-2">
+    <label>المبلغ الأعلى</label>
+    <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+      class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.MaxAmount"
+      (ngModelChange)="getIncomes()">
+
+  </div>
+  <div class="col-md-2">
+    <label>الموظف</label>
+    <ng-select [(ngModel)]="filtering.UserId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+    (ngModelChange)="getIncomes()">
+      <ng-option *ngFor="let user of UserService.users" [value]="user.id">{{user.name}}
+      </ng-option>
+    </ng-select>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-2">
+    <label>من تاريخ</label>
+    <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
+      [(ngModel)]="filtering.FromDate" bsDatepicker [container]="'html'"
+      [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }"
+      (ngModelChange)="getIncomes()">
+
+  </div>
+  <div class="col-md-2">
+    <label>الى تاريخ</label>
+    <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
+      [(ngModel)]="filtering.ToDate" bsDatepicker [container]="'html'"
+      [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }"
+      (ngModelChange)="getIncomes()">
+
+  </div>
+</div>
+<br>
   <ejs-grid #normalgrid   id='normalgrid'  (load)='load()'  [allowPaging]='true'
   [gridLines]="lines" [pageSettings]='pageSettings' [toolbar]='toolbar'
     [editSettings]='editSettings'[dataSource]='incomes' rowHeight='38'

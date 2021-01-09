@@ -1,9 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { EditSettingsModel, GridComponent, ToolbarItems } from '@syncfusion/ej2-angular-grids';
-import {Outcome } from '../outcome.model'
-import {OutcomeService} from '../outcome.service'
-
+import { from } from 'rxjs';
+import { Outcome } from '../outcome.model'
+import { OutcomeService } from '../outcome.service'
+import { Filtering } from 'src/app/Models/Filtering.model'
+import { CustomService } from 'src/app/services/custom.service';
+import { Coin } from 'src/app/Models/Coins/coin.model';
+import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-view-out-come',
   templateUrl: './view-out-come.component.html',
@@ -11,7 +15,8 @@ import {OutcomeService} from '../outcome.service'
 })
 export class ViewOutComeComponent implements OnInit {
 
-  constructor(private outcomeService:OutcomeService,public router:Router) { }
+  constructor(private outcomeService: OutcomeService, public router: Router,
+    private customService: CustomService,public UserService:UserService) { }
   public stTime: any;
   public filter: Object;
   public filterSettings: Object;
@@ -22,17 +27,24 @@ export class ViewOutComeComponent implements OnInit {
   public gridInstance: GridComponent;
   public toolbar: ToolbarItems[];
   public pageSettings: Object;
-  outcomes:Outcome[]=[];
-  editClicked:any;
-  addClicked:any;
+  outcomes: Outcome[] = [];
+  editClicked: any;
+  addClicked: any;
+  filtering: Filtering
+  coins: Coin[];
+  exportTypes: any[] = [];
   ngOnInit(): void {
+    this.filtering=new Filtering
+    this.Getcoins()
+    this.UserService.GetAll();
+    this.getExportTypes()
     this.getOutcomes();
     this.editSettings = { showDeleteConfirmDialog: true, allowDeleting: true };
     this.toolbar = ['Search', 'Delete',];
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
-    this.pageSettings = { pageSize: 5,pageSizes:true };
+    this.pageSettings = { pageSize: 5, pageSizes: true };
     this.gridInstance.on('data-ready', function () {
       this.dReady = true;
     });
@@ -46,22 +58,34 @@ export class ViewOutComeComponent implements OnInit {
     const pageResize: any = (gridHeight - (pageSize * rowHeight)) / rowHeight; // new page size is obtained here
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
-  getOutcomes(){
-    this.outcomeService.getOutcomes().subscribe(
-      res=>{
-        this.outcomes=res;
+  getOutcomes() {
+    this.outcomeService.getOutcomes(this.filtering).subscribe(
+      res => {
+        this.outcomes = res;
       }
     )
   }
-  addNewClicked(){
-    this.addClicked=true;
-    this.editClicked=false;
-    
-  }
-  addFinish(){
+  addNewClicked() {
+    this.addClicked = true;
+    this.editClicked = false;
 
   }
-  AddMoreOutcome(){
-this.router.navigate(['app/outcome/addmore'])
+  addFinish() {
+
+  }
+  AddMoreOutcome() {
+    this.router.navigate(['app/outcome/addmore'])
+  }
+  Getcoins() {
+    this.customService.getAll("Currency").subscribe(res => {
+      this.coins = res;
+    });
+  }
+  getExportTypes() {
+    this.customService.getAll('OutComeType').subscribe(
+      res => {
+        this.exportTypes = res;
+      }
+    )
   }
 }

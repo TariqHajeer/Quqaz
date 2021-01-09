@@ -2,7 +2,7 @@
   <div class="col-md-12 mb-4">
     <div class="card">
       <div class="card-body">
-        <div class="card-title">تعديل العميل</div>
+        <h3 class="card-title">تعديل العميل</h3>
         <form (ngSubmit)="addOrEditClient()" class="row">
           <div class="row w-100 align-items-end mb-3">
             <div class="col-md-3">
@@ -62,7 +62,7 @@
                         <label for="phone" class="col-form-label">الرقم:</label>
                         <input id="phone" type="text" maxlength="10"
                           oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
-                          class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="tempPhone"> </div>
+                          class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="phone.Phone"> </div>
                       <button type="button" class="btn btn-primary" (click)="addNewPhone()">اضافة</button>
                     </form>
                     <table class="table">
@@ -76,10 +76,18 @@
                         <th></th>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let phone of client.phones;let i=index">
+                        <tr *ngFor="let phone of phones;let i=index">
                           <td>{{i}}</td>
-                          <td>{{phone}}</td>
-                          <td>x</td>
+                          <td>{{phone.Phone}}</td>
+                          <td>
+                            <svg (click)="DeletePhone(phone)" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"style="cursor: pointer;">
+                            <path
+                              d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                            <path fill-rule="evenodd"
+                              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                          </svg>حذف
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -96,7 +104,6 @@
           <div class="row w-100">
             <div class="col-3">
               <button type="submit" class="btn btn-primary"> {{'forms.save' | translate}}</button>
-
 
             </div>
           </div>

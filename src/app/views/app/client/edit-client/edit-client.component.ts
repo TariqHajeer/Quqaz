@@ -4,6 +4,7 @@ import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { CustomService } from 'src/app/services/custom.service';
 import { Client } from '../client.model';
 import { ClientService } from '../client.service';
+import { Phone } from 'src/app/Models/phone.model'
 
 @Component({
   selector: 'app-edit-client',
@@ -12,16 +13,18 @@ import { ClientService } from '../client.service';
 })
 export class EditClientComponent implements OnInit {
 
-  constructor(private customService: CustomService,private clientService:ClientService,
+  constructor(private customService: CustomService, private clientService: ClientService,
     private notifications: NotificationsService,
     private getroute: ActivatedRoute,
-    private router:Router) { }
+    private router: Router) { }
   client: Client;
   regions: any[] = [];
-  tempPhone: any;
+  phone: Phone
+  phones: Phone[] = []
   id
   submitted
   ngOnInit(): void {
+    this.phone = new Phone()
     this.init();
     this.getroute.params.subscribe(par => {
       this.id = par['id'] as string
@@ -29,7 +32,7 @@ export class EditClientComponent implements OnInit {
     this.getRegions();
     this.getClientById()
   }
-  
+
   init() {
     this.client = {
       id: null,
@@ -46,20 +49,18 @@ export class EditClientComponent implements OnInit {
   }
   getClientById() {
     this.clientService.getClients().subscribe(
-      res=>{
-       this.client=res.find(c=>c.id==this.id)
+      res => {
+        this.client = res.find(c => c.id == this.id)
+        //this.phones=this.client.phones
       }
     )
   }
 
   addOrEditClient() {
-   
-    if (this.tempPhone)
-      this.client.phones.push(this.tempPhone)
 
     this.clientService.Update(this.client).subscribe(
       res => {
-         this.notifications.create('success', 'تم تعديل عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+        this.notifications.create('success', 'تم تعديل عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         this.router.navigate(['/app/client'])
 
       }
@@ -74,8 +75,18 @@ export class EditClientComponent implements OnInit {
   }
 
   addNewPhone() {
-    this.client.phones.push(this.tempPhone);
-    this.tempPhone = '';
-  }
+    console.log(this.phone)
+    this.clientService.addPhone(this.phone).subscribe(res => {
+      this.phones.push(this.phone);
+      this.phone = new Phone();
+      this.notifications.create('success', 'تمت اضافة رقم هاتف بنجاح ', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    })
 
+  }
+  DeletePhone(item) {
+    this.clientService.deletePhone(item.objectId).subscribe(res => {
+      this.phones.filter(p => p != item)
+      this.notifications.create('success', 'تم حذف رقم هاتف بنجاح ', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    })
+  }
 }

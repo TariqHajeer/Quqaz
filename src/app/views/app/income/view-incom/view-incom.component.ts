@@ -1,7 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { EditSettingsModel, GridComponent, ToolbarItems } from '@syncfusion/ej2-angular-grids';
+import { CustomService } from 'src/app/services/custom.service';
 import {Income} from '../income.model'
 import {IncomeService} from '../income.service'
+import { UserService } from 'src/app/services/user.service';
+import { Filtering } from 'src/app/Models/Filtering.model';
+import { Coin } from 'src/app/Models/Coins/coin.model';
+
 @Component({
   selector: 'app-view-incom',
   templateUrl: './view-incom.component.html',
@@ -9,7 +14,8 @@ import {IncomeService} from '../income.service'
 })
 export class ViewIncomComponent implements OnInit {
 
-  constructor(private incomeService:IncomeService) { }
+  constructor(private incomeService:IncomeService,
+    private customService: CustomService,public UserService:UserService) { }
   public stTime: any;
   public filter: Object;
   public filterSettings: Object;
@@ -23,7 +29,14 @@ export class ViewIncomComponent implements OnInit {
   incomes:Income[]=[];
   editClicked:any;
   addClicked:any;
+  filtering: Filtering
+  coins: Coin[];
+  importTypes: any[] = [];
   ngOnInit(): void {
+    this.filtering=new Filtering
+    this.Getcoins()
+    this.UserService.GetAll();
+    this.getImportTypes()
     this.getIncomes();
     this.editSettings = { showDeleteConfirmDialog: true, allowDeleting: true };
     this.toolbar = ['Search', 'Delete',];
@@ -49,9 +62,21 @@ export class ViewIncomComponent implements OnInit {
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
 getIncomes(){
-  this.incomeService.getIncomes().subscribe(
+  this.incomeService.getIncomes(this.filtering).subscribe(
     res=>{
       this.incomes=res;
+    }
+  )
+}
+Getcoins() {
+  this.customService.getAll("Currency").subscribe(res => {
+    this.coins = res;
+  });
+}
+getImportTypes() {
+  this.customService.getAll("IncomeType").subscribe(
+    res => {
+      this.importTypes = res;
     }
   )
 }

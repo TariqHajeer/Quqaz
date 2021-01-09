@@ -1,34 +1,94 @@
 <div class="col-md-12 mb-4">
   <div class="card">
     <div class="card-body">
-      <div class="d-flex justify-content-between">
+
+      <div class=" d-flex justify-content-between">
         <h5 class="card-title">{{'menu.outcome' | translate}}</h5>
         <button class="btn  mb-3" (click)="addUserModal.show();addNewClicked()"><i class="iconsminds-add  text-primary"
-          style="font-size: 38px;"></i></button>
+            style="font-size: 38px;"></i></button>
+      </div>
+      
+          <button (click)="AddMoreOutcome()" class="btn btn-primary"> اضافة متعددة</button>
+        
+      <br><br>
+      <h5 class="card-title">بحث على حسب : </h5>
+      <div class="row">
+        <div class="col-md-2">
+          <label>نوع الصادرات</label>
+          <ng-select [(ngModel)]="filtering.Type" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+          (ngModelChange)="getOutcomes()">
+            <ng-option *ngFor="let exportType of exportTypes" [value]="exportType.id">{{exportType.name}}
+            </ng-option>
+          </ng-select>
+        </div>
+        <div class="col-md-2">
+          <label>العملة</label>
+          <ng-select [(ngModel)]="filtering.CurrencyId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+          (ngModelChange)="getOutcomes()">
+            <ng-option *ngFor="let coin of coins" [value]="coin.id">{{coin.name}}</ng-option>
+          </ng-select>
 
-</div>
-<button (click)="AddMoreOutcome()" class="btn btn-primary"> اضافة متعددة</button>
+        </div>
+        <div class="col-md-2">
+          <label> المبلغ الأدنى</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.MinAmount"
+            (ngModelChange)="getOutcomes()">
 
-<br><br>
-  <ejs-grid #normalgrid   id='normalgrid'  (load)='load()'  [allowPaging]='true'
-  [gridLines]="lines" [pageSettings]='pageSettings' [toolbar]='toolbar'
-    [editSettings]='editSettings'[dataSource]='outcomes' rowHeight='38'
-      [allowSorting]='true' height='400'
-       [enableHover]='true' [selectionSettings]='selectionSettings'
-        [filterSettings]='filterSettings' [allowSorting]='true'
-         [allowFiltering]='true'>
-   <e-columns>
-       <e-column   field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter' width='50' [isPrimaryKey]='true'></e-column>
-       <e-column   field='amount' [allowEditing]='true' textAlign="Center" headerText="المبلغ المصروف" width='140'></e-column>
-       <e-column   field='date' [allowEditing]='false' textAlign="Center" headerText="التاريخ " width='140'></e-column>
-       <e-column   field='reason' [allowEditing]='false' textAlign="Center" headerText=السبب width='140'></e-column>
-       <e-column   field='note' [allowEditing]='false' textAlign="Center" headerText="ملاحظات" width='140'></e-column>
+        </div>
+        <div class="col-md-2">
+          <label>المبلغ الأعلى</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.MaxAmount"
+            (ngModelChange)="getOutcomes()">
 
-   </e-columns>
-</ejs-grid>
+        </div>
+        <div class="col-md-2">
+          <label>الموظف</label>
+          <ng-select [(ngModel)]="filtering.UserId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+          (ngModelChange)="getOutcomes()">
+            <ng-option *ngFor="let user of UserService.users" [value]="user.id">{{user.name}}
+            </ng-option>
+          </ng-select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <label>من تاريخ</label>
+          <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="filtering.FromDate" bsDatepicker [container]="'html'"
+            [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }"
+            (ngModelChange)="getOutcomes()">
 
-</div>
-</div>
+        </div>
+        <div class="col-md-2">
+          <label>الى تاريخ</label>
+          <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="filtering.ToDate" bsDatepicker [container]="'html'"
+            [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }"
+            (ngModelChange)="getOutcomes()">
+
+        </div>
+      </div>
+      <br>
+      <ejs-grid #normalgrid id='normalgrid' (load)='load()' [allowPaging]='true' [gridLines]="lines"
+        [pageSettings]='pageSettings' [toolbar]='toolbar' [editSettings]='editSettings' [dataSource]='outcomes'
+        rowHeight='38' [allowSorting]='true' height='400' [enableHover]='true' [selectionSettings]='selectionSettings'
+        [filterSettings]='filterSettings' [allowSorting]='true' [allowFiltering]='true'>
+        <e-columns>
+          <e-column field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter' width='50'
+            [isPrimaryKey]='true'></e-column>
+          <e-column field='amount' [allowEditing]='true' textAlign="Center" headerText="المبلغ المصروف" width='140'>
+          </e-column>
+          <e-column field='date' [allowEditing]='false' textAlign="Center" headerText="التاريخ " width='140'></e-column>
+          <e-column field='reason' [allowEditing]='false' textAlign="Center" headerText=السبب width='140'></e-column>
+          <e-column field='note' [allowEditing]='false' textAlign="Center" headerText="ملاحظات" width='140'></e-column>
+
+        </e-columns>
+      </ejs-grid>
+
+    </div>
+  </div>
 </div>
 <div bsModal #addUserModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
   aria-labelledby="dialog-sizes-name1">
@@ -43,8 +103,7 @@
         </button>
       </div>
       <div class="modal-body" style="font-size: 15px;">
-        <app-add-out-come (addFinish)="addFinish();addUserModal.hide()" [addClicked]="addClicked"
-         ></app-add-out-come>
+        <app-add-out-come (addFinish)="addFinish();addUserModal.hide()" [addClicked]="addClicked"></app-add-out-come>
       </div>
     </div>
   </div>
