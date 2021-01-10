@@ -104,7 +104,7 @@ export class ExportsTypesComponent implements OnInit {
     }
   }
   onActionBegin(args: ActionEventArgs) {
-    let name = args.data["name"].trim();
+    //
     if (args.action == "add") {
       if (args.requestType == "save") {
         if (args.data["name"] == undefined) {
@@ -134,6 +134,7 @@ export class ExportsTypesComponent implements OnInit {
     }
     if (args.action == "edit") {
       var id = args.data["id"];
+      let name = args.data["name"].trim();
       if (name == "") {
         this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
         args.cancel = true;

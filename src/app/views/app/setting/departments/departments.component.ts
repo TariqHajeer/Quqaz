@@ -85,7 +85,7 @@ export class DepartmentsComponent implements OnInit {
 
     if (args.action == "add") {
       if (args.requestType == "save") {
-        let name = args.data["name"].trim();
+        //let name = args.data["name"].trim();
         if (args.data["name"] == ""||args.data["name"]==undefined) {
           this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
           args.cancel = true;
@@ -97,6 +97,7 @@ export class DepartmentsComponent implements OnInit {
         else {
           let obj: any = { name: args.data['name'] }
           args.cancel = true;
+          console.log(obj)
           this.customService.addOrUpdate(this.apiName, obj, 'add').subscribe(
             res => {
               this.notifications.create('success', 'تم اضافة القسم  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
