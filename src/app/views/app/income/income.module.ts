@@ -29,6 +29,7 @@ import { AddMoreIncomeComponent } from './add-more-income/add-more-income.compon
     BsDatepickerModule.forRoot(),
     NgSelectModule,
     
+    
 
   ],schemas:[CUSTOM_ELEMENTS_SCHEMA],
   providers: [EditService, ToolbarService, SortService]

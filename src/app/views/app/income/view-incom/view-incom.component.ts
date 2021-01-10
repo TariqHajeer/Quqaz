@@ -6,6 +6,7 @@ import {IncomeService} from '../income.service'
 import { UserService } from 'src/app/services/user.service';
 import { Filtering } from 'src/app/Models/Filtering.model';
 import { Coin } from 'src/app/Models/Coins/coin.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-incom',
@@ -15,7 +16,8 @@ import { Coin } from 'src/app/Models/Coins/coin.model';
 export class ViewIncomComponent implements OnInit {
 
   constructor(private incomeService:IncomeService,
-    private customService: CustomService,public UserService:UserService) { }
+    private customService: CustomService,public UserService:UserService,
+    private router:Router) { }
   public stTime: any;
   public filter: Object;
   public filterSettings: Object;
@@ -80,5 +82,8 @@ getImportTypes() {
       this.importTypes = res;
     }
   )
+}
+AddMoreOutcome() {
+  this.router.navigate(['app/income/addmoreincome'])
 }
 }
