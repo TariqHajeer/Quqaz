@@ -87,8 +87,13 @@ export class ImportsTypesComponent implements OnInit {
   onActionBegin(args: ActionEventArgs) {
     if (args.action == "add") {
       if (args.requestType == "save") {
-        //let name = args.data["name"].trim();
-        if (args.data["name"] == ""||args.data["name"]==undefined) {
+        if(args.data["name"]==undefined){
+          this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+          args.cancel = true;
+          return;
+        }
+        let name = args.data["name"].trim();
+        if (name) {
           this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
           args.cancel = true;
         }
