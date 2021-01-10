@@ -1,1 +1,69 @@
-<p>add-in-come works!</p>
+<div class="col-md-12">
+    <form class="row" (ngSubmit)="addOrEditUser()">
+        <div class="row w-100 align-items-end mb-3">
+            <div class="col-md-3">
+                <label>نوع الواردات<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                <ng-select [(ngModel)]="CreateIncome.IncomeTypeId" [ngModelOptions]="{standalone: true}"
+                    [closeOnSelect]="true">
+                    <ng-option *ngFor="let importType of importTypes" [value]="importType.id">{{importType.name}}
+                    </ng-option>
+                </ng-select>
+                <div *ngIf="!CreateIncome.IncomeTypeId && submitted" class="invalid-tooltip">نوع الواردات حقل مطلوب
+                </div>
+
+            </div>
+            <div class="col-md-3">
+                <label>العملة<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                <ng-select [(ngModel)]="CreateIncome.CurrencyId" [ngModelOptions]="{standalone: true}"
+                    [closeOnSelect]="true">
+                    <ng-option *ngFor="let coin of coins" [value]="coin.id">{{coin.name}}</ng-option>
+                </ng-select>
+                <div *ngIf="!CreateIncome.CurrencyId && submitted" class="invalid-tooltip"> العملة حقل مطلوب</div>
+
+            </div>
+            <div class="col-md-3">
+                <label>المبلغ<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                    class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateIncome.Amount">
+                <div *ngIf="!CreateIncome.Amount && submitted" class="invalid-tooltip">المبلغ حقل مطلوب</div>
+            </div>
+            <div class="col-md-3">
+                <label>الربح<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                    class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateIncome.Earining">
+                <div *ngIf="!CreateIncome.Earining && submitted" class="invalid-tooltip">الربح حقل مطلوب</div>
+            </div>
+
+            <div class="col-md-3">
+                <label>المصدر</label>
+                <input type="text"class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateIncome.Source">
+            </div>
+            <div class="col-md-3">
+                <label>الموظف</label>
+                <ng-select [(ngModel)]="CreateIncome.UserId" [ngModelOptions]="{standalone: true}"
+                    [closeOnSelect]="true">
+                    <ng-option *ngFor="let user of UserService.users" [value]="user.id">{{user.name}}
+                    </ng-option>
+                </ng-select>
+            </div>
+            <div class="col-md-3">
+                <label>تاريخ </label>
+                <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
+                    [(ngModel)]="CreateIncome.Date" bsDatepicker [container]="'html'"
+                    [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
+            </div>
+            <div class="col-md-6">
+                <label>ملاحظات</label>
+                <input type="text"class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateIncome.Note">
+            </div>
+
+        </div>
+
+        <div class="row w-100">
+            <div class="col-3">
+                <button type="submit" class="btn btn-primary"> حفظ</button>
+            </div>
+        </div>
+    </form>
+</div>
+<simple-notifications></simple-notifications>

@@ -50,6 +50,10 @@ export class AddOutComeComponent implements OnInit, OnChanges {
  
   addOrEditUser() {
     this.submitted = true;
+    this.OutcomeService.Create(this.CreateOutCome).subscribe(res=>{
+      this.notifications.create('', 'تم الاضافة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+
+    })
   }
 
 

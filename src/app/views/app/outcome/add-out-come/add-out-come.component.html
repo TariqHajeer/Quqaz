@@ -11,28 +11,26 @@
                 <div *ngIf="!CreateOutCome.OutComeTypeId && submitted" class="invalid-tooltip">نوع الصادرات حقل مطلوب</div>
 
             </div>
-
-            <div class="col-md-3">
-                <label>المبلغ<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                <input type="text"
-                    oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
-                    class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateOutCome.Amount">
-                <div *ngIf="!CreateOutCome.Amount && submitted" class="invalid-tooltip">الكمية حقل مطلوب</div>
-            </div>
             <div class="col-md-3">
                 <label>المعلة<span class="text-danger text-one align-bottom mx-1">*</span></label>
                 <ng-select [(ngModel)]="CreateOutCome.CurrencyId" [ngModelOptions]="{standalone: true}"
                     [closeOnSelect]="true">
                     <ng-option *ngFor="let coin of coins" [value]="coin.id">{{coin.name}}</ng-option>
                 </ng-select>
-                <div *ngIf="!CreateOutCome.CurrencyId && submitted" class="invalid-tooltip">نوع العملة حقل مطلوب</div>
+                <div *ngIf="!CreateOutCome.CurrencyId && submitted" class="invalid-tooltip"> العملة حقل مطلوب</div>
 
             </div>
             <div class="col-md-3">
-                <label>السبب</label>
+                <label>المبلغ<span class="text-danger text-one align-bottom mx-1">*</span></label>
                 <input type="text"
-                    oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
-                    class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateOutCome.Reason">
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                    class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateOutCome.Amount">
+                <div *ngIf="!CreateOutCome.Amount && submitted" class="invalid-tooltip">المبلغ حقل مطلوب</div>
+            </div>
+            
+            <div class="col-md-3">
+                <label>السبب</label>
+                <input type="text"  class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateOutCome.Reason">
             </div>
             <div class="col-md-3">
                 <label>تاريخ </label>
@@ -42,9 +40,7 @@
             </div>
             <div class="col-md-3">
                 <label>ملاحظات</label>
-                <input type="text"
-                    oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
-                    class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateOutCome.Note">
+                <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateOutCome.Note">
             </div>
 
         </div>
@@ -56,3 +52,4 @@
         </div>
     </form>
 </div>
+<simple-notifications></simple-notifications>

@@ -51,7 +51,8 @@ export class ViewIncomComponent implements OnInit {
     this.lines = 'Horizontal';
   }
   addNewClicked(){
-
+    this.addClicked = true;
+    this.editClicked = false;
   }
 
   load() {
@@ -62,9 +63,9 @@ export class ViewIncomComponent implements OnInit {
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
 getIncomes(){
-  this.incomeService.getIncomes(this.filtering).subscribe(
+  this.incomeService.Get(this.filtering).subscribe(
     res=>{
-      this.incomes=res;
+      this.incomes=res.body;
     }
   )
 }

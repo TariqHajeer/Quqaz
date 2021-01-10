@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Filtering } from 'src/app/Models/Filtering.model'
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -10,26 +11,32 @@ import { map } from 'rxjs/operators';
 export class OutcomeService {
 
 
-  constructor(private http : HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   baseUrl: string = 'http://localhost:5000/';
+  controler = environment.baseUrl + "api/OutCome"
 
-
-  getOutcomes(filter:Filtering):Observable<any>{
-    let formdata=new FormData()
-    formdata.append('CurrencyId',filter.CurrencyId.toString())
-    formdata.append('FromDate',filter.FromDate.toString())
-    formdata.append('MaxAmount',filter.MaxAmount.toString())
-    formdata.append('MinAmount',filter.MinAmount.toString())
-    formdata.append('ToDate',filter.ToDate.toString())
-    formdata.append('Type',filter.Type.toString())
-    formdata.append('UserId',filter.UserId.toString())
-    return this.http.get(this.baseUrl+'api/OutCome?'+formdata).pipe(
+  getOutcomes(): Observable<any> {
+    return this.http.get(this.baseUrl + 'api/OutCome?').pipe(
       map(
-        (res:any)=>{
+        (res: any) => {
           return res;
         }
       )
     )
+  }
+  Get(filter: Filtering){
+    let CurrencyId = new HttpParams().set('CurrencyId', filter.CurrencyId);
+    let FromDate = new HttpParams().set('FromDate', filter.FromDate);
+    let MaxAmount = new HttpParams().set('MaxAmount', filter.MaxAmount);
+    let MinAmount = new HttpParams().set('MinAmount', filter.MinAmount);
+    let ToDate = new HttpParams().set('ToDate', filter.ToDate);
+    let Type = new HttpParams().set('Type', filter.Type);
+    let UserId = new HttpParams().set('UserId', filter.UserId);
+    return this.http.get<any>(this.controler + "?" + CurrencyId + "&" + FromDate + "&" + MaxAmount
+      + "&"+MinAmount+"&"+ToDate+"&"+Type+"&"+UserId,{observe: 'response'})
+  }
+  Create(item) {
+    return this.http.post(this.controler, item)
   }
 }

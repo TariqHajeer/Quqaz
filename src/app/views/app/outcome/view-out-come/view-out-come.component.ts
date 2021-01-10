@@ -59,9 +59,9 @@ export class ViewOutComeComponent implements OnInit {
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
   getOutcomes() {
-    this.outcomeService.getOutcomes(this.filtering).subscribe(
-      res => {
-        this.outcomes = res;
+    this.outcomeService.Get(this.filtering).subscribe(
+      response => {
+        this.outcomes = response.body;
       }
     )
   }
