@@ -87,13 +87,8 @@ export class ImportsTypesComponent implements OnInit {
   onActionBegin(args: ActionEventArgs) {
     if (args.action == "add") {
       if (args.requestType == "save") {
-        if(args.data["name"]==undefined){
-          this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
-          args.cancel = true;
-          return;
-        }
-        let name = args.data["name"].trim();
-        if (name) {
+        let name = args.data["name"];
+        if (args.data["name"] == ""||args.data["name"]==undefined) {
           this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
           args.cancel = true;
         }
@@ -106,7 +101,7 @@ export class ImportsTypesComponent implements OnInit {
           args.cancel = true;
           this.customService.addOrUpdate(this.apiName, obj, 'add').subscribe(
             res => {
-              this.notifications.create('success', 'تم اضافة نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+              this.notifications.create('success', 'تم اضافة نوع واردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 
               this.importTypes.push(res);
               this.gridInstance.refresh();

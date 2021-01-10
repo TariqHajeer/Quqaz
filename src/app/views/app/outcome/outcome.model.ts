@@ -1,5 +1,5 @@
 export interface Outcome{
-  amount: number,
+  amount?: number,
   currencyId?: number,
   date?: any,
   reason?: string,

@@ -99,15 +99,10 @@ export class ExportsTypesComponent implements OnInit {
     }
   }
   onActionBegin(args: ActionEventArgs) {
-    //
     if (args.action == "add") {
       if (args.requestType == "save") {
-        if (args.data["name"] == undefined) {
-          this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
-          args.cancel = true;
-        }
-        let name = args.data["name"].trim();
-        if (name == "") {
+        let name = args.data["name"]
+        if (args.data["name"] == ""||args.data["name"]==undefined) {
           this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
           args.cancel = true;
         }
@@ -117,9 +112,11 @@ export class ExportsTypesComponent implements OnInit {
         }
         else {
           let obj: any = { name: args.data['name'] }
+          args.cancel = true;
           this.customService.addOrUpdate(this.apiName, obj, 'add').subscribe(
             res => {
-              this.notifications.create('success', 'تم اضافة نوع الواردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+              this.notifications.create('success', 'تم اضافة نوع صادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+
               this.exportTypes.push(res);
               this.gridInstance.refresh();
             }
@@ -128,8 +125,8 @@ export class ExportsTypesComponent implements OnInit {
       }
     }
     if (args.action == "edit") {
-      var id = args.data["id"];
       let name = args.data["name"].trim();
+      var id = args.data["id"];
       if (name == "") {
         this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
         args.cancel = true;
@@ -138,11 +135,10 @@ export class ExportsTypesComponent implements OnInit {
         this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
         args.cancel = true;
       }
-
     }
     if (args.requestType == "delete") {
-      let coin = args.data[0];
-      if (!coin.canDelete) {
+      let exportType = args.data[0];
+      if (!exportType.canDelete) {
         this.notifications.create('', 'لا يمكن الحذف', NotificationType.Error, { timeOut: 6000, showProgressBar: false });
         args.cancel = true;
       }
