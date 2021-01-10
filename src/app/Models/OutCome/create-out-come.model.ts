@@ -1,8 +1,8 @@
 export class CreateOutCome {
-    Amount
-    CurrencyId
-    Date
-    Reason
-    Note
-    OutComeTypeId
+    Amount:number
+    CurrencyId:number
+    Date:Date
+    Reason:string
+    Note:string
+    OutComeTypeId:number
 }

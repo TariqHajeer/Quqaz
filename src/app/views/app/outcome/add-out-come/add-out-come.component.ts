@@ -5,6 +5,8 @@ import { CustomService } from 'src/app/services/custom.service';
 import { OutcomeService } from 'src/app/views/app/outcome/outcome.service';
 import { CreateOutCome } from 'src/app/Models/OutCome/create-out-come.model';
 import { Coin } from 'src/app/Models/Coins/coin.model';
+import { DatePipe } from '@angular/common';
+import { Data } from '@syncfusion/ej2-angular-grids';
 
 @Component({
   selector: 'app-add-out-come',
@@ -16,6 +18,7 @@ export class AddOutComeComponent implements OnInit, OnChanges {
   constructor(public OutcomeService: OutcomeService,
     private customService: CustomService,
     private notifications: NotificationsService,
+    private datePipe: DatePipe
   ) { }
   @Input() currentUserId;
   @Input() editClicked;
@@ -25,6 +28,7 @@ export class AddOutComeComponent implements OnInit, OnChanges {
   CreateOutCome: CreateOutCome
   ngOnInit(): void {
     this.CreateOutCome = new CreateOutCome()
+    this.CreateOutCome.Date=new Date()
     this.Getcoins()
     this.getExportTypes()
   }
@@ -50,6 +54,9 @@ export class AddOutComeComponent implements OnInit, OnChanges {
  
   addOrEditUser() {
     this.submitted = true;
+    let date=this.datePipe.transform( this.CreateOutCome.Date,"yyyy-MM-dd hh:mm:ss")
+    this.CreateOutCome.Date=new Date(date)
+    console.log( this.CreateOutCome)
     this.OutcomeService.Create(this.CreateOutCome).subscribe(res=>{
       this.notifications.create('', 'تم الاضافة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 

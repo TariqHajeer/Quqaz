@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { OutcomeRoutingModule } from './outcome-routing.module';
 import { ViewOutComeComponent } from './view-out-come/view-out-come.component';
@@ -31,6 +31,8 @@ import { AddMoreOutcomeComponent } from './add-more-outcome/add-more-outcome.com
     BsDatepickerModule.forRoot(),
     NgSelectModule,
 
-  ], schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  ], schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [DatePipe]
+
 })
 export class OutcomeModule { }
