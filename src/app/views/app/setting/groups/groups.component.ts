@@ -99,7 +99,7 @@ export class GroupsComponent implements OnInit {
       this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
       return true
     }
-     if(this.Groups.filter(c => c.name == name).length > 0 ){
+     if(this.Groups.filter(c => c.name == group.Name).length > 0 ){
       this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
       return true
     }
@@ -107,6 +107,6 @@ export class GroupsComponent implements OnInit {
       this.notifications.create('', 'لا يوجد صلاحيات', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
       return true;
     }
-    return true;
+    return false;
   }
 }
