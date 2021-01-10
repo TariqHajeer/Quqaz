@@ -28,7 +28,7 @@ export class IncomeService {
     return this.http.post(this.contoler, item)
   }
   AddMultiple(items) {
-    return this.http.post(this.contoler+"AddMultiple", items)
+    return this.http.post(this.contoler+"/AddMultiple", items)
   }
   Get(filter: Filtering) {
    

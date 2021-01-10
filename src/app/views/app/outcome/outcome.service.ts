@@ -39,4 +39,7 @@ export class OutcomeService {
   Create(item) {
     return this.http.post(this.controler, item)
   }
+  CreateMulitpleOutCome(items) {
+    return this.http.post(this.controler+"/CreateMulitpleOutCome", items)
+  }
 }

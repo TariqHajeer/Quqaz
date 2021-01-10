@@ -129,7 +129,10 @@ export class AddMoreOutcomeComponent implements OnInit {
   }
 
   AddOutcome() {
-    this.notifications.create('success', 'تم اضافة صادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-    this.OutComes = []
+    this.OutcomeService.CreateMulitpleOutCome(this.OutComes).subscribe(res=>{
+      this.notifications.create('success', 'تم اضافة صادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.OutComes = []
+  })
+   
   }
 }
