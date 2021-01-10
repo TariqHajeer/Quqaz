@@ -40,17 +40,14 @@
             </div>
             <div class="col-md-3" >
               <label>كلمة السر <span class="text-danger text-one align-bottom mx-1">*</span></label>
-              <input type="password"
-                oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
-                class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.password">
+              <input type="password"  class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.password">
               <div *ngIf="!User.password && submitted" class="invalid-tooltip">كلمة السر حقل مطلوب</div>
             </div>
             <div class="col-md-3" >
               <label> تأكيد كلمة السر <span class="text-danger text-one align-bottom mx-1">*</span></label>
-              <input type="password"
-                oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
-                class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.password">
-              <div *ngIf="!User.password && submitted" class="invalid-tooltip">كلمة السر حقل مطلوب</div>
+              <input type="password" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="confirmpassword">
+              <div *ngIf="User.password!=confirmpassword && submitted " class="invalid-tooltip">كلمة السر  غير متطابقة</div>
+
             </div>
             
           </div>
@@ -67,9 +64,7 @@
             </div>
             <div class="col-md-5" *ngIf="!User.canWorkAsAgent">
               <label>الخبرة</label>
-              <input type="text"
-                oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
-                class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.experince">
+              <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.experince">
             </div>
 
           </div>
@@ -83,7 +78,7 @@
             </div>
             <div class="col-md-3" *ngIf="User.canWorkAsAgent">
               <label>كلفة التوصيل</label>
-              <input type="number" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
+              <input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                 class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.salary">
             </div>
             
@@ -91,9 +86,7 @@
           <div class="row w-100 align-items-end mb-3">
             <div class="col-md-11">
               <label>ملاحظات</label>
-              <input type="text"
-                oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
-                class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.note">
+              <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.note">
             </div>
           </div>
           <div class="row w-100 align-items-end mb-3">

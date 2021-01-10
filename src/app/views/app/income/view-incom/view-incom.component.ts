@@ -33,7 +33,7 @@ export class ViewIncomComponent implements OnInit {
   coins: Coin[];
   importTypes: any[] = [];
   ngOnInit(): void {
-    this.filtering=new Filtering
+    this.filtering=new Filtering()
     this.Getcoins()
     this.UserService.GetAll();
     this.getImportTypes()

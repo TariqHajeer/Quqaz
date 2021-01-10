@@ -33,8 +33,8 @@ export class OutcomeService {
     let ToDate = new HttpParams().set('ToDate', filter.ToDate);
     let Type = new HttpParams().set('Type', filter.Type);
     let UserId = new HttpParams().set('UserId', filter.UserId);
-    return this.http.get<any>(this.controler + "?" + CurrencyId + "&" + FromDate + "&" + MaxAmount
-      + "&"+MinAmount+"&"+ToDate+"&"+Type+"&"+UserId,{observe: 'response'})
+    return this.http.get<any>(this.controler + "?" +MinAmount   + "&" +MaxAmount  + "&" +UserId 
+      + "&"+FromDate +"&"+ToDate+"&"+Type+"&"+CurrencyId,{observe: 'response'})
   }
   Create(item) {
     return this.http.post(this.controler, item)

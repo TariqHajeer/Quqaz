@@ -39,8 +39,8 @@ export class IncomeService {
     let ToDate = new HttpParams().set('ToDate', filter.ToDate);
     let Type = new HttpParams().set('Type', filter.Type);
     let UserId = new HttpParams().set('UserId', filter.UserId);
-    return this.http.get<any>(this.contoler + "?" + CurrencyId + "&" + FromDate + "&" + MaxAmount
-      + "&"+MinAmount+"&"+ToDate+"&"+Type+"&"+UserId,{observe: 'response'})
-   
+    return this.http.get<any>(this.contoler + "?" +MinAmount   + "&" +MaxAmount  + "&" +UserId 
+      + "&"+FromDate +"&"+ToDate+"&"+Type+"&"+CurrencyId,{observe: 'response'})
+  
   }
 }

@@ -30,6 +30,8 @@ export class ViewUserComponent implements OnInit {
   editClicked:any;
   addClicked:any;
   currentUserId:any;
+  confirmpassword:string
+
   ngOnInit(): void {
     this.getUser();
     this.editSettings = { showDeleteConfirmDialog: true, allowDeleting: true };

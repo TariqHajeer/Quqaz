@@ -23,7 +23,7 @@ export const environment = {
   */
   defaultColor: 'light.blueyale',
   isDarkSwitchActive: true,
-  defaultDirection: 'ltr',
+  defaultDirection: 'rtl',
   themeRadiusStorageKey: 'vien-themeradius',
   isAuthGuardActive: false,
   //defaultRole: UserPermission.Admin,

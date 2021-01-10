@@ -34,7 +34,7 @@ export class ViewOutComeComponent implements OnInit {
   coins: Coin[];
   exportTypes: any[] = [];
   ngOnInit(): void {
-    this.filtering=new Filtering
+    this.filtering=new Filtering()
     this.Getcoins()
     this.UserService.GetAll();
     this.getExportTypes()

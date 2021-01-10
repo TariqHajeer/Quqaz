@@ -35,6 +35,7 @@ export class EditUserComponent implements OnInit {
   nameIsRepeated: boolean = false;
   id
   submitted
+  confirmpassword:string
   ngOnInit(): void {
     this.phone = new Phone()
     this.addGroup = new Group()
