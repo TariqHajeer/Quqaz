@@ -3,8 +3,6 @@ import { ActionEventArgs, EditSettingsModel, GridComponent, SaveEventArgs, Toolb
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { CustomService } from 'src/app/services/custom.service';
 import { Coin } from '../../../../Models/Coins/coin.model';
-import { CreateCoin } from '../../../../Models/Coins/create-coin.model';
-import { UpdateCoin } from '../../../../Models/Coins/update-coin.model';
 @Component({
   selector: 'app-coins',
   templateUrl: './coins.component.html',
@@ -26,6 +24,7 @@ export class CoinsComponent implements OnInit {
   public gridInstance: GridComponent;
   public toolbar: Object[];
   public pageSettings: Object;
+
   ngOnInit(): void {
     this.Get();
     this.editSettings = { showDeleteConfirmDialog: false, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
@@ -42,9 +41,7 @@ export class CoinsComponent implements OnInit {
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
     this.pageSettings = { pageCount: 5 };
-    this.gridInstance.on('data-ready', function () {
-      this.dReady = true;
-    });
+    
     this.selectionSettings = { persistSelection: true, type: "Multiple" };
     this.lines = 'Horizontal';
   }
@@ -63,12 +60,10 @@ export class CoinsComponent implements OnInit {
   }
   actionComplete(args: SaveEventArgs) {
     if (args.action === "edit") {
-      console.log(args.cancel);
       let obj: any = { id: Number.parseInt(args.data['id']), name: args.data['name'] }
       this.customService.addOrUpdate(this.apiName, obj, 'update').subscribe(
         res => {
           this.notifications.create('success', 'تم تعديل  العملة  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-        
         }
       )
     }
@@ -77,18 +72,18 @@ export class CoinsComponent implements OnInit {
       this.customService.delete(this.apiName, id).subscribe(
         res => {
           this.notifications.create('success', 'تم حذف  العملة  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
-         
+
         }
       )
-     
+
     }
   }
   onActionBegin(args: ActionEventArgs) {
     if (args.action == "add") {
       if (args.requestType == "save") {
 
-        if(args.data["name"]==undefined){
-          
+        if (args.data["name"] == undefined) {
+
           this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
           args.cancel = true;
           return;
@@ -120,6 +115,7 @@ export class CoinsComponent implements OnInit {
     }
     if (args.action == "edit") {
       let name = args.data["name"].trim();
+
       var id = args.data["id"];
       if (name == "") {
         this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });

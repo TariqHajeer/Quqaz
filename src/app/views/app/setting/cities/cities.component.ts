@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { EditSettingsModel, GridComponent, SaveEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
+import { ActionEventArgs, EditSettingsModel, GridComponent, IEditCell, SaveEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { CreateCity } from 'src/app/Models/Cities/create-city.Model';
@@ -28,6 +28,8 @@ export class CitiesComponent implements OnInit {
   public pageSettings: Object;
   currentId: any;
   currentMode = '';
+  apiName: string = "Country"
+  public numericParams: IEditCell;
   ngOnInit(): void {
     this.getCities();
     this.editSettings = { showDeleteConfirmDialog: false, allowAdding: false, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
@@ -37,14 +39,20 @@ export class CitiesComponent implements OnInit {
       { text: 'حفظ', tooltipText: 'حفظ', prefixIcon: 'e-update', id: 'normalgrid_update' },
       { text: 'تراجع', tooltipText: 'تراجع', prefixIcon: 'e-cancel', id: 'normalgrid_cancel' },
       'Search'
-      ]
+    ]
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
     this.pageSettings = { pageCount: 5 };
-    this.gridInstance.on('data-ready', function () {
-      this.dReady = true;
-    });
+    this.numericParams = {
+      params: {
+        validateDecimalOnType: true,
+        decimals: 1,
+        format: 'N',
+        min: 1,
+
+      }
+    };
     this.selectionSettings = { persistSelection: true, type: "Multiple" };
     this.lines = 'Horizontal';
   }
@@ -76,10 +84,9 @@ export class CitiesComponent implements OnInit {
         this.notifications.create("error", "الأسم موجود سابقاً", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       }
       this.city.deliveryCost = Number(this.city.deliveryCost);
-      this.customService.addOrUpdate('Country', this.city, 'add').subscribe(
+      this.customService.addOrUpdate(this.apiName, this.city, 'add').subscribe(
         res => {
           this.notifications.create('success', 'تم اضافة مدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-          this.getCities();
           this.city = { name: '', deliveryCost: 0, regions: [] };
           this.currentMode = '';
         }
@@ -87,7 +94,7 @@ export class CitiesComponent implements OnInit {
     }
     else if (this.currentMode == 'edit') {
       let obj: any = { id: Number.parseInt(this.currentId), name: this.city.name, deliveryCost: Number(this.city.deliveryCost) }
-      this.customService.addOrUpdate('Country', obj, 'update').subscribe(
+      this.customService.addOrUpdate(this.apiName, obj, 'update').subscribe(
         res => {
           this.notifications.create('success', 'تم تعديل المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
           this.city = { name: '', deliveryCost: 0, regions: [] };
@@ -97,6 +104,50 @@ export class CitiesComponent implements OnInit {
       )
     }
 
+  }
+  onActionBegin(args: ActionEventArgs) {
+
+    if (args.action == "edit") {
+      let name = args.data["name"].trim();
+      if (name == "") {
+        this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+        args.cancel = true;
+      }
+
+      if (this.cities.filter(c => c.name == name).length > 1) {
+        this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+        args.cancel = true;
+      }
+    }
+    if (args.action == "edit") {
+      let name = args.data["name"].trim();
+
+      let id = args.data["id"];
+      console.log(id);
+      let deliveryCost = args.data["deliveryCost"];
+      if (name == "") {
+        this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+        args.cancel = true;
+      }
+      else if (this.cities.filter(c => c.name == name && c.id != id).length > 0) {
+        this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+        args.cancel = true;
+      }
+      else if (deliveryCost == "" || deliveryCost <= 0) {
+
+        this.notifications.create('', 'خطأ في المبلغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+        args.cancel = true;
+      }
+      else {
+        this.cities.filter(c=>c.id==id)[0].name = name;
+        this.cities.filter(c=>c.id==id)[0].deliveryCost = deliveryCost;
+        this.customService.addOrUpdate(this.apiName, { name: name, deliveryCost: deliveryCost, id: id }, "update").subscribe();
+        args.cancel = true;
+        this.gridInstance.refresh();
+
+      }
+
+    }
   }
   deldetRegionFromCity(i) {
     var city = this.city.regions.splice(i, 1);
@@ -108,49 +159,16 @@ export class CitiesComponent implements OnInit {
     const pageResize: any = (gridHeight - (pageSize * rowHeight)) / rowHeight; // new page size is obtained here
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
-  // actionComplete(args: SaveEventArgs) {
-
-  //   if (args.action == 'add') {
-  //     let obj: any = { name: args.data['name'] }
-  //     this.customService.addOrUpdate('Country', obj, 'add').subscribe(
-  //       res => {
-  //         if (res.result) {
-  //           this.notifications.create('success', 'تم اضافة مدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-  //           this.getCities();
-  //         }
-  //       }
-  //     )
-  //   }
-  //   else if (args.action === "edit") {
-
-  //   }
-  //   console.log(args);
-  //   if (args.requestType == 'delete') {
-  //     let id = args.data[0].id;
-  //     console.log(args.data[0]);
-  //     if (args.data['canDelete']||args.data["canDeleteWithRegion"]) {
-  //       this.customService.delete('Country', id).subscribe(
-  //         res => {
-  //           if (res.result) {
-  //             this.notifications.create('success', 'تم حذف المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
-  //             this.getCities();
-  //           }
-  //         }
-  //       )
-  //     }
-  //     else {
-  //       this.gridInstance.refresh();
-
-  //     }
-
-  //   }
-  // }
   getCities() {
-    this.customService.getAll('Country').subscribe(
+    this.customService.getAll(this.apiName).subscribe(
       res => {
         this.cities = res;
-        console.log(this.cities);
       }
     )
   }
+  // Test() {
+  //   this.cities[0].name = "SAdasd";
+  //   this.cities[0].regions[0].name = "sads";
+  //   this.gridInstance.refresh();
+  // }
 }

@@ -35,19 +35,24 @@
           <span class="btn" (click)="addRegionToCity()"><i class="text-primary simple-icon-plus" style="font-size: 24px;"></i></span>
           <span class="btn btn-primary mt-2 " (click)="addCity()">{{'forms.save'|translate}}</span>
          </div>
-
+         <!-- <button (click)="Test()" >asdsad </button> -->
       <ejs-grid #normalgrid   id='normalgrid'[enableRtl]='true'  (load)='load()'  [allowPaging]='true'
      [gridLines]="lines" [pageSettings]='pageSettings' [toolbar]='toolbar'
        [editSettings]='editSettings'[dataSource]='cities' rowHeight='38'
          [allowSorting]='true' height='400' 
           [enableHover]='true' [selectionSettings]='selectionSettings'
            [filterSettings]='filterSettings' [allowSorting]='true'
-            [allowFiltering]='true'>
+            [allowFiltering]='true'
+            (actionBegin)="onActionBegin($event)" 
+            >
+            <!-- (actionComplete)="actionComplete($event)" -->
             <!-- (actionComplete)="actionComplete($event)" -->
       <e-columns>
           <e-column   field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter' width='50' [isPrimaryKey]='true'></e-column>
           <e-column   field='name' [allowEditing]='true' textAlign="Center" headerText="الاسم" width='140'></e-column>
-          <e-column   field='deliveryCost' [allowEditing]='true' textAlign="Center" headerText="كلفة التوصيل" width='140'></e-column>
+          <e-column   field='deliveryCost' [allowEditing]='true' textAlign="Center" headerText="كلفة التوصيل" width='140' 
+          editType= 'numericedit'  [edit]='numericParams'
+          ></e-column>
           <e-column   field='regions' [allowEditing]='false' textAlign="Center" headerText="المناطق" width='140'  [allowEditing]= 'false'>
             <ng-template  #template let-data>
               <div class="d-flex justify-content-center text-center my-2">
