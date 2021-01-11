@@ -11,7 +11,7 @@ import { ClientService } from '../client.service';
 })
 export class AddClientComponent implements OnInit, OnChanges {
 
-  constructor(private customService: CustomService,private clientService:ClientService,
+  constructor(private customService: CustomService, private clientService: ClientService,
     private notifications: NotificationsService) { }
   client: Client;
   regions: any[] = [];
@@ -47,26 +47,27 @@ export class AddClientComponent implements OnInit, OnChanges {
   }
   getClientById() {
     this.clientService.getClients().subscribe(
-      res=>{
-        this.client=res.find(c=>c.id==this.currentClientId);
-        
+      res => {
+        this.client = res.find(c => c.id == this.currentClientId);
+
       }
     )
   }
 
   addOrEditClient() {
-     //this.addFinish.emit('s');
+    //this.addFinish.emit('s');
     this.submitted = true;
     if (this.tempPhone)
       this.client.phones.push(this.tempPhone)
-
+      console.log(this.client);
     this.clientService.addClient(this.client).subscribe(
       res => {
+        
         if (this.addClicked) {
           this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
           this.tempPhone = '';
         }
-        else if(!this.editClicked) {
+        else if (!this.editClicked) {
           this.notifications.create('success', 'تم تعديل عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         }
         this.init();

@@ -1,10 +1,9 @@
 export class CreateIncome {
-    Amount
-    Date
-    Source
-    Earining
-    Note
-    UserId
-    IncomeTypeId
-    CurrencyId
+    Amount:number;
+    Date:Date;
+    Source:string;
+    Earining:number;
+    Note:string;
+    IncomeTypeId:number;
+    CurrencyId:number;
 }

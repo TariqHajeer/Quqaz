@@ -24,7 +24,8 @@
             <div class="col-md-3">
                 <label>المبلغ<span class="text-danger text-one align-bottom mx-1">*</span></label>
                 <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                    class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateIncome.Amount">
+                    class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateIncome.Amount"
+                    >
                 <div *ngIf="!CreateIncome.Amount && submitted" class="invalid-tooltip">المبلغ حقل مطلوب</div>
             </div>
             <div class="col-md-3">
@@ -37,14 +38,6 @@
             <div class="col-md-3">
                 <label>المصدر</label>
                 <input type="text"class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateIncome.Source">
-            </div>
-            <div class="col-md-3">
-                <label>الموظف</label>
-                <ng-select [(ngModel)]="CreateIncome.UserId" [ngModelOptions]="{standalone: true}"
-                    [closeOnSelect]="true">
-                    <ng-option *ngFor="let user of UserService.users" [value]="user.id">{{user.name}}
-                    </ng-option>
-                </ng-select>
             </div>
             <div class="col-md-3">
                 <label>تاريخ </label>

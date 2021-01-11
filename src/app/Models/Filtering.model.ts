@@ -1,9 +1,9 @@
 export class Filtering {
-    MinAmount?:any
-    MaxAmount?:any
-    UserId?:any
-    FromDate?:any
-    ToDate?:any
-    Type?:any
-    CurrencyId?:any
+    MinAmount?:any=null;
+    MaxAmount?:any=null;
+    UserId?:any=null;
+    FromDate?:any=null;
+    ToDate?:any=null;
+    Type?:any=null;
+    CurrencyId?:any=null;
 }
