@@ -68,12 +68,15 @@ export class ViewClientsComponent implements OnInit {
       }
     )
   }
-  onEditClicked(data) {
-    this.route.navigate(['/app/client/edit',data[0].id])
+  onEditClicked(id) {
+    this.route.navigate(['/app/client/edit',id])
 
   }
   addFinish(value) {
-    console.log(value);
+    this.clients.push(value)
+    this.formatOptions = {type: 'date', format: 'dd/MM/yyyy'};
+    this.gridInstance.refresh();
+
   }
   actionComplete(args: SaveEventArgs) {
     if (args.requestType == 'delete') {

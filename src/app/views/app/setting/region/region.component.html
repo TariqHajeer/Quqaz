@@ -10,7 +10,7 @@
         [pageSettings]='pageSettings' [toolbar]='toolbar' [editSettings]='editSettings' [dataSource]='regions'
         rowHeight='38' [allowSorting]='true' height='400' [enableHover]='true' [selectionSettings]='selectionSettings'
         [filterSettings]='filterSettings' [allowSorting]='true' [allowFiltering]='true'
-        (actionBegin)="onActionBegin($event)">
+        (actionBegin)="onActionBegin($event)"(actionComplete)="actionComplete($event)">
         <e-columns>
           <e-column   field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter' width='50' [isPrimaryKey]='true'></e-column>
           <e-column   field='name' textAlign="Center" headerText="اسم المنطقة" width='140'></e-column>

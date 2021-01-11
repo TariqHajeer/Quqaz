@@ -7,6 +7,7 @@ import { CreateOutCome } from 'src/app/Models/OutCome/create-out-come.model';
 import { OutcomeService } from 'src/app/views/app/outcome/outcome.service';
 import { DropDownList } from '@syncfusion/ej2-dropdowns';
 import { Query, DataManager } from '@syncfusion/ej2-data';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-add-more-outcome',
@@ -39,7 +40,7 @@ export class AddMoreOutcomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.CreateOutCome = new CreateOutCome()
-    this.editSettings = { showDeleteConfirmDialog: true, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
+    this.editSettings = {  showDeleteConfirmDialog: false, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true  };
     this.toolbar = [
       { text: 'اضافة', tooltipText: 'اضافة', prefixIcon: 'e-add', id: 'normalgrid_add' },
       { text: 'تعديل', tooltipText: 'تعديل', prefixIcon: 'e-edit', id: 'normalgrid_edit' },
@@ -60,43 +61,45 @@ export class AddMoreOutcomeComponent implements OnInit {
     this.lines = 'Horizontal';
     this.Getcoins()
     this.getExportTypes()
+
   }
 
 
   addOrEditUser() {
     this.submitted = true;
   }
+  coinsapi = environment.baseUrl + "api/Currency";
   Getcoins() {
-
-    this.customService.getAll("Currency").subscribe(res => {
-      this.coins = res;
-      this.coinsParams = {
-        params: {
-          allowFiltering: true,
-          dataSource: new DataManager(this.coins),
-          fields: { text: 'العملة', value: 'name' },
-          query: new Query(),
-          actionComplete: () => false
-        }
-      };
-    });
-    this.coinsParams = { params: { popupHeight: '300px' } };
-  }
-  getExportTypes() {
-    this.customService.getAll('OutComeType').subscribe(
-      res => {
-        this.exportTypes = res;
-        this.exportTypesParams = {
-          params: {
-            allowFiltering: true,
-            dataSource: new DataManager(this.exportTypes),
-            fields: { text: 'نوع الصادرات', value: 'name' },
-            query: new Query(),
-            actionComplete: () => false
-          }
-        };
+    this.coinsParams = {
+      params: {
+        allowFiltering: true,
+        dataSource: new DataManager({url:this.coinsapi}),
+        fields: { text: 'العملة', value: 'name' },
+        actionComplete: () => false
       }
-    )
+    };
+    // this.customService.getAll("Currency").subscribe(res => {
+    //   this.coins = res;
+      
+    // });
+    // this.coinsParams = { params: { popupHeight: '300px' } };
+  }
+  OutComeTypeapi = environment.baseUrl + "api/OutComeType";
+  getExportTypes() {
+    this.exportTypesParams = {
+      params: {
+        allowFiltering: true,
+        dataSource: new DataManager({url:this.OutComeTypeapi}),
+        fields: { text: 'نوع الصادرات', value: 'name' },
+        actionComplete: () => false
+      }
+    };
+    // this.customService.getAll('OutComeType').subscribe(
+    //   res => {
+    //     this.exportTypes = res;
+     
+    //   }
+    // )
   }
 
 

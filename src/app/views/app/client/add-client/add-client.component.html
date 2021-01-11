@@ -4,27 +4,54 @@
       <div class="col-md-3">
         <label>{{'client.name' | translate}}</label><span
         class="text-danger text-one align-bottom mx-1">*</span>
-        <input type="text"  class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.name">
+        <input  (ngModelChange)='checkName()' type="text"  class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.name">
         <div *ngIf="!client.name && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
+        <div *ngIf="nameIsRepeated&&client.name!=''" class="invalid-tooltip">الأسم مكرر</div>
       </div>
       <div class="col-md-3">
-        <label>{{'client.user-name' | translate}}</label>
-        <input type="text" class="form-control"
+        <label>{{'client.user-name' | translate}}
+          <span class="text-danger text-one align-bottom mx-1">*</span>
+        </label>
+        <input  (ngModelChange)='checkUserName()' type="text" class="form-control"
          [ngModelOptions]="{standalone: true}"oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '').replace(/(\..*)\./g, '$1');"
          [(ngModel)]="client.userName">
-      </div>
+         <div *ngIf="!client.userName && submitted" class="invalid-tooltip">اسم المستخدم حقل مطلوب</div>
+         <div *ngIf="usernameIsRepeated&&client.userName!=''" class="invalid-tooltip">اسم المستخدم مكرر</div>
+        </div>
       <div class="col-md-3">
-        <label>{{'client.password' | translate}}</label>
+        <label>{{'client.password' | translate}}
+          <span class="text-danger text-one align-bottom mx-1">*</span>
+        </label>
         <input type="password" class="form-control"
          [ngModelOptions]="{standalone: true}"
          [(ngModel)]="client.password">
+         <div *ngIf="!client.password && submitted" class="invalid-tooltip">كلمة السر حقل مطلوب</div>
+
       </div>
       <div class="col-md-3">
-        <label>{{'client.region' | translate}}</label>
-        <ng-select   [(ngModel)]="client.regionId" [ngModelOptions]="{standalone: true}"
-        [closeOnSelect]="true">
-        <ng-option *ngFor="let region of regions" [value]="region.id">{{region.name}}</ng-option>
-      </ng-select>
+        <label>تأكيد كلمة السر
+          <span class="text-danger text-one align-bottom mx-1">*</span>
+        </label>
+        <input type="password" class="form-control"
+         [ngModelOptions]="{standalone: true}"
+         [(ngModel)]="client.password">
+         <div *ngIf="!client.password && submitted" class="invalid-tooltip">تأكيد كلمة السر حقل مطلوب</div>
+
+      </div>
+      <div class="col-md-3">
+        <label>{{'client.first-date' | translate}}
+          <span class="text-danger text-one align-bottom mx-1">*</span>
+        </label>
+        <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.firstDate" bsDatepicker
+        [container]="'html'" [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
+        <div *ngIf="!client.firstDate && submitted" class="invalid-tooltip">  تاريخ الإنضمام حقل مطلوب</div>
+      </div>
+    <div class="col-md-3">
+      <label>{{'client.region' | translate}}</label>
+      <ng-select   [(ngModel)]="client.regionId" [ngModelOptions]="{standalone: true}"
+      [closeOnSelect]="true">
+      <ng-option *ngFor="let region of regions" [value]="region.id">{{region.name}}</ng-option>
+    </ng-select>
     </div>
     <div class="col-md-3">
       <label>{{'client.address' | translate}}</label>
@@ -32,11 +59,8 @@
          [ngModelOptions]="{standalone: true}"
          [(ngModel)]="client.address">
   </div>
-  <div class="col-md-3">
-    <label>{{'client.first-date' | translate}}</label>
-    <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.firstDate" bsDatepicker
-    [container]="'html'" [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
-</div>
+
+
 <div class="col-md-3">
   <label>{{'client.note' | translate}}</label>
   <input type="text"  class="form-control"

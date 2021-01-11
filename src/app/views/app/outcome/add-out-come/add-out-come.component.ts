@@ -54,9 +54,7 @@ export class AddOutComeComponent implements OnInit, OnChanges {
  
   addOrEditUser() {
     this.submitted = true;
-    let date=this.datePipe.transform( this.CreateOutCome.Date,"yyyy-MM-dd hh:mm:ss")
-    this.CreateOutCome.Date=new Date(date)
-    console.log( this.CreateOutCome)
+    this.CreateOutCome.Amount =Number( this.CreateOutCome.Amount);
     this.OutcomeService.Create(this.CreateOutCome).subscribe(res=>{
       this.notifications.create('', 'تم الاضافة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 

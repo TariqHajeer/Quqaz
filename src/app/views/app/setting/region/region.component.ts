@@ -5,7 +5,7 @@ import { City } from 'src/app/Models/Cities/city.Model';
 import { CustomService } from 'src/app/services/custom.service';
 import { Region } from '../../../../Models/Regions/region.model';
 import { Query, DataManager } from '@syncfusion/ej2-data';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 @Component({
   selector: 'app-region',
   templateUrl: './region.component.html',
@@ -26,6 +26,7 @@ export class RegionComponent implements OnInit {
   public pageSettings: Object;
   public citiesParameter: IEditCell;
   apiName: string = "Region";
+  countryapi = environment.baseUrl + "api/Country";
   ngOnInit(): void {
     this.getRegions();
     this.editSettings = { showDeleteConfirmDialog: false, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
@@ -45,11 +46,36 @@ export class RegionComponent implements OnInit {
     this.citiesParameter = {
       params: {
         allowFiltering: true,
-        dataSource: new DataManager({ url: "https://localhost:44333/api/Country" }),
+        dataSource: new DataManager({ url: this.countryapi }),
         fields: { text: 'name', value: 'id' },
         actionComplete: () => false
       }
     };
+  }
+  actionComplete(args: SaveEventArgs) {
+
+    if (args.action === "edit") {
+
+      args.cancel = true;
+      let obj: any = { id: Number.parseInt(args.data['id']), name: args.data['name'] }
+      this.customService.addOrUpdate(this.apiName, obj, 'update').subscribe(
+        res => {
+          this.notifications.create('success', 'تم تعديل  المنطقة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+
+        }
+      )
+
+    }
+    if (args.requestType == 'delete') {
+      let id = args.data[0].id;
+      this.customService.delete(this.apiName, id).subscribe(
+        res => {
+          this.notifications.create('success', 'تم حذف المنطقة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
+
+        }
+      )
+
+    }
   }
   onActionBegin(args: ActionEventArgs) {
     if (args.action == 'add') {
@@ -65,18 +91,37 @@ export class RegionComponent implements OnInit {
           args.cancel = true;
           this.notifications.create('', 'يجب اختيار المدينة', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
         }
-        console.log(this.regions.filter(c => c.name == name).length);
         if (this.regions.filter(c => c.name == name && c.country.id == countryId).length != 0) {
           this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
           args.cancel = true;
         } else {
           args.cancel = true;
-          this.customService.Create(this.apiName,{name:name,countryId:countryId}).toPromise().then(res=>{
-            this.notifications.create('', 'تم اضافة نوع صادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+          this.customService.Create(this.apiName, { name: name, countryId: countryId }).toPromise().then(res => {
+            this.notifications.create('', 'تم اضافة المنطقة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
             this.regions.push(res);
             this.gridInstance.refresh();
           });
         }
+      }
+    }
+    if (args.action == "edit") {
+      let name = args.data["name"].trim();
+      var id = args.data["id"];
+      if (name == "") {
+        this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+        args.cancel = true;
+      } let countryId = args.data['country']['name'];
+
+      if (this.regions.filter(c => c.name == name && c.country.id != countryId).length != 0) {
+        this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+        args.cancel = true;
+      }
+    }
+    if (args.requestType == "delete") {
+      let exportType = args.data[0];
+      if (!exportType.canDelete) {
+        this.notifications.create('', 'لا يمكن الحذف', NotificationType.Error, { timeOut: 6000, showProgressBar: false });
+        args.cancel = true;
       }
     }
   }

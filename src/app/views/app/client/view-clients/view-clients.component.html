@@ -21,13 +21,13 @@
        <e-column   field='address' [allowEditing]='false' textAlign="Center" headerText="{{'client.adderss' | translate}}" width='140'></e-column>
        <e-column   field='regionName' [allowEditing]='false' textAlign="Center" headerText="{{'client.region' | translate}}" width='140'></e-column>
        <e-column   field='note' [allowEditing]='false' textAlign="Center" headerText="{{'client.note' | translate}}" width='140'></e-column>
-       <e-column   field='action' [allowEditing]='false' textAlign="Center" headerText="action" width='140'>
-        <ng-template #template>
-          <div class="text-center">
-            <button class="btn" (click)="onEditClicked(clients); addClientModal.show()"><i class="simple-icon-pencil text-primary" style="font-size: 20px;"></i></button>
-          </div>
-        </ng-template>
-       </e-column>
+       <e-column    [allowEditing]='false' textAlign="Center" headerText="" width='140'>
+        <ng-template  #template let-data>
+          <div>
+                <span class="btn btn-xs badge-primary mx-1" (click)="onEditClicked(data.id)">{{'forms.edit' | translate}}</span>
+        </div>
+      </ng-template>
+      </e-column>
    </e-columns>
 </ejs-grid>
 
@@ -48,7 +48,7 @@
         </button>
       </div>
       <div class="modal-body" style="font-size: 15px;">
-        <app-add-client (addFinish)="addFinish($event);" [addClicked]="addClicked"
+        <app-add-client (addFinish)="addFinish($event);addClientModal.hide()" [addClicked]="addClicked"
           [editClicked]="editClicked" [currentClientId]="currentClientId"></app-add-client>
       </div>
     </div>

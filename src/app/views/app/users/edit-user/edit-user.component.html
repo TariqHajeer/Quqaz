@@ -5,11 +5,13 @@
         <form  (ngSubmit)="addOrEditUser()">
           <div class="row w-100 align-items-end mb-3">
             <div class="col-md-3">
-              <label> نوع الموظف</label>
+              <label> نوع الموظف <span class="text-danger text-one align-bottom mx-1">*</span></label>
               <ng-select [(ngModel)]="User.canWorkAsAgent" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
                 <ng-option [value]="true">مندوب</ng-option>
                 <ng-option [value]="false"> موظف</ng-option>
               </ng-select>
+              <div *ngIf="!User.canWorkAsAgent && submitted" class="invalid-tooltip">نوع الموظف حقل مطلوب</div>
+
             </div>
             <div class="col-md-3">
               <label>الاسم<span class="text-danger text-one align-bottom mx-1">*</span></label>
@@ -53,15 +55,18 @@
           </div>
           <div class="row w-100 align-items-end mb-3">
             <div class="col-md-3" *ngIf="!User.canWorkAsAgent">
-              <label>العنوان</label>
-              <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.address">
-            </div>
-            <div class="col-md-3" *ngIf="!User.canWorkAsAgent">
-              <label>تاريخ التوظيف</label>
+              <label>تاريخ التوظيف<span class="text-danger text-one align-bottom mx-1">*</span></label>
               <input readonly type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                 [(ngModel)]="User.hireDate" bsDatepicker [container]="'html'"
                 [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
+                <div *ngIf="!User.hireDate && submitted " class="invalid-tooltip">تاريخ التوظيف حقل مطلوب</div>
+
             </div>
+            <div class="col-md-3" *ngIf="!User.canWorkAsAgent">
+              <label>العنوان</label>
+              <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.address">
+            </div>
+           
             <div class="col-md-5" *ngIf="!User.canWorkAsAgent">
               <label>الخبرة</label>
               <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.experince">
@@ -71,16 +76,20 @@
 
           <div class="row w-100 align-items-end mb-3">
             <div class="col-md-3" *ngIf="User.canWorkAsAgent">
-              <label>المدينة</label>
+              <label>المدينة<span class="text-danger text-one align-bottom mx-1">*</span></label>
               <ng-select [(ngModel)]="User.CountryId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
                 <ng-option *ngFor="let country of countries" [value]="country.id">{{country.name}}</ng-option>
               </ng-select>
+              <div *ngIf="!User.CountryId && submitted " class="invalid-tooltip">المدينة  حقل مطلوب</div>
+
             </div>
             <div class="col-md-3" *ngIf="User.canWorkAsAgent">
-              <label>كلفة التوصيل</label>
+              <label>كلفة التوصيل<span class="text-danger text-one align-bottom mx-1">*</span></label>
               <input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                 class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.salary">
-            </div>
+                <div *ngIf="!User.salary && submitted " class="invalid-tooltip">كلفة التوصيل حقل مطلوب</div>
+
+              </div>
             
           </div>
           <div class="row w-100 align-items-end mb-3">
@@ -148,6 +157,8 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="col-md-4">
               <!-- Modal -->
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#group"
                 data-whatever="@getbootstrap" *ngIf="!User.canWorkAsAgent">المجموعات</button>

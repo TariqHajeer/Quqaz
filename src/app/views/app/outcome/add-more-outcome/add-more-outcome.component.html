@@ -21,10 +21,10 @@
                         <e-column field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter'
                             width='50' [isPrimaryKey]='true'></e-column>
                         <e-column field='OutComeTypeId' textAlign="Center" headerText="نوع الصادرات" width='175'
-                            editType='dropdownedit'></e-column>
+                        editType= 'dropdownedit'[edit]='exportTypesParams'></e-column>
                         <e-column field='Amount' textAlign="Center" headerText="المبلغ المصروف" width='175'></e-column>
                         <e-column field='CurrencyId' textAlign="Center" headerText="العملة" width='140'
-                            editType='dropdownedit'></e-column>
+                        editType= 'dropdownedit'[edit]='coinsParams'></e-column>
                         <e-column field='Date' textAlign="Center" headerText="التاريخ" width='140'
                         editType='DatePickerEdit'[readOnlyInput]="true"></e-column>
                         <e-column field='Reason' textAlign="Center" headerText="السبب" width='140'></e-column>

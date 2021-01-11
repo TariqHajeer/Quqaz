@@ -39,7 +39,7 @@ export class IncomeService {
       params = params.append("CurrencyId", filter.CurrencyId);
     if (filter.MinAmount != undefined || filter.MinAmount != null)
       params = params.append("MinAmount", filter.MinAmount);
-     params =params.append("MaxAmount",10); 
+     params =params.append("MaxAmount","10"); 
     // if(filter.CurrencyId!=undefined||filter.CurrencyId!=null)
     // let CurrencyId = new HttpParams().set('CurrencyId', filter.CurrencyId);
     // let FromDate = new HttpParams().set('FromDate', filter.FromDate);

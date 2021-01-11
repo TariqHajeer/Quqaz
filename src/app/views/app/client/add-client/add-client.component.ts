@@ -14,6 +14,7 @@ export class AddClientComponent implements OnInit, OnChanges {
   constructor(private customService: CustomService, private clientService: ClientService,
     private notifications: NotificationsService) { }
   client: Client;
+  clients: Client[]=[];
   regions: any[] = [];
   tempPhone: any;
   @Input() currentClientId;
@@ -21,6 +22,8 @@ export class AddClientComponent implements OnInit, OnChanges {
   @Input() addClicked;
   @Output() addFinish = new EventEmitter<any>();
   submitted = false;
+  nameIsRepeated:boolean=false;
+  usernameIsRepeated:boolean=false;
   ngOnInit(): void {
     this.init();
     this.getRegions();
@@ -48,14 +51,32 @@ export class AddClientComponent implements OnInit, OnChanges {
   getClientById() {
     this.clientService.getClients().subscribe(
       res => {
+        this.clients=res
         this.client = res.find(c => c.id == this.currentClientId);
 
       }
     )
   }
-
+  checkName(){       
+    if( this.clients.filter(c=>c.name==this.client.name).length>0){
+      
+      this.nameIsRepeated =true
+      return;
+    }
+   else
+    this.nameIsRepeated =false
+  }
+  checkUserName(){       
+    
+    if( this.clients.filter(c=>c.userName==this.client.userName).length>0){
+      
+      this.usernameIsRepeated =true
+      return;
+    }else
+    this.usernameIsRepeated =false
+  }
   addOrEditClient() {
-    //this.addFinish.emit('s');
+    this.addFinish.emit(this.client);
     this.submitted = true;
     if (this.tempPhone)
       this.client.phones.push(this.tempPhone)

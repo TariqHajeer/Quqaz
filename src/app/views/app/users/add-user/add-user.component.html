@@ -1,117 +1,131 @@
+<form (ngSubmit)="addOrEditUser()">
+  <div class="row w-100 align-items-end mb-3">
+    <div class="col-md-3">
+      <label> نوع الموظف<span class="text-danger text-one align-bottom mx-1">*</span></label>
+      <ng-select [(ngModel)]="CreateUser.CanWorkAsAgent" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
+        <ng-option [value]="true">مندوب</ng-option>
+        <ng-option [value]="false"> موظف</ng-option>
+      </ng-select>
+      <div *ngIf="!CreateUser.CanWorkAsAgent && submitted" class="invalid-tooltip">نوع الموظف حقل مطلوب</div>
 
-  <form  (ngSubmit)="addOrEditUser()">
-    <div class="row w-100 align-items-end mb-3">
-      <div class="col-md-3">
-        <label> نوع الموظف</label>
-        <ng-select  [(ngModel)]="CreateUser.CanWorkAsAgent"
-          [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
-          <ng-option [value]="true" >مندوب</ng-option>
-          <ng-option [value]="false"> موظف</ng-option>
-        </ng-select>
-      </div>
-      <div class="col-md-3">
-        <label>القسم<span class="text-danger text-one align-bottom mx-1">*</span></label>
-        <ng-select [(ngModel)]="CreateUser.DepartmentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
-          <ng-option *ngFor="let department of departments" [value]="department.id">{{department.name}}</ng-option>
-        </ng-select>
-        <div *ngIf="!CreateUser.DepartmentId && submitted" class="invalid-tooltip">القسم حقل مطلوب</div>
+    </div>
+    <div class="col-md-3">
+      <label>القسم<span class="text-danger text-one align-bottom mx-1">*</span></label>
+      <ng-select [(ngModel)]="CreateUser.DepartmentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
+        <ng-option *ngFor="let department of departments" [value]="department.id">{{department.name}}</ng-option>
+      </ng-select>
+      <div *ngIf="!CreateUser.DepartmentId && submitted" class="invalid-tooltip">القسم حقل مطلوب</div>
+
+    </div>
+    <div class="col-md-3">
+      <label>الاسم<span class="text-danger text-one align-bottom mx-1">*</span></label>
+      <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Name"
+        (ngModelChange)='checkName()'>
+      <div *ngIf="!CreateUser.Name && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
+      <div *ngIf="nameIsRepeated&&CreateUser.Name!=''" class="invalid-tooltip">الأسم مكرر</div>
+    </div>
+  </div>
+  <div class="row w-100 align-items-end mb-3" *ngIf="!CreateUser.CanWorkAsAgent">
+    <div class="col-md-3">
+      <label>اسم المستخدم<span class="text-danger text-one align-bottom mx-1">*</span></label>
+      <input type="text" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
+      (ngModelChange)='checkUserName()' class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.UserName">
+      <div *ngIf="!CreateUser.UserName && submitted" class="invalid-tooltip">اسم المستخدم حقل مطلوب</div>
+      <div *ngIf="usernameIsRepeated&&CreateUser.UserName!=''" class="invalid-tooltip">اسم المستخدم مكرر</div>
+
+    </div>
+    <div class="col-md-3">
+      <label>كلمة السر <span class="text-danger text-one align-bottom mx-1">*</span></label>
+      <input type="password" class="form-control" [ngModelOptions]="{standalone: true}"
+        [(ngModel)]="CreateUser.Password">
+      <div *ngIf="!CreateUser.Password && submitted" class="invalid-tooltip">كلمة السر حقل مطلوب</div>
+    </div>
+    <div class="col-md-3">
+      <label> تاكيد كلمة السر <span class="text-danger text-one align-bottom mx-1">*</span></label>
+      <input type="password" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="confirmpassword">
+      <div *ngIf="CreateUser.Password!=confirmpassword && submitted" class="invalid-tooltip">كلمة السر غير متطابقة</div>
+    </div>
+  </div>
+  <div class="row w-100 align-items-end mb-3" *ngIf="!CreateUser.CanWorkAsAgent">
+    <div class="col-md-3">
+      <label>المجموعات <span class="text-danger text-one align-bottom mx-1">*</span></label>
+      <ng-select multiple="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" [selectableGroup]="true"
+        [searchable]="true" [(ngModel)]="CreateUser.GroupsId" [ngModelOptions]="{standalone: true}"
+        [closeOnSelect]="true">
+        <ng-option *ngFor="let group of Groups" [value]="group.id">{{group.name}}</ng-option>
+      </ng-select>
+      <div *ngIf="!CreateUser.GroupsId && submitted" class="invalid-tooltip">المجموعات  حقل مطلوب</div>
+
+    </div>
+    <div class="col-md-3">
+      <label>تاريخ التوظيف<span class="text-danger text-one align-bottom mx-1">*</span></label>
+      <input readonly type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+        [(ngModel)]="CreateUser.HireDate" bsDatepicker [container]="'html'"
+        [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
+        <div *ngIf="!CreateUser.HireDate && submitted" class="invalid-tooltip">تاريخ التوظيف  حقل مطلوب</div>
+
+    </div>
+    <div class="col-md-3">
+      <label>العنوان</label>
+      <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Address">
+    </div>
+
+  </div>
+  <div class="row w-100 align-items-end mb-3">
+    <div class="col-md-9" *ngIf="!CreateUser.CanWorkAsAgent">
+      <label>الخبرة</label>
+      <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Experince">
+    </div>
+    <div class="col-md-3" *ngIf="CreateUser.CanWorkAsAgent">
+      <label>المدينة<span class="text-danger text-one align-bottom mx-1">*</span></label>
+      <ng-select [(ngModel)]="CreateUser.CountryId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
+        <ng-option *ngFor="let country of Countries" [value]="country.id">{{country.name}}</ng-option>
+      </ng-select>
+      <div *ngIf="!CreateUser.CountryId && submitted" class="invalid-tooltip">نوع الموظف حقل مطلوب</div>
+
+    </div>
+    <div class="col-md-3" *ngIf="CreateUser.CanWorkAsAgent">
+      <label>كلفة التوصيل<span class="text-danger text-one align-bottom mx-1">*</span></label>
+      <input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+        class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Salary">
+        <div *ngIf="!CreateUser.Salary && submitted" class="invalid-tooltip">نوع الموظف حقل مطلوب</div>
 
       </div>
-      <div class="col-md-3">
-        <label>الاسم<span class="text-danger text-one align-bottom mx-1">*</span></label>
-        <input type="text"
-          class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Name" (ngModelChange)='checkName()'>
-          <div *ngIf="!CreateUser.Name && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
-          <div *ngIf="nameIsRepeated&&CreateUser.Name!=''" class="invalid-tooltip" >الأسم مكرر</div>
-      </div>
+  </div>
+  <div class="row w-100 align-items-end mb-3">
+    <div class="col-md-9">
+      <label>ملاحظات</label>
+      <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Note">
     </div>
-    <div class="row w-100 align-items-end mb-3"*ngIf="!CreateUser.CanWorkAsAgent">
-      <div class="col-md-3">
-        <label>اسم المستخدم<span class="text-danger text-one align-bottom mx-1">*</span></label>
-        <input type="text" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
-          class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.UserName">
-          <div *ngIf="!CreateUser.UserName && submitted" class="invalid-tooltip">اسم المستخدم حقل مطلوب</div>
-      </div>
-      <div class="col-md-3">
-        <label>كلمة السر <span class="text-danger text-one align-bottom mx-1">*</span></label>
-        <input type="password"  class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Password">
-          <div *ngIf="!CreateUser.Password && submitted" class="invalid-tooltip">كلمة السر  حقل مطلوب</div>
-      </div>
-      <div class="col-md-3">
-        <label> تاكيد كلمة السر <span class="text-danger text-one align-bottom mx-1">*</span></label>
-        <input type="password"  class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="confirmpassword">
-          <div *ngIf="CreateUser.Password!=confirmpassword && submitted" class="invalid-tooltip">كلمة السر  غير متطابقة</div>
-      </div>
-    </div>
-    <div class="row w-100 align-items-end mb-3"*ngIf="!CreateUser.CanWorkAsAgent">
-      <div class="col-md-3" >
-        <label>المجموعات <span class="text-danger text-one align-bottom mx-1">*</span></label>
-        <ng-select multiple="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" [selectableGroup]="true"
-          [searchable]="true" [(ngModel)]="CreateUser.GroupsId" [ngModelOptions]="{standalone: true}"
-          [closeOnSelect]="true">
-          <ng-option *ngFor="let group of Groups" [value]="group.id">{{group.name}}</ng-option>
-        </ng-select>
-      </div>
-      <div class="col-md-3">
-        <label>العنوان</label>
-        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Address">
-      </div>
-      <div class="col-md-3">
-        <label>تاريخ التوظيف</label>
-        <input readonly type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.HireDate"
-          bsDatepicker [container]="'html'" [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
-      </div>
-    </div>
-    <div class="row w-100 align-items-end mb-3">
-      <div class="col-md-9"*ngIf="!CreateUser.CanWorkAsAgent">
-        <label>الخبرة</label>
-        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Experince">
-      </div>
-      <div class="col-md-3" *ngIf="CreateUser.CanWorkAsAgent">
-        <label>المدينة</label>
-        <ng-select [(ngModel)]="CreateUser.CountryId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
-          <ng-option *ngFor="let country of Countries" [value]="country.id">{{country.name}}</ng-option>
-        </ng-select>
-      </div>
-      <div class="col-md-3"*ngIf="CreateUser.CanWorkAsAgent">
-        <label>كلفة التوصيل</label>
-        <input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-          class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Salary">
-      </div>
-    </div>
-    <div class="row w-100 align-items-end mb-3">
-      <div class="col-md-9">
-        <label>ملاحظات</label>
-        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Note">
-      </div>
-      </div>
-      <div class="row w-100 align-items-end mb-3">
-      <!--add phones-->
-  <div  *ngFor="let phone of CreateUser.Phones;let i=index" class="col-md-3">
-    <ng-container>
-      <label>رقم الهاتف-{{i+1}}</label>
-      <input type="text" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"  class="form-control"
-       [ngModelOptions]="{standalone: true}"
-       [(ngModel)]="CreateUser.Phones[i]">
+  </div>
+  <div class="row w-100 align-items-end mb-3">
+    <!--add phones-->
+    <div *ngFor="let phone of CreateUser.Phones;let i=index" class="col-md-3">
+      <ng-container>
+        <label>رقم الهاتف-{{i+1}}</label>
+        <input type="text" maxlength="10"
+          oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" class="form-control"
+          [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Phones[i]">
       </ng-container>
-  </div>
-  <div class="col-md-3">
-    <label>رقم الهاتف</label>
-    <input type="text" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"  class="form-control"
-     [ngModelOptions]="{standalone: true}"
-     [(ngModel)]="tempPhone">
-  </div>
-  
-  <div class="col-2">
-    <button type="button" class="btn" (click)="addNewPhone()"><i class="iconsminds-add  text-primary" style="font-size: 22px;"></i></button>
-  </div>
-      </div>
-  
-    <div class="row w-100">
-      <div class="col-3">
-        <button type="submit" class="btn btn-primary"> حفظ</button>
-      </div>
     </div>
-  </form>
+    <div class="col-md-3">
+      <label>رقم الهاتف</label>
+      <input type="text" maxlength="10"
+        oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" class="form-control"
+        [ngModelOptions]="{standalone: true}" [(ngModel)]="tempPhone">
+    </div>
+
+    <div class="col-2">
+      <button type="button" class="btn" (click)="addNewPhone()"><i class="iconsminds-add  text-primary"
+          style="font-size: 22px;"></i></button>
+    </div>
+  </div>
+
+  <div class="row w-100">
+    <div class="col-3">
+      <button type="submit" class="btn btn-primary"> حفظ</button>
+    </div>
+  </div>
+</form>
 
 <simple-notifications></simple-notifications>

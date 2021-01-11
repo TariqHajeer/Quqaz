@@ -13,10 +13,10 @@ import { Router } from '@angular/router';
 })
 export class ViewUserComponent implements OnInit {
 
-  constructor(public UserService:UserService,private customService:CustomService,private notifications:NotificationsService,
-    public route:Router) { }
-  
-  tempRegion:any;
+  constructor(public UserService: UserService, private customService: CustomService, private notifications: NotificationsService,
+    public route: Router) { }
+
+  tempRegion: any;
   public stTime: any;
   public filter: Object;
   public filterSettings: Object;
@@ -27,10 +27,10 @@ export class ViewUserComponent implements OnInit {
   public gridInstance: GridComponent;
   public toolbar: Object[];
   public pageSettings: Object;
-  editClicked:any;
-  addClicked:any;
-  currentUserId:any;
-  confirmpassword:string
+  editClicked: any;
+  addClicked: any;
+  currentUserId: any;
+  confirmpassword: string
 
   ngOnInit(): void {
     this.getUser();
@@ -41,7 +41,7 @@ export class ViewUserComponent implements OnInit {
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
-    this.pageSettings = { pageSize: 5,pageSizes:true };
+    this.pageSettings = { pageSize: 5, pageSizes: true };
     this.selectionSettings = { persistSelection: true, type: "Multiple" };
     this.lines = 'Horizontal';
   }
@@ -52,20 +52,22 @@ export class ViewUserComponent implements OnInit {
     const pageResize: any = (gridHeight - (pageSize * rowHeight)) / rowHeight; // new page size is obtained here
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
-  addNewClicked(){
-    this.addClicked=true;
-    this.editClicked=false;
+  addNewClicked() {
+    this.addClicked = true;
+    this.editClicked = false;
     this.getUser();
   }
-  getUser(){
+  getUser() {
 
-      this.UserService.GetAll();
+    this.UserService.GetAll();
   }
-  onEditClicked(data){
-   this.route.navigate(['/app/user/edit',data[0].id])
-  
+  onEditClicked(id) {
+    this.route.navigate(['/app/user/edit', id])
+
   }
-  addFinish(){
+  addFinish(value) {
+    this.UserService.users.push(value)
+    this.gridInstance.refresh();
 
   }
   actionComplete(args: SaveEventArgs) {
@@ -83,10 +85,7 @@ export class ViewUserComponent implements OnInit {
       }
     }
   }
-  navigate(id){
-    console.log(id);
-    // this.route.navigate("/user/edit/"+id)
-  }
-  
-  
+
+
+
 }

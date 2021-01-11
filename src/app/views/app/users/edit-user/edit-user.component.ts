@@ -23,7 +23,7 @@ export class EditUserComponent implements OnInit {
     private notifications: NotificationsService,
     private getroute: ActivatedRoute,
     private router: Router) { }
-  User: User
+  User: User=new User()
   Countries: any[] = [];
   departments: any[] = [];
   Groups: Group[] = []
@@ -39,6 +39,7 @@ export class EditUserComponent implements OnInit {
   ngOnInit(): void {
     this.phone = new Phone()
     this.addGroup = new Group()
+    this.User.canWorkAsAgent=true
     this.getroute.params.subscribe(par => {
       this.id = par['id'] as string
     });

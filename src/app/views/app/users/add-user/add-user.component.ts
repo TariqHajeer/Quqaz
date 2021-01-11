@@ -29,6 +29,7 @@ export class AddUserComponent implements OnInit, OnChanges {
   Groups: Group[] = []
   tempPhone: string;
   nameIsRepeated:boolean=false;
+  usernameIsRepeated:boolean=false;
   ngOnInit(): void {
     this.getCountry()
     this.getDepartments()
@@ -41,19 +42,26 @@ export class AddUserComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
   }
-  checkName(){
-    console.log(this.UserService.users);
-       
+  checkName(){       
     if( this.UserService.users.filter(c=>c.name==this.CreateUser.Name).length>0){
       
       this.nameIsRepeated =true
-      console.log(this.nameIsRepeated);
       return;
     }
+   else
     this.nameIsRepeated =false
-    console.log(this.nameIsRepeated);
+  }
+  checkUserName(){       
+    
+    if( this.UserService.users.filter(c=>c.userName==this.CreateUser.UserName).length>0){
+      
+      this.usernameIsRepeated =true
+      return;
+    }else
+    this.usernameIsRepeated =false
   }
   addOrEditUser() {
+    this.addFinish.emit(this.CreateUser);
     this.submitted = true;
     this.UserService.Creat(this.CreateUser).subscribe(
       res => {

@@ -17,15 +17,15 @@
           <e-column field='name' [allowEditing]='true' textAlign="Center" headerText="الاسم" width='140'></e-column>
           <e-column field='userName' [allowEditing]='false' textAlign="Center" headerText="اسم المستخدم" width='140'></e-column>
           <e-column field='department.name' [allowEditing]='false' textAlign="Center" headerText="القسم" width='140'></e-column>
-          <e-column field='employeeType' [allowEditing]='false' textAlign="Center" headerText="نوع الموظف" width='140'></e-column>
+          <e-column field='employeeType' [allowEditing]='false' textAlign="Center" headerText="نوع الموظف" width='170'></e-column>
           <e-column field='phones' [allowEditing]='false' textAlign="Center" headerText="ارقام الهاتف" width='140'>
-            <e-column    [allowEditing]='false' textAlign="Center" headerText="" width='140'>
+          </e-column>
+          <e-column    [allowEditing]='false' textAlign="Center" headerText="" width='140'>
             <ng-template  #template let-data>
               <div>
-                    <span class="btn btn-xs badge-primary mx-1" (click)="navigate(data.id)">{{'forms.edit' | translate}}</span>
+                    <span class="btn btn-xs badge-primary mx-1" (click)="onEditClicked(data.id)">{{'forms.edit' | translate}}</span>
             </div>
           </ng-template>
-          </e-column>
           </e-column>
         </e-columns>
       </ejs-grid>
@@ -47,7 +47,7 @@
         </button>
       </div>
       <div class="modal-body" style="font-size: 15px;">
-        <app-add-user (addFinish)="addFinish();addUserModal.hide()" [addClicked]="addClicked"
+        <app-add-user (addFinish)="addFinish($event);addUserModal.hide()" [addClicked]="addClicked"
           [editClicked]="editClicked" [currentUserId]="currentUserId"></app-add-user>
       </div>
     </div>
