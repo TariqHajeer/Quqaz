@@ -23,7 +23,7 @@ export class EditUserComponent implements OnInit {
     private notifications: NotificationsService,
     private getroute: ActivatedRoute,
     private router: Router) { }
-  User: User=new User()
+  User: User = new User()
   Countries: any[] = [];
   departments: any[] = [];
   Groups: Group[] = []
@@ -33,18 +33,21 @@ export class EditUserComponent implements OnInit {
   addGroup: Group
   addGroups: Group[] = []
   nameIsRepeated: boolean = false;
+  usernameIsRepeated: boolean = false;
   id
   submitted
-  confirmpassword:string
+  confirmpassword: string
+  checkPassword: boolean = false
   ngOnInit(): void {
     this.phone = new Phone()
     this.addGroup = new Group()
-    this.User.canWorkAsAgent=true
+    this.User.canWorkAsAgent = true
     this.getroute.params.subscribe(par => {
       this.id = par['id'] as string
     });
+    this.GetUserById()
     this.UserService.GetAll()
-    this.User = this.UserService.users.find(u => u.id == this.id)
+    //  this.User = this.UserService.users.find(u => u.id == this.id)
     this.getCountry()
     this.getDepartments()
     this.GetAllGroups()
@@ -52,27 +55,41 @@ export class EditUserComponent implements OnInit {
   }
 
   checkName() {
-    console.log(this.UserService.users);
-
     if (this.UserService.users.filter(c => c.name == this.User.name).length > 0) {
-
       this.nameIsRepeated = true
-      console.log(this.nameIsRepeated);
       return;
     }
     this.nameIsRepeated = false
-    console.log(this.nameIsRepeated);
+  }
+  checkUserName() {
+    if (this.UserService.users.filter(c => c.userName == this.User.userName && c.id != this.User.id).length > 0) {
+
+      this.usernameIsRepeated = true
+      return;
+    } else
+      this.usernameIsRepeated = false
   }
   addOrEditUser() {
     this.UserService.Update(this.User).subscribe(
       res => {
-
         this.notifications.create('success', 'تم التعديل بنجاح ', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         this.router.navigate(['/app/user'])
       }
     )
   }
-
+  GetUserById() {
+    this.UserService.GetById(this.id).subscribe(res => {
+      this.User = res
+    })
+  }
+  CheckPassword() {
+    // if (this.User.Password != this.confirmpassword) {
+    //   this.checkPassword = true
+    // }
+    // else{
+    //   this.checkPassword = false
+    // }
+  }
 
   getDepartments() {
     this.customService.getAll('Department').subscribe(

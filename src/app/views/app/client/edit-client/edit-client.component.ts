@@ -18,11 +18,16 @@ export class EditClientComponent implements OnInit {
     private getroute: ActivatedRoute,
     private router: Router) { }
   client: Client;
+  clients:Client[]=[]
   regions: any[] = [];
   phone: Phone
   phones: Phone[] = []
   id
   submitted
+  nameIsRepeated:boolean=false;
+  usernameIsRepeated:boolean=false;
+  confirmpassword:string
+  checkPassword: boolean = false
   ngOnInit(): void {
     this.phone = new Phone()
     this.init();
@@ -32,7 +37,32 @@ export class EditClientComponent implements OnInit {
     this.getRegions();
     this.getClientById()
   }
-
+  checkName(){       
+    if( this.clients.filter(c=>c.name==this.client.name&&c.id!=this.client.id).length>0){
+      
+      this.nameIsRepeated =true
+      return;
+    }
+   else
+    this.nameIsRepeated =false
+  }
+  checkUserName(){       
+    
+    if( this.clients.filter(c=>c.userName==this.client.userName&&c.id!=this.client.id).length>0){
+      
+      this.usernameIsRepeated =true
+      return;
+    }else
+    this.usernameIsRepeated =false
+  }
+  CheckPassword() {
+    if (this.client.password != this.confirmpassword) {
+      this.checkPassword = true
+    }
+    else{
+      this.checkPassword = false
+    }
+  }
   init() {
     this.client = {
       id: null,
@@ -48,9 +78,13 @@ export class EditClientComponent implements OnInit {
     }
   }
   getClientById() {
+    this.clientService.getClientById(this.id).subscribe(res=>{
+      this.client = res
+    })
     this.clientService.getClients().subscribe(
       res => {
-        this.client = res.find(c => c.id == this.id)
+        this.clients=res
+       // this.client = res.find(c => c.id == this.id)
         //this.phones=this.client.phones
       }
     )

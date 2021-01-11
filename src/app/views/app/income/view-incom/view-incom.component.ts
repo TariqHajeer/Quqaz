@@ -66,7 +66,7 @@ export class ViewIncomComponent implements OnInit {
 
       res => {
         console.log(res);
-        // this.incomes=res.body;
+         this.incomes=res;
       }
     )
   }

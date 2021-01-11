@@ -25,16 +25,24 @@ export class OutcomeService {
       )
     )
   }
-  Get(filter: Filtering){
-    let CurrencyId = new HttpParams().set('CurrencyId', filter.CurrencyId);
-    let FromDate = new HttpParams().set('FromDate', filter.FromDate);
-    let MaxAmount = new HttpParams().set('MaxAmount', filter.MaxAmount);
-    let MinAmount = new HttpParams().set('MinAmount', filter.MinAmount);
-    let ToDate = new HttpParams().set('ToDate', filter.ToDate);
-    let Type = new HttpParams().set('Type', filter.Type);
-    let UserId = new HttpParams().set('UserId', filter.UserId);
-    return this.http.get<any>(this.controler + "?" +MinAmount   + "&" +MaxAmount  + "&" +UserId 
-      + "&"+FromDate +"&"+ToDate+"&"+Type+"&"+CurrencyId,{observe: 'response'})
+  Get(filter: Filtering) {
+    let params = new HttpParams();
+    if (filter.CurrencyId != undefined || filter.CurrencyId != null)
+      params = params.append("CurrencyId", filter.CurrencyId);
+    if (filter.FromDate != undefined || filter.FromDate != null)
+      params = params.append("FromDate", filter.FromDate);
+      if (filter.MaxAmount != undefined || filter.MaxAmount != null)
+      params = params.append("MaxAmount", filter.MaxAmount);
+    if (filter.MinAmount != undefined || filter.MinAmount != null)
+      params = params.append("MinAmount", filter.MinAmount);
+      if (filter.ToDate != undefined || filter.ToDate != null)
+      params = params.append("ToDate", filter.ToDate);
+      if (filter.Type != undefined || filter.Type != null)
+      params = params.append("Type", filter.Type);
+      if (filter.UserId != undefined || filter.UserId != null)
+      params = params.append("UserId", filter.UserId);
+    return this.http.get<any>(this.controler, { params: params })
+
   }
   Create(item) {
     return this.http.post(this.controler, item)

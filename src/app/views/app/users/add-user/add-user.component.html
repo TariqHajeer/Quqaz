@@ -42,8 +42,10 @@
     </div>
     <div class="col-md-3">
       <label> تاكيد كلمة السر <span class="text-danger text-one align-bottom mx-1">*</span></label>
-      <input type="password" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="confirmpassword">
-      <div *ngIf="CreateUser.Password!=confirmpassword && submitted" class="invalid-tooltip">كلمة السر غير متطابقة</div>
+      <input (keyup)="CheckPassword()" type="password" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="confirmpassword">
+      <div *ngIf="checkPassword" class="invalid-tooltip">كلمة السر غير متطابقة</div>
+      <div *ngIf="!CreateUser.Password && submitted" class="invalid-tooltip">تأكيد كلمة السر حقل مطلوب</div>
+
     </div>
   </div>
   <div class="row w-100 align-items-end mb-3" *ngIf="!CreateUser.CanWorkAsAgent">

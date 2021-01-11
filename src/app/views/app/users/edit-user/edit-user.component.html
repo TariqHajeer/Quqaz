@@ -37,8 +37,10 @@
               <label>اسم المستخدم<span class="text-danger text-one align-bottom mx-1">*</span></label>
               <input type="text"
                 oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
-                class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.userName">
+                (ngModelChange)='checkUserName()' class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.userName">
               <div *ngIf="!User.userName && submitted" class="invalid-tooltip">اسم المستخدم حقل مطلوب</div>
+              <div *ngIf="usernameIsRepeated&&CreateUser.UserName!=''" class="invalid-tooltip">اسم المستخدم مكرر</div>
+
             </div>
             <div class="col-md-3" >
               <label>كلمة السر <span class="text-danger text-one align-bottom mx-1">*</span></label>
@@ -47,9 +49,9 @@
             </div>
             <div class="col-md-3" >
               <label> تأكيد كلمة السر <span class="text-danger text-one align-bottom mx-1">*</span></label>
-              <input type="password" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="confirmpassword">
-              <div *ngIf="User.password!=confirmpassword && submitted " class="invalid-tooltip">كلمة السر  غير متطابقة</div>
-
+              <input (keyup)="CheckPassword()" type="password" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="confirmpassword">
+              <div *ngIf="checkPassword" class="invalid-tooltip">كلمة السر غير متطابقة</div>
+              
             </div>
             
           </div>

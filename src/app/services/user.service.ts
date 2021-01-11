@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/internal/Observable';
+import { map } from 'rxjs/internal/operators/map';
 import { environment } from 'src/environments/environment.prod';
 import { CreateUser } from '../Models/user/create-user';
 import { User } from '../Models/user/user.model';
@@ -23,6 +25,15 @@ export class UserService {
       }
       this.users = res;
     })
+  }
+  GetById(id): Observable<any> {
+    return this.http.get<any>(this.controler + id).pipe(
+      map(
+        (res: any) => {
+          return res;
+        }
+      )
+    )
   }
   Creat(item: CreateUser) {
     return this.http.post(this.controler, item)

@@ -61,7 +61,7 @@ export class ViewOutComeComponent implements OnInit {
   getOutcomes() {
     this.outcomeService.Get(this.filtering).subscribe(
       response => {
-        this.outcomes = response.body;
+        this.outcomes = response;
       }
     )
   }

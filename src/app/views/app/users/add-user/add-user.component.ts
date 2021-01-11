@@ -14,10 +14,10 @@ import { Group } from 'src/app/Models/Group/group.model';
 export class AddUserComponent implements OnInit, OnChanges {
 
   constructor(public UserService: UserService,
-     public GroupService: GroupService, 
-     private customService: CustomService,
-      private notifications: NotificationsService,
-      ) { }
+    public GroupService: GroupService,
+    private customService: CustomService,
+    private notifications: NotificationsService,
+  ) { }
   @Input() currentUserId;
   @Input() editClicked;
   @Input() addClicked;
@@ -28,44 +28,54 @@ export class AddUserComponent implements OnInit, OnChanges {
   departments: any[] = [];
   Groups: Group[] = []
   tempPhone: string;
-  nameIsRepeated:boolean=false;
-  usernameIsRepeated:boolean=false;
+  nameIsRepeated: boolean = false;
+  usernameIsRepeated: boolean = false;
+  confirmpassword
+  checkPassword: boolean = false
   ngOnInit(): void {
     this.getCountry()
     this.getDepartments()
     this.GetAllGroups()
     this.CreateUser = new CreateUser()
-    this.CreateUser.CanWorkAsAgent=false
+    this.CreateUser.CanWorkAsAgent = false
     this.CreateUser.Phones = []
   }
 
 
   ngOnChanges(changes: SimpleChanges): void {
   }
-  checkName(){       
-    if( this.UserService.users.filter(c=>c.name==this.CreateUser.Name).length>0){
-      
-      this.nameIsRepeated =true
+  checkName() {
+    if (this.UserService.users.filter(c => c.name == this.CreateUser.Name).length > 0) {
+
+      this.nameIsRepeated = true
       return;
     }
-   else
-    this.nameIsRepeated =false
+    else
+      this.nameIsRepeated = false
   }
-  checkUserName(){       
-    
-    if( this.UserService.users.filter(c=>c.userName==this.CreateUser.UserName).length>0){
-      
-      this.usernameIsRepeated =true
+  checkUserName() {
+
+    if (this.UserService.users.filter(c => c.userName == this.CreateUser.UserName).length > 0) {
+
+      this.usernameIsRepeated = true
       return;
-    }else
-    this.usernameIsRepeated =false
+    } else
+      this.usernameIsRepeated = false
+  }
+  CheckPassword() {
+    if (this.CreateUser.Password != this.confirmpassword) {
+      this.checkPassword = true
+    }
+    else{
+      this.checkPassword = false
+    }
   }
   addOrEditUser() {
-    this.addFinish.emit(this.CreateUser);
     this.submitted = true;
     this.UserService.Creat(this.CreateUser).subscribe(
       res => {
         if (this.addClicked) {
+          this.addFinish.emit(this.CreateUser);
           this.notifications.create('success', 'تم اضافة موظف بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         }
 
@@ -99,7 +109,7 @@ export class AddUserComponent implements OnInit, OnChanges {
     this.CreateUser.Phones.push(this.tempPhone);
     this.tempPhone = '';
   }
-//  NameIsNullOrDuplicate(array:[],name){
+  //  NameIsNullOrDuplicate(array:[],name){
 
-//  }
+  //  }
 }

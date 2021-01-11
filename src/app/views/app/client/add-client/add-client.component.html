@@ -32,11 +32,10 @@
         <label>تأكيد كلمة السر
           <span class="text-danger text-one align-bottom mx-1">*</span>
         </label>
-        <input type="password" class="form-control"
-         [ngModelOptions]="{standalone: true}"
-         [(ngModel)]="client.password">
+       
+         <input (keyup)="CheckPassword()" type="password" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="confirmpassword">
+         <div *ngIf="checkPassword" class="invalid-tooltip">كلمة السر غير متطابقة</div>
          <div *ngIf="!client.password && submitted" class="invalid-tooltip">تأكيد كلمة السر حقل مطلوب</div>
-
       </div>
       <div class="col-md-3">
         <label>{{'client.first-date' | translate}}
