@@ -53,6 +53,8 @@ export class AddInComeComponent implements OnInit {
     this.CreateIncome.Amount =Number( this.CreateIncome.Amount);
     this.CreateIncome.Earining = Number(this.CreateIncome.Earining);
     this.IncomeService.Create(this.CreateIncome).subscribe(res=>{
+      this.addFinish.emit(this.CreateIncome);
+
       this.notifications.create('', 'تم الاضافة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 
     })

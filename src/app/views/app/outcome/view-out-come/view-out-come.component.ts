@@ -70,7 +70,9 @@ export class ViewOutComeComponent implements OnInit {
     this.editClicked = false;
 
   }
-  addFinish() {
+  addFinish(value) {
+    this.outcomes.push(value)
+    this.gridInstance.refresh();
 
   }
   AddMoreOutcome() {

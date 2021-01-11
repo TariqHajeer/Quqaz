@@ -103,7 +103,7 @@
         </button>
       </div>
       <div class="modal-body" style="font-size: 15px;">
-        <app-add-in-come></app-add-in-come>
+        <app-add-in-come  (addFinish)="addFinish($event);addIncomModal.hide()" [addClicked]="addClicked"></app-add-in-come>
       </div>
     </div>
   </div>

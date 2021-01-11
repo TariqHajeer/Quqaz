@@ -56,6 +56,8 @@ export class AddOutComeComponent implements OnInit, OnChanges {
     this.submitted = true;
     this.CreateOutCome.Amount =Number( this.CreateOutCome.Amount);
     this.OutcomeService.Create(this.CreateOutCome).subscribe(res=>{
+      this.addFinish.emit(this.CreateOutCome);
+
       this.notifications.create('', 'تم الاضافة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 
     })

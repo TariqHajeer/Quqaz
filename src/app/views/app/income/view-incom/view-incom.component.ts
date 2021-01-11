@@ -91,5 +91,9 @@ export class ViewIncomComponent implements OnInit {
 
     });
   }
+  addFinish(value) {
+    this.incomes.push(value)
+    this.gridInstance.refresh();
 
+  }
 }

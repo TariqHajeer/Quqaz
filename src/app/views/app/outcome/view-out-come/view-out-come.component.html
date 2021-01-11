@@ -105,7 +105,7 @@
         </button>
       </div>
       <div class="modal-body" style="font-size: 15px;">
-        <app-add-out-come (addFinish)="addFinish();addUserModal.hide()" [addClicked]="addClicked"></app-add-out-come>
+        <app-add-out-come (addFinish)="addFinish($event);addUserModal.hide()" [addClicked]="addClicked"></app-add-out-come>
       </div>
     </div>
   </div>
