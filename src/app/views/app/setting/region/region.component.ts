@@ -1,16 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { EditSettingsModel, GridComponent, SaveEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
+import { EditSettingsModel, GridComponent, IEditCell, SaveEventArgs, toogleCheckbox, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
+import { City } from 'src/app/Models/Cities/city.Model';
 import { CustomService } from 'src/app/services/custom.service';
-import{Region} from '../../../../Models/Regions/region.model';
+import { Region } from '../../../../Models/Regions/region.model';
+import { Query, DataManager } from '@syncfusion/ej2-data';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-region',
   templateUrl: './region.component.html',
   styleUrls: ['./region.component.scss']
 })
 export class RegionComponent implements OnInit {
-  constructor(private customService:CustomService,private notifications:NotificationsService) { }
-  regions:Region[]=[];
+  constructor(private customService: CustomService, private notifications: NotificationsService) { }
+  regions: Region[] = [];
   public stTime: any;
   public filter: Object;
   public filterSettings: Object;
@@ -19,24 +22,34 @@ export class RegionComponent implements OnInit {
   public lines: any;
   @ViewChild('normalgrid')
   public gridInstance: GridComponent;
-  public toolbar: ToolbarItems[];
+  public toolbar: Object[];
   public pageSettings: Object;
-
+  public citiesParameter: IEditCell;
   ngOnInit(): void {
     this.getRegions();
-    this.editSettings = { };
-    this.toolbar = ['Search',];
+    this.editSettings = { showDeleteConfirmDialog: false, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
+    this.toolbar = [
+      { text: 'اضافة', tooltipText: 'اضافة', prefixIcon: 'e-add', id: 'normalgrid_add' },
+      { text: 'تعديل', tooltipText: 'تعديل', prefixIcon: 'e-edit', id: 'normalgrid_edit' },
+      { text: 'حذف', tooltipText: 'حذف', prefixIcon: 'e-delete', id: 'normalgrid_delete' },
+      { text: 'حفظ', tooltipText: 'حفظ', prefixIcon: 'e-update', id: 'normalgrid_update' },
+      { text: 'تراجع', tooltipText: 'تراجع', prefixIcon: 'e-cancel', id: 'normalgrid_cancel' },
+      'Search']
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
     this.pageSettings = { pageCount: 5 };
-    this.gridInstance.on('data-ready', function () {
-      this.dReady = true;
-    });
     this.selectionSettings = { persistSelection: true, type: "Multiple" };
     this.lines = 'Horizontal';
+    this.citiesParameter = {
+      params: {
+        allowFiltering: true,
+        dataSource: new DataManager({url:"https://localhost:44333/api/Country"}),
+        fields: { text: 'name', value: 'name' },
+         actionComplete: () => false
+      }
+    };
   }
-
   load() {
     const rowHeight: number = this.gridInstance.getRowHeight();  // height of the each row
     const gridHeight: any = this.gridInstance.height;  // grid height
@@ -45,13 +58,11 @@ export class RegionComponent implements OnInit {
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
 
-  getRegions(){
-  this.customService.getAll('Region').subscribe(
-    res=>
-    {
-      console.log(res);
-      this.regions=res;
-    }
-  )
-}
+  getRegions() {
+    this.customService.getAll('Region').subscribe(
+      res => {
+        this.regions = res;
+      }
+    )
+  }
 }

@@ -41,9 +41,6 @@ export class ExportsTypesComponent implements OnInit {
     this.stTime = performance.now();
     this.pageSettings = { pageCount: 5 };
 
-    // this.gridInstance.on('data-ready', function () {
-    //   this.dReady = true;
-    // });
     this.selectionSettings = { persistSelection: true, type: "Multiple" };
     this.lines = 'Horizontal';
 

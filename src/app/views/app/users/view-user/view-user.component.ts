@@ -83,6 +83,10 @@ export class ViewUserComponent implements OnInit {
       }
     }
   }
+  navigate(id){
+    console.log(id);
+    // this.route.navigate("/user/edit/"+id)
+  }
   
   
 }
