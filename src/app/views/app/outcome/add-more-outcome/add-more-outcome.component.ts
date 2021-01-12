@@ -16,8 +16,8 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class AddMoreOutcomeComponent implements OnInit {
   submitted = false;
-
-  OutComes: CreateOutCome[] = []
+  tempId :1 ;
+  public OutComes: CreateOutCome[] = []
   coins: Coin[];
   exportTypes: any[] = [];
   apiName = "Currency";
@@ -33,9 +33,9 @@ export class AddMoreOutcomeComponent implements OnInit {
   public gridInstance: GridComponent;
   public toolbar: Object[];
   public pageSettings: Object;
-  public gridDs:any;
+  public gridDs: any;
   public outComeTypeDs: any;
-  public coinDs:any;
+  public coinDs: any;
   constructor(public OutcomeService: OutcomeService,
     private customService: CustomService,
     private notifications: NotificationsService,
@@ -43,7 +43,7 @@ export class AddMoreOutcomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.outComeTypeDs = new DataManager({ url: this.OutComeTypeapi });
-    this.coinDs = new DataManager({url:this.coinsapi});
+    this.coinDs = new DataManager({ url: this.coinsapi });
     this.editSettings = { showDeleteConfirmDialog: false, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
     this.toolbar = [
       { text: 'اضافة', tooltipText: 'اضافة', prefixIcon: 'e-add', id: 'normalgrid_add' },
@@ -79,7 +79,8 @@ export class AddMoreOutcomeComponent implements OnInit {
   actionComplete(args: SaveEventArgs) {
 
     if (args.action == 'add') {
-      console.log(args.data);
+      if (args.requestType == "save") {
+      }
     }
     // else if (args.action == "edit") {
     //   // this.notifications.create('', 'تم التعديل', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
@@ -90,7 +91,6 @@ export class AddMoreOutcomeComponent implements OnInit {
       this.notifications.create('', 'تم الحذف', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
     }
   }
-
   AddOutcome() {
     console.log(this.OutComes);
     // if (this.OutComes.length == 0)
