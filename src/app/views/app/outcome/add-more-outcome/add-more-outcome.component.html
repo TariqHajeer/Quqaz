@@ -27,6 +27,7 @@
                         foreignKeyValue='name'  foreignKeyField ='id' 
                         [dataSource]='coinDs'></e-column>
                         <e-column field='Date' textAlign="Center" headerText="التاريخ" width='140'
+                        [format]='dateFormatOptions'
                         editType='DatePickerEdit'[readOnlyInput]="true"></e-column>
                         <e-column field='Reason' textAlign="Center" headerText="السبب" width='140'></e-column>
                         <e-column field='Note' textAlign="Center" headerText="ملاحظات" width='200'></e-column>

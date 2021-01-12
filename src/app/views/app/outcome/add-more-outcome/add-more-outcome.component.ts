@@ -36,6 +36,7 @@ export class AddMoreOutcomeComponent implements OnInit {
   public gridDs: any;
   public outComeTypeDs: any;
   public coinDs: any;
+  public dateFormatOptions: any = {type:'date', format:'dd/MM/yyyy'};
   constructor(public OutcomeService: OutcomeService,
     private customService: CustomService,
     private notifications: NotificationsService,
@@ -79,8 +80,9 @@ export class AddMoreOutcomeComponent implements OnInit {
   actionComplete(args: SaveEventArgs) {
 
     if (args.action == 'add') {
-      // if (args.requestType == "save") {
-      // }
+      if (args.requestType == "save") {
+        args.data["date"] = new Date(args.data["data"]);
+      }
     }
     // else if (args.action == "edit") {
     //   // this.notifications.create('', 'تم التعديل', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
