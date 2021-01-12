@@ -37,12 +37,17 @@ export class AddMoreOutcomeComponent implements OnInit {
   public outComeTypeDs: any;
   public coinDs: any;
   public dateFormatOptions: any = {type:'date', format:'dd/MM/yyyy'};
+  public requiredValidation;
   constructor(public OutcomeService: OutcomeService,
     private customService: CustomService,
     private notifications: NotificationsService,
   ) { }
 
   ngOnInit(): void {
+    var customFn = (args) => {
+      return !args;
+  };
+    this.requiredValidation={ required:[true,"هذا الحقل مطلوب"]};
     this.outComeTypeDs = new DataManager({ url: this.OutComeTypeapi });
     this.coinDs = new DataManager({ url: this.coinsapi });
     this.editSettings = { showDeleteConfirmDialog: false, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };

@@ -21,13 +21,18 @@
                         <e-column field="id" [isPrimaryKey]="true" isIdentity="true" width="75" textAlign="right" [visible]='false' ></e-column> 
                         <e-column field='OutComeTypeId' textAlign="Center" headerText="نوع الصادرات" width='175'
                         foreignKeyValue='name'  foreignKeyField ='id' 
+                        [validationRules]='requiredValidation'
                         [dataSource]='outComeTypeDs'></e-column>
-                        <e-column field='Amount' textAlign="Center" headerText="المبلغ المصروف" width='175'></e-column>
+                        <e-column field='Amount' textAlign="Center" headerText="المبلغ المصروف" width='175'
+                        editType='numericedit' [validationRules]='requiredValidation'
+                        ></e-column>
                         <e-column field='CurrencyId' textAlign="Center" headerText="العملة" width='140'
+                        [validationRules]='requiredValidation'
                         foreignKeyValue='name'  foreignKeyField ='id' 
                         [dataSource]='coinDs'></e-column>
                         <e-column field='Date' textAlign="Center" headerText="التاريخ" width='140'
                         [format]='dateFormatOptions'
+                        [validationRules]='requiredValidation'
                         editType='DatePickerEdit'[readOnlyInput]="true"></e-column>
                         <e-column field='Reason' textAlign="Center" headerText="السبب" width='140'></e-column>
                         <e-column field='Note' textAlign="Center" headerText="ملاحظات" width='200'></e-column>
