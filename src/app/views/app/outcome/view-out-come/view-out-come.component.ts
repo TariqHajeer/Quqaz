@@ -8,6 +8,7 @@ import { Filtering } from 'src/app/Models/Filtering.model'
 import { CustomService } from 'src/app/services/custom.service';
 import { Coin } from 'src/app/Models/Coins/coin.model';
 import { UserService } from 'src/app/services/user.service';
+import { CreateOutCome } from 'src/app/Models/OutCome/create-out-come.model';
 @Component({
   selector: 'app-view-out-come',
   templateUrl: './view-out-come.component.html',
@@ -25,7 +26,7 @@ export class ViewOutComeComponent implements OnInit {
   public lines: any;
   @ViewChild('normalgrid')
   public gridInstance: GridComponent;
-  public toolbar: ToolbarItems[];
+  public toolbar: Object[];
   public pageSettings: Object;
   outcomes: Outcome[] = [];
   editClicked: any;
@@ -40,7 +41,9 @@ export class ViewOutComeComponent implements OnInit {
     this.getExportTypes()
     this.getOutcomes();
     this.editSettings = { showDeleteConfirmDialog: true, allowDeleting: true };
-    this.toolbar = ['Search', 'Delete',];
+    this.toolbar = [
+    { text: 'حذف', tooltipText: 'حذف', prefixIcon: 'e-delete', id: 'normalgrid_delete' },
+    'Search'];
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
@@ -70,8 +73,15 @@ export class ViewOutComeComponent implements OnInit {
     this.editClicked = false;
 
   }
-  addFinish(value) {
-    this.outcomes.push(value)
+  CreateOutcome:Outcome
+  addFinish(value:CreateOutCome) {
+    this.CreateOutcome.amount=value.Amount
+    this.CreateOutcome.date=value.Date
+    this.CreateOutcome.currencyId=value.CurrencyId
+    this.CreateOutcome.outComeTypeId=value.OutComeTypeId
+    this.CreateOutcome.note=value.Note
+    this.CreateOutcome.reason=value.Reason
+      this.outcomes.push(this.CreateOutcome)
     this.gridInstance.refresh();
 
   }

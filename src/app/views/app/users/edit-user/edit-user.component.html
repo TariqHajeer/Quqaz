@@ -22,7 +22,7 @@
             </div>
             <div class="col-md-3">
               <label>القسم<span class="text-danger text-one align-bottom mx-1">*</span></label>
-              <ng-select [(ngModel)]="User.department" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
+              <ng-select [(ngModel)]="User.departmentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
                 <ng-option *ngFor="let department of departments" [value]="department.id">{{department.name}}
                 </ng-option>
               </ng-select>

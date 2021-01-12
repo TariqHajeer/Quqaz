@@ -89,7 +89,6 @@ export class AddClientComponent implements OnInit, OnChanges {
     this.submitted = true;
     if (this.tempPhone)
       this.client.phones.push(this.tempPhone)
-      console.log(this.client);
     this.clientService.addClient(this.client).subscribe(
       res => {
         this.addFinish.emit(this.client);
@@ -98,9 +97,7 @@ export class AddClientComponent implements OnInit, OnChanges {
           this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
           this.tempPhone = '';
         }
-        else if (!this.editClicked) {
-          this.notifications.create('success', 'تم تعديل عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-        }
+        
         this.init();
       }
     )

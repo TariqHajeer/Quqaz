@@ -7,6 +7,7 @@ import { UserService } from 'src/app/services/user.service';
 import { Filtering } from 'src/app/Models/Filtering.model';
 import { Coin } from 'src/app/Models/Coins/coin.model';
 import { Router } from '@angular/router';
+import { CreateIncome } from 'src/app/Models/inCome/create-income.model';
 
 @Component({
   selector: 'app-view-incom',
@@ -26,7 +27,7 @@ export class ViewIncomComponent implements OnInit {
   public lines: any;
   @ViewChild('normalgrid')
   public gridInstance: GridComponent;
-  public toolbar: ToolbarItems[];
+  public toolbar: Object[];
   public pageSettings: Object;
   incomes: Income[] = [];
   editClicked: any;
@@ -41,7 +42,9 @@ export class ViewIncomComponent implements OnInit {
     this.getImportTypes()
     this.getIncomes();
     this.editSettings = { showDeleteConfirmDialog: true, allowDeleting: true };
-    this.toolbar = ['Search', 'Delete',];
+    this.toolbar = [
+      { text: 'حذف', tooltipText: 'حذف', prefixIcon: 'e-delete', id: 'normalgrid_delete' },
+      'Search'];
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
@@ -91,8 +94,15 @@ export class ViewIncomComponent implements OnInit {
 
     });
   }
-  addFinish(value) {
-    this.incomes.push(value)
+  createInCome:Income
+  addFinish(value:CreateIncome) {
+    this.createInCome.amount=value.Amount
+    this.createInCome.date=value.Date
+    this.createInCome.earining=value.Earining
+    this.createInCome.incomeTypeId=value.IncomeTypeId
+    this.createInCome.note=value.Note
+    this.createInCome.source=value.Source
+    this.incomes.push( this.createInCome)
     this.gridInstance.refresh();
 
   }
