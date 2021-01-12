@@ -26,16 +26,6 @@ export class CustomService {
   Create(apiName, item): Observable<any> {
     return this.http.post(this.baseUrl + 'api/' + apiName, item);
   }
-  exitsstudent(newstudent): Observable<any> {
-    let item = new FormData();
-    item.append('firstName', newstudent.firstName);
-    item.append('middleName', newstudent.middleName);
-    item.append('lastName', newstudent.lastName);
-    item.append('mobileNumber', newstudent.mobileNumber);
-    item.append('phoneNumber', newstudent.phoneNumber);
-    return this.http.post(this.baseUrl + 'api/StudentExist', item);
-
-  }
   delete(apiName, id): Observable<any> {
     return this.http.delete(this.baseUrl + 'api/' + apiName + '/' + id);
   }

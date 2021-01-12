@@ -21,7 +21,8 @@
                         <e-column field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter'
                             width='50' [isPrimaryKey]='true'></e-column>
                         <e-column field='OutComeTypeId' textAlign="Center" headerText="نوع الصادرات" width='175'
-                        editType= 'dropdownedit'[edit]='exportTypesParams'></e-column>
+                        foreignKeyValue='name'  foreignKeyField ='id' 
+                        [dataSource]='outComeTypeDs'></e-column>
                         <e-column field='Amount' textAlign="Center" headerText="المبلغ المصروف" width='175'></e-column>
                         <e-column field='CurrencyId' textAlign="Center" headerText="العملة" width='140'
                         editType= 'dropdownedit'[edit]='coinsParams'></e-column>

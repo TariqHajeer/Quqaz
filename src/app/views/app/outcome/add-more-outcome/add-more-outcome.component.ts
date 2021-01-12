@@ -16,11 +16,13 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class AddMoreOutcomeComponent implements OnInit {
   submitted = false;
-  CreateOutCome: CreateOutCome
+
   OutComes: CreateOutCome[] = []
   coins: Coin[];
   exportTypes: any[] = [];
   apiName = "Currency";
+  coinsapi = environment.baseUrl + "api/Currency";
+  OutComeTypeapi = environment.baseUrl + "api/OutComeType";
   public stTime: any;
   public filter: Object;
   public filterSettings: Object;
@@ -33,14 +35,15 @@ export class AddMoreOutcomeComponent implements OnInit {
   public pageSettings: Object;
   public coinsParams: IEditCell
   public exportTypesParams: IEditCell
+  public outComeTypeDs: any;
   constructor(public OutcomeService: OutcomeService,
     private customService: CustomService,
     private notifications: NotificationsService,
   ) { }
 
   ngOnInit(): void {
-    this.CreateOutCome = new CreateOutCome()
-    this.editSettings = {  showDeleteConfirmDialog: false, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true  };
+    this.outComeTypeDs = new DataManager({ url: this.OutComeTypeapi });
+    this.editSettings = { showDeleteConfirmDialog: false, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
     this.toolbar = [
       { text: 'اضافة', tooltipText: 'اضافة', prefixIcon: 'e-add', id: 'normalgrid_add' },
       { text: 'تعديل', tooltipText: 'تعديل', prefixIcon: 'e-edit', id: 'normalgrid_edit' },
@@ -48,58 +51,18 @@ export class AddMoreOutcomeComponent implements OnInit {
       { text: 'حفظ', tooltipText: 'حفظ', prefixIcon: 'e-update', id: 'normalgrid_update' },
       { text: 'تراجع', tooltipText: 'تراجع', prefixIcon: 'e-cancel', id: 'normalgrid_cancel' },
       'Search'];
-    // this.toolbar = ['Add', 'Search', 'Edit', 'Delete', 'Update', 'Cancel'];
-
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
     this.pageSettings = { pageCount: 5 };
-    this.gridInstance.on('data-ready', function () {
-      this.dReady = true;
-    });
     this.selectionSettings = { persistSelection: true, type: "Multiple" };
     this.lines = 'Horizontal';
-    this.Getcoins()
-    this.getExportTypes()
 
   }
 
 
   addOrEditUser() {
     this.submitted = true;
-  }
-  coinsapi = environment.baseUrl + "api/Currency";
-  Getcoins() {
-    this.coinsParams = {
-      params: {
-        allowFiltering: true,
-        dataSource: new DataManager({url:this.coinsapi}),
-        fields: { text: 'العملة', value: 'name' },
-        actionComplete: () => false
-      }
-    };
-    // this.customService.getAll("Currency").subscribe(res => {
-    //   this.coins = res;
-      
-    // });
-    // this.coinsParams = { params: { popupHeight: '300px' } };
-  }
-  OutComeTypeapi = environment.baseUrl + "api/OutComeType";
-  getExportTypes() {
-    this.exportTypesParams = {
-      params: {
-        allowFiltering: true,
-        dataSource: new DataManager({url:this.OutComeTypeapi}),
-        fields: { text: 'نوع الصادرات', value: 'name' },
-        actionComplete: () => false
-      }
-    };
-    // this.customService.getAll('OutComeType').subscribe(
-    //   res => {
-    //     this.exportTypes = res;
-     
-    //   }
-    // )
   }
 
 
@@ -115,9 +78,8 @@ export class AddMoreOutcomeComponent implements OnInit {
   actionComplete(args: SaveEventArgs) {
 
     if (args.action == 'add') {
-
-      this.OutComes.push(this.CreateOutCome);
-      this.notifications.create('success', 'تم اضافة صادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      console.log(args.data);
+      // this.notifications.create('', 'تم اضافة صادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 
     }
     else if (args.action == "edit") {
@@ -127,15 +89,16 @@ export class AddMoreOutcomeComponent implements OnInit {
 
     else if (args.requestType == "delete") {
       this.notifications.create('', 'تم الحذف', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-
     }
   }
 
   AddOutcome() {
-    this.OutcomeService.CreateMulitpleOutCome(this.OutComes).subscribe(res=>{
-      this.notifications.create('success', 'تم اضافة صادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    if (this.OutComes.length == 0)
+      return;
+    this.OutcomeService.CreateMulitpleOutCome(this.OutComes).subscribe(res => {
+      this.notifications.create('', 'تم اضافة صادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.OutComes = []
-  })
-   
+    })
+
   }
 }
