@@ -79,8 +79,8 @@ export class AddMoreOutcomeComponent implements OnInit {
   actionComplete(args: SaveEventArgs) {
 
     if (args.action == 'add') {
-      if (args.requestType == "save") {
-      }
+      // if (args.requestType == "save") {
+      // }
     }
     // else if (args.action == "edit") {
     //   // this.notifications.create('', 'تم التعديل', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });

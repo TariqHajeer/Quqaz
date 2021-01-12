@@ -18,9 +18,7 @@
                     [selectionSettings]='selectionSettings' [filterSettings]='filterSettings' [allowSorting]='true'
                     [allowFiltering]='true' (actionComplete)="actionComplete($event)">
                     <e-columns>
-                        
                         <e-column field="id" [isPrimaryKey]="true" isIdentity="true" width="75" textAlign="right" [visible]='false' ></e-column> 
-
                         <e-column field='OutComeTypeId' textAlign="Center" headerText="نوع الصادرات" width='175'
                         foreignKeyValue='name'  foreignKeyField ='id' 
                         [dataSource]='outComeTypeDs'></e-column>
