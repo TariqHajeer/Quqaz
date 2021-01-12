@@ -13,19 +13,19 @@
     </div>
     <br>
                 <ejs-grid #normalgrid id='normalgrid' (load)='load()' [allowPaging]='true' [gridLines]="lines"
-                    [pageSettings]='pageSettings' [toolbar]='toolbar' [editSettings]='editSettings' [dataSource]='OutComes'
+                    [pageSettings]='pageSettings' [toolbar]='toolbar' [editSettings]='editSettings' (dataSource)='OutComes'
                     rowHeight='38' [allowSorting]='true' height='400' [enableHover]='true'
                     [selectionSettings]='selectionSettings' [filterSettings]='filterSettings' [allowSorting]='true'
                     [allowFiltering]='true' (actionComplete)="actionComplete($event)">
                     <e-columns>
-                        <!-- <e-column field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter'
-                            width='50' [isPrimaryKey]='true'></e-column> -->
+                        
                         <e-column field='OutComeTypeId' textAlign="Center" headerText="نوع الصادرات" width='175'
                         foreignKeyValue='name'  foreignKeyField ='id' 
                         [dataSource]='outComeTypeDs'></e-column>
                         <e-column field='Amount' textAlign="Center" headerText="المبلغ المصروف" width='175'></e-column>
-                        <!-- <e-column field='CurrencyId' textAlign="Center" headerText="العملة" width='140'
-                        editType= 'dropdownedit'[edit]='coinsParams'></e-column> -->
+                        <e-column field='CurrencyId' textAlign="Center" headerText="العملة" width='140'
+                        foreignKeyValue='name'  foreignKeyField ='id' 
+                        [dataSource]='coinDs'></e-column>
                         <e-column field='Date' textAlign="Center" headerText="التاريخ" width='140'
                         editType='DatePickerEdit'[readOnlyInput]="true"></e-column>
                         <e-column field='Reason' textAlign="Center" headerText="السبب" width='140'></e-column>

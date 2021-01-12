@@ -33,9 +33,9 @@ export class AddMoreOutcomeComponent implements OnInit {
   public gridInstance: GridComponent;
   public toolbar: Object[];
   public pageSettings: Object;
-  public coinsParams: IEditCell
-  public exportTypesParams: IEditCell
+  public gridDs:any;
   public outComeTypeDs: any;
+  public coinDs:any;
   constructor(public OutcomeService: OutcomeService,
     private customService: CustomService,
     private notifications: NotificationsService,
@@ -43,6 +43,7 @@ export class AddMoreOutcomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.outComeTypeDs = new DataManager({ url: this.OutComeTypeapi });
+    this.coinDs = new DataManager({url:this.coinsapi});
     this.editSettings = { showDeleteConfirmDialog: false, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
     this.toolbar = [
       { text: 'اضافة', tooltipText: 'اضافة', prefixIcon: 'e-add', id: 'normalgrid_add' },
@@ -79,13 +80,11 @@ export class AddMoreOutcomeComponent implements OnInit {
 
     if (args.action == 'add') {
       console.log(args.data);
-      // this.notifications.create('', 'تم اضافة صادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-
     }
-    else if (args.action == "edit") {
-      this.notifications.create('', 'تم التعديل', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    // else if (args.action == "edit") {
+    //   // this.notifications.create('', 'تم التعديل', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 
-    }
+    // }
 
     else if (args.requestType == "delete") {
       this.notifications.create('', 'تم الحذف', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
@@ -93,12 +92,13 @@ export class AddMoreOutcomeComponent implements OnInit {
   }
 
   AddOutcome() {
-    if (this.OutComes.length == 0)
-      return;
-    this.OutcomeService.CreateMulitpleOutCome(this.OutComes).subscribe(res => {
-      this.notifications.create('', 'تم اضافة صادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      this.OutComes = []
-    })
+    console.log(this.OutComes);
+    // if (this.OutComes.length == 0)
+    //   return;
+    // this.OutcomeService.CreateMulitpleOutCome(this.OutComes).subscribe(res => {
+    //   this.notifications.create('', 'تم اضافة صادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    //   this.OutComes = []
+    // })
 
   }
 }
