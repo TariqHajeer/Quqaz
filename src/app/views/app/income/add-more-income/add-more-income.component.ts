@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { CreateIncome } from 'src/app/Models/inCome/create-income.model';
 import { UserService } from 'src/app/services/user.service';
 import { IncomeService } from '../income.service';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-add-more-income',
@@ -17,8 +18,7 @@ import { IncomeService } from '../income.service';
 export class AddMoreIncomeComponent implements OnInit {
 
   submitted = false;
-  Income: CreateIncome
-  Incomes: CreateIncome[] = []
+  Incomes: any[] = []
   coins: Coin[];
   importTypes: any[] = [];
   apiName = "Currency";
@@ -35,14 +35,25 @@ export class AddMoreIncomeComponent implements OnInit {
   public coinsParams: IEditCell
   public importTypesParams: IEditCell
   public userTypesParams: IEditCell
+  public inComeTypeDs: any;
+  public CurrencyDs: any;
+  public UserDs: any;
+  public dateFormatOptions: any = {type:'date', format:'dd/MM/yyyy'};
+ inComeTypeapi = environment.baseUrl + "api/OutComeType";
+ Currencyapi = environment.baseUrl + "api/Currency";
+ Userapi = environment.baseUrl + "api/User";
+
   constructor(public IncomeService: IncomeService,
     private customService: CustomService,
     private notifications: NotificationsService,
     private userservic:UserService
+    
   ) { }
 
   ngOnInit(): void {
-    this.Income = new CreateIncome()
+    this.inComeTypeDs = new DataManager({ url: this.inComeTypeapi });
+    this.CurrencyDs = new DataManager({ url: this.Currencyapi });
+    this.UserDs = new DataManager({ url: this.Userapi });
     this.editSettings = { showDeleteConfirmDialog: true, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
     this.toolbar = [
       { text: 'اضافة', tooltipText: 'اضافة', prefixIcon: 'e-add', id: 'normalgrid_add' },
@@ -125,27 +136,25 @@ export class AddMoreIncomeComponent implements OnInit {
   actionComplete(args: SaveEventArgs) {
 
     if (args.action == 'add') {
+      if (args.requestType == "save") {
+        args.data["date"] = new Date(args.data["data"]);
+             this.notifications.create('', 'تم التعديل', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 
-      this.Incomes.push(this.Income);
-      this.notifications.create('success', 'تم اضافة صادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-
+      }
     }
-    else if (args.action == "edit") {
-      this.notifications.create('', 'تم التعديل', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-
-    }
+  
 
     else if (args.requestType == "delete") {
       this.notifications.create('', 'تم الحذف', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-
     }
   }
 
   AddIncome() {
-    this.IncomeService.AddMultiple(this.Incomes).subscribe(res=>{
-      this.notifications.create('success', 'تم اضافة واردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      this.Incomes = []
-  })
+    console.log(this.Incomes)
+  //   this.IncomeService.AddMultiple(this.Incomes).subscribe(res=>{
+  //     this.notifications.create('success', 'تم اضافة واردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+  //     this.Incomes = []
+  // })
    
   }
 }

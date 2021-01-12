@@ -100,4 +100,5 @@ export class ViewOutComeComponent implements OnInit {
       }
     )
   }
+  
 }

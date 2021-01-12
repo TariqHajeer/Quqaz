@@ -89,7 +89,7 @@ export class ViewIncomComponent implements OnInit {
     this.router.navigate(['app/income/addmoreincome'])
   }
   Test(){
-    console.log(this.filtering);
+   // console.log(this.filtering);
     this.incomeService.Get(this.filterSettings).subscribe(res=>{
 
     });
