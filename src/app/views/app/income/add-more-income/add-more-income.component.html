@@ -19,17 +19,23 @@
                     <e-columns>
                         <e-column field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter'
                             width='50' [isPrimaryKey]='true'></e-column>
-                        <e-column field='IncomeTypeId' textAlign="Center" headerText="نوع الواردات" width='170'
-                            editType='dropdownedit'></e-column>
-                        <e-column field='CurrencyId' textAlign="Center" headerText="العملة" width='130'
-                            editType='dropdownedit'></e-column>
+                        
+                            <e-column field='IncomeTypeId' textAlign="Center" headerText="نوع الواردات" width='175'
+                            foreignKeyValue='name'  foreignKeyField ='id' 
+                            [dataSource]='inComeTypeDs'></e-column>
+                            <e-column field='CurrencyId' textAlign="Center" headerText="العملة" width='175'
+                            foreignKeyValue='name'  foreignKeyField ='id' 
+                            [dataSource]='CurrencyDs'></e-column>
+  
                         <e-column field='Amount' textAlign="Center" headerText="المبلغ المصروف" width='170'></e-column>
                         <e-column field='Earining' textAlign="Center" headerText="الربح" width='130'></e-column>
-                        <e-column field='UserId' textAlign="Center" headerText="الموظف" width='130'
-                            editType='dropdownedit'></e-column>
+                            <e-column field='UserId' textAlign="Center" headerText="الموظف" width='175'
+                            foreignKeyValue='name'  foreignKeyField ='id' 
+                            [dataSource]='UserDs'></e-column>
                         <e-column field='Source' textAlign="Center" headerText="المصدر" width='130'></e-column>
                         <e-column field='Date' textAlign="Center" headerText="التاريخ" width='130'
-                            editType='DatePickerEdit'[format]="{type: 'date', yMd: 'short'}" [readOnlyInput]="true"></e-column>
+                        [format]='dateFormatOptions'
+                        editType='DatePickerEdit'[readOnlyInput]="true"></e-column>
                         <e-column field='Note' textAlign="Center" headerText="ملاحظات" width='200'></e-column>
 
                     </e-columns>
