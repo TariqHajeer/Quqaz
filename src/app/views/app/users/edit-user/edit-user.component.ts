@@ -80,6 +80,8 @@ export class EditUserComponent implements OnInit {
   GetUserById() {
     this.UserService.GetById(this.id).subscribe(res => {
       this.User = res
+      this.phones = this.User.phones
+      console.log(res)
     })
   }
   CheckPassword() {
@@ -109,11 +111,20 @@ export class EditUserComponent implements OnInit {
   GetAllGroups() {
     this.GroupService.GetAll().subscribe(res => {
       this.Groups = res
+      this.addGroups=this.Groups.filter(g=>this.User.groupsId.includes(g.id))
     })
   }
 
   addNewPhone() {
-    console.log(this.phone)
+    this.phone.objectId = Number(this.id)
+    if(this.phone.phone==null||this.phone.phone==undefined){
+      this.notifications.create('', 'الرقم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+      return
+    }
+    if (this.phones.filter(p => p.phone == this.phone.phone).length > 0) {
+      this.notifications.create('', 'الرقم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+      return
+    }
     this.UserService.AddPhone(this.phone).subscribe(res => {
       this.phones.push(this.phone);
       this.phone = new Phone();
@@ -121,15 +132,16 @@ export class EditUserComponent implements OnInit {
     })
 
   }
-  DeletePhone(item) {
-    this.UserService.deletePhone(item.objectId).subscribe(res => {
-      this.phones.filter(p => p != item)
+  DeletePhone(item: Phone) {
+    this.UserService.deletePhone(item.id).subscribe(res => {
+      this.phones = this.phones.filter(p => p != item)
       this.notifications.create('success', 'تم حذف رقم هاتف بنجاح ', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
     })
   }
   addNewGroup() {
     this.UserService.AddToGroup(this.id, this.addGroup.id).subscribe(res => {
       this.addGroups.push(this.addGroup);
+      this.Groups.filter(g=>g!=this.addGroup)
       this.phone = new Phone();
       this.notifications.create('success', 'تمت اضافة المستخدم الى المجموعة بنجاح ', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
     })
@@ -137,7 +149,8 @@ export class EditUserComponent implements OnInit {
   }
   DeleteGroup(item) {
     this.UserService.deleteGroup(this.id, item.id).subscribe(res => {
-      this.addGroups.filter(p => p != item)
+      this.Groups.push(item)
+      this.addGroups = this.addGroups.filter(p => p != item)
       this.notifications.create('success', 'تم حذف المستخدم من المجموعة بنجاح ', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
     })
   }

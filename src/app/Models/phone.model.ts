@@ -1,4 +1,5 @@
 export class Phone {
-    objectId: any
-    Phone: string
+    id: number
+    objectId:number
+    phone: string
 }
