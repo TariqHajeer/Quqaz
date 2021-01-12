@@ -48,17 +48,17 @@ export class UserService {
     return this.http.put(this.controler + "AddPhone", item)
   }
   deletePhone(id) {
-    return this.http.put(this.controler + "deletePhone/", id)
+    return this.http.put(this.controler + "deletePhone/"+id, id)
 
   }
   AddToGroup(userid,groupid) {
     var  formData=new FormData();
-    formData.append("privelegeId",groupid);
+    formData.append("groupid",groupid);
     return this.http.put(this.controler + "AddToGroup/"+userid,formData )
   }
   deleteGroup(userid,groupid) {
     var  formData=new FormData();
-    formData.append("privelegeId",groupid);
+    formData.append("groupid",groupid);
     return this.http.put(this.controler + "deleteGroup/"+userid,formData )
   }
 }

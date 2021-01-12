@@ -36,8 +36,8 @@
               </div>
             <div class="col-md-3">
               <label>{{'client.region' | translate}}</label>
-              <ng-select [(ngModel)]="client.regionId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
-                <ng-option *ngFor="let region of regions" [value]="region.id">{{region.name}}</ng-option>
+              <ng-select [(ngModel)]="client.region" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
+                <ng-option *ngFor="let region of regions" [value]="region">{{region.name}}</ng-option>
               </ng-select>
             </div>
             <div class="col-md-3">
@@ -74,7 +74,7 @@
                       <label for="phone" class="col-form-label">الرقم:</label>
                       <input id="phone" type="text" maxlength="10"
                         oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
-                        class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="phone.Phone"> </div>
+                        class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="phone.phone"> </div>
                     <button type="button" class="btn btn-primary" (click)="addNewPhone()">اضافة</button>
                   </form>
                   <table class="table">
@@ -90,7 +90,7 @@
                     <tbody>
                       <tr *ngFor="let phone of phones;let i=index">
                         <td>{{i}}</td>
-                        <td>{{phone.Phone}}</td>
+                        <td>{{phone.phone}}</td>
                         <td>
                           <svg (click)="DeletePhone(phone)" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                           fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"style="cursor: pointer;">

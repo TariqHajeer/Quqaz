@@ -39,7 +39,7 @@
                 oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
                 (ngModelChange)='checkUserName()' class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.userName">
               <div *ngIf="!User.userName && submitted" class="invalid-tooltip">اسم المستخدم حقل مطلوب</div>
-              <div *ngIf="usernameIsRepeated&&CreateUser.UserName!=''" class="invalid-tooltip">اسم المستخدم مكرر</div>
+              <div *ngIf="usernameIsRepeated&&CreateUser.Useruame!=''" class="invalid-tooltip">اسم المستخدم مكرر</div>
 
             </div>
             <div class="col-md-3" >
@@ -79,10 +79,10 @@
           <div class="row w-100 align-items-end mb-3">
             <div class="col-md-3" *ngIf="User.canWorkAsAgent">
               <label>المدينة<span class="text-danger text-one align-bottom mx-1">*</span></label>
-              <ng-select [(ngModel)]="User.CountryId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
+              <ng-select [(ngModel)]="User.countryId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
                 <ng-option *ngFor="let country of countries" [value]="country.id">{{country.name}}</ng-option>
               </ng-select>
-              <div *ngIf="!User.CountryId && submitted " class="invalid-tooltip">المدينة  حقل مطلوب</div>
+              <div *ngIf="!User.countryId && submitted " class="invalid-tooltip">المدينة  حقل مطلوب</div>
 
             </div>
             <div class="col-md-3" *ngIf="User.canWorkAsAgent">
@@ -122,7 +122,7 @@
                           <label for="phone" class="col-form-label">الرقم:</label>
                           <input id="phone" type="text" maxlength="10"
                             oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
-                            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="phone.Phone"> </div>
+                            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="phone.phone"> </div>
                         <button type="button" class="btn btn-primary" (click)="addNewPhone()">اضافة</button>
                       </form>
                       <table class="table">
@@ -138,7 +138,7 @@
                         <tbody>
                           <tr *ngFor="let phone of phones;let i=index">
                             <td>{{i}}</td>
-                            <td>{{phone.Phone}}</td>
+                            <td>{{phone.phone}}</td>
                             <td>
                               <svg (click)="DeletePhone(phone)" xmlns="http://www.w3.org/2000/svg" width="16"
                                 height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"

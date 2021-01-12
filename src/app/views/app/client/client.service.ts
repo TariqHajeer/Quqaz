@@ -14,25 +14,7 @@ export class ClientService {
   controler = this.baseUrl + 'api/Client/'
 
   getClients(): Observable<Client[]> {
-    return this.http.get<Client[]>(this.baseUrl + 'api/Client').pipe(
-      map(
-        (res: any) => {
-          const data = res.map(obj => ({
-            id: obj.id,
-            name: obj.name,
-            userName: obj.userName,
-            regionId: obj.region.id,
-            regionName: obj.region.name,
-            canDelete: obj.canDelete,
-            note: obj.note,
-            firstDate: obj.firstDate,
-            address: obj.address,
-            phones: obj.phones,
-          }))
-          return data;
-        }
-      )
-    )
+    return this.http.get<Client[]>(this.baseUrl + 'api/Client')
   }
   getClientById(id): Observable<Client> {
     return this.http.get<Client>(this.controler + id).pipe(

@@ -80,6 +80,8 @@ export class EditClientComponent implements OnInit {
   getClientById() {
     this.clientService.getClientById(this.id).subscribe(res=>{
       this.client = res
+      console.log(res)
+      this.phones=this.client.phones
     })
     this.clientService.getClients().subscribe(
       res => {
@@ -91,7 +93,6 @@ export class EditClientComponent implements OnInit {
   }
 
   addOrEditClient() {
-
     this.clientService.Update(this.client).subscribe(
       res => {
         this.notifications.create('success', 'تم تعديل عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
@@ -109,7 +110,15 @@ export class EditClientComponent implements OnInit {
   }
 
   addNewPhone() {
-    console.log(this.phone)
+    this.phone.objectId = Number(this.id)
+    if(this.phone.phone==null||this.phone.phone==undefined){
+      this.notifications.create('', 'الرقم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+      return
+    }
+    if (this.phones!=[]&& this.phones.filter(p => p.phone == this.phone.phone).length > 0) {
+      this.notifications.create('', 'الرقم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+      return
+    }
     this.clientService.addPhone(this.phone).subscribe(res => {
       this.phones.push(this.phone);
       this.phone = new Phone();
@@ -118,8 +127,8 @@ export class EditClientComponent implements OnInit {
 
   }
   DeletePhone(item) {
-    this.clientService.deletePhone(item.objectId).subscribe(res => {
-      this.phones.filter(p => p != item)
+    this.clientService.deletePhone(item.id).subscribe(res => {
+      this.phones = this.phones.filter(p => p != item)
       this.notifications.create('success', 'تم حذف رقم هاتف بنجاح ', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
     })
   }
