@@ -98,6 +98,8 @@ export class GroupsComponent implements OnInit {
     })
   }
   ///////////editt
+  ///////////editt
+  ///////////editt
   validation(group :CreateGroup):boolean{
     if(group.Name==''||group.Name==undefined)
     {
