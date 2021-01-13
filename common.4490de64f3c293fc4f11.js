@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[2],{l0A4:function(n,t,l){"use strict";l.d(t,"a",(function(){return s}));class s{constructor(){this.MinAmount=null,this.MaxAmount=null,this.UserId=null,this.FromDate=null,this.ToDate=null,this.Type=null,this.CurrencyId=null}}}}]);
