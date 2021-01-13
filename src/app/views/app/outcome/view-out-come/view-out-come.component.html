@@ -80,11 +80,16 @@
         <e-columns>
           <e-column field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter' width='50'
             [isPrimaryKey]='true'></e-column>
+            <e-column field='outComeType.name' [allowEditing]='true' textAlign="Center" headerText="نوع الصرف" width='140'>
+            </e-column>
           <e-column field='amount' [allowEditing]='true' textAlign="Center" headerText="المبلغ المصروف" width='140'>
           </e-column>
-          <e-column field='date' [allowEditing]='false' textAlign="Center" headerText="التاريخ " width='140'></e-column>
+          <e-column field='date' [allowEditing]='false' textAlign="Center" headerText="التاريخ " width='140'
+          ></e-column>
           <e-column field='reason' [allowEditing]='false' textAlign="Center" headerText=السبب width='140'></e-column>
           <e-column field='note' [allowEditing]='false' textAlign="Center" headerText="ملاحظات" width='140'></e-column>
+          <e-column field='note' [allowEditing]='false' textAlign="Center" headerText="ملاحظات" width='140'></e-column>
+          <e-column field='createdBy' [allowEditing]='false' textAlign="Center" headerText="المستخدم" width='140'></e-column>
 
         </e-columns>
       </ejs-grid>

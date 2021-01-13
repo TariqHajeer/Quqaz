@@ -9,6 +9,7 @@ import { CustomService } from 'src/app/services/custom.service';
 import { Coin } from 'src/app/Models/Coins/coin.model';
 import { UserService } from 'src/app/services/user.service';
 import { CreateOutCome } from 'src/app/Models/OutCome/create-out-come.model';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-view-out-come',
   templateUrl: './view-out-come.component.html',
@@ -17,7 +18,8 @@ import { CreateOutCome } from 'src/app/Models/OutCome/create-out-come.model';
 export class ViewOutComeComponent implements OnInit {
 
   constructor(private outcomeService: OutcomeService, public router: Router,
-    private customService: CustomService,public UserService:UserService) { }
+    private customService: CustomService,public UserService:UserService,
+    public datepipe: DatePipe) { }
   public stTime: any;
   public filter: Object;
   public filterSettings: Object;
@@ -34,6 +36,7 @@ export class ViewOutComeComponent implements OnInit {
   filtering: Filtering
   coins: Coin[];
   exportTypes: any[] = [];
+  
   ngOnInit(): void {
     this.filtering=new Filtering()
     this.Getcoins()
@@ -48,9 +51,7 @@ export class ViewOutComeComponent implements OnInit {
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
     this.pageSettings = { pageSize: 5, pageSizes: true };
-    this.gridInstance.on('data-ready', function () {
-      this.dReady = true;
-    });
+    
     this.selectionSettings = { persistSelection: true, type: "Multiple" };
     this.lines = 'Horizontal';
   }
@@ -62,9 +63,19 @@ export class ViewOutComeComponent implements OnInit {
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
   getOutcomes() {
+    if(this.filtering.ToDate){
+      this.filtering.ToDate =this.datepipe.transform(this.filtering.ToDate, 'yyyy-MM-dd')
+    }
+    if(this.filtering.FromDate){
+      this.filtering.FromDate =this.datepipe.transform(this.filtering.FromDate, 'yyyy-MM-dd') 
+    }
     this.outcomeService.Get(this.filtering).subscribe(
       response => {
         this.outcomes = response;
+        console.log(this.outcomes);
+        this.outcomes.forEach(c=>{
+          c.date =c.date.split('T')[0];
+        });
       }
     )
   }

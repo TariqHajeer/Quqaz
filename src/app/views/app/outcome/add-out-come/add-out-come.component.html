@@ -18,7 +18,6 @@
                     <ng-option *ngFor="let coin of coins" [value]="coin.id">{{coin.name}}</ng-option>
                 </ng-select>
                 <div *ngIf="!CreateOutCome.CurrencyId && submitted" class="invalid-tooltip"> العملة حقل مطلوب</div>
-
             </div>
             <div class="col-md-3">
                 <label>المبلغ<span class="text-danger text-one align-bottom mx-1">*</span></label>
