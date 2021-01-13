@@ -101,7 +101,7 @@ export class CitiesComponent implements OnInit {
           this.notifications.create('', 'تم الحذف', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
         }
       )
-     
+
     }
   }
   onActionBegin(args: ActionEventArgs) {
@@ -125,7 +125,7 @@ export class CitiesComponent implements OnInit {
       //   this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
       //   args.cancel = true;
       // }
-      else if (this.cities.filter(c => c.name == name && c.id != id).length > 0) {
+      if (this.cities.filter(c => c.name == name && c.id != id).length > 0) {
         this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
         args.cancel = true;
       }
