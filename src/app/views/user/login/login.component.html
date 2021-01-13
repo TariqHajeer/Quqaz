@@ -14,7 +14,7 @@
     <form #loginForm="ngForm" novalidate (ngSubmit)="onSubmit()">
       <label class="form-group has-float-label">
         <input class="form-control" required  ngModel #userName="ngModel" name="userName" [(ngModel)]="userNameModel" />
-        <span>{{ 'user.user-name' | translate }}</span>
+        <span>{{ 'user.username' | translate }}</span>
         <div *ngIf="!userName.valid && loginForm.submitted" class="invalid-tooltip">userName is required!</div>
       </label>
       <label class="form-group has-float-label">
@@ -24,7 +24,7 @@
         <div *ngIf="!password.valid && loginForm.submitted" class="invalid-tooltip">Password is required!</div>
       </label>
       <div class="d-flex justify-content-between align-items-center">
-        <a routerLink="/user/forgot-password">{{ 'user.forgot-password' | translate }}?</a>
+        <!-- <a routerLink="/user/forgot-password">{{ 'user.forgot-password' | translate }}?</a> -->
         <app-state-button [btnClass]="'btn btn-primary btn-lg btn-shadow'" [currentState]="buttonState"
           [isDisabled]="buttonDisabled" click="onLoginClick()">
           {{ 'user.login-button' | translate | uppercase }}
