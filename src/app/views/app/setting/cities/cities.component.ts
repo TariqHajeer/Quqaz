@@ -121,8 +121,7 @@ export class CitiesComponent implements OnInit {
       let name = args.data["name"].trim();
       let id = args.data["id"];
       let deliveryCost = args.data["deliveryCost"];
-      ////change
-      ///change 2 
+
       if (this.cities.filter(c => c.name == name && c.id != id).length > 0) {
         this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
         args.cancel = true;
@@ -173,3 +172,4 @@ export class CitiesComponent implements OnInit {
   }
 
 }
+//tariq
