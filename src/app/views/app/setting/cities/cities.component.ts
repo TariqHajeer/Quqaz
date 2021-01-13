@@ -140,7 +140,7 @@ export class CitiesComponent implements OnInit {
       }
     }
     if (args.requestType == "delete") {
-      let city = args.data[0] as City;
+      let city = args.data[0] as City;   
 
       if (city.canDeleteWithRegion) {
         if (confirm("سوف يتم حذف المناطق الموجودة ضمن هذه المدينة")) {
