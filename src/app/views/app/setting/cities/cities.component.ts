@@ -69,9 +69,7 @@ export class CitiesComponent implements OnInit {
     this.currentId = data.id
     this.city.name = data.name;
     this.city.deliveryCost = Number(data.deliveryCost);
-    // for(let item of data.regions){
-    //   this.city.regions.push(item.name)
-    // }
+
   }
   addCity() {
     if (!this.city.name) {
@@ -89,6 +87,10 @@ export class CitiesComponent implements OnInit {
           this.notifications.create('success', 'تم اضافة مدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
           this.city = { name: '', deliveryCost: 0, regions: [] };
           this.currentMode = '';
+          console.log(res);
+          this.cities.push(res);
+          
+          this.gridInstance.refresh();
         }
       )
     }
@@ -98,7 +100,11 @@ export class CitiesComponent implements OnInit {
         res => {
           this.notifications.create('success', 'تم تعديل المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
           this.city = { name: '', deliveryCost: 0, regions: [] };
-          this.getCities();
+          // this.getCities();
+          console.log(res);
+          this.cities.push(res);
+          
+          this.gridInstance.refresh();
           this.currentMode = '';
         }
       )
