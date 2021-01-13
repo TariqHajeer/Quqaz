@@ -29,6 +29,7 @@ export class AddClientComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.init();
     this.getRegions();
+  this.getClient()
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (this.currentClientId && !this.addClicked) {
@@ -58,10 +59,16 @@ export class AddClientComponent implements OnInit, OnChanges {
       regionId: null,
     }
   }
-  getClientById() {
+  getClient(){
     this.clientService.getClients().subscribe(
       res => {
         this.clients=res
+      }
+    )
+  }
+  getClientById() {
+    this.clientService.getClients().subscribe(
+      res => {
         this.client = res.find(c => c.id == this.currentClientId);
 
       }

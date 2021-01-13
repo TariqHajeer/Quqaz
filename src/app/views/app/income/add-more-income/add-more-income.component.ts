@@ -42,6 +42,7 @@ export class AddMoreIncomeComponent implements OnInit {
  inComeTypeapi = environment.baseUrl + "api/OutComeType";
  Currencyapi = environment.baseUrl + "api/Currency";
  Userapi = environment.baseUrl + "api/User";
+ public requiredValidation;
 
   constructor(public IncomeService: IncomeService,
     private customService: CustomService,
@@ -51,6 +52,7 @@ export class AddMoreIncomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.requiredValidation={ required:[true,"هذا الحقل مطلوب"]};
     this.inComeTypeDs = new DataManager({ url: this.inComeTypeapi });
     this.CurrencyDs = new DataManager({ url: this.Currencyapi });
     this.UserDs = new DataManager({ url: this.Userapi });
@@ -137,24 +139,24 @@ export class AddMoreIncomeComponent implements OnInit {
 
     if (args.action == 'add') {
       if (args.requestType == "save") {
-        args.data["date"] = new Date(args.data["data"]);
-             this.notifications.create('', 'تم التعديل', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+       // args.data["date"] = new Date(args.data["data"]);
+        //     this.notifications.create('', 'تم التعديل', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 
       }
     }
   
 
     else if (args.requestType == "delete") {
-      this.notifications.create('', 'تم الحذف', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+     // this.notifications.create('', 'تم الحذف', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
     }
   }
 
   AddIncome() {
     console.log(this.Incomes)
-  //   this.IncomeService.AddMultiple(this.Incomes).subscribe(res=>{
-  //     this.notifications.create('success', 'تم اضافة واردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-  //     this.Incomes = []
-  // })
+    this.IncomeService.AddMultiple(this.Incomes).subscribe(res=>{
+      this.notifications.create('success', 'تم اضافة واردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.Incomes = []
+  })
    
   }
 }

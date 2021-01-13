@@ -63,7 +63,6 @@ export class ViewClientsComponent implements OnInit {
   getClients() {
     this.clientService.getClients().subscribe(
       res => {
-        console.log(res)
         this.clients = res;
       }
     )

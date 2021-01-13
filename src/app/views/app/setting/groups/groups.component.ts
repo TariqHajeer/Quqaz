@@ -71,7 +71,7 @@ export class GroupsComponent implements OnInit {
     this.UpdateGroup.Privileges=group.privilegesId
   }
   saveGroup() {
-    if(this.validation(this.CreateGroup))return
+    if(this.Updatevalidation(this.UpdateGroup))return
     this.GroupService.Update(this.UpdateGroup).subscribe(res => {
       this.hiddenbtnSave = true
       this.notifications.create('', 'تم التعديل', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
@@ -85,6 +85,10 @@ export class GroupsComponent implements OnInit {
     this.hiddenbtnSave = true
   }
   DeleteGroup(group:Group){
+    if(group.id==1){
+      this.notifications.create('', ' لايمكن حذف المجموعة', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+      return
+    }
     this.GroupService.Delete(group.id).subscribe(res=>{
       this.notifications.create('', 'تم الحذف', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Groups=this.Groups.filter(g=>g!=group);
@@ -99,11 +103,27 @@ export class GroupsComponent implements OnInit {
       this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
       return true
     }
-     if(this.Groups.filter(c => c.name == group.Name).length > 0 ){
+     if(this.Groups.filter(c => c.name == group.Name&&c.id!=group.Id).length > 0 ){
       this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
       return true
     }
     if(group.PrivilegesId==undefined||group.PrivilegesId.length==0){
+      this.notifications.create('', 'لا يوجد صلاحيات', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+      return true;
+    }
+    return false;
+  }
+  Updatevalidation(group :UpdateGroupDto):boolean{
+    if(group.Name==''||group.Name==undefined)
+    {
+      this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+      return true
+    }
+     if(this.Groups.filter(c => c.name == group.Name&&c.id!=group.Id).length > 0 ){
+      this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+      return true
+    }
+    if(group.Privileges==undefined||group.Privileges.length==0){
       this.notifications.create('', 'لا يوجد صلاحيات', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
       return true;
     }

@@ -22,20 +22,22 @@
                         
                             <e-column field='IncomeTypeId' textAlign="Center" headerText="نوع الواردات" width='175'
                             foreignKeyValue='name'  foreignKeyField ='id' 
-                            [dataSource]='inComeTypeDs'></e-column>
+                            [dataSource]='inComeTypeDs'
+                            [validationRules]='requiredValidation'></e-column>
                             <e-column field='CurrencyId' textAlign="Center" headerText="العملة" width='175'
                             foreignKeyValue='name'  foreignKeyField ='id' 
-                            [dataSource]='CurrencyDs'></e-column>
+                            [dataSource]='CurrencyDs' [validationRules]='requiredValidation'></e-column>
   
-                        <e-column field='Amount' textAlign="Center" headerText="المبلغ المصروف" width='170'></e-column>
-                        <e-column field='Earining' textAlign="Center" headerText="الربح" width='130'></e-column>
+                        <e-column field='Amount' textAlign="Center" headerText="المبلغ المصروف" width='170' 
+                        editType='numericedit'[validationRules]='requiredValidation'></e-column>
+                        <e-column field='Earining'  editType='numericedit' textAlign="Center" headerText="الربح" width='130' [validationRules]='requiredValidation'></e-column>
                             <e-column field='UserId' textAlign="Center" headerText="الموظف" width='175'
-                            foreignKeyValue='name'  foreignKeyField ='id' 
+                            foreignKeyValue='name'  foreignKeyField ='id'  [validationRules]='requiredValidation'
                             [dataSource]='UserDs'></e-column>
-                        <e-column field='Source' textAlign="Center" headerText="المصدر" width='130'></e-column>
+                        <e-column field='Source' textAlign="Center" headerText="المصدر" width='130' [validationRules]='requiredValidation'></e-column>
                         <e-column field='Date' textAlign="Center" headerText="التاريخ" width='130'
-                        [format]='dateFormatOptions'
-                        editType='DatePickerEdit'[readOnlyInput]="true"></e-column>
+                        [format]='dateFormatOptions' 
+                        editType='DatePickerEdit'[readOnlyInput]="true"[validationRules]='requiredValidation'></e-column>
                         <e-column field='Note' textAlign="Center" headerText="ملاحظات" width='200'></e-column>
 
                     </e-columns>
