@@ -172,4 +172,3 @@ export class CitiesComponent implements OnInit {
   }
 
 }
-//tariq
