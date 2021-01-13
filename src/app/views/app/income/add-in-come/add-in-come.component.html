@@ -23,14 +23,14 @@
             </div>
             <div class="col-md-3">
                 <label>المبلغ<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                <input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                     class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateIncome.Amount"
                     >
                 <div *ngIf="!CreateIncome.Amount && submitted" class="invalid-tooltip">المبلغ حقل مطلوب</div>
             </div>
             <div class="col-md-3">
                 <label>الربح<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                <input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                     class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateIncome.Earining">
                 <div *ngIf="!CreateIncome.Earining && submitted" class="invalid-tooltip">الربح حقل مطلوب</div>
             </div>

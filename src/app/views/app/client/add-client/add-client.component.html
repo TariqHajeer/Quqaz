@@ -4,7 +4,7 @@
       <div class="col-md-3">
         <label>{{'client.name' | translate}}</label><span
         class="text-danger text-one align-bottom mx-1">*</span>
-        <input  (ngModelChange)='checkName()' type="text"  class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.name">
+        <input  (keyup)='checkName()' type="text"  class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.name">
         <div *ngIf="!client.name && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
         <div *ngIf="nameIsRepeated&&client.name!=''" class="invalid-tooltip">الأسم مكرر</div>
       </div>
@@ -12,7 +12,7 @@
         <label>{{'client.user-name' | translate}}
           <span class="text-danger text-one align-bottom mx-1">*</span>
         </label>
-        <input  (ngModelChange)='checkUserName()' type="text" class="form-control"
+        <input  (keyup)='checkUserName()' type="text" class="form-control"
          [ngModelOptions]="{standalone: true}"oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '').replace(/(\..*)\./g, '$1');"
          [(ngModel)]="client.userName">
          <div *ngIf="!client.userName && submitted" class="invalid-tooltip">اسم المستخدم حقل مطلوب</div>

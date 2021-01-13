@@ -111,6 +111,7 @@ export class EditUserComponent implements OnInit {
   GetAllGroups() {
     this.GroupService.GetAll().subscribe(res => {
       this.Groups = res
+      if(this.User.groupsId==null)return
       this.addGroups=this.Groups.filter(g=>this.User.groupsId.includes(g.id))
     })
   }
