@@ -18,9 +18,12 @@ export class LangService {
   renderer: Renderer2;
   defaultLanguage = getThemeLang();
   supportedLanguages: Language[] = [
-    { code: 'en-US', direction: 'ltr', label: 'English', shorthand: 'en' },
-    {   code: 'ar',  direction: 'rtl',label: 'العربية',shorthand: 'ar',
+    {
+      code: 'ar', direction: 'rtl', label: 'العربية', shorthand: 'ar',
     },
+    {
+      code: 'en-US', direction: 'ltr', label: 'English', shorthand: 'en'
+    }
   ];
 
   constructor(
@@ -33,9 +36,9 @@ export class LangService {
 
   init() {
     this.translate.setTranslation('en-US', en);
-    this.translate.setTranslation('es-ES', es);
+    //this.translate.setTranslation('es-ES', es);
     this.translate.setTranslation('ar', ar);
-    this.translate.setDefaultLang(this.defaultLanguage);
+    this.translate.setDefaultLang('ar');
     if (this.isSingleLang) {
       this.translate.use(this.defaultLanguage);
     } else {
@@ -67,7 +70,7 @@ export class LangService {
       lang !== '' &&
       this.supportedLanguages.map((item) => item.code).includes(lang) &&
       this.direction !==
-        this.supportedLanguages.find((item) => item.code === lang).direction
+      this.supportedLanguages.find((item) => item.code === lang).direction
     ) {
       setThemeLang(lang);
       window.location.reload();
