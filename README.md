@@ -1,6 +1,7 @@
 
-npm install
-npm install jquery -- save
-npm install bootstrap -- save
+**npm install**
 
-TRANSFER TO GITHUB
+**npm install jquery -- save**
+
+**npm install bootstrap -- save**
+
