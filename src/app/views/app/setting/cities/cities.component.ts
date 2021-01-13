@@ -87,32 +87,24 @@ export class CitiesComponent implements OnInit {
           this.notifications.create('success', 'تم اضافة مدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
           this.city = { name: '', deliveryCost: 0, regions: [] };
           this.currentMode = '';
-          console.log(res);
           this.cities.push(res);
-          
           this.gridInstance.refresh();
         }
       )
     }
-    else if (this.currentMode == 'edit') {
-      let obj: any = { id: Number.parseInt(this.currentId), name: this.city.name, deliveryCost: Number(this.city.deliveryCost) }
-      this.customService.addOrUpdate(this.apiName, obj, 'update').subscribe(
+  }
+  actionComplete(args: SaveEventArgs) {
+    if (args.requestType == 'delete') {
+      let id = args.data[0].id;
+      this.customService.delete(this.apiName, id).subscribe(
         res => {
-          this.notifications.create('success', 'تم تعديل المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-          this.city = { name: '', deliveryCost: 0, regions: [] };
-          // this.getCities();
-          console.log(res);
-          this.cities.push(res);
-          
-          this.gridInstance.refresh();
-          this.currentMode = '';
+          this.notifications.create('', 'تم الحذف', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
         }
       )
+     
     }
-
   }
   onActionBegin(args: ActionEventArgs) {
-
     if (args.action == "edit") {
       let name = args.data["name"].trim();
       if (name == "") {
@@ -127,9 +119,7 @@ export class CitiesComponent implements OnInit {
     }
     if (args.action == "edit") {
       let name = args.data["name"].trim();
-
       let id = args.data["id"];
-      console.log(id);
       let deliveryCost = args.data["deliveryCost"];
       if (name == "") {
         this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
@@ -145,14 +135,25 @@ export class CitiesComponent implements OnInit {
         args.cancel = true;
       }
       else {
-        this.cities.filter(c=>c.id==id)[0].name = name;
-        this.cities.filter(c=>c.id==id)[0].deliveryCost = deliveryCost;
+        this.cities.filter(c => c.id == id)[0].name = name;
         this.customService.addOrUpdate(this.apiName, { name: name, deliveryCost: deliveryCost, id: id }, "update").subscribe();
+        this.notifications.create('', 'تم تعديل المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         args.cancel = true;
         this.gridInstance.refresh();
-
       }
+    }
+    if (args.requestType == "delete") {
+      let city = args.data[0] as City;
 
+      if (city.canDeleteWithRegion) {
+        if (confirm("سوف يتم حذف المناطق الموجودة ضمن هذه المدينة")) {
+        } else {
+          args.cancel = true;
+        }
+      } else if (!city.canDelete) {
+        this.notifications.create('', 'لا يمكن الحذف', NotificationType.Error, { timeOut: 6000, showProgressBar: false });
+        args.cancel = true;
+      }
     }
   }
   deldetRegionFromCity(i) {
@@ -172,9 +173,5 @@ export class CitiesComponent implements OnInit {
       }
     )
   }
-  // Test() {
-  //   this.cities[0].name = "SAdasd";
-  //   this.cities[0].regions[0].name = "sads";
-  //   this.gridInstance.refresh();
-  // }
+
 }

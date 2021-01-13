@@ -5,6 +5,6 @@ export class City {
     name:string;
     deliveryCost:string;
     canDelete:boolean;
-    CanDeleteWithRegion:boolean
+    canDeleteWithRegion:boolean
     regions:Region[] =[];
 }
