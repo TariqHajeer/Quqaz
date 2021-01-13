@@ -97,6 +97,7 @@ export class GroupsComponent implements OnInit {
       this.hiddenbtnSave=true
     })
   }
+  ///////////editt
   validation(group :CreateGroup):boolean{
     if(group.Name==''||group.Name==undefined)
     {
