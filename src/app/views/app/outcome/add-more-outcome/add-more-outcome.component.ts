@@ -102,10 +102,11 @@ export class AddMoreOutcomeComponent implements OnInit {
     this.OutComes.forEach(c => {
       c.Date = this.datepipe.transform(c.Date, 'yyyy-MM-dd');
     });
-    // this.OutcomeService.CreateMulitpleOutCome(this.OutComes).subscribe(res => {
-    //   this.notifications.create('', 'تم اضافة صادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-    //   this.OutComes = []
-    // })
+    
+    this.OutcomeService.CreateMulitpleOutCome(this.OutComes).subscribe(res => {
+      this.notifications.create('', 'تم اضافة صادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.OutComes = []  
+    });
 
   }
 }

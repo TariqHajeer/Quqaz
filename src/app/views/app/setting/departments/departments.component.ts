@@ -75,7 +75,6 @@ export class DepartmentsComponent implements OnInit {
       this.customService.delete(this.apiName, id).subscribe(
         res => {
           this.notifications.create('success', 'تم حذف القسم  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
-         
         }
       )
      
@@ -106,7 +105,6 @@ export class DepartmentsComponent implements OnInit {
           this.customService.addOrUpdate(this.apiName, obj, 'add').subscribe(
             res => {
               this.notifications.create('success', 'تم اضافة القسم  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-
               this.departments.push(res);
               this.gridInstance.refresh();
             }
@@ -128,7 +126,8 @@ export class DepartmentsComponent implements OnInit {
     }
     if (args.requestType == "delete") {
       let exportType = args.data[0];
-      if (!exportType.canDelete) {
+
+      if (0!=exportType.userCount) {
         this.notifications.create('', 'لا يمكن الحذف', NotificationType.Error, { timeOut: 6000, showProgressBar: false });
         args.cancel = true;
       }
