@@ -39,6 +39,11 @@ export class AuthService {
     this.resetAuthenticated();
     this.rout.navigate(['user/login']);
   }
+  Test(){
+    this.http.get(this.baseUrl+"api/Default/De").subscribe(res=>{
+      console.log(res)
+    });
+  }
   public get authenticatedUser(): any {
     var auth: any = this.localStorageService.getItem(this.localStorageKey);
     if (Object.keys(auth).length === 0 && auth.constructor === Object) {
