@@ -37,7 +37,7 @@ export class AuthService {
 
   signOut() {
     this.resetAuthenticated();
-    this.rout.navigate(['user/login']);
+    this.rout.navigate(['user/login']);  
   }
   Test(){
     this.http.get(this.baseUrl+"api/Default/De").subscribe(res=>{

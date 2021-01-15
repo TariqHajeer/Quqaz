@@ -35,7 +35,7 @@ export class CoinsComponent implements OnInit {
       { text: 'حفظ', tooltipText: 'حفظ', prefixIcon: 'e-update', id: 'normalgrid_update' },
       { text: 'تراجع', tooltipText: 'تراجع', prefixIcon: 'e-cancel', id: 'normalgrid_cancel' },
       'Search'];
-    // this.toolbar = ['Add', 'Search', 'Edit', 'Delete', 'Update', 'Cancel'];
+
 
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };

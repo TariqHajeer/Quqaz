@@ -18,7 +18,7 @@ import { DatePipe } from '@angular/common';
 export class ViewOutComeComponent implements OnInit {
 
   constructor(private outcomeService: OutcomeService, public router: Router,
-    private customService: CustomService,public UserService:UserService,
+    private customService: CustomService, public UserService: UserService,
     public datepipe: DatePipe) { }
   public stTime: any;
   public filter: Object;
@@ -36,22 +36,22 @@ export class ViewOutComeComponent implements OnInit {
   filtering: Filtering
   coins: Coin[];
   exportTypes: any[] = [];
-  
+
   ngOnInit(): void {
-    this.filtering=new Filtering()
+    this.filtering = new Filtering()
     this.Getcoins()
     this.UserService.GetAll();
     this.getExportTypes()
     this.getOutcomes();
     this.editSettings = { showDeleteConfirmDialog: true, allowDeleting: true };
     this.toolbar = [
-    { text: 'حذف', tooltipText: 'حذف', prefixIcon: 'e-delete', id: 'normalgrid_delete' },
-    'Search'];
+      { text: 'حذف', tooltipText: 'حذف', prefixIcon: 'e-delete', id: 'normalgrid_delete' },
+      'Search'];
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
     this.pageSettings = { pageSize: 5, pageSizes: true };
-    
+
     this.selectionSettings = { persistSelection: true, type: "Multiple" };
     this.lines = 'Horizontal';
   }
@@ -63,18 +63,17 @@ export class ViewOutComeComponent implements OnInit {
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
   getOutcomes() {
-    if(this.filtering.ToDate){
-      this.filtering.ToDate =this.datepipe.transform(this.filtering.ToDate, 'yyyy-MM-dd')
+    if (this.filtering.ToDate) {
+      this.filtering.ToDate = this.datepipe.transform(this.filtering.ToDate, 'yyyy-MM-dd')
     }
-    if(this.filtering.FromDate){
-      this.filtering.FromDate =this.datepipe.transform(this.filtering.FromDate, 'yyyy-MM-dd') 
+    if (this.filtering.FromDate) {
+      this.filtering.FromDate = this.datepipe.transform(this.filtering.FromDate, 'yyyy-MM-dd')
     }
     this.outcomeService.Get(this.filtering).subscribe(
       response => {
         this.outcomes = response;
-        console.log(this.outcomes);
-        this.outcomes.forEach(c=>{
-          c.date =c.date.split('T')[0];
+        this.outcomes.forEach(c => {
+          c.date = c.date.split('T')[0];
         });
       }
     )
@@ -84,15 +83,15 @@ export class ViewOutComeComponent implements OnInit {
     this.editClicked = false;
 
   }
-  CreateOutcome:Outcome
-  addFinish(value:CreateOutCome) {
-    this.CreateOutcome.amount=value.Amount
-    this.CreateOutcome.date=value.Date
-    this.CreateOutcome.currencyId=value.CurrencyId
-    this.CreateOutcome.outComeTypeId=value.OutComeTypeId
-    this.CreateOutcome.note=value.Note
-    this.CreateOutcome.reason=value.Reason
-      this.outcomes.push(this.CreateOutcome)
+  CreateOutcome: Outcome
+  addFinish(value: CreateOutCome) {
+    this.CreateOutcome.amount = value.Amount
+    this.CreateOutcome.date = value.Date
+    this.CreateOutcome.currencyId = value.CurrencyId
+    this.CreateOutcome.outComeTypeId = value.OutComeTypeId
+    this.CreateOutcome.note = value.Note
+    this.CreateOutcome.reason = value.Reason
+    this.outcomes.push(this.CreateOutcome)
     this.gridInstance.refresh();
 
   }
@@ -111,5 +110,5 @@ export class ViewOutComeComponent implements OnInit {
       }
     )
   }
-  
+
 }

@@ -32,6 +32,9 @@ export class CustomService {
   getAll(apiName): Observable<any> {
     return this.http.get(this.baseUrl + 'api/' + apiName);
   }
+  getAllWithPagging(apiName,pageSettings): Observable<any>{
+    return this.http.get(this.baseUrl + 'api/' + apiName,{params:pageSettings});
+  }
   getAllsy(apiName): Observable<[]> {
     return this.http.get(this.baseUrl + 'api/' + apiName).pipe(
       map(
