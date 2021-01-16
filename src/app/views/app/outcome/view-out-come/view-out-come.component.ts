@@ -71,7 +71,7 @@ export class ViewOutComeComponent implements OnInit {
     }
     this.outcomeService.Get(this.filtering).subscribe(
       response => {
-        this.outcomes = response;
+        this.outcomes = response.data;
         this.outcomes.forEach(c => {
           c.date = c.date.split('T')[0];
         });
@@ -81,7 +81,6 @@ export class ViewOutComeComponent implements OnInit {
   addNewClicked() {
     this.addClicked = true;
     this.editClicked = false;
-
   }
   CreateOutcome: Outcome
   addFinish(value: CreateOutCome) {

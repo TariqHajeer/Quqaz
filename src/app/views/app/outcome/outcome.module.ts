@@ -31,7 +31,8 @@ import { AddMoreOutcomeComponent } from './add-more-outcome/add-more-outcome.com
     BsDatepickerModule.forRoot(),
     NgSelectModule,
 
-  ], schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [DatePipe]
 
 })
