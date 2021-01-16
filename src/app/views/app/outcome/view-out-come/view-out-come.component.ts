@@ -110,8 +110,7 @@ export class ViewOutComeComponent implements OnInit {
   }
   actionComplete(args: SaveEventArgs) {
     if(args.requestType=="refresh"){
-      
-      console.log("refresh");
+      this.gridInstance.pageSettings.totalRecordsCount = this.totalRecoreds;
     }
   }
   onActionBegin(args: ActionEventArgs) {
