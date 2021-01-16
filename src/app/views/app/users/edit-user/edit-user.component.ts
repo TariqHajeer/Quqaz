@@ -4,7 +4,6 @@ import { from } from 'rxjs';
 import { CustomService } from 'src/app/services/custom.service';
 import { GroupService } from 'src/app/services/group.service';
 import { UserService } from 'src/app/services/user.service';
-import { CreateUser } from 'src/app/Models/user/create-user'
 import { Group } from 'src/app/Models/Group/group.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/Models/user/user.model';
@@ -70,10 +69,13 @@ export class EditUserComponent implements OnInit {
       this.usernameIsRepeated = false
   }
   addOrEditUser() {
+    this.User.id = Number(this.id)
+    this.User.groupsId = []
+    this.User.phones = []
     this.UserService.Update(this.User).subscribe(
       res => {
         this.notifications.create('success', 'تم التعديل بنجاح ', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-        this.router.navigate(['/app/user'])
+        //this.router.navigate(['/app/user'])
       }
     )
   }
@@ -81,16 +83,15 @@ export class EditUserComponent implements OnInit {
     this.UserService.GetById(this.id).subscribe(res => {
       this.User = res
       this.phones = this.User.phones
-      console.log(res)
     })
   }
   CheckPassword() {
-    // if (this.User.Password != this.confirmpassword) {
-    //   this.checkPassword = true
-    // }
-    // else{
-    //   this.checkPassword = false
-    // }
+    if (this.User.password != this.confirmpassword) {
+      this.checkPassword = true
+    }
+    else {
+      this.checkPassword = false
+    }
   }
 
   getDepartments() {
@@ -111,14 +112,14 @@ export class EditUserComponent implements OnInit {
   GetAllGroups() {
     this.GroupService.GetAll().subscribe(res => {
       this.Groups = res
-      if(this.User.groupsId==null)return
-      this.addGroups=this.Groups.filter(g=>this.User.groupsId.includes(g.id))
+      if (this.User.groupsId == null) return
+      this.addGroups = this.Groups.filter(g => this.User.groupsId.includes(g.id))
     })
   }
 
   addNewPhone() {
     this.phone.objectId = Number(this.id)
-    if(this.phone.phone==null||this.phone.phone==undefined){
+    if (this.phone.phone == null || this.phone.phone == undefined) {
       this.notifications.create('', 'الرقم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
       return
     }
@@ -142,7 +143,7 @@ export class EditUserComponent implements OnInit {
   addNewGroup() {
     this.UserService.AddToGroup(this.id, this.addGroup.id).subscribe(res => {
       this.addGroups.push(this.addGroup);
-      this.Groups.filter(g=>g!=this.addGroup)
+      this.Groups.filter(g => g != this.addGroup)
       this.phone = new Phone();
       this.notifications.create('success', 'تمت اضافة المستخدم الى المجموعة بنجاح ', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
     })
@@ -155,4 +156,5 @@ export class EditUserComponent implements OnInit {
       this.notifications.create('success', 'تم حذف المستخدم من المجموعة بنجاح ', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
     })
   }
+  
 }

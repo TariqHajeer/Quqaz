@@ -1,7 +1,7 @@
 import { Phone } from '../phone.model'
 
 export class User {
-      id:any
+      id:number
       name:string 
       departmentId:number 
       department

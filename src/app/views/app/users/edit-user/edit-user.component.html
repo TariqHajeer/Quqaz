@@ -16,7 +16,7 @@
             <div class="col-md-3">
               <label>الاسم<span class="text-danger text-one align-bottom mx-1">*</span></label>
               <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.name"
-                (ngModelChange)='checkName()'>
+                (keyup)='checkName()'>
               <div *ngIf="!User.name && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
               <div *ngIf="nameIsRepeated&&User.name!=''" class="invalid-tooltip">الأسم مكرر</div>
             </div>
@@ -37,22 +37,12 @@
               <label>اسم المستخدم<span class="text-danger text-one align-bottom mx-1">*</span></label>
               <input type="text"
                 oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
-                (ngModelChange)='checkUserName()' class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.userName">
+                (keyup)='checkUserName()' class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.userName">
               <div *ngIf="!User.userName && submitted" class="invalid-tooltip">اسم المستخدم حقل مطلوب</div>
-              <div *ngIf="usernameIsRepeated&&CreateUser.Useruame!=''" class="invalid-tooltip">اسم المستخدم مكرر</div>
+              <div *ngIf="usernameIsRepeated&&User.userName!=''" class="invalid-tooltip">اسم المستخدم مكرر</div>
 
             </div>
-            <div class="col-md-3" >
-              <label>كلمة السر <span class="text-danger text-one align-bottom mx-1">*</span></label>
-              <input type="password"  class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.password">
-              <div *ngIf="!User.password && submitted" class="invalid-tooltip">كلمة السر حقل مطلوب</div>
-            </div>
-            <div class="col-md-3" >
-              <label> تأكيد كلمة السر <span class="text-danger text-one align-bottom mx-1">*</span></label>
-              <input (keyup)="CheckPassword()" type="password" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="confirmpassword">
-              <div *ngIf="checkPassword" class="invalid-tooltip">كلمة السر غير متطابقة</div>
-              
-            </div>
+        
             
           </div>
           <div class="row w-100 align-items-end mb-3">
@@ -100,6 +90,7 @@
               <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.note">
             </div>
           </div>
+        
           <div class="row w-100 align-items-end mb-3">
             <div class="col-md-4">
               <!-- Modal -->
@@ -225,7 +216,22 @@
 
           </div>
 
-         
+          <h4 class="card-title">تغيير كلمة السر</h4>
+
+          <div class="row">
+            <div class="col-md-3" >
+              <label>كلمة السر <span class="text-danger text-one align-bottom mx-1">*</span></label>
+              <input type="password"  class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.password">
+              <div *ngIf="!User.password && submitted" class="invalid-tooltip">كلمة السر حقل مطلوب</div>
+            </div>
+            <div class="col-md-3" >
+              <label> تأكيد كلمة السر <span class="text-danger text-one align-bottom mx-1">*</span></label>
+              <input (keyup)="CheckPassword()" type="password" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="confirmpassword">
+              <div *ngIf="checkPassword" class="invalid-tooltip">كلمة السر غير متطابقة</div>
+              
+            </div>
+          </div>
+        <br>
           <div class="row w-100">
             <div class="col-12">
               <button type="submit" class="btn btn-primary"> حفظ</button>

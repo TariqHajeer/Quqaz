@@ -18,15 +18,15 @@ export class EditClientComponent implements OnInit {
     private getroute: ActivatedRoute,
     private router: Router) { }
   client: Client;
-  clients:Client[]=[]
+  clients: Client[] = []
   regions: any[] = [];
   phone: Phone
   phones: Phone[] = []
   id
   submitted
-  nameIsRepeated:boolean=false;
-  usernameIsRepeated:boolean=false;
-  confirmpassword:string
+  nameIsRepeated: boolean = false;
+  usernameIsRepeated: boolean = false;
+  confirmpassword: string
   checkPassword: boolean = false
   ngOnInit(): void {
     this.phone = new Phone()
@@ -37,29 +37,29 @@ export class EditClientComponent implements OnInit {
     this.getRegions();
     this.getClientById()
   }
-  checkName(){       
-    if( this.clients.filter(c=>c.name==this.client.name&&c.id!=this.client.id).length>0){
-      
-      this.nameIsRepeated =true
+  checkName() {
+    if (this.clients.filter(c => c.name == this.client.name && c.id != this.client.id).length > 0) {
+
+      this.nameIsRepeated = true
       return;
     }
-   else
-    this.nameIsRepeated =false
+    else
+      this.nameIsRepeated = false
   }
-  checkUserName(){       
-    
-    if( this.clients.filter(c=>c.userName==this.client.userName&&c.id!=this.client.id).length>0){
-      
-      this.usernameIsRepeated =true
+  checkUserName() {
+
+    if (this.clients.filter(c => c.userName == this.client.userName && c.id != this.client.id).length > 0) {
+
+      this.usernameIsRepeated = true
       return;
-    }else
-    this.usernameIsRepeated =false
+    } else
+      this.usernameIsRepeated = false
   }
   CheckPassword() {
     if (this.client.password != this.confirmpassword) {
       this.checkPassword = true
     }
-    else{
+    else {
       this.checkPassword = false
     }
   }
@@ -78,16 +78,16 @@ export class EditClientComponent implements OnInit {
     }
   }
   getClientById() {
-    this.clientService.getClientById(this.id).subscribe(res=>{
+    this.clientService.getClientById(this.id).subscribe(res => {
       this.client = res
-      console.log(res)
-      this.phones=this.client.phones
+      if(this.client.region!=null)
+    this.client.regionId= this.client.region.id
+      this.phones = this.client.phones
     })
     this.clientService.getClients().subscribe(
       res => {
-        this.clients=res
-       // this.client = res.find(c => c.id == this.id)
-        //this.phones=this.client.phones
+        this.clients = res
+
       }
     )
   }
@@ -96,7 +96,7 @@ export class EditClientComponent implements OnInit {
     this.clientService.Update(this.client).subscribe(
       res => {
         this.notifications.create('success', 'تم تعديل عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-        this.router.navigate(['/app/client'])
+        //this.router.navigate(['/app/client'])
 
       }
     )
@@ -111,11 +111,11 @@ export class EditClientComponent implements OnInit {
 
   addNewPhone() {
     this.phone.objectId = Number(this.id)
-    if(this.phone.phone==null||this.phone.phone==undefined){
+    if (this.phone.phone == null || this.phone.phone == undefined) {
       this.notifications.create('', 'الرقم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
       return
     }
-    if (this.phones!=[]&& this.phones.filter(p => p.phone == this.phone.phone).length > 0) {
+    if (this.phones != [] && this.phones.filter(p => p.phone == this.phone.phone).length > 0) {
       this.notifications.create('', 'الرقم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
       return
     }

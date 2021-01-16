@@ -1,51 +1,25 @@
-<div class="row">
-  <div class="col-md-12 mb-4">
+
     <div class="card">
       <div class="card-body">
         <h3 class="card-title">تعديل العميل</h3>
         <form (ngSubmit)="addOrEditClient()" class="row">
-          <div class="row w-100 align-items-end mb-3">
-            <div class="col-md-3">
+          <div class="row w-100 align-items-end mb-3" >
+            <div class="col-md-3"style="padding-bottom: 10px;">
               <label>{{'client.name' | translate}}</label><span class="text-danger text-one align-bottom mx-1">*</span>
-              <input (ngModelChange)='checkName()' type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.name">
+              <input (keyup)='checkName()' type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.name">
               <div *ngIf="!client.name && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
               <div *ngIf="nameIsRepeated&&client.name!=''" class="invalid-tooltip">الأسم مكرر</div>
 
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3"style="padding-bottom: 10px;">
               <label>{{'client.user-name' | translate}}<span class="text-danger text-one align-bottom mx-1">*</span></label>
               <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-              (ngModelChange)='checkUserName()'  [(ngModel)]="client.userName"oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '').replace(/(\..*)\./g, '$1');">
+              (keyup)='checkUserName()'  [(ngModel)]="client.userName"oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '').replace(/(\..*)\./g, '$1');">
               <div *ngIf="!client.userName && submitted" class="invalid-tooltip">اسم المستخدم حقل مطلوب</div>
               <div *ngIf="usernameIsRepeated&&client.userName!=''" class="invalid-tooltip">اسم المستخدم مكرر</div>
            
             </div>
-            <div class="col-md-3">
-              <label>{{'client.password' | translate}}<span class="text-danger text-one align-bottom mx-1">*</span></label>
-              <input type="password" class="form-control" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="client.password">
-                
-            </div>
-            <div class="col-md-3">
-              <label>تأكيد كلمة السر<span class="text-danger text-one align-bottom mx-1">*</span></label>
-              <input (keyup)="CheckPassword()" type="password" class="form-control" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="confirmpassword">
-                <div *ngIf="checkPassword" class="invalid-tooltip">كلمة السر غير متطابقة</div>
-                <div *ngIf="!client.password && submitted" class="invalid-tooltip">تأكيد كلمة السر حقل مطلوب</div>
-             
-              </div>
-            <div class="col-md-3">
-              <label>{{'client.region' | translate}}</label>
-              <ng-select [(ngModel)]="client.region" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
-                <ng-option *ngFor="let region of regions" [value]="region">{{region.name}}</ng-option>
-              </ng-select>
-            </div>
-            <div class="col-md-3">
-              <label>{{'client.address' | translate}}</label>
-              <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="client.address">
-            </div>
-            <div class="col-md-3">
+            <div class="col-md-3"style="padding-bottom: 10px;">
               <label>{{'client.first-date' | translate}}<span class="text-danger text-one align-bottom mx-1">*</span></label>
               <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
                 [(ngModel)]="client.firstDate" bsDatepicker [container]="'html'"
@@ -53,7 +27,19 @@
                 <div *ngIf="!client.firstDate && submitted" class="invalid-tooltip">  تاريخ الإنضمام حقل مطلوب</div>
 
               </div>
-            <div  class="col-md-3">
+            <div class="col-md-3"style="padding-bottom: 10px;">
+              <label>{{'client.region' | translate}}</label>
+              <ng-select [(ngModel)]="client.regionId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
+                <ng-option *ngFor="let region of regions" [value]="region.id">{{region.name}}</ng-option>
+              </ng-select>
+            </div>
+            <div class="col-md-3"style="padding-bottom: 10px;">
+              <label>{{'client.address' | translate}}</label>
+              <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="client.address">
+            </div>
+          
+            <div  class="col-md-3"style="padding-bottom: 10px;">
                 <!-- Modal -->
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
             data-whatever="@getbootstrap">رقم الهاتف</button>
@@ -111,7 +97,8 @@
             </div>
           </div>
             </div>
-            <div class="col-md-12">
+            
+            <div class="col-md-12"style="padding-bottom: 10px;">
               <label>{{'client.note' | translate}}</label>
               <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.note">
             </div>
@@ -120,6 +107,26 @@
 
 
           </div>
+          <h4 class="card-title">تغيير كلمة المرور</h4>
+
+          <div class="row w-100" style="padding-bottom: 10px;">
+           
+            <div class="col-md-3">
+              <label>{{'client.password' | translate}}<span class="text-danger text-one align-bottom mx-1">*</span></label>
+              <input type="password" class="form-control" [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="client.password">
+                
+            </div>
+            <div class="col-md-3">
+              <label>تأكيد كلمة المرور<span class="text-danger text-one align-bottom mx-1">*</span></label>
+              <input (keyup)="CheckPassword()" type="password" class="form-control" [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="confirmpassword">
+                <div *ngIf="checkPassword" class="invalid-tooltip">كلمة السر غير متطابقة</div>
+                <div *ngIf="!client.password && submitted" class="invalid-tooltip">تأكيد كلمة السر حقل مطلوب</div>
+             
+              </div> 
+          </div>
+         
           <div class="row w-100">
             <div class="col-3">
               <button type="submit" class="btn btn-primary"> {{'forms.save' | translate}}</button>
@@ -129,6 +136,5 @@
         </form>
       </div>
     </div>
-  </div>
-</div>
+ 
 <simple-notifications></simple-notifications>
