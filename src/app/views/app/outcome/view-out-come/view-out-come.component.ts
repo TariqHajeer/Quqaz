@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { EditSettingsModel, GridComponent, ToolbarItems } from '@syncfusion/ej2-angular-grids';
+import { ActionEventArgs, EditSettingsModel, GridComponent, SaveEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { from } from 'rxjs';
 import { Outcome } from '../outcome.model'
 import { OutcomeService } from '../outcome.service'
@@ -22,7 +22,6 @@ export class ViewOutComeComponent implements OnInit {
     public datepipe: DatePipe) { }
   public stTime: any;
   public filter: Object;
-  public filterSettings: Object;
   public editSettings: EditSettingsModel;
   public selectionSettings: Object;
   public lines: any;
@@ -36,7 +35,7 @@ export class ViewOutComeComponent implements OnInit {
   filtering: Filtering
   coins: Coin[];
   exportTypes: any[] = [];
-
+  totalRecoreds: number;
   ngOnInit(): void {
     this.filtering = new Filtering()
     this.Getcoins()
@@ -47,7 +46,6 @@ export class ViewOutComeComponent implements OnInit {
     this.toolbar = [
       { text: 'حذف', tooltipText: 'حذف', prefixIcon: 'e-delete', id: 'normalgrid_delete' },
       'Search'];
-    this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
     this.pageSettings = { pageSize: 5, pageSizes: true };
@@ -72,6 +70,7 @@ export class ViewOutComeComponent implements OnInit {
     this.outcomeService.Get(this.filtering).subscribe(
       response => {
         this.outcomes = response.data;
+        this.totalRecoreds =response.total;
         this.outcomes.forEach(c => {
           c.date = c.date.split('T')[0];
         });
@@ -108,6 +107,14 @@ export class ViewOutComeComponent implements OnInit {
         this.exportTypes = res;
       }
     )
+  }
+  actionComplete(args: SaveEventArgs) {
+    if(args.requestType=="refresh"){
+      
+      console.log("refresh");
+    }
+  }
+  onActionBegin(args: ActionEventArgs) {
   }
 
 }

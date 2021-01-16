@@ -76,7 +76,9 @@
       <ejs-grid #normalgrid id='normalgrid' (load)='load()' [allowPaging]='true' [gridLines]="lines"
         [pageSettings]='pageSettings' [toolbar]='toolbar' [editSettings]='editSettings' [dataSource]='outcomes'
         rowHeight='38' [allowSorting]='true' height='400' [enableHover]='true' [selectionSettings]='selectionSettings'
-        [filterSettings]='filterSettings' [allowSorting]='true' [allowFiltering]='true'>
+         [allowSorting]='true'
+         (actionComplete)="actionComplete($event)"(actionBegin)="onActionBegin($event)" 
+         >
         <e-columns>
           <e-column field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter' width='50'
             [isPrimaryKey]='true'></e-column>
