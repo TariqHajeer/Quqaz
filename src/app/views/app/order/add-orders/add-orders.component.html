@@ -1,1 +1,144 @@
-<p>add-orders works!</p>
+
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title"> اضافة طلبات</h2>
+        <form (ngSubmit)="AddOrder()">
+            
+            <div class="row w-100 align-items-end mb-3">
+                <div class="col-md-3">
+                    <label>كود الشحنة<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.Code">
+                    <div *ngIf="!Order.Code && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
+                </div>
+            </div>
+            <div class="row w-100 align-items-end mb-3">
+             
+              
+                <div class="col-md-3">
+                    <label>اسم المستلم<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.RecipientName">
+                    <div *ngIf="!Order.RecipientName && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
+                </div>
+                <div class="col-md-3">
+                    <label>هاتف المستلم<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.RecipientPhones">
+                    <div *ngIf="!Order.RecipientPhones && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
+                </div>
+                <div class="col-md-3">
+                    <label>تاريخ الاستلام<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
+                     [(ngModel)]="Order.DiliveryDate" name="DiliveryDate" bsDatepicker
+                    [container]="'html'" [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
+                    
+                </div>
+            </div>
+        
+            <div class="row w-100 align-items-end mb-3">
+                <div class="col-md-3">
+                    <label>كلفة التوصيل<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="Order.DeliveryCost">
+                    <div *ngIf="!Order.DeliveryCost && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
+                </div>
+                <div class="col-md-3">
+                    <label>الكلفة<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.Cost">
+                    <div *ngIf="!Order.Cost && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
+                </div>
+               
+                <div class="col-md-3">
+                    <label>العنوان<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.Address">
+                    <div *ngIf="!Order.Address && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
+                </div>
+               
+               
+                <div class="col-md-3">
+                    <label>التاريخ<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}" 
+                    [(ngModel)]="Order.Date" name="Date" bsDatepicker
+                    [container]="'html'" [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
+                    
+                </div>
+            </div>
+        
+           
+            <div class="row w-100 align-items-end mb-3">
+              
+                <div class="col-md-3">
+                    <label>الوكيل<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <ng-select   [(ngModel)]="Order.Agent" [ngModelOptions]="{standalone: true}"
+                    [closeOnSelect]="true" name="Agent">
+                    <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
+                  </ng-select>  
+                   <div *ngIf="!Order.Agent && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
+                </div>
+                <div class="col-md-3">
+                    <label>العميل<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <ng-select   [(ngModel)]="Order.Client" [ngModelOptions]="{standalone: true}"
+                    [closeOnSelect]="true" name="Client">
+                    <ng-option *ngFor="let Client of clients" [value]="Client.id">{{Client.name}}</ng-option>
+                  </ng-select>
+                    <div *ngIf="!Order.Client && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
+                </div>
+                <div class="col-md-3">
+                    <label>ملاحظات العميل<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.ClientNote">
+                </div>
+              
+            </div>
+        
+        
+            <div class="row w-100 align-items-end mb-3">
+                <div class="col-md-3">
+                    <label>المدينة<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <ng-select   [(ngModel)]="Order.Country" [ngModelOptions]="{standalone: true}"
+                    [closeOnSelect]="true" name="Country">
+                    <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
+                  </ng-select>
+                   <div *ngIf="!Order.Country && submitted" class="invalid-tooltip">المدينة حقل مطلوب</div>
+                </div>
+                <div class="col-md-3">
+                    <label>المنطقة<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <ng-select   [(ngModel)]="Order.Region" [ngModelOptions]="{standalone: true}"
+                    [closeOnSelect]="true" name="Region">
+                    <ng-option *ngFor="let region of Region" [value]="region.id">{{region.name}}</ng-option>
+                  </ng-select>               
+                 <div *ngIf="!Order.Region && submitted" class="invalid-tooltip">المنطقة حقل مطلوب</div>
+                </div>
+                <div class="col-md-3">
+                    <label>موقع المبلغ<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <ng-select   [(ngModel)]="Order.MonePlaced" [ngModelOptions]="{standalone: true}"
+                    [closeOnSelect]="true" name="MonePlaced">
+                    <ng-option *ngFor="let moenyPlaced of MoenyPlaced" [value]="moenyPlaced.id">{{moenyPlaced.name}}</ng-option>
+                  </ng-select> 
+                <div *ngIf="!Order.MonePlaced && submitted" class="invalid-tooltip">موقع المبلغ حقل مطلوب</div>
+                </div>
+                <div class="col-md-3">
+                    <label>حالة الشحنة<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <ng-select   [(ngModel)]="Order.Orderplaced" [ngModelOptions]="{standalone: true}"
+                    [closeOnSelect]="true" name="Orderplaced">
+                    <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}</ng-option>
+                  </ng-select>  
+                <div *ngIf="!Order.Orderplaced && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
+                </div>
+                
+            </div>
+            <div class="row w-100 align-items-end mb-3">
+              
+                <div class="col-md-12">
+                    <label>ملاحظات<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.Note">
+                </div>
+            </div>
+            <div class="row w-100">
+                <div class="col-3">
+                    <button type="submit" class="btn btn-primary"> حفظ</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<simple-notifications></simple-notifications>

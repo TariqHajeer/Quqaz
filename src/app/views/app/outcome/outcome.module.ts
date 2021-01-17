@@ -13,6 +13,9 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AddMoreOutcomeComponent } from './add-more-outcome/add-more-outcome.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 
 @NgModule({
@@ -30,6 +33,9 @@ import { AddMoreOutcomeComponent } from './add-more-outcome/add-more-outcome.com
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
     NgSelectModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -67,6 +67,8 @@
   </div>
 </div>
 <br>
+
+
   <ejs-grid #normalgrid   id='normalgrid'  (load)='load()'  [allowPaging]='true'
   [gridLines]="lines" [pageSettings]='pageSettings' [toolbar]='toolbar'
     [editSettings]='editSettings'[dataSource]='incomes' rowHeight='38'
@@ -108,5 +110,44 @@
     </div>
   </div>
 </div>
-<button (click)="Test()">sadash</button>
 <simple-notifications></simple-notifications>
+
+
+<!--ggggggggggggggggggggggggggggggg-->
+<mat-form-field>
+  <mat-lable>بحث</mat-lable>
+  <input matInput (keyup)="applyFilter($event)" placeholder="" class="form-control" aria-label="Search">
+</mat-form-field>
+
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%;"
+  (onPageSwitch)="switchPage($event)">
+  <ng-container matColumnDef="SSN">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> الطلب</th>
+      <td mat-cell *matCellDef="let element"> {{element.Ssn}}</td>
+  </ng-container>
+  <ng-container matColumnDef="SSN1">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> الطلب</th>
+      <td mat-cell *matCellDef="let element"> {{element.Ssn}}</td>
+  </ng-container>
+  <ng-container matColumnDef="SSN2">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> الطلب</th>
+      <td mat-cell *matCellDef="let element"> {{element.Ssn}}</td>
+  </ng-container>
+  <ng-container matColumnDef="SSN3">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> الطلب</th>
+      <td mat-cell *matCellDef="let element"> {{element.Ssn}}</td>
+  </ng-container>
+ 
+  
+
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<h2 style="margin: 10px;text-align: center;"> </h2>
+
+<mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
+  [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
+
+  <!--ggggggggggggggggggggggggggggggg-->

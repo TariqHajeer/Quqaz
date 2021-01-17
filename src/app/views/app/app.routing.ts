@@ -12,6 +12,7 @@ const routes: Routes = [
             { path: 'income', loadChildren: () => import('./income/income.module').then(m => m.IncomeModule) },
             { path: 'outcome', loadChildren: () => import('./outcome/outcome.module').then(m => m.OutcomeModule) },
             { path: 'user', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
+            { path: 'order', loadChildren: () => import('./order/order.module').then(m => m.OrderModule) },
 
         ]
     }

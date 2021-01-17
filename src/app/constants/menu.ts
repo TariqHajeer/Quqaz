@@ -88,7 +88,12 @@ const data: IMenuItem[] = [
   label: 'menu.employees',
   to: `${adminRoot}/user`,
 },
-
+//order
+{
+  icon: 'iconsminds-box-close',
+  label: 'الطلبات',
+  to: `${adminRoot}/order`,
+},
  
 
 

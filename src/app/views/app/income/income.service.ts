@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Filtering } from 'src/app/Models/Filtering.model';
+import { Paging } from 'src/app/Models/paging';
 import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
@@ -30,7 +31,7 @@ export class IncomeService {
   AddMultiple(items) {
     return this.http.post(this.contoler + "/AddMultiple", items)
   }
-  Get(filter: Filtering) {
+  Get(filter: Filtering,paging:Paging) {
 
     let params = new HttpParams();
     if (filter.CurrencyId != undefined || filter.CurrencyId != null)
@@ -47,6 +48,10 @@ export class IncomeService {
       params = params.append("Type", filter.Type);
       if (filter.UserId != undefined || filter.UserId != null)
       params = params.append("UserId", filter.UserId);
+      if (paging.RowCount != undefined || paging.RowCount != null)
+      params = params.append("RowCount",paging.RowCount);
+      if (paging.Page != undefined || paging.Page != null)
+      params = params.append("Page", paging.Page);
     return this.http.get<any>(this.contoler, { params: params })
 
   }

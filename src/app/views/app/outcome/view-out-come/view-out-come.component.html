@@ -73,7 +73,9 @@
         </div>
       </div>
       <br>
-      <ejs-grid #normalgrid id='normalgrid' (load)='load()' [allowPaging]='true' [gridLines]="lines"
+      <!--
+
+            <ejs-grid #normalgrid id='normalgrid' (load)='load()' [allowPaging]='true' [gridLines]="lines"
         [pageSettings]='pageSettings' [toolbar]='toolbar' [editSettings]='editSettings' [dataSource]='outcomes'
         rowHeight='38' [allowSorting]='true' height='400' [enableHover]='true' [selectionSettings]='selectionSettings'
          [allowSorting]='true'
@@ -94,6 +96,8 @@
 
         </e-columns>
       </ejs-grid>
+      -->
+  
 
     </div>
   </div>
@@ -117,3 +121,49 @@
   </div>
 </div>
 <simple-notifications></simple-notifications>
+
+<!--ggggggggggggggggggggggggggggggg
+<mat-form-field>
+  <mat-lable>بحث</mat-lable>
+  <input matInput (keyup)="applyFilter($event)" placeholder="" class="form-control" aria-label="Search">
+</mat-form-field>-->
+
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%;"
+  (onPageSwitch)="switchPage($event)">
+  <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> نوع الصرف</th>
+      <td mat-cell *matCellDef="let element"> {{element.amount}}</td>
+  </ng-container>
+  <ng-container matColumnDef="currencyId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> المبلغ المصروف</th>
+      <td mat-cell *matCellDef="let element"> {{element.currencyId}}</td>
+  </ng-container>
+  <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> التاريخ</th>
+      <td mat-cell *matCellDef="let element"> {{element.date}}</td>
+  </ng-container>
+  <ng-container matColumnDef="reason">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> السبب</th>
+      <td mat-cell *matCellDef="let element"> {{element.reason}}</td>
+  </ng-container>
+ 
+  <ng-container matColumnDef="note">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> ملاحظات</th>
+    <td mat-cell *matCellDef="let element"> {{element.note}}</td>
+</ng-container>
+<ng-container matColumnDef="outComeTypeId">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> المستخدم</th>
+    <td mat-cell *matCellDef="let element"> {{element.outComeTypeId}}</td>
+</ng-container>
+
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<h2 style="margin: 10px;text-align: center;"> </h2>
+
+<mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
+  [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
+
+  <!--ggggggggggggggggggggggggggggggg-->
