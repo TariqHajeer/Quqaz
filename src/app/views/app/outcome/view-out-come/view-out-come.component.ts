@@ -75,7 +75,7 @@ paging: Paging
     this.dataSource = new MatTableDataSource(this.outcomes);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.displayedColumns = ['amount','currencyId','date','reason','note','outComeTypeId'];
+    this.displayedColumns = ['outComeType','amount','currency','date','reason','note'];
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

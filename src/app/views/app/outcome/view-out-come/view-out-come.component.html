@@ -130,13 +130,13 @@
 
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%;"
   (onPageSwitch)="switchPage($event)">
-  <ng-container matColumnDef="amount">
+  <ng-container matColumnDef="outComeType">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> نوع الصرف</th>
-      <td mat-cell *matCellDef="let element"> {{element.amount}}</td>
+      <td mat-cell *matCellDef="let element"> {{element.outComeType.name}}</td>
   </ng-container>
-  <ng-container matColumnDef="currencyId">
+  <ng-container matColumnDef="currency">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> المبلغ المصروف</th>
-      <td mat-cell *matCellDef="let element"> {{element.currencyId}}</td>
+      <td mat-cell *matCellDef="let element"> {{element.currency.name}}</td>
   </ng-container>
   <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> التاريخ</th>
@@ -151,9 +151,9 @@
     <th mat-header-cell *matHeaderCellDef mat-sort-header> ملاحظات</th>
     <td mat-cell *matCellDef="let element"> {{element.note}}</td>
 </ng-container>
-<ng-container matColumnDef="outComeTypeId">
+<ng-container matColumnDef="amount">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> المستخدم</th>
-    <td mat-cell *matCellDef="let element"> {{element.outComeTypeId}}</td>
+    <td mat-cell *matCellDef="let element"> {{element.amount}}</td>
 </ng-container>
 
 
