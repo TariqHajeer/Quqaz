@@ -3,6 +3,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Paging } from 'src/app/Models/paging';
 import { Order } from 'src/app/Models/order/order.model';
+import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { OrderService } from 'src/app/services/order.service';
 import { Router } from '@angular/router';
@@ -21,6 +22,7 @@ export class ViewOrdersComponent implements OnInit {
   @Input() totalCount: number;
   pageEvent: PageEvent;
   paging: Paging
+  filter:OrderFilter
   orders:Order[]=[]
   constructor(private orderservice:OrderService,
     private router:Router) { }
@@ -51,10 +53,9 @@ export class ViewOrdersComponent implements OnInit {
     
    }
    allFilter(){
-   this.orderservice.GetAll( this.paging).subscribe(response => {
-     this.dataSource=new MatTableDataSource(response.body)
-     console.log(response.body)
-     this.totalCount = JSON.parse(response.headers.get('x-paging')).TotalRows;
+   this.orderservice.GetAll( this.filter,this.paging).subscribe(response => {
+     this.dataSource=new MatTableDataSource(response.data)
+     this.totalCount = response.total
     
    },
    err => {

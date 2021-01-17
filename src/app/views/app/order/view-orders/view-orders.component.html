@@ -5,10 +5,7 @@
             <button class="btn  mb-3" (click)="AddOrder()"><i class="iconsminds-add  text-primary" style="font-size: 38px;"></i></button>
         </div>
 
-        <mat-form-field>
-            <mat-lable>بحث</mat-lable>
-            <input matInput (keyup)="applyFilter($event)" placeholder="" class="form-control" aria-label="Search">
-        </mat-form-field>
+      
 
         <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%;"
             (onPageSwitch)="switchPage($event)">

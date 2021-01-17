@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.prod';
+import { Paging } from '../Models/paging';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class OrderService {
 
   controler = environment.baseUrl + "api/Order/";
   constructor(public http: HttpClient) { }
-  GetAll(item) {
+  GetAll(filter,paging:Paging) {
     return this.http.get<any>(this.controler)
   }
   GetById(id) {
