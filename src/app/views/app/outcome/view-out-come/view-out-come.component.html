@@ -18,7 +18,7 @@
         <div class="col-md-2">
           <label>نوع الصادرات</label>
           <ng-select [(ngModel)]="filtering.Type" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-          (ngModelChange)="getOutcomes()">
+          (ngModelChange)="allFilter()">
             <ng-option *ngFor="let exportType of exportTypes" [value]="exportType.id">{{exportType.name}}
             </ng-option>
           </ng-select>
@@ -26,7 +26,7 @@
         <div class="col-md-2">
           <label>العملة</label>
           <ng-select [(ngModel)]="filtering.CurrencyId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-          (ngModelChange)="getOutcomes()">
+          (ngModelChange)="allFilter()">
             <ng-option *ngFor="let coin of coins" [value]="coin.id">{{coin.name}}</ng-option>
           </ng-select>
 
@@ -35,20 +35,20 @@
           <label> المبلغ الأدنى</label>
           <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
             class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.MinAmount"
-            (ngModelChange)="getOutcomes()">
+            (ngModelChange)="allFilter()">
 
         </div>
         <div class="col-md-2">
           <label>المبلغ الأعلى</label>
           <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
             class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.MaxAmount"
-            (ngModelChange)="getOutcomes()">
+            (ngModelChange)="allFilter()">
 
         </div>
         <div class="col-md-2">
           <label>الموظف</label>
           <ng-select [(ngModel)]="filtering.UserId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-          (ngModelChange)="getOutcomes()">
+          (ngModelChange)="allFilter()">
             <ng-option *ngFor="let user of UserService.users" [value]="user.id">{{user.name}}
             </ng-option>
           </ng-select>
@@ -60,7 +60,7 @@
           <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
             [(ngModel)]="filtering.FromDate" bsDatepicker [container]="'html'"
             [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }"
-            (ngModelChange)="getOutcomes()">
+            (ngModelChange)="allFilter()">
 
         </div>
         <div class="col-md-2">
@@ -68,7 +68,7 @@
           <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
             [(ngModel)]="filtering.ToDate" bsDatepicker [container]="'html'"
             [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }"
-            (ngModelChange)="getOutcomes()">
+            (ngModelChange)="allFilter()">
 
         </div>
       </div>

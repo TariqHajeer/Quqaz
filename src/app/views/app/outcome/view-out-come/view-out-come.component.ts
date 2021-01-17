@@ -139,7 +139,7 @@ paging: Paging
     this.CreateOutcome.outComeTypeId = value.OutComeTypeId
     this.CreateOutcome.note = value.Note
     this.CreateOutcome.reason = value.Reason
-    this.outcomes.push(this.CreateOutcome)
+    this.dataSource.push(this.CreateOutcome)
     this.gridInstance.refresh();
 
   }

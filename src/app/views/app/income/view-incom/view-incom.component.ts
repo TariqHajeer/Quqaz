@@ -73,7 +73,7 @@ displayedColumns: string[];
     this.dataSource = new MatTableDataSource(this.incomes);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.displayedColumns = ['SSN','SSN1','SSN2','SSN3'];
+    this.displayedColumns = ['incomeTypeId','amount','date','source','earining','note','userId'];
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -91,9 +91,8 @@ displayedColumns: string[];
    }
    allFilter(){
    this.incomeService.Get(this.filter, this.paging).subscribe(response => {
-     this.dataSource=new MatTableDataSource(response.body)
-     console.log(response.body)
-    // this.totalCount = JSON.parse(response.headers.get('x-paging')).TotalRows;
+     this.dataSource=new MatTableDataSource(response.data)
+     this.totalCount = response.total
     
    },
    err => {
@@ -146,7 +145,7 @@ displayedColumns: string[];
     this.createInCome.incomeTypeId=value.IncomeTypeId
     this.createInCome.note=value.Note
     this.createInCome.source=value.Source
-    this.incomes.push( this.createInCome)
+    this.dataSource.push( this.createInCome)
     this.gridInstance.refresh();
 
   }
