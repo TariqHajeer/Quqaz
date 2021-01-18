@@ -1,1 +1,41 @@
-<p>view-orders works!</p>
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex justify-content-between">
+            <h3 class="card-title">الطلبات</h3>
+            <button class="btn  mb-3" (click)="AddOrder()"><i class="iconsminds-add  text-primary" style="font-size: 38px;"></i></button>
+        </div>
+
+      
+
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%;"
+            (onPageSwitch)="switchPage($event)">
+            <ng-container matColumnDef="SSN">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> الطلب</th>
+                <td mat-cell *matCellDef="let element"> {{element.Ssn}}</td>
+            </ng-container>
+            <ng-container matColumnDef="SSN1">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> الطلب</th>
+                <td mat-cell *matCellDef="let element"> {{element.Ssn}}</td>
+            </ng-container>
+            <ng-container matColumnDef="SSN2">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> الطلب</th>
+                <td mat-cell *matCellDef="let element"> {{element.Ssn}}</td>
+            </ng-container>
+            <ng-container matColumnDef="SSN3">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> الطلب</th>
+                <td mat-cell *matCellDef="let element"> {{element.Ssn}}</td>
+            </ng-container>
+           
+            
+
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <h2 style="margin: 10px;text-align: center;"> </h2>
+
+        <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
+            [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
+    </div>
+</div>
