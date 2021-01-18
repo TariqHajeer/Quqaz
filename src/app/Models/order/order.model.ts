@@ -11,7 +11,6 @@ export class Order {
       RecipientName: string
       RecipientPhones: string
       Address: string
-      ClientNote: string
       CreatedBy: string
       Date: Date
       DiliveryDate: Date

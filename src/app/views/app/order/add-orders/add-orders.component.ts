@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
-import { Order } from 'src/app/Models/order/order.model';
+import { CreateOrdersFromEmployee } from 'src/app/Models/order/create-orders-from-employee.model';
 import { Region } from 'src/app/Models/Regions/region.model';
 import { User } from 'src/app/Models/user/user.model';
 import { CustomService } from 'src/app/services/custom.service';
@@ -21,7 +21,7 @@ export class AddOrdersComponent implements OnInit {
     private clientService:ClientService
     ,private customerService:CustomService,
     private userService:UserService) { }
-  Order: Order
+  Order: CreateOrdersFromEmployee
   submitted = false;
   orderPlace: NameAndIdDto[] = []
   MoenyPlaced: NameAndIdDto[] = []
@@ -32,7 +32,7 @@ export class AddOrdersComponent implements OnInit {
   cityapi="Country"
   regionapi="Region"
   ngOnInit(): void {
-    this.Order = new Order
+    this.Order = new CreateOrdersFromEmployee
     this.GetMoenyPlaced()
     this.GetorderPlace()
     this.GetRegion()

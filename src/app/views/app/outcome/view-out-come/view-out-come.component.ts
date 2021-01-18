@@ -135,8 +135,8 @@ paging: Paging
   addFinish(value: CreateOutCome) {
     this.CreateOutcome.amount = value.Amount
     this.CreateOutcome.date = value.Date
-    this.CreateOutcome.currencyId = value.CurrencyId
-    this.CreateOutcome.outComeTypeId = value.OutComeTypeId
+    this.CreateOutcome.currency.id = value.CurrencyId
+    this.CreateOutcome.outComeType.id = value.OutComeTypeId
     this.CreateOutcome.note = value.Note
     this.CreateOutcome.reason = value.Reason
     this.dataSource.push(this.CreateOutcome)

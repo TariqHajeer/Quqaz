@@ -27,14 +27,14 @@
   </div>
   <div class="col-md-2">
     <label> المبلغ الأدنى</label>
-    <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+    <input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
       class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.MinAmount"
       (ngModelChange)="allFilter()">
 
   </div>
   <div class="col-md-2">
     <label>المبلغ الأعلى</label>
-    <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+    <input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
       class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.MaxAmount"
       (ngModelChange)="allFilter()">
 

@@ -140,9 +140,10 @@ displayedColumns: string[];
   createInCome:Income
   addFinish(value:CreateIncome) {
     this.createInCome.amount=value.Amount
+    this.createInCome.Currency.id=value.CurrencyId
     this.createInCome.date=value.Date
     this.createInCome.earining=value.Earining
-    this.createInCome.incomeTypeId=value.IncomeTypeId
+    this.createInCome.IncomeType.id=value.IncomeTypeId
     this.createInCome.note=value.Note
     this.createInCome.source=value.Source
     this.dataSource.push( this.createInCome)

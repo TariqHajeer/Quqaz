@@ -6,4 +6,6 @@ export interface Income{
   note?: string,
   userId?: number,
   incomeTypeId?: number
+  IncomeType
+  Currency
 }
