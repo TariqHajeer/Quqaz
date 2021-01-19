@@ -102,6 +102,10 @@ export class AddOrdersComponent implements OnInit {
     this.Order.OrderTypeDtos.push(this.OrderItem)
 
   }
- 
+  changeCountry(){
+    var city=this.cities.find(c=>c.id==this.Order.CountryId)
+    this.Order.Cost=city.deliveryCost
+    this.Region=this.Region.filter(r=>this.Order.CountryId==r.country.id)
+  }
  
 }
