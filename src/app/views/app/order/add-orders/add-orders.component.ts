@@ -30,7 +30,6 @@ export class AddOrdersComponent implements OnInit {
   submitted = false;
   orderPlace: NameAndIdDto[] = []
   MoenyPlaced: NameAndIdDto[] = []
-
   clients: Client[] = []
   cities: City[] = []
   Region: Region[] = []
