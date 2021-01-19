@@ -21,7 +21,7 @@
             </div>
             <div class="col-md-3">
                 <label>المبلغ<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                <input type="text"
+                <input type="number"
                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                     class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateOutCome.Amount">
                 <div *ngIf="!CreateOutCome.Amount && submitted" class="invalid-tooltip">المبلغ حقل مطلوب</div>

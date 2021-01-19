@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { EditSettingsModel, GridComponent, ToolbarItems } from '@syncfusion/ej2-angular-grids';
+import { ActionEventArgs, EditSettingsModel, GridComponent, SaveEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { from } from 'rxjs';
 import { Outcome } from '../outcome.model'
 import { OutcomeService } from '../outcome.service'
@@ -10,6 +10,10 @@ import { Coin } from 'src/app/Models/Coins/coin.model';
 import { UserService } from 'src/app/services/user.service';
 import { CreateOutCome } from 'src/app/Models/OutCome/create-out-come.model';
 import { DatePipe } from '@angular/common';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { Paging } from 'src/app/Models/paging';
+import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'app-view-out-come',
   templateUrl: './view-out-come.component.html',
@@ -22,7 +26,6 @@ export class ViewOutComeComponent implements OnInit {
     public datepipe: DatePipe) { }
   public stTime: any;
   public filter: Object;
-  public filterSettings: Object;
   public editSettings: EditSettingsModel;
   public selectionSettings: Object;
   public lines: any;
@@ -36,8 +39,20 @@ export class ViewOutComeComponent implements OnInit {
   filtering: Filtering
   coins: Coin[];
   exportTypes: any[] = [];
-
+  totalRecoreds: number;
+  ///////////////
+displayedColumns: string[];
+dataSource
+@ViewChild(MatSort, { static: true }) sort: MatSort;
+@ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+@Input() totalCount: number;
+pageEvent: PageEvent;
+paging: Paging
+////////////
   ngOnInit(): void {
+    
+    this.paging = new Paging 
+
     this.filtering = new Filtering()
     this.Getcoins()
     this.UserService.GetAll();
@@ -47,14 +62,47 @@ export class ViewOutComeComponent implements OnInit {
     this.toolbar = [
       { text: 'حذف', tooltipText: 'حذف', prefixIcon: 'e-delete', id: 'normalgrid_delete' },
       'Search'];
-    this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
     this.pageSettings = { pageSize: 5, pageSizes: true };
 
     this.selectionSettings = { persistSelection: true, type: "Multiple" };
     this.lines = 'Horizontal';
+    this.get()
+    this.allFilter()
   }
+  get() {
+    this.dataSource = new MatTableDataSource(this.outcomes);
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.displayedColumns = ['outComeType','amount','currency','date','reason','note'];
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+  switchPage(event: PageEvent) {
+   
+    this.paging.allItemsLength=event.length
+    this.paging.RowCount =  event.pageSize
+    this.paging.Page = event.pageIndex+1
+   
+   
+ this.allFilter();
+    
+   }
+   allFilter(){
+   this.outcomeService.Get( this.filtering,this.paging).subscribe(response => {
+     this.dataSource=new MatTableDataSource(response.data)
+     console.log(response)
+     this.totalCount = response.total
+    
+   },
+   err => {
+     
+   });
+  }
+  
   load() {
     const rowHeight: number = this.gridInstance.getRowHeight();  // height of the each row
     const gridHeight: any = this.gridInstance.height;  // grid height
@@ -69,9 +117,10 @@ export class ViewOutComeComponent implements OnInit {
     if (this.filtering.FromDate) {
       this.filtering.FromDate = this.datepipe.transform(this.filtering.FromDate, 'yyyy-MM-dd')
     }
-    this.outcomeService.Get(this.filtering).subscribe(
+    this.outcomeService.Get(this.filtering,this.paging).subscribe(
       response => {
-        this.outcomes = response;
+        this.outcomes = response.data;
+        this.totalRecoreds =response.total;
         this.outcomes.forEach(c => {
           c.date = c.date.split('T')[0];
         });
@@ -81,17 +130,16 @@ export class ViewOutComeComponent implements OnInit {
   addNewClicked() {
     this.addClicked = true;
     this.editClicked = false;
-
   }
   CreateOutcome: Outcome
   addFinish(value: CreateOutCome) {
     this.CreateOutcome.amount = value.Amount
     this.CreateOutcome.date = value.Date
-    this.CreateOutcome.currencyId = value.CurrencyId
-    this.CreateOutcome.outComeTypeId = value.OutComeTypeId
+    this.CreateOutcome.currency.id = value.CurrencyId
+    this.CreateOutcome.outComeType.id = value.OutComeTypeId
     this.CreateOutcome.note = value.Note
     this.CreateOutcome.reason = value.Reason
-    this.outcomes.push(this.CreateOutcome)
+    this.dataSource.push(this.CreateOutcome)
     this.gridInstance.refresh();
 
   }
@@ -109,6 +157,13 @@ export class ViewOutComeComponent implements OnInit {
         this.exportTypes = res;
       }
     )
+  }
+  actionComplete(args: SaveEventArgs) {
+    if(args.requestType=="refresh"){
+      this.gridInstance.pageSettings.totalRecordsCount = this.totalRecoreds;
+    }
+  }
+  onActionBegin(args: ActionEventArgs) {
   }
 
 }

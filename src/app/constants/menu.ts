@@ -31,11 +31,7 @@ const data: IMenuItem[] = [
         label: 'menu.setting.regions',
         to: `${adminRoot}/setting/regions`,
       },
-      {
-        icon: 'simple-icon-layers',
-        label: 'menu.setting.departments',
-        to: `${adminRoot}/setting/departments`,
-      },
+     
       {
         icon: 'iconsminds-inbox-out',
         label: 'menu.setting.exportTypes',
@@ -88,7 +84,12 @@ const data: IMenuItem[] = [
   label: 'menu.employees',
   to: `${adminRoot}/user`,
 },
-
+//order
+{
+  icon: 'iconsminds-box-close',
+  label: 'الطلبات',
+  to: `${adminRoot}/order`,
+},
  
 
 

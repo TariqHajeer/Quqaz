@@ -5,4 +5,6 @@ export interface Outcome{
   reason?: string,
   note?: string,
   outComeTypeId?  : number
+  outComeType
+  currency
 }

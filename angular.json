@@ -32,6 +32,7 @@
             ],
             "extractCss": true,
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
               "src/style.scss",
               "src/assets/css/vendor/bootstrap.min.css",
               "src/assets/css/vendor/bootstrap.rtl.only.min.css",
@@ -210,7 +211,10 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "scripts": []
+            "scripts": [],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css"
+            ]
           }
         },
         "lint": {

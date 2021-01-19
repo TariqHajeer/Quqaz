@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { EditSettingsModel, GridComponent, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { CustomService } from 'src/app/services/custom.service';
 import { Income } from '../income.model'
@@ -8,6 +8,10 @@ import { Filtering } from 'src/app/Models/Filtering.model';
 import { Coin } from 'src/app/Models/Coins/coin.model';
 import { Router } from '@angular/router';
 import { CreateIncome } from 'src/app/Models/inCome/create-income.model';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { Paging } from 'src/app/Models/paging';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-view-incom',
@@ -35,7 +39,20 @@ export class ViewIncomComponent implements OnInit {
   filtering: Filtering
   coins: Coin[];
   importTypes: any[] = [];
+
+///////////////
+displayedColumns: string[];
+  dataSource
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @Input() totalCount: number;
+  pageEvent: PageEvent;
+  paging: Paging
+  ////////////
   ngOnInit(): void {
+    this.get()
+    this.paging = new Paging
+
     this.filtering = new Filtering()
     this.Getcoins()
     this.UserService.GetAll();
@@ -52,6 +69,37 @@ export class ViewIncomComponent implements OnInit {
     this.selectionSettings = { persistSelection: true, type: "Multiple" };
     this.lines = 'Horizontal';
   }
+  get() {
+    this.dataSource = new MatTableDataSource(this.incomes);
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.displayedColumns = ['incomeTypeId','amount','date','source','earining','note','userId'];
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+  switchPage(event: PageEvent) {
+   
+    this.paging.allItemsLength=event.length
+    this.paging.RowCount =  event.pageSize
+    this.paging.Page = event.pageIndex+1
+   
+   
+ this.allFilter();
+    
+   }
+   allFilter(){
+   this.incomeService.Get(this.filter, this.paging).subscribe(response => {
+     this.dataSource=new MatTableDataSource(response.data)
+     this.totalCount = response.total
+    
+   },
+   err => {
+     
+   });
+  }
+  
   addNewClicked() {
     this.addClicked = true;
     this.editClicked = false;
@@ -65,7 +113,7 @@ export class ViewIncomComponent implements OnInit {
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
   getIncomes() {
-    this.incomeService.Get(this.filtering).subscribe(
+    this.incomeService.Get(this.filter, this.paging).subscribe(
 
       res => {
         console.log(res);
@@ -88,21 +136,17 @@ export class ViewIncomComponent implements OnInit {
   AddMoreOutcome() {
     this.router.navigate(['app/income/addmoreincome'])
   }
-  Test(){
-   // console.log(this.filtering);
-    this.incomeService.Get(this.filterSettings).subscribe(res=>{
-
-    });
-  }
+  
   createInCome:Income
   addFinish(value:CreateIncome) {
     this.createInCome.amount=value.Amount
+    this.createInCome.Currency.id=value.CurrencyId
     this.createInCome.date=value.Date
     this.createInCome.earining=value.Earining
-    this.createInCome.incomeTypeId=value.IncomeTypeId
+    this.createInCome.IncomeType.id=value.IncomeTypeId
     this.createInCome.note=value.Note
     this.createInCome.source=value.Source
-    this.incomes.push( this.createInCome)
+    this.dataSource.push( this.createInCome)
     this.gridInstance.refresh();
 
   }

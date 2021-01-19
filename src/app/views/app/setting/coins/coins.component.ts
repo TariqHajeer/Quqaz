@@ -10,9 +10,8 @@ import { Coin } from '../../../../Models/Coins/coin.model';
 })
 export class CoinsComponent implements OnInit {
   apiName = "Currency";
+  
   constructor(private customService: CustomService, private notifications: NotificationsService) { }
-
-  // coins:any[]=[{id:1,name:'دولار'},{id:2,name:'درهم عراقي'},{id:3,name:'ليرة لبناني'}];
   coins: Coin[];
   public stTime: any;
   public filter: Object;
@@ -53,11 +52,19 @@ export class CoinsComponent implements OnInit {
     const pageResize: any = (gridHeight - (pageSize * rowHeight)) / rowHeight; // new page size is obtained here
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
+  // totalRec;
   Get() {
+    // this.customService.getAllWithPagging(this.apiName,{page:1,rowCount:11}).subscribe(res=>{
+    //   this.coins=res.data;
+    //   this.totalRec=res.total;
+    // });
     this.customService.getAll(this.apiName).subscribe(res => {
       this.coins = res;
     });
   }
+  // Test():void{
+  //   this.gridInstance.pageSettings.totalRecordsCount= this.totalRec;
+  // }
   actionComplete(args: SaveEventArgs) {
     if (args.action === "edit") {
       let obj: any = { id: Number.parseInt(args.data['id']), name: args.data['name'] }
@@ -74,9 +81,11 @@ export class CoinsComponent implements OnInit {
           this.notifications.create('success', 'تم حذف  العملة  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
 
         }
-      )
-
+      );
     }
+    // if(args.requestType=="refresh"){
+    //   this.gridInstance.pageSettings.totalRecordsCount= this.totalRec;
+    // }
   }
   onActionBegin(args: ActionEventArgs) {
     if (args.action == "add") {

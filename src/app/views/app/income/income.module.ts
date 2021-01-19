@@ -13,6 +13,9 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AddMoreIncomeComponent } from './add-more-income/add-more-income.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 @NgModule({
   declarations: [ViewIncomComponent, AddInComeComponent, AddMoreIncomeComponent],
   imports: [
@@ -28,7 +31,9 @@ import { AddMoreIncomeComponent } from './add-more-income/add-more-income.compon
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
     NgSelectModule,
-    
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
     
 
   ],schemas:[CUSTOM_ELEMENTS_SCHEMA],
