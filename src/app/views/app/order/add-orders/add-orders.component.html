@@ -8,22 +8,27 @@
                         <div class="col-md-3">
                             <label>كود الشحنة<span class="text-danger text-one align-bottom mx-1">*</span></label>
                             <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                                [(ngModel)]="Order.Code">
+                                [(ngModel)]="Order.Code" (keyup)="CheckCode()">
                             <div *ngIf="!Order.Code && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
+                            <div *ngIf="showMessageCode" class="invalid-tooltip">الكود مكرر</div>
+
                         </div>
                         <div class="col-md-3">
                             <label>العميل<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                            <ng-select [(ngModel)]="Order.ClientId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+                            <ng-select [(ngModel)]="Order.ClientId" (change)="CheckClient()"
+                             [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
                                 name="Client">
                                 <ng-option *ngFor="let Client of clients" [value]="Client.id">{{Client.name}}</ng-option>
                             </ng-select>
                             <div *ngIf="!Order.ClientId && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
+                            <div *ngIf="showMessageClient" class="invalid-tooltip"> العميل مكرر </div>
+
                         </div>
                     </div>
             <div class="row w-100 align-items-end mb-3">
                 <div class="col-md-3">
                     <label>المدينة<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                    <ng-select [(ngModel)]="Order.CountryId" (ngModelChange)="changeCountry()" [ngModelOptions]="{standalone: true}"
+                    <ng-select [(ngModel)]="Order.CountryId" (change)="changeCountry()" [ngModelOptions]="{standalone: true}"
                         [closeOnSelect]="true" name="Country">
                         <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
                     </ng-select>

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
+import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { CreateOrdersFromEmployee, OrderItem } from 'src/app/Models/order/create-orders-from-employee.model';
 import { Order } from 'src/app/Models/order/order.model';
 import { OrderType } from 'src/app/Models/OrderTypes/order-type.model';
+import { Paging } from 'src/app/Models/paging';
 
 import { Region } from 'src/app/Models/Regions/region.model';
 import { User } from 'src/app/Models/user/user.model';
@@ -33,20 +35,23 @@ export class AddOrdersComponent implements OnInit {
   clients: Client[] = []
   cities: City[] = []
   Region: Region[] = []
+  Regions: Region[] = []
   Agents: User[] = []
   orderTypes: OrderType[] = []
   orderType: OrderType
   OrderItem: OrderItem
   count
+  filter: OrderFilter
+  paging: Paging
   cityapi = "Country"
   regionapi = "Region"
   ordertypeapi = "OrderType";
   ngOnInit(): void {
     this.Order = new CreateOrdersFromEmployee
-    this.Order.OrderTypeDtos=[]
-    this.orderType=new OrderType
-    this.OrderItem= new OrderItem
-
+    this.Order.OrderTypeDtos = []
+    this.orderType = new OrderType
+    this.OrderItem = new OrderItem
+    this.paging = new Paging
     this.GetMoenyPlaced()
     this.GetorderPlace()
     this.GetRegion()
@@ -58,8 +63,8 @@ export class AddOrdersComponent implements OnInit {
     this.Agents = this.userService.users
   }
   AddOrder() {
-    this.orderservice.Creat(this.Order).subscribe(res=>{
-      this.Order=new CreateOrdersFromEmployee
+    this.orderservice.Creat(this.Order).subscribe(res => {
+      this.Order = new CreateOrdersFromEmployee
     })
 
   }
@@ -85,7 +90,7 @@ export class AddOrdersComponent implements OnInit {
   }
   GetRegion() {
     this.customerService.getAll(this.regionapi).subscribe(res => {
-      this.Region = res
+      this.Regions = res
     })
   }
   getOrderTypes() {
@@ -102,10 +107,31 @@ export class AddOrdersComponent implements OnInit {
     this.Order.OrderTypeDtos.push(this.OrderItem)
 
   }
-  changeCountry(){
-    var city=this.cities.find(c=>c.id==this.Order.CountryId)
-    this.Order.Cost=city.deliveryCost
-    this.Region=this.Region.filter(r=>this.Order.CountryId==r.country.id)
+  changeCountry() {
+    this.Region=[]
+    var city = this.cities.find(c => c.id == this.Order.CountryId)
+    this.Order.Cost = city.deliveryCost
+    this.Region = this.Regions.filter(r => r.country.id == this.Order.CountryId)
   }
- 
+  showMessageCode = false
+  CheckCode() {
+    this.filter = new OrderFilter
+    this.filter.Code = this.Order.Code
+    this.orderservice.GetAll(this.filter, this.paging).subscribe(res => {
+      console.log(res)
+      if (res != []) {
+        this.showMessageCode = true
+      } else this.showMessageCode = false
+    })
+  }
+  showMessageClient = false
+  CheckClient() {
+    this.filter = new OrderFilter
+    this.filter.ClientId = this.Order.ClientId
+    this.orderservice.GetAll(this.filter, this.paging).subscribe(res => {
+      if (res != []) {
+        this.showMessageClient = true
+      } else this.showMessageClient = false
+    })
+  }
 }
