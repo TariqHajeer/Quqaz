@@ -26,7 +26,7 @@ export class AddOrdersComponent implements OnInit {
 
     private clientService: ClientService
     , private customerService: CustomService,
-    private userService: UserService) { }
+    public userService: UserService) { }
 
   Order: CreateOrdersFromEmployee
   submitted = false;
@@ -36,7 +36,6 @@ export class AddOrdersComponent implements OnInit {
   cities: City[] = []
   Region: Region[] = []
   Regions: Region[] = []
-  Agents: User[] = []
   orderTypes: OrderType[] = []
   orderType: OrderType
   OrderItem: OrderItem
@@ -60,10 +59,10 @@ export class AddOrdersComponent implements OnInit {
 
     this.getOrderTypes()
     this.userService.GetAll()
-    this.Agents = this.userService.users
   }
   AddOrder() {
     this.orderservice.Creat(this.Order).subscribe(res => {
+      console.log(res)
       this.Order = new CreateOrdersFromEmployee
     })
 
@@ -113,25 +112,26 @@ export class AddOrdersComponent implements OnInit {
     this.Order.Cost = city.deliveryCost
     this.Region = this.Regions.filter(r => r.country.id == this.Order.CountryId)
   }
-  showMessageCode = false
+  showMessageCode:boolean = false
   CheckCode() {
     this.filter = new OrderFilter
     this.filter.Code = this.Order.Code
     this.orderservice.GetAll(this.filter, this.paging).subscribe(res => {
-      console.log(res)
-      if (res != []) {
-        this.showMessageCode = true
-      } else this.showMessageCode = false
+      if (res.data.length==0) {
+        this.showMessageCode = false
+      } else
+       this.showMessageCode = true
     })
   }
-  showMessageClient = false
+  showMessageClient:boolean = false
   CheckClient() {
     this.filter = new OrderFilter
     this.filter.ClientId = this.Order.ClientId
     this.orderservice.GetAll(this.filter, this.paging).subscribe(res => {
-      if (res != []) {
-        this.showMessageClient = true
-      } else this.showMessageClient = false
+      if (res.data.length==0) {
+        this.showMessageClient = false
+      } else 
+      this.showMessageClient = true
     })
   }
 }

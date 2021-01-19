@@ -48,6 +48,8 @@ dataSource
 @Input() totalCount: number;
 pageEvent: PageEvent;
 paging: Paging
+noDataFound:boolean=false
+
 ////////////
   ngOnInit(): void {
     
@@ -93,6 +95,9 @@ paging: Paging
    }
    allFilter(){
    this.outcomeService.Get( this.filtering,this.paging).subscribe(response => {
+    if(response.data.length==0)
+    this.noDataFound=true
+    else      this.noDataFound=false
      this.dataSource=new MatTableDataSource(response.data)
      console.log(response)
      this.totalCount = response.total

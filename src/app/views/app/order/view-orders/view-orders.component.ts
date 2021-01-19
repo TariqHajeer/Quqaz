@@ -31,7 +31,7 @@ export class ViewOrdersComponent implements OnInit {
   paging: Paging
   filtering:OrderFilter
   orders:Order[]=[]
-
+  noDataFound:boolean=false
   orderPlace: NameAndIdDto[] = []
   MoenyPlaced: NameAndIdDto[] = []
   clients:Client[]=[]
@@ -84,10 +84,11 @@ export class ViewOrdersComponent implements OnInit {
    }
    allFilter(){
    this.orderservice.GetAll( this.filtering,this.paging).subscribe(response => {
-     this.dataSource=new MatTableDataSource(response.data)
-     this.totalCount = response.total
-     console.log(response)
-    
+    if(response.data.length==0)
+    this.noDataFound=true
+    else  this.noDataFound=false
+    this.dataSource=new MatTableDataSource(response.data)
+     this.totalCount = response.total    
    },
    err => {
      

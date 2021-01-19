@@ -48,12 +48,13 @@ displayedColumns: string[];
   @Input() totalCount: number;
   pageEvent: PageEvent;
   paging: Paging
+  noDataFound:boolean=false
   ////////////
   ngOnInit(): void {
     this.get()
     this.paging = new Paging
-
     this.filtering = new Filtering()
+    this.allFilter()
     this.Getcoins()
     this.UserService.GetAll();
     this.getImportTypes()
@@ -91,6 +92,9 @@ displayedColumns: string[];
    }
    allFilter(){
    this.incomeService.Get(this.filter, this.paging).subscribe(response => {
+     if(response.data.length==0)
+     this.noDataFound=true
+     else      this.noDataFound=false
      this.dataSource=new MatTableDataSource(response.data)
      this.totalCount = response.total
     
