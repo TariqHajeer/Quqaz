@@ -32,7 +32,6 @@ export class IncomeService {
     return this.http.post(this.contoler + "/AddMultiple", items)
   }
   Get(filter: Filtering,paging:Paging) {
-
     let params = new HttpParams();
     if (filter.CurrencyId != undefined || filter.CurrencyId != null)
       params = params.append("CurrencyId", filter.CurrencyId);

@@ -76,6 +76,7 @@ export class AddUserComponent implements OnInit, OnChanges {
       res => {
         if (this.addClicked) {
           this.addFinish.emit(this.CreateUser);
+          this.CreateUser=new CreateUser
           this.notifications.create('success', 'تم اضافة موظف بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         }
 
@@ -109,8 +110,7 @@ export class AddUserComponent implements OnInit, OnChanges {
     this.CreateUser.Phones.push(this.tempPhone);
     this.tempPhone = '';
   }
-  changeCountry(){
-    var country=this.Countries.find(c=>c.id==this.CreateUser.CountryId)
-    this.CreateUser.Salary=country.deliveryCost
-  }
+  //  NameIsNullOrDuplicate(array:[],name){
+
+  //  }
 }

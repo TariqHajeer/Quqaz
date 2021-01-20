@@ -64,9 +64,9 @@ export class ViewOrdersComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.orders);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.displayedColumns = ['Code','DeliveryCost','Cost','RecipientName',
-    'RecipientPhones','Address','CreatedBy','Date','DiliveryDate','Note','Client','Country'
-    ,'Region','MonePlaced','Orderplaced','Agent'];
+    this.displayedColumns = ['code','deliveryCost','cost','recipientName',
+    'recipientPhones','address','createdBy','date','diliveryDate','note','client','country'
+    ,'region','monePlaced','orderplaced','agent'];
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -87,6 +87,8 @@ export class ViewOrdersComponent implements OnInit {
     if(response.data.length==0)
     this.noDataFound=true
     else  this.noDataFound=false
+    console.log(response.data)
+
     this.dataSource=new MatTableDataSource(response.data)
      this.totalCount = response.total    
    },

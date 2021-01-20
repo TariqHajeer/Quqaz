@@ -14,7 +14,7 @@ export class AddClientComponent implements OnInit, OnChanges {
   constructor(private customService: CustomService, private clientService: ClientService,
     private notifications: NotificationsService) { }
   client: Client;
-  clients: Client[]=[];
+  clients: Client[] = [];
   regions: any[] = [];
   tempPhone: any;
   @Input() currentClientId;
@@ -22,14 +22,14 @@ export class AddClientComponent implements OnInit, OnChanges {
   @Input() addClicked;
   @Output() addFinish = new EventEmitter<any>();
   submitted = false;
-  nameIsRepeated:boolean=false;
-  usernameIsRepeated:boolean=false;
+  nameIsRepeated: boolean = false;
+  usernameIsRepeated: boolean = false;
   confirmpassword
   checkPassword: boolean = false
   ngOnInit(): void {
     this.init();
     this.getRegions();
-  this.getClient()
+    this.getClient()
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (this.currentClientId && !this.addClicked) {
@@ -41,7 +41,7 @@ export class AddClientComponent implements OnInit, OnChanges {
     if (this.client.password != this.confirmpassword) {
       this.checkPassword = true
     }
-    else{
+    else {
       this.checkPassword = false
     }
   }
@@ -59,10 +59,10 @@ export class AddClientComponent implements OnInit, OnChanges {
       regionId: null,
     }
   }
-  getClient(){
+  getClient() {
     this.clientService.getClients().subscribe(
       res => {
-        this.clients=res
+        this.clients = res
       }
     )
   }
@@ -74,23 +74,23 @@ export class AddClientComponent implements OnInit, OnChanges {
       }
     )
   }
-  checkName(){       
-    if( this.clients.filter(c=>c.name==this.client.name).length>0){
-      
-      this.nameIsRepeated =true
+  checkName() {
+    if (this.clients.filter(c => c.name == this.client.name).length > 0) {
+
+      this.nameIsRepeated = true
       return;
     }
-   else
-    this.nameIsRepeated =false
+    else
+      this.nameIsRepeated = false
   }
-  checkUserName(){       
-    
-    if( this.clients.filter(c=>c.userName==this.client.userName).length>0){
-      
-      this.usernameIsRepeated =true
+  checkUserName() {
+
+    if (this.clients.filter(c => c.userName == this.client.userName).length > 0) {
+
+      this.usernameIsRepeated = true
       return;
-    }else
-    this.usernameIsRepeated =false
+    } else
+      this.usernameIsRepeated = false
   }
   addOrEditClient() {
     this.submitted = true;
@@ -99,12 +99,12 @@ export class AddClientComponent implements OnInit, OnChanges {
     this.clientService.addClient(this.client).subscribe(
       res => {
         this.addFinish.emit(this.client);
-
         if (this.addClicked) {
+          this.init()
           this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
           this.tempPhone = '';
         }
-        
+
         this.init();
       }
     )

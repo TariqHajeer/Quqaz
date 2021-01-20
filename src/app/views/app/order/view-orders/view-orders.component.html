@@ -74,96 +74,96 @@
   
           </div>
         </div>
-        <br>
-        <br>
-<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%; overflow-x: scroll;height: 300px;"
-(onPageSwitch)="switchPage($event)">
-
-<ng-container matColumnDef="Code">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> كود </th>
-  <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.Code}}</td>
-</ng-container>
-<ng-container matColumnDef="DeliveryCost">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header> تكلفة التوصيل</th>
-  <td mat-cell *matCellDef="let element"> {{element.DeliveryCost}}</td>
-</ng-container>
-<ng-container matColumnDef="Cost">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header> الطلب</th>
-  <td mat-cell *matCellDef="let element"> {{element.Cost}}</td>
-</ng-container>
-<ng-container matColumnDef="RecipientName">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header> اسم المستلم</th>
-  <td mat-cell *matCellDef="let element"> {{element.RecipientName}}</td>
-</ng-container>
-
-
-<ng-container matColumnDef="RecipientPhones">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header> رقم المستلم</th>
-  <td mat-cell *matCellDef="let element"> {{element.RecipientPhones}}</td>
-</ng-container>
-<ng-container matColumnDef="Address">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header> العنوان</th>
-  <td mat-cell *matCellDef="let element"> {{element.Address}}</td>
-</ng-container>
-<ng-container matColumnDef="CreatedBy">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header> بواسطه</th>
-  <td mat-cell *matCellDef="let element"> {{element.CreatedBy}}</td>
-</ng-container>
-<ng-container matColumnDef="Date">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header> التاريخ</th>
-  <td mat-cell *matCellDef="let element"> {{element.Date}}</td>
-</ng-container>
-
-
-<ng-container matColumnDef="DiliveryDate">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header> تاريخ التوصيل</th>
-  <td mat-cell *matCellDef="let element"> {{element.DiliveryDate}}</td>
-</ng-container>
-<ng-container matColumnDef="Note">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header> ملاحظات</th>
-  <td mat-cell *matCellDef="let element"> {{element.Note}}</td>
-</ng-container>
-<ng-container matColumnDef="Client">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header> اسم العميل</th>
-  <td mat-cell *matCellDef="let element"> {{element.Client.name}}</td>
-</ng-container>
-<ng-container matColumnDef="Country">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header> المدينة</th>
-  <td mat-cell *matCellDef="let element"> {{element.Country.name}}</td>
-</ng-container>
-<ng-container matColumnDef="Region">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header> المنطقة</th>
-  <td mat-cell *matCellDef="let element"> {{element.Region.name}}</td>
-</ng-container>
-
-
-<ng-container matColumnDef="MonePlaced">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header> موقع المبلغ</th>
-  <td mat-cell *matCellDef="let element"> {{element.MonePlaced.name}}</td>
-</ng-container>
-<ng-container matColumnDef="Orderplaced">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header> حالة الشحنة</th>
-  <td mat-cell *matCellDef="let element"> {{element.Orderplaced.name}}</td>
-</ng-container>
-<ng-container matColumnDef="Agent">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header> الوكيل</th>
-  <td mat-cell *matCellDef="let element"> {{element.Agent.name}}</td>
-</ng-container>
-
-
-
-<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-<div class="mat-elevation-z8" style="width: 100%;height: 350px;" *ngIf="noDataFound">
-
-<h5 style="padding-top: 20px; padding-right: 10px;">No records to display</h5>
-
-</div>
-<mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
-[pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
-
+        
+      
 
        </div>
 </div>
-
+<br>
+<div class="example-container mat-elevation-z8" >
+  <table mat-table [dataSource]="dataSource" matSort (onPageSwitch)="switchPage($event)">
+  
+  <ng-container matColumnDef="code">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> كود </th>
+    <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.code}}</td>
+  </ng-container>
+  <ng-container matColumnDef="deliveryCost">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> تكلفة التوصيل</th>
+    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.deliveryCost}}</td>
+  </ng-container>
+  <ng-container matColumnDef="cost">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> الطلب</th>
+    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.cost}}</td>
+  </ng-container>
+  <ng-container matColumnDef="recipientName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> اسم المستلم</th>
+    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.recipientName}}</td>
+  </ng-container>
+  
+  
+  <ng-container matColumnDef="recipientPhones">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 30px;"> رقم المستلم</th>
+    <td mat-cell *matCellDef="let element"style="width: 100px;padding:10px;"> {{element.recipientPhones}}</td>
+  </ng-container>
+  <ng-container matColumnDef="address">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> العنوان</th>
+    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.address}}</td>
+  </ng-container>
+  <ng-container matColumnDef="createdBy">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> بواسطه</th>
+    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.createdBy}}</td>
+  </ng-container>
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> التاريخ</th>
+    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.date}}</td>
+  </ng-container>
+  
+  
+  <ng-container matColumnDef="diliveryDate" >
+    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> تاريخ التوصيل</th>
+    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.diliveryDate}}</td>
+  </ng-container>
+  <ng-container matColumnDef="note">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> ملاحظات</th>
+    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.note}}</td>
+  </ng-container>
+  <ng-container matColumnDef="client">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> اسم العميل</th>
+    <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.client!=null?element.client.name:null}}</td>
+  </ng-container>
+  <ng-container matColumnDef="country">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> المدينة</th>
+    <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.country!=null?element.country.name:null}}</td>
+  </ng-container>
+  <ng-container matColumnDef="region">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> المنطقة</th>
+    <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.region!=null?element.region.name:null}}</td>
+  </ng-container>
+  
+  
+  <ng-container matColumnDef="monePlaced">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> موقع المبلغ</th>
+    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.monePlaced!=null?element.monePlaced.name:null}}</td>
+  </ng-container>
+  <ng-container matColumnDef="orderplaced">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> حالة الشحنة</th>
+    <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.orderplaced!=null?element.orderplaced.name:null}}</td>
+  </ng-container>
+  <ng-container matColumnDef="agent">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> الوكيل</th>
+    <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.agent!=null?element.agent.name:null}}</td>
+  </ng-container>
+  
+  
+  
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  
+  
+  <h5 style="padding-top: 20px; padding-right: 10px;"  *ngIf="noDataFound">No records to display</h5>
+  
+  </div>
+  <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
+  [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
+  

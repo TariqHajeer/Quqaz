@@ -73,7 +73,7 @@
     </div>
     <div class="col-md-3" *ngIf="CreateUser.CanWorkAsAgent">
       <label>المدينة<span class="text-danger text-one align-bottom mx-1">*</span></label>
-      <ng-select [(ngModel)]="CreateUser.CountryId" (change)="changeCountry()"
+      <ng-select [(ngModel)]="CreateUser.CountryId" 
       [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
         <ng-option *ngFor="let country of Countries" [value]="country.id">{{country.name}}</ng-option>
       </ng-select>
@@ -81,9 +81,10 @@
 
     </div>
     <div class="col-md-3" *ngIf="CreateUser.CanWorkAsAgent">
-      <label>كلفة التوصيل</label>
-      <input type="number" readonly oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+      <label>كلفة التوصيل<span class="text-danger text-one align-bottom mx-1">*</span></label>
+      <input type="number"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
         class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Salary">
+        <div *ngIf="!CreateUser.Salary && submitted" class="invalid-tooltip">كلفة التوصيل</div>
 
       </div>
   </div>

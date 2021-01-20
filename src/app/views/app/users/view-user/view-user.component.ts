@@ -5,6 +5,7 @@ import { CustomService } from 'src/app/services/custom.service';
 import { User } from 'src/app/Models/user/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
+import { CreateUser } from 'src/app/Models/user/create-user';
 
 @Component({
   selector: 'app-view-user',
@@ -31,7 +32,7 @@ export class ViewUserComponent implements OnInit {
   addClicked: any;
   currentUserId: any;
   confirmpassword: string
-
+  User: User
   ngOnInit(): void {
     this.getUser();
     this.editSettings = { showDeleteConfirmDialog: true, allowDeleting: true };
@@ -65,8 +66,19 @@ export class ViewUserComponent implements OnInit {
     this.route.navigate(['/app/user/edit', id])
 
   }
-  addFinish(value) {
-    this.UserService.users.push(value)
+  addFinish(value: CreateUser) {
+    this.User.userName=value.UserName
+    this.User.experince=value.Experince
+    this.User.hireDate=value.HireDate
+    this.User.password=value.Password
+    this.User.name=value.Name
+    this.User.salary=value.Salary
+    this.User.note=value.Note
+    this.User.groupsId=value.GroupsId
+    this.User.countryId=value.CountryId
+    this.User.canWorkAsAgent=value.CanWorkAsAgent
+    this.User.phones=this.User.phones.filter(p=>value.Phones.includes(p.phone))
+    this.UserService.users.push(this.User)
     this.gridInstance.refresh();
 
   }

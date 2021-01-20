@@ -37,28 +37,33 @@ export class ViewIncomComponent implements OnInit {
   editClicked: any;
   addClicked: any;
   filtering: Filtering
-  coins: Coin[];
+  coins: Coin[] = [];
   importTypes: any[] = [];
 
-///////////////
-displayedColumns: string[];
+  ///////////////
+  displayedColumns: string[] = ['incomeType', 'currency', 'amount', 'date', 'source', 'earining', 'note', 'createdBy'];
+  ;
   dataSource
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @Input() totalCount: number;
   pageEvent: PageEvent;
   paging: Paging
-  noDataFound:boolean=false
+  noDataFound: boolean = false
   ////////////
   ngOnInit(): void {
-    this.get()
+
     this.paging = new Paging
     this.filtering = new Filtering()
-    this.allFilter()
+    this.getImportTypes()
     this.Getcoins()
     this.UserService.GetAll();
-    this.getImportTypes()
-    this.getIncomes();
+   // this.getIncomes()
+   // this.get()
+    this.allFilter()
+
+
+
     this.editSettings = { showDeleteConfirmDialog: true, allowDeleting: true };
     this.toolbar = [
       { text: 'حذف', tooltipText: 'حذف', prefixIcon: 'e-delete', id: 'normalgrid_delete' },
@@ -70,40 +75,42 @@ displayedColumns: string[];
     this.selectionSettings = { persistSelection: true, type: "Multiple" };
     this.lines = 'Horizontal';
   }
-  get() {
-    this.dataSource = new MatTableDataSource(this.incomes);
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.displayedColumns = ['incomeTypeId','amount','date','source','earining','note','userId'];
-  }
+  // get() {
+  //   this.dataSource = new MatTableDataSource(this.incomes);
+  //   this.dataSource.sort = this.sort;
+  //   this.dataSource.paginator = this.paginator;
+  // }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   switchPage(event: PageEvent) {
-   
-    this.paging.allItemsLength=event.length
-    this.paging.RowCount =  event.pageSize
-    this.paging.Page = event.pageIndex+1
-   
-   
- this.allFilter();
-    
-   }
-   allFilter(){
-   this.incomeService.Get(this.filter, this.paging).subscribe(response => {
-     if(response.data.length==0)
-     this.noDataFound=true
-     else      this.noDataFound=false
-     this.dataSource=new MatTableDataSource(response.data)
-     this.totalCount = response.total
-    
-   },
-   err => {
-     
-   });
+
+    this.paging.allItemsLength = event.length
+    this.paging.RowCount = event.pageSize
+    this.paging.Page = event.pageIndex + 1
+
+
+    this.allFilter();
+
   }
-  
+  allFilter() {
+    this.incomeService.Get(this.filtering, this.paging).subscribe(response => {
+      console.log(response)
+      if (response.data.length == 0)
+        this.noDataFound = true
+      else this.noDataFound = false
+      this.dataSource = new MatTableDataSource(response.data)
+      this.totalCount = response.total
+      this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+     
+    },
+      err => {
+
+      });
+  }
+
   addNewClicked() {
     this.addClicked = true;
     this.editClicked = false;
@@ -117,11 +124,9 @@ displayedColumns: string[];
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
   getIncomes() {
-    this.incomeService.Get(this.filter, this.paging).subscribe(
-
-      res => {
-        console.log(res);
-         this.incomes=res;
+    this.incomeService.Get(this.filtering, this.paging).subscribe(
+      response => {
+        this.incomes = response.data;
       }
     )
   }
@@ -140,17 +145,17 @@ displayedColumns: string[];
   AddMoreOutcome() {
     this.router.navigate(['app/income/addmoreincome'])
   }
-  
-  createInCome:Income
-  addFinish(value:CreateIncome) {
-    this.createInCome.amount=value.Amount
-    this.createInCome.Currency.id=value.CurrencyId
-    this.createInCome.date=value.Date
-    this.createInCome.earining=value.Earining
-    this.createInCome.IncomeType.id=value.IncomeTypeId
-    this.createInCome.note=value.Note
-    this.createInCome.source=value.Source
-    this.dataSource.push( this.createInCome)
+
+  createInCome: Income
+  addFinish(value: CreateIncome) {
+    this.createInCome.amount = value.Amount
+    this.createInCome.Currency.id = value.CurrencyId
+    this.createInCome.date = value.Date
+    this.createInCome.earining = value.Earining
+    this.createInCome.IncomeType.id = value.IncomeTypeId
+    this.createInCome.note = value.Note
+    this.createInCome.source = value.Source
+    this.dataSource.push(this.createInCome)
     this.gridInstance.refresh();
 
   }

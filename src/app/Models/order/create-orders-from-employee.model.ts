@@ -20,6 +20,7 @@ export class CreateOrdersFromEmployee {
 }
 export class OrderItem{
     OrderTypeName:string
+    name
     OrderTypeId:number
     Count:number
 }

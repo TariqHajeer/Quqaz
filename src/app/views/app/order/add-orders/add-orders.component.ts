@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
@@ -26,7 +27,8 @@ export class AddOrdersComponent implements OnInit {
 
     private clientService: ClientService
     , private customerService: CustomService,
-    public userService: UserService) { }
+    public userService: UserService,
+    private notifications: NotificationsService) { }
 
   Order: CreateOrdersFromEmployee
   submitted = false;
@@ -36,7 +38,7 @@ export class AddOrdersComponent implements OnInit {
   cities: City[] = []
   Region: Region[] = []
   Regions: Region[] = []
-  Agents:User[]=[]
+  Agents: User[] = []
   orderTypes: OrderType[] = []
   orderType: OrderType
   OrderItem: OrderItem
@@ -50,7 +52,7 @@ export class AddOrdersComponent implements OnInit {
   ngOnInit(): void {
     this.Order = new CreateOrdersFromEmployee
     this.Order.OrderTypeDtos = []
-    this.Order.RecipientPhones=[]
+    this.Order.RecipientPhones = []
     this.orderType = new OrderType
     this.OrderItem = new OrderItem
     this.paging = new Paging
@@ -64,9 +66,16 @@ export class AddOrdersComponent implements OnInit {
   }
   AddOrder() {
     this.submitted = true;
+    if (this.tempPhone != ''&&this.tempPhone!=undefined) {
+      this.Order.RecipientPhones.push(this.tempPhone);
+      this.tempPhone = ''
+    }
     this.orderservice.Creat(this.Order).subscribe(res => {
-      console.log(res)
       this.Order = new CreateOrdersFromEmployee
+      this.submitted = false;
+      this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+
+
     })
 
   }
@@ -95,9 +104,9 @@ export class AddOrdersComponent implements OnInit {
       this.Regions = res
     })
   }
-  getAgent(){
-    this.userService.GetAgent().subscribe(res=>{
-      this.Agents=res
+  getAgent() {
+    this.userService.GetAgent().subscribe(res => {
+      this.Agents = res
     })
   }
   getOrderTypes() {
@@ -109,40 +118,31 @@ export class AddOrdersComponent implements OnInit {
   }
   AddOrderType() {
     this.OrderItem.OrderTypeId = this.orderType.id
-    this.OrderItem.OrderTypeName = this.orderType.name
+    this.OrderItem.name = this.orderType.name
     this.OrderItem.Count = this.count
     this.Order.OrderTypeDtos.push(this.OrderItem)
+    this.orderType = new OrderType
+    this.count = null
+
 
   }
   changeCountry() {
-    this.Region=[]
-    this.Order.RegionId=null
+    this.Region = []
+    this.Order.RegionId = null
     var city = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.Cost = city.deliveryCost
     this.Region = this.Regions.filter(r => r.country.id == this.Order.CountryId)
   }
-  showMessageCode:boolean = false
+  showMessageCode: boolean = false
   CheckCode() {
-    this.filter = new OrderFilter
-    this.filter.Code = this.Order.Code
-    this.orderservice.GetAll(this.filter, this.paging).subscribe(res => {
-      if (res.data.length==0) {
-        this.showMessageCode = false
+    this.orderservice.chekcCode(this.Order.Code, this.Order.ClientId).subscribe(res => {
+      if (res) {
+        this.showMessageCode = true
       } else
-       this.showMessageCode = true
+        this.showMessageCode = false
     })
   }
-  showMessageClient:boolean = false
-  CheckClient() {
-    this.filter = new OrderFilter
-    this.filter.ClientId = this.Order.ClientId
-    this.orderservice.GetAll(this.filter, this.paging).subscribe(res => {
-      if (res.data.length==0) {
-        this.showMessageClient = false
-      } else 
-      this.showMessageClient = true
-    })
-  }
+
   addNewPhone() {
     this.Order.RecipientPhones.push(this.tempPhone);
     this.tempPhone = '';

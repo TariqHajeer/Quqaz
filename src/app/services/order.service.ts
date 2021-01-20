@@ -58,4 +58,10 @@ export class OrderService {
     return this.http.get<any>(this.controler+"MoenyPlaced")
 
   }
+  chekcCode(code,ClientId){
+    let params = new HttpParams();
+    params = params.append("code",code!=null||code!=undefined?code:null);
+    params = params.append("clientid",ClientId!=null||ClientId!=undefined?ClientId:null);
+    return this.http.get<any>(this.controler+"chekcCode", { params: params })
+  }
 }

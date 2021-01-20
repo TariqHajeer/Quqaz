@@ -9,17 +9,16 @@
                     <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                         [(ngModel)]="Order.Code" (keyup)="CheckCode()">
                     <div *ngIf="!Order.Code && submitted" class="invalid-tooltip">كود الشحنة حقل مطلوب</div>
-                    <div *ngIf="showMessageCode" class="invalid-tooltip">الكود مكرر</div>
 
                 </div>
                 <div class="col-md-3">
                     <label>العميل<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                    <ng-select [(ngModel)]="Order.ClientId" (change)="CheckClient()"
+                    <ng-select [(ngModel)]="Order.ClientId" (change)="CheckCode()"
                         [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Client">
                         <ng-option *ngFor="let Client of clients" [value]="Client.id">{{Client.name}}</ng-option>
                     </ng-select>
                     <div *ngIf="!Order.ClientId && submitted" class="invalid-tooltip">العميل حقل مطلوب</div>
-                    <div *ngIf="showMessageClient" class="invalid-tooltip"> العميل مكرر </div>
+                    <div *ngIf="showMessageCode" class="invalid-tooltip">يوجد شحنة مسبقا لهذا العميل بنفس الكود</div>
 
                 </div>
             </div>
@@ -64,21 +63,19 @@
                     <div *ngIf="!Order.Amount && submitted" class="invalid-tooltip">الكلفة حقل مطلوب</div>
                 </div>
                 <div class="col-md-3">
-                    <label>موقع المبلغ<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <label>موقع المبلغ</label>
                     <ng-select [(ngModel)]="Order.MoenyPlacedId" [ngModelOptions]="{standalone: true}"
                         [closeOnSelect]="true" name="MonePlaced">
                         <ng-option *ngFor="let moenyPlaced of MoenyPlaced" [value]="moenyPlaced.id">{{moenyPlaced.name}}
                         </ng-option>
                     </ng-select>
-                    <div *ngIf="!Order.MoenyPlacedId && submitted" class="invalid-tooltip">موقع المبلغ حقل مطلوب</div>
                 </div>
                 <div class="col-md-3">
-                    <label>حالة الشحنة<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <label>حالة الشحنة</label>
                     <ng-select [(ngModel)]="Order.OrderplacedId" [ngModelOptions]="{standalone: true}"
                         [closeOnSelect]="true" name="Orderplaced">
                         <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}</ng-option>
                     </ng-select>
-                    <div *ngIf="!Order.OrderplacedId && submitted" class="invalid-tooltip">حالة الشحنة حقل مطلوب</div>
                 </div>
 
                 <div class="col-md-3">
@@ -174,7 +171,7 @@
                                         <tbody>
                                             <tr *ngFor="let OrderType of Order.OrderTypeDtos;let i=index">
                                                 <td>{{i}}</td>
-                                                <td>{{OrderType.OrderTypeName}}</td>
+                                                <td>{{OrderType.name}}</td>
                                                 <td>{{OrderType.Count}}</td>
                                                 <td>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -211,10 +208,12 @@
                   </ng-container>
                 </div>
                 <div class="col-md-3">
-                  <label>هاتف المستلم</label>
+                  <label>هاتف المستلم<span class="text-danger text-one align-bottom mx-1">*</span></label>
                   <input type="text" maxlength="10"
                     oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');" class="form-control"
                     [ngModelOptions]="{standalone: true}" [(ngModel)]="tempPhone">
+                    <div *ngIf="!tempPhone&&Order.RecipientPhones.length==0 && submitted" class="invalid-tooltip">هاتف المستلم حقل مطلوب</div>
+
                 </div>
             
                 <div class="col-2">
@@ -233,7 +232,7 @@
 
             <div class="row w-100">
                 <div class="col-3">
-                    <button type="submit" class="btn btn-primary" (click)="AddOrder()"> حفظ</button>
+                    <button type="submit" class="btn btn-primary" > حفظ</button>
                 </div>
             </div>
         </div>
