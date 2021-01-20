@@ -42,12 +42,14 @@ export class AddOrdersComponent implements OnInit {
   count
   filter: OrderFilter
   paging: Paging
+  tempPhone: string;
   cityapi = "Country"
   regionapi = "Region"
   ordertypeapi = "OrderType";
   ngOnInit(): void {
     this.Order = new CreateOrdersFromEmployee
     this.Order.OrderTypeDtos = []
+    this.Order.RecipientPhones=[]
     this.orderType = new OrderType
     this.OrderItem = new OrderItem
     this.paging = new Paging
@@ -108,6 +110,7 @@ export class AddOrdersComponent implements OnInit {
   }
   changeCountry() {
     this.Region=[]
+    this.Order.RegionId=null
     var city = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.Cost = city.deliveryCost
     this.Region = this.Regions.filter(r => r.country.id == this.Order.CountryId)
@@ -133,5 +136,9 @@ export class AddOrdersComponent implements OnInit {
       } else 
       this.showMessageClient = true
     })
+  }
+  addNewPhone() {
+    this.Order.RecipientPhones.push(this.tempPhone);
+    this.tempPhone = '';
   }
 }

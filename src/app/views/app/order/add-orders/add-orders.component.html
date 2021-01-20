@@ -1,52 +1,45 @@
+<form (ngSubmit)="AddOrder()">
 
-        <form (ngSubmit)="AddOrder()">
-           
-            <div class="card">
-                <div class="card-body">
-                    <h2 class="card-title"> اضافة طلبات</h2>
-                    <div class="row w-100 align-items-end mb-3">
-                        <div class="col-md-3">
-                            <label>كود الشحنة<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                            <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                                [(ngModel)]="Order.Code" (keyup)="CheckCode()">
-                            <div *ngIf="!Order.Code && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
-                            <div *ngIf="showMessageCode" class="invalid-tooltip">الكود مكرر</div>
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title"> اضافة طلبات</h2>
+            <div class="row w-100 align-items-end mb-3">
+                <div class="col-md-3">
+                    <label>كود الشحنة<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="Order.Code" (keyup)="CheckCode()">
+                    <div *ngIf="!Order.Code && submitted" class="invalid-tooltip">كود الشحنة حقل مطلوب</div>
+                    <div *ngIf="showMessageCode" class="invalid-tooltip">الكود مكرر</div>
 
-                        </div>
-                        <div class="col-md-3">
-                            <label>العميل<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                            <ng-select [(ngModel)]="Order.ClientId" (change)="CheckClient()"
-                             [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-                                name="Client">
-                                <ng-option *ngFor="let Client of clients" [value]="Client.id">{{Client.name}}</ng-option>
-                            </ng-select>
-                            <div *ngIf="!Order.ClientId && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
-                            <div *ngIf="showMessageClient" class="invalid-tooltip"> العميل مكرر </div>
+                </div>
+                <div class="col-md-3">
+                    <label>العميل<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <ng-select [(ngModel)]="Order.ClientId" (change)="CheckClient()"
+                        [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Client">
+                        <ng-option *ngFor="let Client of clients" [value]="Client.id">{{Client.name}}</ng-option>
+                    </ng-select>
+                    <div *ngIf="!Order.ClientId && submitted" class="invalid-tooltip">العميل حقل مطلوب</div>
+                    <div *ngIf="showMessageClient" class="invalid-tooltip"> العميل مكرر </div>
 
-                        </div>
-                    </div>
+                </div>
+            </div>
             <div class="row w-100 align-items-end mb-3">
                 <div class="col-md-3">
                     <label>المدينة<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                    <ng-select [(ngModel)]="Order.CountryId" (change)="changeCountry()" [ngModelOptions]="{standalone: true}"
-                        [closeOnSelect]="true" name="Country">
+                    <ng-select [(ngModel)]="Order.CountryId" (change)="changeCountry()"
+                        [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Country">
                         <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
                     </ng-select>
                     <div *ngIf="!Order.CountryId && submitted" class="invalid-tooltip">المدينة حقل مطلوب</div>
                 </div>
-              
+
+               
                 <div class="col-md-3">
-                    <label>كلفة التوصيل<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                        [(ngModel)]="Order.Cost" readonly>
-                </div>
-                <div class="col-md-3">
-                    <label>المنطقة<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <label>المنطقة</label>
                     <ng-select [(ngModel)]="Order.RegionId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
                         name="Region">
                         <ng-option *ngFor="let region of Region" [value]="region.id">{{region.name}}</ng-option>
                     </ng-select>
-                    <div *ngIf="!Order.RegionId && submitted" class="invalid-tooltip">المنطقة حقل مطلوب</div>
                 </div>
                 <div class="col-md-3">
                     <label>المندوب<span class="text-danger text-one align-bottom mx-1">*</span></label>
@@ -54,33 +47,21 @@
                         name="Agent">
                         <ng-option *ngFor="let Agent of userService.users" [value]="Agent.id">{{Agent.name}}</ng-option>
                     </ng-select>
-                    <div *ngIf="!Order.AgentId && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
+                    <div *ngIf="!Order.AgentId && submitted" class="invalid-tooltip">المندوب حقل مطلوب</div>
                 </div>
+            </div>
+                <div class="row w-100 align-items-end mb-3">
                 <div class="col-md-3">
-                    <label>اسم المستلم<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                        [(ngModel)]="Order.RecipientName">
-                    <div *ngIf="!Order.RecipientName && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
+                    <label>كلفة التوصيل</label>
+                    <input type="number" class="form-control" [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="Order.Cost" readonly>
                 </div>
-                <div class="col-md-3">
-                    <label>هاتف المستلم<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                        [(ngModel)]="Order.RecipientPhones">
-                    <div *ngIf="!Order.RecipientPhones && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
-                </div>
-                <div class="col-md-3">
-                    <label>تاريخ الاستلام<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                    <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
-                        [(ngModel)]="Order.DiliveryDate" name="DiliveryDate" bsDatepicker [container]="'html'"
-                        [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
 
-                </div>
-              
                 <div class="col-md-3">
                     <label>الكلفة<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                    <input type="number" class="form-control" [ngModelOptions]="{standalone: true}"oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                         [(ngModel)]="Order.Amount">
-                    <div *ngIf="!Order.Amount && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
+                    <div *ngIf="!Order.Amount && submitted" class="invalid-tooltip">الكلفة حقل مطلوب</div>
                 </div>
                 <div class="col-md-3">
                     <label>موقع المبلغ<span class="text-danger text-one align-bottom mx-1">*</span></label>
@@ -97,112 +78,150 @@
                         [closeOnSelect]="true" name="Orderplaced">
                         <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}</ng-option>
                     </ng-select>
-                    <div *ngIf="!Order.OrderplacedId && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
+                    <div *ngIf="!Order.OrderplacedId && submitted" class="invalid-tooltip">حالة الشحنة حقل مطلوب</div>
                 </div>
 
                 <div class="col-md-3">
-                    <label>العنوان<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <label>العنوان</label>
                     <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                         [(ngModel)]="Order.Address">
-                    <div *ngIf="!Order.Address && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
                 </div>
 
 
                 <div class="col-md-3">
-                    <label>التاريخ<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <label>التاريخ</label>
                     <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
                         [(ngModel)]="Order.Date" name="Date" bsDatepicker [container]="'html'"
                         [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
 
                 </div>
-               
-               
-            </div>
-
-
-           
-
-
-            <div class="row w-100 align-items-end mb-3">
-            
-              
                 <div class="col-md-3">
-                                   
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-                    data-whatever="@getbootstrap">انواع الطلبيات</button>
-      
-                  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">انواع الطلبيات </h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>نوع الطلبية<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                                    <ng-select  [(ngModel)]="orderType" [ngModelOptions]="{standalone: true}"
-                                        [closeOnSelect]="true" name="orderType">
-                                        <ng-option *ngFor="let orderType of orderTypes" [value]="orderType">{{orderType.name}}
-                                        </ng-option>
-                                    </ng-select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>العدد</label>
-                                    <input id="phone" type="number" maxlength="10"
-                                    oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
-                                    class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="count">
-                                  
-                                </div>
-                            </div>
-                            
-                             <button type="button" class="btn btn-primary" (click)="AddOrderType()" >اضافة</button>
+                    <label>تاريخ التسليم</label>
+                    <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="Order.DiliveryDate" name="DiliveryDate" bsDatepicker [container]="'html'"
+                        [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
 
-                          <table class="table">
-                            <thead>
-                              <th>
-                                #
-                              </th>
-                              <th>
-                                نوع الطلبية
-                              </th>
-                              <th>
-                                العدد
-                              </th>
-                              <th></th>
-                            </thead>
-                            <tbody>
-                              <tr *ngFor="let OrderType of Order.OrderTypeDtos;let i=index">
-                                <td>{{i}}</td>
-                                <td>{{OrderType.OrderTypeName}}</td>
-                                <td>{{OrderType.Count}}</td>
-                                <td>
-                                  <svg  xmlns="http://www.w3.org/2000/svg" width="16"
-                                    height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"
-                                    style="cursor: pointer;">
-                                    <path
-                                      d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                    <path fill-rule="evenodd"
-                                      d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                  </svg>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-primary" data-dismiss="modal">اغلاق</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                </div>
+                <div class="col-md-3">
+                    <label>اسم المستلم<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="Order.RecipientName">
+                    <div *ngIf="!Order.RecipientName && submitted" class="invalid-tooltip">اسم المستلم حقل مطلوب</div>
                 </div>
 
             </div>
+
+
+
+
+
+            <div class="row w-100 align-items-end mb-3">
+
+
+                <div class="col-md-3">
+
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                        data-whatever="@getbootstrap">نوع الطلبية</button>
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">نوع الطلبية</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>نوع الطلبية<span
+                                                    class="text-danger text-one align-bottom mx-1">*</span></label>
+                                            <ng-select [(ngModel)]="orderType" [ngModelOptions]="{standalone: true}"
+                                                [closeOnSelect]="true" name="orderType">
+                                                <ng-option *ngFor="let orderType of orderTypes" [value]="orderType">
+                                                    {{orderType.name}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>العدد</label>
+                                            <input id="phone" type="number" maxlength="10"
+                                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                                class="form-control" [ngModelOptions]="{standalone: true}"
+                                                [(ngModel)]="count">
+
+                                        </div>
+                                    </div>
+
+                                    <button type="button" class="btn btn-primary"
+                                        (click)="AddOrderType()">اضافة</button>
+
+                                    <table class="table">
+                                        <thead>
+                                            <th>
+                                                #
+                                            </th>
+                                            <th>
+                                                نوع الطلبية
+                                            </th>
+                                            <th>
+                                                العدد
+                                            </th>
+                                            <th></th>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let OrderType of Order.OrderTypeDtos;let i=index">
+                                                <td>{{i}}</td>
+                                                <td>{{OrderType.OrderTypeName}}</td>
+                                                <td>{{OrderType.Count}}</td>
+                                                <td>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"
+                                                        style="cursor: pointer;">
+                                                        <path
+                                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                        <path fill-rule="evenodd"
+                                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                    </svg>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">اغلاق</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+            </div>
+            <div class="row w-100 align-items-end mb-3">
+                <!--add phones-->
+                <div *ngFor="let phone of Order.RecipientPhones;let i=index" class="col-md-3">
+                  <ng-container>
+                    <label>هاتف المستلم-{{i+1}}</label>
+                    <input type="text" maxlength="10"
+                      oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');" class="form-control"
+                      [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.RecipientPhones[i]">
+                  </ng-container>
+                </div>
+                <div class="col-md-3">
+                  <label>هاتف المستلم</label>
+                  <input type="text" maxlength="10"
+                    oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');" class="form-control"
+                    [ngModelOptions]="{standalone: true}" [(ngModel)]="tempPhone">
+                </div>
+            
+                <div class="col-2">
+                  <button type="button" class="btn" (click)="addNewPhone()"><i class="iconsminds-add  text-primary"
+                      style="font-size: 22px;"></i></button>
+                </div>
+              </div>
             <div class="row w-100 align-items-end mb-3">
 
                 <div class="col-md-12">
@@ -219,7 +238,7 @@
             </div>
         </div>
     </div>
-        </form>
-   
+</form>
+
 
 <simple-notifications></simple-notifications>
