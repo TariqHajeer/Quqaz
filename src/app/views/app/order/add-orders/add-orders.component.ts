@@ -36,6 +36,7 @@ export class AddOrdersComponent implements OnInit {
   cities: City[] = []
   Region: Region[] = []
   Regions: Region[] = []
+  Agents:User[]=[]
   orderTypes: OrderType[] = []
   orderType: OrderType
   OrderItem: OrderItem
@@ -58,11 +59,11 @@ export class AddOrdersComponent implements OnInit {
     this.GetRegion()
     this.Getcities()
     this.GetClient()
-
+    this.getAgent()
     this.getOrderTypes()
-    this.userService.GetAll()
   }
   AddOrder() {
+    this.submitted = true;
     this.orderservice.Creat(this.Order).subscribe(res => {
       console.log(res)
       this.Order = new CreateOrdersFromEmployee
@@ -92,6 +93,11 @@ export class AddOrdersComponent implements OnInit {
   GetRegion() {
     this.customerService.getAll(this.regionapi).subscribe(res => {
       this.Regions = res
+    })
+  }
+  getAgent(){
+    this.userService.GetAgent().subscribe(res=>{
+      this.Agents=res
     })
   }
   getOrderTypes() {

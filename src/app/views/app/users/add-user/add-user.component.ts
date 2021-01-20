@@ -109,7 +109,8 @@ export class AddUserComponent implements OnInit, OnChanges {
     this.CreateUser.Phones.push(this.tempPhone);
     this.tempPhone = '';
   }
-  //  NameIsNullOrDuplicate(array:[],name){
-
-  //  }
+  changeCountry(){
+    var country=this.Countries.find(c=>c.id==this.CreateUser.CountryId)
+    this.CreateUser.Salary=country.deliveryCost
+  }
 }

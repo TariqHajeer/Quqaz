@@ -35,6 +35,9 @@ export class UserService {
       )
     )
   }
+  GetAgent(){
+    return this.http.get<any>(this.controler + "Agent")
+  }
   Creat(item: CreateUser) {
     return this.http.post(this.controler, item)
   }
