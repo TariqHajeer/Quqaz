@@ -23,7 +23,7 @@ export class EditUserComponent implements OnInit {
     private getroute: ActivatedRoute,
     private router: Router) { }
   User: User = new User()
-  Countries: any[] = [];
+  countries: any[] = [];
   departments: any[] = [];
   Groups: Group[] = []
   tempPhone: string;
@@ -105,7 +105,7 @@ export class EditUserComponent implements OnInit {
   getCountry() {
     this.customService.getAll('Country').subscribe(
       res => {
-        this.Countries = res;
+        this.countries = res;
       }
     )
   }
