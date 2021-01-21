@@ -12,8 +12,11 @@
         <label>{{'client.user-name' | translate}}
           <span class="text-danger text-one align-bottom mx-1">*</span>
         </label>
+        
+        
         <input  (keyup)='checkUserName()' type="text" class="form-control"
-         [ngModelOptions]="{standalone: true}"oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '').replace(/(\..*)\./g, '$1');"
+         [ngModelOptions]="{standalone: true}"
+         oninput="this.value = this.value.replace(/[^a-zA-Z_0-9-]/g, '').replace(/(\..*)\./g, '$1');"  
          [(ngModel)]="client.userName">
          <div *ngIf="!client.userName && submitted" class="invalid-tooltip">اسم المستخدم حقل مطلوب</div>
          <div *ngIf="usernameIsRepeated&&client.userName!=''" class="invalid-tooltip">اسم المستخدم مكرر</div>

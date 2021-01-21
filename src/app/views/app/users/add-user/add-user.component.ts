@@ -25,7 +25,6 @@ export class AddUserComponent implements OnInit, OnChanges {
   submitted = false;
   CreateUser: CreateUser
   Countries: any[] = [];
-  departments: any[] = [];
   Groups: Group[] = []
   tempPhone: string;
   nameIsRepeated: boolean = false;
@@ -34,7 +33,6 @@ export class AddUserComponent implements OnInit, OnChanges {
   checkPassword: boolean = false
   ngOnInit(): void {
     this.getCountry()
-    this.getDepartments()
     this.GetAllGroups()
     this.CreateUser = new CreateUser()
     this.CreateUser.CanWorkAsAgent = false
@@ -83,16 +81,6 @@ export class AddUserComponent implements OnInit, OnChanges {
       }
     )
   }
-
-
-  getDepartments() {
-    this.customService.getAll('Department').subscribe(
-      res => {
-        this.departments = res;
-      }
-    )
-  }
-
   getCountry() {
     this.customService.getAll('Country').subscribe(
       res => {

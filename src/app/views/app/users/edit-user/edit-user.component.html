@@ -20,16 +20,14 @@
               <div *ngIf="!User.name && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
               <div *ngIf="nameIsRepeated&&User.name!=''" class="invalid-tooltip">الأسم مكرر</div>
             </div>
-            <div class="col-md-3">
+            <!-- <div class="col-md-3">
               <label>القسم<span class="text-danger text-one align-bottom mx-1">*</span></label>
               <ng-select [(ngModel)]="User.departmentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
                 <ng-option *ngFor="let department of departments" [value]="department.id">{{department.name}}
                 </ng-option>
               </ng-select>
               <div *ngIf="!User.department && submitted" class="invalid-tooltip">القسم حقل مطلوب</div>
-
-            </div>
-
+            </div> -->
           </div>
 
           <div class="row w-100 align-items-end mb-3" *ngIf="!User.canWorkAsAgent">
