@@ -100,10 +100,9 @@
 
                 </div>
                 <div class="col-md-3">
-                    <label>اسم المستلم<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <label>اسم المستلم</label>
                     <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                         [(ngModel)]="Order.RecipientName">
-                    <div *ngIf="!Order.RecipientName && submitted" class="invalid-tooltip">اسم المستلم حقل مطلوب</div>
                 </div>
 
             </div>
