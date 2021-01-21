@@ -74,9 +74,6 @@
   
           </div>
         </div>
-        
-      
-
        </div>
 </div>
 <br>
@@ -92,7 +89,7 @@
     <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.deliveryCost}}</td>
   </ng-container>
   <ng-container matColumnDef="cost">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> الطلب</th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> كلفة الطلب</th>
     <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.cost}}</td>
   </ng-container>
   <ng-container matColumnDef="recipientName">
@@ -153,8 +150,6 @@
     <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> الوكيل</th>
     <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.agent!=null?element.agent.name:null}}</td>
   </ng-container>
-  
-  
   
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

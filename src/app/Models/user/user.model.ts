@@ -1,10 +1,10 @@
 import { Phone } from '../phone.model'
 
 export class User {
+      
+      phonesAsString:string;
       id:number
       name:string 
-      departmentId:number 
-      department
       experince:string 
       address:string 
       hireDate:Date 

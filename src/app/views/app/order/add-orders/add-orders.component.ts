@@ -71,11 +71,9 @@ export class AddOrdersComponent implements OnInit {
       this.tempPhone = ''
     }
     this.orderservice.Creat(this.Order).subscribe(res => {
-      this.Order = new CreateOrdersFromEmployee
+      this.Order = new CreateOrdersFromEmployee()
       this.submitted = false;
       this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-
-
     })
 
   }

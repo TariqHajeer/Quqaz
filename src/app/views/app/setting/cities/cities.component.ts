@@ -132,11 +132,13 @@ export class CitiesComponent implements OnInit {
         args.cancel = true;
       }
       else {
-        this.cities.filter(c => c.id == id)[0].name = name;
+        var updatedCity= this.cities.filter(c => c.id == id)[0];
+        updatedCity.name =name;
+        updatedCity.deliveryCost =deliveryCost;
         this.customService.addOrUpdate(this.apiName, { name: name, deliveryCost: deliveryCost, id: id }, "update").subscribe();
         this.notifications.create('', 'تم تعديل المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         args.cancel = true;
-        this.gridInstance.refresh();
+         this.gridInstance.refresh();
       }
     }
     if (args.requestType == "delete") {

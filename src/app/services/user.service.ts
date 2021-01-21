@@ -24,6 +24,9 @@ export class UserService {
         }
       }
       this.users = res;
+      this.users.forEach(e=>{
+        e.phonesAsString = e.phones.map(c=>c.phone).join(',');
+      })
     })
   }
   GetById(id): Observable<any> {
