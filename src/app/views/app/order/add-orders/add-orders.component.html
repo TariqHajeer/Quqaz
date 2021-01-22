@@ -133,11 +133,12 @@
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label>نوع الطلبية<span
+                                            <label>نوع <span
                                                     class="text-danger text-one align-bottom mx-1">*</span></label>
                                             <ng-select [items]="orderTypes"
                                             [(ngModel)]="selectedOrder"
                                             bindLabel="name"
+                                            name='orderTypeSelect'
                                             >
                                             </ng-select>
 
