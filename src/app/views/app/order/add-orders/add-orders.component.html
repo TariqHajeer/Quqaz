@@ -35,7 +35,7 @@
 
                 <div class="col-md-3">
                     <label>المنطقة</label>
-                    <ng-select [(ngModel)]="Order.RegionId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+                        <ng-select [(ngModel)]="Order.RegionId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
                         name="Region" [addTag]="true">
                         <ng-option *ngFor="let region of Region" [value]="region.id">{{region.name}}</ng-option>
                     </ng-select>
@@ -135,19 +135,17 @@
                                         <div class="col-md-6">
                                             <label>نوع الطلبية<span
                                                     class="text-danger text-one align-bottom mx-1">*</span></label>
-                                            <ng-select [(ngModel)]="orderType" [ngModelOptions]="{standalone: true}"
+                                            <!-- <ng-select [(ngModel)]="orderType" [ngModelOptions]="{standalone: true}"
                                                 [closeOnSelect]="true" name="orderType">
                                                 <ng-option *ngFor="let orderType of orderTypes" [value]="orderType">
                                                     {{orderType.name}}
                                                 </ng-option>
+                                            </ng-select>     -->
+                                            <ng-select [items]="orderTypes"
+                                            bindLabel="name">
+
                                             </ng-select>
 
-                                            <ng-select [items]="orderTypes" bindLabel="name" [addTag]="true"
-                                                 [hideSelected]="true" [minTermLength]="1"
-                                                [loading]="ordertypeLoading"
-                                                typeToSearchText="Please enter 1 or more characters"
-                                                [typeahead]="orderTypesInput$" [(ngModel)]="orderType" name="orderTypet">
-                                            </ng-select>
                                         </div>
                                         <div class="col-md-6">
                                             <label>العدد</label>
@@ -180,7 +178,7 @@
                                         <tbody>
                                             <tr *ngFor="let OrderType of Order.OrderTypeDtos;let i=index">
                                                 <td>{{i}}</td>
-                                                <td>{{OrderType.name}}</td>
+                                                <td>{{OrderType.OrderTypeName}}</td>
                                                 <td>{{OrderType.Count}}</td>
                                                 <td>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"

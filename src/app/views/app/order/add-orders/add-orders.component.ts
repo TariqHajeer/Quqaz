@@ -65,7 +65,7 @@ export class AddOrdersComponent implements OnInit {
     this.GetClient()
     this.getAgent()
     this.getOrderTypes()
-    this.loadPeople()
+    // this.loadPeople()
   }
   AddOrder() {
 
@@ -119,22 +119,23 @@ export class AddOrdersComponent implements OnInit {
       this.Agents = res
     })
   }
-  getPeople(term: string = null): Observable<any[]> {
-    let items = this.gettype;
-    if (term) {
-      items = items.filter(x => x.name.toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > -1);
-      this.customerService.Create(this.ordertypeapi, term).subscribe(res => {
-        console.log(res)
-      })
-    }
-    return of(items).pipe(delay(500));
-  }
-  gettype
+  // getPeople(term: string = null): Observable<any[]> {
+  //   let items = this.gettype;
+  //   if (term) {
+  //     items = items.filter(x => x.name.toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > -1);
+  //     this.customerService.Create(this.ordertypeapi, term).subscribe(res => {
+  //       console.log(res)
+  //     })
+  //   }
+  //   return of(items).pipe(delay(500));
+  // }
+  // gettype
   getOrderTypes() {
     this.customerService.getAll(this.ordertypeapi).subscribe(
       res => {
+        console.log(res);
         this.orderTypes = res;
-        this.gettype = res
+        // this.gettype = res
       }
     )
   }
@@ -168,19 +169,19 @@ export class AddOrdersComponent implements OnInit {
     this.Order.RecipientPhones.push(this.tempPhone);
     this.tempPhone = '';
   }
-  ordertypeLoading = false;
-  orderTypesInput$ = new Subject<string>();
-  private loadPeople() {
-    this.orderTypes = concat(
-      of([]), // default items
-      this.orderTypesInput$.pipe(
-        distinctUntilChanged(),
-        tap(() => this.ordertypeLoading = true),
-        switchMap(term => this.getPeople(term).pipe(
-          catchError(() => of([])), // empty list on error
-          tap(() => this.ordertypeLoading = false)
-        ))
-      )
-    );
-  }
+  // ordertypeLoading = false;
+  // orderTypesInput$ = new Subject<string>();
+  // private loadPeople() {
+  //   this.orderTypes = concat(
+  //     of([]), // default items
+  //     this.orderTypesInput$.pipe(
+  //       distinctUntilChanged(),
+  //       tap(() => this.ordertypeLoading = true),
+  //       switchMap(term => this.getPeople(term).pipe(
+  //         catchError(() => of([])), // empty list on error
+  //         tap(() => this.ordertypeLoading = false)
+  //       ))
+  //     )
+  //   );
+  // }
 }

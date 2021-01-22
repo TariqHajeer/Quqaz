@@ -2,7 +2,7 @@ export class CreateOrdersFromEmployee {
     Code:string
     ClientId:number
     CountryId:number
-    RegionId:number
+    RegionId:any 
     RegionName:string
     Address:string
     AgentId:number
