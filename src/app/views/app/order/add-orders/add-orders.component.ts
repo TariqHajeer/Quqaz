@@ -77,11 +77,9 @@ export class AddOrdersComponent implements OnInit {
     }
 
     if (isNaN(this.Order.RegionId)) {
-      console.log(this.Order.RegionId);
       this.Order.RegionName = this.Order.RegionId.label;
       this.Order.RegionId = null;
     }
-    console.log(this.Order);
     this.orderservice.Creat(this.Order).subscribe(res => {
       this.Order = new CreateOrdersFromEmployee()
       this.submitted = false;
@@ -123,9 +121,7 @@ export class AddOrdersComponent implements OnInit {
   getOrderTypes() {
     this.customerService.getAll(this.ordertypeapi).subscribe(
       res => {
-        console.log(res);
         this.orderTypes = res;
-        // this.gettype = res
       }
     )
   }
