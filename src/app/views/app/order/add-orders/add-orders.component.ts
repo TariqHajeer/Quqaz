@@ -53,9 +53,7 @@ export class AddOrdersComponent implements OnInit {
   regionapi = "Region"
   ordertypeapi = "OrderType";
   ngOnInit(): void {
-    this.Order = new CreateOrdersFromEmployee
-    this.Order.OrderTypeDtos = []
-    this.Order.RecipientPhones = []
+    this.Order = new CreateOrdersFromEmployee();
     this.orderType = new OrderType
     this.OrderItem = new OrderItem
     this.paging = new Paging
@@ -69,11 +67,12 @@ export class AddOrdersComponent implements OnInit {
   }
   AddOrder() {
 
-
     this.submitted = true;
     if (this.tempPhone != '' && this.tempPhone != undefined) {
       this.Order.RecipientPhones.push(this.tempPhone);
       this.tempPhone = ''
+    } else {
+      return;
     }
 
     if (isNaN(this.Order.RegionId)) {
@@ -84,6 +83,7 @@ export class AddOrdersComponent implements OnInit {
       this.Order = new CreateOrdersFromEmployee()
       this.submitted = false;
       this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.GetRegion();
     });
 
   }
@@ -117,7 +117,7 @@ export class AddOrdersComponent implements OnInit {
       this.Agents = res
     })
   }
-  
+
   getOrderTypes() {
     this.customerService.getAll(this.ordertypeapi).subscribe(
       res => {
@@ -144,12 +144,12 @@ export class AddOrdersComponent implements OnInit {
   showMessageCode: boolean = false
   CheckCode() {
     // if (this.Order.ClientId != null && this.Order.ClientId != undefined) {
-      this.orderservice.chekcCode(this.Order.Code, this.Order.ClientId).subscribe(res => {
-        if (res) {
-          this.showMessageCode = true
-        } else
-          this.showMessageCode = false
-      })
+    this.orderservice.chekcCode(this.Order.Code, this.Order.ClientId).subscribe(res => {
+      if (res) {
+        this.showMessageCode = true
+      } else
+        this.showMessageCode = false
+    })
     // }
   }
 

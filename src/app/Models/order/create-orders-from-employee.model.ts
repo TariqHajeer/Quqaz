@@ -1,4 +1,12 @@
 export class CreateOrdersFromEmployee {
+    /**
+     *
+     */
+    constructor() {
+        this.OrderTypeDtos = [];
+        this.RecipientPhones = [];
+        
+    }
     Code:string
     ClientId:number
     CountryId:number
