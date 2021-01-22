@@ -1,3 +1,4 @@
+<button (click)="test()">test</button>
 <form (ngSubmit)="AddOrder()">
 
     <div class="card">
@@ -36,7 +37,9 @@
                 <div class="col-md-3">
                     <label>المنطقة</label>
                     <ng-select [(ngModel)]="Order.RegionId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-                        name="Region">
+                        name="Region"
+                        [addTag]="true"
+                        >
                         <ng-option *ngFor="let region of Region" [value]="region.id">{{region.name}}</ng-option>
                     </ng-select>
                 </div>

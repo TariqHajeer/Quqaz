@@ -65,16 +65,21 @@ export class AddOrdersComponent implements OnInit {
     this.getOrderTypes()
   }
   AddOrder() {
+    
     this.submitted = true;
     if (this.tempPhone != ''&&this.tempPhone!=undefined) {
       this.Order.RecipientPhones.push(this.tempPhone);
       this.tempPhone = ''
     }
-    this.orderservice.Creat(this.Order).subscribe(res => {
-      this.Order = new CreateOrdersFromEmployee()
-      this.submitted = false;
-      this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-    })
+    if(! isNaN( this.Order.RegionId)){
+      this.Order.RegionName = this.Order.RegionId.toString();
+      this.Order.RegionId = null;
+    }
+    // this.orderservice.Creat(this.Order).subscribe(res => {
+    //   this.Order = new CreateOrdersFromEmployee()
+    //   this.submitted = false;
+    //   this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    // })
 
   }
   GetorderPlace() {
@@ -116,13 +121,12 @@ export class AddOrdersComponent implements OnInit {
   }
   AddOrderType() {
     this.OrderItem.OrderTypeId = this.orderType.id
-    this.OrderItem.name = this.orderType.name
+    this.OrderItem.OrderTypeName = this.orderType.name
     this.OrderItem.Count = this.count
     this.Order.OrderTypeDtos.push(this.OrderItem)
     this.orderType = new OrderType
     this.count = null
-
-
+    
   }
   changeCountry() {
     this.Region = []
@@ -144,5 +148,8 @@ export class AddOrdersComponent implements OnInit {
   addNewPhone() {
     this.Order.RecipientPhones.push(this.tempPhone);
     this.tempPhone = '';
+  }
+  test(){
+    console.log(this.Order);
   }
 }
