@@ -216,7 +216,7 @@
                     <input type="text" maxlength="10"
                         oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
                         class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="tempPhone">
-                    <div *ngIf="!tempPhone&&Order.RecipientPhones.length==0 && submitted" class="invalid-tooltip">هاتف
+                    <div *ngIf="!tempPhone&&Order.RecipientPhones!=null&&Order.RecipientPhones!=undefined&&Order.RecipientPhones.length==0 && submitted" class="invalid-tooltip">هاتف
                         المستلم حقل مطلوب</div>
 
                 </div>

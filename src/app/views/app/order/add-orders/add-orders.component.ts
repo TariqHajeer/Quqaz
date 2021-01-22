@@ -48,7 +48,7 @@ export class AddOrdersComponent implements OnInit {
   filter: OrderFilter
   paging: Paging
   tempPhone: string;
-  selectedOrder:any;
+  selectedOrder: any;
   cityapi = "Country"
   regionapi = "Region"
   ordertypeapi = "OrderType";
@@ -66,11 +66,10 @@ export class AddOrdersComponent implements OnInit {
     this.GetClient()
     this.getAgent()
     this.getOrderTypes()
-    // this.loadPeople()
   }
   AddOrder() {
 
-    
+
     this.submitted = true;
     if (this.tempPhone != '' && this.tempPhone != undefined) {
       this.Order.RecipientPhones.push(this.tempPhone);
@@ -79,8 +78,8 @@ export class AddOrdersComponent implements OnInit {
 
     if (isNaN(this.Order.RegionId)) {
       console.log(this.Order.RegionId);
-      this.Order.RegionName  = this.Order.RegionId.label;
-      this.Order.RegionId=null;
+      this.Order.RegionName = this.Order.RegionId.label;
+      this.Order.RegionId = null;
     }
     console.log(this.Order);
     this.orderservice.Creat(this.Order).subscribe(res => {
@@ -120,17 +119,7 @@ export class AddOrdersComponent implements OnInit {
       this.Agents = res
     })
   }
-  // getPeople(term: string = null): Observable<any[]> {
-  //   let items = this.gettype;
-  //   if (term) {
-  //     items = items.filter(x => x.name.toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > -1);
-  //     this.customerService.Create(this.ordertypeapi, term).subscribe(res => {
-  //       console.log(res)
-  //     })
-  //   }
-  //   return of(items).pipe(delay(500));
-  // }
-  // gettype
+  
   getOrderTypes() {
     this.customerService.getAll(this.ordertypeapi).subscribe(
       res => {
@@ -158,31 +147,18 @@ export class AddOrdersComponent implements OnInit {
   }
   showMessageCode: boolean = false
   CheckCode() {
-    this.orderservice.chekcCode(this.Order.Code, this.Order.ClientId).subscribe(res => {
-      if (res) {
-        this.showMessageCode = true
-      } else
-        this.showMessageCode = false
-    })
+    // if (this.Order.ClientId != null && this.Order.ClientId != undefined) {
+      this.orderservice.chekcCode(this.Order.Code, this.Order.ClientId).subscribe(res => {
+        if (res) {
+          this.showMessageCode = true
+        } else
+          this.showMessageCode = false
+      })
+    // }
   }
 
   addNewPhone() {
     this.Order.RecipientPhones.push(this.tempPhone);
     this.tempPhone = '';
   }
-  // ordertypeLoading = false;
-  // orderTypesInput$ = new Subject<string>();
-  // private loadPeople() {
-  //   this.orderTypes = concat(
-  //     of([]), // default items
-  //     this.orderTypesInput$.pipe(
-  //       distinctUntilChanged(),
-  //       tap(() => this.ordertypeLoading = true),
-  //       switchMap(term => this.getPeople(term).pipe(
-  //         catchError(() => of([])), // empty list on error
-  //         tap(() => this.ordertypeLoading = false)
-  //       ))
-  //     )
-  //   );
-  // }
 }
