@@ -98,7 +98,4 @@ export class AddUserComponent implements OnInit, OnChanges {
     this.CreateUser.Phones.push(this.tempPhone);
     this.tempPhone = '';
   }
-  //  NameIsNullOrDuplicate(array:[],name){
-
-  //  }
 }

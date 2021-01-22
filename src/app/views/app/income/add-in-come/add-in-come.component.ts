@@ -48,7 +48,7 @@ export class AddInComeComponent implements OnInit {
   }
 
  
-  addOrEditUser() {
+  addOrEdit() {
     this.submitted = true;
     this.CreateIncome.Amount =Number( this.CreateIncome.Amount);
     this.CreateIncome.Earining = Number(this.CreateIncome.Earining);

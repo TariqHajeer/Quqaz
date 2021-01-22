@@ -3,93 +3,73 @@
     <div class="card-body">
       <div class="d-flex justify-content-between">
         <h3 class="card-title">{{'menu.income' | translate}}</h3>
-      <button class="btn  mb-3" (click)="addIncomModal.show();addNewClicked()"><i class="iconsminds-add  text-primary" style="font-size: 38px;"></i></button>
-</div>
-<button (click)="AddMoreOutcome()" class="btn btn-primary"> اضافة متعددة</button>
-<br><br>
-<h5 class="card-title">بحث على حسب : </h5>
-<div class="row">
-  <div class="col-md-2">
-    <label>نوع الواردات</label>
-    <ng-select [(ngModel)]="filtering.Type" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-    (ngModelChange)="allFilter()">
-      <ng-option *ngFor="let importType of importTypes" [value]="importType.id">{{importType.name}}
-      </ng-option>
-    </ng-select>
+        <button class="btn  mb-3" (click)="addIncomModal.show();addNewClicked()"><i class="iconsminds-add  text-primary"
+            style="font-size: 38px;"></i></button>
+      </div>
+      <button (click)="AddMoreOutcome()" class="btn btn-primary"> اضافة متعددة</button>
+      <br><br>
+      <h5 class="card-title">بحث على حسب : </h5>
+      <div class="row">
+        <div class="col-md-2">
+          <label>نوع الواردات</label>
+          <ng-select [(ngModel)]="filtering.Type" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+            (ngModelChange)="allFilter()">
+            <ng-option *ngFor="let importType of importTypes" [value]="importType.id">{{importType.name}}
+            </ng-option>
+          </ng-select>
+        </div>
+        <div class="col-md-2">
+          <label>العملة</label>
+          <ng-select [(ngModel)]="filtering.CurrencyId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+            (ngModelChange)="allFilter()">
+            <ng-option *ngFor="let coin of coins" [value]="coin.id">{{coin.name}}</ng-option>
+          </ng-select>
+
+        </div>
+        <div class="col-md-2">
+          <label> المبلغ الأدنى</label>
+          <input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.MinAmount"
+            (ngModelChange)="allFilter()">
+
+        </div>
+        <div class="col-md-2">
+          <label>المبلغ الأعلى</label>
+          <input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.MaxAmount"
+            (ngModelChange)="allFilter()">
+
+        </div>
+        <div class="col-md-2">
+          <label>الموظف</label>
+          <ng-select [(ngModel)]="filtering.UserId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+            (ngModelChange)="allFilter()">
+            <ng-option *ngFor="let user of UserService.users" [value]="user.id">{{user.name}}
+            </ng-option>
+          </ng-select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <label>من تاريخ</label>
+          <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="filtering.FromDate" bsDatepicker [container]="'html'"
+            [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }" (ngModelChange)="allFilter()">
+
+        </div>
+        <div class="col-md-2">
+          <label>الى تاريخ</label>
+          <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="filtering.ToDate" bsDatepicker [container]="'html'"
+            [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }" (ngModelChange)="allFilter()">
+
+        </div>
+      </div>
+      <br>
+
+
+    </div>
   </div>
-  <div class="col-md-2">
-    <label>العملة</label>
-    <ng-select [(ngModel)]="filtering.CurrencyId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-    (ngModelChange)="allFilter()">
-      <ng-option *ngFor="let coin of coins" [value]="coin.id">{{coin.name}}</ng-option>
-    </ng-select>
-
-  </div>
-  <div class="col-md-2">
-    <label> المبلغ الأدنى</label>
-    <input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-      class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.MinAmount"
-      (ngModelChange)="allFilter()">
-
-  </div>
-  <div class="col-md-2">
-    <label>المبلغ الأعلى</label>
-    <input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-      class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.MaxAmount"
-      (ngModelChange)="allFilter()">
-
-  </div>
-  <div class="col-md-2">
-    <label>الموظف</label>
-    <ng-select [(ngModel)]="filtering.UserId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-    (ngModelChange)="allFilter()">
-      <ng-option *ngFor="let user of UserService.users" [value]="user.id">{{user.name}}
-      </ng-option>
-    </ng-select>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-2">
-    <label>من تاريخ</label>
-    <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
-      [(ngModel)]="filtering.FromDate" bsDatepicker [container]="'html'"
-      [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }"
-      (ngModelChange)="allFilter()">
-
-  </div>
-  <div class="col-md-2">
-    <label>الى تاريخ</label>
-    <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
-      [(ngModel)]="filtering.ToDate" bsDatepicker [container]="'html'"
-      [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }"
-      (ngModelChange)="allFilter()">
-
-  </div>
-</div>
-<br>
-
-<!--
-  <ejs-grid #normalgrid   id='normalgrid'  (load)='load()'  [allowPaging]='true'
-  [gridLines]="lines" [pageSettings]='pageSettings' [toolbar]='toolbar'
-    [editSettings]='editSettings'[dataSource]='incomes' rowHeight='38'
-      [allowSorting]='true' height='400'
-       [enableHover]='true' [selectionSettings]='selectionSettings'
-        [filterSettings]='filterSettings' [allowSorting]='true'
-         [allowFiltering]='true'>
-   <e-columns>
-       <e-column   field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter' width='50' [isPrimaryKey]='true'></e-column>
-       <e-column   field='amount' [allowEditing]='true' textAlign="Center" headerText="المبلغ الوارد" width='140'></e-column>
-       <e-column   field='date' [allowEditing]='false' textAlign="Center" headerText="تاريخ الادخال" width='170'></e-column>
-       <e-column   field='source' [allowEditing]='false' textAlign="Center" headerText="المصدر" width='140'></e-column>
-       <e-column   field='earining' [allowEditing]='false' textAlign="Center" headerText="الربح" width='140'></e-column>
-       <e-column   field='user' [allowEditing]='false' textAlign="Center" headerText="المستخدم" width='140'></e-column>
-       <e-column   field='note' [allowEditing]='false' textAlign="Center" headerText="ملاحظات" width='170'></e-column>
-
-   </e-columns>
-</ejs-grid>-->
-
-</div>
-</div>
 </div>
 
 <div bsModal #addIncomModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
@@ -105,7 +85,8 @@
         </button>
       </div>
       <div class="modal-body" style="font-size: 15px;">
-        <app-add-in-come  (addFinish)="addFinish($event);addIncomModal.hide()" [addClicked]="addClicked"></app-add-in-come>
+        <app-add-in-come (addFinish)="addFinish($event);addIncomModal.hide()" [addClicked]="addClicked">
+        </app-add-in-come>
       </div>
     </div>
   </div>
@@ -113,56 +94,58 @@
 <simple-notifications></simple-notifications>
 
 
-<!--ggggggggggggggggggggggggggggggg-->
-<div class="example-container mat-elevation-z8" >
+
+<div class="example-container mat-elevation-z8">
 
 
-<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%;"
-  (onPageSwitch)="switchPage($event)">
-  <ng-container matColumnDef="incomeType" style="padding: 10px;">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> نوع الواردات</th>
-    <td mat-cell *matCellDef="let element"style="padding: 10px;"> {{element.incomeType!=null?element.incomeType.name:null}}</td>
-  </ng-container>
-  <ng-container matColumnDef="currency">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> العملة</th>
-    <td mat-cell *matCellDef="let element" style="padding: 10px;"> {{element.currency!=null?element.currency.name:null}}</td>
-  </ng-container>
-  <ng-container matColumnDef="amount">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%;"
+    (onPageSwitch)="switchPage($event)">
+    <ng-container matColumnDef="incomeType" style="padding: 10px;">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> نوع الواردات</th>
+      <td mat-cell *matCellDef="let element" style="padding: 10px;">
+        {{element.incomeType!=null?element.incomeType.name:null}}</td>
+    </ng-container>
+    <ng-container matColumnDef="currency">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> العملة</th>
+      <td mat-cell *matCellDef="let element" style="padding: 10px;">
+        {{element.currency!=null?element.currency.name:null}}</td>
+    </ng-container>
+    <ng-container matColumnDef="amount">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> المبلغ الوارد</th>
       <td mat-cell *matCellDef="let element" style="padding: 10px;"> {{element.amount}}</td>
-  </ng-container>
-  <ng-container matColumnDef="date">
+    </ng-container>
+    <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> تاريخ الادخال</th>
       <td mat-cell *matCellDef="let element" style="padding: 10px;"> {{element.date}}</td>
-  </ng-container>
-  <ng-container matColumnDef="source">
+    </ng-container>
+    <ng-container matColumnDef="source">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> المصدر</th>
       <td mat-cell *matCellDef="let element" style="padding: 10px;"> {{element.source}}</td>
-  </ng-container>
-  <ng-container matColumnDef="earining">
+    </ng-container>
+    <ng-container matColumnDef="earining">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> الربح</th>
       <td mat-cell *matCellDef="let element" style="padding: 10px;"> {{element.earining}}</td>
-  </ng-container>
- 
-  <ng-container matColumnDef="note">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> ملاحظات</th>
-    <td mat-cell *matCellDef="let element" style="padding: 10px;"> {{element.note}}</td>
-</ng-container>
-<ng-container matColumnDef="createdBy">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> تم الانشاء بواسطة</th>
-    <td mat-cell *matCellDef="let element" style="padding: 10px;"> {{element.createdBy}}</td>
-</ng-container>
+    </ng-container>
+
+    <ng-container matColumnDef="note">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> ملاحظات</th>
+      <td mat-cell *matCellDef="let element" style="padding: 10px;"> {{element.note}}</td>
+    </ng-container>
+    <ng-container matColumnDef="createdBy">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> تم الانشاء بواسطة</th>
+      <td mat-cell *matCellDef="let element" style="padding: 10px;"> {{element.createdBy}}</td>
+    </ng-container>
 
 
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 
-  <h5 style="padding-top: 20px; padding-right: 10px;"  *ngIf="noDataFound">No records to display</h5>
-  
-  </div>
+  <h5 style="padding-top: 20px; padding-right: 10px;" *ngIf="noDataFound">No records to display</h5>
+
+</div>
 <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
   [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
 
-  <!--ggggggggggggggggggggggggggggggg-->
+<!--ggggggggggggggggggggggggggggggg-->
