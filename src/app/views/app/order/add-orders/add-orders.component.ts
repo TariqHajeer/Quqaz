@@ -48,6 +48,7 @@ export class AddOrdersComponent implements OnInit {
   filter: OrderFilter
   paging: Paging
   tempPhone: string;
+  selectedOrder:any;
   cityapi = "Country"
   regionapi = "Region"
   ordertypeapi = "OrderType";

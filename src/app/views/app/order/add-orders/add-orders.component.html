@@ -135,15 +135,10 @@
                                         <div class="col-md-6">
                                             <label>نوع الطلبية<span
                                                     class="text-danger text-one align-bottom mx-1">*</span></label>
-                                            <!-- <ng-select [(ngModel)]="orderType" [ngModelOptions]="{standalone: true}"
-                                                [closeOnSelect]="true" name="orderType">
-                                                <ng-option *ngFor="let orderType of orderTypes" [value]="orderType">
-                                                    {{orderType.name}}
-                                                </ng-option>
-                                            </ng-select>     -->
                                             <ng-select [items]="orderTypes"
-                                            bindLabel="name">
-
+                                            [(ngModel)]="selectedOrder"
+                                            bindLabel="name"
+                                            >
                                             </ng-select>
 
                                         </div>
