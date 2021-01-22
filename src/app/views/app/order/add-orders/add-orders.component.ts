@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
+import { concat, Observable, of, Subject } from 'rxjs';
+import { catchError, delay, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
@@ -39,7 +41,7 @@ export class AddOrdersComponent implements OnInit {
   Region: Region[] = []
   Regions: Region[] = []
   Agents: User[] = []
-  orderTypes: OrderType[] = []
+  orderTypes: Observable<OrderType[]>
   orderType: OrderType
   OrderItem: OrderItem
   count
@@ -63,15 +65,16 @@ export class AddOrdersComponent implements OnInit {
     this.GetClient()
     this.getAgent()
     this.getOrderTypes()
+    this.loadPeople()
   }
   AddOrder() {
-    
+
     this.submitted = true;
-    if (this.tempPhone != ''&&this.tempPhone!=undefined) {
+    if (this.tempPhone != '' && this.tempPhone != undefined) {
       this.Order.RecipientPhones.push(this.tempPhone);
       this.tempPhone = ''
     }
-    if(! isNaN( this.Order.RegionId)){
+    if (!isNaN(this.Order.RegionId)) {
       this.Order.RegionName = this.Order.RegionId.toString();
       this.Order.RegionId = null;
     }
@@ -112,10 +115,23 @@ export class AddOrdersComponent implements OnInit {
       this.Agents = res
     })
   }
+  getPeople(term: string = null): Observable<any[]> {
+
+    let items = this.gettype;
+    if (term) {
+      items = items.filter(x => x.name.toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > -1);
+      this.customerService.Create(this.ordertypeapi, term).subscribe(res => {
+        console.log(res)
+      })
+    }
+    return of(items).pipe(delay(500));
+  }
+  gettype
   getOrderTypes() {
     this.customerService.getAll(this.ordertypeapi).subscribe(
       res => {
         this.orderTypes = res;
+        this.gettype = res
       }
     )
   }
@@ -126,7 +142,7 @@ export class AddOrdersComponent implements OnInit {
     this.Order.OrderTypeDtos.push(this.OrderItem)
     this.orderType = new OrderType
     this.count = null
-    
+
   }
   changeCountry() {
     this.Region = []
@@ -149,7 +165,19 @@ export class AddOrdersComponent implements OnInit {
     this.Order.RecipientPhones.push(this.tempPhone);
     this.tempPhone = '';
   }
-  test(){
-    console.log(this.Order);
+  ordertypeLoading = false;
+  orderTypesInput$ = new Subject<string>();
+  private loadPeople() {
+    this.orderTypes = concat(
+      of([]), // default items
+      this.orderTypesInput$.pipe(
+        distinctUntilChanged(),
+        tap(() => this.ordertypeLoading = true),
+        switchMap(term => this.getPeople(term).pipe(
+          catchError(() => of([])), // empty list on error
+          tap(() => this.ordertypeLoading = false)
+        ))
+      )
+    );
   }
 }

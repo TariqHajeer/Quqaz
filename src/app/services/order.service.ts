@@ -1,5 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.prod';
 import { OrderFilter } from '../Models/order-filter.model';
 import { Paging } from '../Models/paging';
@@ -64,4 +66,5 @@ export class OrderService {
     params = params.append("clientid",ClientId!=null||ClientId!=undefined?ClientId:null);
     return this.http.get<any>(this.controler+"chekcCode", { params: params })
   }
+  
 }
