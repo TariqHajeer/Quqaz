@@ -64,19 +64,23 @@
                     <div *ngIf="!Order.Amount && submitted" class="invalid-tooltip">الكلفة حقل مطلوب</div>
                 </div>
                 <div class="col-md-3">
-                    <label>موقع المبلغ</label>
+                    <label>موقع المبلغ<span class="text-danger text-one align-bottom mx-1">*</span></label>
                     <ng-select [(ngModel)]="Order.MoenyPlacedId" [ngModelOptions]="{standalone: true}"
                         [closeOnSelect]="true" name="MonePlaced">
                         <ng-option *ngFor="let moenyPlaced of MoenyPlaced" [value]="moenyPlaced.id">{{moenyPlaced.name}}
                         </ng-option>
                     </ng-select>
+                    <div *ngIf="!Order.MoenyPlacedId && submitted" class="invalid-tooltip">موقع المبلغ حقل مطلوب</div>
+
                 </div>
                 <div class="col-md-3">
-                    <label>حالة الشحنة</label>
+                    <label>حالة الشحنة<span class="text-danger text-one align-bottom mx-1">*</span></label>
                     <ng-select [(ngModel)]="Order.OrderplacedId" [ngModelOptions]="{standalone: true}"
                         [closeOnSelect]="true" name="Orderplaced">
                         <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}</ng-option>
                     </ng-select>
+                    <div *ngIf="!Order.OrderplacedId && submitted" class="invalid-tooltip">حالة الشحنة حقل مطلوب</div>
+
                 </div>
 
                 <div class="col-md-3">
