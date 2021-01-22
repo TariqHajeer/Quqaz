@@ -69,20 +69,24 @@ export class AddOrdersComponent implements OnInit {
   }
   AddOrder() {
 
+    
     this.submitted = true;
     if (this.tempPhone != '' && this.tempPhone != undefined) {
       this.Order.RecipientPhones.push(this.tempPhone);
       this.tempPhone = ''
     }
-    if (!isNaN(this.Order.RegionId)) {
-      this.Order.RegionName = this.Order.RegionId.toString();
-      this.Order.RegionId = null;
+
+    if (isNaN(this.Order.RegionId)) {
+      console.log(this.Order.RegionId);
+      this.Order.RegionName  = this.Order.RegionId.label;
+      this.Order.RegionId=null;
     }
-    // this.orderservice.Creat(this.Order).subscribe(res => {
-    //   this.Order = new CreateOrdersFromEmployee()
-    //   this.submitted = false;
-    //   this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-    // })
+    console.log(this.Order);
+    this.orderservice.Creat(this.Order).subscribe(res => {
+      this.Order = new CreateOrdersFromEmployee()
+      this.submitted = false;
+      this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    });
 
   }
   GetorderPlace() {
@@ -116,7 +120,6 @@ export class AddOrdersComponent implements OnInit {
     })
   }
   getPeople(term: string = null): Observable<any[]> {
-
     let items = this.gettype;
     if (term) {
       items = items.filter(x => x.name.toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > -1);
