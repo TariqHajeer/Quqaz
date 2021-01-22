@@ -71,7 +71,8 @@ export class AddOrdersComponent implements OnInit {
     if (this.tempPhone != '' && this.tempPhone != undefined) {
       this.Order.RecipientPhones.push(this.tempPhone);
       this.tempPhone = ''
-    } else {
+    } 
+    if(this.Order.RecipientPhones.length==0){
       return;
     }
 
@@ -143,14 +144,14 @@ export class AddOrdersComponent implements OnInit {
   }
   showMessageCode: boolean = false
   CheckCode() {
-    // if (this.Order.ClientId != null && this.Order.ClientId != undefined) {
-    this.orderservice.chekcCode(this.Order.Code, this.Order.ClientId).subscribe(res => {
-      if (res) {
-        this.showMessageCode = true
-      } else
-        this.showMessageCode = false
-    })
-    // }
+    if (this.Order.ClientId != null && this.Order.ClientId != undefined) {
+      this.orderservice.chekcCode(this.Order.Code, this.Order.ClientId).subscribe(res => {
+        if (res) {
+          this.showMessageCode = true
+        } else
+          this.showMessageCode = false
+      })
+    }
   }
 
   addNewPhone() {
