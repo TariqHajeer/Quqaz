@@ -52,10 +52,6 @@ export class ViewIncomComponent implements OnInit {
     this.UserService.GetAll();
     this.allFilter()
   }
-  // applyFilter(event: Event) {
-  //   const filterValue = (event.target as HTMLInputElement).value;
-  //   this.dataSource.filter = filterValue.trim().toLowerCase();
-  // }
   switchPage(event: PageEvent) {
 
     this.paging.allItemsLength = event.length
@@ -104,8 +100,6 @@ export class ViewIncomComponent implements OnInit {
   AddMoreOutcome() {
     this.router.navigate(['app/income/addmoreincome'])
   }
-
-  // createInCome: Income
   addFinish() {
     this.allFilter();
   }

@@ -21,12 +21,7 @@ export class ViewOutComeComponent implements OnInit {
   constructor(private outcomeService: OutcomeService, public router: Router,
     private customService: CustomService, public UserService: UserService,
     public datepipe: DatePipe) { }
-  public stTime: any;
-  public filter: Object;
-  public selectionSettings: Object;
-  public lines: any;
   @ViewChild('normalgrid')
-
   outcomes: Outcome[] = [];
   editClicked: any;
   addClicked: any;
@@ -34,8 +29,7 @@ export class ViewOutComeComponent implements OnInit {
   coins: Coin[];
   exportTypes: any[] = [];
   totalRecoreds: number;
-  ///////////////
-  displayedColumns: string[];
+  displayedColumns: string[] = ['outComeType', 'amount', 'currency', 'date', 'reason', 'note'];
   dataSource: MatTableDataSource<Outcome>;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -53,15 +47,7 @@ export class ViewOutComeComponent implements OnInit {
     this.Getcoins()
     this.UserService.GetAll();
     this.getExportTypes()
-    this.getOutcomes();
-    this.get()
     this.allFilter()
-  }
-  get() {
-    this.dataSource = new MatTableDataSource(this.outcomes);
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.displayedColumns = ['outComeType', 'amount', 'currency', 'date', 'reason', 'note'];
   }
   switchPage(event: PageEvent) {
     this.paging.allItemsLength = event.length
@@ -74,31 +60,17 @@ export class ViewOutComeComponent implements OnInit {
       if (response.data.length == 0)
         this.noDataFound = true
       else this.noDataFound = false
+      console.log(response.data);
+      response.data.forEach(e => {
+        e.date = e.date.split('T')[0];
+      });
       this.dataSource = new MatTableDataSource(response.data)
-      console.log(response)
       this.totalCount = response.total
 
     },
       err => {
 
       });
-  }
-  getOutcomes() {
-    if (this.filtering.ToDate) {
-      this.filtering.ToDate = this.datepipe.transform(this.filtering.ToDate, 'yyyy-MM-dd')
-    }
-    if (this.filtering.FromDate) {
-      this.filtering.FromDate = this.datepipe.transform(this.filtering.FromDate, 'yyyy-MM-dd')
-    }
-    this.outcomeService.Get(this.filtering, this.paging).subscribe(
-      response => {
-        this.outcomes = response.data;
-        this.totalRecoreds = response.total;
-        this.outcomes.forEach(c => {
-          c.date = c.date.split('T')[0];
-        });
-      }
-    )
   }
   addNewClicked() {
     this.addClicked = true;
