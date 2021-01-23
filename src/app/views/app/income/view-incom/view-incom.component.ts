@@ -34,7 +34,7 @@ export class ViewIncomComponent implements OnInit {
   importTypes: any[] = [];
 
   ///////////////
-  displayedColumns: string[] = ['incomeType', 'currency', 'amount', 'date', 'source', 'earining', 'note', 'createdBy',"Delete","Edit"];
+  displayedColumns: string[] = ['incomeType', 'currency', 'amount', 'date', 'source', 'earining', 'note', 'createdBy', "Delete", "Edit"];
   ;
   dataSource
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -52,10 +52,10 @@ export class ViewIncomComponent implements OnInit {
     this.UserService.GetAll();
     this.allFilter()
   }
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
+  // applyFilter(event: Event) {
+  //   const filterValue = (event.target as HTMLInputElement).value;
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
+  // }
   switchPage(event: PageEvent) {
 
     this.paging.allItemsLength = event.length
@@ -105,16 +105,15 @@ export class ViewIncomComponent implements OnInit {
     this.router.navigate(['app/income/addmoreincome'])
   }
 
-  createInCome: Income
-  addFinish(value: CreateIncome) {
-    this.createInCome.amount = value.Amount
-    this.createInCome.Currency.id = value.CurrencyId
-    this.createInCome.date = value.Date
-    this.createInCome.earining = value.Earining
-    this.createInCome.IncomeType.id = value.IncomeTypeId
-    this.createInCome.note = value.Note
-    this.createInCome.source = value.Source
-    // this.dataSource.push(this.createInCome);
+  // createInCome: Income
+  addFinish() {
     this.allFilter();
+  }
+  delete(element) {
+    this.incomeService.Delete(element.id).subscribe(res => {
+      let index = this.dataSource.data.indexOf(element);
+      this.dataSource.data.splice(index, 1);
+      this.dataSource._updateChangeSubscription();
+    })
   }
 }

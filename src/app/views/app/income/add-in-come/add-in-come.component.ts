@@ -5,6 +5,7 @@ import { UserService } from 'src/app/services/user.service';
 import { CreateIncome } from 'src/app/Models/inCome/create-income.model';
 import { Coin } from 'src/app/Models/Coins/coin.model';
 import { IncomeService } from '../income.service';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-add-in-come',
@@ -16,18 +17,22 @@ export class AddInComeComponent implements OnInit {
   constructor(public IncomeService: IncomeService,
     private customService: CustomService,
     private notifications: NotificationsService,
-    public UserService:UserService
+    public UserService: UserService
   ) { }
   @Input() editClicked;
   @Input() addClicked;
   @Output() addFinish = new EventEmitter<any>();
   submitted = false;
   CreateIncome: CreateIncome
+  
   ngOnInit(): void {
     this.CreateIncome = new CreateIncome()
     this.Getcoins()
     this.getImportType()
     this.UserService.GetAll();
+    console.log(this.addClicked);
+    console.log(this.editClicked);
+
 
   }
   coins: Coin[];
@@ -47,17 +52,21 @@ export class AddInComeComponent implements OnInit {
     )
   }
 
- 
+
   addOrEdit() {
+
     this.submitted = true;
-    this.CreateIncome.Amount =Number( this.CreateIncome.Amount);
+    this.CreateIncome.Amount = Number(this.CreateIncome.Amount);
     this.CreateIncome.Earining = Number(this.CreateIncome.Earining);
-    this.IncomeService.Create(this.CreateIncome).subscribe(res=>{
-      this.addFinish.emit(this.CreateIncome);
+    this.IncomeService.Create(this.CreateIncome).subscribe(res => {
+      if (this.addClicked) {
+        this.CreateIncome= new CreateIncome();
+        this.submitted =false;        
+        this.addFinish.emit(this.CreateIncome);
+        this.notifications.create('', 'تم الاضافة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      }
 
-      this.notifications.create('', 'تم الاضافة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-
-    })
+    });
   }
 
 

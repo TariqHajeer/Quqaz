@@ -85,7 +85,7 @@
         </button>
       </div>
       <div class="modal-body" style="font-size: 15px;">
-        <app-add-in-come (addFinish)="addFinish($event);addIncomModal.hide()" [addClicked]="addClicked">
+        <app-add-in-come (addFinish)="addFinish($event);" [addClicked]="true">
         </app-add-in-come>
       </div>
     </div>
@@ -137,11 +137,11 @@
     </ng-container>
     <ng-container matColumnDef="Edit">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> تعديل</th>
-      <td mat-cell *matCellDef="let element" style="padding: 10px;"><button class="btn btn-primary">تعديل</button> </td>
+      <td mat-cell *matCellDef="let element" style="padding: 10px;"><button class="btn btn-primary" >تعديل</button> </td>
     </ng-container>
     <ng-container matColumnDef="Delete">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> حذف</th>
-      <td mat-cell *matCellDef="let element" style="padding: 10px;"><button class="btn btn-danger">حذف</button> </td>
+      <td mat-cell *matCellDef="let element;" style="padding: 10px;"><button class="btn btn-danger" (click)="delete(element)">حذف</button> </td>
     </ng-container>
     
 
@@ -156,5 +156,3 @@
 </div>
 <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
   [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
-
-<!--ggggggggggggggggggggggggggggggg-->
