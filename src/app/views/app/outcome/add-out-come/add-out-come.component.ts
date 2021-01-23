@@ -28,7 +28,6 @@ export class AddOutComeComponent implements OnInit, OnChanges {
   CreateOutCome: CreateOutCome
   ngOnInit(): void {
     this.CreateOutCome = new CreateOutCome()
-    this.CreateOutCome.Date=new Date()
     this.Getcoins()
     this.getExportTypes()
   }
@@ -51,15 +50,17 @@ export class AddOutComeComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
   }
- 
+
   addOrEditUser() {
     this.submitted = true;
-    this.CreateOutCome.Amount =Number( this.CreateOutCome.Amount);
-    this.OutcomeService.Create(this.CreateOutCome).subscribe(res=>{
-      this.addFinish.emit(this.CreateOutCome);
-
-      this.notifications.create('', 'تم الاضافة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-
+    this.CreateOutCome.Amount = Number(this.CreateOutCome.Amount);
+    this.OutcomeService.Create(this.CreateOutCome).subscribe(res => {
+      if (this.addClicked) {
+        this.CreateOutCome = new CreateOutCome();
+        this.submitted =false; 
+        this.addFinish.emit();
+        this.notifications.create('', 'تم الاضافة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      }
     })
   }
 

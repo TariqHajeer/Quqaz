@@ -1,4 +1,7 @@
 export class CreateOutCome {
+    constructor(){
+        this.Date = new Date();
+    }
     Amount:number
     CurrencyId:number
     Date:any

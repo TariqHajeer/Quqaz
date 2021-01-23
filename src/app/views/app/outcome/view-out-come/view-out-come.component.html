@@ -11,14 +11,14 @@
         <button (click)="AddMoreOutcome()" class="btn btn-primary"> اضافة متعددة</button>
 
       </div>
-        
+
       <br><br>
       <h5 class="card-title">بحث على حسب : </h5>
       <div class="row">
         <div class="col-md-2">
           <label>نوع الصادرات</label>
           <ng-select [(ngModel)]="filtering.Type" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-          (ngModelChange)="allFilter()">
+            (ngModelChange)="allFilter()">
             <ng-option *ngFor="let exportType of exportTypes" [value]="exportType.id">{{exportType.name}}
             </ng-option>
           </ng-select>
@@ -26,7 +26,7 @@
         <div class="col-md-2">
           <label>العملة</label>
           <ng-select [(ngModel)]="filtering.CurrencyId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-          (ngModelChange)="allFilter()">
+            (ngModelChange)="allFilter()">
             <ng-option *ngFor="let coin of coins" [value]="coin.id">{{coin.name}}</ng-option>
           </ng-select>
 
@@ -48,7 +48,7 @@
         <div class="col-md-2">
           <label>الموظف</label>
           <ng-select [(ngModel)]="filtering.UserId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-          (ngModelChange)="allFilter()">
+            (ngModelChange)="allFilter()">
             <ng-option *ngFor="let user of UserService.users" [value]="user.id">{{user.name}}
             </ng-option>
           </ng-select>
@@ -59,21 +59,19 @@
           <label>من تاريخ</label>
           <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
             [(ngModel)]="filtering.FromDate" bsDatepicker [container]="'html'"
-            [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }"
-            (ngModelChange)="allFilter()">
+            [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }" (ngModelChange)="allFilter()">
 
         </div>
         <div class="col-md-2">
           <label>الى تاريخ</label>
           <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
             [(ngModel)]="filtering.ToDate" bsDatepicker [container]="'html'"
-            [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }"
-            (ngModelChange)="allFilter()">
+            [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }" (ngModelChange)="allFilter()">
 
         </div>
       </div>
       <br>
-  
+
 
     </div>
   </div>
@@ -91,51 +89,65 @@
         </button>
       </div>
       <div class="modal-body" style="font-size: 15px;">
-        <app-add-out-come (addFinish)="addFinish($event);addUserModal.hide()" [addClicked]="addClicked"></app-add-out-come>
+        <app-add-out-come (addFinish)="addFinish($event)" [addClicked]="true"></app-add-out-come>
       </div>
     </div>
   </div>
 </div>
 <simple-notifications></simple-notifications>
 
-<div class="example-container mat-elevation-z8" >
-<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%;"
-  (onPageSwitch)="switchPage($event)">
-  <ng-container matColumnDef="outComeType">
+<div class="example-container mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%;"
+    (onPageSwitch)="switchPage($event)">
+    <ng-container matColumnDef="outComeType">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> نوع الصرف</th>
-      <td mat-cell *matCellDef="let element"style="padding-right: 10px;"> {{element.outComeType.name}}</td>
-  </ng-container>
-  <ng-container matColumnDef="currency">
+      <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.outComeType.name}}</td>
+    </ng-container>
+    <ng-container matColumnDef="currency">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> المبلغ المصروف</th>
       <td mat-cell *matCellDef="let element"> {{element.currency.name}}</td>
-  </ng-container>
-  <ng-container matColumnDef="date">
+    </ng-container>
+    <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> التاريخ</th>
       <td mat-cell *matCellDef="let element"> {{element.date}}</td>
-  </ng-container>
-  <ng-container matColumnDef="reason">
+    </ng-container>
+    <ng-container matColumnDef="reason">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> السبب</th>
       <td mat-cell *matCellDef="let element"> {{element.reason}}</td>
-  </ng-container>
- 
-  <ng-container matColumnDef="note">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> ملاحظات</th>
-    <td mat-cell *matCellDef="let element"> {{element.note}}</td>
-</ng-container>
-<ng-container matColumnDef="amount">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> المستخدم</th>
-    <td mat-cell *matCellDef="let element"> {{element.amount}}</td>
-</ng-container>
+    </ng-container>
+
+    <ng-container matColumnDef="note">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ملاحظات</th>
+      <td mat-cell *matCellDef="let element"> {{element.note}}</td>
+    </ng-container>
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> المستخدم</th>
+      <td mat-cell *matCellDef="let element"> {{element.amount}}</td>
+    </ng-container>
+    <ng-container matColumnDef="createdBy">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> تم الانشاء بواسطة</th>
+      <td mat-cell *matCellDef="let element" style="padding: 10px;"> {{element.createdBy}}</td>
+    </ng-container>
+    <ng-container matColumnDef="Edit">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> تعديل</th>
+      <td mat-cell *matCellDef="let element" style="padding: 10px;"><button class="btn btn-primary">تعديل</button> </td>
+    </ng-container>
+    <ng-container matColumnDef="Delete">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> حذف</th>
+      <td mat-cell *matCellDef="let element;" style="padding: 10px;"><button class="btn btn-danger"
+          (click)="delete(element)">حذف</button> </td>
+    </ng-container>
 
 
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 
 
   <h5 style="padding-top: 20px; padding-right: 10px;" *ngIf="noDataFound">No records to display</h5>
-  
-  </div>
+
+</div>
 <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
   [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>

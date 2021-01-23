@@ -24,7 +24,7 @@ export class AddInComeComponent implements OnInit {
   @Output() addFinish = new EventEmitter<any>();
   submitted = false;
   CreateIncome: CreateIncome
-  
+
   ngOnInit(): void {
     this.CreateIncome = new CreateIncome()
     this.Getcoins()
@@ -54,19 +54,18 @@ export class AddInComeComponent implements OnInit {
 
 
   addOrEdit() {
-
     this.submitted = true;
     this.CreateIncome.Amount = Number(this.CreateIncome.Amount);
     this.CreateIncome.Earining = Number(this.CreateIncome.Earining);
     this.IncomeService.Create(this.CreateIncome).subscribe(res => {
       if (this.addClicked) {
-        this.CreateIncome= new CreateIncome();
-        this.submitted =false;        
+        this.CreateIncome = new CreateIncome();
+        this.submitted = false;
         this.addFinish.emit(this.CreateIncome);
         this.notifications.create('', 'تم الاضافة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       }
-
     });
+
   }
 
 

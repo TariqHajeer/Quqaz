@@ -29,7 +29,7 @@ export class ViewOutComeComponent implements OnInit {
   coins: Coin[];
   exportTypes: any[] = [];
   totalRecoreds: number;
-  displayedColumns: string[] = ['outComeType', 'amount', 'currency', 'date', 'reason', 'note'];
+  displayedColumns: string[] = ['outComeType', 'amount', 'currency', 'date', 'reason', 'note',"createdBy", "Edit","Delete"];
   dataSource: MatTableDataSource<Outcome>;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -72,12 +72,13 @@ export class ViewOutComeComponent implements OnInit {
 
       });
   }
+
   addNewClicked() {
     this.addClicked = true;
     this.editClicked = false;
   }
-  addFinish() {
-
+  addFinish(args) {
+    this.allFilter();
   }
   AddMoreOutcome() {
     this.router.navigate(['app/outcome/addmore'])
@@ -93,6 +94,14 @@ export class ViewOutComeComponent implements OnInit {
         this.exportTypes = res;
       }
     )
+  }
+  delete(element) {
+
+    this.outcomeService.Delete(element.id).subscribe(res => {
+      let index = this.dataSource.data.indexOf(element);
+      this.dataSource.data.splice(index, 1);
+      this.dataSource._updateChangeSubscription();
+    })
   }
 
 }

@@ -34,7 +34,7 @@ export class ViewIncomComponent implements OnInit {
   importTypes: any[] = [];
 
   ///////////////
-  displayedColumns: string[] = ['incomeType', 'currency', 'amount', 'date', 'source', 'earining', 'note', 'createdBy', "Delete", "Edit"];
+  displayedColumns: string[] = ['incomeType', 'currency', 'amount', 'date', 'source', 'earining', 'note', 'createdBy', "Edit","Delete"];
   ;
   dataSource
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -100,7 +100,7 @@ export class ViewIncomComponent implements OnInit {
   AddMoreOutcome() {
     this.router.navigate(['app/income/addmoreincome'])
   }
-  addFinish() {
+  addFinish(args) {
     this.allFilter();
   }
   delete(element) {

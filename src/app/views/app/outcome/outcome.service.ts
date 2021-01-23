@@ -10,17 +10,17 @@ import { Paging } from 'src/app/Models/paging';
   providedIn: 'root'
 })
 export class OutcomeService {
-
+  
 
   constructor(private http: HttpClient) { }
 
-  baseUrl: string = 'http://localhost:5000/';
   controler = environment.baseUrl + "api/OutCome"
 
   getOutcomes(): Observable<any> {
-    return this.http.get(this.baseUrl + 'api/OutCome?').pipe(
+    return this.http.get(this.controler).pipe(
       map(
         (res: any) => {
+          
           return res;
         }
       )
@@ -55,5 +55,9 @@ export class OutcomeService {
   CreateMulitpleOutCome(items) {
     return this.http.post(this.controler+"/CreateMulitpleOutCome", items)
   }
+  Delete = (id) =>this.http.delete(this.controler+"/"+id);
+  // Delete(id)  {
+  //   return this.http.delete(this.controler+"/"+id);
+  // }
 }
  
