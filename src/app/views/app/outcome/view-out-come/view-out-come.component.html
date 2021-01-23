@@ -122,11 +122,6 @@
 </div>
 <simple-notifications></simple-notifications>
 
-<!--ggggggggggggggggggggggggggggggg
-<mat-form-field>
-  <mat-lable>بحث</mat-lable>
-  <input matInput (keyup)="applyFilter($event)" placeholder="" class="form-control" aria-label="Search">
-</mat-form-field>-->
 <div class="example-container mat-elevation-z8" >
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%;"
   (onPageSwitch)="switchPage($event)">
@@ -168,5 +163,3 @@
   </div>
 <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
   [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
-
-  <!--ggggggggggggggggggggggggggggggg-->
