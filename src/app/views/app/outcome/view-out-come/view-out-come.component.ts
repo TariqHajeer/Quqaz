@@ -1,14 +1,11 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { ActionEventArgs, EditSettingsModel, GridComponent, SaveEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
-import { from } from 'rxjs';
 import { Outcome } from '../outcome.model'
 import { OutcomeService } from '../outcome.service'
 import { Filtering } from 'src/app/Models/Filtering.model'
 import { CustomService } from 'src/app/services/custom.service';
 import { Coin } from 'src/app/Models/Coins/coin.model';
 import { UserService } from 'src/app/services/user.service';
-import { CreateOutCome } from 'src/app/Models/OutCome/create-out-come.model';
 import { DatePipe } from '@angular/common';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -24,15 +21,7 @@ export class ViewOutComeComponent implements OnInit {
   constructor(private outcomeService: OutcomeService, public router: Router,
     private customService: CustomService, public UserService: UserService,
     public datepipe: DatePipe) { }
-  public stTime: any;
-  public filter: Object;
-  public editSettings: EditSettingsModel;
-  public selectionSettings: Object;
-  public lines: any;
   @ViewChild('normalgrid')
-  public gridInstance: GridComponent;
-  public toolbar: Object[];
-  public pageSettings: Object;
   outcomes: Outcome[] = [];
   editClicked: any;
   addClicked: any;
@@ -40,37 +29,24 @@ export class ViewOutComeComponent implements OnInit {
   coins: Coin[];
   exportTypes: any[] = [];
   totalRecoreds: number;
-  ///////////////
-displayedColumns: string[];
-dataSource
-@ViewChild(MatSort, { static: true }) sort: MatSort;
-@ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-@Input() totalCount: number;
-pageEvent: PageEvent;
-paging: Paging
-noDataFound:boolean=false
+  displayedColumns: string[] = ['outComeType', 'amount', 'currency', 'date', 'reason', 'note',"createdBy", "Edit","Delete"];
+  dataSource: MatTableDataSource<Outcome>;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @Input() totalCount: number;
+  pageEvent: PageEvent;
+  paging: Paging
+  noDataFound: boolean = false
 
-////////////
+  ////////////
   ngOnInit(): void {
-    
-    this.paging = new Paging 
+
+    this.paging = new Paging
 
     this.filtering = new Filtering()
     this.Getcoins()
     this.UserService.GetAll();
     this.getExportTypes()
-    this.getOutcomes();
-    this.editSettings = { showDeleteConfirmDialog: true, allowDeleting: true };
-    this.toolbar = [
-      { text: 'حذف', tooltipText: 'حذف', prefixIcon: 'e-delete', id: 'normalgrid_delete' },
-      'Search'];
-    this.filter = { type: "CheckBox" };
-    this.stTime = performance.now();
-    this.pageSettings = { pageSize: 5, pageSizes: true };
-
-    this.selectionSettings = { persistSelection: true, type: "Multiple" };
-    this.lines = 'Horizontal';
-    this.get()
     this.allFilter()
   }
   get() {
@@ -85,54 +61,29 @@ noDataFound:boolean=false
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   switchPage(event: PageEvent) {
-   
-    this.paging.allItemsLength=event.length
-    this.paging.RowCount =  event.pageSize
-    this.paging.Page = event.pageIndex+1
-   
-   
- this.allFilter();
-    
-   }
-   allFilter(){
-   this.outcomeService.Get( this.filtering,this.paging).subscribe(response => {
-    if(response.data.length==0)
-    this.noDataFound=true
-    else      this.noDataFound=false
-     this.dataSource=new MatTableDataSource(response.data)
-     console.log(response)
-     this.totalCount = response.total
-    
-   },
-   err => {
-     
-   });
+    this.paging.allItemsLength = event.length
+    this.paging.RowCount = event.pageSize
+    this.paging.Page = event.pageIndex + 1
+    this.allFilter();
   }
-  
-  load() {
-    const rowHeight: number = this.gridInstance.getRowHeight();  // height of the each row
-    const gridHeight: any = this.gridInstance.height;  // grid height
-    const pageSize: number = this.gridInstance.pageSettings.pageSize;   // initial page size
-    const pageResize: any = (gridHeight - (pageSize * rowHeight)) / rowHeight; // new page size is obtained here
-    this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
+  allFilter() {
+    this.outcomeService.Get(this.filtering, this.paging).subscribe(response => {
+      if (response.data.length == 0)
+        this.noDataFound = true
+      else this.noDataFound = false
+      console.log(response.data);
+      response.data.forEach(e => {
+        e.date = e.date.split('T')[0];
+      });
+      this.dataSource = new MatTableDataSource(response.data)
+      this.totalCount = response.total
+
+    },
+      err => {
+
+      });
   }
-  getOutcomes() {
-    if (this.filtering.ToDate) {
-      this.filtering.ToDate = this.datepipe.transform(this.filtering.ToDate, 'yyyy-MM-dd')
-    }
-    if (this.filtering.FromDate) {
-      this.filtering.FromDate = this.datepipe.transform(this.filtering.FromDate, 'yyyy-MM-dd')
-    }
-    this.outcomeService.Get(this.filtering,this.paging).subscribe(
-      response => {
-        this.outcomes = response.data;
-        this.totalRecoreds =response.total;
-        this.outcomes.forEach(c => {
-          c.date = c.date.split('T')[0];
-        });
-      }
-    )
-  }
+
   addNewClicked() {
     this.addClicked = true;
     this.editClicked = false;
@@ -140,17 +91,9 @@ noDataFound:boolean=false
   onEditClicked(id){
 
   }
-  CreateOutcome: Outcome
-  addFinish(value: CreateOutCome) {
-    this.CreateOutcome.amount = value.Amount
-    this.CreateOutcome.date = value.Date
-    this.CreateOutcome.currency.id = value.CurrencyId
-    this.CreateOutcome.outComeType.id = value.OutComeTypeId
-    this.CreateOutcome.note = value.Note
-    this.CreateOutcome.reason = value.Reason
-    this.dataSource.push(this.CreateOutcome)
-    this.gridInstance.refresh();
-
+ 
+  addFinish(args) {
+    this.allFilter();
   }
   AddMoreOutcome() {
     this.router.navigate(['app/outcome/addmore'])
@@ -167,12 +110,13 @@ noDataFound:boolean=false
       }
     )
   }
-  actionComplete(args: SaveEventArgs) {
-    if(args.requestType=="refresh"){
-      this.gridInstance.pageSettings.totalRecordsCount = this.totalRecoreds;
-    }
-  }
-  onActionBegin(args: ActionEventArgs) {
+  delete(element) {
+
+    this.outcomeService.Delete(element.id).subscribe(res => {
+      let index = this.dataSource.data.indexOf(element);
+      this.dataSource.data.splice(index, 1);
+      this.dataSource._updateChangeSubscription();
+    })
   }
 
 }

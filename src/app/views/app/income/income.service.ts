@@ -51,13 +51,14 @@ export class IncomeService {
       params = params.append("RowCount", paging.RowCount);
     if (paging.Page != undefined || paging.Page != null)
       params = params.append("Page", paging.Page);
-    return this.http.get<any>(this.contoler, { params: params })
+    return this.http.get<any>(this.contoler, { params: params });
 
   }
-  GetById(id) {
-    return this.http.get(this.contoler + "/" + id)
-  }
+
   Ubdate(item) {
     return this.http.patch(this.contoler, item)
+  }
+  Delete(id){
+    return this.http.delete(this.contoler+"/"+id);
   }
 }
