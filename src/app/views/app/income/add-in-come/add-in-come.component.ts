@@ -11,14 +11,14 @@ import { IncomeService } from '../income.service';
   templateUrl: './add-in-come.component.html',
   styleUrls: ['./add-in-come.component.scss']
 })
-export class AddInComeComponent implements OnInit {
+export class AddInComeComponent implements OnInit, OnChanges {
 
   constructor(public IncomeService: IncomeService,
     private customService: CustomService,
     private notifications: NotificationsService,
-    public UserService:UserService
+    public UserService: UserService
   ) { }
-  @Input() editClicked;
+  @Input() Id;
   @Input() addClicked;
   @Output() addFinish = new EventEmitter<any>();
   submitted = false;
@@ -29,6 +29,11 @@ export class AddInComeComponent implements OnInit {
     this.getImportType()
     this.UserService.GetAll();
 
+  }
+  ngOnChanges() {
+    this.IncomeService.GetById(this.Id).subscribe(res => {
+      this.CreateIncome = res as any
+    })
   }
   coins: Coin[];
   importTypes: any[] = [];
@@ -47,19 +52,25 @@ export class AddInComeComponent implements OnInit {
     )
   }
 
- 
+
   addOrEditUser() {
     this.submitted = true;
-    this.CreateIncome.Amount =Number( this.CreateIncome.Amount);
+    this.CreateIncome.Amount = Number(this.CreateIncome.Amount);
     this.CreateIncome.Earining = Number(this.CreateIncome.Earining);
-    this.IncomeService.Create(this.CreateIncome).subscribe(res=>{
-      this.addFinish.emit(this.CreateIncome);
+    if (this.addClicked) {
+      this.IncomeService.Create(this.CreateIncome).subscribe(res => {
+        this.addFinish.emit(this.CreateIncome);
+        this.notifications.create('', 'تم الاضافة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      })
+    }
+    else if (!this.addClicked) {
+      this.IncomeService.Ubdate(this.CreateIncome).subscribe(res => {
+        this.addFinish.emit(this.CreateIncome);
+        this.notifications.create('', 'تم التعديل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      })
+    }
 
-      this.notifications.create('', 'تم الاضافة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-
-    })
   }
-
 
 
 }

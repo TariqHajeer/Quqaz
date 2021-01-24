@@ -77,7 +77,8 @@ noDataFound:boolean=false
     this.dataSource = new MatTableDataSource(this.outcomes);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.displayedColumns = ['outComeType','amount','currency','date','reason','note'];
+    this.displayedColumns = ['outComeType','amount','currency'
+    ,'date','reason','note','edit'];
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -135,6 +136,9 @@ noDataFound:boolean=false
   addNewClicked() {
     this.addClicked = true;
     this.editClicked = false;
+  }
+  onEditClicked(id){
+
   }
   CreateOutcome: Outcome
   addFinish(value: CreateOutCome) {

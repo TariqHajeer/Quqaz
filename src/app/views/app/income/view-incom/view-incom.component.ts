@@ -34,14 +34,15 @@ export class ViewIncomComponent implements OnInit {
   public toolbar: Object[];
   public pageSettings: Object;
   incomes: Income[] = [];
-  editClicked: any;
+  Id: any;
   addClicked: any;
   filtering: Filtering
   coins: Coin[] = [];
   importTypes: any[] = [];
 
   ///////////////
-  displayedColumns: string[] = ['incomeType', 'currency', 'amount', 'date', 'source', 'earining', 'note', 'createdBy'];
+  displayedColumns: string[] = ['incomeType', 'currency', 'amount',
+    'date', 'source', 'earining', 'note', 'createdBy', 'edit'];
   ;
   dataSource
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -58,8 +59,8 @@ export class ViewIncomComponent implements OnInit {
     this.getImportTypes()
     this.Getcoins()
     this.UserService.GetAll();
-   // this.getIncomes()
-   // this.get()
+    // this.getIncomes()
+    // this.get()
     this.allFilter()
 
 
@@ -103,8 +104,8 @@ export class ViewIncomComponent implements OnInit {
       this.dataSource = new MatTableDataSource(response.data)
       this.totalCount = response.total
       this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-     
+      this.dataSource.paginator = this.paginator;
+
     },
       err => {
 
@@ -113,9 +114,11 @@ export class ViewIncomComponent implements OnInit {
 
   addNewClicked() {
     this.addClicked = true;
-    this.editClicked = false;
   }
-
+  onEditClicked(id) {
+    this.addClicked = false;
+    this.Id=id
+  }
   load() {
     const rowHeight: number = this.gridInstance.getRowHeight();  // height of the each row
     const gridHeight: any = this.gridInstance.height;  // grid height

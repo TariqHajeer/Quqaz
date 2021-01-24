@@ -31,27 +31,33 @@ export class IncomeService {
   AddMultiple(items) {
     return this.http.post(this.contoler + "/AddMultiple", items)
   }
-  Get(filter: Filtering,paging:Paging) {
+  Get(filter: Filtering, paging: Paging) {
     let params = new HttpParams();
     if (filter.CurrencyId != undefined || filter.CurrencyId != null)
       params = params.append("CurrencyId", filter.CurrencyId);
     if (filter.FromDate != undefined || filter.FromDate != null)
       params = params.append("FromDate", filter.FromDate);
-      if (filter.MaxAmount != undefined || filter.MaxAmount != null)
+    if (filter.MaxAmount != undefined || filter.MaxAmount != null)
       params = params.append("MaxAmount", filter.MaxAmount);
     if (filter.MinAmount != undefined || filter.MinAmount != null)
       params = params.append("MinAmount", filter.MinAmount);
-      if (filter.ToDate != undefined || filter.ToDate != null)
+    if (filter.ToDate != undefined || filter.ToDate != null)
       params = params.append("ToDate", filter.ToDate);
-      if (filter.Type != undefined || filter.Type != null)
+    if (filter.Type != undefined || filter.Type != null)
       params = params.append("Type", filter.Type);
-      if (filter.UserId != undefined || filter.UserId != null)
+    if (filter.UserId != undefined || filter.UserId != null)
       params = params.append("UserId", filter.UserId);
-      if (paging.RowCount != undefined || paging.RowCount != null)
-      params = params.append("RowCount",paging.RowCount);
-      if (paging.Page != undefined || paging.Page != null)
+    if (paging.RowCount != undefined || paging.RowCount != null)
+      params = params.append("RowCount", paging.RowCount);
+    if (paging.Page != undefined || paging.Page != null)
       params = params.append("Page", paging.Page);
     return this.http.get<any>(this.contoler, { params: params })
 
+  }
+  GetById(id) {
+    return this.http.get(this.contoler + "/" + id)
+  }
+  Ubdate(item) {
+    return this.http.patch(this.contoler, item)
   }
 }

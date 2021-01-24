@@ -55,5 +55,11 @@ export class OutcomeService {
   CreateMulitpleOutCome(items) {
     return this.http.post(this.controler+"/CreateMulitpleOutCome", items)
   }
+  GetById(id) {
+    return this.http.get(this.controler + "/" + id)
+  }
+  Ubdate(item) {
+    return this.http.patch(this.controler, item)
+  }
 }
  
