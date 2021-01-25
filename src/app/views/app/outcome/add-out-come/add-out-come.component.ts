@@ -21,7 +21,7 @@ export class AddOutComeComponent implements OnInit, OnChanges {
     private datePipe: DatePipe
   ) { }
   @Input() currentUserId;
-  @Input() editClicked;
+  @Input() outcome;
   @Input() addClicked;
   @Output() addFinish = new EventEmitter<any>();
   submitted = false;
@@ -48,20 +48,41 @@ export class AddOutComeComponent implements OnInit, OnChanges {
     )
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges() {
+    if (!this.addClicked) {
+      this.CreateOutCome.Id = this.outcome.id
+      this.CreateOutCome.Amount = this.outcome.amount
+      this.CreateOutCome.Date = this.outcome.date
+      this.CreateOutCome.CurrencyId = this.outcome.currency.id
+      this.CreateOutCome.Note = this.outcome.note
+      this.CreateOutCome.Reason = this.outcome.reason
+      this.CreateOutCome.OutComeTypeId = this.outcome.outComeType.id
+    }
   }
 
   addOrEdit() {
     this.submitted = true;
     this.CreateOutCome.Amount = Number(this.CreateOutCome.Amount);
-    this.OutcomeService.Create(this.CreateOutCome).subscribe(res => {
-      if (this.addClicked) {
+    if (this.addClicked) {
+      this.OutcomeService.Create(this.CreateOutCome).subscribe(res => {
         this.CreateOutCome = new CreateOutCome();
         this.submitted =false; 
         this.addFinish.emit();
         this.notifications.create('', 'تم الاضافة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      }
+    
     })
+    }
+    else if (!this.addClicked){
+      this.OutcomeService.Ubdate(this.CreateOutCome).subscribe(res => {
+        this.CreateOutCome = new CreateOutCome();
+        this.submitted =false; 
+        this.addFinish.emit();
+        this.notifications.create('', 'تم التعديل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    
+    })
+    }
+    
+
   }
 
 

@@ -23,7 +23,7 @@ export class ViewOutComeComponent implements OnInit {
     public datepipe: DatePipe) { }
   @ViewChild('normalgrid')
   outcomes: Outcome[] = [];
-  editClicked: any;
+  outcome: any;
   addClicked: any;
   filtering: Filtering
   coins: Coin[];
@@ -86,9 +86,10 @@ export class ViewOutComeComponent implements OnInit {
 
   addNewClicked() {
     this.addClicked = true;
-    this.editClicked = false;
   }
-  onEditClicked(id){
+  onEditClicked(item){
+    this.addClicked = false;
+    this.outcome=item
 
   }
  

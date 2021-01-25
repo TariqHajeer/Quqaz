@@ -82,14 +82,14 @@
     <div class="modal-content modal-lg">
       <div class="modal-header">
         <h4 *ngIf="addClicked" id="dialog-sizes-name1" class="modal-title pull-left">اضافة صادرة</h4>
-        <h4 *ngIf="editClicked" id="dialog-sizes-name1" class="modal-title pull-left">تعديل صادرة</h4>
+        <h4 *ngIf="!addClicked" id="dialog-sizes-name1" class="modal-title pull-left">تعديل صادرة</h4>
 
         <button type="button" class="close pull-right" (click)="addUserModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body" style="font-size: 15px;">
-        <app-add-out-come (addFinish)="addFinish($event)" [addClicked]="true"></app-add-out-come>
+        <app-add-out-come (addFinish)="addFinish($event)" [addClicked]="addClicked" [outcome]="outcome"></app-add-out-come>
       </div>
     </div>
   </div>
@@ -131,7 +131,7 @@
 <ng-container matColumnDef="Edit">
   <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
   <td mat-cell *matCellDef="let element"> 
-    <span class="btn btn-xs badge-primary mx-1" (click)="addUserModal.show();onEditClicked(element.id)">{{'forms.edit' | translate}}</span>
+    <span class="btn btn-xs badge-primary mx-1" (click)="addUserModal.show();onEditClicked(element)">{{'forms.edit' | translate}}</span>
   </td>
 </ng-container>
  
