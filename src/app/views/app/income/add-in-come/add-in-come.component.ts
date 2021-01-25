@@ -35,7 +35,9 @@ export class AddInComeComponent implements OnInit, OnChanges {
 
   }
   ngOnChanges() {
-    if (!this.addClicked) {
+    this.CreateIncome = new CreateIncome()
+    this.submitted=false
+    if (!this.addClicked&&this.Income!=null&&this.Income!=undefined) {
       this.CreateIncome.Id = this.Income.id
       this.CreateIncome.Amount = this.Income.amount
       this.CreateIncome.Date = this.Income.date
@@ -73,13 +75,13 @@ export class AddInComeComponent implements OnInit, OnChanges {
     this.CreateIncome.Earining = Number(this.CreateIncome.Earining);
     if (this.addClicked) {
       this.IncomeService.Create(this.CreateIncome).subscribe(res => {
-        this.addFinish.emit(this.CreateIncome);
+        this.addFinish.emit();
         this.notifications.create('', 'تم الاضافة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       })
     }
     else if (!this.addClicked) {
       this.IncomeService.Ubdate(this.CreateIncome).subscribe(res => {
-        this.addFinish.emit(this.CreateIncome);
+        this.addFinish.emit();
         this.notifications.create('', 'تم التعديل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       })
     }

@@ -49,7 +49,9 @@ export class AddOutComeComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    if (!this.addClicked) {
+    this.CreateOutCome = new CreateOutCome()
+    this.submitted=false
+    if (!this.addClicked&&this.outcome!=null&&this.outcome!=undefined) {
       this.CreateOutCome.Id = this.outcome.id
       this.CreateOutCome.Amount = this.outcome.amount
       this.CreateOutCome.Date = this.outcome.date
