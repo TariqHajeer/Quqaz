@@ -34,6 +34,13 @@ export class AuthService {
   signIn(user: user):Observable<any> {
     return this.http.post(this.baseUrl+'api/EmployeeAuth',user) ;
   }
+  TestLogin(){
+    this.http.get("Default/Check").subscribe(res=>{
+      return true;
+    },err=>{
+      this.rout.navigate(['/user/login']);
+    })
+  }
 
   signOut() {
     this.resetAuthenticated();
