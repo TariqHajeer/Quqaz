@@ -66,5 +66,16 @@ export class OrderService {
     params = params.append("clientid",ClientId!=null||ClientId!=undefined?ClientId:null);
     return this.http.get<any>(this.controler+"chekcCode", { params: params })
   }
-  
+  GetNewOrder(){
+    return this.http.get<any>(this.controler+"NewOrders")
+  }
+  Accept(id){
+    let params = new HttpParams();
+    params = params.append("id",id);
+    return this.http.put<any>(this.controler+"Accept", { params: params })
+  }
+  DisAccept(id){
+    let params = new HttpParams();
+    params = params.append("id",id);
+    return this.http.put<any>(this.controler+"DisAccept", { params: params })  }
 }

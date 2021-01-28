@@ -31,6 +31,13 @@ export class JwtInterceptor implements HttpInterceptor {
                       else{
                         return this.logoutUser();
                     }
+                    case 403:
+                    if (req.url.includes("login")){
+                        return this.generalErrorHandling(error);
+                      }
+                      else{
+                        return this.logoutUser();
+                    }
                 default:
                   return this.generalErrorHandling(error);
               }

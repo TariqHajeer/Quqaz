@@ -15,51 +15,7 @@ export interface IMenuItem {
 const data: IMenuItem[] = [
 
 
-  //setting tab
-  {
-    icon: 'simple-icon-settings',
-    label: 'menu.setting.setting',
-    to: `${adminRoot}/setting`,
-    subs:[
-      {
-        icon: 'iconsminds-map2',
-        label: 'menu.setting.cities',
-        to: `${adminRoot}/setting/cities`,
-      },
-      {
-        icon: 'iconsminds-map2',
-        label: 'menu.setting.regions',
-        to: `${adminRoot}/setting/regions`,
-      },
-     
-      {
-        icon: 'iconsminds-inbox-out',
-        label: 'menu.setting.exportTypes',
-        to: `${adminRoot}/setting/exportTypes`,
-      },
-      {
-        icon: 'iconsminds-inbox-into',
-        label: 'menu.setting.importTypes',
-        to: `${adminRoot}/setting/importTypes`,
-      },
-      {
-        icon: 'iconsminds-box-close',
-        label: 'menu.setting.shipmentsTypes',
-        to: `${adminRoot}/setting/shipmentsTypes`,
-      },
-      {
-        icon: 'iconsminds-coins',
-        label: 'menu.setting.coins',
-        to: `${adminRoot}/setting/coins`,
-      }
-      ,
-      {
-        icon: 'simple-icon-layers',
-        label: 'المجموعات',
-        to: `${adminRoot}/setting/group`,
-      }
-    ]
-  },
+  
    //clients
  {
   icon: 'simple-icon-people',
@@ -89,9 +45,65 @@ const data: IMenuItem[] = [
   icon: 'iconsminds-box-close',
   label: 'الطلبات',
   to: `${adminRoot}/order`,
+  subs:[
+    {
+      icon: 'iconsminds-box-close',
+      label: 'الطلبات الجديدة',
+      to: `${adminRoot}/order/neworders`,
+    },
+    {
+      icon: 'iconsminds-box-close',
+      label: 'عرض الطلبات',
+      to: `${adminRoot}/order/`,
+    },
+  ]
 },
  
-
+//setting tab
+{
+  icon: 'simple-icon-settings',
+  label: 'menu.setting.setting',
+  to: `${adminRoot}/setting`,
+  subs:[
+    {
+      icon: 'iconsminds-map2',
+      label: 'menu.setting.cities',
+      to: `${adminRoot}/setting/cities`,
+    },
+    {
+      icon: 'iconsminds-map2',
+      label: 'menu.setting.regions',
+      to: `${adminRoot}/setting/regions`,
+    },
+   
+    {
+      icon: 'iconsminds-inbox-out',
+      label: 'menu.setting.exportTypes',
+      to: `${adminRoot}/setting/exportTypes`,
+    },
+    {
+      icon: 'iconsminds-inbox-into',
+      label: 'menu.setting.importTypes',
+      to: `${adminRoot}/setting/importTypes`,
+    },
+    {
+      icon: 'iconsminds-box-close',
+      label: 'menu.setting.shipmentsTypes',
+      to: `${adminRoot}/setting/shipmentsTypes`,
+    },
+    {
+      icon: 'iconsminds-coins',
+      label: 'menu.setting.coins',
+      to: `${adminRoot}/setting/coins`,
+    }
+    ,
+    {
+      icon: 'simple-icon-layers',
+      label: 'المجموعات',
+      to: `${adminRoot}/setting/group`,
+    }
+  ]
+},
 
 
 

@@ -12,9 +12,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ViewNewOrderComponent } from './view-new-order/view-new-order.component';
 
 @NgModule({
-  declarations: [ViewOrdersComponent,AddOrdersComponent,EditOrdersComponent, CreateMulitpleOutComeComponent],
+  declarations: [ViewOrdersComponent,AddOrdersComponent,EditOrdersComponent, CreateMulitpleOutComeComponent, ViewNewOrderComponent],
   imports: [
     CommonModule,
     OrderRoutingModule,
