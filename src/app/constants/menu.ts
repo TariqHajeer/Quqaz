@@ -15,7 +15,34 @@ export interface IMenuItem {
 const data: IMenuItem[] = [
 
 
-  
+  //order
+{
+  icon: 'iconsminds-box-close',
+  label: 'الطلبات',
+  to: `${adminRoot}/order`,
+  subs:[
+    {
+      icon: 'iconsminds-box-close',
+      label: 'الطلبات الجديدة',
+      to: `${adminRoot}/order/neworders`,
+    },
+    {
+      icon: 'iconsminds-box-close',
+      label: 'عرض الطلبات',
+      to: `${adminRoot}/order/`,
+    },
+    {
+      icon: 'iconsminds-add',
+      label: 'إضافة طلب',
+      to: `${adminRoot}/order/addorder`,
+    },
+    {
+      icon: 'iconsminds-add',
+      label: 'إضافة طلبات متعددة',
+      to: `${adminRoot}/order/addorder`,
+    },
+  ]
+},
    //clients
  {
   icon: 'simple-icon-people',
@@ -40,24 +67,7 @@ const data: IMenuItem[] = [
   label: 'menu.employees',
   to: `${adminRoot}/user`,
 },
-//order
-{
-  icon: 'iconsminds-box-close',
-  label: 'الطلبات',
-  to: `${adminRoot}/order`,
-  subs:[
-    {
-      icon: 'iconsminds-box-close',
-      label: 'الطلبات الجديدة',
-      to: `${adminRoot}/order/neworders`,
-    },
-    {
-      icon: 'iconsminds-box-close',
-      label: 'عرض الطلبات',
-      to: `${adminRoot}/order/`,
-    },
-  ]
-},
+
  
 //setting tab
 {

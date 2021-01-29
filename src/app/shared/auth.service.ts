@@ -35,7 +35,7 @@ export class AuthService {
     return this.http.post(this.baseUrl+'api/EmployeeAuth',user) ;
   }
   TestLogin(){
-    this.http.get("Default/Check").subscribe(res=>{
+    this.http.get(this.baseUrl+"api/Default/Check").subscribe(res=>{
       return true;
     },err=>{
       this.rout.navigate(['/user/login']);

@@ -30,15 +30,15 @@
 
 
     <!-- search input  -->
-    <div class="search" (click)="searchAreaClick($event)">
+    <!-- <div class="search" (click)="searchAreaClick($event)">
       <input placeholder="Search..." [(ngModel)]="searchKey" (keyup)="searchKeyUp($event)">
       <span class="search-icon" (click)="searchClick($event)">
         <i class="simple-icon-magnifier"></i>
       </span>
-    </div>
+    </div> -->
 
 
-    <div class="btn-group ml-2" dropdown *ngIf="!isSingleLang">
+    <div class="btn-group ml-2" dropdown *ngIf="!isSingleLang&&1!=1">
       <button dropdownToggle type="button" class="language-button dropdown-toggle btn btn-light btn-sm">
         {{currentLanguage | uppercase}} <span class="caret"></span>
       </button>
@@ -189,12 +189,12 @@
       </button>
 
       <div class="dropdown-menu dropdown-menu-right mt-3" *dropdownMenu role="menu">
-        <a class="dropdown-item c-pointer">Account</a>
-        <a class="dropdown-item c-pointer">Features</a>
+        <a class="dropdown-item c-pointer">الحساب الشخصي</a>
+        <!-- <a class="dropdown-item c-pointer">Features</a>
         <a class="dropdown-item c-pointer">History</a>
-        <a class="dropdown-item c-pointer">Support</a>
+        <a class="dropdown-item c-pointer">Support</a> -->
         <li class="divider dropdown-divider"></li>
-        <a class="dropdown-item c-pointer" (click)="onSignOut()">Sign out</a>
+        <a class="dropdown-item c-pointer" (click)="onSignOut()">تسجيل الخروج</a>
       </div>
     </div>
 </div>
