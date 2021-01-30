@@ -140,11 +140,12 @@
                                             <label>نوع <span
                                                     class="text-danger text-one align-bottom mx-1">*</span></label>
                                             <ng-select [items]="orderTypes"
-                                            [(ngModel)]="selectedOrder"
-                                            bindLabel="name"
+                                            [(ngModel)]="orderType"
+                                            bindLabel="name"[addTag]="true"
                                             name='orderTypeSelect'
                                             >
                                             </ng-select>
+                                            <div *ngIf="!orderType && submitordertype" class="invalid-tooltip">النوع حقل مطلوب</div>
 
                                         </div>
                                         <div class="col-md-6">
@@ -153,6 +154,7 @@
                                                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                                 class="form-control" [ngModelOptions]="{standalone: true}"
                                                 [(ngModel)]="count">
+                                                <div *ngIf="!count && submitordertype" class="invalid-tooltip">العدد حقل مطلوب</div>
 
                                         </div>
                                     </div>

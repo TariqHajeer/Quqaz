@@ -29,26 +29,26 @@ export class ViewOrdersComponent implements OnInit {
   @Input() totalCount: number;
   pageEvent: PageEvent;
   paging: Paging
-  filtering:OrderFilter
-  orders:Order[]=[]
-  noDataFound:boolean=false
+  filtering: OrderFilter
+  orders: Order[] = []
+  noDataFound: boolean = false
   orderPlace: NameAndIdDto[] = []
   MoenyPlaced: NameAndIdDto[] = []
-  clients:Client[]=[]
-  cities:City[]=[]
-  Region: Region[]=[]
-  Agents:User[]=[]
-  cityapi="Country"
-  regionapi="Region"
-  constructor(private orderservice:OrderService,
-    private router:Router,
-    private clientService:ClientService
-    ,private customerService:CustomService,
-    private userService:UserService) { }
+  clients: Client[] = []
+  cities: City[] = []
+  Region: Region[] = []
+  Agents: User[] = []
+  cityapi = "Country"
+  regionapi = "Region"
+  constructor(private orderservice: OrderService,
+    private router: Router,
+    private clientService: ClientService
+    , private customerService: CustomService,
+    private userService: UserService) { }
 
   ngOnInit(): void {
     this.paging = new Paging
-    this.filtering=new OrderFilter
+    this.filtering = new OrderFilter
     this.allFilter()
     this.get()
     this.GetMoenyPlaced()
@@ -57,48 +57,58 @@ export class ViewOrdersComponent implements OnInit {
     this.Getcities()
     this.GetClient()
     this.userService.GetAll()
-    this.Agents=this.userService.users
+    this.Agents = this.userService.users
 
   }
   get() {
     this.dataSource = new MatTableDataSource(this.orders);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.displayedColumns = ['code','deliveryCost','cost','recipientName',
-    'recipientPhones','address','createdBy','date','diliveryDate','note','client','country'
-    ,'region','monePlaced','orderplaced','agent'];
+    this.displayedColumns = ['code', 'deliveryCost', 'cost', 'recipientName',
+      'recipientPhones', 'address', 'createdBy', 'date', 'diliveryDate', 'note', 'client', 'country'
+      , 'region', 'monePlaced', 'orderplaced', 'agent', 'Edit', 'Delete'];
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   switchPage(event: PageEvent) {
-   
-    this.paging.allItemsLength=event.length
-    this.paging.RowCount =  event.pageSize
-    this.paging.Page = event.pageIndex+1
-   
-   
- this.allFilter();
-    
-   }
-   allFilter(){
-   this.orderservice.GetAll( this.filtering,this.paging).subscribe(response => {
-    if(response.data.length==0)
-    this.noDataFound=true
-    else  this.noDataFound=false
-    console.log(response.data)
 
-    this.dataSource=new MatTableDataSource(response.data)
-     this.totalCount = response.total    
-   },
-   err => {
-     
-   });
+    this.paging.allItemsLength = event.length
+    this.paging.RowCount = event.pageSize
+    this.paging.Page = event.pageIndex + 1
+
+
+    this.allFilter();
+
   }
-  
-  AddOrder(){
-this.router.navigate(['/app/order/addorder'])
+  allFilter() {
+    this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
+      if (response.data.length == 0)
+        this.noDataFound = true
+      else this.noDataFound = false
+      console.log(response.data)
+
+      this.dataSource = new MatTableDataSource(response.data)
+      this.totalCount = response.total
+    },
+      err => {
+
+      });
+  }
+
+  AddOrder() {
+    this.router.navigate(['/app/order/addorder'])
+  }
+  delete(element) {
+    this.orderservice.Delete(element.id).subscribe(res => {
+      let index = this.dataSource.data.indexOf(element);
+      this.dataSource.data.splice(index, 1);
+      this.dataSource._updateChangeSubscription();
+     })
+  }
+  Edit(element) {
+
   }
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
@@ -110,19 +120,20 @@ this.router.navigate(['/app/order/addorder'])
       this.MoenyPlaced = res
     })
   }
-  GetClient(){
-    this.clientService.getClients().subscribe(res=>{
-      this.clients=res
+  GetClient() {
+    this.clientService.getClients().subscribe(res => {
+      this.clients = res
     })
   }
-  Getcities(){
-    this.customerService.getAll(this.cityapi).subscribe(res=>{
-      this.cities=res
+  Getcities() {
+    this.customerService.getAll(this.cityapi).subscribe(res => {
+      this.cities = res
     })
   }
-  GetRegion(){
-    this.customerService.getAll(this.regionapi).subscribe(res=>{
-      this.Region=res
+  GetRegion() {
+    this.customerService.getAll(this.regionapi).subscribe(res => {
+      this.Region = res
     })
   }
+
 }

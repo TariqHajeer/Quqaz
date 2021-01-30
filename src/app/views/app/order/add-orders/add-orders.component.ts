@@ -8,8 +8,6 @@ import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { CreateOrdersFromEmployee, OrderItem } from 'src/app/Models/order/create-orders-from-employee.model';
 import { Order } from 'src/app/Models/order/order.model';
 import { OrderType } from 'src/app/Models/OrderTypes/order-type.model';
-import { Paging } from 'src/app/Models/paging';
-
 import { Region } from 'src/app/Models/Regions/region.model';
 import { User } from 'src/app/Models/user/user.model';
 import { CustomService } from 'src/app/services/custom.service';
@@ -41,14 +39,13 @@ export class AddOrdersComponent implements OnInit {
   Region: Region[] = []
   Regions: Region[] = []
   Agents: User[] = []
-  orderTypes: Observable<OrderType[]>
+  orderTypes: OrderType[] = []
   orderType: OrderType
   OrderItem: OrderItem
   count
   filter: OrderFilter
-  paging: Paging
   tempPhone: string;
-  selectedOrder: any;
+  //selectedOrder: any;
   cityapi = "Country"
   regionapi = "Region"
   ordertypeapi = "OrderType";
@@ -56,7 +53,7 @@ export class AddOrdersComponent implements OnInit {
     this.Order = new CreateOrdersFromEmployee();
     this.orderType = new OrderType
     this.OrderItem = new OrderItem
-    this.paging = new Paging
+    this.submitted = false;
     this.GetMoenyPlaced()
     this.GetorderPlace()
     this.GetRegion()
@@ -64,6 +61,11 @@ export class AddOrdersComponent implements OnInit {
     this.GetClient()
     this.getAgent()
     this.getOrderTypes()
+    this.int()
+
+  }
+  int() {
+   
   }
   AddOrder() {
 
@@ -71,8 +73,8 @@ export class AddOrdersComponent implements OnInit {
     if (this.tempPhone != '' && this.tempPhone != undefined) {
       this.Order.RecipientPhones.push(this.tempPhone);
       this.tempPhone = ''
-    } 
-    if(this.Order.RecipientPhones.length==0){
+    }
+    if (this.Order.RecipientPhones.length == 0) {
       return;
     }
 
@@ -91,11 +93,14 @@ export class AddOrdersComponent implements OnInit {
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
+      this.Order.OrderplacedId = this.orderPlace[1].id
+
     })
   }
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
+      this.Order.MoenyPlacedId = this.MoenyPlaced[0].id
     })
   }
   GetClient() {
@@ -126,11 +131,24 @@ export class AddOrdersComponent implements OnInit {
       }
     )
   }
+  submitordertype: boolean = false
   AddOrderType() {
+    if (!this.orderType || !this.count) {
+      this.submitordertype = true
+      return
+    }
+    else this.submitordertype = false
+    if (this.orderTypes.filter(o => o.name == this.orderType.name).length < 1) {
+      this.customerService.Create(this.ordertypeapi, this.orderType).subscribe(res => {
+        //console.log(res)
+      })
+    }
     this.OrderItem.OrderTypeId = this.orderType.id
     this.OrderItem.OrderTypeName = this.orderType.name
     this.OrderItem.Count = this.count
     this.Order.OrderTypeDtos.push(this.OrderItem)
+    this.orderTypes = this.orderTypes.filter(o => o != this.orderType)
+    this.OrderItem = new OrderItem
     this.orderType = new OrderType
     this.count = null
 
@@ -141,6 +159,7 @@ export class AddOrdersComponent implements OnInit {
     var city = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.Cost = city.deliveryCost
     this.Region = this.Regions.filter(r => r.country.id == this.Order.CountryId)
+    this.Order.AgentId = this.Region[0].id
   }
   showMessageCode: boolean = false
   CheckCode() {
