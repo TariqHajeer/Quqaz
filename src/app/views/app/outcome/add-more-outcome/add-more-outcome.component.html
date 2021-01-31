@@ -21,7 +21,7 @@
                         <e-column field="id" [isPrimaryKey]="true" isIdentity="true" width="75" textAlign="right" [visible]='false' ></e-column> 
                         <e-column field='OutComeTypeId' textAlign="Center" headerText="نوع الصادرات" width='175'
                         foreignKeyValue='name'  foreignKeyField ='id' 
-                        [validationRules]='requiredValidation'
+                        [validationRules]='requiredValidation' 
                         [dataSource]='outComeTypeDs'></e-column>
                         <e-column field='Amount' textAlign="Center" headerText="المبلغ المصروف" width='175'
                         editType='numericedit' [validationRules]='requiredValidation'

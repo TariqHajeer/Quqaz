@@ -21,8 +21,10 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService, private notifications: NotificationsService, private router: Router) { }
 
   ngOnInit() {
+    this.myDate=new Date
   }
   user: UserLogin
+  myDate:Date
   onSubmit() {
     // if (!this.loginForm.valid || this.buttonDisabled) {
     //   return;
@@ -34,6 +36,7 @@ export class LoginComponent implements OnInit {
     this.authService.signIn(this.loginForm.value).subscribe(
       response => {
         this.user=response as UserLogin
+        //this.user.expiry.setMinutes(this.myDate.getMinutes()+1);
         // this.notifications.create('success', 'تم تسجيل الدخول بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         //  this.authService.setAuthenticatedUser(response.data[0].user);
         this.router.navigate(['/app/HomePage']);

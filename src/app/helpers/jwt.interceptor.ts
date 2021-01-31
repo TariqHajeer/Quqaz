@@ -1,8 +1,9 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent, HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../shared/auth.service';
-import { catchError, filter, take, switchMap, finalize } from 'rxjs/operators';
+import { catchError, filter, take, switchMap, finalize, tap } from 'rxjs/operators';
 import { throwError as observableThrowError, Observable, BehaviorSubject, throwError } from 'rxjs';
+import { UserLogin } from '../Models/userlogin.model';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -12,32 +13,39 @@ export class JwtInterceptor implements HttpInterceptor {
 
 
       intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
-        const currentUser = this.authenticationService.authenticatedUser;
-        let token:any=null;
-        if(currentUser)
-        {
-          if(currentUser.token){
-            token=currentUser.token;
+        if (this.authenticationService.authenticatedUser != null) {
+          const clonedReq = req.clone({
+              headers: req.headers.set('Authorization', 'Bearer ' + this.authenticationService.authenticatedUser)
           }
-        }
-        return next.handle(this.addToken(req, token)).pipe(
-          catchError(error => {
-            if (error instanceof HttpErrorResponse) {
-              switch ((<HttpErrorResponse>error).status) {
-                case 401:
-                    if (req.url.includes("login")){
-                        return this.generalErrorHandling(error);
+          )
+          // var auth= JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
+          //     if(auth.expiry> new Date()){
+          //     localStorage.removeItem('kokazUser')
+          //     return this.logoutUser();
+          //     }
+        return next.handle(clonedReq).pipe(
+          tap(
+            succ => { 
+              
+            },
+            error => {
+              if (error instanceof HttpErrorResponse) {
+                switch ((<HttpErrorResponse>error).status) {
+                  case 401:
+                      if (req.url.includes("login")){
+                          return this.generalErrorHandling(error);
+                        }
+                        else{
+                          return this.logoutUser();
                       }
-                      else{
-                        return this.logoutUser();
-                    }
-                default:
-                  return this.generalErrorHandling(error);
+                  default:
+                    return this.generalErrorHandling(error);
+                }
+              } else {
+                return this.generalErrorHandling(error);
               }
-            } else {
-              return this.generalErrorHandling(error);
             }
-          }));
+         ))}
       }
 
       addToken(req: HttpRequest<any>, token: any): HttpRequest<any> {
