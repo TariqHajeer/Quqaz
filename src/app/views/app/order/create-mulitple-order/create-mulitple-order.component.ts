@@ -9,6 +9,17 @@ import { environment } from 'src/environments/environment.prod';
 import { OrderService } from 'src/app/services/order.service';
 import { ClientService } from '../../client/client.service';
 
+import { concat, Observable, of, Subject } from 'rxjs';
+import { catchError, delay, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
+import { City } from 'src/app/Models/Cities/city.Model';
+import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
+import { OrderFilter } from 'src/app/Models/order-filter.model';
+import { CreateOrdersFromEmployee, OrderItem } from 'src/app/Models/order/create-orders-from-employee.model';
+import { Order } from 'src/app/Models/order/order.model';
+import { OrderType } from 'src/app/Models/OrderTypes/order-type.model';
+import { Region } from 'src/app/Models/Regions/region.model';
+import { User } from 'src/app/Models/user/user.model';
+import { Client } from '../../client/client.model';
 
 @Component({
   selector: 'app-create-mulitple-order',
@@ -17,87 +28,181 @@ import { ClientService } from '../../client/client.service';
 })
 export class CreateMulitpleOrderComponent implements OnInit {
 
-  submitted = false;
-  Orders: any[] = []
-
-  public stTime: any;
-  public filter: Object;
-  public filterSettings: Object;
-  public editSettings: EditSettingsModel;
-  public selectionSettings: Object;
-  public lines: any;
-  @ViewChild('normalgrid')
-  public gridInstance: GridComponent;
-  public toolbar: Object[];
-  public pageSettings: Object;
-
-  public CountryDs: any;
-  public dateFormatOptions: any = {type:'date', format:'dd/MM/yyyy'};
-  Countryapi = environment.baseUrl + "api/Country";
-  public requiredValidation;
-
-
   constructor(private orderservice: OrderService,
+
+    private clientService: ClientService
+    , private customerService: CustomService,
     public userService: UserService,
-    private notifications: NotificationsService
-    
-  ) { }
+    private notifications: NotificationsService) { }
 
+  Order: CreateOrdersFromEmployee
+  submitted = false;
+  orderPlace: NameAndIdDto[] = []
+  MoenyPlaced: NameAndIdDto[] = []
+  clients: Client[] = []
+  cities: City[] = []
+  Region: Region[] = []
+  Regions: Region[] = []
+  Agents: User[] = []
+  orderTypes: OrderType[] = []
+  orderType: OrderType
+  OrderItem: OrderItem
+  count
+  filter: OrderFilter
+  tempPhone: string;
+  //selectedOrder: any;
+  cityapi = "Country"
+  regionapi = "Region"
+  ordertypeapi = "OrderType";
+  Orders: any[] = []
   ngOnInit(): void {
-    this.requiredValidation={ required:[true,"هذا الحقل مطلوب"]};
-    this.CountryDs = new DataManager({ url: this.Countryapi });
-    this.editSettings = { showDeleteConfirmDialog: true, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
-    this.toolbar = [
-      { text: 'اضافة', tooltipText: 'اضافة', prefixIcon: 'e-add', id: 'normalgrid_add' },
-      { text: 'تعديل', tooltipText: 'تعديل', prefixIcon: 'e-edit', id: 'normalgrid_edit' },
-      { text: 'حذف', tooltipText: 'حذف', prefixIcon: 'e-delete', id: 'normalgrid_delete' },
-      { text: 'حفظ', tooltipText: 'حفظ', prefixIcon: 'e-update', id: 'normalgrid_update' },
-      { text: 'تراجع', tooltipText: 'تراجع', prefixIcon: 'e-cancel', id: 'normalgrid_cancel' },
-      'Search'];
-    // this.toolbar = ['Add', 'Search', 'Edit', 'Delete', 'Update', 'Cancel'];
-
-    this.filterSettings = { type: "CheckBox" };
-    this.filter = { type: "CheckBox" };
-    this.stTime = performance.now();
-    this.pageSettings = { pageCount: 5 };
-    this.selectionSettings = { persistSelection: true, type: "Multiple" };
-    this.lines = 'Horizontal';
-
+    this.Order = new CreateOrdersFromEmployee();
+    this.orderType = new OrderType
+    this.OrderItem = new OrderItem
+    this.submitted = false;
+    this.GetMoenyPlaced()
+    this.GetorderPlace()
+    this.GetRegion()
+    this.Getcities()
+    // this.GetClient()
+    this.getAgent()
+    this.getOrderTypes()
+    this.int()
 
   }
+  int() {
 
+  }
+  AddOrders() {
 
+    this.submitted = true;
+    if (this.tempPhone != '' && this.tempPhone != undefined) {
+      this.Order.RecipientPhones.push(this.tempPhone);
+      this.tempPhone = ''
+    }
+    if (this.Order.RecipientPhones.length == 0) {
+      return;
+    }
 
-  load() {
-    const rowHeight: number = this.gridInstance.getRowHeight();  // height of the each row
-    const gridHeight: any = this.gridInstance.height;  // grid height
-    const pageSize: number = this.gridInstance.pageSettings.pageSize;   // initial page size
-    const pageResize: any = (gridHeight - (pageSize * rowHeight)) / rowHeight; // new page size is obtained here
-    this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
+    if (isNaN(this.Order.RegionId)) {
+      this.Order.RegionName = this.Order.RegionId.label;
+      this.Order.RegionId = null;
+    }
+    this.orderservice.Creat(this.Order).subscribe(res => {
+      this.Order = new CreateOrdersFromEmployee()
+      this.submitted = false;
+      this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.GetRegion();
+    });
+
+  }
+  GetorderPlace() {
+    this.orderservice.orderPlace().subscribe(res => {
+      this.orderPlace = res
+      this.Order.OrderplacedId = this.orderPlace[1].id
+
+    })
+  }
+  GetMoenyPlaced() {
+    this.orderservice.MoenyPlaced().subscribe(res => {
+      this.MoenyPlaced = res
+      this.Order.MoenyPlacedId = this.MoenyPlaced[0].id
+    })
+  }
+  GetClient() {
+    this.clientService.getClients().subscribe(res => {
+      this.clients = res
+    })
+  }
+  Getcities() {
+    this.customerService.getAll(this.cityapi).subscribe(res => {
+      this.cities = res
+    })
+  }
+  GetRegion() {
+    this.customerService.getAll(this.regionapi).subscribe(res => {
+      this.Regions = res
+    })
+  }
+  getAgent() {
+    this.userService.GetAgent().subscribe(res => {
+      this.Agents = res
+    })
   }
 
-
-  actionComplete(args: SaveEventArgs) {
-
-    if (args.action == 'add') {
-      if (args.requestType == "save") {
-       // args.data["date"] = new Date(args.data["data"]);
-        //     this.notifications.create('', 'تم التعديل', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-
+  getOrderTypes() {
+    this.customerService.getAll(this.ordertypeapi).subscribe(
+      res => {
+        this.orderTypes = res;
       }
+    )
+  }
+  submitordertype: boolean = false
+  AddOrderType() {
+    if (!this.orderType || !this.count) {
+      this.submitordertype = true
+      return
     }
-  
+    else this.submitordertype = false
+    if (this.orderTypes.filter(o => o.name == this.orderType.name).length < 1) {
+      this.customerService.Create(this.ordertypeapi, this.orderType).subscribe(res => {
+        //console.log(res)
+      })
+    }
+    this.OrderItem.OrderTypeId = this.orderType.id
+    this.OrderItem.OrderTypeName = this.orderType.name
+    this.OrderItem.Count = this.count
+    this.Order.OrderTypeDtos.push(this.OrderItem)
+    this.orderTypes = this.orderTypes.filter(o => o != this.orderType)
+    this.OrderItem = new OrderItem
+    this.orderType = new OrderType
+    this.count = null
 
-    else if (args.requestType == "delete") {
-     // this.notifications.create('', 'تم الحذف', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+  }
+  changeCountry() {
+    this.Region = []
+    this.Order.RegionId = null
+    var city = this.cities.find(c => c.id == this.Order.CountryId)
+    this.Order.Cost = city.deliveryCost
+    this.Region = this.Regions.filter(r => r.country.id == this.Order.CountryId)
+    this.Order.AgentId = this.Region[0].id
+  }
+  showMessageCode: boolean = false
+  CheckCode() {
+    if (this.Order.ClientId != null && this.Order.ClientId != undefined) {
+      this.orderservice.chekcCode(this.Order.Code, this.Order.ClientId).subscribe(res => {
+        if (res) {
+          this.showMessageCode = true
+        } else
+          this.showMessageCode = false
+      })
     }
   }
+
+  addNewPhone() {
+    this.Order.RecipientPhones.push(this.tempPhone);
+    this.tempPhone = '';
+  }
+
+  onEnter() {
+    if (!this.Order.Code||!this.Order.ClientId||
+      !this.Order.CountryId||!this.Order.AgentId||
+      !this.Order.MoenyPlacedId||!this.Order.OrderplacedId
+      ) {
+      this.submitted = true
+      return
+    }
+    this.Orders.push(this.Order)
+    this.submitted = false
+    this.Order=new CreateOrdersFromEmployee
+  }
+
 
   AddOrder() {
-    this.orderservice.Creat(this.Orders).subscribe(res=>{
+    this.orderservice.createMultiple(this.Orders).subscribe(res => {
       this.notifications.create('success', 'تم اضافة الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Orders = []
-  })
-   
+    })
+
   }
 }

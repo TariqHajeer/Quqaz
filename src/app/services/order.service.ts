@@ -44,6 +44,10 @@ export class OrderService {
     return this.http.post(this.controler,item)
 
   }
+  createMultiple(item){
+    return this.http.post(this.controler+"createMultiple",item)
+
+  }
   Update(item) {
     return this.http.patch(this.controler,item)
 
