@@ -49,16 +49,22 @@ export class AddOrdersComponent implements OnInit {
   cityapi = "Country"
   regionapi = "Region"
   ordertypeapi = "OrderType";
+
+  EditorderType: OrderType
+  EditOrderItem: OrderItem
+  Editcount
   ngOnInit(): void {
     this.Order = new CreateOrdersFromEmployee();
     this.orderType = new OrderType
     this.OrderItem = new OrderItem
+    this.EditorderType = new OrderType
+    this.EditOrderItem = new OrderItem
     this.submitted = false;
     this.GetMoenyPlaced()
     this.GetorderPlace()
     this.GetRegion()
     this.Getcities()
-    this.GetClient()
+    //this.GetClient()
     this.getAgent()
     this.getOrderTypes()
     this.int()
@@ -123,11 +129,12 @@ export class AddOrdersComponent implements OnInit {
       this.Agents = res
     })
   }
-
+  AllorderTypes:any[]=[]
   getOrderTypes() {
     this.customerService.getAll(this.ordertypeapi).subscribe(
       res => {
         this.orderTypes = res;
+        this.AllorderTypes=res
       }
     )
   }
@@ -176,5 +183,29 @@ export class AddOrdersComponent implements OnInit {
   addNewPhone() {
     this.Order.RecipientPhones.push(this.tempPhone);
     this.tempPhone = '';
+  }
+  tempEditOrderType
+  EditOrderType(OrderType: OrderItem) {
+    OrderType.CanEdit = true
+    this.EditorderType =this.AllorderTypes.find(o=>o.id==OrderType.OrderTypeId) 
+    this.Editcount = OrderType.Count
+    this.tempEditOrderType = Object.assign({}, OrderType);
+  }
+  SaveOrderType(OrderType) {
+    this.EditOrderItem.CanEdit = false
+    this.EditOrderItem.Count = this.Editcount
+    this.EditOrderItem.OrderTypeName = this.EditorderType.name
+    this.EditOrderItem.OrderTypeId = this.EditorderType.id
+    OrderType = Object.assign(OrderType, this.EditOrderItem);
+  }
+ 
+  deleteOrderType(OrderType) {
+    this.Order.OrderTypeDtos = this.Order.OrderTypeDtos.filter(o => o != OrderType)
+
+  }
+  CansleEditOrderType(OrderType) {
+    this.tempEditOrderType.CanEdit = false
+    OrderType = Object.assign(OrderType, this.tempEditOrderType);
+
   }
 }

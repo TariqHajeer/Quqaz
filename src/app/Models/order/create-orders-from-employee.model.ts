@@ -30,4 +30,5 @@ export class OrderItem{
     OrderTypeName:string
     OrderTypeId:number
     Count:number
+    CanEdit:boolean=false
 }
