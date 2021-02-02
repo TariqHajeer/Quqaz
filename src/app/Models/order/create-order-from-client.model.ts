@@ -18,4 +18,7 @@ export class CreateOrderFromClient {
     RecipientPhones:string[]
     OrderItem:OrderItem[]
     CanEdit:boolean=false
+    OrderplacedId:number
+    AgentId:number
+    ClientId:number
 }

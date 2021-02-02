@@ -44,7 +44,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
   cities: City[] = []
   Region: Region[] = []
   Regions: Region[] = []
-  //Agents: User[] = []
+  Agents: User[] = []
   orderTypes: OrderType[] = []
   orderType: OrderType
   OrderItem: OrderItem
@@ -70,11 +70,11 @@ export class CreateMulitpleOrderComponent implements OnInit {
     this.EditOrderItem = new OrderItem
     this.submitted = false;
     // this.GetMoenyPlaced()
-    // this.GetorderPlace()
+    this.GetorderPlace() 
     this.GetRegion()
     this.Getcities()
-    // this.GetClient()
-    // this.getAgent()
+     this.GetClient()
+     this.getAgent()
     this.getOrderTypes()
     this.int()
 
@@ -84,24 +84,24 @@ export class CreateMulitpleOrderComponent implements OnInit {
   }
 
 
-  // GetorderPlace() {
-  //   this.orderservice.orderPlace().subscribe(res => {
-  //     this.orderPlace = res
-  //     this.Order.OrderplacedId = this.orderPlace[1].id
+  GetorderPlace() {
+    this.orderservice.orderPlace().subscribe(res => {
+      this.orderPlace = res
+      this.Order.OrderplacedId = this.orderPlace[1].id
 
-  //   })
-  // }
+    })
+  }
   // GetMoenyPlaced() {
   //   this.orderservice.MoenyPlaced().subscribe(res => {
   //     this.MoenyPlaced = res
   //     this.Order.MoenyPlacedId = this.MoenyPlaced[0].id
   //   })
   // }
-  // getAgent() {
-  //   this.userService.GetAgent().subscribe(res => {
-  //     this.Agents = res
-  //   })
-  // }
+  getAgent() {
+    this.userService.GetAgent().subscribe(res => {
+      this.Agents = res
+    })
+  }
 
   GetClient() {
     this.clientService.getClients().subscribe(res => {

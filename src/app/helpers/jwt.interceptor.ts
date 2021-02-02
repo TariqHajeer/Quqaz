@@ -9,58 +9,67 @@ import { UserLogin } from '../Models/userlogin.model';
 export class JwtInterceptor implements HttpInterceptor {
 
 
-    constructor(private authenticationService: AuthService,private injector: Injector) { }
+  constructor(private authenticationService: AuthService, private injector: Injector) { }
 
 
-      intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
-        if (this.authenticationService.authenticatedUser != null) {
-          const clonedReq = req.clone({
-              headers: req.headers.set('Authorization', 'Bearer ' + this.authenticationService.authenticatedUser)
-          }
-          )
-          // var auth= JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
-          //     if(auth.expiry> new Date()){
-          //     localStorage.removeItem('kokazUser')
-          //     return this.logoutUser();
-          //     }
-        return next.handle(clonedReq).pipe(
-          tap(
-            succ => { 
-              
-            },
-            error => {
-              if (error instanceof HttpErrorResponse) {
-                switch ((<HttpErrorResponse>error).status) {
-                  case 401:
-                      if (req.url.includes("login")){
-                          return this.generalErrorHandling(error);
-                        }
-                        else{
-                          return this.logoutUser();
-                      }
-                  default:
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
+    if (this.authenticationService.authenticatedUser != null) {
+      const clonedReq = req.clone({
+        headers: req.headers.set('Authorization', 'Bearer ' + this.authenticationService.authenticatedUser)
+      }
+      )
+      // var auth= JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
+      //     if(auth.expiry> new Date()){
+      //     localStorage.removeItem('kokazUser')
+      //     return this.logoutUser();
+      //     }
+      return next.handle(clonedReq).pipe(
+        tap(
+          succ => {
+            this.ExpiryTime()
+          },
+          error => {
+            this.ExpiryTime()
+            if (error instanceof HttpErrorResponse) {
+              switch ((<HttpErrorResponse>error).status) {
+                case 401:
+                  if (req.url.includes("login")) {
                     return this.generalErrorHandling(error);
-                }
-              } else {
-                return this.generalErrorHandling(error);
+                  }
+                  else {
+                    return this.logoutUser();
+                  }
+                default:
+                  return this.generalErrorHandling(error);
               }
+            } else {
+              return this.generalErrorHandling(error);
             }
-         ))}
-      }
-
-      addToken(req: HttpRequest<any>, token: any): HttpRequest<any> {
-        if (token != null) {
-          return req.clone({ setHeaders: { Authorization: 'Bearer ' + token } })
-        } else {
-          this.authenticationService.signOut();
-          return req.clone();
-        }
-      }
+          }
+        ))
+    }
+  }
+  ExpiryTime() {
+    var user = this.authenticationService.authenticatedUser
+    if (user.expiry && (new Date().getTime() - user.expiry > 7 * 60* 60 * 1000)) {
+      localStorage.removeItem('kokazUser')
+      console.log("true logout")
+      return this.logoutUser();
+    }
+  }
+  addToken(req: HttpRequest<any>, token: any): HttpRequest<any> {
+    if (token != null) {
+      return req.clone({ setHeaders: { Authorization: 'Bearer ' + token } })
+    } else {
+      this.authenticationService.signOut();
+      return req.clone();
+    }
+  }
 
   handle400Error(error) {
     if (error && error.status === 400 && error.error && error.error.error === 'invalid_grant') {
       // If we get a 400 and the error message is 'invalid_grant', the token is no longer valid so logout.
-    //  return this.logoutUser();
+      //  return this.logoutUser();
     }
     return this.generalErrorHandling(error);
 
