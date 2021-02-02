@@ -53,16 +53,17 @@
                                         [(ngModel)]="EditOrder.RecipientPhones[i]">
                                 </ng-container>
                             </div>
-                            <div class="col-md-3" *ngIf="order.CanEdit">
+                          
+
                                 <input type="text" maxlength="10"
                                     oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
-                                    style="width: 125px;" class="form-control" [ngModelOptions]="{standalone: true}"
+                                    placeholder="رقم هاتف جديد" *ngIf="order.CanEdit" style="width: 125px;" class="form-control" [ngModelOptions]="{standalone: true}"
                                     [(ngModel)]="EdittempPhone">
                                 <div *ngIf="!EdittempPhone&&EditOrder.RecipientPhones!=null&&EditOrder.RecipientPhones!=undefined&&EditOrder.RecipientPhones.length==0 && submitted"
                                     class="message">هاتف
                                     المستلم حقل مطلوب</div>
 
-                            </div>
+                            
 
                             <div class="col-2" *ngIf="order.CanEdit">
                                 <button type="button" class="btn" (click)="EditaddNewPhone()"><i
@@ -302,7 +303,9 @@
                         <td>
                             <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                                 (keyup.enter)="onEnter()" style="width: 125px;" [(ngModel)]="Order.RecipientName">
-                        </td>
+                                <div *ngIf="!Order.RecipientName && submitted" class="message">اسم المستلم  حقل مطلوب</div>
+
+                            </td>
                         <td>
                             <div *ngFor="let phone of Order.RecipientPhones;let i=index" class="col-md-3">
                                 <ng-container>
@@ -313,16 +316,16 @@
                                         [(ngModel)]="Order.RecipientPhones[i]">
                                 </ng-container>
                             </div>
-                            <div class="col-md-3">
+           
                                 <input type="text" maxlength="10"
                                     oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
                                     style="width: 125px;" class="form-control" [ngModelOptions]="{standalone: true}"
-                                    [(ngModel)]="tempPhone">
+                                    [(ngModel)]="tempPhone" placeholder="رقم هاتف جديد">
                                 <div *ngIf="!tempPhone&&Order.RecipientPhones!=null&&Order.RecipientPhones!=undefined&&Order.RecipientPhones.length==0 && submitted"
                                     class="message">هاتف
                                     المستلم حقل مطلوب</div>
 
-                            </div>
+                           
 
                             <div class="col-2">
                                 <button type="button" class="btn" (click)="addNewPhone()"><i

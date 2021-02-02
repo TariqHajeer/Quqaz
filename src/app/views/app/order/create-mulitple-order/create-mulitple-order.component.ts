@@ -234,21 +234,14 @@ export class CreateMulitpleOrderComponent implements OnInit {
       this.Order.RecipientPhones.push(this.tempPhone);
       this.tempPhone = ''
     }
-    // if (this.Order.RecipientPhones.length == 0) {
-    //   return;
-    // }
+   
 
-    // if (isNaN(this.Order.RegionId)) {
-    //   this.Order.RegionName = this.Order.RegionId.label;
-    //   this.Order.RegionId = null;
-    // }
-    // if (!this.Order.Code||!this.Order.RecipientName||
-    //   !this.Order.CountryId||!this.Order.Cost||
-    //   !this.Order.RecipientPhones||!this.Order.RegionId
-    //   ) {
-    //   this.submitted = true
-    //   return
-    // }
+    if (!this.Order.Code||!this.Order.RecipientName||
+      !this.Order.CountryId||this.Order.RecipientPhones.length == 0
+      ) {
+      this.submitted = true
+      return
+    }
     var country = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.CountryName = country.name
     var regin = this.Regions.find(c => c.id == this.Order.RegionId)
