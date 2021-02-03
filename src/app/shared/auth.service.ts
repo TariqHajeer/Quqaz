@@ -54,7 +54,7 @@ export class AuthService {
   public get authenticatedUser(): any {
     var auth: any = this.localStorageService.getItem(this.localStorageKey);
     if (Object.keys(auth).length === 0 && auth.constructor === Object) {
-      return {};
+      return null;
     } else {
       return auth;
     }
