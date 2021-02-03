@@ -13,9 +13,11 @@ export class JwtInterceptor implements HttpInterceptor {
 
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
-    if (this.authenticationService.authenticatedUser != null) {
+  
+    if (localStorage.getItem('token')!= null) {
+      
       const clonedReq = req.clone({
-        headers: req.headers.set('Authorization', 'Bearer ' + this.authenticationService.authenticatedUser)
+        headers: req.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'))
       }
       )
       
@@ -49,6 +51,7 @@ export class JwtInterceptor implements HttpInterceptor {
     var user = this.authenticationService.authenticatedUser
     if (user.expiry && (new Date().getTime() - user.expiry > 7 * 60* 60 * 1000)) {
       localStorage.removeItem('kokazUser')
+      localStorage.removeItem('token')
       console.log("true logout")
       return this.logoutUser();
     }

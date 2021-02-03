@@ -18,7 +18,7 @@ export class LocalStorageService {
 
   public getItem(itemKey: string) {
     if (this.isItemExist(itemKey))
-      return JSON.parse(window.localStorage.getItem(itemKey));
+      return window.localStorage.getItem(itemKey);
     return {};
   }
 }
