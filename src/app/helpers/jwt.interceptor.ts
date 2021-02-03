@@ -18,14 +18,11 @@ export class JwtInterceptor implements HttpInterceptor {
         headers: req.headers.set('Authorization', 'Bearer ' + this.authenticationService.authenticatedUser)
       }
       )
-      // var auth= JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
-      //     if(auth.expiry> new Date()){
-      //     localStorage.removeItem('kokazUser')
-      //     return this.logoutUser();
-      //     }
+      
       return next.handle(clonedReq).pipe(
         tap(
           succ => {
+            console.log('true')
             this.ExpiryTime()
           },
           error => {

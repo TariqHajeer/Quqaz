@@ -77,15 +77,15 @@
 
                         </td>
                         <td (click)="Edit(order)">
-                            <h4 *ngIf="!order.CanEdit">{{order.RecipientPhones}}</h4>
+                            <h4 *ngIf="!order.CanEdit">{{order.RecipientPhone}}</h4>
 
 
 
                             <input type="text" maxlength="10"
                                 oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
-                                placeholder="رقم هاتف جديد" *ngIf="order.CanEdit" style="width: 125px;"
-                                class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="EdittempPhone">
-                            <div *ngIf="!EdittempPhone&&EditOrder.RecipientPhones!=null&&EditOrder.RecipientPhones!=undefined&&EditOrder.RecipientPhones.length==0 && Editsubmitted"
+                                 *ngIf="order.CanEdit" style="width: 125px;"
+                                class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.RecipientPhone">
+                            <div *ngIf="!EditOrder.RecipientPhone&& Editsubmitted"
                                 class="message">رقم الهاتف
                                  حقل مطلوب</div>
 
@@ -216,8 +216,8 @@
                             <input type="text" maxlength="10"
                                 oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
                                 style="width: 125px;" class="form-control" [ngModelOptions]="{standalone: true}"
-                                (keyup.enter)="onEnter()" [(ngModel)]="tempPhone" >
-                            <div *ngIf="!tempPhone&&Order.RecipientPhones!=null&&Order.RecipientPhones!=undefined&&Order.RecipientPhones.length==0 && submitted"
+                                (keyup.enter)="onEnter()" [(ngModel)]="Order.RecipientPhone" >
+                            <div *ngIf="!Order.RecipientPhone&& submitted"
                                 class="message">رقم الهاتف
                                  حقل مطلوب</div>
                         </td>

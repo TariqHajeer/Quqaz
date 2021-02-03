@@ -15,7 +15,7 @@ import { City } from 'src/app/Models/Cities/city.Model';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { CreateOrdersFromEmployee, OrderItem } from 'src/app/Models/order/create-orders-from-employee.model';
-import { CreateOrderFromClient } from 'src/app/Models/order/create-order-from-client.model';
+import { CreateMultipleOrder } from 'src/app/Models/order/create-multiple-order';
 import { OrderType } from 'src/app/Models/OrderTypes/order-type.model';
 import { Region } from 'src/app/Models/Regions/region.model';
 import { User } from 'src/app/Models/user/user.model';
@@ -35,8 +35,8 @@ export class CreateMulitpleOrderComponent implements OnInit {
     public userService: UserService,
     private notifications: NotificationsService) { }
 
-  Order: CreateOrderFromClient
-  EditOrder: CreateOrderFromClient
+  Order: CreateMultipleOrder
+  EditOrder: CreateMultipleOrder
   submitted = false;
   Editsubmitted=false
   orderPlace: NameAndIdDto[] = []
@@ -54,8 +54,8 @@ export class CreateMulitpleOrderComponent implements OnInit {
   Editcount
   count
   filter: OrderFilter
-  tempPhone: string;
-  EdittempPhone: string
+  //tempPhone: string;
+ // EdittempPhone: string
   //selectedOrder: any;
   cityapi = "Country"
   regionapi = "Region"
@@ -63,8 +63,8 @@ export class CreateMulitpleOrderComponent implements OnInit {
   Orders: any[] = []
   //CanEdit: boolean[] = []
   ngOnInit(): void {
-    this.Order = new CreateOrderFromClient();
-    this.EditOrder = new CreateOrderFromClient();
+    this.Order = new CreateMultipleOrder();
+    this.EditOrder = new CreateMultipleOrder();
     this.orderType = new OrderType
     this.EditorderType = new OrderType
     this.OrderItem = new OrderItem
@@ -128,87 +128,87 @@ export class CreateMulitpleOrderComponent implements OnInit {
       }
     )
   }
-  submitordertype: boolean = false
-  AddOrderType() {
-    if (!this.orderType || !this.count) {
-      this.submitordertype = true
-      return
-    }
-    else this.submitordertype = false
-    if (this.orderTypes.filter(o => o.name == this.orderType.name).length < 1) {
-      this.customerService.Create(this.ordertypeapi, this.orderType).subscribe(res => {
-        //console.log(res)
-      })
-    }
-    this.OrderItem.OrderTypeId = this.orderType.id
-    this.OrderItem.OrderTypeName = this.orderType.name
-    this.OrderItem.Count = this.count
-    this.Order.OrderItem.push(this.OrderItem)
-    this.orderTypes = this.orderTypes.filter(o => o != this.orderType)
-    this.OrderItem = new OrderItem
-    this.orderType = new OrderType
-    this.count = null
+  // submitordertype: boolean = false
+  // AddOrderType() {
+  //   if (!this.orderType || !this.count) {
+  //     this.submitordertype = true
+  //     return
+  //   }
+  //   else this.submitordertype = false
+  //   if (this.orderTypes.filter(o => o.name == this.orderType.name).length < 1) {
+  //     this.customerService.Create(this.ordertypeapi, this.orderType).subscribe(res => {
+  //       //console.log(res)
+  //     })
+  //   }
+  //   this.OrderItem.OrderTypeId = this.orderType.id
+  //   this.OrderItem.OrderTypeName = this.orderType.name
+  //   this.OrderItem.Count = this.count
+  //   this.Order.OrderItem.push(this.OrderItem)
+  //   this.orderTypes = this.orderTypes.filter(o => o != this.orderType)
+  //   this.OrderItem = new OrderItem
+  //   this.orderType = new OrderType
+  //   this.count = null
 
-  }
-  ///// edit ordertype: add and delete ordertype 
-  EditAddOrderType() {
-    if (!this.orderType || !this.count) {
-      this.submitordertype = true
-      return
-    }
-    else this.submitordertype = false
-    if (this.orderTypes.filter(o => o.name == this.orderType.name).length < 1) {
-      this.customerService.Create(this.ordertypeapi, this.orderType).subscribe(res => {
-        //console.log(res)
-      })
-    }
-    this.OrderItem.OrderTypeId = this.orderType.id
-    this.OrderItem.OrderTypeName = this.orderType.name
-    this.OrderItem.Count = this.count
-    this.EditOrder.OrderItem.push(this.OrderItem)
-    this.orderTypes = this.orderTypes.filter(o => o != this.orderType)
-    this.OrderItem = new OrderItem
-    this.orderType = new OrderType
-    this.count = null
+  // }
+  // ///// edit ordertype: add and delete ordertype 
+  // EditAddOrderType() {
+  //   if (!this.orderType || !this.count) {
+  //     this.submitordertype = true
+  //     return
+  //   }
+  //   else this.submitordertype = false
+  //   if (this.orderTypes.filter(o => o.name == this.orderType.name).length < 1) {
+  //     this.customerService.Create(this.ordertypeapi, this.orderType).subscribe(res => {
+  //       //console.log(res)
+  //     })
+  //   }
+  //   this.OrderItem.OrderTypeId = this.orderType.id
+  //   this.OrderItem.OrderTypeName = this.orderType.name
+  //   this.OrderItem.Count = this.count
+  //   this.EditOrder.OrderItem.push(this.OrderItem)
+  //   this.orderTypes = this.orderTypes.filter(o => o != this.orderType)
+  //   this.OrderItem = new OrderItem
+  //   this.orderType = new OrderType
+  //   this.count = null
 
-  }
-  clickOrderItem(order) {
-    this.EditOrder = order
-  }
-  tempEditOrderType
-  EditOrderType(OrderType: OrderItem) {
-    OrderType.CanEdit = true
-    this.EditorderType =this.AllorderTypes.find(o=>o.id==OrderType.OrderTypeId) 
-    this.Editcount = OrderType.Count
-    this.tempEditOrderType = Object.assign({}, OrderType);
-  }
-  SaveOrderType(OrderType) {
-    this.EditOrderItem.CanEdit = false
-    this.EditOrderItem.Count = this.Editcount
-    this.EditOrderItem.OrderTypeName = this.EditorderType.name
-    this.EditOrderItem.OrderTypeId = this.EditorderType.id
-    OrderType = Object.assign(OrderType, this.EditOrderItem);
-  }
-  deleteOrderTypeOnEdit(OrderType) {
-    this.EditOrder.OrderItem = this.EditOrder.OrderItem.filter(o => o != OrderType)
+  // }
+  // clickOrderItem(order) {
+  //   this.EditOrder = order
+  // }
+  // tempEditOrderType
+  // EditOrderType(OrderType: OrderItem) {
+  //   OrderType.CanEdit = true
+  //   this.EditorderType =this.AllorderTypes.find(o=>o.id==OrderType.OrderTypeId) 
+  //   this.Editcount = OrderType.Count
+  //   this.tempEditOrderType = Object.assign({}, OrderType);
+  // }
+  // SaveOrderType(OrderType) {
+  //   this.EditOrderItem.CanEdit = false
+  //   this.EditOrderItem.Count = this.Editcount
+  //   this.EditOrderItem.OrderTypeName = this.EditorderType.name
+  //   this.EditOrderItem.OrderTypeId = this.EditorderType.id
+  //   OrderType = Object.assign(OrderType, this.EditOrderItem);
+  // }
+  // deleteOrderTypeOnEdit(OrderType) {
+  //   this.EditOrder.OrderItem = this.EditOrder.OrderItem.filter(o => o != OrderType)
 
-  }
-  deleteOrderType(OrderType) {
-    this.Order.OrderItem = this.Order.OrderItem.filter(o => o != OrderType)
+  // }
+  // deleteOrderType(OrderType) {
+  //   this.Order.OrderItem = this.Order.OrderItem.filter(o => o != OrderType)
 
-  }
-  CansleEditOrderType(OrderType) {
-    this.tempEditOrderType.CanEdit = false
-    OrderType = Object.assign(OrderType, this.tempEditOrderType);
+  // }
+  // CansleEditOrderType(OrderType) {
+  //   this.tempEditOrderType.CanEdit = false
+  //   OrderType = Object.assign(OrderType, this.tempEditOrderType);
 
-  }
+  // }
   changeCountry() {
-    this.Region = []
-    this.Order.RegionId = null
+    // this.Region = []
+    // this.Order.RegionId = null
     var city = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.Cost = city.deliveryCost
-    this.Region = this.Regions.filter(r => r.country.id == this.Order.CountryId)
-    this.Order.RegionId = this.Region[0].id
+    // this.Region = this.Regions.filter(r => r.country.id == this.Order.CountryId)
+    // this.Order.RegionId = this.Region[0].id
   }
   showMessageCode: boolean = false
   CheckCode() {
@@ -235,26 +235,21 @@ export class CreateMulitpleOrderComponent implements OnInit {
       })
     }
   }
-  addNewPhone() {
-    this.Order.RecipientPhones.push(this.tempPhone);
-    this.tempPhone = '';
-  }
-  EditaddNewPhone() {
-    this.EditOrder.RecipientPhones.push(this.EdittempPhone);
-    this.EdittempPhone = '';
-  }
-  Validation(){
-    
-  }
+  // addNewPhone() {
+  //   this.Order.RecipientPhones.push(this.tempPhone);
+  //   this.tempPhone = '';
+  // }
+  // EditaddNewPhone() {
+  //   this.EditOrder.RecipientPhones.push(this.EdittempPhone);
+  //   this.EdittempPhone = '';
+  // }
+
   onEnter() {
-    if (this.tempPhone != '' && this.tempPhone != undefined) {
-      this.Order.RecipientPhones.push(this.tempPhone);
-      this.tempPhone = ''
-    }
+   
    
 
     if (!this.Order.Code||!this.Order.ClientId||
-      !this.Order.CountryId||this.Order.RecipientPhones.length == 0
+      !this.Order.CountryId||!this.Order.RecipientPhone
       ||!this.Order.AgentId ) {
       this.submitted = true
       return
@@ -271,19 +266,19 @@ export class CreateMulitpleOrderComponent implements OnInit {
     this.Order.AgentName = agent.name
     this.Orders.push(this.Order)
     this.submitted = false
-    this.Order = new CreateOrderFromClient
-    this.tempPhone = ''
+    this.Order = new CreateMultipleOrder
+   // this.tempPhone = ''
   }
-  tempEdit: CreateOrderFromClient
-  Edit(order: CreateOrderFromClient) {
+  tempEdit: CreateMultipleOrder
+  Edit(order: CreateMultipleOrder) {
     order.CanEdit = true
-    this.EdittempPhone=order.RecipientPhones[0]
+   // this.EdittempPhone=order.RecipientPhone
     this.tempEdit = Object.assign({}, order);
     this.EditOrder = order
   }
-  Save(order: CreateOrderFromClient) {
+  Save(order: CreateMultipleOrder) {
     if (!this.EditOrder.Code||!this.EditOrder.ClientId||
-      !this.EditOrder.CountryId||this.EditOrder.RecipientPhones.length == 0
+      !this.EditOrder.CountryId||!this.EditOrder.RecipientPhone
       ||!this.EditOrder.AgentId||!this.EditOrder.OrderplacedId ) {
       this.Editsubmitted = true
       return
@@ -299,12 +294,12 @@ export class CreateMulitpleOrderComponent implements OnInit {
     this.EditOrder.ClientName = client.name
     var agent = this.Agents.find(c => c.id == this.EditOrder.AgentId)
     this.EditOrder.AgentName = agent.name
-    this.EditOrder.RecipientPhones[0]= this.EdittempPhone
+   // this.EditOrder.RecipientPhone= this.EdittempPhone
     order = Object.assign(order, this.EditOrder);
 
   }
 
-  CansleEdit(order: CreateOrderFromClient) {
+  CansleEdit(order: CreateMultipleOrder) {
     this.tempEdit.CanEdit = false
     order = Object.assign(order, this.tempEdit);
   }
