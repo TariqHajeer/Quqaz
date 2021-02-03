@@ -45,7 +45,8 @@ export class JwtInterceptor implements HttpInterceptor {
             }
           }
         ))
-    }
+    } else
+    return next.handle(req.clone());
   }
   ExpiryTime() {
     var user = this.authenticationService.authenticatedUser
