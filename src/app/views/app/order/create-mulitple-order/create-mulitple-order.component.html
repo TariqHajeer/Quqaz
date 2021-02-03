@@ -30,7 +30,7 @@
                             <h4 *ngIf="!order.CanEdit">{{order.Code}}</h4>
                             <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                                 [(ngModel)]="EditOrder.Code" (keyup)="CheckCodeForEdit()" style="width: 125px;"
-                                *ngIf="order.CanEdit">
+                                *ngIf="order.CanEdit" tabindex="1">
                             <div *ngIf="!EditOrder.Code && Editsubmitted" class="message">كود الشحنة حقل مطلوب</div>
 
                         </td>
@@ -43,7 +43,7 @@
                                 </ng-option>
                             </ng-select>
                             <div *ngIf="!EditOrder.ClientId && Editsubmitted" class="message">العميل حقل مطلوب</div>
-                            <div *ngIf="showMessageCode" class="message">يوجد شحنة مسبقا لهذا العميل بنفس الكود</div>
+                            <div *ngIf="EditOrder.showEditMessageCode" class="message">يوجد شحنة مسبقا لهذا العميل بنفس الكود</div>
 
                         </td>
                         <td (click)="Edit(order)">
@@ -77,15 +77,15 @@
 
                         </td>
                         <td (click)="Edit(order)">
-                            <h4 *ngIf="!order.CanEdit">{{order.RecipientPhone}}</h4>
+                            <h4 *ngIf="!order.CanEdit">{{order.RecipientPhones}}</h4>
 
 
 
                             <input type="text" maxlength="10"
                                 oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
                                  *ngIf="order.CanEdit" style="width: 125px;"
-                                class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.RecipientPhone">
-                            <div *ngIf="!EditOrder.RecipientPhone&& Editsubmitted"
+                                class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="EditOrder.RecipientPhones">
+                            <div *ngIf="!EditOrder.RecipientPhones&& Editsubmitted"
                                 class="message">رقم الهاتف
                                  حقل مطلوب</div>
 
@@ -170,7 +170,7 @@
 
                         <td>
                             <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                                [(ngModel)]="Order.Code" (keyup)="CheckCode()" (keyup.enter)="onEnter()"
+                               #code [(ngModel)]="Order.Code" (keyup)="CheckCode()" (keyup.enter)="onEnter()"
                                 style="width: 125px;">
                             <div *ngIf="!Order.Code && submitted" class="message">كود الشحنة حقل مطلوب</div>
                         </td>
@@ -216,8 +216,8 @@
                             <input type="text" maxlength="10"
                                 oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
                                 style="width: 125px;" class="form-control" [ngModelOptions]="{standalone: true}"
-                                (keyup.enter)="onEnter()" [(ngModel)]="Order.RecipientPhone" >
-                            <div *ngIf="!Order.RecipientPhone&& submitted"
+                                (keyup.enter)="onEnter()" [(ngModel)]="Order.RecipientPhones" >
+                            <div *ngIf="!Order.RecipientPhones&& submitted"
                                 class="message">رقم الهاتف
                                  حقل مطلوب</div>
                         </td>
@@ -338,7 +338,7 @@
                                 data-whatever="@getbootstrap">نوع
                                 الطلبية</button>
 
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                            <div class="modal fade" id="exampleModal" tabindex="1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">

@@ -8,10 +8,10 @@ export class CreateMultipleOrder {
     OrderplacedName:string
     Cost:number
     RecipientName:string 
-    RecipientPhone:string
+    RecipientPhones:string
     ClientId:number
     ClientName:string
     Amount:number
     CanEdit:boolean=false 
-
+    showEditMessageCode:boolean=false 
 }

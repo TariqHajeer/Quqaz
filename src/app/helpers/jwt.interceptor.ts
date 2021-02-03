@@ -22,7 +22,6 @@ export class JwtInterceptor implements HttpInterceptor {
       return next.handle(clonedReq).pipe(
         tap(
           succ => {
-            console.log('true')
             this.ExpiryTime()
           },
           error => {

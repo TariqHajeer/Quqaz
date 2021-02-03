@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActionEventArgs, EditSettingsModel, GridComponent, IEditCell, SaveEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { CustomService } from 'src/app/services/custom.service';
@@ -8,7 +8,6 @@ import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment.prod';
 import { OrderService } from 'src/app/services/order.service';
 import { ClientService } from '../../client/client.service';
-
 import { concat, Observable, of, Subject } from 'rxjs';
 import { catchError, delay, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { City } from 'src/app/Models/Cities/city.Model';
@@ -229,9 +228,9 @@ export class CreateMulitpleOrderComponent implements OnInit {
       this.orderservice.chekcCode(this.Order.Code, this.Order.ClientId).subscribe(res => {
        
         if (res||this.Orders.filter(o=>o.Code==this.EditOrder.Code&&o.Code!=this.tempcode).length>0) {
-          this.showMessageCode = true
+          this.EditOrder.showEditMessageCode = true
         } else
-          this.showMessageCode = false
+          this.EditOrder.showEditMessageCode = false
       })
     }
   }
@@ -243,13 +242,10 @@ export class CreateMulitpleOrderComponent implements OnInit {
   //   this.EditOrder.RecipientPhones.push(this.EdittempPhone);
   //   this.EdittempPhone = '';
   // }
-
+  @ViewChild('code') codeElement: ElementRef;
   onEnter() {
-   
-   
-
     if (!this.Order.Code||!this.Order.ClientId||
-      !this.Order.CountryId||!this.Order.RecipientPhone
+      !this.Order.CountryId||!this.Order.RecipientPhones
       ||!this.Order.AgentId ) {
       this.submitted = true
       return
@@ -268,6 +264,9 @@ export class CreateMulitpleOrderComponent implements OnInit {
     this.submitted = false
     this.Order = new CreateMultipleOrder
    // this.tempPhone = ''
+   setTimeout(()=>{ // this will make the execution after the above boolean has changed
+    this.codeElement.nativeElement.focus();
+  },0);  
   }
   tempEdit: CreateMultipleOrder
   Edit(order: CreateMultipleOrder) {
@@ -278,7 +277,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
   }
   Save(order: CreateMultipleOrder) {
     if (!this.EditOrder.Code||!this.EditOrder.ClientId||
-      !this.EditOrder.CountryId||!this.EditOrder.RecipientPhone
+      !this.EditOrder.CountryId||!this.EditOrder.RecipientPhones
       ||!this.EditOrder.AgentId||!this.EditOrder.OrderplacedId ) {
       this.Editsubmitted = true
       return
