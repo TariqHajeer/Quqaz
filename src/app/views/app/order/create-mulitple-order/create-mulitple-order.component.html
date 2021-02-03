@@ -116,7 +116,7 @@
                             <h4 *ngIf="!order.CanEdit">{{order.Amount}}</h4>
                             <input type="number" class="form-control" [ngModelOptions]="{standalone: true}"
                             style="width: 125px;" *ngIf="order.CanEdit" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                            [(ngModel)]="EditOrder.Amount">
+                            [(ngModel)]="EditOrder.Amount" #Amount="ngModel" >
                         <div *ngIf="!EditOrder.Amount && Editsubmitted" class="message">كلفة الشحنة حقل مطلوب</div>
                  
                         </td>

@@ -211,6 +211,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
   }
   showMessageCode: boolean = false
   CheckCode() {
+    if (!this.Order.Code||!this.Order.ClientId) return
     if (this.Order.Code != null && this.Order.Code != undefined) {
       this.orderservice.chekcCode(this.Order.Code, this.Order.ClientId).subscribe(res => {
        
@@ -224,8 +225,9 @@ export class CreateMulitpleOrderComponent implements OnInit {
   tempcode
   CheckCodeForEdit(){
     this.tempcode=this.EditOrder.Code
-    if (this.Order.Code != null && this.Order.Code != undefined) {
-      this.orderservice.chekcCode(this.Order.Code, this.Order.ClientId).subscribe(res => {
+    if (!this.EditOrder.Code || !this.EditOrder.ClientId)return
+    if (this.EditOrder.Code != null && this.EditOrder.Code != undefined) {
+      this.orderservice.chekcCode(this.EditOrder.Code, this.EditOrder.ClientId).subscribe(res => {
        
         if (res||this.Orders.filter(o=>o.Code==this.EditOrder.Code&&o.Code!=this.tempcode).length>0) {
           this.EditOrder.showEditMessageCode = true
@@ -267,6 +269,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
    setTimeout(()=>{ // this will make the execution after the above boolean has changed
     this.codeElement.nativeElement.focus();
   },0);  
+  this.GetorderPlace()
   }
   tempEdit: CreateMultipleOrder
   Edit(order: CreateMultipleOrder) {
