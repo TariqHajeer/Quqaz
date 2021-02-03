@@ -22,8 +22,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.langService.init();
-    // if(localStorage.getItem('kokazUser')==null||localStorage.getItem('kokazUser')==undefined||localStorage.getItem('kokazUser')=='')
-    // return this._router.navigate(['/user/login']);
+    if(localStorage.getItem('kokazUser')==null||localStorage.getItem('kokazUser')==undefined||localStorage.getItem('kokazUser')=='')
+    return this._router.navigate(['/user/login']);
     // this.authService.TestLogin();
     
 
