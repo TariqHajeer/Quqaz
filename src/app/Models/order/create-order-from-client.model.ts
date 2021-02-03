@@ -19,6 +19,10 @@ export class CreateOrderFromClient {
     OrderItem:OrderItem[]
     CanEdit:boolean=false
     OrderplacedId:number
+    OrderplacedName:string
     AgentId:number
+    AgentName:string
     ClientId:number
+    Amount:number
+    ClientName
 }

@@ -38,6 +38,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
   Order: CreateOrderFromClient
   EditOrder: CreateOrderFromClient
   submitted = false;
+  Editsubmitted=false
   orderPlace: NameAndIdDto[] = []
   MoenyPlaced: NameAndIdDto[] = []
   clients: Client[] = []
@@ -211,16 +212,29 @@ export class CreateMulitpleOrderComponent implements OnInit {
   }
   showMessageCode: boolean = false
   CheckCode() {
-    // if (this.Order.Code != null && this.Order.Code != undefined) {
-    //   this.orderservice.chekcCode(this.Order.Code, "").subscribe(res => {
-    //     if (res) {
-    //       this.showMessageCode = true
-    //     } else
-    //       this.showMessageCode = false
-    //   })
-    // }
+    if (this.Order.Code != null && this.Order.Code != undefined) {
+      this.orderservice.chekcCode(this.Order.Code, this.Order.ClientId).subscribe(res => {
+       
+        if (res||this.Orders.filter(o=>o.Code==this.Order.Code).length>0) {
+          this.showMessageCode = true
+        } else
+          this.showMessageCode = false
+      })
+    }
   }
-
+  tempcode
+  CheckCodeForEdit(){
+    this.tempcode=this.EditOrder.Code
+    if (this.Order.Code != null && this.Order.Code != undefined) {
+      this.orderservice.chekcCode(this.Order.Code, this.Order.ClientId).subscribe(res => {
+       
+        if (res||this.Orders.filter(o=>o.Code==this.EditOrder.Code&&o.Code!=this.tempcode).length>0) {
+          this.showMessageCode = true
+        } else
+          this.showMessageCode = false
+      })
+    }
+  }
   addNewPhone() {
     this.Order.RecipientPhones.push(this.tempPhone);
     this.tempPhone = '';
@@ -229,6 +243,9 @@ export class CreateMulitpleOrderComponent implements OnInit {
     this.EditOrder.RecipientPhones.push(this.EdittempPhone);
     this.EdittempPhone = '';
   }
+  Validation(){
+    
+  }
   onEnter() {
     if (this.tempPhone != '' && this.tempPhone != undefined) {
       this.Order.RecipientPhones.push(this.tempPhone);
@@ -236,16 +253,22 @@ export class CreateMulitpleOrderComponent implements OnInit {
     }
    
 
-    if (!this.Order.Code||!this.Order.RecipientName||
+    if (!this.Order.Code||!this.Order.ClientId||
       !this.Order.CountryId||this.Order.RecipientPhones.length == 0
-      ) {
+      ||!this.Order.AgentId ) {
       this.submitted = true
       return
-    }
+    }else  this.submitted = false
     var country = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.CountryName = country.name
-    var regin = this.Regions.find(c => c.id == this.Order.RegionId)
-    this.Order.RegionName = regin.name
+    // var regin = this.Regions.find(c => c.id == this.Order.RegionId)
+    // this.Order.RegionName = regin.name
+    var orderplace = this.orderPlace.find(c => c.id == this.Order.OrderplacedId)
+    this.Order.OrderplacedName = orderplace.name
+    var client = this.clients.find(c => c.id == this.Order.ClientId)
+    this.Order.ClientName = client.name
+    var agent = this.Agents.find(c => c.id == this.Order.AgentId)
+    this.Order.AgentName = agent.name
     this.Orders.push(this.Order)
     this.submitted = false
     this.Order = new CreateOrderFromClient
@@ -254,11 +277,29 @@ export class CreateMulitpleOrderComponent implements OnInit {
   tempEdit: CreateOrderFromClient
   Edit(order: CreateOrderFromClient) {
     order.CanEdit = true
+    this.EdittempPhone=order.RecipientPhones[0]
     this.tempEdit = Object.assign({}, order);
     this.EditOrder = order
   }
   Save(order: CreateOrderFromClient) {
+    if (!this.EditOrder.Code||!this.EditOrder.ClientId||
+      !this.EditOrder.CountryId||this.EditOrder.RecipientPhones.length == 0
+      ||!this.EditOrder.AgentId||!this.EditOrder.OrderplacedId ) {
+      this.Editsubmitted = true
+      return
+    }else this.Editsubmitted = false
     this.EditOrder.CanEdit = false
+    var country = this.cities.find(c => c.id == this.EditOrder.CountryId)
+    this.EditOrder.CountryName = country.name
+    // var regin = this.Regions.find(c => c.id == this.Order.RegionId)
+    // this.Order.RegionName = regin.name
+    var orderplace = this.orderPlace.find(c => c.id == this.EditOrder.OrderplacedId)
+    this.EditOrder.OrderplacedName = orderplace.name
+    var client = this.clients.find(c => c.id == this.EditOrder.ClientId)
+    this.EditOrder.ClientName = client.name
+    var agent = this.Agents.find(c => c.id == this.EditOrder.AgentId)
+    this.EditOrder.AgentName = agent.name
+    this.EditOrder.RecipientPhones[0]= this.EdittempPhone
     order = Object.assign(order, this.EditOrder);
 
   }
