@@ -15,27 +15,37 @@ export class ViewNewOrderComponent implements OnInit {
   dataSource
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  orders:Order[]=[]
-  noDataFound:boolean=false
+  orders: Order[] = []
+  noDataFound: boolean = false
 
-  constructor(private OrderService:OrderService) { }
+  constructor(private OrderService: OrderService) { }
 
   ngOnInit(): void {
     this.get()
   }
   get() {
-    this.OrderService.GetNewOrder().subscribe(res=>{
-      this.orders=res
-      if(this.orders.length==0)
-      this.noDataFound=true
-      else  this.noDataFound=false
+    this.OrderService.GetNewOrder().subscribe(res => {
+      this.orders = res
+      if (this.orders.length == 0)
+        this.noDataFound = true
+      else this.noDataFound = false
       this.dataSource = new MatTableDataSource(this.orders);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
-      this.displayedColumns = ['code','deliveryCost','cost','recipientName',
-      'recipientPhones','address','createdBy','date','diliveryDate','note','client','country'
-      ,'region','monePlaced','orderplaced','agent'];
+      this.displayedColumns = ['code', 'cost', 'recipientName',
+        'recipientPhones', 'address', 'note', 'client', 'country'
+        , 'region', 'agent', 'Accept', 'DisAccept'];
     })
-   
+
+  }
+  Accept(elementid) {
+    this.OrderService.Accept(elementid).subscribe(res=>{
+      this.get()
+    })
+  }
+  DisAccept(elementid) {
+    this.OrderService.DisAccept(elementid).subscribe(res=>{
+      this.get()
+    })
   }
 }
