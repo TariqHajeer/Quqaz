@@ -59,6 +59,10 @@ export class AuthService {
       return auth;
     }
   }
+  IsExpire(){
+    var user= this.authenticatedUser;
+    
+  }
 
   register(credentials: ICreateCredentials) {
 
