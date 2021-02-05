@@ -58,7 +58,7 @@
                   <form>
                     <div class="form-group">
                       <label for="phone" class="col-form-label">الرقم:</label>
-                      <input id="phone" type="text" maxlength="10"
+                      <input id="phone" type="text" maxlength="11"
                         oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
                         class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="phone.phone"> </div>
                     <button type="button" class="btn btn-primary" (click)="addNewPhone()">اضافة</button>

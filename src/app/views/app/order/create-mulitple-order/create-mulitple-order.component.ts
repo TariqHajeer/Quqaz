@@ -53,6 +53,8 @@ export class CreateMulitpleOrderComponent implements OnInit {
   Editcount
   count
   filter: OrderFilter
+  CountryId
+  AgentId
   //tempPhone: string;
   // EdittempPhone: string
   //selectedOrder: any;
@@ -134,7 +136,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
           if (res || this.Orders.filter(o => o.Code == this.EditOrder.Code && o != this.tempcode).length > 0) {
             order.showEditMessageCode = true
           } else
-          order.showEditMessageCode = false
+            order.showEditMessageCode = false
       })
     }
   }
@@ -179,7 +181,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
     if (!this.EditOrder.Code || !this.EditOrder.ClientId ||
       !this.EditOrder.CountryId || !this.EditOrder.RecipientPhones
       || !this.EditOrder.AgentId || !this.EditOrder.OrderplacedId
-      ||order.showEditMessageCode) {
+      || order.showEditMessageCode) {
       this.Editsubmitted = true
       return
     } else this.Editsubmitted = false
@@ -198,15 +200,19 @@ export class CreateMulitpleOrderComponent implements OnInit {
 
   CansleEdit(order: CreateMultipleOrder) {
     this.tempEdit.CanEdit = false
-    order.showEditMessageCode=false
+    order.showEditMessageCode = false
     this.Editsubmitted = false
     order = Object.assign(order, this.tempEdit);
   }
   delete(order) {
     this.Orders = this.Orders.filter(o => o != order)
   }
-
+  submitedSave = false
   AddOrder() {
+    if (!this.CountryId || !this.AgentId || this.Orders == []) {
+      this.submitedSave=true
+      return
+    }
     this.orderservice.createMultiple(this.Orders).subscribe(res => {
       this.notifications.create('success', 'تم اضافة الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Orders = []

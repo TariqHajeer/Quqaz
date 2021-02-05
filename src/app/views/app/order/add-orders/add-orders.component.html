@@ -57,7 +57,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    <label>الكلفة<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <label>الكلفة الكلية<span class="text-danger text-one align-bottom mx-1">*</span></label>
                     <input type="number" class="form-control" [ngModelOptions]="{standalone: true}"
                         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                         [(ngModel)]="Order.Amount">
@@ -266,7 +266,7 @@
                 <div *ngFor="let phone of Order.RecipientPhones;let i=index" class="col-md-3">
                     <ng-container>
                         <label>هاتف المستلم-{{i+1}}</label>
-                        <input type="text" maxlength="10"
+                        <input type="text" maxlength="11"
                             oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
                             class="form-control" [ngModelOptions]="{standalone: true}"
                             [(ngModel)]="Order.RecipientPhones[i]">
@@ -274,7 +274,7 @@
                 </div>
                 <div class="col-md-3">
                     <label>هاتف المستلم<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                    <input type="text" maxlength="10"
+                    <input type="text" maxlength="11"
                         oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
                         class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="tempPhone">
                     <div *ngIf="!tempPhone&&Order.RecipientPhones!=null&&Order.RecipientPhones!=undefined&&Order.RecipientPhones.length==0 && submitted" class="invalid-tooltip">هاتف

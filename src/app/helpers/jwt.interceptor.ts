@@ -80,6 +80,7 @@ export class JwtInterceptor implements HttpInterceptor {
   logoutUser() {
     // Route to the login page (implementation up to you)
     const authService = this.injector.get(AuthService);
+    localStorage.removeItem('token') 
     authService.signOut();
     return observableThrowError("");
   }

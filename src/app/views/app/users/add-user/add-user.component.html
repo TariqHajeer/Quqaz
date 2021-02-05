@@ -99,14 +99,14 @@
     <div *ngFor="let phone of CreateUser.Phones;let i=index" class="col-md-3">
       <ng-container>
         <label>رقم الهاتف-{{i+1}}</label>
-        <input type="text" maxlength="10"
+        <input type="text" maxlength="11"
           oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" class="form-control"
           [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Phones[i]">
       </ng-container>
     </div>
     <div class="col-md-3">
       <label>رقم الهاتف</label>
-      <input type="text" maxlength="10"
+      <input type="text" maxlength="11"
         oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" class="form-control"
         [ngModelOptions]="{standalone: true}" [(ngModel)]="tempPhone">
     </div>
