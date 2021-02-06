@@ -208,4 +208,5 @@ export class AddOrdersComponent implements OnInit {
     OrderType = Object.assign(OrderType, this.tempEditOrderType);
 
   }
+ 
 }

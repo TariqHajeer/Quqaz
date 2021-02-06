@@ -25,10 +25,10 @@ export class JwtInterceptor implements HttpInterceptor {
       return next.handle(clonedReq).pipe(
         tap(
           succ => {
-            this.ExpiryTime()
+           
           },
           error => {
-            this.ExpiryTime()
+         
             if (error instanceof HttpErrorResponse) {
               switch ((<HttpErrorResponse>error).status) {
                 case 401:
@@ -47,19 +47,19 @@ export class JwtInterceptor implements HttpInterceptor {
           }
         ))
     } else {
-      this.ExpiryTime();
+     
       return next.handle(req.clone());
 
     }
   }
-  ExpiryTime() {
-    var user = this.authenticationService.authenticatedUser
-    if (user == null || (user.expiry && (new Date().getTime() - user.expiry > 7 * 60 * 60 * 1000))) {
-      localStorage.removeItem('kokazUser')
-      localStorage.removeItem('token')
-      return this.logoutUser();
-    }
-  }
+  // ExpiryTime() {
+  //   var user = this.authenticationService.authenticatedUser
+  //   if (user == null || (user.expiry && (new Date().getTime() - user.expiry > 7 * 60 * 60 * 1000))) {
+  //     localStorage.removeItem('kokazUser')
+  //     localStorage.removeItem('token')
+  //     return this.logoutUser();
+  //   }
+  // }
   addToken(req: HttpRequest<any>, token: any): HttpRequest<any> {
     if (token != null) {
       return req.clone({ setHeaders: { Authorization: 'Bearer ' + token } })

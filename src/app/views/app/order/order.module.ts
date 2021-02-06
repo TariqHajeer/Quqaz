@@ -14,6 +14,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ViewNewOrderComponent } from './view-new-order/view-new-order.component';
 import { CreateMulitpleOrderComponent } from './create-mulitple-order/create-mulitple-order.component';
 import { GridAllModule, GridModule } from '@syncfusion/ej2-angular-grids';
+import { NgxPrintModule } from 'ngx-print';
 
 @NgModule({
   declarations: [ViewOrdersComponent,AddOrdersComponent,EditOrdersComponent,  ViewNewOrderComponent, CreateMulitpleOrderComponent],
@@ -29,6 +30,7 @@ import { GridAllModule, GridModule } from '@syncfusion/ej2-angular-grids';
     BsDatepickerModule,
     GridModule,
     GridAllModule,
+    NgxPrintModule
   ],schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class OrderModule { }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from 'src/app/shared/auth.guard';
 import { AddOrdersComponent } from './add-orders/add-orders.component';
 import { CreateMulitpleOrderComponent } from './create-mulitple-order/create-mulitple-order.component';
 import { EditOrdersComponent } from './edit-orders/edit-orders.component';
@@ -10,23 +11,23 @@ import { ViewOrdersComponent } from './view-orders/view-orders.component';
 const routes: Routes = [
   {
     path:'',
-    component:ViewOrdersComponent
+    component:ViewOrdersComponent ,canActivate: [AuthGuard],
   },
   {
     path:'addorder',
-    component:AddOrdersComponent
+    component:AddOrdersComponent ,canActivate: [AuthGuard],
   },
   {
     path:'addMulitpleOrders',
-    component:CreateMulitpleOrderComponent
+    component:CreateMulitpleOrderComponent ,canActivate: [AuthGuard],
   },
   {
     path:'editorder',
-    component:EditOrdersComponent
+    component:EditOrdersComponent ,canActivate: [AuthGuard],
   },
   {
     path:'neworders',
-    component:ViewNewOrderComponent
+    component:ViewNewOrderComponent ,canActivate: [AuthGuard],
   },
 ];
 

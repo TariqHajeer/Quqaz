@@ -1,4 +1,8 @@
-<form (ngSubmit)="AddOrder()">
+ <!-- [printStyle]="{div : {'color': 'red'}}"-->
+ <button printSectionId="demo"
+ styleSheetFile="/assets/css/vendor/bootstrap.min.css"[useExistingCss]="true"                                 
+ ngxPrint>print page</button>
+<form (ngSubmit)="AddOrder()" id="demo">
 
     <div class="card">
         <div class="card-body">
@@ -149,6 +153,7 @@
 
                                         </div>
                                         <div class="col-md-6">
+                                         
                                             <label>العدد</label>
                                             <input id="phone" type="number" maxlength="10"
                                                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"

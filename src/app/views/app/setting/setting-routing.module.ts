@@ -13,27 +13,33 @@ import { ShipmentsTypesComponent } from './shipments-types/shipments-types.compo
 const routes: Routes = [
   {
     path:'cities',
-    component:CitiesComponent
+    component:CitiesComponent,
+    canActivate: [AuthGuard],
   },
   {
     path:'regions',
-    component:RegionComponent
+    component:RegionComponent,
+    canActivate: [AuthGuard],
   },
   {
     path:'departments',
-    component:DepartmentsComponent
+    component:DepartmentsComponent,
+    canActivate: [AuthGuard],
   },
   {
     path:'exportTypes',
-    component:ExportsTypesComponent
+    component:ExportsTypesComponent,
+    canActivate: [AuthGuard],
   },
   {
     path:'importTypes',
-    component:ImportsTypesComponent
+    component:ImportsTypesComponent,
+    canActivate: [AuthGuard],
   },
    {
     path:'shipmentsTypes',
-    component:ShipmentsTypesComponent
+    component:ShipmentsTypesComponent,
+    canActivate: [AuthGuard],
   },
   {
     path:'coins',

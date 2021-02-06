@@ -28,21 +28,11 @@ export class AuthService implements OnDestroy{
   private localStorageKey: string = 'kokazUser';
   private permissionlocalStorageKey: string = 'permissions';
   ngOnDestroy(): void {
-    window.removeEventListener('storage', this.storageEventListener.bind(this));
   }
-  private storageEventListener(event: StorageEvent) {
-    if (event.storageArea === localStorage) {
-      if (event.key === 'logout-event') {
-      //  this._user.next(null);
-      }
-      if (event.key === 'login-event') {
-        this.startTokenTimer()
-      }
-    }
-  }
+ 
   constructor(private http:HttpClient,private localStorageService:LocalStorageService,
     private rout:Router) {
-      window.addEventListener('storage', this.storageEventListener.bind(this));
+      this.startTokenTimer()
     }
   baseUrl=environment.baseUrl;
   signIn(user: user):Observable<any> {
@@ -58,6 +48,7 @@ export class AuthService implements OnDestroy{
 
   signOut() {
     this.resetAuthenticated();
+    localStorage.removeItem('token')
     this.rout.navigate(['user/login']);  
   }
   Test(){
@@ -107,19 +98,12 @@ export class AuthService implements OnDestroy{
     if (!accessToken) {
       return 0;
     }
-    return 1 * 1 * 60 * 1000
+    return 1 * 60 * 60 * 1000
   }
-  private timer: Subscription;
   private startTokenTimer() {
     const timeout = this.getTokenRemainingTime()
-    this.timer = of(true)
-      .pipe(
-        delay(timeout),
-        tap(() => this.signOut())
-      )
-      .subscribe();
+    setTimeout(() =>this.signOut(),  timeout)
+   
   }
-  private stopTokenTimer() {
-    this.timer?.unsubscribe();
-  }
+ 
 }
