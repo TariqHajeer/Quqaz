@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from 'src/app/shared/auth.guard';
+import { UserPermission } from 'src/app/shared/auth.roles';
 import { CitiesComponent } from './cities/cities.component';
 import { CoinsComponent } from './coins/coins.component';
 import { DepartmentsComponent } from './departments/departments.component';
@@ -35,11 +37,15 @@ const routes: Routes = [
   },
   {
     path:'coins',
-    component:CoinsComponent
+    component:CoinsComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.AddClient,UserPermission.AddCountry]}
   },
   {
     path:'group',
-    component:GroupsComponent
+    component:GroupsComponent ,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.AddGroup,UserPermission.ShowGroup]}
   }
 
 ];

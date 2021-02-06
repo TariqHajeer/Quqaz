@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/app/HomePage']);
         localStorage.setItem('token',this.user.token)
         this.authService.setAuthenticatedUser(this.user);
-        //this.authService.setAuthenticatedUser(response);
+       // this.authService.setAuthenticatedUser(response);
         this.authService.setPermission(response.privileges);
 
 

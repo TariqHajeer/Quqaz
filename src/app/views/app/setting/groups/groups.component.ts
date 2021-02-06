@@ -62,6 +62,7 @@ export class GroupsComponent implements OnInit {
     this.Group = group;
     this.privilegesInGroup= this.Privileges.filter(p => this.Group.privilegesId.includes(p.id))
     this.userInGroup = this.Group.users;
+    
   }
 
   EditGroup(group:Group) {

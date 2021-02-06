@@ -19,6 +19,7 @@ export class JwtInterceptor implements HttpInterceptor {
       const clonedReq = req.clone({
         headers: req.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'))
       }
+      
       )
 
       return next.handle(clonedReq).pipe(

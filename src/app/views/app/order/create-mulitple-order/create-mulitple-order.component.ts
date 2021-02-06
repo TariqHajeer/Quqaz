@@ -213,6 +213,10 @@ export class CreateMulitpleOrderComponent implements OnInit {
       this.submitedSave=true
       return
     }
+    this.Orders.forEach(o=>{
+      o.CountryId=this.CountryId
+      o.AgentId=this.AgentId
+    })
     this.orderservice.createMultiple(this.Orders).subscribe(res => {
       this.notifications.create('success', 'تم اضافة الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Orders = []
