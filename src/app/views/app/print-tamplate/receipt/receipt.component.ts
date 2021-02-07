@@ -14,5 +14,7 @@ export class ReceiptComponent implements OnInit {
     this.orders=JSON.parse(localStorage.getItem('printorders'))
     console.log(this.orders)
   }
-
+  afterPrint(){
+    console.log("ggggggggggg")
+  }
 }
