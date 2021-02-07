@@ -1,0 +1,84 @@
+
+<div class="card">
+<div class="card-body">
+<h3 class="card-title" (click)=" print()">print</h3>
+<div class="row">
+    <div class="col-md-3">
+        <label>المندوب</label>
+        <ng-select [(ngModel)]="AgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+            name="Agent" (change)="ChangeAgentIdOrOrderplacedId()">
+            <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
+        </ng-select>
+    </div>
+    <div class="col-md-3">
+        <label>حالة الشحنة</label>
+        <ng-select [(ngModel)]="OrderplacedId" [ngModelOptions]="{standalone: true}"
+            [closeOnSelect]="true" name="Orderplaced" (change)="ChangeAgentIdOrOrderplacedId()">
+            <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}</ng-option>
+        </ng-select>
+    
+    </div>
+</div>
+</div>
+</div>
+<div class="example-container mat-elevation-z8" >
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()"
+                      [aria-label]="checkboxLabel()"
+                      >
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)"
+                      [aria-label]="checkboxLabel(row)"
+                     >
+        </mat-checkbox>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="code">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> كود </th>
+      <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.code}}</td>
+    </ng-container>
+    <ng-container matColumnDef="cost">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> كلفة الطلب</th>
+      <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.cost}}</td>
+    </ng-container>
+    <ng-container matColumnDef="country">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> المدينة</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.country!=null?element.country.name:null}}</td>
+    </ng-container>
+    <ng-container matColumnDef="region">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> المنطقة</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.region!=null?element.region.name:null}}</td>
+    </ng-container>    
+    <ng-container matColumnDef="orderplaced">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> حالة الشحنة</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.orderplaced!=null?element.orderplaced.name:null}}</td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+        (click)="selection.toggle(row)">
+    </tr>
+  </table>
+ <!--
+   <mat-paginator [length]="100"
+  [pageSize]="10"
+  [pageSizeOptions]="[ 10, 25,50, 100]">
+</mat-paginator>
+ --> 
+ <h5 style="padding-top: 20px; padding-right: 10px;"  *ngIf="noDataFound">لايوجد بيانات للعرض</h5>
+  
+  </div>
+<mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
+[pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
+

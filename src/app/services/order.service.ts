@@ -83,6 +83,9 @@ export class OrderService {
     params = params.append("id",id);
     return this.http.put<any>(this.controler+"DisAccept/"+id, { params: params })
     }
-    
+    MakeOrderInWay(ids){
+      return this.http.put<any>(this.controler,ids )
+      
+    }
 }
 

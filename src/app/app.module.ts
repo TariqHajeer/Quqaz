@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app.routing';
 import { AppComponent } from './app.component';
 import { ViewsModule } from './views/views.module';
@@ -16,6 +16,7 @@ import {StoreModule} from '@ngrx/store'
 import {StoreDevtoolsModule} from '@ngrx/store-devtools'
 import {EffectsModule } from '@ngrx/effects'
 import { NotificationsService } from 'angular2-notifications';
+//import { allIcons, NgxBootstrapIconsModule } from 'ngx-bootstrap-icons';
 
 @NgModule({
   imports: [
@@ -28,7 +29,9 @@ import { NotificationsService } from 'angular2-notifications';
     HttpClientModule,
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument(),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
+  //  NgxBootstrapIconsModule.forRoot(allIcons) 
+
   ],
   declarations: [
     AppComponent,
@@ -38,5 +41,6 @@ import { NotificationsService } from 'angular2-notifications';
     {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
+  ,schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

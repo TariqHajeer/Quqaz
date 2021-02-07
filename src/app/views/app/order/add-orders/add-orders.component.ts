@@ -60,18 +60,20 @@ export class AddOrdersComponent implements OnInit {
     this.EditorderType = new OrderType
     this.EditOrderItem = new OrderItem
     this.submitted = false;
-    this.GetMoenyPlaced()
-    this.GetorderPlace()
-    this.GetRegion()
-    this.Getcities()
-    //this.GetClient()
-    this.getAgent()
-    this.getOrderTypes()
+   
     this.int()
 
   }
   int() {
-   
+    this.Order = new CreateOrdersFromEmployee()
+    this.submitted = false;
+    this.GetMoenyPlaced()
+    this.GetorderPlace()
+    this.GetRegion()
+    this.Getcities()
+    this.GetClient()
+    this.getAgent()
+    this.getOrderTypes()
   }
   AddOrder() {
 
@@ -89,10 +91,8 @@ export class AddOrdersComponent implements OnInit {
       this.Order.RegionId = null;
     }
     this.orderservice.Creat(this.Order).subscribe(res => {
-      this.Order = new CreateOrdersFromEmployee()
-      this.submitted = false;
       this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      this.GetRegion();
+      this.int()
     });
 
   }

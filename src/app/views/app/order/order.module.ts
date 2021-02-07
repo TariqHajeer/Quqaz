@@ -15,6 +15,7 @@ import { ViewNewOrderComponent } from './view-new-order/view-new-order.component
 import { CreateMulitpleOrderComponent } from './create-mulitple-order/create-mulitple-order.component';
 import { GridAllModule, GridModule } from '@syncfusion/ej2-angular-grids';
 import { NgxPrintModule } from 'ngx-print';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 @NgModule({
   declarations: [ViewOrdersComponent,AddOrdersComponent,EditOrdersComponent,  ViewNewOrderComponent, CreateMulitpleOrderComponent],
@@ -30,7 +31,8 @@ import { NgxPrintModule } from 'ngx-print';
     BsDatepickerModule,
     GridModule,
     GridAllModule,
-    NgxPrintModule
+    NgxPrintModule,
+    SimpleNotificationsModule.forRoot(),
   ],schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class OrderModule { }

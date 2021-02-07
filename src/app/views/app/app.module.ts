@@ -9,6 +9,8 @@ import { JwtInterceptor } from 'src/app/helpers/jwt.interceptor';
 import { GridModule, ToolbarService, PdfExportService } from '@syncfusion/ej2-angular-grids';
 import { UsersModule } from '../app/users/users.module';
 import { OrderModule } from '../app/order/order.module';
+import { ReportsModule } from '../app/reports/reports.module';
+import { PrintTamplateModule } from '../app/print-tamplate/print-tamplate.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,7 +20,9 @@ import { OrderModule } from '../app/order/order.module';
     SharedModule,
     LayoutContainersModule,
     UsersModule,
-    OrderModule
+    OrderModule,
+    ReportsModule,
+    PrintTamplateModule
   ],
   providers: [PdfExportService
     , { provide: LocationStrategy, useClass: HashLocationStrategy }

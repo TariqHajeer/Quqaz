@@ -43,6 +43,20 @@ const data: IMenuItem[] = [
     },
   ]
 },
+ //reports
+ {
+  icon: 'simple-icon-layers',
+  label: 'التقارير',
+  to: `${adminRoot}/reports`,
+  subs:[
+    {
+      icon: 'simple-icon-layers',
+      label: 'كشف شحنات في المخزن',
+      to: `${adminRoot}/reports/ShipmentInStock`,
+    },
+    
+  ]
+},
    //clients
  {
   icon: 'simple-icon-people',

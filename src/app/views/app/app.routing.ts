@@ -13,6 +13,8 @@ const routes: Routes = [
             { path: 'outcome', loadChildren: () => import('./outcome/outcome.module').then(m => m.OutcomeModule) },
             { path: 'user', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
             { path: 'order', loadChildren: () => import('./order/order.module').then(m => m.OrderModule) },
+            { path: 'reports', loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule) },
+            { path: 'print', loadChildren: () => import('./print-tamplate/print-tamplate.module').then(m => m.PrintTamplateModule) },
 
         ]
     }
