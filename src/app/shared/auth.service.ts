@@ -33,7 +33,7 @@ export class AuthService implements OnDestroy{
  
   constructor(private http:HttpClient,private localStorageService:LocalStorageService,
     private rout:Router) {
-      this.startTokenTimer()
+     // this.startTokenTimer()
     }
   baseUrl=environment.baseUrl;
   signIn(user: user):Observable<any> {
