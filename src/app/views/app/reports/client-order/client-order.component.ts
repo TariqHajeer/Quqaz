@@ -79,26 +79,26 @@ export class ClientOrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getClients()
-    this.GetorderPlace()
+    //this.GetorderPlace()
     this.paging = new Paging
     this.filtering = new OrderFilter
   }
 
-  GetorderPlace() {
-    this.orderservice.orderPlace().subscribe(res => {
-      this.orderPlace = res
-      this.orderPlace = this.orderPlace.filter(o => o.id == 3 || o.id == 2)
+  // GetorderPlace() {
+  //   this.orderservice.orderPlace().subscribe(res => {
+  //     this.orderPlace = res
+  //     this.orderPlace = this.orderPlace.filter(o => o.id == 3 || o.id == 2)
 
-    })
-  }
+  //   })
+  // }
   getClients() {
     this.clientService.getClients().subscribe(res => {
       this.Clients = res
     })
   }
   ChangeClientIdOrOrderplacedId() {
-    if (this.OrderplacedId != null && this.ClientId != null) {
-      this.filtering.OrderplacedId = this.OrderplacedId
+    if (this.ClientId != null) {
+      this.filtering.OrderplacedId =2
       this.filtering.ClientId=this.ClientId
       this.allFilter();
     }

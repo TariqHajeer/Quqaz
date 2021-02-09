@@ -56,7 +56,12 @@ const data: IMenuItem[] = [
     },
     {
       icon: 'simple-icon-layers',
-      label: 'كشف   طلبات العميل',
+      label: 'كشف شحنات المندوب  في الطريق',
+      to: `${adminRoot}/reports/Shipmentonway`,
+    },
+    {
+      icon: 'simple-icon-layers',
+      label: 'كشف   شحنات العميل',
       to: `${adminRoot}/reports/clientorder`,
     },
   ]

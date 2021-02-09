@@ -78,26 +78,26 @@ export class ShipmentInStockComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAgent()
-    this.GetorderPlace()
+    //this.GetorderPlace()
     this.paging = new Paging
     this.filtering = new OrderFilter
   }
 
-  GetorderPlace() {
-    this.orderservice.orderPlace().subscribe(res => {
-      this.orderPlace = res
-      this.orderPlace = this.orderPlace.filter(o => o.id == 3 || o.id == 2)
+  // GetorderPlace() {
+  //   this.orderservice.orderPlace().subscribe(res => {
+  //     this.orderPlace = res
+  //     this.orderPlace = this.orderPlace.filter(o => o.id == 3 || o.id == 2)
 
-    })
-  }
+  //   })
+  // }
   getAgent() {
     this.userService.GetAgent().subscribe(res => {
       this.Agents = res
     })
   }
   ChangeAgentIdOrOrderplacedId() {
-    if (this.OrderplacedId != null && this.AgentId != null) {
-      this.filtering.OrderplacedId = this.OrderplacedId
+    if (this.AgentId != null) {
+      this.filtering.OrderplacedId = 2
       this.filtering.AgentId=this.AgentId
       this.allFilter();
     }
