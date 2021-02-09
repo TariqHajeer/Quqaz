@@ -12,7 +12,7 @@
         </svg>طباعة </h4>
     </button>
 
-    <button (click)="afterPrint()" class="btn btn-primary"> نقل الى خارج الشركة</button>
+    <button (click)="afterPrint()" [disabled]="disabledbtn" class="btn btn-primary"> نقل الى خارج الشركة</button>
   </div>
 </div>
 

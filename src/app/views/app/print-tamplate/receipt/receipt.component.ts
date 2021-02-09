@@ -11,6 +11,7 @@ export class ReceiptComponent implements OnInit {
 
   constructor(private orderservice: OrderService,
     private notifications: NotificationsService,) { }
+  disabledbtn=false
   tempPhone
   orders: any[] = []
   ngOnInit(): void {
@@ -39,6 +40,7 @@ export class ReceiptComponent implements OnInit {
       console.log('true')
       this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.orders=[]
+      this.disabledbtn=true
     })
   }
   // @HostListener('window:afterprint', ['$event'])
