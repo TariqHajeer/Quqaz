@@ -10,7 +10,7 @@ export class StartComponent implements OnInit {
   constructor(private authenticationService: AuthService) { }
 
   ngOnInit() {
-    this.authenticationService.startTokenTimer()
+   // this.authenticationService.startTokenTimer()
   }
  
  

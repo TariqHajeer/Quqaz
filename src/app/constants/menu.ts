@@ -54,7 +54,11 @@ const data: IMenuItem[] = [
       label: 'كشف شحنات في المخزن',
       to: `${adminRoot}/reports/ShipmentInStock`,
     },
-    
+    {
+      icon: 'simple-icon-layers',
+      label: 'كشف   طلبات العميل',
+      to: `${adminRoot}/reports/clientorder`,
+    },
   ]
 },
    //clients

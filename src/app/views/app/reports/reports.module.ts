@@ -9,9 +9,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { NgxPrintModule } from 'ngx-print';
+import { ClientOrderComponent } from './client-order/client-order.component';
 
 @NgModule({
-  declarations: [ShipmentInStockComponent],
+  declarations: [ShipmentInStockComponent, ClientOrderComponent],
   imports: [
     CommonModule,
     ReportsRoutingModule,

@@ -7,4 +7,5 @@ export class OrderFilter {
       RecipientName 
       MonePlacedId 
       OrderplacedId 
+      AgentId
 }

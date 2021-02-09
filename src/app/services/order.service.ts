@@ -17,6 +17,8 @@ export class OrderService {
     let params = new HttpParams();
     if (filter.Code != undefined || filter.Code != null)
       params = params.append("Code", filter.Code);
+      if (filter.AgentId != undefined || filter.AgentId != null)
+      params = params.append("AgentId", filter.AgentId);
     if (filter.Phone != undefined || filter.Phone != null)
       params = params.append("Phone", filter.Phone);
       if (filter.CountryId != undefined || filter.CountryId != null)

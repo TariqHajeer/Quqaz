@@ -39,10 +39,10 @@ export class ReceiptComponent implements OnInit {
   }
   // @HostListener('window:afterprint', ['$event'])
   // @HostListener('click', ['$event.target'])
-  @HostListener('window:afterprint', ['$event'])
-  onafterprint() {
-    console.log("ggggggggggg")
+  // @HostListener('window:afterprint', ['$event'])
+  // onafterprint() {
+  //   console.log("ggggggggggg")
     
-  }
+  // }
 
 }

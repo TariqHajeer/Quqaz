@@ -56,9 +56,7 @@ export class ViewOrdersComponent implements OnInit {
     this.GetRegion()
     this.Getcities()
     this.GetClient()
-    this.userService.GetAll()
-    this.Agents = this.userService.users
-
+    this.getAgent()
   }
   get() {
     this.dataSource = new MatTableDataSource(this.orders);
@@ -105,10 +103,15 @@ export class ViewOrdersComponent implements OnInit {
       let index = this.dataSource.data.indexOf(element);
       this.dataSource.data.splice(index, 1);
       this.dataSource._updateChangeSubscription();
-     })
+    })
   }
   Edit(element) {
 
+  }
+  getAgent() {
+    this.userService.GetAgent().subscribe(res => {
+      this.Agents = res
+    })
   }
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {

@@ -10,14 +10,15 @@ import { Paging } from 'src/app/Models/paging';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-
-
+import { ClientService } from '../../client/client.service';
+import { Client } from '../../client/client.model';
 @Component({
-  selector: 'app-shipment-in-stock',
-  templateUrl: './shipment-in-stock.component.html',
-  styleUrls: ['./shipment-in-stock.component.scss']
+  selector: 'app-client-order',
+  templateUrl: './client-order.component.html',
+  styleUrls: ['./client-order.component.scss']
 })
-export class ShipmentInStockComponent implements OnInit {
+export class ClientOrderComponent implements OnInit {
+
   displayedColumns: string[] = ['select', 'code', 'cost', 'country', 'region'
     , 'orderplaced'];
   dataSource = new MatTableDataSource([]);
@@ -62,14 +63,14 @@ export class ShipmentInStockComponent implements OnInit {
   }
   constructor(
     private orderservice: OrderService,
-    public userService: UserService,
+    public clientService: ClientService,
     private notifications: NotificationsService,
     public route: Router
   ) { }
-  AgentId
+  ClientId
   OrderplacedId
   orderPlace: NameAndIdDto[] = []
-  Agents: User[] = []
+  Clients: Client[] = []
   paging: Paging
   filtering: OrderFilter
   noDataFound: boolean = false
@@ -77,7 +78,7 @@ export class ShipmentInStockComponent implements OnInit {
   @Input() totalCount: number;
 
   ngOnInit(): void {
-    this.getAgent()
+    this.getClients()
     this.GetorderPlace()
     this.paging = new Paging
     this.filtering = new OrderFilter
@@ -90,15 +91,15 @@ export class ShipmentInStockComponent implements OnInit {
 
     })
   }
-  getAgent() {
-    this.userService.GetAgent().subscribe(res => {
-      this.Agents = res
+  getClients() {
+    this.clientService.getClients().subscribe(res => {
+      this.Clients = res
     })
   }
-  ChangeAgentIdOrOrderplacedId() {
-    if (this.OrderplacedId != null && this.AgentId != null) {
+  ChangeClientIdOrOrderplacedId() {
+    if (this.OrderplacedId != null && this.ClientId != null) {
       this.filtering.OrderplacedId = this.OrderplacedId
-      this.filtering.AgentId=this.AgentId
+      this.filtering.ClientId=this.ClientId
       this.allFilter();
     }
 
@@ -116,7 +117,7 @@ export class ShipmentInStockComponent implements OnInit {
           this.noDataFound = true
         else this.noDataFound = false
       this.dataSource = new MatTableDataSource(response.data)
-      //this.dataSource.data = this.dataSource.data.filter(d => d.agent.id == this.AgentId)
+      //this.dataSource.data = this.dataSource.data.filter(d => d.agent.id == this.ClientId)
       this.totalCount = response.total
     },
       err => {
@@ -129,4 +130,5 @@ export class ShipmentInStockComponent implements OnInit {
     this.route.navigate(['/print'])
    
   }
+
 }
