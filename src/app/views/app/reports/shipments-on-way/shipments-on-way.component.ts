@@ -18,7 +18,7 @@ import { Router } from '@angular/router';
 export class ShipmentsOnWayComponent implements OnInit {
 
   displayedColumns: string[] = ['select', 'code', 'cost', 'country', 'region'
-  , 'orderplaced'];
+  , 'orderplaced','monePlaced'];
 dataSource = new MatTableDataSource([]);
 selection = new SelectionModel<any>(true, []);
 
@@ -101,6 +101,10 @@ ChangeAgentIdOrOrderplacedId() {
   if (this.AgentId != null) {
     this.filtering.OrderplacedId = 3
     this.filtering.AgentId=this.AgentId
+    this.allFilter();
+  }
+  if(this.MoenyPlacedId!=null)
+  {this.filtering.MonePlacedId=this.MoenyPlacedId
     this.allFilter();
   }
 
