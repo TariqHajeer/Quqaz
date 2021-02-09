@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { OrderService } from 'src/app/services/order.service';
 
 @Component({
@@ -8,7 +9,8 @@ import { OrderService } from 'src/app/services/order.service';
 })
 export class ReceiptComponent implements OnInit {
 
-  constructor(private orderservice: OrderService,) { }
+  constructor(private orderservice: OrderService,
+    private notifications: NotificationsService,) { }
   tempPhone
   orders: any[] = []
   ngOnInit(): void {
@@ -35,6 +37,8 @@ export class ReceiptComponent implements OnInit {
     // window.onafterprint = afterPrint;
     this.orderservice.MakeOrderInWay(this.orders.map(o=>o.id)).subscribe(res=>{
       console.log('true')
+      this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.orders=[]
     })
   }
   // @HostListener('window:afterprint', ['$event'])
