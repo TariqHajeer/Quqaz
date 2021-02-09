@@ -1,7 +1,19 @@
-<h3>المعاينة قبل الطباعة</h3>
+<div class="card">
+  <div class="card-body">
+    <h3>المعاينة قبل الطباعة</h3>
+  
+    <button printSectionId="print" class="btn" styleSheetFile="/assets/css/vendor/bootstrap.min.css"
+    [useExistingCss]="true" (click)="afterPrint()" ngxPrint> 
+    <h4>    <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+      <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+      <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>
+      </svg>طباعة </h4>
+  </button>
+   
+ 
+  </div>
+</div>
 
-<button printSectionId="print" class="btn btn-primary" styleSheetFile="/assets/css/vendor/bootstrap.min.css"
-  [useExistingCss]="true" ngxPrint>طباعة</button>
 
 <div id="print" >
   <div class="card" style="width:20cm;height: 16cm;margin: 50px;" *ngFor="let item of orders">
@@ -16,16 +28,24 @@
           <div class="row card" style="border-style: solid; padding: 2px;border-width: 1px;margin: 1px;">
             <div class="col-md-12">الاسم التجاري : {{item.client.name}} </div>
 
-
+<div style="border-style: solid; padding: 2px;border-width: 1px;margin: 1px;"></div>
             <div class="col-md-12">هاتف : {{item.client.phones}} </div>
+            <div style="border-style: solid; padding: 2px;border-width: 1px;margin: 1px;"></div>
 
             <div class="col-md-12"> عنوان : {{item.client.address}} </div>
+            <div style="border-style: solid; padding: 2px;border-width: 1px;margin: 1px;"></div>
+
             <div class="col-md-12"> المبلغ مع التوصيل : {{item.deliveryCost}} </div>
-            <div class="col-md-12">
-              معلومات وملاحظات المندوب
-              : {{item.note}}
-              <br>
-              <br>
+            <div style="border-style: solid; padding: 2px;border-width: 1px;margin: 1px;"></div>
+
+            <div class="col-md-12" >
+              معلومات وملاحظات المندوب  :
+
+              <div style="height: 25px;border-style: solid; padding: 2px;border-width: 1px;margin: 1px;" class="card">
+               {{item.note}}
+
+              </div>
+              
 
             </div>
           </div> 
@@ -36,14 +56,23 @@
             <div class="col-md-12">الاسم : {{item.recipientName}} </div>
 
 
+            <div style="border-style: solid; padding: 2px;border-width: 1px;margin: 1px;"></div>
 
 
             <div class="col-md-12"> عنوان : {{item.address}}</div>
+            <div style="border-style: solid; padding: 2px;border-width: 1px;margin: 1px;"></div>
+
             <div class="col-md-12">هاتف : {{item.recipientPhones}}</div>
+            <div style="border-style: solid; padding: 2px;border-width: 1px;margin: 1px;"></div>
+
             <div class="col-md-12">القضاء : {{item.cost}}</div>
+            <div style="border-style: solid; padding: 2px;border-width: 1px;margin: 1px;"></div>
+
             <div class="col-md-12">
               نوع القبض : {{item.address}}
             </div>
+            <div style="border-style: solid; padding: 2px;border-width: 1px;margin: 1px;"></div>
+
             <div class="col-md-12">
               العدد : {{item.address}}
             </div>

@@ -128,8 +128,6 @@ export class ShipmentInStockComponent implements OnInit {
     if (this.orders == []) return
     localStorage.setItem('printorders', JSON.stringify(this.orders))
     this.route.navigate(['/print'])
-    this.orderservice.MakeOrderInWay(this.ids).subscribe(res => {
-
-    })
+   
   }
 }

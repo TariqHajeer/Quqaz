@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment.prod';
 import {LocalStorageService} from '../services/local-storage.service'
 import { Router } from '@angular/router';
 import { delay, tap } from 'rxjs/operators';
+import { UserLogin } from '../Models/userlogin.model';
 export interface user {
   email: string;
   password: string;
@@ -100,7 +101,7 @@ export class AuthService implements OnDestroy{
     }
     return 1 * 60 * 60 * 1000
   }
-  private startTokenTimer() {
+  public startTokenTimer() {
     const timeout = this.getTokenRemainingTime()
     setTimeout(() =>this.signOut(),  timeout)
    

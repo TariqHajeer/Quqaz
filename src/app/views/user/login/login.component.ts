@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.myDate=new Date
+    this.user=new UserLogin
   }
   user: UserLogin
   myDate:Date
