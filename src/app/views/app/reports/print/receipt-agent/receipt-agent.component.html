@@ -1,0 +1,63 @@
+<div class="card" style="direction:rtl">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <h3>
+                   كشف حساب المندوب : {{agent.name}}
+                </h3>
+                <h3>
+                    رقم هاتف المندوب :{{agent.phones}}
+                </h3>
+                <h4>
+                 من تاريخ : الى تاريخ
+                </h4>
+                    <div class="table-bordered" style="width: 100px;padding: 5px;text-align: center;">{{orderplaced.name}}  </div> 
+            </div>
+
+            <div class="col-md-4">
+                <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px" />
+            </div>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <th *ngFor="let head of heads">{{head}}</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let order of orders;index as i">
+                    <td>
+                      {{i+1}}
+                    </td>
+                    <td>
+                        {{order.code}}
+                    </td>
+                    <td>
+                        {{order.deliveryCost}}
+                    </td>
+                    <td>
+                        {{order.country.name}}
+                    </td>
+                    <td>
+                        {{order.recipientPhones}}
+                    </td>
+                    <td>
+                        {{order.client.name}}
+                    </td>
+                    <td>
+                        {{order.note}}
+                    </td>
+                </tr>
+            <tr>
+                <td colspan="2">
+                    الإجمالي :
+                </td>
+                <td >
+                    {{count}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        
+    </div>
+</div>

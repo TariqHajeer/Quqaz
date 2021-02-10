@@ -11,9 +11,12 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { NgxPrintModule } from 'ngx-print';
 import { ClientOrderComponent } from './client-order/client-order.component';
 import { ShipmentsOnWayComponent } from './shipments-on-way/shipments-on-way.component';
+import { ReceiptAgentComponent } from './print/receipt-agent/receipt-agent.component';
+import { FooterComponent } from './print/receipt-agent/layout/footer/footer.component';
+import { HeaderComponent } from './print/receipt-agent/layout/header/header.component';
 
 @NgModule({
-  declarations: [ShipmentInStockComponent, ClientOrderComponent, ShipmentsOnWayComponent],
+  declarations: [ShipmentInStockComponent, ClientOrderComponent, ShipmentsOnWayComponent, ReceiptAgentComponent, FooterComponent, HeaderComponent,],
   imports: [
     CommonModule,
     ReportsRoutingModule,

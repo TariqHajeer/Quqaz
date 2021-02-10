@@ -2,7 +2,6 @@
 <div class="card">
 <div class="card-body">
   <h3>كشف شحنات في المخزن</h3>
-<h3 class="btn btn-primary" (click)=" print()">معاينة</h3>
 <div class="row">
     <div class="col-md-4">
         <label>المندوب</label>
@@ -24,19 +23,28 @@
 </div>
 </div>
 </div>
+<button printSectionId="printpage" class="btn" styleSheetFile="/assets/css/vendor/bootstrap.min.css"
+      [useExistingCss]="true" ngxPrint>
+      <h4> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer"
+          viewBox="0 0 16 16">
+          <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+          <path
+            d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
+        </svg> &nbsp;طباعة </h4>
+    </button>
 <div class="example-container mat-elevation-z8" >
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <!-- Checkbox Column -->
     <ng-container matColumnDef="select">
-      <th mat-header-cell *matHeaderCellDef>
+      <th mat-header-cell *matHeaderCellDef> 
         <mat-checkbox (change)="$event ? masterToggle() : null"
                       [checked]="selection.hasValue() && isAllSelected()"
                       [indeterminate]="selection.hasValue() && !isAllSelected()"
                       [aria-label]="checkboxLabel()"
                       >
-        </mat-checkbox>
+        </mat-checkbox> &nbsp; تحديد الكل 
       </th>
       <td mat-cell *matCellDef="let row">
         <mat-checkbox (click)="$event.stopPropagation()"
@@ -85,3 +93,4 @@
 <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
 [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
 
+<app-receipt-agent id="printpage"  [hidden]="true"></app-receipt-agent>

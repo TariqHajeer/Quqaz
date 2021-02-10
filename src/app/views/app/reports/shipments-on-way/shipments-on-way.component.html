@@ -55,7 +55,7 @@
                           [indeterminate]="selection.hasValue() && !isAllSelected()"
                           [aria-label]="checkboxLabel()"
                           >
-            </mat-checkbox>
+            </mat-checkbox>&nbsp; تحديد الكل 
           </th>
           <td mat-cell *matCellDef="let row">
             <mat-checkbox (click)="$event.stopPropagation()"
