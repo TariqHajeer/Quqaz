@@ -86,6 +86,7 @@ export class ViewOrdersComponent implements OnInit {
         this.noDataFound = true
       else this.noDataFound = false
       console.log(response.data)
+      localStorage.setItem('printorders', JSON.stringify(response.data))
 
       this.dataSource = new MatTableDataSource(response.data)
       this.totalCount = response.total

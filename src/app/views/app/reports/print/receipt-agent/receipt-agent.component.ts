@@ -14,14 +14,12 @@ export class ReceiptAgentComponent implements OnInit {
     private notifications: NotificationsService,
     public sanitizer: DomSanitizer) { }
     heads=['ترقيم','كود','الإجمالي','المحافظة ','الهاتف','اسم العميل','ملاحظات']
-    orders:any[]=[]
+    orders:any[]= JSON.parse(localStorage.getItem('printorders'))
     count=1500
-    agent
-    orderplaced
+    agent=this.orders.map(o=>o.agent)[0]
+    orderplaced=this.orders.map(o=>o.orderplaced)[0]
     ngOnInit(): void {
-    this.orders = JSON.parse(localStorage.getItem('printorders'))
-    this.agent=this.orders.map(o=>o.agent)[0]
-    this.orderplaced=this.orders.map(o=>o.orderplaced)[0]
+  
     console.log(this.orders)
 
   }

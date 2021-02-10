@@ -1,31 +1,39 @@
 <div class="card" style="direction:rtl">
     <div class="card-body">
-        <div class="row">
-            <div class="col-md-4">
-            </div>
-            <div class="col-md-4">
-                <h3>
-                   كشف حساب المندوب : {{agent.name}}
-                </h3>
-                <h3>
-                    رقم هاتف المندوب :{{agent.phones}}
-                </h3>
-                <h4>
-                 من تاريخ : الى تاريخ
-                </h4>
-                    <div class="table-bordered" style="width: 100px;padding: 5px;text-align: center;">{{orderplaced.name}}  </div> 
-            </div>
-
-            <div class="col-md-4">
-                <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px" />
-            </div>
-        </div>
+      
         <table class="table table-bordered">
             <thead>
+                <tr>
+                    <td>
+                        <div class="header">
+                            <div class="row ">
+                                <div class="col-md-4">
+                                    ttttttttttttttt
+                                </div>
+                                <div class="col-md-4">
+                                    <h3>
+                                       كشف حساب المندوب : {{agent!=null?agent.name:null}}
+                                    </h3>
+                                    <h3>
+                                        رقم هاتف المندوب :{{agent!=null?agent.phones:null}}
+                                    </h3>
+                                    <h4>
+                                     من تاريخ : الى تاريخ
+                                    </h4>
+                                        <div class="table-bordered" style="width: 100px;padding: 5px;text-align: center;">{{orderplaced.name}}  </div> 
+                                </div>
+                            
+                                <div class="col-md-4">
+                                    <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px" />
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
                 <th *ngFor="let head of heads">{{head}}</th>
             </thead>
             <tbody>
-                <tr *ngFor="let order of orders;index as i">
+                <tr class="invoice" *ngFor="let order of orders;index as i" >
                     <td>
                       {{i+1}}
                     </td>
@@ -48,7 +56,7 @@
                         {{order.note}}
                     </td>
                 </tr>
-            <tr>
+            <tr class="footer">
                 <td colspan="2">
                     الإجمالي :
                 </td>
@@ -60,4 +68,6 @@
         </table>
         
     </div>
+    
 </div>
+

@@ -1,0 +1,23 @@
+.header { position: fixed; top: 10;direction:rtl ;width: 90%;height: 200px;
+  display: table-header-group;}
+.footer { position: fixed; bottom: 0;direction:rtl }
+table{margin-top: 200px;}
+tr{top:200px}
+.invoice {
+    page-break-after: always;
+  }
+  .invoice {
+    page-break-after: always;
+  }
+  
+  .invoice:last-child {
+    page-break-after: avoid;
+  }
+
+  @media screen {
+    :host {
+      display: none;
+    }
+  }
+    
+  
