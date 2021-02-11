@@ -47,17 +47,21 @@ export class ShipmentInStockComponent implements OnInit {
   }
   ids: any[] = []
   orders: any[] = []
-  checkboxId(row) {
+  checkboxId(row) {  
     if (this.selection.isSelected(row))
       if (this.ids.filter(d => d == row.id).length > 0)
         return
       else {
         this.ids.push(row.id)
         this.orders.push(row)
+        this.agent=this.orders.map(o=>o.agent)[0]
+        this.orderplaced=this.orders.map(o=>o.orderplaced)[0]
+      
       }
     if (!this.selection.isSelected(row)) {
       this.ids = this.ids.filter(i => i != row.id)
       this.orders = this.orders.filter(o => o != row)
+      
     }
   }
   constructor(
@@ -123,10 +127,10 @@ export class ShipmentInStockComponent implements OnInit {
 
       });
   }
+  agent=this.orders.map(o=>o.agent)[0]
+  orderplaced=this.orders.map(o=>o.orderplaced)[0]
   print() {
     if (this.orders == []) return
-    localStorage.setItem('printorders', JSON.stringify(this.orders))
-    this.route.navigate(['/print'])
    
   }
 }

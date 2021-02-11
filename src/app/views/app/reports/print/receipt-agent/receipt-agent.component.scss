@@ -1,23 +1,12 @@
-.header { position: fixed; top: 10;direction:rtl ;width: 90%;height: 200px;
-  display: table-header-group;}
-.footer { position: fixed; bottom: 0;direction:rtl }
-table{margin-top: 200px;}
-tr{top:200px}
-.invoice {
-    page-break-after: always;
-  }
-  .invoice {
-    page-break-after: always;
-  }
-  
-  .invoice:last-child {
-    page-break-after: avoid;
-  }
+.header, .header-space{padding-left: 10%; height: 100px;width: 90%; }
+.footer, .footer-space { height:70px; }
+.header { position: fixed; top: 0;direction: rtl; }
+.footer { position: fixed; bottom: 0; direction: rtl;}
 
-  @media screen {
-    :host {
-      display: none;
-    }
-  }
-    
-  
+.invoice {
+  page-break-after: always;
+}
+
+.invoice:last-child {
+  page-break-after: avoid;
+}

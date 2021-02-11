@@ -23,7 +23,7 @@
 </div>
 </div>
 </div>
-<button printSectionId="printpage" class="btn" styleSheetFile="/assets/css/vendor/bootstrap.min.css"
+<button  printSectionId="printpage" class="btn" styleSheetFile="/assets/css/vendor/bootstrap.min.css"
       [useExistingCss]="true" ngxPrint>
       <h4> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer"
           viewBox="0 0 16 16">
@@ -93,4 +93,5 @@
 <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
 [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
 
-<app-receipt-agent id="printpage"  [hidden]="true"></app-receipt-agent>
+<app-receipt-agent id="printpage" [orders]="orders" [agent]="agent" 
+  [orderplaced]="orderplaced" [hidden]="true"></app-receipt-agent>
