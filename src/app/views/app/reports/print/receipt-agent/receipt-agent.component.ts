@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NotificationsService } from 'angular2-notifications';
+import { UserLogin } from 'src/app/Models/userlogin.model';
 import { OrderService } from 'src/app/services/order.service';
 
 @Component({
@@ -18,6 +19,9 @@ export class ReceiptAgentComponent implements OnInit {
   count = 0
   @Input() agent
   @Input() orderplaced
+  dateOfPrint=new Date()
+  userName:any=JSON.parse(localStorage.getItem('kokazUser'))as UserLogin
+
   ngOnInit(): void {
 
   }

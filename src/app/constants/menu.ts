@@ -51,7 +51,7 @@ const data: IMenuItem[] = [
   subs:[
     {
       icon: 'simple-icon-layers',
-      label: 'كشف شحنات في المخزن',
+      label: 'كشف شحنات المندوب في المخزن',
       to: `${adminRoot}/reports/ShipmentInStock`,
     },
     {
@@ -61,8 +61,13 @@ const data: IMenuItem[] = [
     },
     {
       icon: 'simple-icon-layers',
-      label: 'كشف   شحنات العميل',
+      label: ' كشف   شحنات العميل في المخزن',
       to: `${adminRoot}/reports/clientorder`,
+    },
+    {
+      icon: 'simple-icon-layers',
+      label: ' كشف   شحنات العميل في الطريق',
+      to: `${adminRoot}/reports/clientorderonway`,
     },
   ]
 },

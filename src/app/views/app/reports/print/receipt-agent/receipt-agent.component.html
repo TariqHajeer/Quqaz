@@ -55,17 +55,15 @@
     <div class="row ">
         <div class="col-md-4" style="text-align: right;">
             <h3>
-                مستخدم الطباعة :
+                مستخدم الطباعة :{{userName.name}}
             </h3>
             <h3>
-                تاريخ الطباعة :
+                تاريخ الطباعة :{{dateOfPrint | date:"dd/MM/yyyy"}}
             </h3>
             <h3>
-                وقت الطباعة :
+                وقت الطباعة :{{dateOfPrint | date:"HH:mm:ss"}}
             </h3>
-            <h3>
-                ترقيم الطباعة :
-            </h3>
+           
         </div>
         <div class="col-md-5" style="text-align: right;">
             <h3>
@@ -74,23 +72,7 @@
             <h3>
                 رقم هاتف المندوب :{{agent!=null||agent!=undefined?agent.phones:null}}
             </h3>
-            <h4>
-                <tr class="table-bordered" style="width: 100px;padding: 5px;text-align: center;">
-                    <td >
-                        من تاريخ
-                    </td>
-                    <td >
-                        1/1/1111
-                    </td>
-                    <td >
-                        الى تاريخ
-                    </td>
-                    <td >
-                        1/1/1111
-                    </td>
-                </tr>
-               
-            </h4>
+        
                 <div class="table-bordered" style="width: 100px;padding: 5px;text-align: center;"><h3>{{orderplaced!=null||orderplaced!=undefined?orderplaced.name:null}}</h3>  </div> 
         </div>
     

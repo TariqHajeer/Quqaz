@@ -14,9 +14,10 @@ import { ShipmentsOnWayComponent } from './shipments-on-way/shipments-on-way.com
 import { ReceiptAgentComponent } from './print/receipt-agent/receipt-agent.component';
 import { FooterComponent } from './print/receipt-agent/layout/footer/footer.component';
 import { HeaderComponent } from './print/receipt-agent/layout/header/header.component';
+import { ShipmentsClientOnWayComponent } from './shipments-client-on-way/shipments-client-on-way.component';
 
 @NgModule({
-  declarations: [ShipmentInStockComponent, ClientOrderComponent, ShipmentsOnWayComponent, ReceiptAgentComponent, FooterComponent, HeaderComponent,],
+  declarations: [ShipmentInStockComponent, ClientOrderComponent, ShipmentsOnWayComponent, ReceiptAgentComponent, FooterComponent, HeaderComponent, ShipmentsClientOnWayComponent,],
   imports: [
     CommonModule,
     ReportsRoutingModule,
