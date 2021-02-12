@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { OrderService } from 'src/app/services/order.service';
-import { NotificationsService } from 'angular2-notifications';
+import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/Models/user/user.model';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
@@ -124,11 +124,12 @@ export class ClientOrderComponent implements OnInit {
 
       });
   }
-  print() {
-    if (this.orders == []) return
-    localStorage.setItem('printorders', JSON.stringify(this.orders))
-    this.route.navigate(['/print'])
-   
-  }
+  afterPrint() {
+    this.orderservice.MakeOrderInWay(this.orders.map(o=>o.id)).subscribe(res=>{
+      console.log('true')
+      this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.orders=[]
+    })
+  }                                                                              
 
 }

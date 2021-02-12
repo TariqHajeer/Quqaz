@@ -11,7 +11,11 @@
                 <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
             </ng-select>
         </div>
-    
+        <div class="col-md-8" style="padding-right: 90%;">
+          <button (click)="saveEdit()" class="btn btn-primary"> حفظ</button>
+
+        </div>
+
     </div>
     
   
@@ -81,6 +85,8 @@
         </ng-select>
           </td>
         </ng-container>
+     
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"
             (click)="selection.toggle(row)">
