@@ -17,8 +17,8 @@ import { Router } from '@angular/router';
 })
 export class ShipmentsOnWayComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'code',  'country', 'region'
-    ,'deliveryCost', 'orderplaced', 'monePlaced'];
+  displayedColumns: string[] = ['select', 'code', 'country', 'region'
+    , 'deliveryCost', 'orderplaced', 'monePlaced'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
 
@@ -76,6 +76,7 @@ export class ShipmentsOnWayComponent implements OnInit {
   filtering: OrderFilter
   noDataFound: boolean = false
   canEditCount: boolean[] = []
+  temporders: any[] = []
   @Input() totalCount: number;
 
   ngOnInit(): void {
@@ -95,7 +96,6 @@ export class ShipmentsOnWayComponent implements OnInit {
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
-      console.log(res)
       // this.orderPlace = this.orderPlace.filter(o => o.id == 4 || o.id ==5
       //   || o.id ==6|| o.id ==7|| o.id ==8)
 
@@ -113,11 +113,14 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.allFilter();
     }
   }
-  ChangeOrderplacedId(id,index) {
-    if(id==6)
-    this.canEditCount[index]=false
-    else
-    this.canEditCount[index]=true
+  ChangeOrderplacedId(element, index) {
+    if (element.orderplaced.id == 6)
+      this.canEditCount[index] = false
+    else {
+      this.canEditCount[index] = true
+      element. deliveryCost =Object.assign(this.temporders[index], this.temporders[index]);
+      
+    }
   }
   switchPage(event: PageEvent) {
     this.paging.allItemsLength = event.length
@@ -127,15 +130,17 @@ export class ShipmentsOnWayComponent implements OnInit {
   }
   allFilter() {
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
+      this.canEditCount = []
       if (response)
         if (response.data.length == 0)
           this.noDataFound = true
         else this.noDataFound = false
+        this.temporders =  Object.assign({}, response.data.map(o=>o.deliveryCost));
+
       this.dataSource = new MatTableDataSource(response.data)
-      for(let i=0;i<this.dataSource.data.length;i++){
+      for (let i = 0; i < this.dataSource.data.length; i++) {
         this.canEditCount.push(true)
       }
-      console.log(this.canEditCount)
       this.totalCount = response.total
     },
       err => {
