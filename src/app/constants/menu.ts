@@ -74,6 +74,12 @@ const data: IMenuItem[] = [
       label: ' كشف   شحنات العميل داخل الشركة',
       to: `${adminRoot}/reports/clientinsidecompany`,
     },
+    {
+      icon: 'simple-icon-layers',
+      label: 'الشحنات التي لم يتم استلام مبلغها للعميل',
+      to: `${adminRoot}/reports/Shipmentsnotbeendelivered`,
+    },
+    
   ]
 },
    //clients  

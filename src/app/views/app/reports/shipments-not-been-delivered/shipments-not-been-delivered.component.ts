@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { OrderService } from 'src/app/services/order.service';
-import { NotificationsService } from 'angular2-notifications';
+import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/Models/user/user.model';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
@@ -10,15 +10,17 @@ import { Paging } from 'src/app/Models/paging';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { ClientService } from '../../client/client.service';
+import { Client } from '../../client/client.model';
 @Component({
-  selector: 'app-shipments-on-way',
-  templateUrl: './shipments-on-way.component.html',
-  styleUrls: ['./shipments-on-way.component.scss']
+  selector: 'app-shipments-not-been-delivered',
+  templateUrl: './shipments-not-been-delivered.component.html',
+  styleUrls: ['./shipments-not-been-delivered.component.scss']
 })
-export class ShipmentsOnWayComponent implements OnInit {
+export class ShipmentsNotBeenDeliveredComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'code', 'country', 'region'
-    , 'deliveryCost', 'orderplaced', 'monePlaced'];
+  displayedColumns: string[] = ['select', 'code', 'cost', 'country', 'region'
+ ,'monePlaced'   , 'orderplaced'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
 
@@ -46,9 +48,6 @@ export class ShipmentsOnWayComponent implements OnInit {
   }
   ids: any[] = []
   orders: any[] = []
-  statu
-  MoenyPlacedId
-  MoenyPlaced: any[] = []
   checkboxId(row) {
     if (this.selection.isSelected(row))
       if (this.ids.filter(d => d == row.id).length > 0)
@@ -64,64 +63,46 @@ export class ShipmentsOnWayComponent implements OnInit {
   }
   constructor(
     private orderservice: OrderService,
-    public userService: UserService,
+    public clientService: ClientService,
     private notifications: NotificationsService,
     public route: Router
   ) { }
-  AgentId
+  ClientId
   OrderplacedId
   orderPlace: NameAndIdDto[] = []
-  Agents: User[] = []
+  Clients: Client[] = []
   paging: Paging
   filtering: OrderFilter
   noDataFound: boolean = false
-  canEditCount: boolean[] = []
-  temporders: any[] = []
+
   @Input() totalCount: number;
 
   ngOnInit(): void {
-    this.getAgent()
-    this.GetMoenyPlaced()
-    this.GetorderPlace()
+    this.getClients()
+    //this.GetorderPlace()
     this.paging = new Paging
     this.filtering = new OrderFilter
   }
-  GetMoenyPlaced() {
-    this.orderservice.MoenyPlaced().subscribe(res => {
-      this.MoenyPlaced = res
-      // this.MoenyPlaced=this.MoenyPlaced.filter(m=>m.id==2||m.id==3)
 
-    })
-  }
-  GetorderPlace() {
-    this.orderservice.orderPlace().subscribe(res => {
-      this.orderPlace = res
-      console.log(res)
-      this.orderPlace = this.orderPlace.filter(o =>o.id == 3 || o.id == 4 || o.id ==5
-        || o.id ==6|| o.id ==7|| o.id ==8)
+  // GetorderPlace() {
+  //   this.orderservice.orderPlace().subscribe(res => {
+  //     this.orderPlace = res
+  //     this.orderPlace = this.orderPlace.filter(o => o.id == 3 || o.id == 2)
 
+  //   })
+  // }
+  getClients() {
+    this.clientService.getClients().subscribe(res => {
+      this.Clients = res
     })
   }
-  getAgent() {
-    this.userService.GetAgent().subscribe(res => {
-      this.Agents = res
-    })
-  }
-  ChangeAgentId() {
-    if (this.AgentId != null) {
-      this.filtering.OrderplacedId = 3
-      this.filtering.AgentId = this.AgentId
+  ChangeClientIdOrOrderplacedId() {
+    if (this.ClientId != null) {
+      this.filtering.OrderplacedId =2
+      this.filtering.ClientId=this.ClientId
       this.allFilter();
     }
-  }
-  ChangeOrderplacedId(element, index) {
-    if (element.orderplaced.id == 6)
-      this.canEditCount[index] = false
-    else {
-      this.canEditCount[index] = true
-      element. deliveryCost =Object.assign(this.temporders[index], this.temporders[index]);
-      
-    }
+
   }
   switchPage(event: PageEvent) {
     this.paging.allItemsLength = event.length
@@ -131,30 +112,25 @@ export class ShipmentsOnWayComponent implements OnInit {
   }
   allFilter() {
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
-      this.canEditCount = []
       if (response)
         if (response.data.length == 0)
           this.noDataFound = true
         else this.noDataFound = false
-        this.temporders =  Object.assign({}, response.data.map(o=>o.deliveryCost));
-
       this.dataSource = new MatTableDataSource(response.data)
-      for (let i = 0; i < this.dataSource.data.length; i++) {
-        this.canEditCount.push(true)
-      }
+      //this.dataSource.data = this.dataSource.data.filter(d => d.agent.id == this.ClientId)
       this.totalCount = response.total
     },
       err => {
 
       });
   }
-  saveEdit(){
-    
-  }
-  // print() {
-  //   if (this.orders == []) return
-  //   localStorage.setItem('printorders', JSON.stringify(this.orders))
-  //   this.route.navigate(['/print'])
+  afterPrint() {
+    this.orderservice.MakeOrderInWay(this.orders.map(o=>o.id)).subscribe(res=>{
+      console.log('true')
+      this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.orders=[]
+    })
+  }                                                                              
 
-  // }
+
 }
