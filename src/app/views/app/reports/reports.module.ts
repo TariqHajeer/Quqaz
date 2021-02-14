@@ -15,9 +15,10 @@ import { ReceiptAgentComponent } from './print/receipt-agent/receipt-agent.compo
 import { FooterComponent } from './print/receipt-agent/layout/footer/footer.component';
 import { HeaderComponent } from './print/receipt-agent/layout/header/header.component';
 import { ShipmentsClientOnWayComponent } from './shipments-client-on-way/shipments-client-on-way.component';
+import { ClientInsideCompanyComponent } from './client-inside-company/client-inside-company.component';
 
 @NgModule({
-  declarations: [ShipmentInStockComponent, ClientOrderComponent, ShipmentsOnWayComponent, ReceiptAgentComponent, FooterComponent, HeaderComponent, ShipmentsClientOnWayComponent,],
+  declarations: [ShipmentInStockComponent, ClientOrderComponent, ShipmentsOnWayComponent, ReceiptAgentComponent, FooterComponent, HeaderComponent, ShipmentsClientOnWayComponent, ClientInsideCompanyComponent,],
   imports: [
     CommonModule,
     ReportsRoutingModule,

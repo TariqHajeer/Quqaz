@@ -69,9 +69,14 @@ const data: IMenuItem[] = [
       label: ' كشف   شحنات العميل في الطريق',
       to: `${adminRoot}/reports/clientorderonway`,
     },
+    {
+      icon: 'simple-icon-layers',
+      label: ' كشف   شحنات العميل داخل الشركة',
+      to: `${adminRoot}/reports/clientinsidecompany`,
+    },
   ]
 },
-   //clients
+   //clients  
  {
   icon: 'simple-icon-people',
   label: 'menu.clients',

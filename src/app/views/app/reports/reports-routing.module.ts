@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/auth.guard';
+import { ClientInsideCompanyComponent } from './client-inside-company/client-inside-company.component';
 import { ClientOrderComponent } from './client-order/client-order.component';
 import { ReceiptAgentComponent } from './print/receipt-agent/receipt-agent.component';
 import { ShipmentInStockComponent } from './shipment-in-stock/shipment-in-stock.component';
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path:'clientorderonway',
     component: ShipmentsClientOnWayComponent,canActivate: [AuthGuard],
+  },
+  {
+    path:'clientinsidecompany',
+    component: ClientInsideCompanyComponent,canActivate: [AuthGuard],
   },
   {
     path:'print',
