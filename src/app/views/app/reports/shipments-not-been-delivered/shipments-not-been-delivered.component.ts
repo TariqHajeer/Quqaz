@@ -138,7 +138,6 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   }                                                                              
 
 changeDeleiverMoneyForClient(){
-  console.log(this.ids)
   this.orderservice.DeleiverMoneyForClient(this.ids).subscribe(res=>{
     this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 
