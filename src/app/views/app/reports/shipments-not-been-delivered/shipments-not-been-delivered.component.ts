@@ -58,6 +58,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       else {
         this.ids.push(row.id)
         this.orders.push(row)
+        localStorage.setItem('orders',JSON.stringify(this.orders))
       this.agent=this.orders.map(o=>o.agent)[0]
       this.orderplaced=this.orders.map(o=>o.orderplaced)[0]
       }
