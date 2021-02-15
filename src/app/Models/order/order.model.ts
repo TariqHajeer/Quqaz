@@ -22,3 +22,10 @@ export class Order {
       Orderplaced: NameAndIdDto
       Agent: User
 }
+export class OrderState {
+      Id: number
+      Cost: number
+      MoenyPlacedId: number
+      OrderplacedId: number
+
+}

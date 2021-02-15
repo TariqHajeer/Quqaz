@@ -135,9 +135,9 @@ export class ShipmentInStockComponent implements OnInit {
   }
   afterPrint() {
     this.orderservice.MakeOrderInWay(this.orders.map(o=>o.id)).subscribe(res=>{
-      console.log('true')
       this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.orders=[]
+      this.allFilter()
     })
   }     
 }

@@ -48,6 +48,9 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   }
   ids: any[] = []
   orders: any[] = []
+  
+  agent=this.orders.map(o=>o.agent)[0]
+  orderplaced=this.orders.map(o=>o.orderplaced)[0]
   checkboxId(row) {
     if (this.selection.isSelected(row))
       if (this.ids.filter(d => d == row.id).length > 0)
@@ -55,6 +58,8 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       else {
         this.ids.push(row.id)
         this.orders.push(row)
+      this.agent=this.orders.map(o=>o.agent)[0]
+      this.orderplaced=this.orders.map(o=>o.orderplaced)[0]
       }
     if (!this.selection.isSelected(row)) {
       this.ids = this.ids.filter(i => i != row.id)
@@ -96,9 +101,9 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       this.Clients = res
     })
   }
-  ChangeClientIdOrOrderplacedId() {
+  ChangeClientId() {
     if (this.ClientId != null) {
-      this.filtering.OrderplacedId =2
+      this.filtering.IsClientDiliverdMoney =false
       this.filtering.ClientId=this.ClientId
       this.allFilter();
     }
@@ -132,5 +137,12 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     })
   }                                                                              
 
+changeDeleiverMoneyForClient(){
+  console.log(this.ids)
+  this.orderservice.DeleiverMoneyForClient(this.ids).subscribe(res=>{
+    this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 
+    this.allFilter()
+  })
+}
 }

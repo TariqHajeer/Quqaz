@@ -59,16 +59,16 @@ const data: IMenuItem[] = [
       label: 'كشف شحنات المندوب  في الطريق',
       to: `${adminRoot}/reports/Shipmentonway`,
     },
-    {
-      icon: 'simple-icon-layers',
-      label: ' كشف   شحنات العميل في المخزن',
-      to: `${adminRoot}/reports/clientorder`,
-    },
-    {
-      icon: 'simple-icon-layers',
-      label: ' كشف   شحنات العميل في الطريق',
-      to: `${adminRoot}/reports/clientorderonway`,
-    },
+    // {
+    //   icon: 'simple-icon-layers',
+    //   label: ' كشف   شحنات العميل في المخزن',
+    //   to: `${adminRoot}/reports/clientorder`,
+    // },
+    // {
+    //   icon: 'simple-icon-layers',
+    //   label: ' كشف   شحنات العميل في الطريق',
+    //   to: `${adminRoot}/reports/clientorderonway`,
+    // },
     {
       icon: 'simple-icon-layers',
       label: ' كشف   شحنات العميل داخل الشركة',
@@ -76,7 +76,7 @@ const data: IMenuItem[] = [
     },
     {
       icon: 'simple-icon-layers',
-      label: 'الشحنات التي لم يتم استلام مبلغها للعميل',
+      label: 'كشف حساب العميل الغير مسلم',
       to: `${adminRoot}/reports/Shipmentsnotbeendelivered`,
     },
     

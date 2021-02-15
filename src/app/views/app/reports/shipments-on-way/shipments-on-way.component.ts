@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { OrderService } from 'src/app/services/order.service';
-import { NotificationsService } from 'angular2-notifications';
+import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/Models/user/user.model';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
@@ -10,6 +10,7 @@ import { Paging } from 'src/app/Models/paging';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { OrderState } from 'src/app/Models/order/order.model';
 @Component({
   selector: 'app-shipments-on-way',
   templateUrl: './shipments-on-way.component.html',
@@ -18,7 +19,7 @@ import { Router } from '@angular/router';
 export class ShipmentsOnWayComponent implements OnInit {
 
   displayedColumns: string[] = ['select', 'code', 'country', 'region'
-    , 'deliveryCost', 'orderplaced', 'monePlaced'];
+    , 'cost', 'orderplaced', 'monePlaced'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
 
@@ -77,6 +78,8 @@ export class ShipmentsOnWayComponent implements OnInit {
   noDataFound: boolean = false
   canEditCount: boolean[] = []
   temporders: any[] = []
+  orderstates:OrderState[]=[]
+  orderstate:OrderState=new OrderState()
   @Input() totalCount: number;
 
   ngOnInit(): void {
@@ -149,7 +152,20 @@ export class ShipmentsOnWayComponent implements OnInit {
       });
   }
   saveEdit(){
-    
+    for(let i =0;i<this.dataSource.data.length;i++){
+      this.orderstate.Id=this.dataSource.data[i].id
+      this.orderstate.Cost=this.dataSource.data[i].cost
+      this.orderstate.MoenyPlacedId=this.dataSource.data[i].monePlaced.id
+      this.orderstate.OrderplacedId=this.dataSource.data[i].orderplaced.id
+      this.orderstates.push(this.orderstate)
+      this.orderstate=new OrderState
+    }
+   
+    this.orderservice.UpdateOrdersStatusFromAgent(this.orderstates).subscribe(res=>{
+      this.allFilter()
+      this.orderstates=[]
+      this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    })
   }
   // print() {
   //   if (this.orders == []) return

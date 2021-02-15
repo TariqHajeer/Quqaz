@@ -8,4 +8,5 @@ export class OrderFilter {
       MonePlacedId 
       OrderplacedId 
       AgentId
+      IsClientDiliverdMoney
 }

@@ -33,6 +33,8 @@ export class OrderService {
       params = params.append("MonePlacedId", filter.MonePlacedId);
       if (filter.OrderplacedId != undefined || filter.OrderplacedId != null)
       params = params.append("OrderplacedId", filter.OrderplacedId);
+      if (filter.IsClientDiliverdMoney != undefined || filter.IsClientDiliverdMoney != null)
+      params = params.append("IsClientDiliverdMoney", filter.IsClientDiliverdMoney);
       if (paging.RowCount != undefined || paging.RowCount != null)
       params = params.append("RowCount",paging.RowCount);
       if (paging.Page != undefined || paging.Page != null)
@@ -90,6 +92,13 @@ export class OrderService {
       params.append("ids",ids);
       return this.http.put<any>(this.controler, ids )
       
+    }
+    UpdateOrdersStatusFromAgent(orderstate){
+      return this.http.put<any>(this.controler+"UpdateOrdersStatusFromAgent", orderstate )
+    }
+    DeleiverMoneyForClient(ids){
+      return this.http.put<any>(this.controler+"DeleiverMoneyForClient", ids )
+
     }
 }
 

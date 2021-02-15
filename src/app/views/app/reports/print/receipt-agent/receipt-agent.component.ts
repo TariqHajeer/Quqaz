@@ -25,10 +25,10 @@ export class ReceiptAgentComponent implements OnInit {
   ngOnInit(): void {
 
   }
-  sumdeliveryCost() {
+  sumCost() {
     if(this.orders)
     this.orders.forEach(o => {
-      this.count += o.deliveryCost
+      this.count += o.cost
     })
     return this.count
   }
