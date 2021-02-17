@@ -98,13 +98,12 @@ export class ViewOrdersComponent implements OnInit {
   }
   delete(element) {
     this.orderservice.Delete(element.id).subscribe(res => {
-      let index = this.dataSource.data.indexOf(element);
-      this.dataSource.data.splice(index, 1);
-      this.dataSource._updateChangeSubscription();
+     this.allFilter()
     })
   }
   Edit(element) {
-
+    this.router.navigate(['/app/order/editorder'])
+    localStorage.setItem('editorder',JSON.stringify(element))
   }
   getAgent() {
     this.userService.GetAgent().subscribe(res => {

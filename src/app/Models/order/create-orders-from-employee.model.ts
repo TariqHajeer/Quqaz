@@ -7,6 +7,7 @@ export class CreateOrdersFromEmployee {
         this.RecipientPhones = [];
         
     }
+    Id:number
     Code:string
     ClientId:number
     CountryId:number
