@@ -51,7 +51,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:5px;"> حالة الشحنة</th>
           <td mat-cell *matCellDef="let element;index as i" style="padding:5px;">
             <ng-select [(ngModel)]="element.orderplaced.id" [ngModelOptions]="{standalone: true}"
-            [clearable]="false" name="Orderplaced" (change)="ChangeOrderplacedId(element,i)"style="width: 120px;">
+            autofocus [clearable]="false" name="Orderplaced" (change)="ChangeOrderplacedId(element,i)"style="width: 120px;">
                 <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}</ng-option>
             </ng-select>
           </td>
@@ -60,7 +60,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:5px;"> موقع المبلغ</th>
           <td mat-cell *matCellDef="let element"style="padding:5px;">
             <ng-select [(ngModel)]="element.monePlaced.id" [ngModelOptions]="{standalone: true}"style="width: 120px;"
-            [clearable]="false" name="MonePlaced">
+            autofocus [clearable]="false" name="MonePlaced">
             <ng-option *ngFor="let moenyPlaced of MoenyPlaced" [value]="moenyPlaced.id">{{moenyPlaced.name}}
             </ng-option>
         </ng-select>
