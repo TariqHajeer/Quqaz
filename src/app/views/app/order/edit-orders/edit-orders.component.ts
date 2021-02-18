@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
@@ -26,7 +27,8 @@ export class EditOrdersComponent implements OnInit {
     private clientService: ClientService
     , private customerService: CustomService,
     public userService: UserService,
-    private notifications: NotificationsService) { }
+    private notifications: NotificationsService,
+    private router: Router,) { }
 
   Order: CreateOrdersFromEmployee
   submitted = false;
@@ -110,8 +112,11 @@ this.getorder()
       this.Order.RegionId = null;
     }
     this.orderservice.Creat(this.Order).subscribe(res => {
-      this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+     // this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.int()
+      localStorage.removeItem('editorder')
+      this.router.navigate(['/app/order/'])
+
     });
 
   }
