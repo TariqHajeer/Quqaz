@@ -49,7 +49,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   ids: any[] = []
   orders: any[] = []
   
-  agent=this.orders.map(o=>o.agent)[0]
+  client=this.orders.map(o=>o.agent)[0]
   orderplaced=this.orders.map(o=>o.orderplaced)[0]
   checkboxId(row) {
     if (this.selection.isSelected(row))
@@ -59,7 +59,8 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
         this.ids.push(row.id)
         this.orders.push(row)
         localStorage.setItem('orders',JSON.stringify(this.orders))
-      this.agent=this.orders.map(o=>o.agent)[0]
+      this.client=this.orders.map(o=>o.client)[0]
+      console.log(this.client)
       this.orderplaced=this.orders.map(o=>o.orderplaced)[0]
       }
     if (!this.selection.isSelected(row)) {

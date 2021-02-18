@@ -1,0 +1,82 @@
+
+<div class="card" style="direction:rtl">
+    <div class="card-body">
+   
+<table class="table ">
+    <thead>
+
+    <tr><td><div class="header-space"></div></td></tr>  
+    
+    <th *ngFor="let head of heads"  style="font-size: 20px;">{{head}}</th>
+</thead>
+    <tbody><tr><td>
+      <div class="content">
+        <tr style="  margin-bottom: 20%;font-size: 18px;
+        " class=" table-bordered" *ngFor="let order of orders;index as i" >
+            <td>
+              {{i+1}}
+            </td>
+            <td>
+                {{order.code}}
+            </td>
+            <td>
+                {{order.cost}}
+            </td>
+            <td>
+                {{order.country.name}}
+            </td>
+            <td>
+                {{order.recipientPhones}}
+            </td>
+            
+            <td>
+                {{order.note}}
+            </td>
+        </tr>
+        
+      </div>
+    </td></tr>
+    <tr class=" table-bordered">
+        <td colspan="2">
+            الإجمالي :
+        </td>
+        <td >
+           <!----> {{ count}}
+        </td>
+
+    </tr></tbody>
+   
+  </table>
+  </div>
+</div>
+  <div class="header">
+    <div class="row ">
+        <div class="col-md-4" style="text-align: right; ">
+            <h3>
+                مستخدم الطابعة :{{userName.name}}
+            </h3>
+            <h3>
+                تاريخ الطباعة :{{dateOfPrint | date:"dd/MM/yyyy"}}
+            </h3>
+            <h3>
+                وقت الطباعة :{{dateOfPrint | date:"HH:mm:ss"}}
+            </h3>
+           
+        </div>
+        <div class="col-md-5" style="text-align: right;">
+            <h3 style="font-size: 20px;">
+                اسم العميل  : {{client!=null||client!=undefined?client.name:null}}
+            </h3>
+            <h3  style="font-size: 20px;">
+                رقم هاتف العميل :{{client!=null||client!=undefined?client.phones:null}}
+            </h3>
+        
+        </div>
+    
+        <div class="col-md-3">
+            <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px" />
+        </div>
+    </div>
+  </div>
+ 
+

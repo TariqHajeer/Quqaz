@@ -12,14 +12,13 @@ import { NgxPrintModule } from 'ngx-print';
 import { ClientOrderComponent } from './client-order/client-order.component';
 import { ShipmentsOnWayComponent } from './shipments-on-way/shipments-on-way.component';
 import { ReceiptAgentComponent } from './print/receipt-agent/receipt-agent.component';
-import { FooterComponent } from './print/receipt-agent/layout/footer/footer.component';
-import { HeaderComponent } from './print/receipt-agent/layout/header/header.component';
 import { ShipmentsClientOnWayComponent } from './shipments-client-on-way/shipments-client-on-way.component';
 import { ClientInsideCompanyComponent } from './client-inside-company/client-inside-company.component';
 import { ShipmentsNotBeenDeliveredComponent } from './shipments-not-been-delivered/shipments-not-been-delivered.component';
+import { ReceiptClientComponent } from './print/receipt-client/receipt-client.component';
 
 @NgModule({
-  declarations: [ShipmentInStockComponent, ClientOrderComponent, ShipmentsOnWayComponent, ReceiptAgentComponent, FooterComponent, HeaderComponent, ShipmentsClientOnWayComponent, ClientInsideCompanyComponent, ShipmentsNotBeenDeliveredComponent,],
+  declarations: [ShipmentInStockComponent, ClientOrderComponent, ShipmentsOnWayComponent, ReceiptAgentComponent, ShipmentsClientOnWayComponent, ClientInsideCompanyComponent, ShipmentsNotBeenDeliveredComponent, ReceiptClientComponent,],
   imports: [
     CommonModule,
     ReportsRoutingModule,
