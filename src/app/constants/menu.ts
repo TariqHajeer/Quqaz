@@ -72,11 +72,11 @@ const data: IMenuItem[] = [
       label: 'العميل',
       to: `${adminRoot}/reports/Shipmentonway`,
       subs:[
-        {
-          icon: 'simple-icon-layers',
-          label: ' كشف   شحنات  داخل الشركة',
-          to: `${adminRoot}/reports/clientinsidecompany`,
-        },
+        // {
+        //   icon: 'simple-icon-layers',
+        //   label: ' كشف   شحنات  داخل الشركة',
+        //   to: `${adminRoot}/reports/clientinsidecompany`,
+        // },
         {
           icon: 'simple-icon-layers',
           label: 'كشف الشحنات الغير مسلم مبلغها',
