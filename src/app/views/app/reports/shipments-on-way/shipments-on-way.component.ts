@@ -18,7 +18,7 @@ import { OrderState } from 'src/app/Models/order/order.model';
 })
 export class ShipmentsOnWayComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'code', 'country', 'region'
+  displayedColumns: string[] = [ 'code', 'country', 'region'
     , 'cost', 'orderplaced', 'monePlaced'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);

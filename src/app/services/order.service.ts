@@ -90,7 +90,7 @@ export class OrderService {
     MakeOrderInWay(ids){
       let params = new FormData();
       params.append("ids",ids);
-      return this.http.put<any>(this.controler, ids )
+      return this.http.put<any>(this.controler+"MakeOrderInWay", ids )
       
     }
     UpdateOrdersStatusFromAgent(orderstate){

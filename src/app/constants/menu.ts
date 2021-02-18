@@ -25,6 +25,7 @@ const data: IMenuItem[] = [
       icon: 'iconsminds-box-close',
       label: 'الطلبات الجديدة',
       to: `${adminRoot}/order/neworders`,
+     
     },
     {
       icon: 'iconsminds-box-close',
@@ -51,13 +52,37 @@ const data: IMenuItem[] = [
   subs:[
     {
       icon: 'simple-icon-layers',
-      label: 'كشف شحنات المندوب في المخزن',
+      label: 'المندوب',
       to: `${adminRoot}/reports/ShipmentInStock`,
+      subs:[
+        {
+          icon: 'simple-icon-layers',
+          label: 'كشف شحنات  في المخزن',
+          to: `${adminRoot}/reports/ShipmentInStock`,
+        },
+        {
+          icon: 'simple-icon-layers',
+      label: 'كشف شحنات   في الطريق',
+      to: `${adminRoot}/reports/Shipmentonway`,
+        },
+      ]
     },
     {
       icon: 'simple-icon-layers',
-      label: 'كشف شحنات المندوب  في الطريق',
+      label: 'العميل',
       to: `${adminRoot}/reports/Shipmentonway`,
+      subs:[
+        {
+          icon: 'simple-icon-layers',
+          label: ' كشف   شحنات  داخل الشركة',
+          to: `${adminRoot}/reports/clientinsidecompany`,
+        },
+        {
+          icon: 'simple-icon-layers',
+          label: 'كشف الشحنات الغير مسلم مبلغها',
+          to: `${adminRoot}/reports/Shipmentsnotbeendelivered`,
+        },
+      ]
     },
     // {
     //   icon: 'simple-icon-layers',
@@ -69,16 +94,7 @@ const data: IMenuItem[] = [
     //   label: ' كشف   شحنات العميل في الطريق',
     //   to: `${adminRoot}/reports/clientorderonway`,
     // },
-    {
-      icon: 'simple-icon-layers',
-      label: ' كشف   شحنات العميل داخل الشركة',
-      to: `${adminRoot}/reports/clientinsidecompany`,
-    },
-    {
-      icon: 'simple-icon-layers',
-      label: 'كشف حساب العميل الغير مسلم',
-      to: `${adminRoot}/reports/Shipmentsnotbeendelivered`,
-    },
+    
     
   ]
 },
