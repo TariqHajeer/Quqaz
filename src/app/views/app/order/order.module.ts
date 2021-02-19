@@ -16,9 +16,10 @@ import { CreateMulitpleOrderComponent } from './create-mulitple-order/create-mul
 import { GridAllModule, GridModule } from '@syncfusion/ej2-angular-grids';
 import { NgxPrintModule } from 'ngx-print';
 import { SimpleNotificationsModule } from 'angular2-notifications';
+import { CreatemultipleOrderFromClientComponent } from './createmultiple-order-from-client/createmultiple-order-from-client.component';
 
 @NgModule({
-  declarations: [ViewOrdersComponent,AddOrdersComponent,EditOrdersComponent,  ViewNewOrderComponent, CreateMulitpleOrderComponent],
+  declarations: [ViewOrdersComponent,AddOrdersComponent,EditOrdersComponent,  ViewNewOrderComponent, CreateMulitpleOrderComponent, CreatemultipleOrderFromClientComponent],
   imports: [
     CommonModule,
     OrderRoutingModule,

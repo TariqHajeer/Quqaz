@@ -15,11 +15,11 @@ import { User } from 'src/app/Models/user/user.model';
 import { Client } from '../../client/client.model';
 
 @Component({
-  selector: 'app-create-mulitple-order',
-  templateUrl: './create-mulitple-order.component.html',
-  styleUrls: ['./create-mulitple-order.component.scss']
+  selector: 'app-createmultiple-order-from-client',
+  templateUrl: './createmultiple-order-from-client.component.html',
+  styleUrls: ['./createmultiple-order-from-client.component.scss']
 })
-export class CreateMulitpleOrderComponent implements OnInit {
+export class CreatemultipleOrderFromClientComponent implements OnInit {
 
   constructor(private orderservice: OrderService,
 
@@ -48,7 +48,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
   count
   filter: OrderFilter
   CountryId
-  AgentId
+  ClientId
   //tempPhone: string;
   // EdittempPhone: string
   //selectedOrder: any;
@@ -109,9 +109,9 @@ export class CreateMulitpleOrderComponent implements OnInit {
   }
   showMessageCode: boolean = false
   CheckCode() {
-    if (!this.Order.Code || !this.Order.ClientId) return
+    if (!this.Order.Code || !this.ClientId) return
     if (this.Order.Code != null && this.Order.Code != undefined) {
-      this.orderservice.chekcCode(this.Order.Code, this.Order.ClientId).subscribe(res => {
+      this.orderservice.chekcCode(this.Order.Code, this.ClientId).subscribe(res => {
 
         if (res || this.Orders.filter(o => o.Code == this.Order.Code).length > 0) {
           this.showMessageCode = true
@@ -121,16 +121,17 @@ export class CreateMulitpleOrderComponent implements OnInit {
     }
   }
   tempcode
-  CheckCodeForEdit(order) {
+  CheckCodeForEdit() {
     this.tempcode = this.EditOrder
-    if (!this.EditOrder.Code || !this.EditOrder.ClientId) return
+    if (!this.EditOrder.Code || !this.ClientId) return
     if (this.EditOrder.Code != null) {
-      this.orderservice.chekcCode(this.EditOrder.Code, this.EditOrder.ClientId).subscribe(res => {
+      this.orderservice.chekcCode(this.EditOrder.Code, this.ClientId).subscribe(res => {
         if (this.EditOrder.CanEdit == true)
           if (res || this.Orders.filter(o => o.Code == this.EditOrder.Code && o != this.tempcode).length > 0) {
-            order.showEditMessageCode = true
+           
+            this.showMessageCode = true
           } else
-            order.showEditMessageCode = false
+            this.showMessageCode = false
       })
     }
   }
@@ -203,13 +204,13 @@ export class CreateMulitpleOrderComponent implements OnInit {
   }
   submitedSave = false
   AddOrder() {
-    if (!this.CountryId || !this.AgentId || this.Orders == []) {
+    if (!this.CountryId || !this.ClientId || this.Orders == []) {
       this.submitedSave=true
       return
     }
     this.Orders.forEach(o=>{
       o.CountryId=this.CountryId
-      o.AgentId=this.AgentId
+      o.ClientId=this.ClientId
     })
     this.orderservice.createMultiple(this.Orders).subscribe(res => {
       this.notifications.create('success', 'تم اضافة الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
@@ -217,4 +218,5 @@ export class CreateMulitpleOrderComponent implements OnInit {
     })
 
   }
+
 }

@@ -39,8 +39,13 @@ const data: IMenuItem[] = [
     },
     {
       icon: 'iconsminds-add',
-      label: 'إضافة طلبات متعددة',
+      label: 'إضافة طلبات متعددة للمندوب',
       to: `${adminRoot}/order/addMulitpleOrders`,
+    },
+    {
+      icon: 'iconsminds-add',
+      label: 'إضافة طلبات متعددة للعميل',
+      to: `${adminRoot}/order/addMulitpleOrdersfromClient`,
     },
   ]
 },

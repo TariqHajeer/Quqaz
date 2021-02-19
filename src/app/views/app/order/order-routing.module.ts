@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/auth.guard';
 import { AddOrdersComponent } from './add-orders/add-orders.component';
 import { CreateMulitpleOrderComponent } from './create-mulitple-order/create-mulitple-order.component';
+import { CreatemultipleOrderFromClientComponent } from './createmultiple-order-from-client/createmultiple-order-from-client.component';
 import { EditOrdersComponent } from './edit-orders/edit-orders.component';
 import { ViewNewOrderComponent } from './view-new-order/view-new-order.component';
 import { ViewOrdersComponent } from './view-orders/view-orders.component';
@@ -20,6 +21,10 @@ const routes: Routes = [
   {
     path:'addMulitpleOrders',
     component:CreateMulitpleOrderComponent ,canActivate: [AuthGuard],
+  },
+  {
+    path:'addMulitpleOrdersfromClient',
+    component:CreatemultipleOrderFromClientComponent ,canActivate: [AuthGuard],
   },
   {
     path:'editorder',
