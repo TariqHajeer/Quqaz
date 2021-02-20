@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { OrderService } from 'src/app/services/order.service';
@@ -12,57 +12,24 @@ import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { OrderState } from 'src/app/Models/order/order.model';
 @Component({
-  selector: 'app-shipments-on-way',
-  templateUrl: './shipments-on-way.component.html',
-  styleUrls: ['./shipments-on-way.component.scss']
+  selector: 'app-receipt-shipment-agent',
+  templateUrl: './receipt-shipment-agent.component.html',
+  styleUrls: ['./receipt-shipment-agent.component.scss']
 })
-export class ShipmentsOnWayComponent implements OnInit {
+export class ReceiptShipmentAgentComponent implements OnInit {
 
-  displayedColumns: string[] = [ 'code', 'country', 'region'
-    , 'cost', 'orderplaced', 'monePlaced'];
+  displayedColumns: string[] = ['code', 'country', 'region'
+    , 'cost', 'orderplaced', 'monePlaced','edit'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
-
-  // /** Whether the number of selected elements matches the total number of rows. */
-  // isAllSelected() {
-  //   const numSelected = this.selection.selected.length;
-  //   const numRows = this.dataSource.data.length;
-  //   return numSelected === numRows;
-  // }
-
-  // /** Selects all rows if they are not all selected; otherwise clear selection. */
-  // masterToggle() {
-  //   this.isAllSelected() ?
-  //     this.selection.clear() :
-  //     this.dataSource.data.forEach(row => { this.selection.select(row) });
-  // }
-
-  // /** The label for the checkbox on the passed row */
-  // checkboxLabel(row?: any): string {
-  //   if (!row) {
-  //     return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-  //   }
-  //   this.checkboxId(row)
-  //   return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
-  // }
+  Code
   ids: any[] = []
   orders: any[] = []
+  getorders: any[] = []
   statu
   MoenyPlacedId
   MoenyPlaced: any[] = []
-  // checkboxId(row) {
-  //   if (this.selection.isSelected(row))
-  //     if (this.ids.filter(d => d == row.id).length > 0)
-  //       return
-  //     else {
-  //       this.ids.push(row.id)
-  //       this.orders.push(row)
-  //     }
-  //   if (!this.selection.isSelected(row)) {
-  //     this.ids = this.ids.filter(i => i != row.id)
-  //     this.orders = this.orders.filter(o => o != row)
-  //   }
-  // }
+
   constructor(
     private orderservice: OrderService,
     public userService: UserService,
@@ -78,8 +45,8 @@ export class ShipmentsOnWayComponent implements OnInit {
   noDataFound: boolean = false
   canEditCount: boolean[] = []
   temporders: any[] = []
-  orderstates:OrderState[]=[]
-  orderstate:OrderState=new OrderState()
+  orderstates: OrderState[] = []
+  orderstate: OrderState = new OrderState()
   @Input() totalCount: number;
 
   ngOnInit(): void {
@@ -88,6 +55,7 @@ export class ShipmentsOnWayComponent implements OnInit {
     this.GetorderPlace()
     this.paging = new Paging
     this.filtering = new OrderFilter
+    this.dataSource = new MatTableDataSource([])
   }
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
@@ -100,8 +68,8 @@ export class ShipmentsOnWayComponent implements OnInit {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
       console.log(res)
-      this.orderPlace = this.orderPlace.filter(o =>o.id == 3 || o.id == 4 || o.id ==5
-        || o.id ==6|| o.id ==7|| o.id ==8)
+      this.orderPlace = this.orderPlace.filter(o => o.id == 3 || o.id == 4 || o.id == 5
+        || o.id == 6 || o.id == 7 || o.id == 8)
 
     })
   }
@@ -112,18 +80,38 @@ export class ShipmentsOnWayComponent implements OnInit {
   }
   ChangeAgentId() {
     if (this.AgentId != null) {
-      this.filtering.OrderplacedId = 3
       this.filtering.AgentId = this.AgentId
       this.allFilter();
     }
+  }
+  addOrder() {
+    if (this.Code) {
+      let findorder = this.orders.find(o => o.code == this.Code)
+      if (findorder) {
+        if (this.getorders.filter(o => o == findorder).length > 0) {
+          console.log("موجود  order")
+          return
+        }
+        this.getorders.push(findorder)
+        for (let i = 0; i < this.getorders.length; i++) {
+          this.canEditCount.push(true)
+        }
+        this.sumCost()
+        this.dataSource = new MatTableDataSource(this.getorders)
+        this.totalCount = this.dataSource.data.length
+        console.log(this.getorders)
+        this.temporders = Object.assign({}, this.getorders.map(o => o.cost));
+
+      } else console.log("not found code in order")
+    } else console.log("code is null")
   }
   ChangeOrderplacedId(element, index) {
     if (element.orderplaced.id == 6)
       this.canEditCount[index] = false
     else {
       this.canEditCount[index] = true
-      element. cost =Object.assign(this.temporders[index], this.temporders[index]);
-      
+      element.cost = Object.assign(this.temporders[index], this.temporders[index]);
+
     }
   }
   switchPage(event: PageEvent) {
@@ -139,38 +127,42 @@ export class ShipmentsOnWayComponent implements OnInit {
         if (response.data.length == 0)
           this.noDataFound = true
         else this.noDataFound = false
-        this.temporders =  Object.assign({}, response.data.map(o=>o.cost));
+      //this.temporders = Object.assign({}, response.data.map(o => o.deliveryCost));
+      this.orders = response.data
+      // this.dataSource = new MatTableDataSource(response.data)
 
-      this.dataSource = new MatTableDataSource(response.data)
-      for (let i = 0; i < this.dataSource.data.length; i++) {
-        this.canEditCount.push(true)
-      }
-      this.totalCount = response.total
+      //this.totalCount = response.total
     },
       err => {
 
       });
   }
-  saveEdit(){
-    for(let i =0;i<this.dataSource.data.length;i++){
-      this.orderstate.Id=this.dataSource.data[i].id
-      this.orderstate.Cost=this.dataSource.data[i].cost
-      this.orderstate.MoenyPlacedId=this.dataSource.data[i].monePlaced.id
-      this.orderstate.OrderplacedId=this.dataSource.data[i].orderplaced.id
+  count=0
+  
+  sumCost() {
+    this.count=0
+    if(this.getorders)
+    this.getorders.forEach(o => {
+      this.count += o.cost
+    })
+    return this.count
+  }
+  saveEdit() {
+    for (let i = 0; i < this.dataSource.data.length; i++) {
+      this.orderstate.Id = this.dataSource.data[i].id
+      this.orderstate.Cost = this.dataSource.data[i].cost
+      this.orderstate.MoenyPlacedId = this.dataSource.data[i].monePlaced.id
+      this.orderstate.OrderplacedId = this.dataSource.data[i].orderplaced.id
       this.orderstates.push(this.orderstate)
-      this.orderstate=new OrderState
+      this.orderstate = new OrderState
     }
-   
-    this.orderservice.UpdateOrdersStatusFromAgent(this.orderstates).subscribe(res=>{
+
+    this.orderservice.UpdateOrdersStatusFromAgent(this.orderstates).subscribe(res => {
       this.allFilter()
-      this.orderstates=[]
+      this.orderstates = []
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
     })
   }
-  // print() {
-  //   if (this.orders == []) return
-  //   localStorage.setItem('printorders', JSON.stringify(this.orders))
-  //   this.route.navigate(['/print'])
 
-  // }
+
 }

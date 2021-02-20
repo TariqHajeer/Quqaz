@@ -1,0 +1,104 @@
+<div class="card">
+  <div class="card-body">
+    <h3>استلام حالة الشحنة</h3>
+
+    <div class="row">
+      <div class="col-md-3">
+        <label>المندوب</label>
+        <ng-select [(ngModel)]="AgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Agent"
+          (change)="ChangeAgentId()">
+          <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
+        </ng-select>
+      </div>
+      <div class="col-md-3">
+        <label>كود الشحنة</label>
+        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="Code">
+
+      </div>
+      <div class="col-md-3" style="padding-top: 25px;">
+        <button (click)="addOrder()" class="btn btn-primary"> اضافة شحنة</button>
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+</div>
+<div class="example-container mat-elevation-z8">
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="code">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> كود </th>
+      <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.code}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="country">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> المدينة</th>
+      <td mat-cell *matCellDef="let element"> {{element.country!=null?element.country.name:null}}</td>
+    </ng-container>
+    <ng-container matColumnDef="region">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> المنطقة</th>
+      <td mat-cell *matCellDef="let element"> {{element.region!=null?element.region.name:null}}</td>
+    </ng-container>
+    <ng-container matColumnDef="cost">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> كلفة الطلب</th>
+      <td mat-cell *matCellDef="let element;index as i">
+        <h4 *ngIf="canEditCount[i]">{{element.cost}}</h4>
+        <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" *ngIf="!canEditCount[i]"
+          oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+          [(ngModel)]="element.cost" style="width: 80px;">
+      </td>
+      
+    </ng-container>
+    <ng-container matColumnDef="orderplaced">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> حالة الشحنة</th>
+      <td mat-cell *matCellDef="let element;index as i">
+        <ng-select [(ngModel)]="element.orderplaced.id" [ngModelOptions]="{standalone: true}" [clearable]="false"
+          name="Orderplaced" (change)="ChangeOrderplacedId(element,i)" style="width: 120px;">
+          <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}</ng-option>
+        </ng-select>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="monePlaced">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> موقع المبلغ</th>
+      <td mat-cell *matCellDef="let element">
+        <ng-select [(ngModel)]="element.monePlaced.id" [ngModelOptions]="{standalone: true}" style="width: 120px;"
+          [clearable]="false" name="MonePlaced">
+          <ng-option *ngFor="let moenyPlaced of MoenyPlaced" [value]="moenyPlaced.id">{{moenyPlaced.name}}
+          </ng-option>
+        </ng-select>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        <button (click)="saveEdit()" class="btn btn-primary"> حفظ</button>
+
+      </th>
+      <td mat-cell *matCellDef="let element">
+
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+    </tr>
+  </table>
+  <div style=" padding: 10px 22% 10px 10px; background-color: white;font-size: 15px;"> 
+    الإجمالي : {{count}}
+  </div>
+  <!--
+       <mat-paginator [length]="100"
+      [pageSize]="10"
+      [pageSizeOptions]="[ 10, 25,50, 100]">
+    </mat-paginator>
+     -->
+  <h5 style="padding-top: 20px; padding-right: 10px;" *ngIf="noDataFound">لايوجد بيانات للعرض</h5>
+
+</div>
+<mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
+  [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
+
+<simple-notifications></simple-notifications>

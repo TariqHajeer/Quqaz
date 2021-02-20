@@ -55,7 +55,7 @@ const data: IMenuItem[] = [
   label: 'التقارير',
   to: `${adminRoot}/reports`,
   subs:[
-    {
+    {//agent
       icon: 'simple-icon-layers',
       label: 'المندوب',
       to: `${adminRoot}/reports/ShipmentInStock`,
@@ -70,9 +70,14 @@ const data: IMenuItem[] = [
       label: 'كشف شحنات   في الطريق',
       to: `${adminRoot}/reports/Shipmentonway`,
         },
+        {
+          icon: 'simple-icon-layers',
+      label: 'استلام حالة الشحنة ',
+      to: `${adminRoot}/reports/ReceiptShipmentAgentComponent`,
+        },
       ]
     },
-    {
+    {//client
       icon: 'simple-icon-layers',
       label: 'العميل',
       to: `${adminRoot}/reports/Shipmentonway`,

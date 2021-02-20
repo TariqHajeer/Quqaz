@@ -13,7 +13,7 @@
         <div class="col-md-4" style="padding-right:25px ;">
             <label>المحافظة</label>
             <ng-select [(ngModel)]="CountryId" (keyup.enter)="onEnter()" style="width: 150px; "
-                (change)="changeCountry()" [ngModelOptions]="{standalone: true}" autofocus [clearable]="false"
+                (change)="changeCountry()" [ngModelOptions]="{standalone: true}"  [clearable]="false"
                 name="Country">
                 <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
             </ng-select>
@@ -23,7 +23,7 @@
         <div class="col-md-4">
             <label>العميل</label>
             <ng-select [(ngModel)]="ClientId" (keyup)="CheckCodeForEdit();CheckCode()"
-                style="width: 150px;" [ngModelOptions]="{standalone: true}" autofocus [clearable]="false" name="Client">
+                style="width: 150px;" [ngModelOptions]="{standalone: true}"  [clearable]="false" name="Client">
                 <ng-option *ngFor="let Client of clients" [value]="Client.id">{{Client.name}}
                 </ng-option>
             </ng-select>
@@ -63,7 +63,7 @@
                     <td>
                         <h4 *ngIf="!order.CanEdit">{{order.AgentName}}</h4>
                         <ng-select [(ngModel)]="order.AgentId" [ngModelOptions]="{standalone: true}" style="width: 100px;"
-                        *ngIf="order.CanEdit"   autofocus [clearable]="false" name="Agent" (keyup.enter)="onEnter()">
+                        *ngIf="order.CanEdit"    [clearable]="false" name="Agent" (keyup.enter)="onEnter()">
                             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                         </ng-select>
                         <div *ngIf="!EditOrder.AgentId && Editsubmitted" class="message">المندوب  حقل مطلوب</div>
@@ -73,7 +73,7 @@
                               <td (click)="Edit(order)">
                             <h4 *ngIf="!order.CanEdit">{{order.CountryName}}</h4>
                             <ng-select [(ngModel)]="EditOrder.CountryId" style="width: 100px;"
-                                (change)="changeCountry()" [ngModelOptions]="{standalone: true}"  autofocus [clearable]="false"
+                                (change)="changeCountry()" [ngModelOptions]="{standalone: true}"   [clearable]="false"
                                 *ngIf="order.CanEdit" name="Country">
                                 <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
                             </ng-select>
@@ -83,7 +83,7 @@
                       <td>
                             <h4 *ngIf="!order.CanEdit">{{order.AgentName}}</h4>
                             <ng-select [(ngModel)]="EditOrder.AgentId" [ngModelOptions]="{standalone: true}"
-                                *ngIf="order.CanEdit"  autofocus [clearable]="false" name="Agent" style="width: 100px;">
+                                *ngIf="order.CanEdit"   [clearable]="false" name="Agent" style="width: 100px;">
                                 <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                             </ng-select>
                             <div *ngIf="!EditOrder.AgentId && Editsubmitted" class="message">المندوب حقل مطلوب</div>
@@ -95,7 +95,7 @@
                     <td>
                         <h4 *ngIf="!order.CanEdit">{{order.OrderplacedName}}</h4>
                         <ng-select [(ngModel)]="EditOrder.OrderplacedId" [ngModelOptions]="{standalone: true}"
-                            style="width: 100px;" autofocus [clearable]="false" *ngIf="order.CanEdit"
+                            style="width: 100px;"  [clearable]="false" *ngIf="order.CanEdit"
                             name="Orderplaced">
                             <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}
                             </ng-option>
@@ -190,7 +190,7 @@
                     </td>
                     <td>
                         <ng-select [(ngModel)]="Order.AgentId" [ngModelOptions]="{standalone: true}" style="width: 100px;"
-                            autofocus [clearable]="false" name="Agent" (keyup.enter)="onEnter()">
+                             [clearable]="false" name="Agent" (keyup.enter)="onEnter()">
                             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                         </ng-select>
                         <div *ngIf="!Order.AgentId && submitted" class="message">المندوب حقل مطلوب</div>
@@ -199,7 +199,7 @@
 
                     <td>
                         <ng-select [(ngModel)]="Order.OrderplacedId" [ngModelOptions]="{standalone: true}"
-                            (keyup.enter)="onEnter()" style="width: 100px;" autofocus [clearable]="false"
+                            (keyup.enter)="onEnter()" style="width: 100px;"  [clearable]="false"
                             name="Orderplaced">
                             <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}
                             </ng-option>
