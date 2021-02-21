@@ -26,8 +26,8 @@
 
   </div>
 </div>
-<div class="example-container mat-elevation-z8">
 
+<div class="example-container mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <ng-container matColumnDef="code">
@@ -56,8 +56,8 @@
     <ng-container matColumnDef="orderplaced">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> حالة الشحنة</th>
       <td mat-cell *matCellDef="let element;index as i">
-        <ng-select [(ngModel)]="element.orderplaced.id" [ngModelOptions]="{standalone: true}" [clearable]="false"
-          name="Orderplaced" (change)="ChangeOrderplacedId(element,i)" style="width: 120px;">
+        <ng-select  appendTo="body" [(ngModel)]="element.orderplaced.id" [ngModelOptions]="{standalone: true}" [clearable]="false"
+          name="Orderplaced" (change)="ChangeOrderplacedId(element,i)" style="width: 120px; overflow: visible;">
           <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}</ng-option>
         </ng-select>
       </td>
@@ -65,7 +65,7 @@
     <ng-container matColumnDef="monePlaced">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> موقع المبلغ</th>
       <td mat-cell *matCellDef="let element">
-        <ng-select [(ngModel)]="element.monePlaced.id" [ngModelOptions]="{standalone: true}" style="width: 120px;"
+        <ng-select appendTo="body"[(ngModel)]="element.monePlaced.id" [ngModelOptions]="{standalone: true}" style="width: 120px;"
           [clearable]="false" name="MonePlaced">
           <ng-option *ngFor="let moenyPlaced of MoenyPlaced" [value]="moenyPlaced.id">{{moenyPlaced.name}}
           </ng-option>
@@ -86,7 +86,7 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
     </tr>
   </table>
-  <div style=" padding: 10px 22% 10px 10px; background-color: white;font-size: 15px;"> 
+  <div *ngIf="showcount" style=" padding: 10px 22% 10px 10px; background-color: white;font-size: 15px;"> 
     الإجمالي : {{count}}
   </div>
   <!--
@@ -96,7 +96,6 @@
     </mat-paginator>
      -->
   <h5 style="padding-top: 20px; padding-right: 10px;" *ngIf="noDataFound">لايوجد بيانات للعرض</h5>
-
 </div>
 <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
   [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>

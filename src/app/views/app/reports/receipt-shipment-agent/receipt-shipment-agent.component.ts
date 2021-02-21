@@ -84,6 +84,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       this.allFilter();
     }
   }
+  showcount=false
   addOrder() {
     if (this.Code) {
       let findorder = this.orders.find(o => o.code == this.Code)
@@ -97,10 +98,11 @@ export class ReceiptShipmentAgentComponent implements OnInit {
           this.canEditCount.push(true)
         }
         this.sumCost()
+        this.showcount=true
         this.dataSource = new MatTableDataSource(this.getorders)
         this.totalCount = this.dataSource.data.length
-        console.log(this.getorders)
         this.temporders = Object.assign({}, this.getorders.map(o => o.cost));
+        this.Code=""
 
       } else console.log("not found code in order")
     } else console.log("code is null")

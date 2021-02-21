@@ -108,12 +108,24 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
 
   }
   showMessageCode: boolean = false
+  changeClientId(){
+    this.Orders.map(o=>o.Code).forEach(element => {
+      this.orderservice.chekcCode(element, this.ClientId).subscribe(res => {
+        if (res ) {
+          this.showMessageCode = true
+        } else
+          this.showMessageCode = false
+      })
+    });
+       
+     
+     
+  }
   CheckCode() {
     if (!this.Order.Code || !this.ClientId) return
     if (this.Order.Code != null && this.Order.Code != undefined) {
       this.orderservice.chekcCode(this.Order.Code, this.ClientId).subscribe(res => {
-
-        if (res || this.Orders.filter(o => o.Code == this.Order.Code).length > 0) {
+        if (res || this.Orders.filter(o => o.Code == this.Order.Code&&this.ClientId==o.ClientId).length > 0) {
           this.showMessageCode = true
         } else
           this.showMessageCode = false

@@ -57,7 +57,7 @@
                         </td>
                         <td>
                             <h4 *ngIf="!order.CanEdit">{{order.ClientName}}</h4>
-                            <ng-select [(ngModel)]="EditOrder.ClientId" (change)="CheckCodeForEdit(order)" *ngIf="order.CanEdit"
+                            <ng-select appendTo="body" [(ngModel)]="EditOrder.ClientId" (change)="CheckCodeForEdit(order)" *ngIf="order.CanEdit"
                                 style="width: 100px;" [ngModelOptions]="{standalone: true}"   [clearable]="false"
                                 name="Client">
                                 <ng-option *ngFor="let Client of clients" [value]="Client.id">{{Client.name}}
@@ -92,7 +92,7 @@
                         
                         <td>
                             <h4 *ngIf="!order.CanEdit">{{order.OrderplacedName}}</h4>
-                            <ng-select [(ngModel)]="EditOrder.OrderplacedId" [ngModelOptions]="{standalone: true}"
+                            <ng-select appendTo="body"[(ngModel)]="EditOrder.OrderplacedId" [ngModelOptions]="{standalone: true}"
                                 style="width: 100px;"   [clearable]="false" *ngIf="order.CanEdit" name="Orderplaced">
                                 <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}
                                 </ng-option>
@@ -186,7 +186,7 @@
                             <div *ngIf="!Order.Code && submitted" class="message">كود الشحنة حقل مطلوب</div>
                         </td>
                         <td>
-                            <ng-select [(ngModel)]="Order.ClientId" (change)="CheckCode()" (keyup.enter)="onEnter()"
+                            <ng-select appendTo="body" [(ngModel)]="Order.ClientId" (change)="CheckCode()" (keyup.enter)="onEnter()"
                                 style="width: 100px;" [ngModelOptions]="{standalone: true}"   [clearable]="false"
                                 name="Client">
                                 <ng-option *ngFor="let Client of clients" [value]="Client.id">{{Client.name}}
@@ -198,7 +198,7 @@
                         </td>
                       
                         <td>
-                            <ng-select [(ngModel)]="Order.OrderplacedId" [ngModelOptions]="{standalone: true}"
+                            <ng-select appendTo="body" [(ngModel)]="Order.OrderplacedId" [ngModelOptions]="{standalone: true}"
                                 (keyup.enter)="onEnter()" style="width: 100px;"   [clearable]="false"
                                 name="Orderplaced">
                                 <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}

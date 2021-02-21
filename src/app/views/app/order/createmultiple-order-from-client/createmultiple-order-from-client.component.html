@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-md-4" style="padding-right:25px ;">
             <label>المحافظة</label>
-            <ng-select [(ngModel)]="CountryId" (keyup.enter)="onEnter()" style="width: 150px; "
+            <ng-select appendTo="body" [(ngModel)]="CountryId" (keyup.enter)="onEnter()" style="width: 150px; "
                 (change)="changeCountry()" [ngModelOptions]="{standalone: true}"  [clearable]="false"
                 name="Country">
                 <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
@@ -22,7 +22,7 @@
         </div>
         <div class="col-md-4">
             <label>العميل</label>
-            <ng-select [(ngModel)]="ClientId" (keyup)="CheckCodeForEdit();CheckCode()"
+            <ng-select appendTo="body" [(ngModel)]="ClientId" (ngModelChange)="changeClientId()"
                 style="width: 150px;" [ngModelOptions]="{standalone: true}"  [clearable]="false" name="Client">
                 <ng-option *ngFor="let Client of clients" [value]="Client.id">{{Client.name}}
                 </ng-option>
@@ -60,9 +60,9 @@
                         <div *ngIf="!EditOrder.Code && Editsubmitted" class="message">كود الشحنة حقل مطلوب</div>
 
                     </td>
-                    <td>
+                    <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.AgentName}}</h4>
-                        <ng-select [(ngModel)]="order.AgentId" [ngModelOptions]="{standalone: true}" style="width: 100px;"
+                        <ng-select appendTo="body" [(ngModel)]="order.AgentId" [ngModelOptions]="{standalone: true}" style="width: 100px;"
                         *ngIf="order.CanEdit"    [clearable]="false" name="Agent" (keyup.enter)="onEnter()">
                             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                         </ng-select>
@@ -92,11 +92,11 @@
                     -->
 
 
-                    <td>
+                    <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.OrderplacedName}}</h4>
-                        <ng-select [(ngModel)]="EditOrder.OrderplacedId" [ngModelOptions]="{standalone: true}"
+                        <ng-select appendTo="body" [(ngModel)]="EditOrder.OrderplacedId" [ngModelOptions]="{standalone: true}"
                             style="width: 100px;"  [clearable]="false" *ngIf="order.CanEdit"
-                            name="Orderplaced">
+                            name="Orderplaced " >
                             <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}
                             </ng-option>
                         </ng-select>
@@ -189,7 +189,7 @@
                         <div *ngIf="!Order.Code && submitted" class="message">كود الشحنة حقل مطلوب</div>
                     </td>
                     <td>
-                        <ng-select [(ngModel)]="Order.AgentId" [ngModelOptions]="{standalone: true}" style="width: 100px;"
+                        <ng-select appendTo="body" [(ngModel)]="Order.AgentId" [ngModelOptions]="{standalone: true}" style="width: 100px;"
                              [clearable]="false" name="Agent" (keyup.enter)="onEnter()">
                             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                         </ng-select>
@@ -198,7 +198,7 @@
                     </td>
 
                     <td>
-                        <ng-select [(ngModel)]="Order.OrderplacedId" [ngModelOptions]="{standalone: true}"
+                        <ng-select appendTo="body" [(ngModel)]="Order.OrderplacedId" [ngModelOptions]="{standalone: true}"
                             (keyup.enter)="onEnter()" style="width: 100px;"  [clearable]="false"
                             name="Orderplaced">
                             <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}
@@ -236,8 +236,8 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-
+    
+</div>
 </div>
 
 <simple-notifications></simple-notifications>
