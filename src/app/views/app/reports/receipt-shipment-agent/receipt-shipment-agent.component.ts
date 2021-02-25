@@ -90,7 +90,8 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       let findorder = this.orders.find(o => o.code == this.Code)
       if (findorder) {
         if (this.getorders.filter(o => o == findorder).length > 0) {
-          console.log("موجود  order")
+          this.notifications.create("error", "الشحنة مضافة مسبقا", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
+
           return
         }
         this.getorders.push(findorder)
@@ -104,8 +105,10 @@ export class ReceiptShipmentAgentComponent implements OnInit {
         this.temporders = Object.assign({}, this.getorders.map(o => o.cost));
         this.Code=""
 
-      } else console.log("not found code in order")
-    } else console.log("code is null")
+      } else this.notifications.create("error", "ليس هناك شحنة لهذا الكود", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
+
+    } else this.notifications.create("error", "يجب اضافة كود الشحنة ", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
+
   }
   ChangeOrderplacedId(element, index) {
     if (element.orderplaced.id == 6)
