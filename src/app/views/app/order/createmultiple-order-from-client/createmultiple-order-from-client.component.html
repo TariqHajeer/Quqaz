@@ -1,7 +1,7 @@
 <div style="width: 100%;background-color: white;">
     <div class="card-body">
         <div class="d-flex justify-content-between">
-            <h3 class="card-title">اضافة طلبات</h3>
+            <h3 class="card-title">اضافة طلبات متعددة للعميل</h3>
         </div>
 
         <div>
@@ -10,27 +10,18 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4" style="padding-right:25px ;">
-            <label>المحافظة</label>
-            <ng-select appendTo="body" [(ngModel)]="CountryId" (keyup.enter)="onEnter()" style="width: 150px; "
-                (change)="changeCountry()" [ngModelOptions]="{standalone: true}"  [clearable]="false"
-                name="Country">
-                <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
-            </ng-select>
-            <div *ngIf="!CountryId && submitedSave" class="message">المدينة حقل مطلوب</div>
 
-        </div>
         <div class="col-md-4">
             <label>العميل</label>
-            <ng-select appendTo="body" [(ngModel)]="ClientId" (ngModelChange)="changeClientId()"
-                style="width: 150px;" [ngModelOptions]="{standalone: true}"  [clearable]="false" name="Client">
+            <ng-select appendTo="body" [(ngModel)]="ClientId" (ngModelChange)="changeClientId()" style="width: 150px;"
+                [ngModelOptions]="{standalone: true}" [clearable]="false" name="Client">
                 <ng-option *ngFor="let Client of clients" [value]="Client.id">{{Client.name}}
                 </ng-option>
             </ng-select>
             <div *ngIf="!ClientId && submitedSave" class="message">العميل حقل مطلوب</div>
-         
-              <div *ngIf="showMessageCode" class="message">يوجد شحنة مسبقا لهذا العميل بنفس الكود</div>
-  
+
+            <div *ngIf="showMessageCode" class="message">يوجد شحنة مسبقا لهذا العميل بنفس الكود</div>
+
 
 
         </div>
@@ -41,6 +32,7 @@
         <table class="table">
             <thead>
                 <th>كود الشحنة</th>
+                <th>المحافظة</th>
                 <th>اسم المندوب</th>
                 <th>حالة الشحنة</th>
                 <th>رقم الهاتف </th>
@@ -51,6 +43,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let order of Orders">
+                   
 
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.Code}}</h4>
@@ -61,12 +54,23 @@
 
                     </td>
                     <td (click)="Edit(order)">
+                        <h4 *ngIf="!order.CanEdit">{{order.CountryName}}</h4>
+                        <ng-select appendTo="body" [(ngModel)]="order.CountryId" style="width: 100px;"
+                        *ngIf="order.CanEdit" (change)="changeCountry()" [ngModelOptions]="{standalone: true}"
+                            [clearable]="false" name="Country">
+                            <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
+                        </ng-select>
+                        <div *ngIf="!EditOrder.CountryId && Editsubmitted" class="message">المحافظة حقل مطلوب</div>
+
+                    </td>
+                    <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.AgentName}}</h4>
-                        <ng-select appendTo="body" [(ngModel)]="order.AgentId" [ngModelOptions]="{standalone: true}" style="width: 100px;"
-                        *ngIf="order.CanEdit"    [clearable]="false" name="Agent" (keyup.enter)="onEnter()">
+                        <ng-select appendTo="body" [(ngModel)]="order.AgentId" [ngModelOptions]="{standalone: true}"
+                            style="width: 100px;" *ngIf="order.CanEdit" [clearable]="false" name="Agent"
+                            >
                             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                         </ng-select>
-                        <div *ngIf="!EditOrder.AgentId && Editsubmitted" class="message">المندوب  حقل مطلوب</div>
+                        <div *ngIf="!EditOrder.AgentId && Editsubmitted" class="message">المندوب حقل مطلوب</div>
 
                     </td>
                     <!--
@@ -94,9 +98,9 @@
 
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.OrderplacedName}}</h4>
-                        <ng-select appendTo="body" [(ngModel)]="EditOrder.OrderplacedId" [ngModelOptions]="{standalone: true}"
-                            style="width: 100px;"  [clearable]="false" *ngIf="order.CanEdit"
-                            name="Orderplaced " >
+                        <ng-select appendTo="body" [(ngModel)]="EditOrder.OrderplacedId"
+                            [ngModelOptions]="{standalone: true}" style="width: 100px;" [clearable]="false"
+                            *ngIf="order.CanEdit" name="Orderplaced ">
                             <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}
                             </ng-option>
                         </ng-select>
@@ -188,9 +192,18 @@
                             style="width: 100px;">
                         <div *ngIf="!Order.Code && submitted" class="message">كود الشحنة حقل مطلوب</div>
                     </td>
+                    <td (click)="Edit(order)">
+                        <ng-select appendTo="body" [(ngModel)]="Order.CountryId" (keyup.enter)="onEnter()"
+                         style="width: 150px; " (change)="changeCountry()" [ngModelOptions]="{standalone: true}"
+                         style="width: 100px;" [clearable]="false" name="Country">
+                            <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
+                        </ng-select>
+                        <div *ngIf="!Order.CountryId && submitted" class="message">المحافظة حقل مطلوب</div>
+
+                    </td>
                     <td>
-                        <ng-select appendTo="body" [(ngModel)]="Order.AgentId" [ngModelOptions]="{standalone: true}" style="width: 100px;"
-                             [clearable]="false" name="Agent" (keyup.enter)="onEnter()">
+                        <ng-select appendTo="body" [(ngModel)]="Order.AgentId" [ngModelOptions]="{standalone: true}"
+                            style="width: 100px;" [clearable]="false" name="Agent" (keyup.enter)="onEnter()">
                             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                         </ng-select>
                         <div *ngIf="!Order.AgentId && submitted" class="message">المندوب حقل مطلوب</div>
@@ -198,9 +211,9 @@
                     </td>
 
                     <td>
-                        <ng-select appendTo="body" [(ngModel)]="Order.OrderplacedId" [ngModelOptions]="{standalone: true}"
-                            (keyup.enter)="onEnter()" style="width: 100px;"  [clearable]="false"
-                            name="Orderplaced">
+                        <ng-select appendTo="body" [(ngModel)]="Order.OrderplacedId"
+                            [ngModelOptions]="{standalone: true}" (keyup.enter)="onEnter()" style="width: 100px;"
+                            [clearable]="false" name="Orderplaced">
                             <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}
                             </ng-option>
                         </ng-select>
@@ -236,8 +249,8 @@
                 </tr>
             </tbody>
         </table>
-    
-</div>
+
+    </div>
 </div>
 
 <simple-notifications></simple-notifications>

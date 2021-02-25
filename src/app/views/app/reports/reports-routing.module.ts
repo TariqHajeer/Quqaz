@@ -4,6 +4,7 @@ import { AuthGuard } from 'src/app/shared/auth.guard';
 import { ClientInsideCompanyComponent } from './client-inside-company/client-inside-company.component';
 import { ClientOrderComponent } from './client-order/client-order.component';
 import { ReceiptAgentComponent } from './print/receipt-agent/receipt-agent.component';
+import { ReceiptClientComponent } from './print/receipt-client/receipt-client.component';
 import { ReceiptShipmentAgentComponent } from './receipt-shipment-agent/receipt-shipment-agent.component';
 import { ShipmentInStockComponent } from './shipment-in-stock/shipment-in-stock.component';
 import { ShipmentsClientOnWayComponent } from './shipments-client-on-way/shipments-client-on-way.component';
@@ -43,6 +44,10 @@ const routes: Routes = [
   {
     path:'print',
     component: ReceiptAgentComponent,canActivate: [AuthGuard],
+  },
+  {
+    path:'printclent',
+    component: ReceiptClientComponent,canActivate: [AuthGuard],
   },
 ];
 

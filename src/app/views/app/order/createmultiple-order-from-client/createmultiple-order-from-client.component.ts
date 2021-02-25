@@ -221,7 +221,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
       return
     }
     this.Orders.forEach(o=>{
-      o.CountryId=this.CountryId
+      
       o.ClientId=this.ClientId
     })
     this.orderservice.createMultiple(this.Orders).subscribe(res => {

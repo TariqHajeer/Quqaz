@@ -12,11 +12,11 @@
       </div>
       <div class="col-md-3">
         <label>كود الشحنة</label>
-        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="Code">
+        <input type="text" class="form-control" (keyup.enter)="addOrder()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Code">
 
       </div>
       <div class="col-md-3" style="padding-top: 25px;">
-        <button (click)="addOrder()" class="btn btn-primary"> اضافة شحنة</button>
+        <button (click)="addOrder()"  class="btn btn-primary"> اضافة شحنة</button>
 
       </div>
 
@@ -86,7 +86,7 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
     </tr>
   </table>
-  <div *ngIf="showcount" style=" padding: 10px 22% 10px 10px; background-color: white;font-size: 15px;"> 
+  <div *ngIf="showcount" style=" padding: 10px 29% 10px 10px; background-color: white;font-size: 15px;"> 
     الإجمالي : {{count}}
   </div>
   <!--
