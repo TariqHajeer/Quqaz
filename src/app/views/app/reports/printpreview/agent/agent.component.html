@@ -41,11 +41,12 @@
  
     <thead>
 
-    <th *ngFor="let head of heads">{{head}}</th>
+    <th *ngFor="let head of heads" style="font-size: 20px;">{{head}}</th>
 </thead>
     <tbody>
      
-        <tr class=" table-bordered" *ngFor="let order of orders;index as i" >
+        <tr class=" table-bordered"style="  margin-bottom: 20%;font-size: 18px;" 
+         *ngFor="let order of orders;index as i" >
             <td>
               {{i+1}}
             </td>
