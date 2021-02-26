@@ -54,7 +54,6 @@ export class ShipmentInStockComponent implements OnInit {
       else {
         this.ids.push(row.id)
         this.orders.push(row)
-        localStorage.setItem('printorders',JSON.stringify(this.orders))
         this.agent=this.orders.map(o=>o.agent)[0]
         this.orderplaced=this.orders.map(o=>o.orderplaced)[0]
       
@@ -82,6 +81,7 @@ export class ShipmentInStockComponent implements OnInit {
   @Input() totalCount: number;
 
   ngOnInit(): void {
+    localStorage.removeItem('printordersagent')
     this.getAgent()
     //this.GetorderPlace()
     this.paging = new Paging
@@ -132,6 +132,8 @@ export class ShipmentInStockComponent implements OnInit {
   orderplaced=this.orders.map(o=>o.orderplaced)[0]
   print() {
     if (this.orders == []) return
+    localStorage.setItem('printordersagent',JSON.stringify(this.orders))
+    this.route.navigate(['app/reports/printagentpreview'])
    
   }
   afterPrint() {

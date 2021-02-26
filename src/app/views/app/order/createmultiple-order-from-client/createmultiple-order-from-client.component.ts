@@ -216,7 +216,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   }
   submitedSave = false
   AddOrder() {
-    if (!this.CountryId || !this.ClientId || this.Orders == []) {
+    if ( !this.ClientId || this.Orders == []) {
       this.submitedSave=true
       return
     }

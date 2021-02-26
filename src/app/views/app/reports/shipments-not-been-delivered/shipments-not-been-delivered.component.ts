@@ -3,8 +3,6 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { OrderService } from 'src/app/services/order.service';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
-import { UserService } from 'src/app/services/user.service';
-import { User } from 'src/app/Models/user/user.model';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { Paging } from 'src/app/Models/paging';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
@@ -60,7 +58,6 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
         this.orders.push(row)
         localStorage.setItem('orders',JSON.stringify(this.orders))
       this.client=this.orders.map(o=>o.client)[0]
-      console.log(this.client)
       this.orderplaced=this.orders.map(o=>o.orderplaced)[0]
       }
     if (!this.selection.isSelected(row)) {
@@ -85,6 +82,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   @Input() totalCount: number;
 
   ngOnInit(): void {
+    localStorage.removeItem('printordersclient')
     this.getClients()
     //this.GetorderPlace()
     this.paging = new Paging
@@ -130,6 +128,12 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       err => {
 
       });
+  }
+  print() {
+    if (this.orders == []) return
+    localStorage.setItem('printordersclient',JSON.stringify(this.orders))
+    this.route.navigate(['app/reports/printclientpreview'])
+   
   }
   afterPrint() {
     this.orderservice.MakeOrderInWay(this.orders.map(o=>o.id)).subscribe(res=>{

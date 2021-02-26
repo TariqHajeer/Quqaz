@@ -17,9 +17,11 @@ import { ClientInsideCompanyComponent } from './client-inside-company/client-ins
 import { ShipmentsNotBeenDeliveredComponent } from './shipments-not-been-delivered/shipments-not-been-delivered.component';
 import { ReceiptClientComponent } from './print/receipt-client/receipt-client.component';
 import { ReceiptShipmentAgentComponent } from './receipt-shipment-agent/receipt-shipment-agent.component';
+import { ClientComponent } from './printpreview/client/client.component';
+import { AgentComponent } from './printpreview/agent/agent.component';
 
 @NgModule({
-  declarations: [ShipmentInStockComponent, ClientOrderComponent, ShipmentsOnWayComponent, ReceiptAgentComponent, ShipmentsClientOnWayComponent, ClientInsideCompanyComponent, ShipmentsNotBeenDeliveredComponent, ReceiptClientComponent, ReceiptShipmentAgentComponent,],
+  declarations: [ShipmentInStockComponent, ClientOrderComponent, ShipmentsOnWayComponent, ReceiptAgentComponent, ShipmentsClientOnWayComponent, ClientInsideCompanyComponent, ShipmentsNotBeenDeliveredComponent, ReceiptClientComponent, ReceiptShipmentAgentComponent, ClientComponent, AgentComponent,],
   imports: [
     CommonModule,
     ReportsRoutingModule,
