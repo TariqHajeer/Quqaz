@@ -19,13 +19,14 @@ import { OrderState } from 'src/app/Models/order/order.model';
 export class ReceiptShipmentAgentComponent implements OnInit {
 
   displayedColumns: string[] = ['code', 'country', 'region'
-    , 'cost', 'orderplaced', 'monePlaced','edit'];
+    , 'cost', 'orderplaced', 'monePlaced', 'edit'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
   Code
   ids: any[] = []
   orders: any[] = []
-  getorders: any[] = []
+  getorders: GetOrder[] = []
+  getorder: GetOrder = new GetOrder()
   statu
   MoenyPlacedId
   MoenyPlaced: any[] = []
@@ -60,16 +61,13 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
-      // this.MoenyPlaced=this.MoenyPlaced.filter(m=>m.id==2||m.id==3)
 
     })
   }
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
-      console.log(res)
-      this.orderPlace = this.orderPlace.filter(o => o.id == 3 || o.id == 4 || o.id == 5
-        || o.id == 6 || o.id == 7 || o.id == 8)
+
 
     })
   }
@@ -84,9 +82,9 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       this.allFilter();
     }
   }
-  showcount=false
+  showcount = false
   addOrder() {
-    if (this.Code) {
+    if (this.Code && this.AgentId) {
       let findorder = this.orders.find(o => o.code == this.Code)
       if (findorder) {
         if (this.getorders.filter(o => o == findorder).length > 0) {
@@ -94,28 +92,38 @@ export class ReceiptShipmentAgentComponent implements OnInit {
 
           return
         }
-        this.getorders.push(findorder)
+        this.getorder.order = findorder
+        this.getorder.MoenyPlaced = this.MoenyPlaced
+console.log( this.getorder.order )
+        if (this.getorder.order.isClientDiliverdMoney == true) {
+          this.getorder.MoenyPlaced = this.MoenyPlaced.filter(m => m.id == 2 || m.id == 4)
+          this.getorder.order.monePlaced = this.getorder.MoenyPlaced[0]
+        }
+        this.getorders.push(this.getorder)
         for (let i = 0; i < this.getorders.length; i++) {
           this.canEditCount.push(true)
         }
         this.sumCost()
-        this.showcount=true
+        this.showcount = true
         this.dataSource = new MatTableDataSource(this.getorders)
+
         this.totalCount = this.dataSource.data.length
-        this.temporders = Object.assign({}, this.getorders.map(o => o.cost));
-        this.Code=""
+        this.temporders = Object.assign({}, this.getorders.map(o => o.order.cost));
+        this.Code = ""
+        this.getorder = new GetOrder
+      } else {
+        this.notifications.create("error", "ليس هناك شحنة لهذا الكود", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
+      }
 
-      } else this.notifications.create("error", "ليس هناك شحنة لهذا الكود", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
-
-    } else this.notifications.create("error", "يجب اضافة كود الشحنة ", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
+    } else this.notifications.create("error", " يجب اختيار مندوب واضافة كود الشحنة  ", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
 
   }
   ChangeOrderplacedId(element, index) {
-    if (element.orderplaced.id == 6)
+    if (element.order.orderplaced.id == 6)
       this.canEditCount[index] = false
     else {
       this.canEditCount[index] = true
-      element.cost = Object.assign(this.temporders[index], this.temporders[index]);
+      element.order.cost = Object.assign(this.temporders[index], this.temporders[index]);
 
     }
   }
@@ -142,22 +150,22 @@ export class ReceiptShipmentAgentComponent implements OnInit {
 
       });
   }
-  count=0
-  
+  count = 0
+
   sumCost() {
-    this.count=0
-    if(this.getorders)
-    this.getorders.forEach(o => {
-      this.count += o.cost
-    })
+    this.count = 0
+    if (this.getorders)
+      this.getorders.forEach(o => {
+        this.count += o.order.cost
+      })
     return this.count
   }
   saveEdit() {
     for (let i = 0; i < this.dataSource.data.length; i++) {
-      this.orderstate.Id = this.dataSource.data[i].id
-      this.orderstate.Cost = this.dataSource.data[i].cost
-      this.orderstate.MoenyPlacedId = this.dataSource.data[i].monePlaced.id
-      this.orderstate.OrderplacedId = this.dataSource.data[i].orderplaced.id
+      this.orderstate.Id = this.dataSource.data[i].order.id
+      this.orderstate.Cost = this.dataSource.data[i].order.cost
+      this.orderstate.MoenyPlacedId = this.dataSource.data[i].order.monePlaced.id
+      this.orderstate.OrderplacedId = this.dataSource.data[i].order.orderplaced.id
       this.orderstates.push(this.orderstate)
       this.orderstate = new OrderState
     }
@@ -165,9 +173,19 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.orderservice.UpdateOrdersStatusFromAgent(this.orderstates).subscribe(res => {
       this.allFilter()
       this.orderstates = []
+      this.dataSource = new MatTableDataSource([])
+      this.getorders = []
+      this.sumCost()
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
     })
   }
 
 
+}
+export class GetOrder {
+  constructor() {
+    this.MoenyPlaced = []
+  }
+  order
+  MoenyPlaced: NameAndIdDto[]
 }
