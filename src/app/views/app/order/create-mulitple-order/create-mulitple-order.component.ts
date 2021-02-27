@@ -203,6 +203,11 @@ export class CreateMulitpleOrderComponent implements OnInit {
   }
   submitedSave = false
   AddOrder() {
+    if (this.Order.Code) {
+      this.onEnter()
+      if( this.submitted ==true)
+      return
+    }
     if (!this.CountryId || !this.AgentId || this.Orders == []) {
       this.submitedSave=true
       return

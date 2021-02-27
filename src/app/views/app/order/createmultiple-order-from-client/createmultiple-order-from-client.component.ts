@@ -7,7 +7,7 @@ import { ClientService } from '../../client/client.service';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
-import {  OrderItem } from 'src/app/Models/order/create-orders-from-employee.model';
+import { OrderItem } from 'src/app/Models/order/create-orders-from-employee.model';
 import { CreateMultipleOrder } from 'src/app/Models/order/create-multiple-order';
 import { OrderType } from 'src/app/Models/OrderTypes/order-type.model';
 import { Region } from 'src/app/Models/Regions/region.model';
@@ -108,24 +108,24 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
 
   }
   showMessageCode: boolean = false
-  changeClientId(){
-    this.Orders.map(o=>o.Code).forEach(element => {
+  changeClientId() {
+    this.Orders.map(o => o.Code).forEach(element => {
       this.orderservice.chekcCode(element, this.ClientId).subscribe(res => {
-        if (res ) {
+        if (res) {
           this.showMessageCode = true
         } else
           this.showMessageCode = false
       })
     });
-       
-     
-     
+
+
+
   }
   CheckCode() {
     if (!this.Order.Code || !this.ClientId) return
     if (this.Order.Code != null && this.Order.Code != undefined) {
       this.orderservice.chekcCode(this.Order.Code, this.ClientId).subscribe(res => {
-        if (res || this.Orders.filter(o => o.Code == this.Order.Code&&this.ClientId==o.ClientId).length > 0) {
+        if (res || this.Orders.filter(o => o.Code == this.Order.Code && this.ClientId == o.ClientId).length > 0) {
           this.showMessageCode = true
         } else
           this.showMessageCode = false
@@ -140,7 +140,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
       this.orderservice.chekcCode(this.EditOrder.Code, this.ClientId).subscribe(res => {
         if (this.EditOrder.CanEdit == true)
           if (res || this.Orders.filter(o => o.Code == this.EditOrder.Code && o != this.tempcode).length > 0) {
-           
+
             this.showMessageCode = true
           } else
             this.showMessageCode = false
@@ -216,13 +216,19 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   }
   submitedSave = false
   AddOrder() {
-    if ( !this.ClientId || this.Orders == []) {
-      this.submitedSave=true
+    if (this.Order.Code) {
+      this.onEnter()
+      if( this.submitted ==true)
       return
     }
-    this.Orders.forEach(o=>{
-      
-      o.ClientId=this.ClientId
+
+    if (!this.ClientId || this.Orders == []) {
+      this.submitedSave = true
+      return
+    }
+    this.Orders.forEach(o => {
+
+      o.ClientId = this.ClientId
     })
     this.orderservice.createMultiple(this.Orders).subscribe(res => {
       this.notifications.create('success', 'تم اضافة الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
