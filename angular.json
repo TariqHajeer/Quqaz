@@ -150,6 +150,7 @@
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+             
             ]
           },
           "configurations": {
@@ -211,7 +212,7 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "scripts": [],
+            "scripts": [ ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css"
             ]

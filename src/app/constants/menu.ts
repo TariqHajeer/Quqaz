@@ -47,6 +47,11 @@ const data: IMenuItem[] = [
       label: 'إضافة طلبات متعددة للعميل',
       to: `${adminRoot}/order/addMulitpleOrdersfromClient`,
     },
+    {
+      icon: 'iconsminds-add',
+      label: 'طلبات لم يتم سداد مبلغها كاملا',
+      to: `${adminRoot}/order/OrderNotBeenFullyPaid`,
+    },
   ]
 },
  //reports

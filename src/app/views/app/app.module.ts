@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing';
@@ -11,6 +11,7 @@ import { UsersModule } from '../app/users/users.module';
 import { OrderModule } from '../app/order/order.module';
 import { ReportsModule } from '../app/reports/reports.module';
 import { PrintTamplateModule } from '../app/print-tamplate/print-tamplate.module';
+//////////
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,11 +23,13 @@ import { PrintTamplateModule } from '../app/print-tamplate/print-tamplate.module
     UsersModule,
     OrderModule,
     ReportsModule,
-    PrintTamplateModule
+    PrintTamplateModule,
+    
+    
   ],
   providers: [PdfExportService
     , { provide: LocationStrategy, useClass: HashLocationStrategy }
-  ],
+  ],schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
 
