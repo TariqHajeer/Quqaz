@@ -18,51 +18,15 @@ import { OrderState } from 'src/app/Models/order/order.model';
 })
 export class ShipmentsOnWayComponent implements OnInit {
 
-  displayedColumns: string[] = [ 'code', 'country', 'region'
+  displayedColumns: string[] = ['code', 'country', 'region'
     , 'cost', 'orderplaced', 'monePlaced'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
-
-  // /** Whether the number of selected elements matches the total number of rows. */
-  // isAllSelected() {
-  //   const numSelected = this.selection.selected.length;
-  //   const numRows = this.dataSource.data.length;
-  //   return numSelected === numRows;
-  // }
-
-  // /** Selects all rows if they are not all selected; otherwise clear selection. */
-  // masterToggle() {
-  //   this.isAllSelected() ?
-  //     this.selection.clear() :
-  //     this.dataSource.data.forEach(row => { this.selection.select(row) });
-  // }
-
-  // /** The label for the checkbox on the passed row */
-  // checkboxLabel(row?: any): string {
-  //   if (!row) {
-  //     return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-  //   }
-  //   this.checkboxId(row)
-  //   return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
-  // }
   ids: any[] = []
   orders: any[] = []
   statu
   MoenyPlacedId
   MoenyPlaced: any[] = []
-  // checkboxId(row) {
-  //   if (this.selection.isSelected(row))
-  //     if (this.ids.filter(d => d == row.id).length > 0)
-  //       return
-  //     else {
-  //       this.ids.push(row.id)
-  //       this.orders.push(row)
-  //     }
-  //   if (!this.selection.isSelected(row)) {
-  //     this.ids = this.ids.filter(i => i != row.id)
-  //     this.orders = this.orders.filter(o => o != row)
-  //   }
-  // }
   constructor(
     private orderservice: OrderService,
     public userService: UserService,
@@ -77,11 +41,12 @@ export class ShipmentsOnWayComponent implements OnInit {
   filtering: OrderFilter
   noDataFound: boolean = false
   canEditCount: boolean[] = []
-  temporders: any[] = []
-  orderstates:OrderState[]=[]
-  orderstate:OrderState=new OrderState()
+  temporderscost: any[] = []
+  tempordersmonePlaced: any[] = []
+  tempisClientDiliverdMoney: any[] = []
+  orderstates: OrderState[] = []
+  orderstate: OrderState = new OrderState()
   @Input() totalCount: number;
-
   ngOnInit(): void {
     this.getAgent()
     this.GetMoenyPlaced()
@@ -92,17 +57,12 @@ export class ShipmentsOnWayComponent implements OnInit {
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
-      // this.MoenyPlaced=this.MoenyPlaced.filter(m=>m.id==2||m.id==3)
-
     })
   }
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
-      console.log(res)
-      this.orderPlace = this.orderPlace.filter(o =>o.id == 3 || o.id == 4 || o.id ==5
-        || o.id ==6|| o.id ==7|| o.id ==8)
-
+      this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
     })
   }
   getAgent() {
@@ -122,8 +82,8 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.canEditCount[index] = false
     else {
       this.canEditCount[index] = true
-      element. cost =Object.assign(this.temporders[index], this.temporders[index]);
-      
+      element.cost = Object.assign(this.temporderscost[index], this.temporderscost[index]);
+
     }
   }
   switchPage(event: PageEvent) {
@@ -139,8 +99,9 @@ export class ShipmentsOnWayComponent implements OnInit {
         if (response.data.length == 0)
           this.noDataFound = true
         else this.noDataFound = false
-        this.temporders =  Object.assign({}, response.data.map(o=>o.cost));
-
+      this.temporderscost = Object.assign({}, response.data.map(o => o.cost));
+      this.tempordersmonePlaced = Object.assign({}, response.data.map(o => o.monePlaced));
+      this.tempisClientDiliverdMoney = Object.assign({}, response.data.map(o => o.isClientDiliverdMoney));
       this.dataSource = new MatTableDataSource(response.data)
       for (let i = 0; i < this.dataSource.data.length; i++) {
         this.canEditCount.push(true)
@@ -151,26 +112,21 @@ export class ShipmentsOnWayComponent implements OnInit {
 
       });
   }
-  saveEdit(){
-    for(let i =0;i<this.dataSource.data.length;i++){
-      this.orderstate.Id=this.dataSource.data[i].id
-      this.orderstate.Cost=this.dataSource.data[i].cost
-      this.orderstate.MoenyPlacedId=this.dataSource.data[i].monePlaced.id
-      this.orderstate.OrderplacedId=this.dataSource.data[i].orderplaced.id
+  saveEdit() {
+    for (let i = 0; i < this.dataSource.data.length; i++) {
+      this.orderstate.Id = this.dataSource.data[i].id
+      this.orderstate.Cost = this.dataSource.data[i].cost
+      this.orderstate.MoenyPlacedId = this.dataSource.data[i].monePlaced.id
+      this.orderstate.OrderplacedId = this.dataSource.data[i].orderplaced.id
       this.orderstates.push(this.orderstate)
-      this.orderstate=new OrderState
+      this.orderstate = new OrderState
     }
-   
-    this.orderservice.UpdateOrdersStatusFromAgent(this.orderstates).subscribe(res=>{
+
+    this.orderservice.UpdateOrdersStatusFromAgent(this.orderstates).subscribe(res => {
       this.allFilter()
-      this.orderstates=[]
+      this.orderstates = []
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
     })
   }
-  // print() {
-  //   if (this.orders == []) return
-  //   localStorage.setItem('printorders', JSON.stringify(this.orders))
-  //   this.route.navigate(['/print'])
 
-  // }
 }

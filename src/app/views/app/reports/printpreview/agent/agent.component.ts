@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { NotificationsService } from 'angular2-notifications';
+import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { OrderService } from 'src/app/services/order.service';
 @Component({
@@ -38,4 +38,10 @@ export class AgentComponent implements OnInit {
       })
     return this.count
   }
+  afterPrint() {
+    this.orderservice.MakeOrderInWay(this.orders.map(o=>o.id)).subscribe(res=>{
+      this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      //this.orders=[]
+    })
+  }     
 }

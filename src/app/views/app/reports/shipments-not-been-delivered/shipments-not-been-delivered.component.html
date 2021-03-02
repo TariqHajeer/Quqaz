@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-body">
-      <h3>كشف حساب العميل الغير مسلم</h3>
+      <h3>تسديد العميل</h3>
       <div class="row">
         <div class="col-md-4">
           <label>العميل</label>
@@ -9,10 +9,7 @@
             <ng-option *ngFor="let Client of Clients" [value]="Client.id">{{Client.name}}</ng-option>
           </ng-select>
         </div>
-        <div class="col-md-8" style="margin-right: 80%;">
-          <button (click)="changeDeleiverMoneyForClient()" class="btn  btn-primary"> تسليم المبلغ</button>
-
-        </div>
+        
       </div>
     </div>
   </div>

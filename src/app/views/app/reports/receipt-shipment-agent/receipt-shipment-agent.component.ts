@@ -19,7 +19,7 @@ import { OrderState } from 'src/app/Models/order/order.model';
 export class ReceiptShipmentAgentComponent implements OnInit {
 
   displayedColumns: string[] = ['code', 'country', 'region'
-    , 'cost', 'orderplaced', 'monePlaced', 'edit'];
+    , 'cost','isClientDiliverdMoney', 'orderplaced', 'monePlaced', 'edit'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
   Code
@@ -45,7 +45,9 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   filtering: OrderFilter
   noDataFound: boolean = false
   canEditCount: boolean[] = []
-  temporders: any[] = []
+  temporderscost: any[] = []
+  tempordersmonePlaced: GetOrder[] = []
+  tempisClientDiliverdMoney: any[] = []
   orderstates: OrderState[] = []
   orderstate: OrderState = new OrderState()
   @Input() totalCount: number;
@@ -67,8 +69,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
-
-
+      this.orderPlace = this.orderPlace.filter(o => o.id != 1 &&o.id != 2 )
     })
   }
   getAgent() {
@@ -87,28 +88,39 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     if (this.Code && this.AgentId) {
       let findorder = this.orders.find(o => o.code == this.Code)
       if (findorder) {
-        if (this.getorders.filter(o => o == findorder).length > 0) {
+        if (this.getorders.filter(o => o.order == findorder).length > 0) {
           this.notifications.create("error", "الشحنة مضافة مسبقا", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
-
           return
         }
         this.getorder.order = findorder
         this.getorder.MoenyPlaced = this.MoenyPlaced
-console.log( this.getorder.order )
-        if (this.getorder.order.isClientDiliverdMoney == true) {
+        this.getorder.OrderPlaced = this.orderPlace
+
+        if (this.getorder.order.isClientDiliverdMoney == true||this.getorder.order.orderplaced.id == 4) {
           this.getorder.MoenyPlaced = this.MoenyPlaced.filter(m => m.id == 2 || m.id == 4)
           this.getorder.order.monePlaced = this.getorder.MoenyPlaced[0]
+          this.getorder.order.orderplaced = this.getorder.OrderPlaced[1]
         }
+        if(this.getorder.order.orderplaced.id==1||this.getorder.order.orderplaced.id==2)
+        this.getorder.order.orderplaced = this.getorder.OrderPlaced[0]
         this.getorders.push(this.getorder)
+        this.canEditCount=[]
         for (let i = 0; i < this.getorders.length; i++) {
-          this.canEditCount.push(true)
+          if (this.getorders[i].order.orderplaced.id != 6)
+            this.canEditCount.push(true)
+          else {
+            this.canEditCount.push(false)
+            this.getorders[i].MoenyPlaced = this.MoenyPlaced.filter(m => m.id == 2 || m.id == 4 || m.id == 3)
+
+          }
         }
         this.sumCost()
         this.showcount = true
         this.dataSource = new MatTableDataSource(this.getorders)
-
         this.totalCount = this.dataSource.data.length
-        this.temporders = Object.assign({}, this.getorders.map(o => o.order.cost));
+        this.temporderscost = Object.assign({}, this.getorders.map(o => o.order.cost));
+        this.tempordersmonePlaced = Object.assign({}, this.getorders.map(o => o.order.monePlaced));
+        this.tempisClientDiliverdMoney = Object.assign({}, this.getorders.map(o => o.order.isClientDiliverdMoney));
         this.Code = ""
         this.getorder = new GetOrder
       } else {
@@ -119,13 +131,27 @@ console.log( this.getorder.order )
 
   }
   ChangeOrderplacedId(element, index) {
-    if (element.order.orderplaced.id == 6)
+    if (element.order.orderplaced.id == 6) {
       this.canEditCount[index] = false
+      element.MoenyPlaced = this.MoenyPlaced.filter(m => m.id == 2 || m.id == 4 || m.id == 3)
+      return
+    }
+    else if (element.order.orderplaced.id == 4) {
+      this.canEditCount[index] = true
+      element.order.cost = Object.assign(this.temporderscost[index], this.temporderscost[index]);
+      element.MoenyPlaced = this.MoenyPlaced.filter(m => m.id == 2 || m.id == 4)
+      element.order.monePlaced = element.MoenyPlaced[0]
+      element.order.isClientDiliverdMoney = true
+    }
     else {
       this.canEditCount[index] = true
-      element.order.cost = Object.assign(this.temporders[index], this.temporders[index]);
+      element.order.cost = Object.assign(this.temporderscost[index], this.temporderscost[index]);
+      element.MoenyPlaced = this.MoenyPlaced
+      element.order.monePlaced = Object.assign(this.tempordersmonePlaced[index], this.tempordersmonePlaced[index]);
+      element.order.isClientDiliverdMoney = Object.assign(this.tempisClientDiliverdMoney[index], this.tempisClientDiliverdMoney[index]);
 
     }
+
   }
   switchPage(event: PageEvent) {
     this.paging.allItemsLength = event.length
@@ -140,11 +166,8 @@ console.log( this.getorder.order )
         if (response.data.length == 0)
           this.noDataFound = true
         else this.noDataFound = false
-      //this.temporders = Object.assign({}, response.data.map(o => o.deliveryCost));
       this.orders = response.data
-      // this.dataSource = new MatTableDataSource(response.data)
 
-      //this.totalCount = response.total
     },
       err => {
 
@@ -185,7 +208,10 @@ console.log( this.getorder.order )
 export class GetOrder {
   constructor() {
     this.MoenyPlaced = []
+    this.OrderPlaced = []
   }
   order
   MoenyPlaced: NameAndIdDto[]
+  OrderPlaced: NameAndIdDto[]
+
 }

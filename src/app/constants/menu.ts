@@ -100,7 +100,7 @@ const data: IMenuItem[] = [
         // },
         {
           icon: 'simple-icon-layers',
-          label: 'كشف الشحنات الغير مسلم مبلغها',
+          label: 'تسديد العميل',
           to: `${adminRoot}/reports/Shipmentsnotbeendelivered`,
         },
       ]

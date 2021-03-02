@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { NotificationsService } from 'angular2-notifications';
+import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { OrderService } from 'src/app/services/order.service';
 
@@ -36,5 +36,13 @@ export class ClientComponent implements OnInit {
       })
     return this.count
   }
+ 
+  
+changeDeleiverMoneyForClient(){
+  this.orderservice.DeleiverMoneyForClient(this.orders.map(o=>o.id)).subscribe(res=>{
+    this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 
+   
+  })
+}   
 }
