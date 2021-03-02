@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-3">
+      <label>بحث حسب التاريخ</label>
+      <ejs-datepicker [value]='minValue' [(ngModel)]='minValue' (change)="changeData()"  placeholder='Enter start date'></ejs-datepicker>
+  
+    </div>
+    <div class="col-3">
+      <label>من تاريخ-الى تاريخ</label>
+      <ejs-daterangepicker [value]='startAndEnd' [(ngModel)]='startAndEnd' placeholder='Select a range' (change)="changeRange()" [startDate]='start' [endDate]='end'></ejs-daterangepicker>
+    </div>
+  </div>
+  
+  <ejs-chart style='display:block;' #chart [legendSettings]='legend' id='container' [primaryXAxis]='primaryXAxis'
+        [tooltip]='tooltip' [height]='height' [width]='width' (scrollEnd)='scrollEnd($event)'
+        [primaryYAxis]='primaryYAxis' [chartArea]='chartArea' [title]='title'>
+        <e-series-collection>
+          <e-series [dataSource]='data' [animation]='animation' type='Line' xName='x' yName='y'>
+          </e-series>
+        </e-series-collection>
+      </ejs-chart>

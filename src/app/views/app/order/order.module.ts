@@ -18,9 +18,16 @@ import { NgxPrintModule } from 'ngx-print';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { CreatemultipleOrderFromClientComponent } from './createmultiple-order-from-client/createmultiple-order-from-client.component';
 import { OrderNotBeenFullyPaidComponent } from './order-not-been-fully-paid/order-not-been-fully-paid.component';
-
+import { ProfitsOfOrdersComponent } from './profits-of-orders/profits-of-orders.component';
+import { ChartModule } from '@syncfusion/ej2-angular-charts';
+import { DateFormatOptions } from '@syncfusion/ej2-base'
+import { CategoryService, DateTimeService, ScrollBarService, ColumnSeriesService, LineSeriesService, 
+    ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService,LegendService, TooltipService
+ } from '@syncfusion/ej2-angular-charts';
+ import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
+import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
 @NgModule({
-  declarations: [ViewOrdersComponent,AddOrdersComponent,EditOrdersComponent,  ViewNewOrderComponent, CreateMulitpleOrderComponent, CreatemultipleOrderFromClientComponent, OrderNotBeenFullyPaidComponent],
+  declarations: [ViewOrdersComponent,AddOrdersComponent,EditOrdersComponent,  ViewNewOrderComponent, CreateMulitpleOrderComponent, CreatemultipleOrderFromClientComponent, OrderNotBeenFullyPaidComponent, ProfitsOfOrdersComponent],
   imports: [
     CommonModule,
     OrderRoutingModule,
@@ -35,6 +42,11 @@ import { OrderNotBeenFullyPaidComponent } from './order-not-been-fully-paid/orde
     GridAllModule,
     NgxPrintModule,
     SimpleNotificationsModule.forRoot(),
-  ],schemas:[CUSTOM_ELEMENTS_SCHEMA]
+    ChartModule,
+    DatePickerModule,
+    DateRangePickerModule
+  ] ,providers: [ CategoryService, DateTimeService, ScrollBarService, LineSeriesService, ColumnSeriesService, 
+    ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService, LegendService, TooltipService,]
+    ,schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class OrderModule { }

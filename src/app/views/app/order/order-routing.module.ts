@@ -6,6 +6,7 @@ import { CreateMulitpleOrderComponent } from './create-mulitple-order/create-mul
 import { CreatemultipleOrderFromClientComponent } from './createmultiple-order-from-client/createmultiple-order-from-client.component';
 import { EditOrdersComponent } from './edit-orders/edit-orders.component';
 import { OrderNotBeenFullyPaidComponent } from './order-not-been-fully-paid/order-not-been-fully-paid.component';
+import { ProfitsOfOrdersComponent } from './profits-of-orders/profits-of-orders.component';
 import { ViewNewOrderComponent } from './view-new-order/view-new-order.component';
 import { ViewOrdersComponent } from './view-orders/view-orders.component';
 
@@ -38,6 +39,10 @@ const routes: Routes = [
   {
     path:'OrderNotBeenFullyPaid',
     component:OrderNotBeenFullyPaidComponent ,canActivate: [AuthGuard],
+  },
+  {
+    path:'ProfitsOfOrders',
+    component:ProfitsOfOrdersComponent ,canActivate: [AuthGuard],
   },
 ];
 

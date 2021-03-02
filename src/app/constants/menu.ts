@@ -29,6 +29,12 @@ const data: IMenuItem[] = [
     },
     {
       icon: 'iconsminds-box-close',
+      label: ' أرباح الطلبات ',
+      to: `${adminRoot}/order/ProfitsOfOrders`,
+     
+    },
+    {
+      icon: 'iconsminds-box-close',
       label: 'عرض الطلبات',
       to: `${adminRoot}/order/`,
     },
