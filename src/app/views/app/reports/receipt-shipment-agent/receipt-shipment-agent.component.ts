@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { OrderService } from 'src/app/services/order.service';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { UserService } from 'src/app/services/user.service';
+import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed-state.service';
 import { User } from 'src/app/Models/user/user.model';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { Paging } from 'src/app/Models/paging';
@@ -19,7 +20,7 @@ import { OrderState } from 'src/app/Models/order/order.model';
 export class ReceiptShipmentAgentComponent implements OnInit {
 
   displayedColumns: string[] = ['code', 'country', 'region'
-    , 'cost','isClientDiliverdMoney', 'orderplaced', 'monePlaced', 'edit'];
+    , 'cost', 'isClientDiliverdMoney', 'orderplaced', 'monePlaced', 'edit'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
   Code
@@ -35,7 +36,8 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     private orderservice: OrderService,
     public userService: UserService,
     private notifications: NotificationsService,
-    public route: Router
+    public route: Router,
+    public orderplacedstate: OrderPlacedStateService
   ) { }
   AgentId
   OrderplacedId
@@ -63,13 +65,16 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
+      this.MoenyPlaced = this.MoenyPlaced.filter(o => o.id != 4)
+      console.log(res)
 
     })
   }
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
-      this.orderPlace = this.orderPlace.filter(o => o.id != 1 &&o.id != 2 )
+      console.log(res)
+      this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
     })
   }
   getAgent() {
@@ -95,25 +100,15 @@ export class ReceiptShipmentAgentComponent implements OnInit {
         this.getorder.order = findorder
         this.getorder.MoenyPlaced = this.MoenyPlaced
         this.getorder.OrderPlaced = this.orderPlace
-
-        if (this.getorder.order.isClientDiliverdMoney == true||this.getorder.order.orderplaced.id == 4) {
-          this.getorder.MoenyPlaced = this.MoenyPlaced.filter(m => m.id == 2 || m.id == 4)
-          this.getorder.order.monePlaced = this.getorder.MoenyPlaced[0]
-          this.getorder.order.orderplaced = this.getorder.OrderPlaced[1]
-        }
-        if(this.getorder.order.orderplaced.id==1||this.getorder.order.orderplaced.id==2)
-        this.getorder.order.orderplaced = this.getorder.OrderPlaced[0]
+        this.getorder.canEditCount = true
+        this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced)
+        this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced)
+        this.orderplacedstate.onWay(this.getorder)
+        this.orderplacedstate.unacceptable(this.getorder,this.MoenyPlaced)
+        this.orderplacedstate.isClientDiliverdMoney(this.getorder,this.MoenyPlaced)
+        if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2)
+          this.getorder.order.orderplaced = this.getorder.OrderPlaced[0]
         this.getorders.push(this.getorder)
-        this.canEditCount=[]
-        for (let i = 0; i < this.getorders.length; i++) {
-          if (this.getorders[i].order.orderplaced.id != 6)
-            this.canEditCount.push(true)
-          else {
-            this.canEditCount.push(false)
-            this.getorders[i].MoenyPlaced = this.MoenyPlaced.filter(m => m.id == 2 || m.id == 4 || m.id == 3)
-
-          }
-        }
         this.sumCost()
         this.showcount = true
         this.dataSource = new MatTableDataSource(this.getorders)
@@ -131,28 +126,14 @@ export class ReceiptShipmentAgentComponent implements OnInit {
 
   }
   ChangeOrderplacedId(element, index) {
-    if (element.order.orderplaced.id == 6) {
-      this.canEditCount[index] = false
-      element.MoenyPlaced = this.MoenyPlaced.filter(m => m.id == 2 || m.id == 4 || m.id == 3)
-      return
-    }
-    else if (element.order.orderplaced.id == 4) {
-      this.canEditCount[index] = true
-      element.order.cost = Object.assign(this.temporderscost[index], this.temporderscost[index]);
-      element.MoenyPlaced = this.MoenyPlaced.filter(m => m.id == 2 || m.id == 4)
-      element.order.monePlaced = element.MoenyPlaced[0]
-      element.order.isClientDiliverdMoney = true
-    }
-    else {
-      this.canEditCount[index] = true
-      element.order.cost = Object.assign(this.temporderscost[index], this.temporderscost[index]);
-      element.MoenyPlaced = this.MoenyPlaced
-      element.order.monePlaced = Object.assign(this.tempordersmonePlaced[index], this.tempordersmonePlaced[index]);
-      element.order.isClientDiliverdMoney = Object.assign(this.tempisClientDiliverdMoney[index], this.tempisClientDiliverdMoney[index]);
 
-    }
-
+    this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
+    this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced, this.tempordersmonePlaced[index], this.tempisClientDiliverdMoney[index])
+    this.orderplacedstate.onWay(element)
+    this.orderplacedstate.unacceptable(element,this.MoenyPlaced)
+    this.orderplacedstate.isClientDiliverdMoney(element,this.MoenyPlaced)
   }
+
   switchPage(event: PageEvent) {
     this.paging.allItemsLength = event.length
     this.paging.RowCount = event.pageSize
@@ -203,15 +184,5 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     })
   }
 
-
-}
-export class GetOrder {
-  constructor() {
-    this.MoenyPlaced = []
-    this.OrderPlaced = []
-  }
-  order
-  MoenyPlaced: NameAndIdDto[]
-  OrderPlaced: NameAndIdDto[]
 
 }
