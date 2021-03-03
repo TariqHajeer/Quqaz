@@ -66,14 +66,13 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
       this.MoenyPlaced = this.MoenyPlaced.filter(o => o.id != 4)
-      console.log(res)
-
+    
     })
   }
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
-      console.log(res)
+    
       this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
     })
   }

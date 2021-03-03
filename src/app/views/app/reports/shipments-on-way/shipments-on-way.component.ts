@@ -11,6 +11,7 @@ import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { OrderState } from 'src/app/Models/order/order.model';
+import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed-state.service';
 @Component({
   selector: 'app-shipments-on-way',
   templateUrl: './shipments-on-way.component.html',
@@ -19,7 +20,7 @@ import { OrderState } from 'src/app/Models/order/order.model';
 export class ShipmentsOnWayComponent implements OnInit {
 
   displayedColumns: string[] = ['code', 'country', 'region'
-    , 'cost', 'orderplaced', 'monePlaced'];
+    , 'cost','isClientDiliverdMoney', 'orderplaced', 'monePlaced'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
   ids: any[] = []
@@ -31,7 +32,8 @@ export class ShipmentsOnWayComponent implements OnInit {
     private orderservice: OrderService,
     public userService: UserService,
     private notifications: NotificationsService,
-    public route: Router
+    public route: Router,
+    public orderplacedstate: OrderPlacedStateService
   ) { }
   AgentId
   OrderplacedId
@@ -44,6 +46,8 @@ export class ShipmentsOnWayComponent implements OnInit {
   temporderscost: any[] = []
   tempordersmonePlaced: any[] = []
   tempisClientDiliverdMoney: any[] = []
+  getorders: GetOrder[] = []
+  getorder: GetOrder = new GetOrder()
   orderstates: OrderState[] = []
   orderstate: OrderState = new OrderState()
   @Input() totalCount: number;
@@ -78,13 +82,11 @@ export class ShipmentsOnWayComponent implements OnInit {
     }
   }
   ChangeOrderplacedId(element, index) {
-    if (element.orderplaced.id == 6)
-      this.canEditCount[index] = false
-    else {
-      this.canEditCount[index] = true
-      element.cost = Object.assign(this.temporderscost[index], this.temporderscost[index]);
-
-    }
+    this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
+    this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced, this.tempordersmonePlaced[index], this.tempisClientDiliverdMoney[index])
+    this.orderplacedstate.onWay(element)
+    this.orderplacedstate.unacceptable(element,this.MoenyPlaced)
+    this.orderplacedstate.isClientDiliverdMoney(element,this.MoenyPlaced)
   }
   switchPage(event: PageEvent) {
     this.paging.allItemsLength = event.length
@@ -94,18 +96,27 @@ export class ShipmentsOnWayComponent implements OnInit {
   }
   allFilter() {
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
-      this.canEditCount = []
+      this.getorders = []
       if (response)
         if (response.data.length == 0)
           this.noDataFound = true
         else this.noDataFound = false
-      this.temporderscost = Object.assign({}, response.data.map(o => o.cost));
-      this.tempordersmonePlaced = Object.assign({}, response.data.map(o => o.monePlaced));
-      this.tempisClientDiliverdMoney = Object.assign({}, response.data.map(o => o.isClientDiliverdMoney));
-      this.dataSource = new MatTableDataSource(response.data)
-      for (let i = 0; i < this.dataSource.data.length; i++) {
-        this.canEditCount.push(true)
-      }
+        response.data.forEach(element => {
+          this.getorder.order=element
+          this.getorder.MoenyPlaced = this.MoenyPlaced
+          this.getorder.OrderPlaced = this.orderPlace
+          this.getorder.canEditCount = true
+          this.orderplacedstate.onWay(this.getorder)
+         if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2)
+            this.getorder.order.orderplaced = this.getorder.OrderPlaced[0]
+          this.getorders.push(this.getorder)
+          this.getorder=new GetOrder()
+        });
+      this.temporderscost = Object.assign({},  this.getorders .map(o => o.order.cost));
+      this.tempordersmonePlaced = Object.assign({},  this.getorders .map(o => o.order.monePlaced));
+      this.tempisClientDiliverdMoney = Object.assign({},  this.getorders .map(o => o.order.isClientDiliverdMoney));
+      this.dataSource = new MatTableDataSource( this.getorders )
+      
       this.totalCount = response.total
     },
       err => {
