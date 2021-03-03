@@ -61,6 +61,7 @@ export class ShipmentsOnWayComponent implements OnInit {
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
+      this.MoenyPlaced = this.MoenyPlaced.filter(o => o.id != 4)
     })
   }
   GetorderPlace() {
