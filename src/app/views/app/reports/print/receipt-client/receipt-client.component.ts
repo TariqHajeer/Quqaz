@@ -19,6 +19,7 @@ export class ReceiptClientComponent implements OnInit {
   @Input() orders: any[] = []
   count = 0
   @Input() client
+  @Input() printnumber
   dateOfPrint=new Date()
   userName:any=JSON.parse(localStorage.getItem('kokazUser'))as UserLogin
 

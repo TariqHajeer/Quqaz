@@ -20,6 +20,7 @@ export class ReceiptAgentComponent implements OnInit ,OnChanges{
   count = 0
   @Input() agent
   @Input() orderplaced
+  @Input() printnumber
   dateOfPrint=new Date()
   userName:any=JSON.parse(localStorage.getItem('kokazUser'))as UserLogin
 
