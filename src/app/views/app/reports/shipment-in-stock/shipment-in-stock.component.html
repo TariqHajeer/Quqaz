@@ -10,7 +10,9 @@
             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
         </ng-select>
     </div>
-  
+    <div class="col-md-3" style="padding-top: 25px;">
+      <button (click)="afterPrint()" class="btn btn-primary"> نقل الى  الطريق</button>
+    </div>
   <!--
 <div class="col-md-3">
         <label>حالة الشحنة</label>

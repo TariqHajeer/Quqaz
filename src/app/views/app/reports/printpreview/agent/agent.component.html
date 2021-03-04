@@ -1,15 +1,15 @@
-<button  printSectionId="printpage" class="btn" styleSheetFile="/assets/css/vendor/bootstrap.min.css"
-[useExistingCss]="true" ngxPrint>
-<h4> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer"
-    viewBox="0 0 16 16" (click)="setPrintnumber()">
-    <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
-    <path
-      d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
-  </svg> &nbsp;طباعة </h4>
+<button printSectionId="printpage" class="btn" styleSheetFile="/assets/css/vendor/bootstrap.min.css"
+    [useExistingCss]="true" ngxPrint>
+    <h4> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer"
+            viewBox="0 0 16 16" (click)="setPrintnumber()">
+            <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+            <path
+                d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
+        </svg> &nbsp;طباعة </h4>
 </button>
 <div class="col-md-3" style="padding-top: 25px;">
-    <button (click)="afterPrint()" class="btn btn-primary"> نقل الى  الطريق</button>
-  </div>
+    <button (click)="afterPrint()" class="btn btn-primary"> نقل الى الطريق</button>
+</div>
 <div class="card" style="direction:rtl">
     <div class="card-body">
         <div class="row ">
@@ -26,72 +26,78 @@
                 <h3>
                     وقت الطباعة :{{dateOfPrint | date:"HH:mm:ss"}}
                 </h3>
-               
+
             </div>
             <div class="col-md-5" style="text-align: right;">
                 <h3>
-                   كشف حساب المندوب : {{agent!=null||agent!=undefined?agent.name:null}}
+                    كشف حساب المندوب : {{agent!=null||agent!=undefined?agent.name:null}}
                 </h3>
                 <h3>
-                    رقم هاتف المندوب :{{agent!=null||agent!=undefined?agent.phones:null}}
+                    رقم هاتف المندوب :
+                    <div *ngFor="let phone of agent.phones">
+                        {{phone.phone}}
+                    </div>
                 </h3>
-            
-                    <div *ngIf="orderplaced!=null||orderplaced!=undefined"  ><h3>{{orderplaced.name}}</h3>  </div> 
+
+                <div *ngIf="orderplaced!=null||orderplaced!=undefined">
+                    <h3>{{orderplaced.name}}</h3>
+                </div>
             </div>
-        
+
             <div class="col-md-3">
                 <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px" />
             </div>
         </div>
-<table class="table ">
- 
-    <thead>
+        <table class="table ">
 
-    <th *ngFor="let head of heads" style="font-size: 20px;">{{head}}</th>
-</thead>
-    <tbody>
-     
-        <tr class=" table-bordered"style="  margin-bottom: 20%;font-size: 18px;" 
-         *ngFor="let order of orders;index as i" >
-            <td>
-              {{i+1}}
-            </td>
-            <td>
-                {{order.code}}
-            </td>
-            <td>
-                {{order.cost}}
-            </td>
-            <td>
-                {{order.country.name}}
-            </td>
-            <td>
-                {{order.recipientPhones}}
-            </td>
-            <td>
-                {{order.client.name}}
-            </td>
-            <td>
-                {{order.note}}
-            </td>
-        </tr>
-       
-    
-    <tr class=" table-bordered"style="font-size: 18px;">
-        <td colspan="2">
-            الإجمالي :
-        </td>
-        <td >
-           <!----> {{ count}}
-        </td>
+            <thead>
 
-    </tr></tbody>
-   
-  </table>
-  </div>
+                <th *ngFor="let head of heads" style="font-size: 20px;">{{head}}</th>
+            </thead>
+            <tbody>
+
+                <tr class=" table-bordered" style="  margin-bottom: 20%;font-size: 18px;"
+                    *ngFor="let order of orders;index as i">
+                    <td>
+                        {{i+1}}
+                    </td>
+                    <td>
+                        {{order.code}}
+                    </td>
+                    <td>
+                        {{order.cost}}
+                    </td>
+                    <td>
+                        {{order.country.name}}
+                    </td>
+                    <td>
+                        {{order.recipientPhones}}
+                    </td>
+                    <td>
+                        {{order.client.name}}
+                    </td>
+                    <td>
+                        {{order.note}}
+                    </td>
+                </tr>
+
+
+                <tr class=" table-bordered" style="font-size: 18px;">
+                    <td colspan="2">
+                        الإجمالي :
+                    </td>
+                    <td>
+                        <!----> {{ count}}
+                    </td>
+
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
 </div>
- 
 
-<app-receipt-agent id="printpage" [orders]="orders" [agent]="agent" 
-  [orderplaced]="orderplaced" [printnumber]="printnumber" [hidden]="true"></app-receipt-agent>
-  <simple-notifications></simple-notifications>
+
+<app-receipt-agent id="printpage" [orders]="orders" [agent]="agent" [orderplaced]="orderplaced"
+    [printnumber]="printnumber" [hidden]="true"></app-receipt-agent>
+<simple-notifications></simple-notifications>

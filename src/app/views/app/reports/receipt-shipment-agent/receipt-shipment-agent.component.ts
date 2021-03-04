@@ -89,38 +89,43 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     }
   }
   showcount = false
+  findorder
   addOrder() {
     if (this.Code && this.AgentId) {
-      let findorder = this.orders.find(o => o.code == this.Code)
-      if (findorder) {
-        if (this.getorders.filter(o => o.order == findorder).length > 0) {
-          this.notifications.create("error", "الشحنة مضافة مسبقا", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
-          return
+      this.orderservice.GetOrderByAgent(this.AgentId,this.Code).subscribe(res=>{
+        this.findorder=res
+        console.log(res)
+        if (this.findorder) {
+          if (this.getorders.filter(o => o.order == this.findorder).length > 0) {
+            this.notifications.create("error", "الشحنة مضافة مسبقا", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
+            return
+          }
+          this.getorder.order = this.findorder
+          this.getorder.MoenyPlaced = this.MoenyPlaced
+          this.getorder.OrderPlaced = this.orderPlace
+          this.getorder.canEditCount = true
+          this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced)
+          this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced)
+          this.orderplacedstate.onWay(this.getorder,this.MoenyPlaced)
+          this.orderplacedstate.unacceptable(this.getorder,this.MoenyPlaced)
+          this.orderplacedstate.isClientDiliverdMoney(this.getorder,this.MoenyPlaced)
+          if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2)
+            this.getorder.order.orderplaced = this.getorder.OrderPlaced[0]
+          this.getorders.push(this.getorder)
+          this.sumCost()
+          this.showcount = true
+          this.dataSource = new MatTableDataSource(this.getorders)
+          this.totalCount = this.dataSource.data.length
+          this.temporderscost = Object.assign({}, this.getorders.map(o => o.order.cost));
+          this.tempordersmonePlaced = Object.assign({}, this.getorders.map(o => o.order.monePlaced));
+          this.tempisClientDiliverdMoney = Object.assign({}, this.getorders.map(o => o.order.isClientDiliverdMoney));
+          this.Code = ""
+          this.getorder = new GetOrder
+        } else {
+          this.notifications.create("error", "ليس هناك شحنة لهذا الكود", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
         }
-        this.getorder.order = findorder
-        this.getorder.MoenyPlaced = this.MoenyPlaced
-        this.getorder.OrderPlaced = this.orderPlace
-        this.getorder.canEditCount = true
-        this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced)
-        this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced)
-        this.orderplacedstate.onWay(this.getorder,this.MoenyPlaced)
-        this.orderplacedstate.unacceptable(this.getorder,this.MoenyPlaced)
-        this.orderplacedstate.isClientDiliverdMoney(this.getorder,this.MoenyPlaced)
-        if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2)
-          this.getorder.order.orderplaced = this.getorder.OrderPlaced[0]
-        this.getorders.push(this.getorder)
-        this.sumCost()
-        this.showcount = true
-        this.dataSource = new MatTableDataSource(this.getorders)
-        this.totalCount = this.dataSource.data.length
-        this.temporderscost = Object.assign({}, this.getorders.map(o => o.order.cost));
-        this.tempordersmonePlaced = Object.assign({}, this.getorders.map(o => o.order.monePlaced));
-        this.tempisClientDiliverdMoney = Object.assign({}, this.getorders.map(o => o.order.isClientDiliverdMoney));
-        this.Code = ""
-        this.getorder = new GetOrder
-      } else {
-        this.notifications.create("error", "ليس هناك شحنة لهذا الكود", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
-      }
+      })
+     
 
     } else this.notifications.create("error", " يجب اختيار مندوب واضافة كود الشحنة  ", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
 

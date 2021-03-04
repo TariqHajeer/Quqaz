@@ -105,13 +105,16 @@ export class OrderService {
     return this.http.get(this.controler + "GetClientPrintNumber")
   }
   SetClientPrintNumber(number) {
-    return this.http.put(this.controler + "SetClientPrintNumber",number)
+    return this.http.put(this.controler + "SetClientPrintNumber", number)
   }
   GetAgentPrintNumber() {
     return this.http.get(this.controler + "GetAgentPrintNumber")
   }
   SetAgentPrintNumber(number) {
-    return this.http.put(this.controler + "SetAgentPrintNumber",number)
+    return this.http.put(this.controler + "SetAgentPrintNumber", number)
+  }
+  GetOrderByAgent(agentId, orderCode) {
+    return this.http.get(this.controler+"GetOrderByAgent/"+agentId+"/"+orderCode)
   }
 }
 

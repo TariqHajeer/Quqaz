@@ -73,7 +73,10 @@
                كشف حساب المندوب : {{agent!=null||agent!=undefined?agent.name:null}}
             </h3>
             <h3>
-                رقم هاتف المندوب :{{agent!=null||agent!=undefined?agent.phones:null}}
+                رقم هاتف المندوب :
+                <div *ngFor="let phone of agent.phones">
+                    {{phone.phone}}
+                </div>
             </h3>
         
                 <div class="table-bordered" style="width: 100px;padding: 5px;text-align: center;"><h3>{{orderplaced!=null||orderplaced!=undefined?orderplaced.name:null}}</h3>  </div> 

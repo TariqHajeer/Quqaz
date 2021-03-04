@@ -136,5 +136,10 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
    
   }
                                                                             
-
+  changeDeleiverMoneyForClient(){
+    this.orderservice.DeleiverMoneyForClient(this.orders.map(o=>o.id)).subscribe(res=>{
+      this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+     this.allFilter()
+    })
+  }  
 }

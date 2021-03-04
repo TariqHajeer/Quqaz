@@ -126,10 +126,10 @@ export class ShipmentsOnWayComponent implements OnInit {
   }
   saveEdit() {
     for (let i = 0; i < this.dataSource.data.length; i++) {
-      this.orderstate.Id = this.dataSource.data[i].id
-      this.orderstate.Cost = this.dataSource.data[i].cost
-      this.orderstate.MoenyPlacedId = this.dataSource.data[i].monePlaced.id
-      this.orderstate.OrderplacedId = this.dataSource.data[i].orderplaced.id
+      this.orderstate.Id = this.dataSource.data[i].order.id
+      this.orderstate.Cost = this.dataSource.data[i].order.cost
+      this.orderstate.MoenyPlacedId = this.dataSource.data[i].order.monePlaced.id
+      this.orderstate.OrderplacedId = this.dataSource.data[i].order.orderplaced.id
       this.orderstates.push(this.orderstate)
       this.orderstate = new OrderState
     }

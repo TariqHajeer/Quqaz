@@ -76,8 +76,12 @@
             <h3 style="font-size: 20px;">
                 اسم العميل  : {{client!=null||client!=undefined?client.name:null}}
             </h3>
-            <h3  style="font-size: 20px;">
-                رقم هاتف العميل :{{client!=null||client!=undefined?client.phones:null}}
+            <h3 style="font-size: 20px;">
+                رقم هاتف العميل :
+
+                <div *ngFor="let phone of client.phones">
+                    {{phone.phone}}
+                </div>
             </h3>
         
         </div>
