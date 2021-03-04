@@ -21,15 +21,16 @@ export class AgentComponent implements OnInit {
   orderplaced
   dateOfPrint = new Date()
   userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
-
+  printnumber
   ngOnInit(): void {
     this.orders = JSON.parse(localStorage.getItem('printordersagent'))
     this.agent = this.orders.map(o => o.agent)[0]
     console.log(this.agent)
     this.orderplaced = this.orders.map(o => o.orderplaced)[0]
     this.sumCost()
+    this.getPrintnumber()
   }
-  
+
   sumCost() {
     this.count = 0
     if (this.orders)
@@ -39,9 +40,19 @@ export class AgentComponent implements OnInit {
     return this.count
   }
   afterPrint() {
-    this.orderservice.MakeOrderInWay(this.orders.map(o=>o.id)).subscribe(res=>{
+    this.orderservice.MakeOrderInWay(this.orders.map(o => o.id)).subscribe(res => {
       this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       //this.orders=[]
     })
-  }     
+  }
+  getPrintnumber(){
+    this.orderservice.GetAgentPrintNumber().subscribe(res=>{
+      this.printnumber=res
+    })
+  }
+  setPrintnumber(){
+    this.orderservice.SetAgentPrintNumber( this.printnumber).subscribe(res=>{
+
+    })
+  }
 }

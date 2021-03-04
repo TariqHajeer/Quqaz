@@ -65,7 +65,8 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
-      this.MoenyPlaced = this.MoenyPlaced.filter(o => o.id != 4)
+      console.log(res)
+     // this.MoenyPlaced = this.MoenyPlaced.filter(o => o.id != 4)
     
     })
   }
@@ -102,7 +103,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
         this.getorder.canEditCount = true
         this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced)
         this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced)
-        this.orderplacedstate.onWay(this.getorder)
+        this.orderplacedstate.onWay(this.getorder,this.MoenyPlaced)
         this.orderplacedstate.unacceptable(this.getorder,this.MoenyPlaced)
         this.orderplacedstate.isClientDiliverdMoney(this.getorder,this.MoenyPlaced)
         if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2)
@@ -128,7 +129,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
 
     this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
     this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced, this.tempordersmonePlaced[index], this.tempisClientDiliverdMoney[index])
-    this.orderplacedstate.onWay(element)
+    this.orderplacedstate.onWay(element,this.MoenyPlaced)
     this.orderplacedstate.unacceptable(element,this.MoenyPlaced)
     this.orderplacedstate.isClientDiliverdMoney(element,this.MoenyPlaced)
   }

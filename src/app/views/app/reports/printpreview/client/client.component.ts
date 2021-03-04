@@ -21,11 +21,12 @@ export class ClientComponent implements OnInit {
   client
   dateOfPrint = new Date()
   userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
-
+  printnumber
   ngOnInit(): void {
     this.orders = JSON.parse(localStorage.getItem('printordersclient'))
     this.client = this.orders.map(o => o.client)[0]
     this.sumCost()
+    this.getPrintnumber()
   }
   
   sumCost() {
@@ -45,4 +46,14 @@ changeDeleiverMoneyForClient(){
    
   })
 }   
+getPrintnumber(){
+  this.orderservice.GetClientPrintNumber().subscribe(res=>{
+    this.printnumber=res
+  })
+}
+setPrintnumber(){
+  this.orderservice.SetClientPrintNumber( this.printnumber).subscribe(res=>{
+
+  })
+}
 }

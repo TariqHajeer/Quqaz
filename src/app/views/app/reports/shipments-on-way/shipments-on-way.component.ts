@@ -61,7 +61,7 @@ export class ShipmentsOnWayComponent implements OnInit {
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
-      this.MoenyPlaced = this.MoenyPlaced.filter(o => o.id != 4)
+     // this.MoenyPlaced = this.MoenyPlaced.filter(o => o.id != 4)
     })
   }
   GetorderPlace() {
@@ -85,7 +85,7 @@ export class ShipmentsOnWayComponent implements OnInit {
   ChangeOrderplacedId(element, index) {
     this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
     this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced, this.tempordersmonePlaced[index], this.tempisClientDiliverdMoney[index])
-    this.orderplacedstate.onWay(element)
+    this.orderplacedstate.onWay(element,this.MoenyPlaced)
     this.orderplacedstate.unacceptable(element,this.MoenyPlaced)
     this.orderplacedstate.isClientDiliverdMoney(element,this.MoenyPlaced)
   }
@@ -107,7 +107,7 @@ export class ShipmentsOnWayComponent implements OnInit {
           this.getorder.MoenyPlaced = this.MoenyPlaced
           this.getorder.OrderPlaced = this.orderPlace
           this.getorder.canEditCount = true
-          this.orderplacedstate.onWay(this.getorder)
+          this.orderplacedstate.onWay(this.getorder,this.MoenyPlaced)
          if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2)
             this.getorder.order.orderplaced = this.getorder.OrderPlaced[0]
           this.getorders.push(this.getorder)
