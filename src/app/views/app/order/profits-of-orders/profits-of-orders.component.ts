@@ -156,7 +156,8 @@ public getRandomInt(min, max) {
     this.dataSource = new MatTableDataSource(this.orders);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.displayedColumns = ['code', 'Profit'];
+    this.displayedColumns = ['code', 'cost',
+    'oldCost', 'deliveryCost','deliveryCostClient', 'Profit'];
   }
   switchPage(event: PageEvent) {
 
