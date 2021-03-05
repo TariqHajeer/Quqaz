@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.prod';
 import { OrderFilter } from '../Models/order-filter.model';
-import { Paging } from '../Models/paging';
+import { DateFiter, Paging } from '../Models/paging';
 
 @Injectable({
   providedIn: 'root'
@@ -114,7 +114,19 @@ export class OrderService {
     return this.http.put(this.controler + "SetAgentPrintNumber", number)
   }
   GetOrderByAgent(agentId, orderCode) {
-    return this.http.get(this.controler+"GetOrderByAgent/"+agentId+"/"+orderCode)
+    return this.http.get(this.controler + "GetOrderByAgent/" + agentId + "/" + orderCode)
+  }
+  GetEarning(paging: Paging, datefilter:DateFiter) {
+    let params = new HttpParams();
+    if (paging.RowCount != undefined || paging.RowCount != null)
+      params = params.append("RowCount", paging.RowCount);
+    if (paging.Page != undefined || paging.Page != null)
+      params = params.append("Page", paging.Page);
+    if (datefilter != undefined || datefilter != null)
+      params = params.append("FromDate", datefilter.FromDate);
+    if (datefilter != undefined || datefilter != null)
+      params = params.append("ToDate", datefilter.ToDate);
+    return this.http.get<any>(this.controler+"GetEarnings", { params: params })
   }
 }
 

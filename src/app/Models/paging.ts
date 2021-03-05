@@ -4,3 +4,7 @@ export class Paging{
     Page:any=1
     allItemsLength = 0;
 }
+export class DateFiter{
+    FromDate
+    ToDate
+}

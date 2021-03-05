@@ -9,10 +9,12 @@ import { ChangeEventArgs } from '@syncfusion/ej2-dropdowns';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { Paging } from 'src/app/Models/paging';
+import { DateFiter, Paging } from 'src/app/Models/paging';
 import { Order } from 'src/app/Models/order/order.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { MatTableDataSource } from '@angular/material/table';
+import { OrderService } from 'src/app/services/order.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-profits-of-orders',
   templateUrl: './profits-of-orders.component.html',
@@ -90,23 +92,7 @@ changeData(){
   this.chart.series[0].dataSource = this.GetNumericData(new Date(this.minValue));
   this.chart.dataBind();
 }
-changeRange(){
- this. primaryXAxis = {
-      title: 'اليوم',
-      valueType: 'DateTime',
-      edgeLabelPlacement: 'Shift',
-      skeleton: 'yMMM',
-      skeletonType: 'Date',
-      scrollbarSettings: {
-          range: {
-              minimum:this.startAndEnd[0],
-              maximum:this.startAndEnd[1]
-          },
-          enable: true,
-          pointsLength: 1000
-      }
-  }; 
-}
+
 public scrollEnd(args: IScrollEventArgs): void {
     this.chart.series[0].dataSource = this.GetNumericData(new Date(args.currentRange.maximum));
     this.chart.dataBind();
@@ -135,7 +121,8 @@ public getRandomInt(min, max) {
 }
 //#endregion
 
-  constructor() { }
+  constructor(private orderservice: OrderService,
+    private router: Router,) { }
   displayedColumns: string[];
   dataSource
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -143,13 +130,15 @@ public getRandomInt(min, max) {
   @Input() totalCount: number;
   pageEvent: PageEvent;
   paging: Paging
-  filtering: OrderFilter
+  filtering: DateFiter
   orders: Order[] = []
   noDataFound: boolean = false
   ngOnInit(): void {
     this.paging = new Paging
-    this.filtering = new OrderFilter
+    this.filtering = new DateFiter
     this.get()
+   // this.allfiltering()
+   console.log(this.startAndEnd)
 
   }
   get() {
@@ -164,5 +153,36 @@ public getRandomInt(min, max) {
     this.paging.allItemsLength = event.length
     this.paging.RowCount = event.pageSize
     this.paging.Page = event.pageIndex + 1
+    this.allfiltering()
   }
+  allfiltering(){
+      this.orderservice.GetEarning(this.paging,this.filtering).subscribe(res=>{
+        if (res.data.length == 0)
+        this.noDataFound = true
+      else this.noDataFound = false
+      this.dataSource = new MatTableDataSource(res.data)
+      this.totalCount = res.total      })
+  }
+  changeRange(){
+    this. primaryXAxis = {
+         title: 'اليوم',
+         valueType: 'DateTime',
+         edgeLabelPlacement: 'Shift',
+         skeleton: 'yMMM',
+         skeletonType: 'Date',
+         scrollbarSettings: {
+             range: {
+                 minimum:this.startAndEnd[0],
+                 maximum:this.startAndEnd[1]
+             },
+             enable: true,
+             pointsLength: 1000
+         }
+     }; 
+     this.filtering.FromDate=this.start
+     this.filtering.ToDate=this.end
+     console.log(this.start)
+     console.log(this.filtering)
+     this.allfiltering()
+   }
 }
