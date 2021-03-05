@@ -1,20 +1,46 @@
 <div class="row">
-    <div class="col-3">
-      <label>بحث حسب التاريخ</label>
-      <ejs-datepicker [value]='minValue' [(ngModel)]='minValue' (change)="changeData()"  placeholder='Enter start date'></ejs-datepicker>
-  
-    </div>
-    <div class="col-3">
-      <label>من تاريخ-الى تاريخ</label>
-      <ejs-daterangepicker [value]='startAndEnd' [(ngModel)]='startAndEnd' placeholder='Select a range' (change)="changeRange()" [startDate]='start' [endDate]='end'></ejs-daterangepicker>
-    </div>
+  <div class="col-3">
+    <label>بحث حسب التاريخ</label>
+    <ejs-datepicker [value]='minValue' [(ngModel)]='minValue' (change)="changeData()" placeholder='Enter start date'>
+    </ejs-datepicker>
+
   </div>
+  <div class="col-3">
+    <label>من تاريخ-الى تاريخ</label>
+    <ejs-daterangepicker [value]='startAndEnd' [(ngModel)]='startAndEnd' placeholder='Select a range'
+      (change)="changeRange()" [startDate]='start' [endDate]='end'></ejs-daterangepicker>
+  </div>
+</div>
+
+<ejs-chart style='display:block;' #chart [legendSettings]='legend' id='container' [primaryXAxis]='primaryXAxis'
+  [tooltip]='tooltip' [height]='height' [width]='width' (scrollEnd)='scrollEnd($event)' [primaryYAxis]='primaryYAxis'
+  [chartArea]='chartArea' [title]='title'>
+  <e-series-collection>
+    <e-series [dataSource]='data' [animation]='animation' type='Line' xName='x' yName='y'>
+    </e-series>
+  </e-series-collection>
+</ejs-chart>
+
+<div class="example-container mat-elevation-z8" >
+  <table mat-table [dataSource]="dataSource" matSort (onPageSwitch)="switchPage($event)">
   
-  <ejs-chart style='display:block;' #chart [legendSettings]='legend' id='container' [primaryXAxis]='primaryXAxis'
-        [tooltip]='tooltip' [height]='height' [width]='width' (scrollEnd)='scrollEnd($event)'
-        [primaryYAxis]='primaryYAxis' [chartArea]='chartArea' [title]='title'>
-        <e-series-collection>
-          <e-series [dataSource]='data' [animation]='animation' type='Line' xName='x' yName='y'>
-          </e-series>
-        </e-series-collection>
-      </ejs-chart>
+  <ng-container matColumnDef="code">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> كود </th>
+    <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.code}}</td>
+  </ng-container>
+  <ng-container matColumnDef="Profit">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>  الربح</th>
+    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.deliveryCost}}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  
+  
+  <h5 style="padding-top: 20px; padding-right: 10px;"  *ngIf="noDataFound">No records to display</h5>
+  
+  </div>
+  <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
+  [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
+  

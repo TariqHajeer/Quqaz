@@ -92,7 +92,8 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   findorder
   addOrder() {
     if (this.Code && this.AgentId) {
-      this.orderservice.GetOrderByAgent(this.AgentId,this.Code).subscribe(res=>{
+      this.orderservice.GetOrderByAgent(this.AgentId,this.Code).subscribe(res=>
+        {
         this.findorder=res
         console.log(res)
         if (this.findorder) {
@@ -124,7 +125,10 @@ export class ReceiptShipmentAgentComponent implements OnInit {
         } else {
           this.notifications.create("error", "ليس هناك شحنة لهذا الكود", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
         }
-      })
+      },err=>{
+        this.notifications.create("error",err.error.message, NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
+      }
+      )
      
 
     } else this.notifications.create("error", " يجب اختيار مندوب واضافة كود الشحنة  ", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });

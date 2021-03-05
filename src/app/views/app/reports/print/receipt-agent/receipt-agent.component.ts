@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, HostListener, Input, OnChanges, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NotificationsService } from 'angular2-notifications';
 import { UserLogin } from 'src/app/Models/userlogin.model';
@@ -26,6 +26,10 @@ export class ReceiptAgentComponent implements OnInit ,OnChanges{
 
   ngOnInit(): void {
 
+  }
+  @HostListener('window:afterprint')
+  onafterprint() {
+    console.log("tr")
   }
   ngOnChanges() {
     this.sumCost()

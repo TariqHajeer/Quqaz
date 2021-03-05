@@ -9,7 +9,6 @@ import { AgentComponent } from './printpreview/agent/agent.component';
 import { ClientComponent } from './printpreview/client/client.component';
 import { ReceiptShipmentAgentComponent } from './receipt-shipment-agent/receipt-shipment-agent.component';
 import { ShipmentInStockComponent } from './shipment-in-stock/shipment-in-stock.component';
-import { ShipmentsClientOnWayComponent } from './shipments-client-on-way/shipments-client-on-way.component';
 import { ShipmentsNotBeenDeliveredComponent } from './shipments-not-been-delivered/shipments-not-been-delivered.component';
 import { ShipmentsOnWayComponent } from './shipments-on-way/shipments-on-way.component';
 
@@ -27,10 +26,7 @@ const routes: Routes = [
     path:'clientorder',
     component: ClientOrderComponent,canActivate: [AuthGuard],
   },
-  {
-    path:'clientorderonway',
-    component: ShipmentsClientOnWayComponent,canActivate: [AuthGuard],
-  },
+  
   {
     path:'clientinsidecompany',
     component: ClientInsideCompanyComponent,canActivate: [AuthGuard],

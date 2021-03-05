@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild   } from '@angular/core';
+import { Component, Input, OnInit,ViewChild   } from '@angular/core';
 import { AuthService } from 'src/app/shared/auth.service';
 import { ChartComponent } from '@syncfusion/ej2-angular-charts';
 import { Internationalization, DateFormatOptions } from '@syncfusion/ej2-base';
@@ -7,14 +7,20 @@ import { NumericTextBoxComponent } from '@syncfusion/ej2-angular-inputs';
 import { IScrollEventArgs, ILoadedEventArgs } from '@syncfusion/ej2-charts';
 import { ChangeEventArgs } from '@syncfusion/ej2-dropdowns';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { Paging } from 'src/app/Models/paging';
+import { Order } from 'src/app/Models/order/order.model';
+import { OrderFilter } from 'src/app/Models/order-filter.model';
+import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'app-profits-of-orders',
   templateUrl: './profits-of-orders.component.html',
   styleUrls: ['./profits-of-orders.component.scss']
 })
 export class ProfitsOfOrdersComponent implements OnInit {
-
-  constructor() { }
+    
+//#region  range chart
 //#region  range date
 public month: number = new Date().getMonth();
 public fullYear: number = new Date().getFullYear();
@@ -127,7 +133,35 @@ public GetNumericData(date: Date): {x: Date, y: number}[] {
 public getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-  ngOnInit(): void {
-  }
+//#endregion
 
+  constructor() { }
+  displayedColumns: string[];
+  dataSource
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @Input() totalCount: number;
+  pageEvent: PageEvent;
+  paging: Paging
+  filtering: OrderFilter
+  orders: Order[] = []
+  noDataFound: boolean = false
+  ngOnInit(): void {
+    this.paging = new Paging
+    this.filtering = new OrderFilter
+    this.get()
+
+  }
+  get() {
+    this.dataSource = new MatTableDataSource(this.orders);
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.displayedColumns = ['code', 'Profit'];
+  }
+  switchPage(event: PageEvent) {
+
+    this.paging.allItemsLength = event.length
+    this.paging.RowCount = event.pageSize
+    this.paging.Page = event.pageIndex + 1
+  }
 }
