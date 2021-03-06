@@ -146,8 +146,7 @@ export class ProfitsOfOrdersComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.orders);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
-        this.displayedColumns = ['code', 'cost',
-            'oldCost', 'deliveryCost', 'deliveryCostClient', 'Profit'];
+        this.displayedColumns = ['code', 'cost', 'oldCost', 'deliveryCost', 'deliveryCostClient'];
     }
     switchPage(event: PageEvent) {
 
@@ -156,6 +155,7 @@ export class ProfitsOfOrdersComponent implements OnInit {
         this.paging.Page = event.pageIndex + 1
         this.allfiltering()
     }
+    showcount=false
     allfiltering() {
         this.orderservice.GetEarning(this.paging, this.filtering).subscribe(res => {
             if (res.data && res.data.orders.length == 0)
@@ -163,7 +163,11 @@ export class ProfitsOfOrdersComponent implements OnInit {
             else this.noDataFound = false
             this.dataSource = new MatTableDataSource(res.data.orders)
             this.totalCount = res.total
-            this.totalEarinig=res.data.totalEarinig
+            if (res.data.totalEarinig) {
+                this.totalEarinig = res.data.totalEarinig
+                this.showcount = true
+            }else
+            this.showcount=false
             console.log(res)
         })
     }
