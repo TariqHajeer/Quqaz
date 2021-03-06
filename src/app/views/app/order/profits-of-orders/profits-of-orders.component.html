@@ -60,7 +60,7 @@
 
     <ng-container matColumnDef="cost">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> كلفة الشحنة </th>
-      <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.code}}</td>
+      <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.cost}}</td>
     </ng-container>
     <ng-container matColumnDef="oldCost">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> كلفة الشحنة القديمة </th>
@@ -75,8 +75,8 @@
       <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.deliveryCostClient}}</td>
     </ng-container>
     <ng-container matColumnDef="Profit">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> الربح</th>
-      <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.Profit}}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> اجمالي الربح</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;"> {{totalEarinig}}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

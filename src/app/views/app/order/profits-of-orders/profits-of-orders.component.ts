@@ -134,6 +134,7 @@ export class ProfitsOfOrdersComponent implements OnInit {
     filtering: DateFiter
     orders: Order[] = []
     noDataFound: boolean = false
+    totalEarinig
     ngOnInit(): void {
         this.paging = new Paging
         this.filtering = new DateFiter
@@ -157,11 +158,12 @@ export class ProfitsOfOrdersComponent implements OnInit {
     }
     allfiltering() {
         this.orderservice.GetEarning(this.paging, this.filtering).subscribe(res => {
-            if (res && res.length == 0)
+            if (res.data && res.data.orders.length == 0)
                 this.noDataFound = true
             else this.noDataFound = false
-            this.dataSource = new MatTableDataSource(res)
-            this.totalCount = res.length
+            this.dataSource = new MatTableDataSource(res.data.orders)
+            this.totalCount = res.total
+            this.totalEarinig=res.data.totalEarinig
             console.log(res)
         })
     }
