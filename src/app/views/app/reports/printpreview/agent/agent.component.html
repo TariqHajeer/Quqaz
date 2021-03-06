@@ -3,8 +3,7 @@
         <div class="row">
             <div class="col-md-3" style="padding-top: 25px;" *ngIf="!showPrintbtn">
                 <button (click)="afterPrint()" class="btn btn-primary"
-                 printSectionId="printpage"  styleSheetFile="/assets/css/vendor/bootstrap.min.css"
-                [useExistingCss]="true" ngxPrint> نقل الى الطريق</button>
+               > نقل الى الطريق</button>
             </div>
             <div class="col-md-3" style="padding-top: 25px;" *ngIf="showPrintbtn" >
                 <button printSectionId="printpage" class="btn btn-primary" styleSheetFile="/assets/css/vendor/bootstrap.min.css"

@@ -48,8 +48,8 @@ export class ClientComponent implements OnInit {
     this.orderservice.DeleiverMoneyForClient(this.orders.map(o => o.id)).subscribe(res => {
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.showPrintbtn = true
-      this.printnumber=res.prinNumber
-      this.setPrintnumber()
+      this.printnumber=res.printNumber
+     // this.setPrintnumber()
     }, err => {
       this.showPrintbtn = true
 

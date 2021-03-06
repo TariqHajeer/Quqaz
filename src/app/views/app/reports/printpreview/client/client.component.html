@@ -2,8 +2,7 @@
     <div class="card-body"> 
         <div class="row">
             <div class="col-md-3"  *ngIf="!showPrintbtn" >
-                <button (click)="changeDeleiverMoneyForClient()"printSectionId="printpage" class="btn btn-primary" styleSheetFile="/assets/css/vendor/bootstrap.min.css"
-                  [useExistingCss]="true" ngxPrint> تسليم المبلغ</button>
+                <button (click)="changeDeleiverMoneyForClient()"class="btn btn-primary"> تسليم المبلغ</button>
             
             </div>
             <div class="col-md-3"  *ngIf="showPrintbtn"  >

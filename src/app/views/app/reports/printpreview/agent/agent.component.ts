@@ -48,9 +48,9 @@ export class AgentComponent implements OnInit {
       this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       //this.orders=[]
       
-      this.printnumber=res.prinNumber
+      this.printnumber=res.printNumber
       this.showPrintbtn=true
-      this.setPrintnumber()
+    //  this.setPrintnumber()
 
     })
   }
