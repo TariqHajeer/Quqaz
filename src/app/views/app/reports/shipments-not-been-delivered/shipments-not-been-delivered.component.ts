@@ -101,14 +101,14 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       this.Clients = res
     })
   }
-  ChangeClientId() {
-    if (this.ClientId != null) {
-      this.filtering.IsClientDiliverdMoney =false
-      this.filtering.ClientId=this.ClientId
-      this.allFilter();
-    }
+  // ChangeClientId() {
+  //   if (this.ClientId != null) {
+  //     this.filtering.IsClientDiliverdMoney =false
+  //     this.filtering.ClientId=this.ClientId
+  //     this.allFilter();
+  //   }
 
-  }
+  // }
   switchPage(event: PageEvent) {
     this.paging.allItemsLength = event.length
     this.paging.RowCount = event.pageSize
@@ -116,14 +116,14 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     this.allFilter();
   }
   allFilter() {
-    this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
+    this.orderservice.ShipmentsNotReimbursedToTheClient(this.ClientId).subscribe(response => {
       if (response)
-        if (response.data.length == 0)
+        if (response.length == 0)
           this.noDataFound = true
         else this.noDataFound = false
-      this.dataSource = new MatTableDataSource(response.data)
+      this.dataSource = new MatTableDataSource(response)
       //this.dataSource.data = this.dataSource.data.filter(d => d.agent.id == this.ClientId)
-      this.totalCount = response.total
+      this.totalCount = response.length
     },
       err => {
 

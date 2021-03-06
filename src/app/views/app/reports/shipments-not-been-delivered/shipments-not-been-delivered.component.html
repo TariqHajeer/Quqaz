@@ -5,7 +5,7 @@
         <div class="col-md-4">
           <label>العميل</label>
           <ng-select [(ngModel)]="ClientId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Client"
-            (change)="ChangeClientId()">
+            (change)="allFilter()">
             <ng-option *ngFor="let Client of Clients" [value]="Client.id">{{Client.name}}</ng-option>
           </ng-select>
         </div>

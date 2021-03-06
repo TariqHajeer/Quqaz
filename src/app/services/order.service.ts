@@ -116,7 +116,7 @@ export class OrderService {
   GetOrderByAgent(agentId, orderCode) {
     return this.http.get(this.controler + "GetOrderByAgent/" + agentId + "/" + orderCode)
   }
-  GetEarning(paging: Paging, datefilter:DateFiter) {
+  GetEarning(paging: Paging, datefilter: DateFiter) {
     let params = new HttpParams();
     if (paging.RowCount != undefined || paging.RowCount != null)
       params = params.append("RowCount", paging.RowCount);
@@ -126,7 +126,10 @@ export class OrderService {
       params = params.append("FromDate", datefilter.FromDate);
     if (datefilter.ToDate != undefined || datefilter.ToDate != null)
       params = params.append("ToDate", datefilter.ToDate);
-    return this.http.get<any>(this.controler+"GetEarnings", { params: params })
+    return this.http.get<any>(this.controler + "GetEarnings", { params: params })
+  }
+  ShipmentsNotReimbursedToTheClient(clientid) {
+    return this.http.get<any>(this.controler + "ShipmentsNotReimbursedToTheClient/" + clientid)
   }
 }
 
