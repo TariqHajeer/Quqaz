@@ -135,18 +135,20 @@ export class ProfitsOfOrdersComponent implements OnInit {
     orders: Order[] = []
     noDataFound: boolean = false
     totalEarinig
+    GetEarning:any[]=[]
     ngOnInit(): void {
         this.paging = new Paging
         this.filtering = new DateFiter
         this.get()
-        // this.allfiltering()
+         this.allfiltering()
 
     }
     get() {
         this.dataSource = new MatTableDataSource(this.orders);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
-        this.displayedColumns = ['code', 'cost', 'oldCost', 'deliveryCost', 'deliveryCostClient'];
+        this.displayedColumns = ['code', 'cost', 'oldCost', 'deliveryCost',
+         'agentCost','Earinig'];
     }
     switchPage(event: PageEvent) {
 
@@ -158,6 +160,7 @@ export class ProfitsOfOrdersComponent implements OnInit {
     showcount=false
     allfiltering() {
         this.orderservice.GetEarning(this.paging, this.filtering).subscribe(res => {
+            console.log(res)
             if (res.data && res.data.orders.length == 0)
                 this.noDataFound = true
             else this.noDataFound = false
@@ -168,6 +171,10 @@ export class ProfitsOfOrdersComponent implements OnInit {
                 this.showcount = true
             }else
             this.showcount=false
+            res.data.orders.forEach(element => {
+                var er=element.deliveryCost-element.agentCost
+                this.GetEarning.push(er)
+            });
         })
     }
     changeRange() {

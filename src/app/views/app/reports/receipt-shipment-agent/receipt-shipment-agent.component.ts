@@ -65,15 +65,14 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
-      console.log(res)
-     // this.MoenyPlaced = this.MoenyPlaced.filter(o => o.id != 4)
-    
+      // this.MoenyPlaced = this.MoenyPlaced.filter(o => o.id != 4)
+
     })
   }
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
-    
+
       this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
     })
   }
@@ -92,9 +91,8 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   findorder
   addOrder() {
     if (this.Code && this.AgentId) {
-      this.orderservice.GetOrderByAgent(this.AgentId,this.Code).subscribe(res=>
-        {
-        this.findorder=res
+      this.orderservice.GetOrderByAgent(this.AgentId, this.Code).subscribe(res => {
+        this.findorder = res
         console.log(res)
         if (this.findorder) {
           if (this.getorders.filter(o => o.order == this.findorder).length > 0) {
@@ -107,9 +105,9 @@ export class ReceiptShipmentAgentComponent implements OnInit {
           this.getorder.canEditCount = true
           this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced)
           this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced)
-          this.orderplacedstate.onWay(this.getorder,this.MoenyPlaced)
-          this.orderplacedstate.unacceptable(this.getorder,this.MoenyPlaced)
-          this.orderplacedstate.isClientDiliverdMoney(this.getorder,this.MoenyPlaced)
+          this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced)
+          this.orderplacedstate.unacceptable(this.getorder, this.MoenyPlaced)
+          this.orderplacedstate.isClientDiliverdMoney(this.getorder, this.MoenyPlaced)
           if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2)
             this.getorder.order.orderplaced = this.getorder.OrderPlaced[0]
           this.getorders.push(this.getorder)
@@ -125,24 +123,30 @@ export class ReceiptShipmentAgentComponent implements OnInit {
         } else {
           this.notifications.create("error", "ليس هناك شحنة لهذا الكود", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
         }
-      },err=>{
-        this.notifications.create("error",err.error.message, NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
+      }, err => {
+        this.notifications.create("error", err.error.message, NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       }
       )
-     
+
 
     } else this.notifications.create("error", " يجب اختيار مندوب واضافة كود الشحنة  ", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
 
   }
   ChangeOrderplacedId(element, index) {
-this.GetMoenyPlaced()
+    this.GetMoenyPlaced()
     this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
     this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced, this.tempordersmonePlaced[index], this.tempisClientDiliverdMoney[index])
-    this.orderplacedstate.onWay(element,this.MoenyPlaced)
-    this.orderplacedstate.unacceptable(element,this.MoenyPlaced)
-    this.orderplacedstate.isClientDiliverdMoney(element,this.MoenyPlaced)
+    this.orderplacedstate.onWay(element, this.MoenyPlaced)
+    this.orderplacedstate.unacceptable(element, this.MoenyPlaced)
+    this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
   }
-
+  
+  changeCost(element, index) {
+    if (this.orderplacedstate.rangeCost(element, this.temporderscost[index])) {
+     element.messageCost=""
+    }else
+    element.messageCost=" الكلفة لايمكن أن تتجاوز "+this.temporderscost[index]
+  }
   switchPage(event: PageEvent) {
     this.paging.allItemsLength = event.length
     this.paging.RowCount = event.pageSize

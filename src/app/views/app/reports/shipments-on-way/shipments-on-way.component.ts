@@ -89,6 +89,12 @@ export class ShipmentsOnWayComponent implements OnInit {
     this.orderplacedstate.unacceptable(element,this.MoenyPlaced)
     this.orderplacedstate.isClientDiliverdMoney(element,this.MoenyPlaced)
   }
+  changeCost(element, index) {
+    if (this.orderplacedstate.rangeCost(element, this.temporderscost[index])) {
+     element.messageCost=""
+    }else
+    element.messageCost=" الكلفة لايمكن أن تتجاوز "+this.temporderscost[index]
+  }
   switchPage(event: PageEvent) {
     this.paging.allItemsLength = event.length
     this.paging.RowCount = event.pageSize
