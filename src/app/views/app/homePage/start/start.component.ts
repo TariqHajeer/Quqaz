@@ -1,6 +1,7 @@
 import { Component, OnInit   } from '@angular/core';
 import { AuthService } from 'src/app/shared/auth.service';
 import { StatisticsService } from 'src/app/services/statistics.service';
+import { MainStatics } from 'src/app/Models/main-statics.model';
 
 @Component({
   selector: 'app-start',
@@ -13,7 +14,7 @@ export class StartComponent implements OnInit {
   
   }
 
-
+  MainStatics:MainStatics=new MainStatics()
   ngOnInit() {
    // this.authenticationService.startTokenTimer()
   this.GetMainStatics()
@@ -21,7 +22,7 @@ export class StartComponent implements OnInit {
  
  GetMainStatics(){
    this.StatisticsService.MainStatics().subscribe(res=>{
-     console.log(res)
+     this.MainStatics=res as MainStatics
    })
  }
 }
