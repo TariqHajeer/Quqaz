@@ -3,6 +3,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { OrderService } from 'src/app/services/order.service';
+import { PrintNumberOrder } from 'src/app/Models/order/PrintNumberOrder.model';
+
 @Component({
   selector: 'app-agent',
   templateUrl: './agent.component.html',
@@ -22,10 +24,11 @@ export class AgentComponent implements OnInit {
   dateOfPrint = new Date()
   userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
   printnumber
+  PrintNumberOrder: PrintNumberOrder
   ngOnInit(): void {
+    this.PrintNumberOrder = new PrintNumberOrder
     this.orders = JSON.parse(localStorage.getItem('printordersagent'))
-    this.agent = this.orders.map(o => o.agent)[0]
-    console.log(this.agent)
+    this.agent =  JSON.parse(localStorage.getItem('printagent'))
     this.orderplaced = this.orders.map(o => o.orderplaced)[0]
     this.sumCost()
     this.getPrintnumber()
@@ -41,11 +44,11 @@ export class AgentComponent implements OnInit {
   }
   showPrintbtn=false
   afterPrint() {
-    this.setPrintnumber()
     this.orderservice.MakeOrderInWay(this.orders.map(o => o.id)).subscribe(res => {
       this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       //this.orders=[]
       this.showPrintbtn=true
+      this.setPrintnumber()
 
     })
   }
@@ -54,8 +57,10 @@ export class AgentComponent implements OnInit {
       this.printnumber=res
     })
   }
-  setPrintnumber(){
-    this.orderservice.SetAgentPrintNumber( this.printnumber).subscribe(res=>{
+  setPrintnumber() {
+    this.PrintNumberOrder.PrintNumber = this.printnumber
+    this.PrintNumberOrder.OrderId=this.orders.map(o => o.id)
+    this.orderservice.SetClientPrintNumber(this.PrintNumberOrder).subscribe(res => {
 
     })
   }

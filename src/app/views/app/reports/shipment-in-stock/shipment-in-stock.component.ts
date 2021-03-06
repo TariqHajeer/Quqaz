@@ -82,6 +82,7 @@ export class ShipmentInStockComponent implements OnInit {
 
   ngOnInit(): void {
     localStorage.removeItem('printordersagent')
+    localStorage.removeItem('printagent')
     this.getAgent()
     //this.GetorderPlace()
     this.paging = new Paging
@@ -131,7 +132,12 @@ export class ShipmentInStockComponent implements OnInit {
   agent=this.orders.map(o=>o.agent)[0]
   orderplaced=this.orders.map(o=>o.orderplaced)[0]
   print() {
-    if (this.orders == []) return
+    if ( this.noDataFound == true || this.orders.length==0) {
+      this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      return
+    }
+    localStorage.setItem('printagent',JSON.stringify(this.Agents.find(c=>c.id==this.AgentId)))
+
     localStorage.setItem('printordersagent',JSON.stringify(this.orders))
     this.route.navigate(['app/reports/printagentpreview'])
    

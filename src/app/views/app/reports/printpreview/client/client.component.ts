@@ -2,6 +2,8 @@ import { ChangeDetectorRef, Component, Input, OnChanges, OnInit } from '@angular
 import { DomSanitizer } from '@angular/platform-browser';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { UserLogin } from 'src/app/Models/userlogin.model';
+import { PrintNumberOrder } from 'src/app/Models/order/PrintNumberOrder.model';
+
 import { OrderService } from 'src/app/services/order.service';
 
 @Component({
@@ -22,13 +24,15 @@ export class ClientComponent implements OnInit {
   dateOfPrint = new Date()
   userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
   printnumber
+  PrintNumberOrder: PrintNumberOrder
   ngOnInit(): void {
+    this.PrintNumberOrder = new PrintNumberOrder
     this.orders = JSON.parse(localStorage.getItem('printordersclient'))
-    this.client = this.orders.map(o => o.client)[0]
+    this.client = JSON.parse(localStorage.getItem('printclient'))
     this.sumCost()
     this.getPrintnumber()
   }
-  
+
   sumCost() {
     this.count = 0
     if (this.orders)
@@ -37,23 +41,30 @@ export class ClientComponent implements OnInit {
       })
     return this.count
   }
- 
-  
-changeDeleiverMoneyForClient(){
-  this.orderservice.DeleiverMoneyForClient(this.orders.map(o=>o.id)).subscribe(res=>{
-    this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 
-   
-  })
-}   
-getPrintnumber(){
-  this.orderservice.GetClientPrintNumber().subscribe(res=>{
-    this.printnumber=res
-  })
-}
-setPrintnumber(){
-  this.orderservice.SetClientPrintNumber( this.printnumber).subscribe(res=>{
+  showPrintbtn = false
 
-  })
-}
+  changeDeleiverMoneyForClient() {
+    this.orderservice.DeleiverMoneyForClient(this.orders.map(o => o.id)).subscribe(res => {
+      this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.showPrintbtn = true
+      this.setPrintnumber()
+    }, err => {
+      this.showPrintbtn = true
+
+    })
+
+  }
+  getPrintnumber() {
+    this.orderservice.GetClientPrintNumber().subscribe(res => {
+      this.printnumber = res
+    })
+  }
+  setPrintnumber() {
+    this.PrintNumberOrder.PrintNumber = this.printnumber
+    this.PrintNumberOrder.OrderId=this.orders.map(o => o.id)
+    this.orderservice.SetClientPrintNumber(this.PrintNumberOrder).subscribe(res => {
+
+    })
+  }
 }
