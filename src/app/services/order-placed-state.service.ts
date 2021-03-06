@@ -51,13 +51,13 @@ export class OrderPlacedStateService {
       element.MoenyPlaced = MoenyPlaced.filter(m => m.id == 2||m.id == 3)
       element.order.monePlaced = element.MoenyPlaced[0]
       //element.order.isClientDiliverdMoney = true
-    }else{
-      if(tempordersmonePlacedindex&&tempisClientDiliverdMoneyindex){
-        element.MoenyPlaced = MoenyPlaced
-        element.order.monePlaced = Object.assign(tempordersmonePlacedindex, tempordersmonePlacedindex);
-      //  element.order.isClientDiliverdMoney = Object.assign(tempisClientDiliverdMoneyindex, tempisClientDiliverdMoneyindex);
+    // }else{
+    //   if(tempordersmonePlacedindex&&tempisClientDiliverdMoneyindex){
+    //     element.MoenyPlaced = MoenyPlaced
+    //   //  element.order.monePlaced = Object.assign(tempordersmonePlacedindex, tempordersmonePlacedindex);
+    //   //  element.order.isClientDiliverdMoney = Object.assign(tempisClientDiliverdMoneyindex, tempisClientDiliverdMoneyindex);
      
-      }
+    //   }
      }
   }
  

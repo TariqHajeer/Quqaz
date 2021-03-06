@@ -135,7 +135,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
 
   }
   ChangeOrderplacedId(element, index) {
-
+this.GetMoenyPlaced()
     this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
     this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced, this.tempordersmonePlaced[index], this.tempisClientDiliverdMoney[index])
     this.orderplacedstate.onWay(element,this.MoenyPlaced)
