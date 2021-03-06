@@ -168,7 +168,6 @@ export class ProfitsOfOrdersComponent implements OnInit {
                 this.showcount = true
             }else
             this.showcount=false
-            console.log(res)
         })
     }
     changeRange() {
