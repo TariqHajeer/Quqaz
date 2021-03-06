@@ -20,11 +20,20 @@
   </e-series-collection>
 </ejs-chart>
 <div class="row">
-<div class="col-3">
-  <label>من تاريخ-الى تاريخ</label>
-  <ejs-daterangepicker placeholder='Select a range'
-   [startDate]='start' [endDate]='end'></ejs-daterangepicker>
-</div>
+  <div class="col-md-2">
+    <label>من تاريخ</label>
+    <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
+      [(ngModel)]="filtering.FromDate" bsDatepicker [container]="'html'"
+      [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }" (ngModelChange)="changeRange()">
+
+  </div>
+  <div class="col-md-2">
+    <label>الى تاريخ</label>
+    <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
+      [(ngModel)]="filtering.ToDate" bsDatepicker [container]="'html'"
+      [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }" (ngModelChange)="changeRange()">
+
+  </div>
 </div>
 <div class="example-container mat-elevation-z8" >
   <table mat-table [dataSource]="dataSource" matSort (onPageSwitch)="switchPage($event)">

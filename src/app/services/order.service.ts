@@ -122,9 +122,9 @@ export class OrderService {
       params = params.append("RowCount", paging.RowCount);
     if (paging.Page != undefined || paging.Page != null)
       params = params.append("Page", paging.Page);
-    if (datefilter != undefined || datefilter != null)
+    if (datefilter.FromDate != undefined || datefilter.FromDate != null)
       params = params.append("FromDate", datefilter.FromDate);
-    if (datefilter != undefined || datefilter != null)
+    if (datefilter.ToDate != undefined || datefilter.ToDate != null)
       params = params.append("ToDate", datefilter.ToDate);
     return this.http.get<any>(this.controler+"GetEarnings", { params: params })
   }
