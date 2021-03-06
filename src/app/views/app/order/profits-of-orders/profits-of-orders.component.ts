@@ -15,6 +15,7 @@ import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { OrderService } from 'src/app/services/order.service';
 import { Router } from '@angular/router';
+import { formatDate } from '@angular/common';
 @Component({
   selector: 'app-profits-of-orders',
   templateUrl: './profits-of-orders.component.html',
@@ -60,8 +61,8 @@ public primaryXAxis: Object = {
     skeletonType: 'Date',
     scrollbarSettings: {
         range: {
-            minimum:new Date(2020,1,1),
-            maximum:new Date(2025,1,1)
+            minimum:this.startAndEnd[0],
+            maximum:this.startAndEnd[1]
         },
         enable: true,
         pointsLength: 1000
@@ -138,7 +139,6 @@ public getRandomInt(min, max) {
     this.filtering = new DateFiter
     this.get()
    // this.allfiltering()
-   console.log(this.startAndEnd)
 
   }
   get() {
@@ -157,11 +157,13 @@ public getRandomInt(min, max) {
   }
   allfiltering(){
       this.orderservice.GetEarning(this.paging,this.filtering).subscribe(res=>{
-        if (res.data.length == 0)
+        if (res.data&&res.data.length == 0)
         this.noDataFound = true
       else this.noDataFound = false
       this.dataSource = new MatTableDataSource(res.data)
-      this.totalCount = res.total      })
+      this.totalCount = res.total     
+    console.log(res)
+    })
   }
   changeRange(){
     this. primaryXAxis = {
@@ -179,9 +181,10 @@ public getRandomInt(min, max) {
              pointsLength: 1000
          }
      }; 
-     this.filtering.FromDate=this.start
-     this.filtering.ToDate=this.end
-     console.log(this.start)
+     console.log(this.startAndEnd)
+     this.filtering.FromDate=formatDate(this.startAndEnd[0], 'yyyy-MM-dd', 'en-US');
+     this.filtering.ToDate=formatDate(this.startAndEnd[1], 'yyyy-MM-dd', 'en-US');
+
      console.log(this.filtering)
      this.allfiltering()
    }

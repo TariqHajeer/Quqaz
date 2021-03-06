@@ -27,12 +27,7 @@ const data: IMenuItem[] = [
       to: `${adminRoot}/order/neworders`,
      
     },
-    {
-      icon: 'iconsminds-box-close',
-      label: ' أرباح الطلبات ',
-      to: `${adminRoot}/order/ProfitsOfOrders`,
-     
-    },
+   
     {
       icon: 'iconsminds-box-close',
       label: 'عرض الطلبات',
@@ -115,7 +110,12 @@ const data: IMenuItem[] = [
     //   label: ' كشف   شحنات العميل في الطريق',
     //   to: `${adminRoot}/reports/clientorderonway`,
     // },
-    
+    {
+      icon: 'iconsminds-box-close',
+      label: ' أرباح الطلبات ',
+      to: `${adminRoot}/order/ProfitsOfOrders`,
+     
+    },
     
   ]
 },
