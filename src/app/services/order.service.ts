@@ -105,8 +105,6 @@ export class OrderService {
     return this.http.get(this.controler + "GetClientPrintNumber")
   }
   SetClientPrintNumber(number) {
-    console.log(number)
-
     return this.http.put(this.controler + "SetClientPrintNumber", number)
   }
   GetAgentPrintNumber() {
