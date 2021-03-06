@@ -157,11 +157,11 @@ export class ProfitsOfOrdersComponent implements OnInit {
     }
     allfiltering() {
         this.orderservice.GetEarning(this.paging, this.filtering).subscribe(res => {
-            if (res.data && res.data.length == 0)
+            if (res && res.length == 0)
                 this.noDataFound = true
             else this.noDataFound = false
-            this.dataSource = new MatTableDataSource(res.data)
-            this.totalCount = res.total
+            this.dataSource = new MatTableDataSource(res)
+            this.totalCount = res.length
             console.log(res)
         })
     }
