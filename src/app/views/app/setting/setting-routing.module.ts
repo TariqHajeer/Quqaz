@@ -15,31 +15,37 @@ const routes: Routes = [
     path:'cities',
     component:CitiesComponent,
     canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowCountry,UserPermission.AddCountry]}
   },
   {
     path:'regions',
     component:RegionComponent,
     canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowRegion,UserPermission.AddRegion]}
   },
-  {
-    path:'departments',
-    component:DepartmentsComponent,
-    canActivate: [AuthGuard],
-  },
+  // {
+  //   path:'departments',
+  //   component:DepartmentsComponent,
+  //   canActivate: [AuthGuard],
+  //   data: { roles: [UserPermission.ShowOrderType,UserPermission.AddOrderType]}
+  // },
   {
     path:'exportTypes',
     component:ExportsTypesComponent,
     canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOutComeType,UserPermission.AddOutComeType]}
   },
   {
     path:'importTypes',
     component:ImportsTypesComponent,
     canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowIncomeType,UserPermission.AddIncomeType]}
   },
    {
     path:'shipmentsTypes',
     component:ShipmentsTypesComponent,
     canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrderType,UserPermission.AddOrderType]}
   },
   {
     path:'coins',

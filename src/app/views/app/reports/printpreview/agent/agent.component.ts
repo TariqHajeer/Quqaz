@@ -31,7 +31,7 @@ export class AgentComponent implements OnInit {
     this.agent =  JSON.parse(localStorage.getItem('printagent'))
     this.orderplaced = this.orders.map(o => o.orderplaced)[0]
     this.sumCost()
-    this.getPrintnumber()
+   // this.getPrintnumber()
   }
 
   sumCost() {
@@ -47,6 +47,8 @@ export class AgentComponent implements OnInit {
     this.orderservice.MakeOrderInWay(this.orders.map(o => o.id)).subscribe(res => {
       this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       //this.orders=[]
+      
+      this.printnumber=res.prinNumber
       this.showPrintbtn=true
       this.setPrintnumber()
 
