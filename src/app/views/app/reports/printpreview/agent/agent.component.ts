@@ -39,10 +39,14 @@ export class AgentComponent implements OnInit {
       })
     return this.count
   }
+  showPrintbtn=false
   afterPrint() {
+    this.setPrintnumber()
     this.orderservice.MakeOrderInWay(this.orders.map(o => o.id)).subscribe(res => {
       this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       //this.orders=[]
+      this.showPrintbtn=true
+
     })
   }
   getPrintnumber(){
