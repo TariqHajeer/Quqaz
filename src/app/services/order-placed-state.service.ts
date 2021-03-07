@@ -10,7 +10,7 @@ export class OrderPlacedStateService {
   //على الطريق
   onWay(element, MoenyPlaced) {
     if (element.order.orderplaced.id == 3) {
-      element.MoenyPlaced = MoenyPlaced.filter(m => m.id == 1)
+      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 1)]
       element.order.monePlaced = element.MoenyPlaced[0]
     }
     return element
@@ -19,7 +19,8 @@ export class OrderPlacedStateService {
   canChangeCost(element, MoenyPlaced, temporderscostindex?) {
     if (element.order.orderplaced.id == 6) {
       element.canEditCount = false
-      element.MoenyPlaced = MoenyPlaced.filter(m => m.id == 2 || m.id == 3)
+      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 2 || m.id == 3)]
+      element.order.monePlaced = element.MoenyPlaced[0]
     } else {
       if (temporderscostindex) {
         element.canEditCount = true
@@ -38,7 +39,7 @@ export class OrderPlacedStateService {
   //مرفوض, مرتجع كلي 
   unacceptable(element, MoenyPlaced) {
     if (element.order.orderplaced.id == 7 || element.order.orderplaced.id == 5) {
-      element.MoenyPlaced = MoenyPlaced.filter(m => m.id == 1)
+      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 1)]
       element.order.monePlaced = element.MoenyPlaced[0]
     }
 
@@ -46,7 +47,8 @@ export class OrderPlacedStateService {
   }
   isClientDiliverdMoney(element, MoenyPlaced) {
     if (element.order.isClientDiliverdMoney == true && element.order.orderplaced.id == 4) {
-      element.MoenyPlaced = MoenyPlaced.filter(m => m.id == 2 || m.id == 4)
+      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 2 || m.id == 4)]
+      element.order.monePlaced = element.MoenyPlaced[0]
       // element.order.monePlaced = element.MoenyPlaced[0]
       //element.order.orderplaced = element.OrderPlaced[1]
     }
@@ -54,7 +56,7 @@ export class OrderPlacedStateService {
   //تم التسليم
   sentDeliveredHanded(element, MoenyPlaced, tempordersmonePlacedindex?, tempisClientDiliverdMoneyindex?) {
     if (element.order.orderplaced.id == 4) {
-      element.MoenyPlaced = MoenyPlaced.filter(m => m.id == 2 || m.id == 3)
+      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 2 || m.id == 3)]
       element.order.monePlaced = element.MoenyPlaced[0]
       //element.order.isClientDiliverdMoney = true
       // }else{

@@ -61,6 +61,8 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.paging = new Paging
     this.filtering = new OrderFilter
     this.dataSource = new MatTableDataSource([])
+    this.getorder = new GetOrder
+
   }
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
@@ -95,22 +97,24 @@ export class ReceiptShipmentAgentComponent implements OnInit {
         this.findorder = res
         console.log(res)
         if (this.findorder) {
-          if (this.getorders.filter(o => o.order == this.findorder).length > 0) {
+          if (this.getorders.filter(o => o.order.code == this.findorder.code).length > 0) {
             this.notifications.create("error", "الشحنة مضافة مسبقا", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
             return
           }
-          this.getorder.order = this.findorder
-          this.getorder.MoenyPlaced = this.MoenyPlaced
-          this.getorder.OrderPlaced = this.orderPlace
+          this.getorder.order = {...this.findorder}
+          this.getorder.MoenyPlaced = [...this.MoenyPlaced]
+          this.getorder.OrderPlaced = [...this.orderPlace]
           this.getorder.canEditCount = true
           this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced)
           this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced)
           this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced)
           this.orderplacedstate.unacceptable(this.getorder, this.MoenyPlaced)
           this.orderplacedstate.isClientDiliverdMoney(this.getorder, this.MoenyPlaced)
-          if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2)
-            this.getorder.order.orderplaced = this.getorder.OrderPlaced[0]
-          this.getorders.push(this.getorder)
+          if (this.getorder.order.orderplaced.id == 1 ||this.getorder.order.orderplaced.id == 2) {
+            this.getorder.order.orderplaced = this.getorder.OrderPlaced.find(o=>o.id==3)
+          }
+         
+          this.getorders.push({...this.getorder})
           this.sumCost()
           this.showcount = true
           this.dataSource = new MatTableDataSource(this.getorders)
@@ -133,6 +137,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
 
   }
   ChangeOrderplacedId(element, index) {
+  console.log( this.dataSource.data) 
     this.GetMoenyPlaced()
     this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
     this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced, this.tempordersmonePlaced[index], this.tempisClientDiliverdMoney[index])
@@ -140,12 +145,12 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.orderplacedstate.unacceptable(element, this.MoenyPlaced)
     this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
   }
-  
+
   changeCost(element, index) {
     if (this.orderplacedstate.rangeCost(element, this.temporderscost[index])) {
-     element.messageCost=""
-    }else
-    element.messageCost=" الكلفة لايمكن أن تتجاوز "+this.temporderscost[index]
+      element.messageCost = ""
+    } else
+      element.messageCost = " الكلفة لايمكن أن تتجاوز " + this.temporderscost[index]
   }
   switchPage(event: PageEvent) {
     this.paging.allItemsLength = event.length

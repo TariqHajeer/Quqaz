@@ -12,6 +12,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { ClientService } from '../../client/client.service';
 import { Client } from '../../client/client.model';
+import { OrderPlacedStateService } from 'src/app/services/order-placed-state.service';
 @Component({
   selector: 'app-client-order',
   templateUrl: './client-order.component.html',
@@ -19,8 +20,8 @@ import { Client } from '../../client/client.model';
 })
 export class ClientOrderComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'code', 'cost', 'country', 'region'
-    , 'orderplaced'];
+  displayedColumns: string[] = ['select', 'code',  'country', 'region'
+    , 'cost','oldCost','isClientDiliverdMoney','orderplaced','monePlaced','edit'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
 
@@ -65,7 +66,8 @@ export class ClientOrderComponent implements OnInit {
     private orderservice: OrderService,
     public clientService: ClientService,
     private notifications: NotificationsService,
-    public route: Router
+    public route: Router,
+    public orderplacedstate: OrderPlacedStateService
   ) { }
   ClientId
   OrderplacedId
@@ -74,6 +76,7 @@ export class ClientOrderComponent implements OnInit {
   paging: Paging
   filtering: OrderFilter
   noDataFound: boolean = false
+  temporderscost: any[] = []
 
   @Input() totalCount: number;
 
@@ -98,7 +101,7 @@ export class ClientOrderComponent implements OnInit {
   }
   ChangeClientIdOrOrderplacedId() {
     if (this.ClientId != null) {
-      this.filtering.OrderplacedId =2
+      this.filtering.OrderplacedId =6
       this.filtering.ClientId=this.ClientId
       this.allFilter();
     }
@@ -116,6 +119,8 @@ export class ClientOrderComponent implements OnInit {
         if (response.data.length == 0)
           this.noDataFound = true
         else this.noDataFound = false
+        this.temporderscost = Object.assign({}, response.data .map(o => o.cost));
+
       this.dataSource = new MatTableDataSource(response.data)
       //this.dataSource.data = this.dataSource.data.filter(d => d.agent.id == this.ClientId)
       this.totalCount = response.total
@@ -124,12 +129,15 @@ export class ClientOrderComponent implements OnInit {
 
       });
   }
+ 
   afterPrint() {
-    this.orderservice.MakeOrderInWay(this.orders.map(o=>o.id)).subscribe(res=>{
-      console.log('true')
-      this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      this.orders=[]
-    })
+    // this.orderservice.MakeOrderInWay(this.orders.map(o=>o.id)).subscribe(res=>{
+    //   console.log('true')
+    //   this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    //   this.orders=[]
+    // })
   }                                                                              
+  saveEdit(){
 
+  }
 }

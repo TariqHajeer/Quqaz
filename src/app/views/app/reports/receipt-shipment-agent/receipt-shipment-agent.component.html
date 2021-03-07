@@ -16,7 +16,7 @@
 
       </div>
       <div class="col-md-3" style="padding-top: 25px;">
-        <button (click)="addOrder()"  class="btn btn-primary"> اضافة شحنة</button>
+        <button (click)="addOrder()"  class="btn btn-primary"> عرض شحنة</button>
 
       </div>
 
@@ -71,7 +71,7 @@
       <td mat-cell *matCellDef="let element;index as i">
         <ng-select  appendTo="body" [(ngModel)]="element.order.orderplaced.id" [ngModelOptions]="{standalone: true}" [clearable]="false"
         id="i*2" name="Orderplaced" (change)="ChangeOrderplacedId(element,i)" style="width: 120px; overflow: visible;">
-          <ng-option *ngFor="let order of element.OrderPlaced" [value]="order.id">{{order.name}}</ng-option>
+          <ng-option *ngFor="let order of element.OrderPlaced " [value]="order.id">{{order.name}}</ng-option>
         </ng-select>
       </td>
     </ng-container>

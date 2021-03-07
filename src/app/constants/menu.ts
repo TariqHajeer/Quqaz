@@ -89,6 +89,11 @@ const data: IMenuItem[] = [
         label: 'العميل',
         to: `${adminRoot}/reports/Shipmentonway`,
         subs: [
+          {
+            icon: 'simple-icon-layers',
+            label: ' كشف   شحنات العميل في المخزن',
+            to: `${adminRoot}/reports/clientorder`,
+          },
           // {
           //   icon: 'simple-icon-layers',
           //   label: ' كشف   شحنات  داخل الشركة',
@@ -101,16 +106,8 @@ const data: IMenuItem[] = [
           },
         ]
       },
-      // {
-      //   icon: 'simple-icon-layers',
-      //   label: ' كشف   شحنات العميل في المخزن',
-      //   to: `${adminRoot}/reports/clientorder`,
-      // },
-      // {
-      //   icon: 'simple-icon-layers',
-      //   label: ' كشف   شحنات العميل في الطريق',
-      //   to: `${adminRoot}/reports/clientorderonway`,
-      // },
+
+    
       {
         icon: 'iconsminds-box-close',
         label: ' أرباح الطلبات ',
