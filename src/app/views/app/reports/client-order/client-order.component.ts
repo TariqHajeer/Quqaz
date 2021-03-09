@@ -21,7 +21,7 @@ import { OrderPlacedStateService } from 'src/app/services/order-placed-state.ser
 export class ClientOrderComponent implements OnInit {
 
   displayedColumns: string[] = ['select', 'code',  'country', 'region'
-    , 'cost','oldCost','isClientDiliverdMoney','orderplaced','monePlaced'];
+    , 'cost','oldCost','isClientDiliverdMoney','orderplaced','monePlaced','edit'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
 
@@ -82,18 +82,10 @@ export class ClientOrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getClients()
-    //this.GetorderPlace()
     this.paging = new Paging
     this.filtering = new OrderFilter
   }
 
-  // GetorderPlace() {
-  //   this.orderservice.orderPlace().subscribe(res => {
-  //     this.orderPlace = res
-  //     this.orderPlace = this.orderPlace.filter(o => o.id == 3 || o.id == 2)
-
-  //   })
-  // }
   getClients() {
     this.clientService.getClients().subscribe(res => {
       this.Clients = res
@@ -101,8 +93,6 @@ export class ClientOrderComponent implements OnInit {
   }
   ChangeClientIdOrOrderplacedId() {
     if (this.ClientId != null) {
-      this.filtering.OrderplacedId =6
-      this.filtering.ClientId=this.ClientId
       this.allFilter();
     }
 
@@ -124,30 +114,24 @@ export class ClientOrderComponent implements OnInit {
    
   }
   allFilter() {
-    this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
+    this.orderservice.ShortageOfCash(this.ClientId).subscribe(response => {
+      console.log(response)
       if (response)
-        if (response.data.length == 0)
+        if (response.length == 0)
           this.noDataFound = true
         else this.noDataFound = false
-        this.temporderscost = Object.assign({}, response.data .map(o => o.cost));
-console.log(response)
-      this.dataSource = new MatTableDataSource(response.data)
-      //this.dataSource.data = this.dataSource.data.filter(d => d.agent.id == this.ClientId)
-      this.totalCount = response.total
+        this.temporderscost = Object.assign({}, response .map(o => o.cost));
+      this.dataSource = new MatTableDataSource(response)
+      this.totalCount = response.length
     },
       err => {
 
       });
   }
- 
-  afterPrint() {
-    // this.orderservice.MakeOrderInWay(this.orders.map(o=>o.id)).subscribe(res=>{
-    //   console.log('true')
-    //   this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-    //   this.orders=[]
-    // })
-  }                                                                              
+                                                                              
   saveEdit(){
-
+    this.orderservice.ReiveMoneyFromClient(this.ids).subscribe(res=>{
+      this.allFilter()
+    })
   }
 }

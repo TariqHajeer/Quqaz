@@ -96,15 +96,15 @@
       <td mat-cell *matCellDef="let element" style="padding:10px;">
         {{element.monePlaced!=null?element.monePlaced.name:null}}</td>
     </ng-container>
-    <!--
+   
      <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        <button (click)="saveEdit()" class="btn btn-primary"> حفظ</button>
+        <button (click)="saveEdit()" class="btn btn-primary"> تسديد المبلغ</button>
       </th>
       <td mat-cell *matCellDef="let element">
       </td>
     </ng-container>
-   -->
+ 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
     </tr>

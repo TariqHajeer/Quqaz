@@ -101,7 +101,7 @@ export class OrderService {
     return this.http.put<any>(this.controler + "DeleiverMoneyForClient", ids)
 
   }
- 
+
   SetPrintNumber(number) {
     return this.http.post<any>(this.controler + "SetPrintNumber", number)
   }
@@ -122,6 +122,16 @@ export class OrderService {
   }
   ShipmentsNotReimbursedToTheClient(clientid) {
     return this.http.get<any>(this.controler + "ShipmentsNotReimbursedToTheClient/" + clientid)
+  }
+  ShortageOfCash(clientId) {
+    let params = new HttpParams();
+    params = params.append("clientId", clientId);
+    return this.http.get<any>(this.controler + "ShortageOfCash" , { params: params })
+  }
+  ReiveMoneyFromClient(ids) {
+    let params = new HttpParams();
+    params = params.append("ids", ids);
+    return this.http.get<any>(this.controler + "ReiveMoneyFromClient", { params: params })
   }
 }
 
