@@ -82,7 +82,12 @@ const data: IMenuItem[] = [
             label: 'كشف شحنات   في الطريق',
             to: `${adminRoot}/reports/Shipmentonway`,
           },
-
+          {
+            icon: 'simple-icon-layers',
+            label: 'شحنات حسب رقم الطباعة ',
+            to: `${adminRoot}/reports/printsetprintnumberpreview`,
+    
+          },
         ]
       },
       {//client
@@ -105,6 +110,12 @@ const data: IMenuItem[] = [
             label: 'تسديد العميل',
             to: `${adminRoot}/reports/Shipmentsnotbeendelivered`,
           },
+          {
+            icon: 'simple-icon-layers',
+            label: 'شحنات حسب رقم الطباعة ',
+            to: `${adminRoot}/reports/printsetprintnumberpreview`,
+    
+          },
         ]
       },
       
@@ -115,12 +126,7 @@ const data: IMenuItem[] = [
         to: `${adminRoot}/order/ProfitsOfOrders`,
 
       },
-      {
-        icon: 'simple-icon-layers',
-        label: 'شحنات حسب رقم الطباعة ',
-        to: `${adminRoot}/reports/printsetprintnumberpreview`,
-
-      },
+      
     ]
   },
   //clients  

@@ -131,5 +131,15 @@ export class OrderService {
   ReiveMoneyFromClient(ids) {
     return this.http.put<any>(this.controler + "ReiveMoneyFromClient", ids)
   }
+  GetOrderByAgnetPrintNumber(printNumber){
+    let params = new HttpParams();
+    params = params.append("printNumber", printNumber);
+    return this.http.get<any>(this.controler + "GetOrderByAgnetPrintNumber" , { params: params })
+   }
+   GetOrderByClientPrintNumber(printnumber){
+    let params = new HttpParams();
+    params = params.append("printNumber", printnumber);
+    return this.http.get<any>(this.controler + "GetOrderByClientPrintNumber" , { params: params })
+   }
 }
 
