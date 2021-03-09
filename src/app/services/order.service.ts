@@ -129,9 +129,7 @@ export class OrderService {
     return this.http.get<any>(this.controler + "ShortageOfCash" , { params: params })
   }
   ReiveMoneyFromClient(ids) {
-    let params = new HttpParams();
-    params = params.append("ids", ids);
-    return this.http.get<any>(this.controler + "ReiveMoneyFromClient", { params: params })
+    return this.http.put<any>(this.controler + "ReiveMoneyFromClient", ids)
   }
 }
 
