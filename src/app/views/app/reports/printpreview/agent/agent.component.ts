@@ -54,17 +54,6 @@ export class AgentComponent implements OnInit {
 
     })
   }
-  getPrintnumber(){
-    this.orderservice.GetAgentPrintNumber().subscribe(res=>{
-      this.printnumber=res
-    })
-  }
-  setPrintnumber() {
-    this.PrintNumberOrder.PrintNumber = this.printnumber
-    this.PrintNumberOrder.OrderId=this.orders.map(o => o.id)
-    this.orderservice.SetClientPrintNumber(this.PrintNumberOrder).subscribe(res => {
-
-    })
-  }
+ 
   
 }
