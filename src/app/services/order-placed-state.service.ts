@@ -10,6 +10,7 @@ export class OrderPlacedStateService {
   //على الطريق
   onWay(element, MoenyPlaced) {
     if (element.order.orderplaced.id == 3) {
+      element.messageCost = ""
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 1)]
       element.order.monePlaced = element.MoenyPlaced[0]
     }
@@ -41,6 +42,7 @@ export class OrderPlacedStateService {
     if (element.order.orderplaced.id == 7 || element.order.orderplaced.id == 5) {
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 1)]
       element.order.monePlaced = element.MoenyPlaced[0]
+      element.messageCost = ""
     }
 
     return element
@@ -49,6 +51,7 @@ export class OrderPlacedStateService {
     if (element.order.isClientDiliverdMoney == true && element.order.orderplaced.id == 4) {
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 2 || m.id == 4)]
       element.order.monePlaced = element.MoenyPlaced[0]
+      element.messageCost = ""
       // element.order.monePlaced = element.MoenyPlaced[0]
       //element.order.orderplaced = element.OrderPlaced[1]
     }
@@ -58,6 +61,7 @@ export class OrderPlacedStateService {
     if (element.order.orderplaced.id == 4) {
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 2 || m.id == 3)]
       element.order.monePlaced = element.MoenyPlaced[0]
+      element.messageCost = ""
       //element.order.isClientDiliverdMoney = true
       // }else{
       //   if(tempordersmonePlacedindex&&tempisClientDiliverdMoneyindex){
