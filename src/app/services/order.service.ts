@@ -101,17 +101,9 @@ export class OrderService {
     return this.http.put<any>(this.controler + "DeleiverMoneyForClient", ids)
 
   }
-  GetClientPrintNumber() {
-    return this.http.get(this.controler + "GetClientPrintNumber")
-  }
-  SetClientPrintNumber(number) {
-    return this.http.put(this.controler + "SetClientPrintNumber", number)
-  }
-  GetAgentPrintNumber() {
-    return this.http.get(this.controler + "GetAgentPrintNumber")
-  }
-  SetAgentPrintNumber(number) {
-    return this.http.put(this.controler + "SetAgentPrintNumber", number)
+ 
+  SetPrintNumber(number) {
+    return this.http.post<any>(this.controler + "SetPrintNumber", number)
   }
   GetOrderByAgent(agentId, orderCode) {
     return this.http.get(this.controler + "GetOrderByAgent/" + agentId + "/" + orderCode)

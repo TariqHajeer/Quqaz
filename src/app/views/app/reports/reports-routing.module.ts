@@ -5,8 +5,10 @@ import { ClientInsideCompanyComponent } from './client-inside-company/client-ins
 import { ClientOrderComponent } from './client-order/client-order.component';
 import { ReceiptAgentComponent } from './print/receipt-agent/receipt-agent.component';
 import { ReceiptClientComponent } from './print/receipt-client/receipt-client.component';
+import { ReceiptSetPrintNumberComponent } from './print/receipt-set-print-number/receipt-set-print-number.component';
 import { AgentComponent } from './printpreview/agent/agent.component';
 import { ClientComponent } from './printpreview/client/client.component';
+import { SetPrintNumberComponent } from './printpreview/set-print-number/set-print-number.component';
 import { ReceiptShipmentAgentComponent } from './receipt-shipment-agent/receipt-shipment-agent.component';
 import { ShipmentInStockComponent } from './shipment-in-stock/shipment-in-stock.component';
 import { ShipmentsNotBeenDeliveredComponent } from './shipments-not-been-delivered/shipments-not-been-delivered.component';
@@ -48,13 +50,14 @@ const routes: Routes = [
     component: ClientComponent,canActivate: [AuthGuard],
   },
   {
-    path:'printagent',
-    component: ReceiptAgentComponent,canActivate: [AuthGuard],
+    path:'printsetprintnumberpreview',
+    component: SetPrintNumberComponent,canActivate: [AuthGuard],
   },
   {
-    path:'printclient',
-    component: ReceiptClientComponent,canActivate: [AuthGuard],
+    path:'printnumber',
+    component: ReceiptSetPrintNumberComponent,canActivate: [AuthGuard],
   },
+ 
 ];
 
 @NgModule({

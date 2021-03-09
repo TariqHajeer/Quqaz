@@ -17,11 +17,6 @@ export class StartComponent implements OnInit {
 
   }
   public data: Object[]=[]
-  public data1: Object[]
-  public data2: Object[]
-  public data3: Object[]
-  public data4: Object[]
-  public data5: Object[]
   //Initializing Primary X Axis
   public primaryXAxis: Object = {
     majorGridLines: { width: 0 },
@@ -68,14 +63,7 @@ export class StartComponent implements OnInit {
     this.MainStatics = new MainStatics()
     this.GetMainStatics()
     console.log(this.MainStatics.totalAgent)
-    this.data = [
-        { x: ' المندوبين', y: this.MainStatics.totalAgent },
-        { x: ' العملاء', y1: this.MainStatics.totalClient },
-        { x: 'شحنات تم توصيلها', y2: this.MainStatics.totalOrderDiliverd },
-        { x: 'شحنات في المخزن', y3: this.MainStatics.totalOrderInSotre },
-        { x: 'شحنات خارج المخزن', y4: this.MainStatics.totalOrderOutStore },
-        { x: 'الشحنات', y5: this.MainStatics.totlaOrder },
-      ];
+    
       // this.datalabel = { visible: true };
       // this.piedata = [
       //             { 'x': 'Chrome', y: 37 }, { 'x': 'UC Browser', y: 17 },
@@ -87,7 +75,14 @@ export class StartComponent implements OnInit {
   GetMainStatics() {
     this.StatisticsService.MainStatics().subscribe((res) => {
       this.MainStatics = res
-     
+      this.data = [
+        { x: ' المندوبين', y: this.MainStatics.totalAgent },
+        { x: ' العملاء', y1: this.MainStatics.totalClient },
+        { x: 'شحنات تم توصيلها', y2: this.MainStatics.totalOrderDiliverd },
+        { x: 'شحنات في المخزن', y3: this.MainStatics.totalOrderInSotre },
+        { x: 'شحنات خارج المخزن', y4: this.MainStatics.totalOrderOutStore },
+        { x: 'الشحنات', y5: this.MainStatics.totlaOrder },
+      ];
     })
   }
 

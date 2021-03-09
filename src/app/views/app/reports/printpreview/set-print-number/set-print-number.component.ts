@@ -6,11 +6,11 @@ import { PrintNumberOrder } from 'src/app/Models/order/PrintNumberOrder.model';
 import { OrderService } from 'src/app/services/order.service';
 
 @Component({
-  selector: 'app-client',
-  templateUrl: './client.component.html',
-  styleUrls: ['./client.component.scss']
+  selector: 'app-set-print-number',
+  templateUrl: './set-print-number.component.html',
+  styleUrls: ['./set-print-number.component.scss']
 })
-export class ClientComponent implements OnInit {
+export class SetPrintNumberComponent implements OnInit {
 
   constructor(private orderservice: OrderService,
     private notifications: NotificationsService,
@@ -25,11 +25,7 @@ export class ClientComponent implements OnInit {
   printnumber
   PrintNumberOrder: PrintNumberOrder
   ngOnInit(): void {
-    this.PrintNumberOrder = new PrintNumberOrder
-    this.orders = JSON.parse(localStorage.getItem('printordersclient'))
-    this.client = JSON.parse(localStorage.getItem('printclient'))
-    this.sumCost()
-  //  this.getPrintnumber()
+  
   }
 
   sumCost() {
@@ -44,27 +40,15 @@ export class ClientComponent implements OnInit {
   showPrintbtn = false
 
   changeDeleiverMoneyForClient() {
-    this.orderservice.DeleiverMoneyForClient(this.orders.map(o => o.id)).subscribe(res => {
-      this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    this.orderservice.SetPrintNumber(this.printnumber).subscribe(res => {
       this.showPrintbtn = true
-      this.printnumber=res.printNumber
-     // this.setPrintnumber()
+      this.orders=res
+     this.sumCost()
     }, err => {
       this.showPrintbtn = true
 
     })
 
   }
-  getPrintnumber() {
-    this.orderservice.GetClientPrintNumber().subscribe(res => {
-      this.printnumber = res
-    })
-  }
-  setPrintnumber() {
-    this.PrintNumberOrder.PrintNumber = this.printnumber
-    this.PrintNumberOrder.OrderId=this.orders.map(o => o.id)
-    this.orderservice.SetClientPrintNumber(this.PrintNumberOrder).subscribe(res => {
-
-    })
-  }
+ 
 }

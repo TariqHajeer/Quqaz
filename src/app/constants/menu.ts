@@ -106,7 +106,7 @@ const data: IMenuItem[] = [
           },
         ]
       },
-
+      
     
       {
         icon: 'simple-icon-layers',
@@ -114,7 +114,12 @@ const data: IMenuItem[] = [
         to: `${adminRoot}/order/ProfitsOfOrders`,
 
       },
+      {
+        icon: 'simple-icon-layers',
+        label: 'شحنات حسب رقم الطباعة ',
+        to: `${adminRoot}/reports/printsetprintnumberpreview`,
 
+      },
     ]
   },
   //clients  
