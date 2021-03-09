@@ -1,107 +1,201 @@
-
 <div class="row">
   <div class="col-12">
     <!-- <app-heading></app-heading>
-      <app-breadcrumb></app-breadcrumb> -->
-    <div class="separator mb-5"></div>
+      <app-breadcrumb></app-breadcrumb> 
+    
+    `<ejs-accumulationchart id="chart-container"  >
+  <e-accumulation-series-collection>
+      <e-accumulation-series [dataSource]='piedata' xName='x' yName='y' [dataLabel]='datalabel' radius="70%"></e-accumulation-series>
+  </e-accumulation-series-collection>
+</ejs-accumulationchart>
+    <div class="separator mb-5"></div>-->
   </div>
 </div>
 <div class="row">
   <div class="col-12 mb-4 text-center">
-    <h1></h1>
+    <h1>Welcom!</h1>
 
   </div>
 </div>
 
-<ejs-chart style='display:block;' [chartArea]='chartArea' [width]='width' id='chartcontainer' [primaryXAxis]='primaryXAxis'
-(load)='load($event)' [primaryYAxis]='primaryYAxis' [title]='title' [tooltip]='tooltip'>
-            <e-series-collection>
-                <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y' name='المندوبين' width='3'> </e-series>
-                <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y1' name='العملاء' width='2'> </e-series>
-                <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y2' name='شحنات تم توصيلها' width='4'> </e-series>
-                <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y3' name='شحنات في المخزن' width='4'> </e-series>
-                <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y4' name='شحنات خارج المخزن' width='4'> </e-series>
-                <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y5' name='الشحنات' width='2'> </e-series>
-            
-              </e-series-collection>
-        </ejs-chart>
-
 <div class="row">
-  <div class="col-12 mb-4 text-center">
+  <div class="col-12 mb-4 ">
     <div class="row my-4">
       <div class="col-md-4">
         <div class="card shadow mb-4">
           <div class="card-body">
-            <div class="row align-items-center">
-              <div class="col">
-                <svg xmlns="http://www.w3.org/2000/svg"  width="16" height="16" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
-                  <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
-               
+            <div class="row">
+
+              <div class="col-6">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
+                  <path
+                    d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z" />
+
                 </svg>&nbsp;
                 <small class="text-muted mb-1">عدد العملاء</small>
-                <h3 class="card-title mb-0" style="color: rgb(7, 7, 94);font-size: 18px;">{{MainStatics.totalClient}}</h3>
-                <svg xmlns="http://www.w3.org/2000/svg" style="color: rgb(53, 124, 210);" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
-                  <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
-               
+
+              </div>
+              <div class="col-1"></div>
+              <div class="col-4">
+                <strong>+{{MainStatics.totalClient}}
+                </strong>
+                 <mat-progress-bar class="example-margin" [color]="color" [mode]="mode"
+                  [value]="MainStatics.totalClient" [bufferValue]="70">
+                </mat-progress-bar>
+              </div>
+            </div> <!-- /. row -->
+            <hr width="100%" style="color: grey;">
+            <div class="row">
+
+              <div class="col-6">
+                <svg xmlns="http://www.w3.org/2000/svg" style="color: rgb(53, 124, 210);" width="16" height="16"
+                  fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
+                  <path
+                    d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z" />
+
                 </svg>&nbsp;
                 <small class="text-muted mb-1">عدد الطلبيات تم توصيلها</small>
-                <h3 class="card-title mb-0" style="color: rgb(7, 7, 94);font-size: 18px;">{{MainStatics.totalOrderDiliverd}}</h3>
+
               </div>
-             
+              <div class="col-1"></div>
+              <div class="col-4">
+                <strong>+{{MainStatics.totalOrderDiliverd}}</strong>
+                 <mat-progress-bar class="example-margin" [color]="color" [mode]="mode"
+                  [value]="MainStatics.totalOrderDiliverd" [bufferValue]="70">
+                </mat-progress-bar>
+              </div>
             </div> <!-- /. row -->
+
+
+
+
           </div> <!-- /. card-body -->
         </div> <!-- /. card -->
       </div> <!-- /. col -->
       <div class="col-md-4">
         <div class="card shadow mb-4">
           <div class="card-body">
-            <div class="row align-items-center">
-              <div class="col">
-                <svg xmlns="http://www.w3.org/2000/svg" style="color: rgb(0, 189, 174);" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
-                  <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
-               
+            <div class="row">
+
+              <div class="col-6">
+                <svg xmlns="http://www.w3.org/2000/svg" style="color: rgb(0, 189, 174);" width="16" height="16"
+                  fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
+                  <path
+                    d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z" />
+
                 </svg>&nbsp;
                 <small class="text-muted mb-1">عدد المندوبين </small>
-                <h3 class="card-title mb-0" style="color: rgb(7, 7, 94);font-size: 18px;">{{MainStatics.totalAgent}}</h3>
-              <!--  <ejs-sparkline id='container' width='50px' height='40px' type='Column' valueType= 'Numeric'[dataSource]="data" xName="xval" yName="yval">
-                </ejs-sparkline>-->
-                <svg xmlns="http://www.w3.org/2000/svg" style="color: rgb(229, 101, 144);;" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
-                  <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
-               
+              </div>
+              <div class="col-1"></div>
+              <div class="col-4">
+                <strong>+{{MainStatics.totalAgent}}
+                </strong>
+                 <mat-progress-bar class="example-margin" [color]="color" [mode]="mode"
+                  [value]="MainStatics.totalAgent" [bufferValue]="70">
+                </mat-progress-bar>
+              </div>
+            </div> <!-- /. row -->
+            <hr width="100%" style="color: grey;">
+            <div class="row">
+
+              <div class="col-6">
+                <svg xmlns="http://www.w3.org/2000/svg" style="color: rgb(229, 101, 144);;" width="16" height="16"
+                  fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
+                  <path
+                    d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z" />
+
                 </svg>&nbsp;
                 <small class="text-muted mb-1">عدد الطلبيات في المخزن </small>
-                <h3 class="card-title mb-0" style="color: rgb(7, 7, 94);font-size: 18px;">{{MainStatics.totalOrderInSotre}}</h3>
+
               </div>
-             
+              <div class="col-1"></div>
+              <div class="col-4">
+                <strong>+{{MainStatics.totalOrderInSotre}}</strong>
+                 <mat-progress-bar class="example-margin" [color]="color" [mode]="mode"
+                  [value]="MainStatics.totalOrderInSotre" [bufferValue]="70">
+                </mat-progress-bar>
+              </div>
             </div> <!-- /. row -->
+
+
+
+
           </div> <!-- /. card-body -->
         </div> <!-- /. card -->
       </div> <!-- /. col -->
       <div class="col-md-4">
         <div class="card shadow mb-4">
           <div class="card-body">
-            <div class="row align-items-center">
-              <div class="col">
-                <svg xmlns="http://www.w3.org/2000/svg" style="color: rgb(112, 173, 71);" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
-                  <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
-               
+            <div class="row">
+
+              <div class="col-6">
+                <svg xmlns="http://www.w3.org/2000/svg" style="color: rgb(112, 173, 71);" width="16" height="16"
+                  fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
+                  <path
+                    d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z" />
+
                 </svg>&nbsp;
                 <small class="text-muted mb-1">عدد الطلبيات</small>
-                <h3 class="card-title mb-0" style="color: rgb(7, 7, 94);font-size: 18px;">{{MainStatics.totlaOrder}}</h3>
-                <svg xmlns="http://www.w3.org/2000/svg" style="color: rgb(248, 184, 131);" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
-                  <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
-               
+
+              </div>
+              <div class="col-1"></div>
+              <div class="col-4">
+                <strong>+{{MainStatics.totlaOrder}}
+                </strong>
+                 <mat-progress-bar class="example-margin" [color]="color" [mode]="mode"
+                  [value]="MainStatics.totlaOrder" [bufferValue]="70">
+                </mat-progress-bar>
+              </div>
+            </div> <!-- /. row -->
+            <hr width="100%" style="color: grey;">
+            <div class="row">
+
+              <div class="col-6">
+                <svg xmlns="http://www.w3.org/2000/svg" style="color: rgb(248, 184, 131);" width="16" height="16"
+                  fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
+                  <path
+                    d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z" />
+
                 </svg>&nbsp;
                 <small class="text-muted mb-1">عدد الطلبيات خارج المخزن</small>
-               <b> <h3 class="card-title mb-0" style="color: rgb(7, 7, 94);font-size: 18px;">{{MainStatics.totalOrderOutStore}}</h3>
-               </b>
+
               </div>
-             
+              <div class="col-1"></div>
+              <div class="col-4">
+                <strong>+{{MainStatics.totalOrderOutStore}}
+
+                </strong>
+
+                <mat-progress-bar class="example-margin" [color]="color" [mode]="mode"
+                  [value]="MainStatics.totalOrderOutStore" [bufferValue]="70">
+                </mat-progress-bar>
+              </div>
             </div> <!-- /. row -->
+
+
+
+
           </div> <!-- /. card-body -->
         </div> <!-- /. card -->
       </div> <!-- /. col -->
-    </div> 
+    </div>
 
   </div>
 </div>
+
+<ejs-chart style='display:block;' [chartArea]='chartArea' [width]='width' id='chartcontainer'
+  [primaryXAxis]='primaryXAxis' (load)='load($event)' [primaryYAxis]='primaryYAxis' [title]='title' [tooltip]='tooltip'>
+  <e-series-collection>
+    <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y' name='المندوبين' width='3'> </e-series>
+    <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y1' name='العملاء' width='2'> </e-series>
+    <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y2' name='شحنات تم توصيلها' width='4'>
+    </e-series>
+    <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y3' name='شحنات في المخزن' width='4'>
+    </e-series>
+    <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y4' name='شحنات خارج المخزن' width='4'>
+    </e-series>
+    <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y5' name='الشحنات' width='2'> </e-series>
+
+  </e-series-collection>
+</ejs-chart>

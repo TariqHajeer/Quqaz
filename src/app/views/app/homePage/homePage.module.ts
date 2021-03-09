@@ -22,7 +22,7 @@ import {
     StepAreaSeriesService, SplineSeriesService,  StripLineService,
     SelectionService, ScatterSeriesService, ZoomService, 
 } from '@syncfusion/ej2-angular-charts';
-
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 @NgModule({
   declarations: [HomePageComponent, StartComponent],
   imports: [
@@ -33,7 +33,7 @@ import {
     FormsModule, ReactiveFormsModule ,DatePickerModule,DateRangePickerModule,
     AccumulationChartModule,
     GridModule,
-    
+    MatProgressBarModule
   ],
   providers: [LineSeriesService, DateTimeService, ColumnSeriesService, DataLabelService, ZoomService, StackingColumnSeriesService, CategoryService,
     StepAreaSeriesService, SplineSeriesService, ChartAnnotationService, LegendService, TooltipService, StripLineService,

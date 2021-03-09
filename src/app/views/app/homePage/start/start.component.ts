@@ -3,6 +3,8 @@ import { AuthService } from 'src/app/shared/auth.service';
 import { StatisticsService } from 'src/app/services/statistics.service';
 import { MainStatics } from 'src/app/Models/main-statics.model';
 import { ChartTheme, ILoadedEventArgs } from '@syncfusion/ej2-angular-charts';
+import { ThemePalette } from '@angular/material/core';
+import { ProgressBarMode } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-start',
@@ -65,6 +67,7 @@ export class StartComponent implements OnInit {
   ngOnInit() {
     this.MainStatics = new MainStatics()
     this.GetMainStatics()
+    console.log(this.MainStatics.totalAgent)
     this.data = [
         { x: ' المندوبين', y: this.MainStatics.totalAgent },
         { x: ' العملاء', y1: this.MainStatics.totalClient },
@@ -73,7 +76,11 @@ export class StartComponent implements OnInit {
         { x: 'شحنات خارج المخزن', y4: this.MainStatics.totalOrderOutStore },
         { x: 'الشحنات', y5: this.MainStatics.totlaOrder },
       ];
-    
+      // this.datalabel = { visible: true };
+      // this.piedata = [
+      //             { 'x': 'Chrome', y: 37 }, { 'x': 'UC Browser', y: 17 },
+      //             { 'x': 'iPhone', y: 19 }, { 'x': 'Others', y: 4 }, { 'x': 'Opera', y: 11 }
+      //         ];
     // this.authenticationService.startTokenTimer()
   }
 
@@ -83,4 +90,12 @@ export class StartComponent implements OnInit {
      
     })
   }
+
+  //دائرة
+
+  // public piedata: Object[];
+  // public datalabel: Object;
+ //progres par mat
+ color: ThemePalette = 'primary';
+ mode: ProgressBarMode = 'determinate';
 }
