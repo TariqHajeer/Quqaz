@@ -31,7 +31,7 @@ export class OrderPlacedStateService {
     }
   }
   rangeCost(element, temporderscostindex):boolean {
-    if (element.order.cost < temporderscostindex) {
+    if (element.order.cost <= temporderscostindex) {
       return true
     }
     else return false

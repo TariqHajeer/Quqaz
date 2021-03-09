@@ -34,6 +34,11 @@ const data: IMenuItem[] = [
         to: `${adminRoot}/order/`,
       },
       {
+        icon: 'iconsminds-box-close',
+        label: 'استلام حالة الشحنة ',
+        to: `${adminRoot}/reports/ReceiptShipmentAgentComponent`,
+      },
+      {
         icon: 'iconsminds-add',
         label: 'إضافة طلب',
         to: `${adminRoot}/order/addorder`,
@@ -53,11 +58,7 @@ const data: IMenuItem[] = [
       //   label: 'طلبات لم يتم سداد مبلغها كاملا',
       //   to: `${adminRoot}/order/OrderNotBeenFullyPaid`,
       // },
-      {
-        icon: 'iconsminds-box-close',
-        label: 'استلام حالة الشحنة ',
-        to: `${adminRoot}/reports/ReceiptShipmentAgentComponent`,
-      },
+      
     ]
   },
   //reports

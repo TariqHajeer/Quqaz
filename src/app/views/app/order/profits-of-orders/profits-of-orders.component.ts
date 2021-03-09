@@ -147,7 +147,7 @@ export class ProfitsOfOrdersComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.orders);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
-        this.displayedColumns = ['code', 'cost', 'oldCost', 'deliveryCost',
+        this.displayedColumns = ['code', 'orderplaced','cost', 'oldCost', 'deliveryCost',
          'agentCost','Earinig'];
     }
     switchPage(event: PageEvent) {
@@ -177,22 +177,12 @@ export class ProfitsOfOrdersComponent implements OnInit {
             });
         })
     }
+    FromDate
+    ToDate
     changeRange() {
-        // this.primaryXAxis = {
-        //     title: 'اليوم',
-        //     valueType: 'DateTime',
-        //     edgeLabelPlacement: 'Shift',
-        //     skeleton: 'yMMM',
-        //     skeletonType: 'Date',
-        //     scrollbarSettings: {
-        //         range: {
-        //             minimum: this.filtering.FromDate,
-        //             maximum: this.filtering.ToDate
-        //         },
-        //         enable: true,
-        //         pointsLength: 1000
-        //     }
-        // };
+        this.filtering.FromDate=this.FromDate
+        this.filtering.ToDate=this.ToDate
+        console.log(this.filtering)
         if (this.filtering.FromDate != undefined || this.filtering.FromDate != null)
             this.filtering.FromDate = formatDate(this.filtering.FromDate, 'yyyy-MM-dd', 'en-US');
         if (this.filtering.ToDate != undefined || this.filtering.ToDate != null)

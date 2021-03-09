@@ -21,11 +21,11 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService, private notifications: NotificationsService, private router: Router) { }
 
   ngOnInit() {
-    this.myDate=new Date
-    this.user=new UserLogin
+    this.myDate = new Date
+    this.user = new UserLogin
   }
   user: UserLogin
-  myDate:Date
+  myDate: Date
   onSubmit() {
     // if (!this.loginForm.valid || this.buttonDisabled) {
     //   return;
@@ -33,29 +33,29 @@ export class LoginComponent implements OnInit {
 
     this.buttonDisabled = true;
     this.buttonState = 'show-spinner';
+    if (this.loginForm.value)
+      this.authService.signIn(this.loginForm.value).subscribe(
+        response => {
 
-    this.authService.signIn(this.loginForm.value).subscribe(
-      response => {
-
-        this.user=response as UserLogin
-        this.user.expiry=new Date().getTime()
-        //this.user.expiry.setMinutes(this.myDate.getMinutes()+1);
-        // this.notifications.create('success', 'تم تسجيل الدخول بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-        //  this.authService.setAuthenticatedUser(response.data[0].user);
-        this.router.navigate(['/app/HomePage']);
-        localStorage.setItem('token',this.user.token)
-        this.authService.setAuthenticatedUser(this.user);
-       // this.authService.setAuthenticatedUser(response);
-      //  this.authService.setPermission(response.privileges);
+          this.user = response as UserLogin
+          this.user.expiry = new Date().getTime()
+          //this.user.expiry.setMinutes(this.myDate.getMinutes()+1);
+          // this.notifications.create('success', 'تم تسجيل الدخول بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+          //  this.authService.setAuthenticatedUser(response.data[0].user);
+          this.router.navigate(['/app/HomePage']);
+          localStorage.setItem('token', this.user.token)
+          this.authService.setAuthenticatedUser(this.user);
+          // this.authService.setAuthenticatedUser(response);
+          //  this.authService.setPermission(response.privileges);
 
 
-      }, error => {
-        this.buttonDisabled = false;
-        this.buttonState = '';
-        this.notifications.create('Error', error.message, NotificationType.Error, { theClass: 'primary', timeOut: 6000, showProgressBar: false });
+        }, error => {
+          this.buttonDisabled = false;
+          this.buttonState = '';
+          this.notifications.create('Error', ' اسم المستخدم او كلمة المرور غير صحيح', NotificationType.Error, { theClass: 'primary', timeOut: 6000, showProgressBar: false });
 
-      }
+        }
 
-    )
+      )
   }
 }
