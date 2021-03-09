@@ -40,7 +40,7 @@ export class SetPrintNumberClientComponent implements OnInit {
   showPrintbtn = false
 
   changeDeleiverMoneyForClient() {
-    this.orderservice.GetOrderByAgnetPrintNumber(this.printnumber).subscribe(res => {
+    this.orderservice.GetOrderByClientPrintNumber(this.printnumber).subscribe(res => {
       this.showPrintbtn = true
       this.orders=res
       this.client=this.orders[0].client
