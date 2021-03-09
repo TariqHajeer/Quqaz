@@ -8,6 +8,7 @@ import { ReceiptClientComponent } from './print/receipt-client/receipt-client.co
 import { ReceiptSetPrintNumberComponent } from './print/receipt-set-print-number/receipt-set-print-number.component';
 import { AgentComponent } from './printpreview/agent/agent.component';
 import { ClientComponent } from './printpreview/client/client.component';
+import { SetPrintNumberClientComponent } from './printpreview/set-print-number-client/set-print-number-client.component';
 import { SetPrintNumberComponent } from './printpreview/set-print-number/set-print-number.component';
 import { ReceiptShipmentAgentComponent } from './receipt-shipment-agent/receipt-shipment-agent.component';
 import { ShipmentInStockComponent } from './shipment-in-stock/shipment-in-stock.component';
@@ -50,8 +51,12 @@ const routes: Routes = [
     component: ClientComponent,canActivate: [AuthGuard],
   },
   {
-    path:'printsetprintnumberpreview',
+    path:'printsetprintnumberagentpreview',
     component: SetPrintNumberComponent,canActivate: [AuthGuard],
+  },
+  {
+    path:'printsetprintnumberclientpreview',
+    component: SetPrintNumberClientComponent,canActivate: [AuthGuard],
   },
   {
     path:'printnumber',

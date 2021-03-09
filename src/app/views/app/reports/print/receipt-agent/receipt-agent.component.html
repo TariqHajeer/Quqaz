@@ -79,7 +79,7 @@
                 </div>
             </h3>
         
-                <div class="table-bordered" style="width: 100px;padding: 5px;text-align: center;"><h3>{{orderplaced!=null||orderplaced!=undefined?orderplaced.name:null}}</h3>  </div> 
+                <div class="table-bordered" style="width: 100px;padding: 5px;text-align: center;" *ngIf="orderplaced!=null||orderplaced!=undefined"><h3>{{orderplaced!=null||orderplaced!=undefined?orderplaced.name:null}}</h3>  </div> 
         </div>
     
         <div class="col-md-3">

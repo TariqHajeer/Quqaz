@@ -20,9 +20,10 @@ import { ClientComponent } from './printpreview/client/client.component';
 import { AgentComponent } from './printpreview/agent/agent.component';
 import { ReceiptSetPrintNumberComponent } from './print/receipt-set-print-number/receipt-set-print-number.component';
 import { SetPrintNumberComponent } from './printpreview/set-print-number/set-print-number.component';
+import { SetPrintNumberClientComponent } from './printpreview/set-print-number-client/set-print-number-client.component';
 
 @NgModule({
-  declarations: [ShipmentInStockComponent, ClientOrderComponent, ShipmentsOnWayComponent, ReceiptAgentComponent, ClientInsideCompanyComponent, ShipmentsNotBeenDeliveredComponent, ReceiptClientComponent, ReceiptShipmentAgentComponent, ClientComponent, AgentComponent, ReceiptSetPrintNumberComponent, SetPrintNumberComponent,],
+  declarations: [ShipmentInStockComponent, ClientOrderComponent, ShipmentsOnWayComponent, ReceiptAgentComponent, ClientInsideCompanyComponent, ShipmentsNotBeenDeliveredComponent, ReceiptClientComponent, ReceiptShipmentAgentComponent, ClientComponent, AgentComponent, ReceiptSetPrintNumberComponent, SetPrintNumberComponent, SetPrintNumberClientComponent,],
   imports: [
     CommonModule,
     ReportsRoutingModule,
