@@ -54,7 +54,7 @@ const data: IMenuItem[] = [
         to: `${adminRoot}/order/OrderNotBeenFullyPaid`,
       },
       {
-        icon: 'simple-icon-layers',
+        icon: 'iconsminds-box-close',
         label: 'استلام حالة الشحنة ',
         to: `${adminRoot}/reports/ReceiptShipmentAgentComponent`,
       },
@@ -91,7 +91,7 @@ const data: IMenuItem[] = [
         subs: [
           {
             icon: 'simple-icon-layers',
-            label: ' كشف   شحنات العميل في المخزن',
+            label: 'شحنات المسدد جزء من مبلغها',
             to: `${adminRoot}/reports/clientorder`,
           },
           // {
@@ -109,7 +109,7 @@ const data: IMenuItem[] = [
 
     
       {
-        icon: 'iconsminds-box-close',
+        icon: 'simple-icon-layers',
         label: ' أرباح الطلبات ',
         to: `${adminRoot}/order/ProfitsOfOrders`,
 

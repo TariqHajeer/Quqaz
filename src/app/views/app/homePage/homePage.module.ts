@@ -12,7 +12,16 @@ import { CategoryService, DateTimeService, ScrollBarService, ColumnSeriesService
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
-
+import { SparklineModule, SparklineTooltipService } from '@syncfusion/ej2-angular-charts';
+import { GridModule } from '@syncfusion/ej2-angular-grids';
+import { PageService } from '@syncfusion/ej2-angular-grids';
+import { AccumulationChartModule } from '@syncfusion/ej2-angular-charts';
+import { PieSeriesService, AccumulationTooltipService, AccumulationDataLabelService } from '@syncfusion/ej2-angular-charts';
+import {
+     DataLabelService,
+    StepAreaSeriesService, SplineSeriesService,  StripLineService,
+    SelectionService, ScatterSeriesService, ZoomService, 
+} from '@syncfusion/ej2-angular-charts';
 
 @NgModule({
   declarations: [HomePageComponent, StartComponent],
@@ -20,10 +29,16 @@ import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
     CommonModule,
     ChartModule,
     HomePageRoutingModule,
-    FormsModule, ReactiveFormsModule ,DatePickerModule,DateRangePickerModule
+    SparklineModule,
+    FormsModule, ReactiveFormsModule ,DatePickerModule,DateRangePickerModule,
+    AccumulationChartModule,
+    GridModule,
+    
   ],
-  providers: [ CategoryService, DateTimeService, ScrollBarService, LineSeriesService, ColumnSeriesService, 
-    ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService, LegendService, TooltipService,]
+  providers: [LineSeriesService, DateTimeService, ColumnSeriesService, DataLabelService, ZoomService, StackingColumnSeriesService, CategoryService,
+    StepAreaSeriesService, SplineSeriesService, ChartAnnotationService, LegendService, TooltipService, StripLineService,
+    PieSeriesService, AccumulationTooltipService, ScrollBarService, AccumulationDataLabelService, SelectionService, ScatterSeriesService
+    , PageService,SparklineTooltipService]
     ,schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomePageModule { }

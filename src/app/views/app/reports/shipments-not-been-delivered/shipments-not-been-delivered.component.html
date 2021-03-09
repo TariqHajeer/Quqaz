@@ -9,7 +9,7 @@
             <ng-option *ngFor="let Client of Clients" [value]="Client.id">{{Client.name}}</ng-option>
           </ng-select>
         </div>
-        <div class="col-md-8" style="margin-right: 80%;">
+        <div class="col-md-8" style="padding-top: 25px;">
           <button (click)="print()" class="btn  btn-primary"> 
             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-printer"
           viewBox="0 0 16 16">
@@ -49,6 +49,13 @@
       <ng-container matColumnDef="cost">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> كلفة الطلب</th>
         <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.cost}}</td>
+      </ng-container>
+      <ng-container matColumnDef="oldCost">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> كلفة الشحنة القديمة</th>
+        <td mat-cell *matCellDef="let element;index as i">
+          {{element.oldCost}}
+        
+        </td> 
       </ng-container>
       <ng-container matColumnDef="country">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> المدينة</th>

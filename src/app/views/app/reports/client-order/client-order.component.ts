@@ -21,7 +21,7 @@ import { OrderPlacedStateService } from 'src/app/services/order-placed-state.ser
 export class ClientOrderComponent implements OnInit {
 
   displayedColumns: string[] = ['select', 'code',  'country', 'region'
-    , 'cost','oldCost','isClientDiliverdMoney','orderplaced','monePlaced','edit'];
+    , 'cost','oldCost','isClientDiliverdMoney','orderplaced','monePlaced'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
 
@@ -113,6 +113,16 @@ export class ClientOrderComponent implements OnInit {
     this.paging.Page = event.pageIndex + 1
     this.allFilter();
   }
+  print() {
+    if ( this.noDataFound == true || this.orders.length==0) {
+      this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      return
+    }
+    localStorage.setItem('printordersclient',JSON.stringify(this.orders))
+    localStorage.setItem('printclient',JSON.stringify(this.Clients.find(c=>c.id==this.ClientId)))
+    this.route.navigate(['app/reports/printclientpreview'])
+   
+  }
   allFilter() {
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
       if (response)
@@ -120,7 +130,7 @@ export class ClientOrderComponent implements OnInit {
           this.noDataFound = true
         else this.noDataFound = false
         this.temporderscost = Object.assign({}, response.data .map(o => o.cost));
-
+console.log(response)
       this.dataSource = new MatTableDataSource(response.data)
       //this.dataSource.data = this.dataSource.data.filter(d => d.agent.id == this.ClientId)
       this.totalCount = response.total

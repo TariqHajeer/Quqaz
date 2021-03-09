@@ -11,6 +11,6 @@ export class StatisticsService {
   controler = environment.baseUrl + "api/Statistics/";
 
   MainStatics() {
-   return this.http.get(this.controler+"MainStatics")
+   return this.http.get<any>(this.controler+"MainStatics")
   }
 }
