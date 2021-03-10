@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './unauthorized.component.html'
 })
 export class UnauthorizedComponent implements OnInit, OnDestroy {
-  adminRoot = '/app';
+  adminRoot = '/app/HomePage/start';
 
   constructor() { }
 

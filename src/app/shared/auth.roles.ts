@@ -38,8 +38,22 @@ export enum UserPermission {
   ShowOutComeType = "ShowOutComeType",
   AddOutComeType = "AddOutComeType",
   UpdateOutComeType = "UpdateOutComeType",
-
-
+  DeleteOutComeType="DeleteOutComeType",
+  AddOrder="AddOrder",
+  UpdateOrder="UpdateOrder",
+  DeleteOrder="DeleteOrder",
+  ShowOrder="ShowOrder",
+  AddOutCome="AddOutCome",
+  ShowOutCome="ShowOutCome",
+  UpdateOutCome="UpdateOutCome",
+  DeleteOutCome="DeleteOutCome",
+  AddIncome="AddIncome",
+  ShowIncome="ShowIncome",
+  UpdateIncome="UpdateIncome",
+  DeleteIncome="DeleteIncome",
+  ShowReports="ShowReports",
+  PrintClient="PrintClient",
+  PrintAgent="PrintAgent",
 
 
 }

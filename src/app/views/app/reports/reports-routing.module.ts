@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/auth.guard';
+import { UserPermission } from 'src/app/shared/auth.roles';
 import { ClientInsideCompanyComponent } from './client-inside-company/client-inside-company.component';
 import { ClientOrderComponent } from './client-order/client-order.component';
 import { ReceiptAgentComponent } from './print/receipt-agent/receipt-agent.component';
@@ -20,48 +21,55 @@ const routes: Routes = [
   {
     path:'ShipmentInStock',
     component: ShipmentInStockComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
   },
   {
     path:'Shipmentonway',
     component: ShipmentsOnWayComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
   },
   {
     path:'clientorder',
     component: ClientOrderComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
   },
   
   {
     path:'clientinsidecompany',
     component: ClientInsideCompanyComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
   },
   {
     path:'Shipmentsnotbeendelivered',
     component: ShipmentsNotBeenDeliveredComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
   },
   {
     path:'ReceiptShipmentAgentComponent',
     component: ReceiptShipmentAgentComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
   },
   {
     path:'printagentpreview',
     component: AgentComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
   },
   {
     path:'printclientpreview',
     component: ClientComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
   },
   {
     path:'printsetprintnumberagentpreview',
     component: SetPrintNumberComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
   },
   {
     path:'printsetprintnumberclientpreview',
     component: SetPrintNumberClientComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
   },
-  {
-    path:'printnumber',
-    component: ReceiptSetPrintNumberComponent,canActivate: [AuthGuard],
-  },
+  
  
 ];
 
