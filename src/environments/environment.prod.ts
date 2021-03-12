@@ -4,9 +4,9 @@
 import { UserPermission } from '../app/shared/auth.roles';
 
 export const environment = {
-//baseUrl:"http://tariqhajeer2-001-site1.etempurl.com/",
-   baseUrl:"https://localhost:44333/",
- // baseUrl: 'http://tariqhajeer-001-site1.etempurl.com/',
+  baseUrl: "http://tariqhajeer2-001-site1.etempurl.com/",
+  //baseUrl:"https://localhost:44333/",
+  // baseUrl: 'http://tariqhajeer-001-site1.etempurl.com/',
   production: true,
   // buyUrl: "http://tariqhajeer-001-site1.etempurl.com/",
   SCARF_ANALYTICS: false,
