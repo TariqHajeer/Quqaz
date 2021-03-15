@@ -3,7 +3,7 @@ export class CreateUser {
       DepartmentId:number 
       Experince:string 
       Address:string 
-      HireDate:Date 
+      HireDate:Date=new Date 
       Note:string 
       CanWorkAsAgent:boolean 
       CountryId?:number 

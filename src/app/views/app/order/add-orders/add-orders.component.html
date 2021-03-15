@@ -6,7 +6,7 @@
 
     <div class="card">
         <div class="card-body">
-            <h2 class="card-title"> اضافة طلب</h2>
+            <h2 class="card-title" style="color: rgb(0, 49, 112);"> اضافة طلب</h2>
             <div class="row w-100 align-items-end mb-3">
                 <div class="col-md-3">
                     <label>كود الشحنة<span class="text-danger text-one align-bottom mx-1">*</span></label>
@@ -88,9 +88,11 @@
                 </div>
 
                 <div class="col-md-3">
-                    <label>العنوان</label>
+                    <label>العنوان<span class="text-danger text-one align-bottom mx-1">*</span></label>
                     <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                         [(ngModel)]="Order.Address">
+                        <div *ngIf="!Order.Address && submitted" class="invalid-tooltip"> العنوان حقل مطلوب</div>
+
                 </div>
 
 
@@ -102,17 +104,17 @@
 
                 </div>
                 <div class="col-md-3">
-                    <label>تاريخ التسليم</label>
+                    <label>تاريخ التسليم<span class="text-danger text-one align-bottom mx-1">*</span></label>
                     <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
                         [(ngModel)]="Order.DiliveryDate" name="DiliveryDate" bsDatepicker [container]="'html'"
                         [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
-
+                        <div *ngIf="!Order.DiliveryDate && submitted" class="invalid-tooltip"> تاريخ التسليم حقل مطلوب</div>
                 </div>
                 <div class="col-md-3">
                     <label>اسم المستلم</label>
                     <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                         [(ngModel)]="Order.RecipientName">
-                </div>
+                    </div>
 
             </div>
 
@@ -155,7 +157,7 @@
                                         <div class="col-md-6">
                                          
                                             <label>العدد</label>
-                                            <input id="phone" type="number" maxlength="10"
+                                            <input type="number"
                                                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                                 class="form-control" [ngModelOptions]="{standalone: true}"
                                                 [(ngModel)]="count">
@@ -199,7 +201,7 @@
                                                 </td>
                                                 <td>
                                                     <h4 *ngIf="!OrderType.CanEdit">{{OrderType.Count}}</h4>
-                                                    <input id="phone" type="number" maxlength="10"
+                                                    <input  type="number" 
                                                         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                                         *ngIf="OrderType.CanEdit"  class="form-control"
                                                         [ngModelOptions]="{standalone: true}"
@@ -295,7 +297,7 @@
             <div class="row w-100 align-items-end mb-3">
 
                 <div class="col-md-12">
-                    <label>ملاحظات<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <label>ملاحظات</label>
                     <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                         [(ngModel)]="Order.Note">
                 </div>

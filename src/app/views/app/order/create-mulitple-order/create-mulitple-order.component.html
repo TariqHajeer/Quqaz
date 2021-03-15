@@ -10,7 +10,7 @@
         </div>
     </div>
         <div class="row">
-            <div class="col-md-4" style="padding-right:25px ;">
+       <!--     <div class="col-md-4" style="padding-right:25px ;">
                 <label>المحافظة</label>
                 <ng-select [(ngModel)]="CountryId" (keyup.enter)="onEnter()" style="width: 150px; "
                     (change)="changeCountry()" [ngModelOptions]="{standalone: true}"   [clearable]="false"
@@ -19,7 +19,7 @@
                 </ng-select>
                 <div *ngIf="!CountryId && submitedSave" class="message">المدينة حقل مطلوب</div>
 
-            </div>
+            </div>-->
             <div class="col-md-4">
                 <label>المندوب</label>
                 <ng-select [(ngModel)]="AgentId" [ngModelOptions]="{standalone: true}" style="width: 150px;"
@@ -37,6 +37,7 @@
                 <thead>
                     <th>كود الشحنة</th>
                     <th>اسم العميل</th>
+                    <th>المحافظة</th>
                     <th>حالة الشحنة</th>
                     <th>رقم الهاتف </th>
                     <th>الكلفة الكلية</th>
@@ -67,17 +68,18 @@
                             <div *ngIf="order.showEditMessageCode" class="message">يوجد شحنة مسبقا لهذا العميل بنفس الكود</div>
 
                         </td>
-                        <!--
+                        
                               <td (click)="Edit(order)">
                             <h4 *ngIf="!order.CanEdit">{{order.CountryName}}</h4>
-                            <ng-select [(ngModel)]="EditOrder.CountryId" style="width: 100px;"
+                            <ng-select [(ngModel)]="CountryId" style="width: 100px;"
                                 (change)="changeCountry()" [ngModelOptions]="{standalone: true}"   [clearable]="false"
                                 *ngIf="order.CanEdit" name="Country">
                                 <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
                             </ng-select>
-                            <div *ngIf="!EditOrder.CountryId && Editsubmitted" class="message">المدينة حقل مطلوب</div>
+                            <div *ngIf="!CountryId && Editsubmitted" class="message">المحافظة حقل مطلوب</div>
 
                         </td>
+                        <!--
                       <td>
                             <h4 *ngIf="!order.CanEdit">{{order.AgentName}}</h4>
                             <ng-select [(ngModel)]="EditOrder.AgentId" [ngModelOptions]="{standalone: true}"
@@ -196,7 +198,15 @@
                             <div *ngIf="showMessageCode" class="message">يوجد شحنة مسبقا لهذا العميل بنفس الكود</div>
 
                         </td>
-                      
+                      <td>
+                        <ng-select [(ngModel)]="CountryId" style="width: 100px;"
+                        (change)="changeCountry()" [ngModelOptions]="{standalone: true}"   [clearable]="false"
+                         name="Country">
+                        <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
+                    </ng-select>
+                    <div *ngIf="!CountryId && submitted" class="message">المحافظة حقل مطلوب</div>
+
+                      </td>
                         <td>
                             <ng-select appendTo="body" [(ngModel)]="Order.OrderplacedId" [ngModelOptions]="{standalone: true}"
                                 (keyup.enter)="onEnter()" style="width: 100px;"   [clearable]="false"
@@ -208,7 +218,7 @@
 
                         </td>
                         <td>
-                            <input type="text" maxlength="10"
+                            <input type="text" maxlength="11"
                                 oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
                                 style="width: 100px;" class="form-control" [ngModelOptions]="{standalone: true}"
                                 (keyup.enter)="onEnter()" [(ngModel)]="Order.RecipientPhones" >

@@ -221,7 +221,7 @@
 
                     </td>
                     <td>
-                        <input type="text" maxlength="10"
+                        <input type="text" maxlength="11"
                             oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
                             style="width: 100px;" class="form-control" [ngModelOptions]="{standalone: true}"
                             (keyup.enter)="onEnter()" [(ngModel)]="Order.RecipientPhones">

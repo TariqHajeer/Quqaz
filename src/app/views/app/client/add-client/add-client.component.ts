@@ -27,7 +27,7 @@ export class AddClientComponent implements OnInit, OnChanges {
   confirmpassword
   checkPassword: boolean = false
   ngOnInit(): void {
-    this.init();
+   this.client=new Client
     this.getRegions();
     this.getClient()
   }
@@ -45,20 +45,7 @@ export class AddClientComponent implements OnInit, OnChanges {
       this.checkPassword = false
     }
   }
-  init() {
-    this.client = {
-      id: null,
-      name: null,
-      password: null,
-      userName: null,
-      address: null,
-      canDelete: null,
-      firstDate: null,
-      note: null,
-      phones: [],
-      regionId: null,
-    }
-  }
+ 
   getClient() {
     this.clientService.getClients().subscribe(
       res => {
@@ -100,12 +87,13 @@ export class AddClientComponent implements OnInit, OnChanges {
       res => {
         this.addFinish.emit(this.client);
         if (this.addClicked) {
-          this.init()
+          this.client=new Client
           this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
           this.tempPhone = '';
+          this.submitted = false;
         }
 
-        this.init();
+        this.client=new Client
       }
     )
   }

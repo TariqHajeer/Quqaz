@@ -1,6 +1,9 @@
 import { Region } from 'src/app/Models/Regions/region.model';
 
-export interface Client {
+export class Client {
+  constructor(){
+    this.phones=[]
+  }
   id?:any;
   name:any;
   userName:any;
@@ -8,7 +11,7 @@ export interface Client {
   regionId?:number;
   region?:Region
   address?:any;
-  firstDate?:any;
+  firstDate:Date=new Date;
   note?:any;
   canDelete?:any;
   phones?:any[]

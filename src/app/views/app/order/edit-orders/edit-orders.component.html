@@ -155,7 +155,7 @@
                                         <div class="col-md-6">
                                          
                                             <label>العدد</label>
-                                            <input id="phone" type="number" maxlength="10"
+                                            <input  type="number"
                                                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                                 class="form-control" [ngModelOptions]="{standalone: true}"
                                                 [(ngModel)]="count">
@@ -199,7 +199,7 @@
                                                 </td>
                                                 <td>
                                                     <h4 *ngIf="!OrderType.CanEdit">{{OrderType.Count}}</h4>
-                                                    <input id="phone" type="number" maxlength="10"
+                                                    <input type="number" 
                                                         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                                         *ngIf="OrderType.CanEdit"  class="form-control"
                                                         [ngModelOptions]="{standalone: true}"

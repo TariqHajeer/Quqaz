@@ -73,8 +73,9 @@ export class ViewClientsComponent implements OnInit {
   }
   addFinish(value) {
     this.formatOptions = {type: 'date', format: 'dd/MM/yyyy'};
-    this.clients.push(value)
-    this.gridInstance.refresh();
+    // this.clients.push(value)
+    // this.gridInstance.refresh();
+    this.getClients()
 
   }
   actionComplete(args: SaveEventArgs) {
