@@ -55,11 +55,13 @@
                     </td>
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.CountryName}}</h4>
-                        <ng-select appendTo="body" [(ngModel)]="order.CountryId" style="width: 100px;"
-                        *ngIf="order.CanEdit" (change)="changeCountry()" [ngModelOptions]="{standalone: true}"
-                            [clearable]="false" name="Country">
-                            <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
-                        </ng-select>
+                       
+                        <ng-select [items]="cities"style="width: 100px;" *ngIf="order.CanEdit"
+                                            [(ngModel)]="order.Country"[clearable]="false"
+                                            bindLabel="name"[addTag]="true"
+                                            name='Country'
+                                            >
+                                            </ng-select>
                         <div *ngIf="!EditOrder.CountryId && Editsubmitted" class="message">المحافظة حقل مطلوب</div>
 
                     </td>
@@ -193,10 +195,11 @@
                         <div *ngIf="!Order.Code && submitted" class="message">كود الشحنة حقل مطلوب</div>
                     </td>
                     <td >
-                        <ng-select appendTo="body" [(ngModel)]="Order.CountryId" (keyup.enter)="onEnter()"
-                         style="width: 150px; " (change)="changeCountry()" [ngModelOptions]="{standalone: true}"
-                         style="width: 100px;" [clearable]="false" name="Country">
-                            <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
+                        <ng-select [items]="cities"style="width: 100px;"
+                        [(ngModel)]="Order.Country"[clearable]="false"
+                        bindLabel="name"[addTag]="true"
+                        name='Country'
+                        >
                         </ng-select>
                         <div *ngIf="!Order.CountryId && submitted" class="message">المحافظة حقل مطلوب</div>
 

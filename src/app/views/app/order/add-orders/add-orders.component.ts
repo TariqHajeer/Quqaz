@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { concat, Observable, of, Subject } from 'rxjs';
@@ -90,7 +91,8 @@ export class AddOrdersComponent implements OnInit {
       this.Order.RegionName = this.Order.RegionId.label;
       this.Order.RegionId = null;
     }
-    this.orderservice.Creat(this.Order).subscribe(res => {
+    console.log(this.Order)
+   this.orderservice.Creat(this.Order).subscribe(res => {
       this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.int()
     });

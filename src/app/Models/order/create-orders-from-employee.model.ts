@@ -21,8 +21,8 @@ export class CreateOrdersFromEmployee {
     RecipientName:string
     CreatedBy:string
     Amount:number
-    Date:Date=new Date
-    DiliveryDate:Date=new Date
+    Date:any=new Date
+    DiliveryDate:any=new Date
     Note:string
     RecipientPhones:string[]
     OrderTypeDtos:OrderItem[]

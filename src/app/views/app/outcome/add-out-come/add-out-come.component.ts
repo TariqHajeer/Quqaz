@@ -63,6 +63,7 @@ export class AddOutComeComponent implements OnInit, OnChanges {
   }
 
   addOrEdit() {
+    console.log(this.CreateOutCome)
     this.submitted = true;
     this.CreateOutCome.Amount = Number(this.CreateOutCome.Amount);
     if (this.addClicked) {

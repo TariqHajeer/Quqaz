@@ -2,6 +2,7 @@ export class CreateMultipleOrder {
     Code:string
     CountryId:number
     CountryName:string
+    Country
     AgentId:number
     AgentName:string
     OrderplacedId:number
