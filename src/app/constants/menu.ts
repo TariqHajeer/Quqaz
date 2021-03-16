@@ -45,7 +45,7 @@ const data: IMenuItem[] = [
       },
       {
         icon: 'iconsminds-add',
-        label: 'إضافة طلبات متعددة للمندوب',
+        label: 'إضافة طلبات متعددة ',
         to: `${adminRoot}/order/addMulitpleOrders`,
       },
       {
