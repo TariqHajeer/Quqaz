@@ -80,6 +80,9 @@
                         {{order.cost}}
                     </td>
                     <td>
+                        {{order.cost-order.deliveryCost}}
+                    </td>
+                    <td>
                         {{order.country.name}}
                     </td>
                 <!--   <td>
@@ -105,7 +108,10 @@
                     <td>
                         <!----> {{ count}}
                     </td>
-
+                 
+                    <td>
+                        <!----> {{ deliveryCostCount}}
+                    </td>
                 </tr>
             </tbody>
 

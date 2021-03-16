@@ -17,7 +17,7 @@ export class ClientComponent implements OnInit {
     public sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef) { }
     // 'موقع المبلغ', 'حالة الشحنة '
-  heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'الهاتف', 'ملاحظات']
+  heads = ['ترقيم', 'كود', 'الإجمالي','يدفع للعميل', 'المحافظة ', 'الهاتف', 'ملاحظات']
   orders: any[] = []
   count = 0
   client
@@ -32,12 +32,14 @@ export class ClientComponent implements OnInit {
     this.sumCost()
   //  this.getPrintnumber()
   }
-
+  deliveryCostCount
   sumCost() {
     this.count = 0
+    this.deliveryCostCount = 0
     if (this.orders)
       this.orders.forEach(o => {
         this.count += o.cost
+        this.deliveryCostCount += o.cost- o.deliveryCost
       })
     return this.count
   }
