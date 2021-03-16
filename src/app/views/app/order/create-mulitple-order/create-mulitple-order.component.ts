@@ -7,7 +7,7 @@ import { ClientService } from '../../client/client.service';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
-import {  OrderItem } from 'src/app/Models/order/create-orders-from-employee.model';
+import { OrderItem } from 'src/app/Models/order/create-orders-from-employee.model';
 import { CreateMultipleOrder } from 'src/app/Models/order/create-multiple-order';
 import { OrderType } from 'src/app/Models/OrderTypes/order-type.model';
 import { Region } from 'src/app/Models/Regions/region.model';
@@ -97,6 +97,9 @@ export class CreateMulitpleOrderComponent implements OnInit {
     this.customerService.getAll(this.cityapi).subscribe(res => {
       this.cities = res
       this.Order.CountryId = res[0].id
+      if (this.Orders.length != 0)
+        this.Order.CountryId = this.Orders[this.Orders.length - 1].CountryId
+
       this.changeCountry()
     })
   }
@@ -205,8 +208,8 @@ export class CreateMulitpleOrderComponent implements OnInit {
   AddOrder() {
     if (this.Order.Code) {
       this.onEnter()
-      if( this.submitted ==true)
-      return
+      if (this.submitted == true)
+        return
     }
     if (this.Orders == []) {
       //this.submitedSave=true
