@@ -58,7 +58,7 @@
                        
                         <ng-select [items]="cities"style="width: 100px;" *ngIf="order.CanEdit"
                                             [(ngModel)]="order.Country"[clearable]="false"
-                                            bindLabel="name"[addTag]="true"
+                                           (change)="changeCountry()" bindLabel="name"[addTag]="true"
                                             name='Country'
                                             >
                                             </ng-select>
@@ -197,7 +197,7 @@
                     <td >
                         <ng-select [items]="cities"style="width: 100px;"
                         [(ngModel)]="Order.Country"[clearable]="false"
-                        bindLabel="name"[addTag]="true"
+                        bindLabel="name"[addTag]="true"(change)="changeCountry()"
                         name='Country'
                         >
                         </ng-select>

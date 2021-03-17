@@ -118,6 +118,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   }
   allFilter() {
     this.orderservice.ShipmentsNotReimbursedToTheClient(this.ClientId).subscribe(response => {
+     console.log(response)
       if (response)
         if (response.length == 0)
           this.noDataFound = true

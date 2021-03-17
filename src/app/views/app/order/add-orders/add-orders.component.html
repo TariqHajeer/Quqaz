@@ -87,13 +87,13 @@
 
                 </div>
 
-                <div class="col-md-3">
+             <!--    <div class="col-md-3">
                     <label>العنوان</label>
                     <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                         [(ngModel)]="Order.Address">
-                     <!--   <div *ngIf="!Order.Address && submitted" class="invalid-tooltip"> العنوان حقل مطلوب</div>
--->
-                </div>
+                       <div *ngIf="!Order.Address && submitted" class="invalid-tooltip"> العنوان حقل مطلوب</div>
+
+                </div>-->
 
 
                 <div class="col-md-3">
@@ -103,13 +103,13 @@
                         [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
 
                 </div>
-                <div class="col-md-3">
+             <!--   <div class="col-md-3">
                     <label>تاريخ التسليم</label>
                     <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
                         [(ngModel)]="Order.DiliveryDate" name="DiliveryDate" bsDatepicker [container]="'html'"
                         [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
-                     <!--  <div *ngIf="!Order.DiliveryDate && submitted" class="invalid-tooltip"> تاريخ التسليم حقل مطلوب</div>
-               -->  </div>
+                       <div *ngIf="!Order.DiliveryDate && submitted" class="invalid-tooltip"> تاريخ التسليم حقل مطلوب</div>
+                </div>--> 
                 <div class="col-md-3">
                     <label>اسم المستلم</label>
                     <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"

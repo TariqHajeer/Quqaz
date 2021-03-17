@@ -117,12 +117,13 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     this.customerService.getAll(this.cityapi).subscribe(res => {
       this.cities = res
       this.Order.CountryId = res[0].id
+      this.Order.Country= this.cities.find(c => c.id == this.Order.CountryId)
       this.changeCountry()
     })
   }
 
   changeCountry() {
-
+    this.Order.CountryId=this.Order.Country.id
     var city = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.Cost = city.deliveryCost
 
