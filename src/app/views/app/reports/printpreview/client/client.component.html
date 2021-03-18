@@ -1,25 +1,25 @@
 <div class="card">
-    <div class="card-body"> 
+    <div class="card-body">
         <div class="row">
-            <div class="col-md-3"  *ngIf="!showPrintbtn" >
-                <button (click)="changeDeleiverMoneyForClient()"class="btn btn-primary"> تسليم المبلغ</button>
-            
+            <div class="col-md-3" *ngIf="!showPrintbtn">
+                <button (click)="changeDeleiverMoneyForClient()" class="btn btn-primary"> تسليم المبلغ</button>
+
             </div>
-            <div class="col-md-3"  *ngIf="showPrintbtn"  >
-                <button printSectionId="printpage" class="btn btn-primary" styleSheetFile="/assets/css/vendor/bootstrap.min.css"
-                 [useExistingCss]="true" ngxPrint>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer"
-                        viewBox="0 0 16 16" >
+            <div class="col-md-3" *ngIf="showPrintbtn">
+                <button printSectionId="printpage" class="btn btn-primary"
+                    styleSheetFile="/assets/css/vendor/bootstrap.min.css" [useExistingCss]="true" ngxPrint>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-printer" viewBox="0 0 16 16">
                         <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
                         <path
                             d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
-                    </svg> &nbsp;طباعة 
-            </button>
+                    </svg> &nbsp;طباعة
+                </button>
             </div>
-           
+
         </div>
     </div>
-    </div>
+</div>
 
 
 <app-receipt-client id="printpage" [orders]="orders" [client]="client" [printnumber]="printnumber" [hidden]="true">
@@ -28,28 +28,53 @@
     <div class="card-body">
         <div class="row ">
             <div class="col-md-4" style="text-align: right; ">
-                <h3>
-                    رقم الطباعة :{{printnumber}}
-                </h3>
-                <h3>
-                    مستخدم الطابعة :{{userName.name}}
-                </h3>
-                <h3>
-                    تاريخ الطباعة :{{dateOfPrint | date:"dd/MM/yyyy"}}
-                </h3>
-                <h3>
-                    وقت الطباعة :{{dateOfPrint | date:"HH:mm:ss"}}
-                </h3>
+                <table>
+
+                    <tr>
+                        <td class="tdstyle">
+                            رقم الطباعة :
+                        </td>
+                        <td class="tdstyle">
+                            {{printnumber}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdstyle">
+                            مستخدم الطابعة :
+                        </td>
+                        <td class="tdstyle">
+                            {{userName.name}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdstyle">
+                            تاريخ الطباعة :
+                        </td>
+                        <td class="tdstyle">
+                            {{dateOfPrint | date:"dd/MM/yyyy"}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdstyle">
+                            وقت الطباعة :
+                        </td>
+                        <td class="tdstyle">
+                            {{dateOfPrint | date:"HH:mm:ss"}}
+                        </td>
+                    </tr>
+
+
+                </table>
 
             </div>
             <div class="col-md-5" style="text-align: right;">
                 <h3 style="font-size: 20px;">
                     اسم العميل : {{client!=null||client!=undefined?client.name:null}}
                 </h3>
-                <h3 style="font-size: 20px;" >
+                <h3 style="font-size: 20px;">
                     رقم هاتف العميل :
 
-                    <div  *ngFor="let phone of client.phones">
+                    <div *ngFor="let phone of client.phones">
                         {{phone.phone}}
                     </div>
                 </h3>
@@ -60,17 +85,37 @@
                 <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px" />
             </div>
         </div>
-        <table class="table ">
+        <table class="table table-bordered table-condensed col-md-12">
             <thead>
-
-
-
-                <th *ngFor="let head of heads" style="font-size: 20px;">{{head}}</th>
+                <th>
+                    ترقيم
+                </th>
+                <th>
+                    كود
+                </th>
+                <th>
+                    الإجمالي
+                </th>
+                <th>
+                    الرسوم
+                </th>
+                <th>
+                    يدفع للعميل
+                </th>
+                <th>
+                    المحافظة
+                </th>
+                <th>
+                    الهاتف
+                </th>
+                <th>
+                    ملاحظات
+                </th>
+                <!--<th *ngFor="let head of heads" style="font-size: 20px;">{{head}}</th>-->
             </thead>
             <tbody>
-                <tr style="  margin-bottom: 20%;font-size: 18px;
-        " class=" table-bordered" *ngFor="let order of orders;index as i">
-                    <td>
+                <tr  *ngFor="let order of orders;index as i">
+                    <td class="p">
                         {{i+1}}
                     </td>
                     <td>
@@ -80,17 +125,20 @@
                         {{order.cost}}
                     </td>
                     <td>
+                        {{order.deliveryCost}}
+                    </td>
+                    <td>
                         {{order.cost-order.deliveryCost}}
                     </td>
                     <td>
                         {{order.country.name}}
                     </td>
-                <!--   <td>
+                    <!--   <td>
                         {{order.monePlaced.name}}
                     </td>
                     <td>
                         {{order.orderplaced.name}}
-                    </td>--> 
+                    </td>-->
                     <td>
                         {{order.recipientPhones}}
                     </td>
@@ -100,17 +148,19 @@
                     </td>
                 </tr>
 
-
-                <tr class=" table-bordered" style="font-size: 18px;">
+                <br>
+                <tr class=" table-bordered trbordered" style="font-size: 18px;">
                     <td colspan="2">
                         الإجمالي :
                     </td>
                     <td>
-                        <!----> {{ count}}
+                        {{ count}}
                     </td>
-                 
                     <td>
-                        <!----> {{ deliveryCostCount}}
+                        {{ deliveryCostCount}}
+                    </td>
+                    <td colspan="4">
+                        {{count-deliveryCostCount}}
                     </td>
                 </tr>
             </tbody>

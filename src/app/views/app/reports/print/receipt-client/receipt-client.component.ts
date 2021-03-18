@@ -16,7 +16,7 @@ export class ReceiptClientComponent implements OnInit {
     public sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef) { }
     //'موقع المبلغ', 'حالة الشحنة '
-    heads = ['ترقيم', 'كود', 'الإجمالي','يدفع للعميل', 'المحافظة ', 'الهاتف', 'ملاحظات']
+    heads = ['ترقيم', 'كود', 'الإجمالي','الرسوم',' يدفع للعميل', 'المحافظة ', 'الهاتف', 'ملاحظات']
     @Input() orders: any[] = []
   count = 0
   @Input() client
@@ -37,7 +37,7 @@ export class ReceiptClientComponent implements OnInit {
     if (this.orders)
       this.orders.forEach(o => {
         this.count += o.cost
-        this.deliveryCostCount += o.cost- o.deliveryCost
+        this.deliveryCostCount +=  o.deliveryCost
       })
     return this.count
   }
