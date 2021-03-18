@@ -54,7 +54,7 @@
                             <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                                 [(ngModel)]="EditOrder.Code" (keyup)="CheckCodeForEdit(order)" style="width: 100px;"
                                 *ngIf="order.CanEdit" tabindex="1">
-                            <div *ngIf="!EditOrder.Code && Editsubmitted" class="message">كود الشحنة حقل مطلوب</div>
+                            <div *ngIf="!EditOrder.Code && Editsubmitted&&order.CanEdit" class="message">كود الشحنة حقل مطلوب</div>
 
                         </td>
                                <td (click)="Edit(order)">
@@ -64,7 +64,7 @@
                                 *ngIf="order.CanEdit" name="Country">
                                 <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
                             </ng-select>
-                            <div *ngIf="!EditOrder.CountryId && Editsubmitted" class="message">المحافظة حقل مطلوب</div>
+                            <div *ngIf="!EditOrder.CountryId && Editsubmitted&&order.CanEdit" class="message">المحافظة حقل مطلوب</div>
 
                         </td>
                       
@@ -74,7 +74,7 @@
                                 *ngIf="order.CanEdit"   [clearable]="false" name="Agent" style="width: 100px;">
                                 <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                             </ng-select>
-                            <div *ngIf="!EditOrder.AgentId && Editsubmitted" class="message">المندوب حقل مطلوب</div>
+                            <div *ngIf="!EditOrder.AgentId && Editsubmitted&&order.CanEdit" class="message">المندوب حقل مطلوب</div>
 
                         </td>
                   
@@ -86,7 +86,7 @@
                                 <ng-option *ngFor="let Client of clients" [value]="Client.id">{{Client.name}}
                                 </ng-option>
                             </ng-select>
-                            <div *ngIf="!EditOrder.ClientId && Editsubmitted" class="message">العميل حقل مطلوب</div>
+                            <div *ngIf="!EditOrder.ClientId && Editsubmitted&&order.CanEdit" class="message">العميل حقل مطلوب</div>
                             <div *ngIf="order.showEditMessageCode" class="message">يوجد شحنة مسبقا لهذا العميل بنفس الكود</div>
 
                         </td>
@@ -101,7 +101,7 @@
                                 <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}
                                 </ng-option>
                             </ng-select>
-                            <div *ngIf="!EditOrder.OrderplacedId && Editsubmitted" class="message">حالة الشحنة حقل مطلوب
+                            <div *ngIf="!EditOrder.OrderplacedId && Editsubmitted&&order.CanEdit" class="message">حالة الشحنة حقل مطلوب
                             </div>
 
                         </td>
@@ -114,7 +114,7 @@
                                 oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
                                  *ngIf="order.CanEdit" style="width: 100px;"
                                 class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="EditOrder.RecipientPhones">
-                            <div *ngIf="!EditOrder.RecipientPhones&& Editsubmitted"
+                            <div *ngIf="!EditOrder.RecipientPhones&& Editsubmitted&&order.CanEdit"
                                 class="message">رقم الهاتف
                                  حقل مطلوب</div>
 
@@ -130,7 +130,7 @@
                             <input type="number" class="form-control" [ngModelOptions]="{standalone: true}"
                             style="width: 100px;" *ngIf="order.CanEdit" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                             [(ngModel)]="EditOrder.Amount" #Amount="ngModel" >
-                        <div *ngIf="!EditOrder.Amount && Editsubmitted" class="message">الكلفة الكلية حقل مطلوب</div>
+                        <div *ngIf="!EditOrder.Amount && Editsubmitted&&order.CanEdit" class="message">الكلفة الكلية حقل مطلوب</div>
                  
                         </td>
                         <td (click)="Edit(order)">
@@ -196,7 +196,7 @@
                                 name="Country">
                                 <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
                             </ng-select>
-                            <div *ngIf="!Order.CountryId && Editsubmitted" class="message">المحافظة حقل مطلوب</div>
+                            <div *ngIf="!Order.CountryId && submitted" class="message">المحافظة حقل مطلوب</div>
 
                         </td>
                       
@@ -206,7 +206,7 @@
                                  [clearable]="false" name="Agent" style="width: 100px;">
                                 <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                             </ng-select>
-                            <div *ngIf="!Order.AgentId && Editsubmitted" class="message">المندوب حقل مطلوب</div>
+                            <div *ngIf="!Order.AgentId && submitted" class="message">المندوب حقل مطلوب</div>
 
                         </td> 
                         <td>

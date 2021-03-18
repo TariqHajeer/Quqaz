@@ -50,7 +50,7 @@
                         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                             [(ngModel)]="EditOrder.Code" (keyup)="CheckCodeForEdit()" style="width: 100px;"
                             *ngIf="order.CanEdit" tabindex="1">
-                        <div *ngIf="!EditOrder.Code && Editsubmitted" class="message">كود الشحنة حقل مطلوب</div>
+                        <div *ngIf="!EditOrder.Code && Editsubmitted&&order.CanEdit" class="message">كود الشحنة حقل مطلوب</div>
 
                     </td>
                     <td (click)="Edit(order)">
@@ -62,7 +62,7 @@
                                             name='Country'
                                             >
                                             </ng-select>
-                        <div *ngIf="!EditOrder.CountryId && Editsubmitted" class="message">المحافظة حقل مطلوب</div>
+                        <div *ngIf="!EditOrder.CountryId && Editsubmitted&&order.CanEdit" class="message">المحافظة حقل مطلوب</div>
 
                     </td>
                     <td (click)="Edit(order)">
@@ -72,7 +72,7 @@
                             >
                             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                         </ng-select>
-                        <div *ngIf="!EditOrder.AgentId && Editsubmitted" class="message">المندوب حقل مطلوب</div>
+                        <div *ngIf="!EditOrder.AgentId && Editsubmitted&&order.CanEdit" class="message">المندوب حقل مطلوب</div>
 
                     </td>
                     <!--
@@ -106,7 +106,7 @@
                             <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}
                             </ng-option>
                         </ng-select>
-                        <div *ngIf="!EditOrder.OrderplacedId && Editsubmitted" class="message">حالة الشحنة حقل مطلوب
+                        <div *ngIf="!EditOrder.OrderplacedId && Editsubmitted&&order.CanEdit" class="message">حالة الشحنة حقل مطلوب
                         </div>
 
                     </td>
@@ -119,9 +119,11 @@
                             oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
                             *ngIf="order.CanEdit" style="width: 100px;" class="form-control"
                             [ngModelOptions]="{standalone: true}" [(ngModel)]="EditOrder.RecipientPhones">
-                        <div *ngIf="!EditOrder.RecipientPhones&& Editsubmitted" class="message">رقم الهاتف
+                        <div *ngIf="!EditOrder.RecipientPhones&& Editsubmitted&&order.CanEdit" class="message">رقم الهاتف
                             حقل مطلوب</div>
-
+                            <div class="message" *ngIf="EditOrder.RecipientPhones&&Editsubmitted&&order.CanEdit">
+                                {{RecipientPhoneslength}}
+                            </div>
 
                     </td>
 
@@ -135,7 +137,7 @@
                             style="width: 100px;" *ngIf="order.CanEdit"
                             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                             [(ngModel)]="EditOrder.Amount" #Amount="ngModel">
-                        <div *ngIf="!EditOrder.Amount && Editsubmitted" class="message">الكلفة الكلية حقل مطلوب</div>
+                        <div *ngIf="!EditOrder.Amount && Editsubmitted&&order.CanEdit" class="message">الكلفة الكلية حقل مطلوب</div>
 
                     </td>
                     <td (click)="Edit(order)">
@@ -230,6 +232,9 @@
                             (keyup.enter)="onEnter()" [(ngModel)]="Order.RecipientPhones">
                         <div *ngIf="!Order.RecipientPhones&& submitted" class="message">رقم الهاتف
                             حقل مطلوب</div>
+                            <div class="message" *ngIf="Order.RecipientPhones&& submitted">
+                                {{RecipientPhoneslength}}
+                            </div>
                     </td>
 
 

@@ -168,7 +168,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
       })
     }
   }
-  RecipientPhoneslength
+  RecipientPhoneslength=""
   @ViewChild('code') codeElement: ElementRef;
   onEnter() {
     this.addNewCountry()
@@ -180,9 +180,13 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
       return
     } else this.submitted = false
     if (this.Order.RecipientPhones.length < 11) {
-      this.RecipientPhoneslength=" لايمكن للرقم ان يكون اصغر من  11 رقم"
-       return
-     }
+      this.RecipientPhoneslength=" لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
+      this.submitted = true
+      return
+     }else{ 
+       this.RecipientPhoneslength=""
+       this.submitted = false
+    }
     this.Order.CountryId = this.Order.Country.id
     // var country = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.CountryName = this.Order.Country.name
@@ -223,9 +227,13 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
       return
     } else this.Editsubmitted = false
     if (this.EditOrder.RecipientPhones.length < 11) {
-      this.RecipientPhoneslength=" لايمكن للرقم ان يكون اصغر من  11 رقم"
-       return
-     }
+      this.RecipientPhoneslength=" لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
+      this.Editsubmitted = true
+      return
+     }else{ 
+       this.RecipientPhoneslength=""
+       this.Editsubmitted = false
+    }
     this.EditOrder.CanEdit = false
     this.EditOrder.CountryId = this.EditOrder.Country.id
     this.EditOrder.CountryName = this.EditOrder.Country.name
