@@ -15,7 +15,7 @@
 </div>
 <div class="example-container mat-elevation-z8">
 
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 ">
 
     <!-- Checkbox Column -->
     <ng-container matColumnDef="select">
@@ -117,29 +117,29 @@
       </td>
     </ng-container>
  
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" style="width: 100%;"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
     </tr>
    
   </table>
   
-      <div class="row" style="padding: 15px;background-color: rgb(221, 221, 221);">
-        <div class="col-md-4">
-            الإجمالي :
-        </div>
-        <div class="col-md-1">
-            {{ count}}
-        </div>
-        <div class="col-md-1">
-            {{ deliveryCostCount}}
-        </div>
-        <div class="col-md-1">
-            {{count-deliveryCostCount}}
-        </div>
-      </div>
+     
     
   <h5 style="padding-top: 20px; padding-right: 10px;" *ngIf="noDataFound">لايوجد بيانات للعرض</h5>
-
+  <div class="row" *ngIf="!noDataFound"style="padding: 15px 30px 15px 15px;background-color: rgb(221, 221, 221);">
+    <div class="col-md-4">
+        الإجمالي :
+    </div>
+    <div class="col-md-1" style="padding-right:10px ;">
+        {{ count}}
+    </div>
+    <div class="col-md-1">
+        {{ deliveryCostCount}}
+    </div>
+    <div class="col-md-1">
+        {{count-deliveryCostCount}}
+    </div>
+  </div>
 </div>
 <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
   [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
