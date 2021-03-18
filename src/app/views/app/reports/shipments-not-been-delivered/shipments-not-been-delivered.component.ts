@@ -10,6 +10,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { ClientService } from '../../client/client.service';
 import { Client } from '../../client/client.model';
+import { OrderClientDontDiliverdMoney } from 'src/app/Models/order/order-client-dont-diliverd-money.model';
 @Component({
   selector: 'app-shipments-not-been-delivered',
   templateUrl: './shipments-not-been-delivered.component.html',
@@ -18,7 +19,7 @@ import { Client } from '../../client/client.model';
 export class ShipmentsNotBeenDeliveredComponent implements OnInit {
 
   displayedColumns: string[] = ['select', 'code','oldCost', 'cost', 'country', 'region'
-,'monePlaced'   , 'orderplaced'];
+,'monePlaced'   , 'orderplaced','agentPrintNumber','clientPrintNumber'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
 
@@ -85,18 +86,22 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     localStorage.removeItem('printordersclient')
     localStorage.removeItem('printclient')
     this.getClients()
-    //this.GetorderPlace()
+    this.GetorderPlace()
     this.paging = new Paging
     this.filtering = new OrderFilter
+    this.orderClientDontDiliverdMoney=new OrderClientDontDiliverdMoney()
   }
 
-  // GetorderPlace() {
-  //   this.orderservice.orderPlace().subscribe(res => {
-  //     this.orderPlace = res
-  //     this.orderPlace = this.orderPlace.filter(o => o.id == 3 || o.id == 2)
+  GetorderPlace() {
+    this.orderservice.orderPlace().subscribe(res => {
+      this.orderPlace = res
+      this.orderPlace.forEach(item=>{
+        item.checked=true
+      })
+      //this.orderPlace = this.orderPlace.filter(o => o.id == 3 || o.id == 2)
 
-  //   })
-  // }
+    })
+  }
   getClients() {
     this.clientService.getClients().subscribe(res => {
       this.Clients = res
@@ -116,9 +121,12 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     this.paging.Page = event.pageIndex + 1
     this.allFilter();
   }
+ orderClientDontDiliverdMoney:OrderClientDontDiliverdMoney
   allFilter() {
-    this.orderservice.ShipmentsNotReimbursedToTheClient(this.ClientId).subscribe(response => {
-     console.log(response)
+    this.orderClientDontDiliverdMoney.ClientId=this.ClientId
+    var orderPlace=this.orderPlace.filter(o=>o.checked==true)
+    this.orderClientDontDiliverdMoney.OrderPlacedId=orderPlace.map(o=>o.id)
+    this.orderservice.ClientDontDiliverdMoney(this.orderClientDontDiliverdMoney).subscribe(response => {
       if (response)
         if (response.length == 0)
           this.noDataFound = true

@@ -20,7 +20,7 @@ import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed
 export class ShipmentsOnWayComponent implements OnInit {
 
   displayedColumns: string[] = ['code', 'country', 'region'
-    , 'cost','isClientDiliverdMoney', 'orderplaced', 'monePlaced'];
+    , 'cost','isClientDiliverdMoney', 'orderplaced', 'monePlaced','agentPrintNumber','clientPrintNumber'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
   ids: any[] = []
@@ -104,6 +104,7 @@ export class ShipmentsOnWayComponent implements OnInit {
   allFilter() {
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
       this.getorders = []
+      console.log(response)
       if (response)
         if (response.data.length == 0)
           this.noDataFound = true

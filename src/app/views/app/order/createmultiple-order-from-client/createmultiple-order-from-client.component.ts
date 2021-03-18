@@ -26,9 +26,9 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     private clientService: ClientService
     , private customerService: CustomService,
     public userService: UserService,
-    private notifications: NotificationsService) { 
+    private notifications: NotificationsService) {
 
-    }
+  }
 
   Order: CreateMultipleOrder
   EditOrder: CreateMultipleOrder
@@ -73,25 +73,25 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     this.getAgent()
   }
 
-  addNewCountry(){
-  if(!this.clients.find(c=>c.name==this.Order.Country.name)){
-    this.customerService.Create(this.cityapi,this.Order.Country).subscribe(res=>{
-      this.Order.Country=res
-     this.Getcities()
+  addNewCountry() {
+    if (!this.clients.find(c => c.name == this.Order.Country.name)) {
+      this.customerService.Create(this.cityapi, this.Order.Country).subscribe(res => {
+        this.Order.Country = res
+        this.Getcities()
 
-    })
+      })
+    }
+
   }
-  
-  }
-  editNewCountry(){
-    if(!this.clients.find(c=>c.name==this.EditOrder.Country.name)){
-      this.customerService.Create(this.cityapi,this.EditOrder.Country).subscribe(res=>{
-        this.EditOrder.Country=res
+  editNewCountry() {
+    if (!this.clients.find(c => c.name == this.EditOrder.Country.name)) {
+      this.customerService.Create(this.cityapi, this.EditOrder.Country).subscribe(res => {
+        this.EditOrder.Country = res
         this.Getcities()
       })
     }
-    
-    }
+
+  }
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
@@ -117,13 +117,13 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     this.customerService.getAll(this.cityapi).subscribe(res => {
       this.cities = res
       this.Order.CountryId = res[0].id
-      this.Order.Country= this.cities.find(c => c.id == this.Order.CountryId)
+      this.Order.Country = this.cities.find(c => c.id == this.Order.CountryId)
       this.changeCountry()
     })
   }
 
   changeCountry() {
-    this.Order.CountryId=this.Order.Country.id
+    this.Order.CountryId = this.Order.Country.id
     var city = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.Cost = city.deliveryCost
 
@@ -168,18 +168,22 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
       })
     }
   }
-
+  RecipientPhoneslength
   @ViewChild('code') codeElement: ElementRef;
   onEnter() {
     this.addNewCountry()
-
+   
     if (!this.Order.Code || !this.Order.ClientId ||
-    !this.Order.RecipientPhones
+      !this.Order.RecipientPhones
       || !this.Order.AgentId || this.showMessageCode) {
       this.submitted = true
       return
     } else this.submitted = false
-    this.Order.CountryId= this.Order.Country.id
+    if (this.Order.RecipientPhones.length < 11) {
+      this.RecipientPhoneslength=" لايمكن للرقم ان يكون اصغر من  11 رقم"
+       return
+     }
+    this.Order.CountryId = this.Order.Country.id
     // var country = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.CountryName = this.Order.Country.name
     var orderplace = this.orderPlace.find(c => c.id == this.Order.OrderplacedId)
@@ -209,16 +213,21 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     this.EditOrder = order
   }
   Save(order: CreateMultipleOrder) {
+    
     this.editNewCountry()
     if (!this.EditOrder.Code || !this.EditOrder.ClientId ||
-       !this.EditOrder.RecipientPhones
+      !this.EditOrder.RecipientPhones
       || !this.EditOrder.AgentId || !this.EditOrder.OrderplacedId
       || order.showEditMessageCode) {
       this.Editsubmitted = true
       return
     } else this.Editsubmitted = false
+    if (this.EditOrder.RecipientPhones.length < 11) {
+      this.RecipientPhoneslength=" لايمكن للرقم ان يكون اصغر من  11 رقم"
+       return
+     }
     this.EditOrder.CanEdit = false
-    this.EditOrder.CountryId=this.EditOrder.Country.id
+    this.EditOrder.CountryId = this.EditOrder.Country.id
     this.EditOrder.CountryName = this.EditOrder.Country.name
     var orderplace = this.orderPlace.find(c => c.id == this.EditOrder.OrderplacedId)
     this.EditOrder.OrderplacedName = orderplace.name
@@ -243,8 +252,8 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   AddOrder() {
     if (this.Order.Code) {
       this.onEnter()
-      if( this.submitted ==true)
-      return
+      if (this.submitted == true)
+        return
     }
 
     if (!this.ClientId || this.Orders == []) {

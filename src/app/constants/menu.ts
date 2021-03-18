@@ -95,20 +95,17 @@ const data: IMenuItem[] = [
         label: 'العميل',
         to: `${adminRoot}/reports/Shipmentonway`,
         subs: [
-          {
-            icon: 'simple-icon-layers',
-            label: 'شحنات المسدد جزء من مبلغها',
-            to: `${adminRoot}/reports/clientorder`,
-          },
-          // {
-          //   icon: 'simple-icon-layers',
-          //   label: ' كشف   شحنات  داخل الشركة',
-          //   to: `${adminRoot}/reports/clientinsidecompany`,
-          // },
+         
+         
           {
             icon: 'simple-icon-layers',
             label: 'تسديد العميل',
             to: `${adminRoot}/reports/Shipmentsnotbeendelivered`,
+          },
+          {
+            icon: 'simple-icon-layers',
+            label: 'ارجاع الشحنات',
+            to: `${adminRoot}/reports/clientorder`,
           },
           {
             icon: 'simple-icon-layers',

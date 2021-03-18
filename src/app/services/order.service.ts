@@ -5,6 +5,7 @@ import { delay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.prod';
 import { OrderFilter } from '../Models/order-filter.model';
 import { DateFiter, Paging } from '../Models/paging';
+import { OrderClientDontDiliverdMoney } from '../Models/order/order-client-dont-diliverd-money.model';
 
 @Injectable({
   providedIn: 'root'
@@ -140,6 +141,15 @@ export class OrderService {
     let params = new HttpParams();
     params = params.append("printNumber", printnumber);
     return this.http.get<any>(this.controler + "GetOrderByClientPrintNumber" , { params: params })
+   }
+   ClientDontDiliverdMoney(item:OrderClientDontDiliverdMoney){
+    let params = new HttpParams();
+  
+    if (item.ClientId != undefined || item.ClientId!= null)
+      params = params.append("ClientId", item.ClientId);
+    if (item.OrderPlacedId.length!=0)
+      params = params.append("OrderPlacedId", item.OrderPlacedId.join(''));
+    return this.http.get<any>(this.controler + "ClientDontDiliverdMoney", { params: params })
    }
 }
 

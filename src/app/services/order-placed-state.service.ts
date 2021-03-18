@@ -16,9 +16,9 @@ export class OrderPlacedStateService {
     }
     return element
   }
-  //مرتجع جزئي
+  //تم التسليم و مرتجع جزئي
   canChangeCost(element, MoenyPlaced, temporderscostindex?) {
-    if (element.order.orderplaced.id == 6) {
+    if (element.order.orderplaced.id == 6||element.order.orderplaced.id == 4) {
       element.canEditCount = false
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 2 || m.id == 3)]
       element.order.monePlaced = element.MoenyPlaced[0]

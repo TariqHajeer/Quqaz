@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
 })
 export class ShipmentInStockComponent implements OnInit {
   displayedColumns: string[] = ['select', 'code', 'cost', 'country', 'region'
-    , 'orderplaced'];
+    , 'orderplaced','agentPrintNumber','clientPrintNumber'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
 

@@ -2,11 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/auth.guard';
 import { UserPermission } from 'src/app/shared/auth.roles';
-import { ClientInsideCompanyComponent } from './client-inside-company/client-inside-company.component';
 import { ClientOrderComponent } from './client-order/client-order.component';
-import { ReceiptAgentComponent } from './print/receipt-agent/receipt-agent.component';
-import { ReceiptClientComponent } from './print/receipt-client/receipt-client.component';
-import { ReceiptSetPrintNumberComponent } from './print/receipt-set-print-number/receipt-set-print-number.component';
 import { AgentComponent } from './printpreview/agent/agent.component';
 import { ClientComponent } from './printpreview/client/client.component';
 import { SetPrintNumberClientComponent } from './printpreview/set-print-number-client/set-print-number-client.component';
@@ -34,11 +30,7 @@ const routes: Routes = [
     data: { roles: [UserPermission.ShowReports]}
   },
   
-  {
-    path:'clientinsidecompany',
-    component: ClientInsideCompanyComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
-  },
+  
   {
     path:'Shipmentsnotbeendelivered',
     component: ShipmentsNotBeenDeliveredComponent,canActivate: [AuthGuard],

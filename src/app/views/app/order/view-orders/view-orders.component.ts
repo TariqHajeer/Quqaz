@@ -63,8 +63,8 @@ export class ViewOrdersComponent implements OnInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.displayedColumns = ['code', 'deliveryCost', 'cost', 'recipientName',
-      'recipientPhones', 'address', 'createdBy', 'date', 'diliveryDate', 'note', 'client', 'country'
-      , 'region', 'monePlaced', 'orderplaced', 'agent', 'Edit', 'Delete'];
+      'recipientPhones', 'client','clientPrintNumber', 'country'
+      , 'region', 'agent','agentPrintNumber', 'monePlaced', 'orderplaced', 'address', 'createdBy', 'date', 'diliveryDate', 'note', 'Edit', 'Delete'];
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -82,6 +82,7 @@ export class ViewOrdersComponent implements OnInit {
   }
   allFilter() {
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
+     console.log(response.data)
       if (response.data.length == 0)
         this.noDataFound = true
       else this.noDataFound = false

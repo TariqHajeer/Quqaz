@@ -21,7 +21,8 @@ import { OrderPlacedStateService } from 'src/app/services/order-placed-state.ser
 export class ClientOrderComponent implements OnInit {
 
   displayedColumns: string[] = ['select', 'code',  'country', 'region'
-    , 'cost','oldCost','isClientDiliverdMoney','orderplaced','monePlaced','edit'];
+    , 'cost','oldCost','isClientDiliverdMoney','orderplaced','monePlaced',
+    'agentPrintNumber','clientPrintNumber','edit'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
 

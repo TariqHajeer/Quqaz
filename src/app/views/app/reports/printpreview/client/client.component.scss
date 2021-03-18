@@ -11,13 +11,21 @@
   font-size: 18px;
   padding:10px;
 }
-
+table, td {
+  border-style:solid; 
+  border-width:2px; 
+  border-color:#636363; 
+  margin:10px;
+  padding: 5px;
+  font-size: 16px;
+}
+th{ font-size: 18px;  padding: 10px;}
 .tdstyle{
   border-style:solid; 
-            border-width:2px; 
+            border-width:1px; 
             border-color:#636363; 
             margin:10px;
-            padding: 5px;
+            padding: 10px;
             font-size: 16px;
 }
 tr.trbordered{
