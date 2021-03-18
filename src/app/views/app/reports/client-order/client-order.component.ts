@@ -21,7 +21,7 @@ import { OrderPlacedStateService } from 'src/app/services/order-placed-state.ser
 export class ClientOrderComponent implements OnInit {
 
   displayedColumns: string[] = ['select', 'code',  'country', 'region'
-    , 'cost','oldCost','isClientDiliverdMoney','orderplaced','monePlaced',
+  ,'oldCost'  , 'cost','deliveryCost','sumdeliveryCost','isClientDiliverdMoney','orderplaced','monePlaced',
     'agentPrintNumber','clientPrintNumber','edit'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
@@ -122,6 +122,8 @@ export class ClientOrderComponent implements OnInit {
           this.noDataFound = true
         else this.noDataFound = false
         this.temporderscost = Object.assign({}, response .map(o => o.cost));
+        this.ordersCount=response
+        this.sumCost()
       this.dataSource = new MatTableDataSource(response)
       this.totalCount = response.length
     },
@@ -134,5 +136,18 @@ export class ClientOrderComponent implements OnInit {
     this.orderservice.ReiveMoneyFromClient(this.ids).subscribe(res=>{
       this.allFilter()
     })
+  }
+  deliveryCostCount=0
+  count=0
+  ordersCount: any[] = []
+  sumCost() {
+    this.count = 0
+    this.deliveryCostCount = 0
+    if (this.ordersCount)
+      this.ordersCount.forEach(o => {
+        this.count += o.cost
+        this.deliveryCostCount +=o.deliveryCost
+      })
+    return this.count
   }
 }

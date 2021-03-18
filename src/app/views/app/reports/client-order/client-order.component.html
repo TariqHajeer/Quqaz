@@ -45,13 +45,6 @@
       <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.region!=null?element.region.name:null}}
       </td>
     </ng-container>
-    <ng-container matColumnDef="cost">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> كلفة الشحنة</th>
-      <td mat-cell *matCellDef="let element;index as i">
-        {{element.cost}}
-
-      </td>
-    </ng-container>
     <ng-container matColumnDef="oldCost">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> كلفة الشحنة القديمة</th>
       <td mat-cell *matCellDef="let element;index as i">
@@ -59,6 +52,28 @@
 
       </td>
     </ng-container>
+    <ng-container matColumnDef="cost">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> كلفة الشحنة</th>
+      <td mat-cell *matCellDef="let element;index as i">
+        {{element.cost}}
+
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="deliveryCost">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> الرسوم </th>
+      <td mat-cell *matCellDef="let element;index as i">
+        {{element.deliveryCost}}
+
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="sumdeliveryCost">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> يدفع للعميل</th>
+      <td mat-cell *matCellDef="let element;index as i">
+        {{element.cost-element.deliveryCost}}
+
+      </td>
+    </ng-container>
+   
     <ng-container matColumnDef="isClientDiliverdMoney">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> تسليم المبلغ للعميل</th>
       <td mat-cell *matCellDef="let element">
@@ -105,7 +120,24 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
     </tr>
+   
   </table>
+  
+      <div class="row" style="padding: 15px;background-color: rgb(221, 221, 221);">
+        <div class="col-md-4">
+            الإجمالي :
+        </div>
+        <div class="col-md-1">
+            {{ count}}
+        </div>
+        <div class="col-md-1">
+            {{ deliveryCostCount}}
+        </div>
+        <div class="col-md-1">
+            {{count-deliveryCostCount}}
+        </div>
+      </div>
+    
   <h5 style="padding-top: 20px; padding-right: 10px;" *ngIf="noDataFound">لايوجد بيانات للعرض</h5>
 
 </div>
