@@ -148,7 +148,15 @@ export class OrderService {
     if (item.ClientId != undefined || item.ClientId!= null)
       params = params.append("ClientId", item.ClientId);
     if (item.OrderPlacedId.length!=0)
-      params = params.append("OrderPlacedId", item.OrderPlacedId.join(''));
+    { // params = params.append("OrderPlacedId", item.OrderPlacedId);
+      let index=0
+      item.OrderPlacedId.forEach(element => {
+        var key="OrderPlacedId["+index+"]"
+        params = params.append(key, element);
+        index++;
+      });
+      console.log(params)}
+
     return this.http.get<any>(this.controler + "ClientDontDiliverdMoney", { params: params })
    }
 }
