@@ -83,16 +83,16 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       this.Agents = res
     })
   }
-  ChangeAgentId() {
-    if (this.AgentId != null) {
-      this.filtering.AgentId = this.AgentId
-      this.allFilter();
-    }
-  }
+  // ChangeAgentId() {
+  //   if (this.AgentId != null) {
+  //     this.filtering.AgentId = this.AgentId
+  //     this.allFilter();
+  //   }
+  // }
   showcount = false
   findorder
   addOrder() {
-    if (this.Code && this.AgentId) {
+    if (this.Code) {
       this.orderservice.GetOrderByAgent(this.AgentId, this.Code).subscribe(res => {
         this.findorder = res
         console.log(res)

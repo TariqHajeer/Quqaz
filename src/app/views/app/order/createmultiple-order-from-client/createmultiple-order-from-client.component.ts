@@ -41,6 +41,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   Region: Region[] = []
   Regions: Region[] = []
   Agents: User[] = []
+  GetAgents: User[] = []
   orderTypes: OrderType[] = []
   orderType: OrderType
   OrderItem: OrderItem
@@ -102,8 +103,12 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
 
   getAgent() {
     this.userService.GetAgent().subscribe(res => {
-      this.Agents = res
-      this.Order.AgentId = res[0].id
+      this.GetAgents = res
+      this.Agents=this.GetAgents.filter(a=>a.countryId== this.Order.CountryId)
+      if(this.Agents.length!=0)
+      this.Order.AgentId = this.Agents[0].id
+      else this.Order.AgentId=null
+
     })
   }
 
@@ -116,17 +121,30 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   Getcities() {
     this.customerService.getAll(this.cityapi).subscribe(res => {
       this.cities = res
-      this.Order.CountryId = res[0].id
+      if( this.cities .length!=0)
+      this.Order.CountryId =  this.cities [0].id
       this.Order.Country = this.cities.find(c => c.id == this.Order.CountryId)
       this.changeCountry()
     })
   }
 
   changeCountry() {
-    this.Order.CountryId = this.Order.Country.id
-    var city = this.cities.find(c => c.id == this.Order.CountryId)
+
+    var city = this.cities.find(c => c == this.Order.Country)
+    this.Agents=this.GetAgents.filter(a=>a.countryId== this.Order.Country.id)
+    if(this.Agents.length!=0)
+    this.Order.AgentId = this.Agents[0].id
+    else this.Order.AgentId=null
     this.Order.Cost = city.deliveryCost
 
+  }
+  changeCountryEdit() {
+    var city = this.cities.find(c => c.id == this.EditOrder.Country)
+    this.Agents=this.GetAgents.filter(a=>a.countryId== this.EditOrder.Country.id)
+    if(this.Agents.length!=0)
+    this.EditOrder.AgentId = this.Agents[0].id
+    else this.EditOrder.AgentId=null
+    this.EditOrder.Cost = city.deliveryCost
   }
   showMessageCode: boolean = false
   changeClientId() {

@@ -98,7 +98,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       this.orderPlace.forEach(item=>{
         item.checked=true
       })
-      //this.orderPlace = this.orderPlace.filter(o => o.id == 3 || o.id == 2)
+      this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
 
     })
   }

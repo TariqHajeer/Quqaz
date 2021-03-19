@@ -39,6 +39,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
   Region: Region[] = []
   Regions: Region[] = []
   Agents: User[] = []
+  GetAgents: User[] = []
   orderTypes: OrderType[] = []
   orderType: OrderType
   OrderItem: OrderItem
@@ -82,8 +83,12 @@ export class CreateMulitpleOrderComponent implements OnInit {
 
   getAgent() {
     this.userService.GetAgent().subscribe(res => {
-      this.Agents = res
-      this.Order.AgentId = res[0].id
+      this.GetAgents = res
+      this.Agents=this.GetAgents.filter(a=>a.countryId== this.Order.CountryId)
+      if(this.Agents.length!=0)
+      this.Order.AgentId = this.Agents[0].id
+      else this.Order.AgentId=null
+
     })
   }
 
@@ -96,10 +101,9 @@ export class CreateMulitpleOrderComponent implements OnInit {
   Getcities() {
     this.customerService.getAll(this.cityapi).subscribe(res => {
       this.cities = res
-      this.Order.CountryId = res[0].id
-      if (this.Orders.length != 0)
-        this.Order.CountryId = this.Orders[this.Orders.length - 1].CountryId
-
+      if( this.cities.length!=0)
+      this.Order.CountryId =  this.cities[0].id
+      
       this.changeCountry()
     })
   }
@@ -107,8 +111,20 @@ export class CreateMulitpleOrderComponent implements OnInit {
   changeCountry() {
 
     var city = this.cities.find(c => c.id == this.Order.CountryId)
+    this.Agents=this.GetAgents.filter(a=>a.countryId== this.Order.CountryId)
+    if(this.Agents.length!=0)
+    this.Order.AgentId = this.Agents[0].id
+    else this.Order.AgentId=null
     this.Order.Cost = city.deliveryCost
 
+  }
+  changeCountryEdit() {
+    var city = this.cities.find(c => c.id == this.EditOrder.CountryId)
+    this.Agents=this.GetAgents.filter(a=>a.countryId== this.EditOrder.CountryId)
+    if(this.Agents.length!=0)
+    this.EditOrder.AgentId = this.Agents[0].id
+    else this.EditOrder.AgentId=null
+    this.EditOrder.Cost = city.deliveryCost
   }
   showMessageCode: boolean = false
   CheckCode() {
@@ -173,6 +189,8 @@ export class CreateMulitpleOrderComponent implements OnInit {
     order.CanEdit = true
     this.tempEdit = Object.assign({}, order);
     this.EditOrder = order
+    this.Agents=this.Agents.filter(a=>a.countryId== this.EditOrder.CountryId)
+
   }
   Save(order: CreateMultipleOrder) {
     if (!this.EditOrder.Code || !this.EditOrder.ClientId ||
