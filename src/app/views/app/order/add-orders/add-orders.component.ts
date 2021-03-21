@@ -1,6 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { concat, Observable, of, Subject } from 'rxjs';
 import { catchError, delay, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { City } from 'src/app/Models/Cities/city.Model';
@@ -29,7 +30,8 @@ export class AddOrdersComponent implements OnInit {
     private clientService: ClientService
     , private customerService: CustomService,
     public userService: UserService,
-    private notifications: NotificationsService) { }
+    private notifications: NotificationsService,
+    public spinner: NgxSpinnerService) { }
 
   Order: CreateOrdersFromEmployee
   submitted = false;
@@ -92,9 +94,11 @@ export class AddOrdersComponent implements OnInit {
       this.Order.RegionId = null;
     }
     console.log(this.Order)
+    this.spinner.show()
    this.orderservice.Creat(this.Order).subscribe(res => {
       this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.int()
+      this.spinner.hide()
     });
 
   }
@@ -148,6 +152,7 @@ export class AddOrdersComponent implements OnInit {
     }
     else this.submitordertype = false
     if (this.orderTypes.filter(o => o.name == this.orderType.name).length < 1) {
+
       this.customerService.Create(this.ordertypeapi, this.orderType).subscribe(res => {
         //console.log(res)
       })
