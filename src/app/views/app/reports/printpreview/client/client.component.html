@@ -72,11 +72,10 @@
             </div>
             <div class="col-md-3" style="text-align: right;">
                 <br>
-                <h3 style="font-size: 20px;">
+                <h3>
                     اسم العميل : {{client!=null||client!=undefined?client.name:null}}
-                </h3>
-                <h3 style="font-size: 20px;">
-                    رقم هاتف العميل :
+                    <br>
+                    أرقام هاتف العميل :
 
                     <div *ngFor="let phone of client.phones">
                         {{phone.phone}}
@@ -93,7 +92,7 @@
                     ترقيم
                 </th>
                 <th>
-                    كود
+                    رقم الوصل
                 </th>
                 <th>
                     الإجمالي
