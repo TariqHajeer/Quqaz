@@ -77,7 +77,18 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   changeMoenyPlaced() {
     if (this.getorders.length != 0) {
       this.getorders.forEach(o => {
-        o.order.monePlaced = { ...this.MoenyPlacedId }
+        if (this.OrderplacedId.id == 4 && this.MoenyPlacedId.id == 3) {
+          if (o.order.isClientDiliverdMoney) {
+            o.order.monePlaced.id = 4
+          }
+          else {
+            o.order.monePlaced.id = 3
+          }
+        }
+        else {
+          o.order.monePlaced.id = this.MoenyPlacedId.id
+        }
+        
       })
       this.dataSource.data = this.getorders
       this.dataSource._updateChangeSubscription();
@@ -97,11 +108,13 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       this.getorders.forEach(o => {
         o.order.orderplaced = { ...this.OrderplacedId }
         this.ChangeOrderplacedId(o, this.getorders.indexOf(o))
-     
+
 
       })
-      this.MoenyPlacedId=null
-      this.getMoenyPlaced= this.getorders[0].MoenyPlaced
+      this.MoenyPlacedId = null
+      this.getMoenyPlaced = this.getorders[0].MoenyPlaced
+      if (this.OrderplacedId.id == 4)
+        this.getMoenyPlaced = [{ id: 2, name: "مندوب" }, { id: 3, name: "تم تسليمها/داخل الشركة" }]
       this.dataSource.data = this.getorders
       this.dataSource._updateChangeSubscription();
     }
@@ -165,7 +178,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
 
   }
   ChangeOrderplacedId(element, index) {
-   // this.GetMoenyPlaced()
+    // this.GetMoenyPlaced()
     this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
     this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced)
     this.orderplacedstate.onWay(element, this.MoenyPlaced)

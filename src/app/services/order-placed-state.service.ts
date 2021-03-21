@@ -61,7 +61,6 @@ export class OrderPlacedStateService {
     if (element.order.orderplaced.id == 4&&element.order.isClientDiliverdMoney == false) {
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 2 || m.id == 3)]
       element.order.monePlaced = element.MoenyPlaced[0]
-      element.MoenyPlaced[1].name="داخل الشركة/تم تسليمها"
 
       element.messageCost = ""
       //element.order.isClientDiliverdMoney = true
