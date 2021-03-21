@@ -16,6 +16,7 @@ import {StoreModule} from '@ngrx/store'
 import {StoreDevtoolsModule} from '@ngrx/store-devtools'
 import {EffectsModule } from '@ngrx/effects'
 import { NotificationsService } from 'angular2-notifications';
+import { NgxSpinnerModule } from 'ngx-spinner';
 //import { allIcons, NgxBootstrapIconsModule } from 'ngx-bootstrap-icons';
 
 @NgModule({
@@ -30,6 +31,7 @@ import { NotificationsService } from 'angular2-notifications';
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot([]),
+    NgxSpinnerModule,
   //  NgxBootstrapIconsModule.forRoot(allIcons) 
 
   ],

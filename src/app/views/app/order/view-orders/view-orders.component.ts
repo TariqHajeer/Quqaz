@@ -15,6 +15,7 @@ import { ClientService } from '../../client/client.service';
 import { CustomService } from 'src/app/services/custom.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/Models/user/user.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-view-orders',
@@ -44,7 +45,8 @@ export class ViewOrdersComponent implements OnInit {
     private router: Router,
     private clientService: ClientService
     , private customerService: CustomService,
-    private userService: UserService) { }
+    private userService: UserService,
+    public spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.paging = new Paging
@@ -63,8 +65,8 @@ export class ViewOrdersComponent implements OnInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.displayedColumns = ['code', 'deliveryCost', 'cost', 'recipientName',
-      'recipientPhones', 'client','clientPrintNumber', 'country'
-      , 'region', 'agent','agentPrintNumber', 'monePlaced', 'orderplaced', 'address', 'createdBy', 'date', 'diliveryDate', 'note', 'Edit', 'Delete'];
+      'recipientPhones', 'client', 'clientPrintNumber', 'country'
+      , 'region', 'agent', 'agentPrintNumber', 'monePlaced', 'orderplaced', 'address', 'createdBy', 'date', 'diliveryDate', 'note', 'Edit', 'Delete'];
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -81,8 +83,10 @@ export class ViewOrdersComponent implements OnInit {
 
   }
   allFilter() {
+    this.spinner.show()
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
-     console.log(response.data)
+     
+      this.spinner.hide()
       if (response.data.length == 0)
         this.noDataFound = true
       else this.noDataFound = false
@@ -90,7 +94,7 @@ export class ViewOrdersComponent implements OnInit {
       this.totalCount = response.total
     },
       err => {
-
+        this.spinner.hide()
       });
   }
 
@@ -99,12 +103,12 @@ export class ViewOrdersComponent implements OnInit {
   }
   delete(element) {
     this.orderservice.Delete(element.id).subscribe(res => {
-     this.allFilter()
+      this.allFilter()
     })
   }
   Edit(element) {
     this.router.navigate(['/app/order/editorder'])
-    localStorage.setItem('editorder',JSON.stringify(element))
+    localStorage.setItem('editorder', JSON.stringify(element))
   }
   getAgent() {
     this.userService.GetAgent().subscribe(res => {

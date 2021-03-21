@@ -23,6 +23,8 @@ import {
     SelectionService, ScatterSeriesService, ZoomService, 
 } from '@syncfusion/ej2-angular-charts';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { NgxSpinnerModule } from 'ngx-spinner';
+
 @NgModule({
   declarations: [HomePageComponent, StartComponent],
   imports: [
@@ -33,12 +35,15 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     FormsModule, ReactiveFormsModule ,DatePickerModule,DateRangePickerModule,
     AccumulationChartModule,
     GridModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    NgxSpinnerModule,
+    
   ],
   providers: [LineSeriesService, DateTimeService, ColumnSeriesService, DataLabelService, ZoomService, StackingColumnSeriesService, CategoryService,
     StepAreaSeriesService, SplineSeriesService, ChartAnnotationService, LegendService, TooltipService, StripLineService,
     PieSeriesService, AccumulationTooltipService, ScrollBarService, AccumulationDataLabelService, SelectionService, ScatterSeriesService
     , PageService,SparklineTooltipService]
-    ,schemas:[CUSTOM_ELEMENTS_SCHEMA]
+    ,schemas:[CUSTOM_ELEMENTS_SCHEMA],
+    
 })
 export class HomePageModule { }

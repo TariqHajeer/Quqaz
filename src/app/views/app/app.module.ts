@@ -11,10 +11,12 @@ import { UsersModule } from '../app/users/users.module';
 import { OrderModule } from '../app/order/order.module';
 import { ReportsModule } from '../app/reports/reports.module';
 import { PrintTamplateModule } from '../app/print-tamplate/print-tamplate.module';
+import { SpinnerComponent } from './spinner/spinner.component';
 //////////
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, SpinnerComponent],
   imports: [
     CommonModule,
     AppRoutingModule,
@@ -24,12 +26,13 @@ import { PrintTamplateModule } from '../app/print-tamplate/print-tamplate.module
     OrderModule,
     ReportsModule,
     PrintTamplateModule,
-    
+    NgxSpinnerModule
     
   ],
   providers: [PdfExportService
     , { provide: LocationStrategy, useClass: HashLocationStrategy }
-  ],schemas:[CUSTOM_ELEMENTS_SCHEMA]
+  ],schemas:[CUSTOM_ELEMENTS_SCHEMA],
+  exports:[SpinnerComponent]
 })
 export class AppModule { }
 

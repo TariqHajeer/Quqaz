@@ -5,6 +5,7 @@ import { MainStatics } from 'src/app/Models/main-statics.model';
 import { ChartTheme, ILoadedEventArgs } from '@syncfusion/ej2-angular-charts';
 import { ThemePalette } from '@angular/material/core';
 import { ProgressBarMode } from '@angular/material/progress-bar';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-start',
@@ -13,7 +14,8 @@ import { ProgressBarMode } from '@angular/material/progress-bar';
 export class StartComponent implements OnInit {
 
   constructor(private authenticationService: AuthService,
-    private StatisticsService: StatisticsService) {
+    private StatisticsService: StatisticsService,
+    private spinner: NgxSpinnerService) {
 
   }
   public data: Object[]=[]
@@ -73,7 +75,9 @@ export class StartComponent implements OnInit {
   }
 
   GetMainStatics() {
+    this.spinner.show()
     this.StatisticsService.MainStatics().subscribe((res) => {
+      this.spinner.hide()
       this.MainStatics = res
       this.data = [
         { x: ' المندوبين', y: this.MainStatics.totalAgent },
@@ -83,6 +87,8 @@ export class StartComponent implements OnInit {
         { x: 'شحنات خارج المخزن', y4: this.MainStatics.totalOrderOutStore },
         { x: 'الشحنات', y5: this.MainStatics.totlaOrder },
       ];
+    },err=>{
+      this.spinner.hide()
     })
   }
 

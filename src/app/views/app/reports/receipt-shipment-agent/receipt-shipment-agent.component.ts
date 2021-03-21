@@ -69,7 +69,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
-      this.getMoenyPlaced = [...this.MoenyPlaced]
+      this.getMoenyPlaced = res
       // this.MoenyPlaced = this.MoenyPlaced.filter(o => o.id != 4)
 
     })
@@ -81,7 +81,6 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       })
       this.dataSource.data = this.getorders
       this.dataSource._updateChangeSubscription();
-      console.log(this.dataSource)
     }
 
 
@@ -98,10 +97,11 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       this.getorders.forEach(o => {
         o.order.orderplaced = { ...this.OrderplacedId }
         this.ChangeOrderplacedId(o, this.getorders.indexOf(o))
-        console.log(this.dataSource)
+     
 
       })
-      this.getMoenyPlaced=  this.getMoenyPlaced.filter(m => this.getorders[0].MoenyPlaced.includes(m))
+      this.MoenyPlacedId=null
+      this.getMoenyPlaced= this.getorders[0].MoenyPlaced
       this.dataSource.data = this.getorders
       this.dataSource._updateChangeSubscription();
     }
@@ -124,7 +124,6 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     if (this.Code) {
       this.orderservice.GetOrderByAgent(this.Code).subscribe(res => {
         this.findorder = res
-        console.log(res)
         if (this.findorder) {
           if (this.getorders.filter(o => o.order.code == this.findorder.code).length > 0) {
             this.notifications.create("error", "الشحنة مضافة مسبقا", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
@@ -166,7 +165,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
 
   }
   ChangeOrderplacedId(element, index) {
-    this.GetMoenyPlaced()
+   // this.GetMoenyPlaced()
     this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
     this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced)
     this.orderplacedstate.onWay(element, this.MoenyPlaced)

@@ -26,6 +26,7 @@ import {
 } from '@syncfusion/ej2-angular-charts';
 import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
+import { NgxSpinnerModule } from 'ngx-spinner';
 @NgModule({
   declarations: [
     ViewOrdersComponent,
@@ -51,7 +52,8 @@ import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
     SimpleNotificationsModule.forRoot(),
     ChartModule,
     DatePickerModule,
-    DateRangePickerModule
+    DateRangePickerModule,
+    NgxSpinnerModule
   ], providers: [CategoryService, DateTimeService, ScrollBarService, LineSeriesService, ColumnSeriesService,
     ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService, LegendService, TooltipService,]
   , schemas: [CUSTOM_ELEMENTS_SCHEMA]

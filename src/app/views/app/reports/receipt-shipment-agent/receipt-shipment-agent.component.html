@@ -31,14 +31,14 @@
   <div class="col-2">
     <label>حالة الشحنة</label>
     <ng-select  appendTo="body" [(ngModel)]="OrderplacedId" [ngModelOptions]="{standalone: true}" [clearable]="false"
-     name="Orderplaced" (change)="changeOrderPlaced()" style="width: 120px; overflow: visible;">
+     name="Orderplaced" (ngModelChange)="changeOrderPlaced()" style="width: 120px; overflow: visible;">
       <ng-option *ngFor="let order of orderPlace " [value]="order">{{order.name}}</ng-option>
     </ng-select>
   </div>
   <div class="col-2">
     <label>موقع المبلغ</label>
     <ng-select appendTo="body"[(ngModel)]="MoenyPlacedId" [ngModelOptions]="{standalone: true}" style="width: 120px;"
-    [clearable]="false" (change)="changeMoenyPlaced()" name="MonePlaced">
+    [clearable]="false" (ngModelChange)="changeMoenyPlaced()" name="MonePlaced">
     <ng-option *ngFor="let moenyPlaced of getMoenyPlaced" [value]="moenyPlaced">{{moenyPlaced.name}}
     </ng-option>
   </ng-select>
