@@ -16,7 +16,7 @@ export class ReceiptClientComponent implements OnInit {
     public sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef) { }
     //'موقع المبلغ', 'حالة الشحنة '
-    heads = ['ترقيم', 'كود', 'الإجمالي','الرسوم',' يدفع للعميل', 'المحافظة ', 'الهاتف', 'ملاحظات']
+    heads = ['ترقيم', 'رقم الوصل', 'الإجمالي','الرسوم',' يدفع للعميل', 'المحافظة ', 'الهاتف', 'ملاحظات']
     @Input() orders: any[] = []
   count = 0
   @Input() client

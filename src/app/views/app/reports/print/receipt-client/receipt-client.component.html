@@ -1,7 +1,7 @@
 <div class="card" style="direction:rtl">
     <div class="card-body">
 
-        <table class="table ">
+        <table>
             <thead>
 
                 <tr>
@@ -10,7 +10,30 @@
                     </td>
                 </tr>
 
-                <th *ngFor="let head of heads" style="font-size: 20px;">{{head}}</th>
+                <th>
+                    ترقيم
+                </th>
+                <th>
+                    رقم الوصل
+                </th>
+                <th>
+                    الإجمالي
+                </th>
+                <th>
+                    الرسوم
+                </th>
+                <th>
+                    يدفع للعميل
+                </th>
+                <th>
+                    المحافظة
+                </th>
+                <th>
+                    الهاتف
+                </th>
+                <th>
+                    ملاحظات
+                </th>
             </thead>
             <tbody>
                 <tr>
@@ -26,7 +49,7 @@
                     </td>
                     <td>
                         {{order.cost}}
-                    </td> 
+                    </td>
                     <td>
                         {{order.deliveryCost}}
                     </td>
@@ -55,7 +78,7 @@
     </div>
     </td>
     </tr>
-    <tr class=" table-bordered trbordered" style="font-size: 18px;  background-color: rgb(218, 218, 219);
+    <tr class=" table-bordered trbordered" style="font-size: 18px;  background-color: rgb(185, 185, 185);
     ">
         <td colspan="2">
             الإجمالي :
@@ -78,37 +101,37 @@
 <div class="header">
     <div class="row ">
         <div class="col-md-4" style="text-align: right; ">
-            <table>
+            <table border="2px">
 
                 <tr>
-                    <td class="tdstyle">
+                    <td>
                         رقم الطباعة :
                     </td>
-                    <td class="tdstyle">
+                    <td>
                         {{printnumber}}
                     </td>
                 </tr>
                 <tr>
-                    <td class="tdstyle">
+                    <td>
                         مستخدم الطابعة :
                     </td>
-                    <td class="tdstyle">
+                    <td>
                         {{userName.name}}
                     </td>
                 </tr>
                 <tr>
-                    <td class="tdstyle">
+                    <td>
                         تاريخ الطباعة :
                     </td>
-                    <td class="tdstyle">
+                    <td>
                         {{dateOfPrint | date:"dd/MM/yyyy"}}
                     </td>
                 </tr>
                 <tr>
-                    <td class="tdstyle">
+                    <td>
                         وقت الطباعة :
                     </td>
-                    <td class="tdstyle">
+                    <td>
                         {{dateOfPrint | date:"HH:mm:ss"}}
                     </td>
                 </tr>
@@ -118,22 +141,22 @@
 
 
         </div>
-        <div class="col-md-5" style="text-align: right;">
-            <h3 style="font-size: 20px;">
+        <div class="col-md-5" style="direction: rtl;">
+            <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px"
+                style="margin-left: 20%;" />
+        </div>
+        <div class="col-md-3" style="text-align: right;">
+            <br>
+            <h3>
                 اسم العميل : {{client!=null||client!=undefined?client.name:null}}
-            </h3>
-            <h3 style="font-size: 20px;">
-                رقم هاتف العميل :
+                <br>
+                أرقام هاتف العميل :
 
                 <div *ngFor="let phone of client.phones">
                     {{phone.phone}}
                 </div>
             </h3>
 
-        </div>
-
-        <div class="col-md-3">
-            <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px" />
         </div>
     </div>
 </div>
