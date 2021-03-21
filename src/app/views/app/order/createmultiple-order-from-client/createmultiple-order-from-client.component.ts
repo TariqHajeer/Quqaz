@@ -104,10 +104,10 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   getAgent() {
     this.userService.GetAgent().subscribe(res => {
       this.GetAgents = res
-      this.Agents=this.GetAgents.filter(a=>a.countryId== this.Order.CountryId)
-      if(this.Agents.length!=0)
-      this.Order.AgentId = this.Agents[0].id
-      else this.Order.AgentId=null
+      this.Agents = this.GetAgents.filter(a => a.countryId == this.Order.CountryId)
+      if (this.Agents.length != 0)
+        this.Order.AgentId = this.Agents[0].id
+      else this.Order.AgentId = null
 
     })
   }
@@ -121,8 +121,8 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   Getcities() {
     this.customerService.getAll(this.cityapi).subscribe(res => {
       this.cities = res
-      if( this.cities .length!=0)
-      this.Order.CountryId =  this.cities [0].id
+      if (this.cities.length != 0)
+        this.Order.CountryId = this.cities[0].id
       this.Order.Country = this.cities.find(c => c.id == this.Order.CountryId)
       this.changeCountry()
     })
@@ -131,19 +131,19 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   changeCountry() {
 
     var city = this.cities.find(c => c == this.Order.Country)
-    this.Agents=this.GetAgents.filter(a=>a.countryId== this.Order.Country.id)
-    if(this.Agents.length!=0)
-    this.Order.AgentId = this.Agents[0].id
-    else this.Order.AgentId=null
+    this.Agents = this.GetAgents.filter(a => a.countryId == this.Order.Country.id)
+    if (this.Agents.length != 0)
+      this.Order.AgentId = this.Agents[0].id
+    else this.Order.AgentId = null
     this.Order.Cost = city.deliveryCost
 
   }
   changeCountryEdit() {
     var city = this.cities.find(c => c.id == this.EditOrder.Country)
-    this.Agents=this.GetAgents.filter(a=>a.countryId== this.EditOrder.Country.id)
-    if(this.Agents.length!=0)
-    this.EditOrder.AgentId = this.Agents[0].id
-    else this.EditOrder.AgentId=null
+    this.Agents = this.GetAgents.filter(a => a.countryId == this.EditOrder.Country.id)
+    if (this.Agents.length != 0)
+      this.EditOrder.AgentId = this.Agents[0].id
+    else this.EditOrder.AgentId = null
     this.EditOrder.Cost = city.deliveryCost
   }
   showMessageCode: boolean = false
@@ -186,25 +186,28 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
       })
     }
   }
-  RecipientPhoneslength=""
+  RecipientPhoneslength = ""
   @ViewChild('code') codeElement: ElementRef;
+  checkLengthPhoneNumber(phone) {
+    if (phone&&phone.length < 11) {
+      this.RecipientPhoneslength = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
+      return true
+    } else {
+      this.RecipientPhoneslength = ""
+      return false
+    }
+  }
   onEnter() {
     this.addNewCountry()
-   
+    if (this.checkLengthPhoneNumber(this.Order.RecipientPhones))
+      return
     if (!this.Order.Code || !this.Order.ClientId ||
       !this.Order.RecipientPhones
       || !this.Order.AgentId || this.showMessageCode) {
       this.submitted = true
       return
     } else this.submitted = false
-    if (this.Order.RecipientPhones.length < 11) {
-      this.RecipientPhoneslength=" لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
-      this.submitted = true
-      return
-     }else{ 
-       this.RecipientPhoneslength=""
-       this.submitted = false
-    }
+
     this.Order.CountryId = this.Order.Country.id
     // var country = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.CountryName = this.Order.Country.name
@@ -235,7 +238,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     this.EditOrder = order
   }
   Save(order: CreateMultipleOrder) {
-    
+
     this.editNewCountry()
     if (!this.EditOrder.Code || !this.EditOrder.ClientId ||
       !this.EditOrder.RecipientPhones
@@ -244,14 +247,8 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
       this.Editsubmitted = true
       return
     } else this.Editsubmitted = false
-    if (this.EditOrder.RecipientPhones.length < 11) {
-      this.RecipientPhoneslength=" لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
-      this.Editsubmitted = true
-      return
-     }else{ 
-       this.RecipientPhoneslength=""
-       this.Editsubmitted = false
-    }
+    if (this.checkLengthPhoneNumber(this.EditOrder.RecipientPhones))
+    return
     this.EditOrder.CanEdit = false
     this.EditOrder.CountryId = this.EditOrder.Country.id
     this.EditOrder.CountryName = this.EditOrder.Country.name
