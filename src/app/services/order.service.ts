@@ -106,8 +106,8 @@ export class OrderService {
   SetPrintNumber(number) {
     return this.http.post<any>(this.controler + "SetPrintNumber", number)
   }
-  GetOrderByAgent(agentId, orderCode) {
-    return this.http.get(this.controler + "GetOrderByAgent/" + agentId + "/" + orderCode)
+  GetOrderByAgent( orderCode) {
+    return this.http.get(this.controler + "GetOrderByAgent/"  + orderCode)
   }
   GetEarning(paging: Paging, datefilter: DateFiter) {
     let params = new HttpParams();
@@ -155,8 +155,7 @@ export class OrderService {
         params = params.append(key, element);
         index++;
       });
-      console.log(params)}
-
+}
     return this.http.get<any>(this.controler + "ClientDontDiliverdMoney", { params: params })
    }
 }

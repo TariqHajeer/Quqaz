@@ -31,7 +31,8 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   statu
   MoenyPlacedId
   MoenyPlaced: any[] = []
-
+  getMoenyPlaced: any[] = []
+  OrderplacedId
   constructor(
     private orderservice: OrderService,
     public userService: UserService,
@@ -40,7 +41,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     public orderplacedstate: OrderPlacedStateService
   ) { }
   AgentId
-  OrderplacedId
+
   orderPlace: NameAndIdDto[] = []
   Agents: User[] = []
   paging: Paging
@@ -64,12 +65,26 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.getorder = new GetOrder
 
   }
+
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
+      this.getMoenyPlaced = [...this.MoenyPlaced]
       // this.MoenyPlaced = this.MoenyPlaced.filter(o => o.id != 4)
 
     })
+  }
+  changeMoenyPlaced() {
+    if (this.getorders.length != 0) {
+      this.getorders.forEach(o => {
+        o.order.monePlaced = { ...this.MoenyPlacedId }
+      })
+      this.dataSource.data = this.getorders
+      this.dataSource._updateChangeSubscription();
+      console.log(this.dataSource)
+    }
+
+
   }
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
@@ -77,6 +92,20 @@ export class ReceiptShipmentAgentComponent implements OnInit {
 
       this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
     })
+  }
+  changeOrderPlaced() {
+    if (this.getorders.length != 0) {
+      this.getorders.forEach(o => {
+        o.order.orderplaced = { ...this.OrderplacedId }
+        this.ChangeOrderplacedId(o, this.getorders.indexOf(o))
+        console.log(this.dataSource)
+
+      })
+      this.getMoenyPlaced=  this.getMoenyPlaced.filter(m => this.getorders[0].MoenyPlaced.includes(m))
+      this.dataSource.data = this.getorders
+      this.dataSource._updateChangeSubscription();
+    }
+
   }
   getAgent() {
     this.userService.GetAgent().subscribe(res => {
@@ -93,7 +122,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   findorder
   addOrder() {
     if (this.Code) {
-      this.orderservice.GetOrderByAgent(this.AgentId, this.Code).subscribe(res => {
+      this.orderservice.GetOrderByAgent(this.Code).subscribe(res => {
         this.findorder = res
         console.log(res)
         if (this.findorder) {
@@ -101,7 +130,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
             this.notifications.create("error", "الشحنة مضافة مسبقا", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
             return
           }
-          this.getorder.order = {...this.findorder}
+          this.getorder.order = { ...this.findorder }
           this.getorder.MoenyPlaced = [...this.MoenyPlaced]
           this.getorder.OrderPlaced = [...this.orderPlace]
           this.getorder.canEditCount = true
@@ -110,11 +139,11 @@ export class ReceiptShipmentAgentComponent implements OnInit {
           this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced)
           this.orderplacedstate.unacceptable(this.getorder, this.MoenyPlaced)
           this.orderplacedstate.isClientDiliverdMoney(this.getorder, this.MoenyPlaced)
-          if (this.getorder.order.orderplaced.id == 1 ||this.getorder.order.orderplaced.id == 2) {
-            this.getorder.order.orderplaced = this.getorder.OrderPlaced.find(o=>o.id==3)
+          if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2) {
+            this.getorder.order.orderplaced = this.getorder.OrderPlaced.find(o => o.id == 3)
           }
-         
-          this.getorders.push({...this.getorder})
+
+          this.getorders.push({ ...this.getorder })
           this.sumCost()
           this.showcount = true
           this.dataSource = new MatTableDataSource(this.getorders)
@@ -137,10 +166,9 @@ export class ReceiptShipmentAgentComponent implements OnInit {
 
   }
   ChangeOrderplacedId(element, index) {
-  console.log( this.dataSource.data) 
     this.GetMoenyPlaced()
     this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
-    this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced, this.tempordersmonePlaced[index], this.tempisClientDiliverdMoney[index])
+    this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced)
     this.orderplacedstate.onWay(element, this.MoenyPlaced)
     this.orderplacedstate.unacceptable(element, this.MoenyPlaced)
     this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)

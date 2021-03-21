@@ -34,7 +34,7 @@
                         {{order.cost-order.deliveryCost}}
                     </td>
                     <td>
-                        {{order.country.name}}
+                        {{order.country!=null||order.country!=undefined?order.country.name:null}}
                     </td>
                     <!-- 
                         <td>
