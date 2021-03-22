@@ -69,7 +69,8 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
-      this.getMoenyPlaced = res
+      console.log(res)
+      this.getMoenyPlaced = [...res]
       // this.MoenyPlaced = this.MoenyPlaced.filter(o => o.id != 4)
 
     })
@@ -77,21 +78,19 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   changeMoenyPlaced() {
     if (this.getorders.length != 0) {
       this.getorders.forEach(o => {
-        if (this.OrderplacedId.id == 4 && this.MoenyPlacedId.id == 3) {
+        o.order.monePlaced = this.MoenyPlaced.find(m=>m.id==this.MoenyPlacedId.id)
+        if (this.OrderplacedId.id == 4 && this.MoenyPlacedId.id == 4) {
           if (o.order.isClientDiliverdMoney) {
-            o.order.monePlaced.id = 4
+            o.order.monePlaced = this.MoenyPlaced.find(m=>m.id==4)
           }
           else {
-            o.order.monePlaced.id = 3
+            o.order.monePlaced = this.MoenyPlaced.find(m=>m.id==3)
           }
         }
-        else {
-          o.order.monePlaced.id = this.MoenyPlacedId.id
-        }
-        
+
+
       })
-      this.dataSource.data = this.getorders
-      this.dataSource._updateChangeSubscription();
+
     }
 
 
@@ -99,7 +98,6 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
-
       this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
     })
   }
@@ -108,15 +106,12 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       this.getorders.forEach(o => {
         o.order.orderplaced = { ...this.OrderplacedId }
         this.ChangeOrderplacedId(o, this.getorders.indexOf(o))
-
-
       })
       this.MoenyPlacedId = null
-      this.getMoenyPlaced = this.getorders[0].MoenyPlaced
+      this.getMoenyPlaced = [...this.getorders[0].MoenyPlaced]
       if (this.OrderplacedId.id == 4)
-        this.getMoenyPlaced = [{ id: 2, name: "مندوب" }, { id: 3, name: "تم تسليمها/داخل الشركة" }]
-      this.dataSource.data = this.getorders
-      this.dataSource._updateChangeSubscription();
+        this.getMoenyPlaced = [{ id: 2, name: "مندوب" }, { id: 4, name: "تم تسليمها/داخل الشركة" }]
+
     }
 
   }

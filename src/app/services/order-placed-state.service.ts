@@ -14,7 +14,7 @@ export class OrderPlacedStateService {
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 1)]
       element.order.monePlaced = element.MoenyPlaced[0]
     }
-    return element
+    
   }
   //تم التسليم و مرتجع جزئي
   canChangeCost(element, MoenyPlaced, temporderscostindex?) {
@@ -40,7 +40,7 @@ export class OrderPlacedStateService {
   //مرفوض, مرتجع كلي 
   unacceptable(element, MoenyPlaced) {
     if (element.order.orderplaced.id == 7 || element.order.orderplaced.id == 5) {
-      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 1)]
+      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 3)]
       element.order.monePlaced = element.MoenyPlaced[0]
       element.messageCost = ""
     }
