@@ -31,52 +31,82 @@
 
 
 <div class="card" style="direction:rtl" *ngIf="showPrintbtn">
+    
+
     <div class="card-body">
         <div class="row ">
-            <div class="col-md-4" style="text-align: right; ">
-                <h3>
-                    رقم الطباعة :{{printnumber}}
-                </h3>
-                <h3>
-                    مستخدم الطابعة :{{userName.name}}
-                </h3>
-                <h3>
-                    تاريخ الطباعة :{{dateOfPrint | date:"dd/MM/yyyy"}}
-                </h3>
-                <h3>
-                    وقت الطباعة :{{dateOfPrint | date:"HH:mm:ss"}}
-                </h3>
+            <div class="col-md-4" style="text-align: right;">
+                <table>
+
+                    <tr>
+                        <td >
+                            رقم الطباعة :
+                        </td>
+                        <td >
+                            {{printnumber}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            مستخدم الطابعة :
+                        </td>
+                        <td >
+                            {{userName.name}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >
+                            تاريخ الطباعة :
+                        </td>
+                        <td >
+                            {{dateOfPrint | date:"dd/MM/yyyy"}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >
+                            وقت الطباعة :
+                        </td>
+                        <td >
+                            {{dateOfPrint | date:"HH:mm:ss"}}
+                        </td>
+                    </tr>
+
+
+                </table>
 
             </div>
-            <div class="col-md-5" style="text-align: right;">
+            <div class="col-md-5">
+                <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px"
+                style="margin-right: 20%;" />
+            </div>
+            <div class="col-md-3" style="text-align: right;">
                 <h3>
                     كشف حساب المندوب : {{agent!=null||agent!=undefined?agent.name:null}}
-                </h3>
-                <h3>
+                    <br>
                     رقم هاتف المندوب :
                     <div *ngFor="let phone of agent.phones">
                         {{phone.phone}}
                     </div>
+                    <br>
+                    <div *ngIf="orderplaced!=null||orderplaced!=undefined">
+                       {{orderplaced.name}}
+                    </div>
                 </h3>
 
-              
-
+                
             </div>
 
-            <div class="col-md-3">
-                <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px" />
-            </div>
+           
         </div>
-        <table class="table ">
+        <table >
+
             <thead>
-
-
 
                 <th *ngFor="let head of heads" style="font-size: 20px;">{{head}}</th>
             </thead>
             <tbody>
-                <tr style="  margin-bottom: 20%;font-size: 18px;
-        " class=" table-bordered" *ngFor="let order of orders;index as i">
+
+                <tr *ngFor="let order of orders;index as i">
                     <td>
                         {{i+1}}
                     </td>
@@ -90,26 +120,26 @@
                         {{order.country.name}}
                     </td>
                     <td>
-                        {{order.monePlaced.name}}
+                        {{order.orderplaced.name}}
                     </td>
                     <td>
-                        {{order.orderplaced.name}}
+                        {{order.monePlaced.name}}
                     </td>
                     <td>
                         {{order.recipientPhones}}
                     </td>
-
+                  
                     <td>
                         {{order.note}}
                     </td>
                 </tr>
 
 
-                <tr class=" table-bordered" style="font-size: 18px;">
+                <tr class=" table-bordered trbordered" style="font-size: 18px;">
                     <td colspan="2">
                         الإجمالي :
                     </td>
-                    <td>
+                    <td colspan="6">
                         <!----> {{ count}}
                     </td>
 
@@ -119,6 +149,7 @@
         </table>
     </div>
 </div>
+
 
 
 <simple-notifications></simple-notifications>

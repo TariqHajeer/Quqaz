@@ -87,7 +87,18 @@
             (ngModelChange)="allFilter()">
   
           </div>
-       
+          <div class="col-md-2">
+            <label>رقم طباعة المندوب</label>
+            <input type="text" 
+            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.AgentPrintNumber"
+            (ngModelChange)="allFilter()">
+          </div>
+          <div class="col-md-2">
+            <label>رقم طباعة العميل</label>
+            <input type="text" 
+            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.ClientPrintNumber"
+            (ngModelChange)="allFilter()">
+          </div>
         </div>
        </div>
 </div>

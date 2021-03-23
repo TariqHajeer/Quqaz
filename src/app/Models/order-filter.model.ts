@@ -9,4 +9,6 @@ export class OrderFilter {
       OrderplacedId 
       AgentId
       IsClientDiliverdMoney
+      AgentPrintNumber
+      ClientPrintNumber
 }

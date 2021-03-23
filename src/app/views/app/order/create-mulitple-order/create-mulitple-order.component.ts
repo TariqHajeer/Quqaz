@@ -58,6 +58,8 @@ export class CreateMulitpleOrderComponent implements OnInit {
   ordertypeapi = "OrderType";
   Orders: any[] = []
   //CanEdit: boolean[] = []
+  @ViewChild('code') codeElement: ElementRef;
+
   ngOnInit(): void {
     this.Order = new CreateMultipleOrder();
     this.EditOrder = new CreateMultipleOrder();
@@ -154,25 +156,28 @@ export class CreateMulitpleOrderComponent implements OnInit {
     }
   }
   RecipientPhoneslength = ""
-  @ViewChild('code') codeElement: ElementRef;
   checkLengthPhoneNumber(phone) {
-    if (phone&&phone.length < 11) {
-      this.RecipientPhoneslength = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
-      return true
-    } else {
-      this.RecipientPhoneslength = ""
-      return false
-    }
+    console.log(phone)
+
+   
+    // if (phone&&phone.length < 11) {
+    //   this.RecipientPhoneslength = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
+    //   return true
+    // } 
+    // else {
+    //   this.RecipientPhoneslength = ""
+    //   return false
+    // }
   }
   onEnter() {
-    if (this.checkLengthPhoneNumber(this.Order.RecipientPhones))
-      return
+    
     if (!this.Order.Code || !this.Order.ClientId ||
       !this.Order.CountryId || !this.Order.RecipientPhones
       || !this.Order.AgentId || this.showMessageCode) {
       this.submitted = true
       return
     } else this.submitted = false
+   
     var country = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.CountryName = country.name
     var orderplace = this.orderPlace.find(c => c.id == this.Order.OrderplacedId)
@@ -211,8 +216,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
       this.Editsubmitted = true
       return
     } else this.Editsubmitted = false
-    if (this.checkLengthPhoneNumber(this.EditOrder.RecipientPhones))
-    return
+ 
     this.EditOrder.CanEdit = false
     var country = this.cities.find(c => c.id == this.EditOrder.CountryId)
     this.EditOrder.CountryName = country.name

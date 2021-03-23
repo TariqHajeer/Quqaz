@@ -2,7 +2,7 @@
 <div class="card" style="direction:rtl">
     <div class="card-body">
    
-<table class="table ">
+<table>
     <thead>
 
     <tr><td><div class="header-space"></div></td></tr>  
@@ -11,8 +11,7 @@
 </thead>
     <tbody><tr><td>
       <div class="content">
-        <tr style="  margin-bottom: 20%;font-size: 18px;"
-        class=" table-bordered" *ngFor="let order of orders;index as i" >
+        <tr *ngFor="let order of orders;index as i" style="  margin-bottom: 20%;font-size: 18px;" class=" table-bordered" >
             <td>
               {{i+1}}
             </td>
@@ -38,15 +37,17 @@
         
       </div>
     </td></tr>
-    <tr class=" table-bordered" style="font-size: 18px;">
+    <tr class=" table-bordered trbordered" style="font-size: 18px;  background-color: rgb(185, 185, 185);
+    ">
         <td colspan="2">
             الإجمالي :
         </td>
-        <td >
-           <!----> {{ count}}
+        <td colspan="5">
+            <!----> {{ count}}
         </td>
 
-    </tr></tbody>
+    </tr>
+</tbody>
    
   </table>
   </div>
@@ -54,36 +55,64 @@
   <div class="header">
     <div class="row ">
         <div class="col-md-4" style="text-align: right;">
-            <h3>
-                رقم الطباعة :{{printnumber}}
-            </h3>
-            <h3>
-                مستخدم الطابعة :{{userName.name}}
-            </h3>
-            <h3>
-                تاريخ الطباعة :{{dateOfPrint | date:"dd/MM/yyyy"}}
-            </h3>
-            <h3>
-                وقت الطباعة :{{dateOfPrint | date:"HH:mm:ss"}}
-            </h3>
+            <table border="2px">
+
+                <tr>
+                    <td >
+                        رقم الطباعة :
+                    </td>
+                    <td >
+                        {{printnumber}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        مستخدم الطابعة :
+                    </td>
+                    <td >
+                        {{userName.name}}
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        تاريخ الطباعة :
+                    </td>
+                    <td >
+                        {{dateOfPrint | date:"dd/MM/yyyy"}}
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        وقت الطباعة :
+                    </td>
+                    <td >
+                        {{dateOfPrint | date:"HH:mm:ss"}}
+                    </td>
+                </tr>
+
+
+            </table>
            
         </div>
-        <div class="col-md-5" style="text-align: right;">
+        <div class="col-md-5">
+            <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px"
+            style="margin-left: 20%;"  />
+        </div>
+        <div class="col-md-3" style="text-align: right;">
             <h3>
-               كشف حساب المندوب : {{agent!=null||agent!=undefined?agent.name:null}}
-            </h3>
-            <h3>
+                كشف حساب المندوب : {{agent!=null||agent!=undefined?agent.name:null}}
+                <br>
                 رقم هاتف المندوب :
                 <div *ngFor="let phone of agent.phones">
                     {{phone.phone}}
                 </div>
+                <br>
+                <div *ngIf="orderplaced!=null||orderplaced!=undefined">
+                   {{orderplaced.name}}
+                </div>
             </h3>
-        
-                <div class="table-bordered" style="width: 100px;padding: 5px;text-align: center;" *ngIf="orderplaced!=null||orderplaced!=undefined"><h3>{{orderplaced!=null||orderplaced!=undefined?orderplaced.name:null}}</h3>  </div> 
-        </div>
-    
-        <div class="col-md-3">
-            <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px" />
+
+            
         </div>
     </div>
   </div>

@@ -28,15 +28,17 @@ export class SetPrintNumberClientComponent implements OnInit {
   
   }
 
+  deliveryCostCount
   sumCost() {
     this.count = 0
+    this.deliveryCostCount = 0
     if (this.orders)
       this.orders.forEach(o => {
         this.count += o.cost
+        this.deliveryCostCount +=o.deliveryCost
       })
     return this.count
   }
-
   showPrintbtn = false
 
   changeDeleiverMoneyForClient() {
