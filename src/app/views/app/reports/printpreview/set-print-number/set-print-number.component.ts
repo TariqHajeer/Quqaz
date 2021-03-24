@@ -21,7 +21,7 @@ export class SetPrintNumberComponent implements OnInit {
   count = 0
   agent
   dateOfPrint = new Date()
-  userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
+  userName
   printnumber
   PrintNumberOrder: PrintNumberOrder
   ngOnInit(): void {
@@ -41,9 +41,14 @@ export class SetPrintNumberComponent implements OnInit {
 
   changeDeleiverMoneyForClient() {
     this.orderservice.GetOrderByAgnetPrintNumber(this.printnumber).subscribe(res => {
+     console.log(res)
       this.showPrintbtn = true
-      this.orders=res
-      this.agent=this.orders[0].agent
+      this.orders=res.orders
+      this.agent.name=res.destinationName
+      this.agent.phones=res.destinationPhone
+      this.printnumber=res.printNmber
+      this.dateOfPrint=res.date
+      this.userName=res.printerName
      this.sumCost()
     }, err => {
       this.showPrintbtn = true

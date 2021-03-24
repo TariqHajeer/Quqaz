@@ -79,7 +79,8 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   paging: Paging
   filtering: OrderFilter
   noDataFound: boolean = false
-
+  IsClientDeleviredMoney: boolean = false
+  ClientDoNotDeleviredMoney: boolean = false
   @Input() totalCount: number;
 
   ngOnInit(): void {
@@ -89,7 +90,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     this.GetorderPlace()
     this.paging = new Paging
     this.filtering = new OrderFilter
-    this.orderClientDontDiliverdMoney=new OrderClientDontDiliverdMoney()
+    this.order=new OrderClientDontDiliverdMoney()
   }
 
   GetorderPlace() {
@@ -121,12 +122,13 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     this.paging.Page = event.pageIndex + 1
     this.allFilter();
   }
- orderClientDontDiliverdMoney:OrderClientDontDiliverdMoney
+ order:OrderClientDontDiliverdMoney
   allFilter() {
-    this.orderClientDontDiliverdMoney.ClientId=this.ClientId
+    this.order.ClientId=this.ClientId
+
     var orderPlace=this.orderPlace.filter(o=>o.checked==true)
-    this.orderClientDontDiliverdMoney.OrderPlacedId=orderPlace.map(o=>o.id)
-    this.orderservice.ClientDontDiliverdMoney(this.orderClientDontDiliverdMoney).subscribe(response => {
+    this.order.OrderPlacedId=orderPlace.map(o=>o.id)
+    this.orderservice.ClientDontDiliverdMoney(this.order).subscribe(response => {
       if (response)
         if (response.length == 0)
           this.noDataFound = true
