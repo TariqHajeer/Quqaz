@@ -4,7 +4,8 @@ import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { PrintNumberOrder } from 'src/app/Models/order/PrintNumberOrder.model';
 import { OrderService } from 'src/app/services/order.service';
-
+import * as jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
 @Component({
   selector: 'app-set-print-number',
   templateUrl: './set-print-number.component.html',
@@ -16,8 +17,8 @@ export class SetPrintNumberComponent implements OnInit {
     private notifications: NotificationsService,
     public sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef) { }
-  heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'موقع المبلغ', 'حالة الشحنة ', 'الهاتف', 'ملاحظات']
-  orders: any[] = []
+    heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'الهاتف',  'ملاحظات']
+    orders: any[] = []
   count = 0
   agent
   dateOfPrint = new Date()
@@ -32,20 +33,20 @@ export class SetPrintNumberComponent implements OnInit {
     this.count = 0
     if (this.orders)
       this.orders.forEach(o => {
-        this.count += o.cost
+        this.count += o.total
       })
     return this.count
   }
 
   showPrintbtn = false
-
+  phones
   changeDeleiverMoneyForClient() {
     this.orderservice.GetOrderByAgnetPrintNumber(this.printnumber).subscribe(res => {
      console.log(res)
       this.showPrintbtn = true
       this.orders=res.orders
-      this.agent.name=res.destinationName
-      this.agent.phones=res.destinationPhone
+      this.agent=res.destinationName
+      this.phones=res.destinationPhone
       this.printnumber=res.printNmber
       this.dateOfPrint=res.date
       this.userName=res.printerName
@@ -56,5 +57,18 @@ export class SetPrintNumberComponent implements OnInit {
     })
 
   }
- 
+  public convetToPDF()
+  {
+  var data = document.getElementById('contentToConvert');
+  html2canvas(data).then(canvas => {
+  // Few necessary setting options
+  var imgWidth = 208;
+  var imgHeight = canvas.height * imgWidth / canvas.width;
+  const contentDataURL = canvas.toDataURL('image/png')
+  let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
+  var position = 0;
+  pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth,imgHeight)
+  pdf.save('new-file.pdf'); // Generated PDF
+  });
+  }
 }

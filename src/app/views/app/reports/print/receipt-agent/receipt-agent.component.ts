@@ -15,12 +15,13 @@ export class ReceiptAgentComponent implements OnInit ,OnChanges{
     private notifications: NotificationsService,
     public sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef) { }
-  heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'الهاتف', 'اسم العميل', 'ملاحظات']
+  heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'الهاتف',  'ملاحظات']
   @Input() orders: any[] = []
   count = 0
   @Input() agent
   @Input() orderplaced
   @Input() printnumber
+  @Input() phones
   dateOfPrint=new Date()
   userName:any=JSON.parse(localStorage.getItem('kokazUser'))as UserLogin
 
@@ -38,7 +39,7 @@ export class ReceiptAgentComponent implements OnInit ,OnChanges{
     this.count=0
     if(this.orders)
     this.orders.forEach(o => {
-      this.count += o.cost
+      this.count += o.total
     })
     return this.count
   }

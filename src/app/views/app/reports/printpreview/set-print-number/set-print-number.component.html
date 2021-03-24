@@ -21,7 +21,16 @@
                             d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
                     </svg> &nbsp;طباعة 
             </button>
-            <app-receipt-agent id="printpage" [orders]="orders" [agent]="agent" 
+
+            <button  class="btn btn-primary" (click)="convetToPDF()">
+           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer"
+                   viewBox="0 0 16 16" >
+                   <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+                   <path
+                       d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
+               </svg> &nbsp;تحميل 
+       </button>
+            <app-receipt-agent id="printpage" [orders]="orders" [agent]="agent"[phones]="phones" 
     [printnumber]="printnumber" [hidden]="true"></app-receipt-agent>
             </div>
            
@@ -30,13 +39,13 @@
     </div>
 
 
-<div class="card" style="direction:rtl" *ngIf="showPrintbtn">
+<div class="card" style="direction:rtl" *ngIf="showPrintbtn" id="contentToConvert">
     
 
     <div class="card-body">
         <div class="row ">
             <div class="col-md-4" style="text-align: right;">
-                <table>
+                <table >
 
                     <tr>
                         <td >
@@ -81,12 +90,14 @@
             </div>
             <div class="col-md-3" style="text-align: right;">
                 <h3>
-                    كشف حساب المندوب : {{agent!=null||agent!=undefined?agent.name:null}}
+                    كشف حساب المندوب : {{agent!=null||agent!=undefined?agent:null}}
                     <br>
-                    رقم هاتف المندوب :
-                    <div *ngFor="let phone of agent.phones">
+                    رقم هاتف المندوب :{{phones}}
+                   <!--
+                       <div *ngFor="let phone of agent.phones">
                         {{phone.phone}}
                     </div>
+                   --> 
                     <br>
                     <div *ngIf="orderplaced!=null||orderplaced!=undefined">
                        {{orderplaced.name}}
@@ -109,29 +120,23 @@
                 <tr *ngFor="let order of orders;index as i">
                     <td>
                         {{i+1}}
-                    </td>
-                    <td>
-                        {{order.code}}
-                    </td>
-                    <td>
-                        {{order.cost}}
-                    </td>
-                    <td>
-                        {{order.country.name}}
-                    </td>
-                    <td>
-                        {{order.orderplaced.name}}
-                    </td>
-                    <td>
-                        {{order.monePlaced.name}}
-                    </td>
-                    <td>
-                        {{order.recipientPhones}}
-                    </td>
-                  
-                    <td>
-                        {{order.note}}
-                    </td>
+                      </td>
+                      <td>
+                          {{order.code}}
+                      </td>
+                      <td>
+                          {{order.total}}
+                      </td>
+                      <td>
+                          {{order.country}}
+                      </td>
+                      <td>
+                          {{order.phone}}
+                      </td>
+                     
+                      <td>
+                          {{order.note}}
+                      </td>
                 </tr>
 
 

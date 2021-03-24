@@ -13,26 +13,24 @@
       <div class="content">
         <tr *ngFor="let order of orders;index as i" style="  margin-bottom: 20%;font-size: 18px;" class=" table-bordered" >
             <td>
-              {{i+1}}
-            </td>
-            <td>
-                {{order.code}}
-            </td>
-            <td>
-                {{order.cost}}
-            </td>
-            <td>
-                {{order.country.name}}
-            </td>
-            <td>
-                {{order.recipientPhones}}
-            </td>
-            <td>
-                {{order.client.name}}
-            </td>
-            <td>
-                {{order.note}}
-            </td>
+                {{i+1}}
+              </td>
+              <td>
+                  {{order.code}}
+              </td>
+              <td>
+                  {{order.total}}
+              </td>
+              <td>
+                  {{order.country}}
+              </td>
+              <td>
+                  {{order.phone}}
+              </td>
+             
+              <td>
+                  {{order.note}}
+              </td>
         </tr>
         
       </div>
@@ -100,12 +98,14 @@
         </div>
         <div class="col-md-3" style="text-align: right;">
             <h3>
-                كشف حساب المندوب : {{agent!=null||agent!=undefined?agent.name:null}}
+                كشف حساب المندوب : {{agent!=null||agent!=undefined?agent:null}}
                 <br>
-                رقم هاتف المندوب :
-                <div *ngFor="let phone of agent.phones">
+                رقم هاتف المندوب :{{phones}}
+               <!--
+ <div *ngFor="let phone of agent.phones">
                     {{phone.phone}}
                 </div>
+               -->
                 <br>
                 <div *ngIf="orderplaced!=null||orderplaced!=undefined">
                    {{orderplaced.name}}
