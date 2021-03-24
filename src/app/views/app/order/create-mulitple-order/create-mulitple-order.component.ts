@@ -13,20 +13,24 @@ import { OrderType } from 'src/app/Models/OrderTypes/order-type.model';
 import { Region } from 'src/app/Models/Regions/region.model';
 import { User } from 'src/app/Models/user/user.model';
 import { Client } from '../../client/client.model';
+import { Order } from 'src/app/Models/order/order.model';
+import { SpinnerComponent } from '../../spinner/spinner.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-create-mulitple-order',
   templateUrl: './create-mulitple-order.component.html',
   styleUrls: ['./create-mulitple-order.component.scss']
 })
-export class CreateMulitpleOrderComponent implements OnInit {
+export class CreateMulitpleOrderComponent extends SpinnerComponent implements OnInit {
 
   constructor(private orderservice: OrderService,
 
     private clientService: ClientService
     , private customerService: CustomService,
     public userService: UserService,
-    private notifications: NotificationsService) { }
+    private notifications: NotificationsService,
+    public spinner: NgxSpinnerService) {super(spinner) }
 
   Order: CreateMultipleOrder
   EditOrder: CreateMultipleOrder
@@ -158,26 +162,36 @@ export class CreateMulitpleOrderComponent implements OnInit {
   RecipientPhoneslength = ""
   checkLengthPhoneNumber(phone) {
     console.log(phone)
-
-   
-    // if (phone&&phone.length < 11) {
-    //   this.RecipientPhoneslength = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
-    //   return true
-    // } 
-    // else {
-    //   this.RecipientPhoneslength = ""
-    //   return false
-    // }
+    if (phone&&phone.length < 11) {
+      this.RecipientPhoneslength = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
+      return true
+    } 
+    else {
+      this.RecipientPhoneslength = ""
+      return false
+    }
+  }
+  RecipientPhoneslengthEdit = ""
+  checkLengthPhoneNumberForEdit(phone) {
+    console.log(phone)
+    if (phone&&phone.length < 11) {
+      this.RecipientPhoneslengthEdit = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
+      return true
+    } 
+    else {
+      this.RecipientPhoneslengthEdit = ""
+      return false
+    }
   }
   onEnter() {
-    
     if (!this.Order.Code || !this.Order.ClientId ||
       !this.Order.CountryId || !this.Order.RecipientPhones
       || !this.Order.AgentId || this.showMessageCode) {
       this.submitted = true
       return
     } else this.submitted = false
-   
+    if (this.checkLengthPhoneNumber(this.Order.RecipientPhones))
+    return
     var country = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.CountryName = country.name
     var orderplace = this.orderPlace.find(c => c.id == this.Order.OrderplacedId)
@@ -216,7 +230,8 @@ export class CreateMulitpleOrderComponent implements OnInit {
       this.Editsubmitted = true
       return
     } else this.Editsubmitted = false
- 
+    if (this.checkLengthPhoneNumberForEdit(this.EditOrder.RecipientPhones))
+    return
     this.EditOrder.CanEdit = false
     var country = this.cities.find(c => c.id == this.EditOrder.CountryId)
     this.EditOrder.CountryName = country.name
@@ -254,9 +269,13 @@ export class CreateMulitpleOrderComponent implements OnInit {
     //   o.CountryId=this.CountryId
     //   o.AgentId=this.AgentId
     // })
+    this.showSpinner()
     this.orderservice.createMultiple(this.Orders).subscribe(res => {
+      this.hideSpinner()
       this.notifications.create('success', 'تم اضافة الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Orders = []
+    },err=>{
+      this.hideSpinner()
     })
 
   }

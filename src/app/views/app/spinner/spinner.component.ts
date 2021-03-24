@@ -12,5 +12,10 @@ export class SpinnerComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+showSpinner(){
+  this.spinner.show()
+}
+hideSpinner(){
+  this.spinner.hide()
+}
 }

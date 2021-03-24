@@ -101,6 +101,9 @@
                     رقم الوصل
                 </th>
                 <th>
+                    المبلغ القديم
+                </th>
+                <th>
                     الإجمالي
                 </th>
                 <th>
@@ -127,6 +130,9 @@
                     </td>
                     <td>
                         {{order.code}}
+                    </td>
+                    <td>
+                        {{order.oldCost}}
                     </td>
                     <td>
                         {{order.cost}}
@@ -157,7 +163,7 @@
 
                
                 <tr class=" table-bordered trbordered" style="font-size: 18px;">
-                    <td colspan="2">
+                    <td colspan="3">
                         الإجمالي :
                     </td>
                     <td>

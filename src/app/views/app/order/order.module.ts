@@ -35,7 +35,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ViewNewOrderComponent,
      CreateMulitpleOrderComponent,
     CreatemultipleOrderFromClientComponent
-    , ProfitsOfOrdersComponent],
+    , ProfitsOfOrdersComponent,],
   imports: [
     CommonModule,
     OrderRoutingModule,
@@ -53,7 +53,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ChartModule,
     DatePickerModule,
     DateRangePickerModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    
   ], providers: [CategoryService, DateTimeService, ScrollBarService, LineSeriesService, ColumnSeriesService,
     ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService, LegendService, TooltipService,]
   , schemas: [CUSTOM_ELEMENTS_SCHEMA]

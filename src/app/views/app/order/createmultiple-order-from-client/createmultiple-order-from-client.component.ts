@@ -197,6 +197,16 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
       return false
     }
   }
+  RecipientPhoneslengthEdit = ""
+  checkLengthPhoneNumberEdit(phone) {
+    if (phone&&phone.length < 11) {
+      this.RecipientPhoneslengthEdit = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
+      return true
+    } else {
+      this.RecipientPhoneslengthEdit = ""
+      return false
+    }
+  }
   onEnter() {
     this.addNewCountry()
     if (this.checkLengthPhoneNumber(this.Order.RecipientPhones))
@@ -247,7 +257,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
       this.Editsubmitted = true
       return
     } else this.Editsubmitted = false
-    if (this.checkLengthPhoneNumber(this.EditOrder.RecipientPhones))
+    if (this.checkLengthPhoneNumberEdit(this.EditOrder.RecipientPhones))
     return
     this.EditOrder.CanEdit = false
     this.EditOrder.CountryId = this.EditOrder.Country.id

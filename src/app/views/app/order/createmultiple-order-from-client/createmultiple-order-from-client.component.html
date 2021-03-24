@@ -112,25 +112,18 @@
                     </td>
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.RecipientPhones}}</h4>
-
-
-
                         <input type="text" maxlength="11"
                             oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
                             *ngIf="order.CanEdit" style="width: 100px;" class="form-control"
                             [ngModelOptions]="{standalone: true}" [(ngModel)]="EditOrder.RecipientPhones"
-                            (keyup)="checkLengthPhoneNumber(EditOrder.RecipientPhones)">
+                            (keyup)="checkLengthPhoneNumberEdit(EditOrder.RecipientPhones)">
                         <div *ngIf="!EditOrder.RecipientPhones&& Editsubmitted&&order.CanEdit" class="message">رقم الهاتف
                             حقل مطلوب</div>
-                            <div class="message" *ngIf="EditOrder.RecipientPhones&&checkLengthPhoneNumber(EditOrder.RecipientPhones)&&order.CanEdit">
-                                {{RecipientPhoneslength}}
+                            <div class="message" *ngIf="EditOrder.RecipientPhones&&checkLengthPhoneNumberEdit(EditOrder.RecipientPhones)&&order.CanEdit">
+                                {{RecipientPhoneslengthEdit}}
                             </div>
 
                     </td>
-
-
-
-
 
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.Amount}}</h4>
