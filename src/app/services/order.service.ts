@@ -147,6 +147,10 @@ export class OrderService {
   
     if (item.ClientId != undefined || item.ClientId!= null)
       params = params.append("ClientId", item.ClientId);
+      if (item.ClientDoNotDeleviredMoney != undefined || item.ClientDoNotDeleviredMoney!= null)
+      params = params.append("ClientDoNotDeleviredMoney", item.ClientDoNotDeleviredMoney);
+      if (item.IsClientDeleviredMoney != undefined || item.IsClientDeleviredMoney!= null)
+      params = params.append("IsClientDeleviredMoney", item.IsClientDeleviredMoney);
     if (item.OrderPlacedId.length!=0)
     { // params = params.append("OrderPlacedId", item.OrderPlacedId);
       let index=0
