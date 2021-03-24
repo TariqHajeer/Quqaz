@@ -39,13 +39,13 @@
     </div>
 
 
-<div class="card" style="text-align: right;" *ngIf="showPrintbtn" id="contentToConvert">
+<div class="card" style="text-align: left;" *ngIf="showPrintbtn" id="contentToConvert">
     
 
     <div class="card-body">
         <div class="row ">
-            <div class="col-md-4" style="text-align: right;">
-                <table >
+            <div class="col-md-4" style="text-align: left;">
+                <table style="text-align: left;">
 
                     <tr>
                         <td >
@@ -88,7 +88,7 @@
                 <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px"
                 style="margin-right: 20%;" />
             </div>
-            <div class="col-md-3" style="text-align: right;">
+            <div class="col-md-3" style="text-align: left;">
                 <h3>
                     كشف حساب المندوب : {{agent!=null||agent!=undefined?agent:null}}
                     <br>
@@ -109,11 +109,11 @@
 
            
         </div>
-        <table >
+        <table style="text-align: left;">
 
             <thead>
 
-                <th *ngFor="let head of heads" style="font-size: 20px;">{{head}}</th>
+                <th *ngFor="let head of heads" style="font-size: 20px;text-align: left;">{{head}}</th>
             </thead>
             <tbody>
 

@@ -75,6 +75,12 @@ export class ReceiptShipmentAgentComponent implements OnInit {
 
     })
   }
+  getmony(){
+    this.orderservice.MoenyPlaced().subscribe(res => {
+      this.MoenyPlaced = res
+
+    })
+  }
   changeMoenyPlaced() {
     if (this.getorders.length != 0) {
       this.getorders.forEach(o => {
@@ -92,9 +98,8 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       })
 
     }
-
-
   }
+  
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
@@ -174,6 +179,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   }
   ChangeOrderplacedId(element, index) {
     // this.GetMoenyPlaced()
+    this.getmony()
     this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
     this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced)
     this.orderplacedstate.onWay(element, this.MoenyPlaced)

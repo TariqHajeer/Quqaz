@@ -18,7 +18,7 @@ import { OrderClientDontDiliverdMoney } from 'src/app/Models/order/order-client-
 })
 export class ShipmentsNotBeenDeliveredComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'code', 'oldCost', 'cost', 'country', 'region'
+  displayedColumns: string[] = ['select', 'code', 'oldCost', 'cost','deliveryCost','clientCost', 'country', 'region'
     , 'monePlaced', 'orderplaced', 'agentPrintNumber', 'clientPrintNumber'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
