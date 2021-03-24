@@ -18,8 +18,8 @@ import { OrderClientDontDiliverdMoney } from 'src/app/Models/order/order-client-
 })
 export class ShipmentsNotBeenDeliveredComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'code','oldCost', 'cost', 'country', 'region'
-,'monePlaced'   , 'orderplaced','agentPrintNumber','clientPrintNumber'];
+  displayedColumns: string[] = ['select', 'code', 'oldCost', 'cost', 'country', 'region'
+    , 'monePlaced', 'orderplaced', 'agentPrintNumber', 'clientPrintNumber'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
 
@@ -47,9 +47,9 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   }
   ids: any[] = []
   orders: any[] = []
-  
-  client=this.orders.map(o=>o.agent)[0]
-  orderplaced=this.orders.map(o=>o.orderplaced)[0]
+
+  client = this.orders.map(o => o.agent)[0]
+  orderplaced = this.orders.map(o => o.orderplaced)[0]
   checkboxId(row) {
     if (this.selection.isSelected(row))
       if (this.ids.filter(d => d == row.id).length > 0)
@@ -57,9 +57,9 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       else {
         this.ids.push(row.id)
         this.orders.push(row)
-        localStorage.setItem('orders',JSON.stringify(this.orders))
-      this.client=this.orders.map(o=>o.client)[0]
-      this.orderplaced=this.orders.map(o=>o.orderplaced)[0]
+        localStorage.setItem('orders', JSON.stringify(this.orders))
+        this.client = this.orders.map(o => o.client)[0]
+        this.orderplaced = this.orders.map(o => o.orderplaced)[0]
       }
     if (!this.selection.isSelected(row)) {
       this.ids = this.ids.filter(i => i != row.id)
@@ -79,6 +79,8 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   paging: Paging
   filtering: OrderFilter
   noDataFound: boolean = false
+  IsClientDeleviredMoney: boolean = true
+  ClientDoNotDeleviredMoney: boolean = true
   @Input() totalCount: number;
 
   ngOnInit(): void {
@@ -88,14 +90,14 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     this.GetorderPlace()
     this.paging = new Paging
     this.filtering = new OrderFilter
-    this.order=new OrderClientDontDiliverdMoney()
+    this.order = new OrderClientDontDiliverdMoney()
   }
 
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
-      this.orderPlace.forEach(item=>{
-        item.checked=true
+      this.orderPlace.forEach(item => {
+        item.checked = true
       })
       this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
 
@@ -120,11 +122,14 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     this.paging.Page = event.pageIndex + 1
     this.allFilter();
   }
- order:OrderClientDontDiliverdMoney
+  order: OrderClientDontDiliverdMoney
   allFilter() {
-    this.order.ClientId=this.ClientId
-    var orderPlace=this.orderPlace.filter(o=>o.checked==true)
-    this.order.OrderPlacedId=orderPlace.map(o=>o.id)
+    this.order.ClientId = this.ClientId
+    this.order.IsClientDeleviredMoney = this.IsClientDeleviredMoney
+    this.order.ClientDoNotDeleviredMoney = this.ClientDoNotDeleviredMoney
+    var orderPlace = this.orderPlace.filter(o => o.checked == true)
+    this.order.OrderPlacedId = orderPlace.map(o => o.id)
+    console.log(this.order)
     this.orderservice.ClientDontDiliverdMoney(this.order).subscribe(response => {
       if (response)
         if (response.length == 0)
@@ -139,20 +144,20 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       });
   }
   print() {
-    if ( this.noDataFound == true || this.orders.length==0) {
+    if (this.noDataFound == true || this.orders.length == 0) {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    localStorage.setItem('printordersclient',JSON.stringify(this.orders))
-    localStorage.setItem('printclient',JSON.stringify(this.Clients.find(c=>c.id==this.ClientId)))
+    localStorage.setItem('printordersclient', JSON.stringify(this.orders))
+    localStorage.setItem('printclient', JSON.stringify(this.Clients.find(c => c.id == this.ClientId)))
     this.route.navigate(['app/reports/printclientpreview'])
-   
+
   }
-                                                                            
-  changeDeleiverMoneyForClient(){
-    this.orderservice.DeleiverMoneyForClient(this.orders.map(o=>o.id)).subscribe(res=>{
+
+  changeDeleiverMoneyForClient() {
+    this.orderservice.DeleiverMoneyForClient(this.orders.map(o => o.id)).subscribe(res => {
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-     this.allFilter()
+      this.allFilter()
     })
-  }  
+  }
 }

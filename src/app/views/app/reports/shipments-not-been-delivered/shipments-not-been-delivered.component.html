@@ -16,8 +16,8 @@
           <mat-checkbox class="example-margin" *ngFor="let orderplaced of orderPlace" [(ngModel)]="orderplaced.checked" (change)="allFilter()">&nbsp;{{orderplaced.name}}</mat-checkbox>
         </section>
         <section class="example-section">
-          <mat-checkbox class="example-margin" [(ngModel)]="order.IsClientDeleviredMoney" (change)="allFilter()">&nbsp;تسديد المبلغ مسبقاً</mat-checkbox>
-          <mat-checkbox class="example-margin" [(ngModel)]="order.ClientDoNotDeleviredMoney" (change)="allFilter()">&nbsp; لم يتم تسديد المبلغ مسبقاً</mat-checkbox>
+          <mat-checkbox class="example-margin" [(ngModel)]="IsClientDeleviredMoney" (change)="allFilter()">&nbsp;تسديد المبلغ مسبقاً</mat-checkbox>
+          <mat-checkbox class="example-margin" [(ngModel)]="ClientDoNotDeleviredMoney" (change)="allFilter()">&nbsp; لم يتم تسديد المبلغ مسبقاً</mat-checkbox>
 
         </section>
         <div class="col-md-8" style="padding-top: 25px;">
