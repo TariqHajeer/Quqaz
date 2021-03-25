@@ -6,7 +6,6 @@ import { PrintNumberOrder } from 'src/app/Models/order/PrintNumberOrder.model';
 import { OrderService } from 'src/app/services/order.service';
 import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
-
 @Component({
   selector: 'app-set-print-number',
   templateUrl: './set-print-number.component.html',
@@ -17,7 +16,8 @@ export class SetPrintNumberComponent implements OnInit {
   constructor(private orderservice: OrderService,
     private notifications: NotificationsService,
     public sanitizer: DomSanitizer,
-    private cdr: ChangeDetectorRef) { }
+    private cdr: ChangeDetectorRef,
+    ) { }
     heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'الهاتف',  'ملاحظات']
     orders: any[] = []
   count = 0
@@ -60,29 +60,21 @@ export class SetPrintNumberComponent implements OnInit {
   }
   public convetToPDF()
   {
-  // var data = document.getElementById('contentToConvert');
-  // html2canvas(data).then(canvas => {
-  // // Few necessary setting options
-  // var imgWidth = 208;
-  // var imgHeight = canvas.height * imgWidth / canvas.width;
-  // const contentDataURL = canvas.toDataURL('image/png')
-  // let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
-  // pdf.setFont('arial-boldr');
-  // pdf.setFontSize(10);
-  // pdf.setTextColor(0, 0, 0); //black  var position = 0;
-  // var position = 0;
-  // pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth,imgHeight)
-  // pdf.save('new-file.pdf'); // Generated PDF
-  // });
-//   var doc = new jspdf();
-// doc.addFont("arial-bold.ttf", "arial-bold", "normal");
-// doc.setFont("arial-bold"); // set font
-// doc.setFontSize(50);
+  var data = document.getElementById('contentToConvert');
+  html2canvas(data).then(canvas => {
+  // Few necessary setting options
+  var imgWidth = 208;
+  var imgHeight = canvas.height * imgWidth / canvas.width;
+  const contentDataURL = canvas.toDataURL('image/png')
+  let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
+  pdf.setFont('arial-boldr');
+  pdf.setFontSize(10);
+  pdf.setTextColor(0, 0, 0); //black  var position = 0;
+  var position = 0;
+  pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth,imgHeight)
+  pdf.save('new-file.pdf'); // Generated PDF
+  });
 
-// var arabicText = "إذا لم تستح فاصنع ما شئت";
-
-// doc.text(arabicText, 10, 60);
-// doc.save('new-file.pdf');
  
   }
   

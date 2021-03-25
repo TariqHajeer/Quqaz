@@ -47,6 +47,7 @@
     "@syncfusion/ej2-angular-grids": "^18.2.59",
     "@syncfusion/ej2-angular-inputs": "^18.4.44",
     "@syncfusion/ej2-angular-navigations": "^18.3.47",
+    "@syncfusion/ej2-angular-pdfviewer": "^18.4.49",
     "@syncfusion/ej2-angular-schedule": "^18.2.55",
     "@syncfusion/ej2-navigations": "^18.2.55",
     "@types/jquery": "^3.5.1",
