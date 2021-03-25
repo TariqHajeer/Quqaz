@@ -18,8 +18,8 @@ import { OrderClientDontDiliverdMoney } from 'src/app/Models/order/order-client-
 })
 export class ShipmentsNotBeenDeliveredComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'code', 'oldCost', 'cost','deliveryCost','clientCost', 'country', 'region'
-    , 'monePlaced', 'orderplaced', 'agentPrintNumber', 'clientPrintNumber','isClientDiliverdMoney'];
+  displayedColumns: string[] = ['select', 'code', 'oldCost', 'cost', 'deliveryCost', 'clientCost', 'country', 'region'
+    , 'monePlaced', 'orderplaced', 'agentPrintNumber', 'clientPrintNumber', 'isClientDiliverdMoney'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
 
@@ -159,5 +159,26 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.allFilter()
     })
+  }
+  TestCalc(element): number {
+    if (!element.isClientDiliverdMoney){
+      if(element.orderplaced.id==5)
+      return 0;
+      else if(element.orderplaced.id==7)
+      return element.deliveryCost;
+      return element.cost - element.deliveryCost;
+    }
+    else{ 
+      //مرتجع كلي
+      if(element.orderplaced.id==5)
+      return element.deliveryCost- element.cost ;
+      //مرفوض
+      else if(element.orderplaced.id==7)
+      return (-element.cost);
+      //مرتجع جزئي
+      else if(element.orderplaced.id==6)
+      return element.cost-  element.oldCost;
+    }
+    
   }
 }
