@@ -43,11 +43,9 @@ export class SetPrintNumberComponent implements OnInit {
   phones
   changeDeleiverMoneyForClient() {
     this.orderservice.GetOrderByAgnetPrintNumber(this.printnumber).subscribe(res => {
-      console.log(res)
       this.showPrintbtn = true
       this.orders = res.orders
       this.agent = res.destinationName
-      console.log(this.agent)
       this.phones = res.destinationPhone
       this.printnumber = res.printNmber
       this.dateOfPrint = res.date
@@ -55,6 +53,7 @@ export class SetPrintNumberComponent implements OnInit {
       this.sumCost()
     }, err => {
       this.showPrintbtn = false
+      this.notifications.create('success', 'رقم الطباعة غير موجود', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 
     })
 
