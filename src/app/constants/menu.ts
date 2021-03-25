@@ -102,11 +102,11 @@ const data: IMenuItem[] = [
             label: 'تسديد العميل',
             to: `${adminRoot}/reports/Shipmentsnotbeendelivered`,
           },
-          {
-            icon: 'simple-icon-layers',
-            label: 'ارجاع الشحنات',
-            to: `${adminRoot}/reports/clientorder`,
-          },
+          // {
+          //   icon: 'simple-icon-layers',
+          //   label: 'ارجاع الشحنات',
+          //   to: `${adminRoot}/reports/clientorder`,
+          // },
           {
             icon: 'simple-icon-layers',
             label: 'شحنات حسب رقم الطباعة ',
