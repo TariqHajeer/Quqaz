@@ -17,9 +17,9 @@ export class SetPrintNumberComponent implements OnInit {
     private notifications: NotificationsService,
     public sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef,
-    ) { }
-    heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'الهاتف',  'ملاحظات']
-    orders: any[] = []
+  ) { }
+  heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'الهاتف', 'ملاحظات']
+  orders: any[] = []
   count = 0
   agent
   dateOfPrint = new Date()
@@ -27,7 +27,7 @@ export class SetPrintNumberComponent implements OnInit {
   printnumber
   PrintNumberOrder: PrintNumberOrder
   ngOnInit(): void {
-  
+
   }
 
   sumCost() {
@@ -43,39 +43,28 @@ export class SetPrintNumberComponent implements OnInit {
   phones
   changeDeleiverMoneyForClient() {
     this.orderservice.GetOrderByAgnetPrintNumber(this.printnumber).subscribe(res => {
-     console.log(res)
+      console.log(res)
       this.showPrintbtn = true
-      this.orders=res.orders
-      this.agent=res.destinationName
-      this.phones=res.destinationPhone
-      this.printnumber=res.printNmber
-      this.dateOfPrint=res.date
-      this.userName=res.printerName
-     this.sumCost()
+      this.orders = res.orders
+      this.agent = res.destinationName
+      console.log(this.agent)
+      this.phones = res.destinationPhone
+      this.printnumber = res.printNmber
+      this.dateOfPrint = res.date
+      this.userName = res.printerName
+      this.sumCost()
     }, err => {
-      this.showPrintbtn = true
+      this.showPrintbtn = false
 
     })
 
   }
-  public convetToPDF()
-  {
-  var data = document.getElementById('contentToConvert');
-  html2canvas(data).then(canvas => {
-  // Few necessary setting options
-  var imgWidth = 208;
-  var imgHeight = canvas.height * imgWidth / canvas.width;
-  const contentDataURL = canvas.toDataURL('image/png')
-  let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
-  pdf.setFont('arial-boldr');
-  pdf.setFontSize(10);
-  pdf.setTextColor(0, 0, 0); //black  var position = 0;
-  var position = 0;
-  pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth,imgHeight)
-  pdf.save('new-file.pdf'); // Generated PDF
-  });
-
- 
+  public convetToPDF() {
+    const elementToPrint = document.getElementById('contentToConvert'); //The html element to become a pdf
+    const pdf = new jspdf('p', 'mm', 'a4');
+    pdf.addHTML(elementToPrint, () => {
+      pdf.save('web.pdf');
+    });
   }
-  
+
 }

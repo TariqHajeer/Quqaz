@@ -3,10 +3,10 @@
         <h3>عرض شحنات حسب رقم الطباعة للمندوب</h3>
         <div class="row">
           
-            <div class="col-md-3"  *ngIf="!showPrintbtn" >
+            <div class="col-md-3"  >
                 <label>رقم الطباعة</label>
                 <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="printnumber" >
+                [(ngModel)]="printnumber" (keyup.enter)="changeDeleiverMoneyForClient()">
                 <br>
                 <button (click)="changeDeleiverMoneyForClient()"class="btn btn-primary">ارسال</button>
             
@@ -60,7 +60,7 @@
                             مستخدم الطابعة :
                         </td>
                         <td >
-                            {{userName.name}}
+                            {{agent}}
                         </td>
                     </tr>
                     <tr>
