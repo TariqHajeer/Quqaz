@@ -34,6 +34,7 @@
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
               "src/style.scss",
+              "src/assets/fonts/font.css",
               "src/assets/css/vendor/bootstrap.min.css",
               "src/assets/css/vendor/bootstrap.rtl.only.min.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
