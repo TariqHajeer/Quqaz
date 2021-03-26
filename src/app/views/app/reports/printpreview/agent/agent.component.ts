@@ -4,6 +4,7 @@ import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { OrderService } from 'src/app/services/order.service';
 import { PrintNumberOrder } from 'src/app/Models/order/PrintNumberOrder.model';
+import * as jspdf from 'jspdf';
 
 @Component({
   selector: 'app-agent',
@@ -54,6 +55,12 @@ export class AgentComponent implements OnInit {
 
     })
   }
- 
+  public convetToPDF() {
+    const elementToPrint = document.getElementById('contentToConvert'); //The html element to become a pdf
+    const pdf = new jspdf('p', 'mm', 'a4');
+    pdf.addHTML(elementToPrint, () => {
+      pdf.save('web.pdf');
+    });
+  }
   
 }

@@ -4,6 +4,7 @@ import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { PrintNumberOrder } from 'src/app/Models/order/PrintNumberOrder.model';
 import { OrderService } from 'src/app/services/order.service';
+import * as jspdf from 'jspdf';
 
 @Component({
   selector: 'app-set-print-number-client',
@@ -21,11 +22,11 @@ export class SetPrintNumberClientComponent implements OnInit {
   count = 0
   client
   dateOfPrint = new Date()
-  userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
+  userName
   printnumber
   PrintNumberOrder: PrintNumberOrder
   ngOnInit(): void {
-  
+
   }
 
   deliveryCostCount
@@ -34,23 +35,33 @@ export class SetPrintNumberClientComponent implements OnInit {
     this.deliveryCostCount = 0
     if (this.orders)
       this.orders.forEach(o => {
-        this.count += o.cost
-        this.deliveryCostCount +=o.deliveryCost
+        this.count += o.total
+        this.deliveryCostCount += o.deliveryCost
       })
     return this.count
   }
   showPrintbtn = false
-
+  destinationPhone
   changeDeleiverMoneyForClient() {
     this.orderservice.GetOrderByClientPrintNumber(this.printnumber).subscribe(res => {
       this.showPrintbtn = true
-      this.orders=res
-      this.client=this.orders[0].client
-     this.sumCost()
+      this.orders = res.orders
+      this.client = res.destinationName
+      this.destinationPhone = res.destinationPhone
+      this.userName = res.printerName
+      this.dateOfPrint=res.date
+      this.sumCost()
     }, err => {
       this.showPrintbtn = true
 
     })
 
+  }
+  public convetToPDF() {
+    const elementToPrint = document.getElementById('contentToConvert'); //The html element to become a pdf
+    const pdf = new jspdf('p', 'mm', 'a4');
+    pdf.addHTML(elementToPrint, () => {
+      pdf.save('web.pdf');
+    });
   }
 }
