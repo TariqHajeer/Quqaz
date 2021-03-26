@@ -167,7 +167,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       else if(element.orderplaced.id==7)
       return element.deliveryCost;
       return element.cost - element.deliveryCost;
-      //commit after delete branch
+     
     }
     else{ 
       //مرتجع كلي
