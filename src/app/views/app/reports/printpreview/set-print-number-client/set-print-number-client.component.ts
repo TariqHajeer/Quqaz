@@ -52,7 +52,8 @@ export class SetPrintNumberClientComponent implements OnInit {
       this.dateOfPrint=res.date
       this.sumCost()
     }, err => {
-      this.showPrintbtn = true
+      this.showPrintbtn = false
+      this.notifications.create('success', 'رقم الطباعة غير موجود', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 
     })
 

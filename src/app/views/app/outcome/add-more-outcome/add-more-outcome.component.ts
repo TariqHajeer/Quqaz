@@ -18,8 +18,8 @@ export class AddMoreOutcomeComponent implements OnInit {
   submitted = false;
   tempId: 1;
   public OutComes: CreateOutCome[] = []
-  coins: Coin[];
-  exportTypes: any[] = [];
+  coins: Object[] = [];
+  exportTypes: Object[] = [];
   apiName = "Currency";
   coinsapi = environment.baseUrl + "api/Currency";
   OutComeTypeapi = environment.baseUrl + "api/OutComeType";
@@ -37,7 +37,8 @@ export class AddMoreOutcomeComponent implements OnInit {
   public outComeTypeDs: any;
   public coinDs: any;
   public dateFormatOptions: any = { type: 'date', format: 'dd/MM/yyyy' };
-  public requiredValidation;
+  public requiredValidation = { required: [true, "هذا الحقل مطلوب"] };
+
   constructor(public OutcomeService: OutcomeService,
     private customService: CustomService,
     private notifications: NotificationsService,
@@ -45,10 +46,10 @@ export class AddMoreOutcomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    this.requiredValidation = { required: [true, "هذا الحقل مطلوب"] };
-    this.outComeTypeDs = new DataManager({ url: this.OutComeTypeapi });
-    this.coinDs = new DataManager({ url: this.coinsapi });
+    // this.GetOutComeType()
+    // this.Getcoins() 
+    this.coinDs = new DataManager({url:this.coinsapi})
+    this.outComeTypeDs = new DataManager({url:this.OutComeTypeapi})
     this.editSettings = { showDeleteConfirmDialog: false, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
     this.toolbar = [
       { text: 'اضافة', tooltipText: 'اضافة', prefixIcon: 'e-add', id: 'normalgrid_add' },
@@ -102,11 +103,26 @@ export class AddMoreOutcomeComponent implements OnInit {
     this.OutComes.forEach(c => {
       c.Date = this.datepipe.transform(c.Date, 'yyyy-MM-dd');
     });
-    
+
     this.OutcomeService.CreateMulitpleOutCome(this.OutComes).subscribe(res => {
       this.notifications.create('', 'تم اضافة صادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      this.OutComes = []  
+      this.OutComes = []
     });
 
+  }
+  GetOutComeType() {
+    this.customService.getAll('OutComeType').subscribe(
+      res => {
+        this.exportTypes = res;
+        this.outComeTypeDs =res as object[]
+        console.log(   this.outComeTypeDs)
+      }
+    )
+  }
+  Getcoins() {
+    this.customService.getAll(this.apiName).subscribe(res => {
+      this.coins = res;
+      this.coinDs =  res as object[]
+    });
   }
 }

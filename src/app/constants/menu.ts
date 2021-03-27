@@ -184,11 +184,11 @@ const data: IMenuItem[] = [
         label: 'menu.setting.shipmentsTypes',
         to: `${adminRoot}/setting/shipmentsTypes`,
       },
-      {
-        icon: 'iconsminds-coins',
-        label: 'menu.setting.coins',
-        to: `${adminRoot}/setting/coins`,
-      }
+      // {
+      //   icon: 'iconsminds-coins',
+      //   label: 'menu.setting.coins',
+      //   to: `${adminRoot}/setting/coins`,
+      // }
       ,
       {
         icon: 'simple-icon-layers',

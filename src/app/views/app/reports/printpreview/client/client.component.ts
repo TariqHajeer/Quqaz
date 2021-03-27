@@ -26,6 +26,8 @@ export class ClientComponent implements OnInit {
   userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
   printnumber
   PrintNumberOrder: PrintNumberOrder
+  address="أربيل - شارع 40 - قرب تقاطع كوك"
+  companyPhone="07514550880 - 07700890880"
   ngOnInit(): void {
     this.PrintNumberOrder = new PrintNumberOrder
     this.orders = JSON.parse(localStorage.getItem('printordersclient'))
@@ -62,10 +64,13 @@ export class ClientComponent implements OnInit {
   }
   public convetToPDF() {
     const elementToPrint = document.getElementById('contentToConvert'); //The html element to become a pdf
-    const pdf = new jspdf('p', 'mm', 'a4');
+    const pdf = new jspdf('l', 'in', 'a4');
+    pdf.internal.scaleFactor = 30;
     pdf.addHTML(elementToPrint, () => {
-      pdf.save('web.pdf');
+      pdf.save(this.dateOfPrint+'.pdf');
     });
+   
+    
   }
  
 }

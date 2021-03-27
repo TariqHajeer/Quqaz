@@ -1,4 +1,4 @@
-<div class="card" >
+<div class="card wtable" >
     <div class="card-body">
         <div class="row">
             <div class="col-md-3" *ngIf="!showPrintbtn">
@@ -22,7 +22,7 @@
 </div>
 
 
-<div class="card" style="direction:rtl" id="contentToConvert">
+<div class="card wtable" style="direction:rtl" id="contentToConvert">
     <div class="card-body">
         <div class="row ">
             <div class="col-md-4" style="text-align: right; ">
@@ -84,7 +84,7 @@
 
             
         </div>
-        <table >
+        <table>
             <thead>
                 <th>
                     ترقيم
@@ -92,9 +92,7 @@
                 <th>
                     رقم الوصل
                 </th>
-                <th>
-                    المبلغ القديم
-                </th>
+               
                 <th>
                     الإجمالي
                 </th>
@@ -111,6 +109,9 @@
                     الهاتف
                 </th>
                 <th>
+                    المبلغ القديم
+                </th>
+                <th>
                     ملاحظات
                 </th>
                 <!--<th *ngFor="let head of heads" style="font-size: 20px;">{{head}}</th>-->
@@ -123,9 +124,7 @@
                     <td>
                         {{order.code}}
                     </td>
-                    <td>
-                        {{order.oldCost}}
-                    </td>
+                    
                     <td>
                         {{order.cost}}
                     </td>
@@ -147,7 +146,9 @@
                     <td>
                         {{order.recipientPhones}}
                     </td>
-
+                    <td>
+                        {{order.oldCost}}
+                    </td>
                     <td>
                         {{order.note}}
                     </td>
@@ -164,13 +165,17 @@
                     <td>
                         {{ deliveryCostCount}}
                     </td>
-                    <td colspan="4">
+                    <td >
                         {{count-deliveryCostCount}}
                     </td>
+                    <td colspan="3"></td>
                 </tr>
             </tbody>
 
         </table>
+        <div class="card-footer">
+         <h4 style="margin-right: 25%;">{{address}} &nbsp; {{companyPhone}}</h4>   
+        </div>
     </div>
 </div>
 
