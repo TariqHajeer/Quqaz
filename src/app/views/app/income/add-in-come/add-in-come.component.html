@@ -12,7 +12,7 @@
                 </div>
 
             </div>
-            <div class="col-md-3">
+          <!--  <div class="col-md-3">
                 <label>العملة<span class="text-danger text-one align-bottom mx-1">*</span></label>
                 <ng-select [(ngModel)]="CreateIncome.CurrencyId" [ngModelOptions]="{standalone: true}"
                     [closeOnSelect]="true">
@@ -20,7 +20,7 @@
                 </ng-select>
                 <div *ngIf="!CreateIncome.CurrencyId && submitted" class="invalid-tooltip"> العملة حقل مطلوب</div>
 
-            </div>
+            </div>-->
             <div class="col-md-3">
                 <label>المبلغ<span class="text-danger text-one align-bottom mx-1">*</span></label>
                 <input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
@@ -35,10 +35,10 @@
                 <div *ngIf="!CreateIncome.Earining && submitted" class="invalid-tooltip">الربح حقل مطلوب</div>
             </div>
 
-            <div class="col-md-3">
+         <!--   <div class="col-md-3">
                 <label>المصدر</label>
                 <input type="text"class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateIncome.Source">
-            </div>
+            </div>-->
             <div class="col-md-3">
                 <label>تاريخ </label>
                 <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"

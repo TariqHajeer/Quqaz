@@ -26,6 +26,8 @@ export class SetPrintNumberComponent implements OnInit {
   userName
   printnumber
   PrintNumberOrder: PrintNumberOrder
+  address="أربيل - شارع 40 - قرب تقاطع كوك"
+  companyPhone="07514550880 - 07700890880"
   ngOnInit(): void {
 
   }

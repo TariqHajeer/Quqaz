@@ -11,14 +11,14 @@
                 <div *ngIf="!CreateOutCome.OutComeTypeId && submitted" class="invalid-tooltip">نوع الصادرات حقل مطلوب</div>
 
             </div>
-            <div class="col-md-3">
+         <!--   <div class="col-md-3">
                 <label>العملة<span class="text-danger text-one align-bottom mx-1">*</span></label>
                 <ng-select [(ngModel)]="CreateOutCome.CurrencyId" [ngModelOptions]="{standalone: true}"
                     [closeOnSelect]="true">
                     <ng-option *ngFor="let coin of coins" [value]="coin.id">{{coin.name}}</ng-option>
                 </ng-select>
                 <div *ngIf="!CreateOutCome.CurrencyId && submitted" class="invalid-tooltip"> العملة حقل مطلوب</div>
-            </div>
+            </div>-->
             <div class="col-md-3">
                 <label>المبلغ<span class="text-danger text-one align-bottom mx-1">*</span></label>
                 <input type="number"

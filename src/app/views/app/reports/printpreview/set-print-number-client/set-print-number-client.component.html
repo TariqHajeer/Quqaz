@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card wtable">
     <div class="card-body"> 
         <h3>عرض شحنات حسب رقم الطباعة للعميل</h3>
         <div class="row">
@@ -40,7 +40,7 @@
     </div>
 
 
-<div class="card" style="direction:rtl" *ngIf="showPrintbtn" id="contentToConvert">
+<div class="card wtable" style="direction:rtl" *ngIf="showPrintbtn" id="contentToConvert">
     <div class="card-body">
         <div class="row ">
             <div class="col-md-4" style="text-align: right; ">
@@ -110,9 +110,7 @@
                 <th>
                     رقم الوصل
                 </th>
-                <th>
-                    المبلغ القديم
-                </th>
+              
                 <th>
                     الإجمالي
                 </th>
@@ -129,21 +127,22 @@
                     الهاتف
                 </th>
                 <th>
+                    المبلغ القديم
+                </th>
+                <th>
                     ملاحظات
                 </th>
                 <!--<th *ngFor="let head of heads" style="font-size: 20px;">{{head}}</th>-->
             </thead>
             <tbody>
                 <tr  *ngFor="let order of orders;index as i">
-                    <td class="p">
+                    <td style="width: 5px;">
                         {{i+1}}
                     </td>
                     <td>
                         {{order.code}}
                     </td>
-                    <td>
-                        {{order.oldCost}}
-                    </td>
+                   
                     <td>
                         {{order.total}}
                     </td>
@@ -165,7 +164,9 @@
                     <td>
                         {{order.phone}}
                     </td>
-
+                    <td>
+                        {{order.oldCost}}
+                    </td>
                     <td>
                         {{order.note}}
                     </td>
@@ -189,6 +190,9 @@
             </tbody>
 
         </table>
+        <div class="card-footer">
+            <h4 style="margin-right: 25%;">{{address}} &nbsp; {{companyPhone}}</h4>   
+           </div>
     </div>
 </div>
 

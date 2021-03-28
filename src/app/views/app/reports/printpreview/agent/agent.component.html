@@ -1,4 +1,4 @@
-<div class="card" >
+<div class="card wtable" >
     <div class="card-body">
         <div class="row">
             <div class="col-md-3" style="padding-top: 25px;" *ngIf="!showPrintbtn">
@@ -31,7 +31,7 @@
     </div>
     </div>
 
-<div class="card" style="direction:rtl" id="contentToConvert">
+<div class="card wtable" style="direction:rtl" id="contentToConvert">
     <div class="card-body">
         <div class="row ">
             <div class="col-md-4" style="text-align: right;">
@@ -106,7 +106,7 @@
             <tbody>
 
                 <tr *ngFor="let order of orders;index as i">
-                    <td>
+                    <td style="width: 5px;">
                         {{i+1}}
                     </td>
                     <td>
@@ -142,6 +142,9 @@
             </tbody>
 
         </table>
+        <div class="card-footer">
+            <h4 style="margin-right: 25%;">{{address}} &nbsp; {{companyPhone}}</h4>   
+           </div>
     </div>
 </div>
 

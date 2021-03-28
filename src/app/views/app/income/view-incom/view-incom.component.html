@@ -18,14 +18,14 @@
             </ng-option>
           </ng-select>
         </div>
-        <div class="col-md-2">
+      <!--  <div class="col-md-2">
           <label>العملة</label>
           <ng-select [(ngModel)]="filtering.CurrencyId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
             (ngModelChange)="allFilter()">
             <ng-option *ngFor="let coin of coins" [value]="coin.id">{{coin.name}}</ng-option>
           </ng-select>
 
-        </div>
+        </div>-->
         <div class="col-md-2">
           <label> المبلغ الأدنى</label>
           <input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
@@ -106,11 +106,11 @@
       <td mat-cell *matCellDef="let element" style="padding: 10px;">
         {{element.incomeType!=null?element.incomeType.name:null}}</td>
     </ng-container>
-    <ng-container matColumnDef="currency">
+   <!-- <ng-container matColumnDef="currency">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> العملة</th>
       <td mat-cell *matCellDef="let element" style="padding: 10px;">
         {{element.currency!=null?element.currency.name:null}}</td>
-    </ng-container>
+    </ng-container>-->
     <ng-container matColumnDef="amount">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> المبلغ الوارد</th>
       <td mat-cell *matCellDef="let element" style="padding: 10px;"> {{element.amount}}</td>
@@ -119,10 +119,11 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> تاريخ الادخال</th>
       <td mat-cell *matCellDef="let element" style="padding: 10px;"> {{element.date| date: 'yyyy/MM/dd'}}</td>
     </ng-container>
+    <!--
     <ng-container matColumnDef="source">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> المصدر</th>
       <td mat-cell *matCellDef="let element" style="padding: 10px;"> {{element.source}}</td>
-    </ng-container>
+    </ng-container>-->
     <ng-container matColumnDef="earining">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> الربح</th>
       <td mat-cell *matCellDef="let element" style="padding: 10px;"> {{element.earining}}</td>

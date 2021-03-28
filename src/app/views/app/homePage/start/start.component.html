@@ -1,6 +1,6 @@
 <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff"
  type = "line-scale-party" [fullScreen] = "true">
-    <p style="color: white" > الرجاء الإنتظار... </p>
+    <p style="color: white" > </p>
 </ngx-spinner>
 <div class="row">
   <div class="col-12">
@@ -17,10 +17,28 @@
 </div>
 <div class="row">
   <div class="col-12 mb-4 text-center">
-    <h1>Welcom!</h1>
+    <h1></h1>
 
   </div>
 </div>
+
+
+<!--
+  <ejs-chart style='display:block;' [chartArea]='chartArea' [width]='width' id='chartcontainer'
+  [primaryXAxis]='primaryXAxis' (load)='load($event)' [primaryYAxis]='primaryYAxis' [title]='title' [tooltip]='tooltip'>
+  <e-series-collection>
+    <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y' name='المندوبين' width='3'> </e-series>
+    <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y1' name='العملاء' width='2'> </e-series>
+    <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y2' name='شحنات تم توصيلها' width='4'>
+    </e-series>
+    <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y3' name='شحنات في المخزن' width='4'>
+    </e-series>
+    <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y4' name='شحنات خارج المخزن' width='4'>
+    </e-series>
+    <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y5' name='الشحنات' width='2'> </e-series>
+
+  </e-series-collection>
+</ejs-chart>
 
 <div class="row">
   <div class="col-12 mb-4 ">
@@ -48,7 +66,7 @@
                   [value]="MainStatics.totalClient" [bufferValue]="70">
                 </mat-progress-bar>
               </div>
-            </div> <!-- /. row -->
+            </div>  /. row 
             <hr width="100%" style="color: grey;">
             <div class="row">
 
@@ -69,14 +87,14 @@
                   [value]="MainStatics.totalOrderDiliverd" [bufferValue]="70">
                 </mat-progress-bar>
               </div>
-            </div> <!-- /. row -->
+            </div> 
 
 
 
 
-          </div> <!-- /. card-body -->
-        </div> <!-- /. card -->
-      </div> <!-- /. col -->
+          </div> 
+        </div> 
+      </div> 
       <div class="col-md-4">
         <div class="card shadow mb-4">
           <div class="card-body">
@@ -99,7 +117,7 @@
                   [value]="MainStatics.totalAgent" [bufferValue]="70">
                 </mat-progress-bar>
               </div>
-            </div> <!-- /. row -->
+            </div>
             <hr width="100%" style="color: grey;">
             <div class="row">
 
@@ -120,14 +138,14 @@
                   [value]="MainStatics.totalOrderInSotre" [bufferValue]="70">
                 </mat-progress-bar>
               </div>
-            </div> <!-- /. row -->
+            </div> 
 
 
 
 
-          </div> <!-- /. card-body -->
-        </div> <!-- /. card -->
-      </div> <!-- /. col -->
+          </div>
+        </div> 
+      </div> 
       <div class="col-md-4">
         <div class="card shadow mb-4">
           <div class="card-body">
@@ -151,7 +169,7 @@
                   [value]="MainStatics.totlaOrder" [bufferValue]="70">
                 </mat-progress-bar>
               </div>
-            </div> <!-- /. row -->
+            </div> 
             <hr width="100%" style="color: grey;">
             <div class="row">
 
@@ -175,32 +193,159 @@
                   [value]="MainStatics.totalOrderOutStore" [bufferValue]="70">
                 </mat-progress-bar>
               </div>
-            </div> <!-- /. row -->
+            </div>
 
 
 
 
-          </div> <!-- /. card-body -->
-        </div> <!-- /. card -->
-      </div> <!-- /. col -->
+          </div> 
+        </div> 
+      </div>
     </div>
 
   </div>
 </div>
-<!--
-  <ejs-chart style='display:block;' [chartArea]='chartArea' [width]='width' id='chartcontainer'
-  [primaryXAxis]='primaryXAxis' (load)='load($event)' [primaryYAxis]='primaryYAxis' [title]='title' [tooltip]='tooltip'>
-  <e-series-collection>
-    <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y' name='المندوبين' width='3'> </e-series>
-    <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y1' name='العملاء' width='2'> </e-series>
-    <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y2' name='شحنات تم توصيلها' width='4'>
-    </e-series>
-    <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y3' name='شحنات في المخزن' width='4'>
-    </e-series>
-    <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y4' name='شحنات خارج المخزن' width='4'>
-    </e-series>
-    <e-series [dataSource]='data' type='StackingColumn' xName='x' yName='y5' name='الشحنات' width='2'> </e-series>
-
-  </e-series-collection>
-</ejs-chart>
 -->
+<div class="row">
+  
+    <div class="col-md-4">
+      <div class="dashbord email-content">
+        <div class="title-section">
+          <p>عدد الطلبيات</p>
+        </div>
+        <div class="icon-text-section">
+          <div class="icon-section">
+            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+          </div>
+          <div class="text-section">
+            <h1>{{MainStatics.totlaOrder}}</h1>
+            <span>+   </span>
+          </div>
+          <div style="clear:both;"></div>
+        </div>
+        <div class="detail-section">
+          <a href="#">
+            <p>View Detail</p>
+            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+    <div class="dashbord download-content">
+      <div class="title-section">
+        <p>عدد الطلبيات خارج المخزن</p>
+      </div>
+      <div class="icon-text-section">
+        <div class="icon-section">
+          <i class="fa fa-download" aria-hidden="true"></i>
+        </div>
+        <div class="text-section">
+          <h1>{{MainStatics.totalOrderOutStore}} <small>+</small></h1>
+          <span></span>
+        </div>
+        <div style="clear:both;"></div>
+      </div>
+      <div class="detail-section">
+        <a href="#">
+          <p>View Detail</p>
+          <i class="fa fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="dashbord product-content">
+      <div class="title-section">
+        <p>عدد الطلبيات في المخزن</p>
+      </div>
+      <div class="icon-text-section">
+        <div class="icon-section">
+          <i class="fa fa-credit-card" aria-hidden="true"></i>
+        </div>
+        <div class="text-section">
+          <h1>{{MainStatics.totalOrderInSotre}} <small>+</small></h1>
+          <span></span>
+        </div>
+        <div style="clear:both;"></div>
+      </div>
+      <div class="detail-section">
+        <a href="#">
+          <p>View Detail</p>
+          <i class="fa fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="dashbord email-content">
+      <div class="title-section">
+        <p>عدد المندوبين</p>
+      </div>
+      <div class="icon-text-section">
+        <div class="icon-section">
+          <i class="fa fa-envelope-o" aria-hidden="true"></i>
+        </div>
+        <div class="text-section">
+          <h1>{{MainStatics.totalAgent}}</h1>
+          <span>+</span>
+        </div>
+        <div style="clear:both;"></div>
+      </div>
+      <div class="detail-section">
+        <a href="#">
+          <p>View Detail</p>
+          <i class="fa fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="dashbord download-content">
+      <div class="title-section">
+        <p>عدد الطلبيات تم توصيلها</p>
+      </div>
+      <div class="icon-text-section">
+        <div class="icon-section">
+          <i class="fa fa-download" aria-hidden="true"></i>
+        </div>
+        <div class="text-section">
+          <h1>{{MainStatics.totalOrderDiliverd}}<small>+</small></h1>
+          <span></span>
+        </div>
+        <div style="clear:both;"></div>
+      </div>
+      <div class="detail-section">
+        <a href="#">
+          <p>View Detail</p>
+          <i class="fa fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="dashbord product-content">
+      <div class="title-section">
+        <p>عدد العملاء</p>
+      </div>
+      <div class="icon-text-section">
+        <div class="icon-section">
+          <i class="fa fa-credit-card" aria-hidden="true"></i>
+        </div>
+        <div class="text-section">
+          <h1>{{MainStatics.totalClient}} <small>+</small></h1>
+          <span></span>
+        </div>
+        <div style="clear:both;"></div>
+      </div>
+      <div class="detail-section">
+        <a href="#">
+          <p>View Detail</p>
+          <i class="fa fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  
+</div>
+

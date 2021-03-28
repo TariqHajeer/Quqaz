@@ -34,7 +34,7 @@ export class ViewIncomComponent implements OnInit {
   importTypes: any[] = [];
 
   ///////////////
-  displayedColumns: string[] = ['incomeType', 'currency', 'amount', 'date', 'source', 'earining', 'note', 'createdBy', "Edit", "Delete"];
+  displayedColumns: string[] = ['incomeType', 'amount', 'date', 'earining', 'note', 'createdBy', "Edit", "Delete"];
   ;
   dataSource
   @ViewChild(MatSort, { static: true }) sort: MatSort;

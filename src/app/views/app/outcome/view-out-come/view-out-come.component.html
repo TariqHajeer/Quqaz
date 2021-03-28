@@ -23,14 +23,14 @@
             </ng-option>
           </ng-select>
         </div>
-        <div class="col-md-2">
+     <!--  <div class="col-md-2">
           <label>العملة</label>
           <ng-select [(ngModel)]="filtering.CurrencyId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
             (ngModelChange)="allFilter()">
             <ng-option *ngFor="let coin of coins" [value]="coin.id">{{coin.name}}</ng-option>
           </ng-select>
 
-        </div>
+        </div>--> 
         <div class="col-md-2">
           <label> المبلغ الأدنى</label>
           <input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"

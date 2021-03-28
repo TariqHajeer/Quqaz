@@ -9,7 +9,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-start',
-  templateUrl: './start.component.html'
+  templateUrl: './start.component.html',
+  styleUrls: ['./start.component.scss']
 })
 export class StartComponent implements OnInit {
 
