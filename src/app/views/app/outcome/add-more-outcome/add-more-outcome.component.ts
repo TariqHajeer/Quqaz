@@ -19,7 +19,7 @@ export class AddMoreOutcomeComponent implements OnInit {
   tempId: 1;
   public OutComes: CreateOutCome[] = []
   coins: Object[] = [];
-  exportTypes: Object[] = [];
+  exportTypes
   apiName = "Currency";
   coinsapi = environment.baseUrl + "api/Currency";
   OutComeTypeapi = environment.baseUrl + "api/OutComeType";
@@ -34,7 +34,7 @@ export class AddMoreOutcomeComponent implements OnInit {
   public toolbar: Object[];
   public pageSettings: Object;
   public gridDs: any;
-  public outComeTypeDs: any;
+  public outComeTypeDs: DataManager;
   public coinDs: any;
   public dateFormatOptions: any = { type: 'date', format: 'dd/MM/yyyy' };
   public requiredValidation = { required: [true, "هذا الحقل مطلوب"] };
@@ -46,10 +46,9 @@ export class AddMoreOutcomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.GetOutComeType()
+     this.GetOutComeType()
     // this.Getcoins() 
-    this.coinDs = new DataManager({url:this.coinsapi})
-    this.outComeTypeDs = new DataManager({url:this.OutComeTypeapi})
+   // this.coinDs = new DataManager({url:this.coinsapi})
     this.editSettings = { showDeleteConfirmDialog: false, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
     this.toolbar = [
       { text: 'اضافة', tooltipText: 'اضافة', prefixIcon: 'e-add', id: 'normalgrid_add' },
@@ -114,8 +113,10 @@ export class AddMoreOutcomeComponent implements OnInit {
     this.customService.getAll('OutComeType').subscribe(
       res => {
         this.exportTypes = res;
-        this.outComeTypeDs =res as object[]
-        console.log(   this.outComeTypeDs)
+       console.log(res)
+        this.outComeTypeDs = new DataManager()
+        this.outComeTypeDs.dataSource.data= res as JSON
+
       }
     )
   }

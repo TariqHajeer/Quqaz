@@ -11,6 +11,7 @@ import { ReceiptShipmentAgentComponent } from './receipt-shipment-agent/receipt-
 import { ShipmentInStockComponent } from './shipment-in-stock/shipment-in-stock.component';
 import { ShipmentsNotBeenDeliveredComponent } from './shipments-not-been-delivered/shipments-not-been-delivered.component';
 import { ShipmentsOnWayComponent } from './shipments-on-way/shipments-on-way.component';
+import { StatisticsComponent } from './statistics/statistics.component';
 
 
 const routes: Routes = [
@@ -61,7 +62,11 @@ const routes: Routes = [
     component: SetPrintNumberClientComponent,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowReports]}
   },
-  
+  {
+    path:'Statistics',
+    component: StatisticsComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
+  },
  
 ];
 

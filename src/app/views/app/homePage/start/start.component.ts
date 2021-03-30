@@ -65,7 +65,7 @@ export class StartComponent implements OnInit {
   ngOnInit() {
     this.MainStatics = new MainStatics()
     this.GetMainStatics()
-    console.log(this.MainStatics.totalAgent)
+    
     
       // this.datalabel = { visible: true };
       // this.piedata = [

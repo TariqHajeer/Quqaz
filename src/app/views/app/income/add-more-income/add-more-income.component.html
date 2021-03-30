@@ -22,7 +22,7 @@
                         
                             <e-column field='IncomeTypeId' textAlign="Center" headerText="نوع الواردات" width='175'
                             foreignKeyValue='name'  foreignKeyField ='id' 
-                            [dataSource]='inComeTypeDs'
+                            [dataSource]='inComeTypeDs.dataSource.data'
                             [validationRules]='requiredValidation'></e-column>
                            <!-- <e-column field='CurrencyId' textAlign="Center" headerText="العملة" width='175'
                             foreignKeyValue='name'  foreignKeyField ='id' 

@@ -1,6 +1,5 @@
-<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff"
- type = "line-scale-party" [fullScreen] = "true">
-    <p style="color: white" > </p>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="line-scale-party" [fullScreen]="true">
+  <p style="color: white"> </p>
 </ngx-spinner>
 <div class="row">
   <div class="col-12">
@@ -206,146 +205,119 @@
   </div>
 </div>
 -->
-<div class="row">
-  
-    <div class="col-md-4">
-      <div class="dashbord email-content">
-        <div class="title-section">
-          <p>عدد الطلبيات</p>
-        </div>
-        <div class="icon-text-section">
-          <div class="icon-section">
-            <i class="fa fa-envelope-o" aria-hidden="true"></i>
-          </div>
-          <div class="text-section">
-            <h1>{{MainStatics.totlaOrder}}</h1>
-            <span>+   </span>
-          </div>
-          <div style="clear:both;"></div>
-        </div>
-        <div class="detail-section">
-          <a href="#">
-            <p>View Detail</p>
-            <i class="fa fa-arrow-right" aria-hidden="true"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-    <div class="dashbord download-content">
-      <div class="title-section">
-        <p>عدد الطلبيات خارج المخزن</p>
-      </div>
-      <div class="icon-text-section">
-        <div class="icon-section">
-          <i class="fa fa-download" aria-hidden="true"></i>
-        </div>
-        <div class="text-section">
-          <h1>{{MainStatics.totalOrderOutStore}} <small>+</small></h1>
-          <span></span>
-        </div>
-        <div style="clear:both;"></div>
-      </div>
-      <div class="detail-section">
-        <a href="#">
-          <p>View Detail</p>
-          <i class="fa fa-arrow-right" aria-hidden="true"></i>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="dashbord product-content">
-      <div class="title-section">
-        <p>عدد الطلبيات في المخزن</p>
-      </div>
-      <div class="icon-text-section">
-        <div class="icon-section">
-          <i class="fa fa-credit-card" aria-hidden="true"></i>
-        </div>
-        <div class="text-section">
-          <h1>{{MainStatics.totalOrderInSotre}} <small>+</small></h1>
-          <span></span>
-        </div>
-        <div style="clear:both;"></div>
-      </div>
-      <div class="detail-section">
-        <a href="#">
-          <p>View Detail</p>
-          <i class="fa fa-arrow-right" aria-hidden="true"></i>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="dashbord email-content">
-      <div class="title-section">
-        <p>عدد المندوبين</p>
-      </div>
-      <div class="icon-text-section">
-        <div class="icon-section">
-          <i class="fa fa-envelope-o" aria-hidden="true"></i>
-        </div>
-        <div class="text-section">
-          <h1>{{MainStatics.totalAgent}}</h1>
-          <span>+</span>
-        </div>
-        <div style="clear:both;"></div>
-      </div>
-      <div class="detail-section">
-        <a href="#">
-          <p>View Detail</p>
-          <i class="fa fa-arrow-right" aria-hidden="true"></i>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="dashbord download-content">
-      <div class="title-section">
-        <p>عدد الطلبيات تم توصيلها</p>
-      </div>
-      <div class="icon-text-section">
-        <div class="icon-section">
-          <i class="fa fa-download" aria-hidden="true"></i>
-        </div>
-        <div class="text-section">
-          <h1>{{MainStatics.totalOrderDiliverd}}<small>+</small></h1>
-          <span></span>
-        </div>
-        <div style="clear:both;"></div>
-      </div>
-      <div class="detail-section">
-        <a href="#">
-          <p>View Detail</p>
-          <i class="fa fa-arrow-right" aria-hidden="true"></i>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="dashbord product-content">
-      <div class="title-section">
-        <p>عدد العملاء</p>
-      </div>
-      <div class="icon-text-section">
-        <div class="icon-section">
-          <i class="fa fa-credit-card" aria-hidden="true"></i>
-        </div>
-        <div class="text-section">
-          <h1>{{MainStatics.totalClient}} <small>+</small></h1>
-          <span></span>
-        </div>
-        <div style="clear:both;"></div>
-      </div>
-      <div class="detail-section">
-        <a href="#">
-          <p>View Detail</p>
-          <i class="fa fa-arrow-right" aria-hidden="true"></i>
-        </a>
-      </div>
-    </div>
-  </div>
-  
-</div>
 
+
+
+
+
+<div class="row">
+  <div class="col-sm-6 col-md-3 ">
+    <div class="stat-card">
+      <div class="stat-card__content">
+        <p class="text-uppercase mb-1 text-muted"></p>
+       <h2> {{MainStatics.totalOrderDiliverd}}</h2>
+       <span class="text-success font-weight-bold mr-1"> <i class="fa fa-arrow-up"></i></span>
+        <div>
+         
+          <span class="text-muted"> عدد الطلبيات تم توصيلها</span>
+        </div>
+      </div>
+      <div class="stat-card__icon stat-card__icon--warning">
+        <div class="stat-card__icon-circle">
+          <i class="fa fa-suitcase"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3">
+    <div class="stat-card">
+      <div class="stat-card__content">
+        <p class="text-uppercase mb-1 text-muted"></p>
+       <h2> {{MainStatics.totalOrderInSotre}}</h2><span class="text-success font-weight-bold mr-1"> <i class="fa fa-arrow-up"></i></span>
+        <div>
+         
+          <span class="text-muted">عدد الطلبيات في المخزن </span>
+         
+
+        </div>
+      </div>
+      <div class="stat-card__icon stat-card__icon--primary">
+        <div class="stat-card__icon-circle">
+          <i class="fa fa-suitcase"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3">
+    <div class="stat-card">
+      <div class="stat-card__content">
+        <p class="text-uppercase mb-1 text-muted"></p>
+       <h2> {{MainStatics.totlaOrder}}</h2><span class="text-success font-weight-bold mr-1"> <i class="fa fa-arrow-up"></i></span>
+        <div>
+         
+          <span class="text-muted">عدد الطلبيات </span>
+        </div>
+      </div>
+      <div class="stat-card__icon stat-card__icon--danger">
+        <div class="stat-card__icon-circle">
+          <i class="fa fa-suitcase"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3">
+    <div class="stat-card">
+      <div class="stat-card__content">
+        <p class="text-uppercase mb-1 text-muted"></p>
+       <h2>{{MainStatics.totalOrderOutStore}}</h2>
+       <span class="text-success font-weight-bold mr-1"> <i class="fa fa-arrow-up"></i></span>
+        <div>
+         
+          <span class="text-muted">عدد الطلبيات خارج المخزن</span>
+        </div>
+      </div>
+      <div class="stat-card__icon stat-card__icon--success">
+        <div class="stat-card__icon-circle">
+          <i class="fa fa-suitcase"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3">
+   <div class="card">
+    <div class="stat-card">
+      <div class="stat-card__content">
+        <p class="text-uppercase mb-1 text-muted"></p>
+       <h2> {{MainStatics.totalClient}}</h2>
+        <div>
+         
+          <span class="text-muted">عدد العملاء </span>
+        </div>
+      </div>
+      <div class="stat-card__icon stat-card__icon--primary">
+        <div class="stat-card__icon-circle">
+          <i class="fa fa-users"></i>
+        </div>
+      </div>
+      
+    </div>
+    <hr width="100%" style="height: 3px;color: black;">
+    <div class="stat-card">
+      <div class="stat-card__content">
+        <p class="text-uppercase mb-1 text-muted"></p>
+       <h2> {{MainStatics.totalAgent}}</h2>
+        <div>
+         
+          <span class="text-muted">عدد المندوبين </span>
+        </div>
+      </div>
+      <div class="stat-card__icon stat-card__icon--primary">
+        <div class="stat-card__icon-circle">
+          <i class="fa fa-users"></i>
+        </div>
+      </div>
+    </div>
+   </div>
+  </div>
+ 
+</div>

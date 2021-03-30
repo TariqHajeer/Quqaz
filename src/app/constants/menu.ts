@@ -123,6 +123,12 @@ const data: IMenuItem[] = [
         to: `${adminRoot}/order/ProfitsOfOrders`,
 
       },
+      {
+        icon: 'simple-icon-layers',
+        label: ' الإحصائيات  ',
+        to: `${adminRoot}/reports/Statistics`,
+
+      },
       
     ]
   },

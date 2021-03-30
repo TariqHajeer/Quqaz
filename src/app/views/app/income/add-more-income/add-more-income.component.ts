@@ -20,7 +20,7 @@ export class AddMoreIncomeComponent implements OnInit {
   submitted = false;
   Incomes: any[] = []
   coins: Coin[];
-  importTypes: any[] = [];
+  importTypes
   apiName = "Currency";
   public stTime: any;
   public filter: Object;
@@ -35,11 +35,11 @@ export class AddMoreIncomeComponent implements OnInit {
   public coinsParams: IEditCell
   public importTypesParams: IEditCell
   public userTypesParams: IEditCell
-  public inComeTypeDs: any;
+  public inComeTypeDs: DataManager;
   public CurrencyDs: any;
   public UserDs: any;
   public dateFormatOptions: any = {type:'date', format:'dd/MM/yyyy'};
- inComeTypeapi = environment.baseUrl + "api/OutComeType";
+ inComeTypeapi = environment.baseUrl + "api/IncomeType";
  Currencyapi = environment.baseUrl + "api/Currency";
  Userapi = environment.baseUrl + "api/User";
  public requiredValidation;
@@ -52,10 +52,12 @@ export class AddMoreIncomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getIncomeType()
+
+  var token=  localStorage.getItem('token')
     this.requiredValidation={ required:[true,"هذا الحقل مطلوب"]};
-    this.inComeTypeDs = new DataManager({ url: this.inComeTypeapi });
-    this.CurrencyDs = new DataManager({ url: this.Currencyapi });
-    this.UserDs = new DataManager({ url: this.Userapi });
+    // this.CurrencyDs = new DataManager({ url: this.Currencyapi });
+    // this.UserDs = new DataManager({ url: this.Userapi });
     this.editSettings = { showDeleteConfirmDialog: true, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
     this.toolbar = [
       { text: 'اضافة', tooltipText: 'اضافة', prefixIcon: 'e-add', id: 'normalgrid_add' },
@@ -72,59 +74,60 @@ export class AddMoreIncomeComponent implements OnInit {
     this.pageSettings = { pageCount: 5 };
     this.selectionSettings = { persistSelection: true, type: "Multiple" };
     this.lines = 'Horizontal';
-    this.Getcoins()
-    this.getOutComeType()
-    this.GetUsers()
+   // this.Getcoins()
+   // this.GetUsers()
   }
 
 
   addOrEditUser() {
     this.submitted = true;
   }
-  Getcoins() {
+  // Getcoins() {
 
-    this.customService.getAll("Currency").subscribe(res => {
-      this.coins = res;
-      this.coinsParams = {
-        params: {
-          allowFiltering: true,
-          dataSource: new DataManager(this.coins),
-          fields: { text: 'العملة', value: 'name' },
-          query: new Query(),
-          actionComplete: () => false
-        }
-      };
-    });
-    this.coinsParams = { params: { popupHeight: '300px' } };
-  }
-  getOutComeType() {
-    this.customService.getAll('OutComeType').subscribe(
+  //   this.customService.getAll("Currency").subscribe(res => {
+  //     this.coins = res;
+  //     this.coinsParams = {
+  //       params: {
+  //         allowFiltering: true,
+  //         dataSource: new DataManager(this.coins),
+  //         fields: { text: 'العملة', value: 'name' },
+  //         query: new Query(),
+  //         actionComplete: () => false
+  //       }
+  //     };
+  //   });
+  //   this.coinsParams = { params: { popupHeight: '300px' } };
+  // }
+  getIncomeType() {
+    this.customService.getAll('IncomeType').subscribe(
       res => {
         this.importTypes = res;
-        this.importTypesParams = {
-          params: {
-            allowFiltering: true,
-            dataSource: new DataManager(this.importTypes),
-            fields: { text: 'نوع الواردات', value: 'name' },
-            query: new Query(),
-            actionComplete: () => false
-          }
-        };
+        this.inComeTypeDs =new DataManager()
+        this.inComeTypeDs.dataSource.data=res as JSON
+        // this.importTypesParams = {
+        //   params: {
+        //     allowFiltering: true,
+        //     dataSource: new DataManager(this.importTypes),
+        //     fields: { text: 'نوع الواردات', value: 'name' },
+        //     query: new Query(),
+        //     actionComplete: () => false
+        //   }
+        // };
       }
     )
   }
-  GetUsers(){
-    this.userservic.GetAll()
-    this.userTypesParams = {
-      params: {
-        allowFiltering: true,
-        dataSource: new DataManager(this.userservic.users),
-        fields: { text: 'الموظف', value: 'name' },
-        query: new Query(),
-        actionComplete: () => false
-      }
-    };
-  }
+  // GetUsers(){
+  //   this.userservic.GetAll()
+  //   this.userTypesParams = {
+  //     params: {
+  //       allowFiltering: true,
+  //       dataSource: new DataManager(this.userservic.users),
+  //       fields: { text: 'الموظف', value: 'name' },
+  //       query: new Query(),
+  //       actionComplete: () => false
+  //     }
+  //   };
+  // }
 
   load() {
     const rowHeight: number = this.gridInstance.getRowHeight();  // height of the each row

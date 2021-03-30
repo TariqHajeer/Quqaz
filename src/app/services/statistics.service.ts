@@ -13,4 +13,7 @@ export class StatisticsService {
   MainStatics() {
    return this.http.get<any>(this.controler+"MainStatics")
   }
+  GetAggregate() {
+    return this.http.get<any>(this.controler+"GetAggregate")
+   }
 }
