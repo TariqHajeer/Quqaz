@@ -67,17 +67,17 @@ export class ViewUserComponent implements OnInit {
 
   }
   addFinish(value: CreateUser) {
-    this.User.userName=value.UserName
-    this.User.experince=value.Experince
-    this.User.hireDate=value.HireDate
-    this.User.password=value.Password
-    this.User.name=value.Name
-    this.User.salary=value.Salary
-    this.User.note=value.Note
-    this.User.groupsId=value.GroupsId
-    this.User.countryId=value.CountryId
-    this.User.canWorkAsAgent=value.CanWorkAsAgent
-    this.User.phones=this.User.phones.filter(p=>value.Phones.includes(p.phone))
+    this.User.userName = value.UserName
+    this.User.experince = value.Experince
+    this.User.hireDate = value.HireDate
+    this.User.password = value.Password
+    this.User.name = value.Name
+    this.User.salary = value.Salary
+    this.User.note = value.Note
+    this.User.groupsId = value.GroupsId
+    this.User.countryId = value.CountryId
+    this.User.canWorkAsAgent = value.CanWorkAsAgent
+    this.User.phones = this.User.phones.filter(p => value.Phones.includes(p.phone))
     this.UserService.users.push(this.User)
     this.gridInstance.refresh();
 
@@ -98,6 +98,8 @@ export class ViewUserComponent implements OnInit {
     }
   }
 
-
+  showAgent(id) {
+    this.route.navigate(['/app/user/showagent', id])
+  }
 
 }

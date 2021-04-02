@@ -212,7 +212,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     if (this.checkLengthPhoneNumber(this.Order.RecipientPhones))
       return
     if (!this.Order.Code || !this.Order.ClientId ||
-      !this.Order.RecipientPhones
+      !this.Order.RecipientPhones||!this.Order.Amount
       || !this.Order.AgentId || this.showMessageCode) {
       this.submitted = true
       return
@@ -251,7 +251,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
 
     this.editNewCountry()
     if (!this.EditOrder.Code || !this.EditOrder.ClientId ||
-      !this.EditOrder.RecipientPhones
+      !this.EditOrder.RecipientPhones||!this.EditOrder.Amount
       || !this.EditOrder.AgentId || !this.EditOrder.OrderplacedId
       || order.showEditMessageCode) {
       this.Editsubmitted = true

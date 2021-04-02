@@ -13,9 +13,10 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { ShowAgentComponent } from './show-agent/show-agent.component';
 
 @NgModule({
-  declarations: [AddUserComponent, ViewUserComponent, EditUserComponent],
+  declarations: [AddUserComponent, ViewUserComponent, EditUserComponent, ShowAgentComponent],
   imports: [
     CommonModule,
     UsersRoutingModule,

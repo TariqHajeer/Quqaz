@@ -6,7 +6,9 @@
           <div class="row w-100 align-items-end mb-3">
             <div class="col-md-3">
               <label> نوع الموظف <span class="text-danger text-one align-bottom mx-1">*</span></label>
-              <ng-select [(ngModel)]="User.canWorkAsAgent" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
+              <ng-select [(ngModel)]="User.canWorkAsAgent"
+               [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+               [disabled]="true">
                 <ng-option [value]="true">مندوب</ng-option>
                 <ng-option [value]="false"> موظف</ng-option>
               </ng-select>

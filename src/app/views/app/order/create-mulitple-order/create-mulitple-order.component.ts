@@ -186,7 +186,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
   onEnter() {
     if (!this.Order.Code || !this.Order.ClientId ||
       !this.Order.CountryId || !this.Order.RecipientPhones
-      || !this.Order.AgentId || this.showMessageCode) {
+      || !this.Order.AgentId || this.showMessageCode||!this.Order.Amount) {
       this.submitted = true
       return
     } else this.submitted = false
@@ -226,7 +226,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     if (!this.EditOrder.Code || !this.EditOrder.ClientId ||
       !this.EditOrder.CountryId || !this.EditOrder.RecipientPhones
       || !this.EditOrder.AgentId || !this.EditOrder.OrderplacedId
-      || order.showEditMessageCode) {
+      || order.showEditMessageCode||!this.EditOrder.Amount) {
       this.Editsubmitted = true
       return
     } else this.Editsubmitted = false
