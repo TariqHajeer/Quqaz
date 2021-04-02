@@ -135,7 +135,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     if (this.Agents.length != 0)
       this.Order.AgentId = this.Agents[0].id
     else this.Order.AgentId = null
-    this.Order.Cost = city.deliveryCost
+    this.Order.DeliveryCost = city.deliveryCost
 
   }
   changeCountryEdit() {
@@ -144,7 +144,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     if (this.Agents.length != 0)
       this.EditOrder.AgentId = this.Agents[0].id
     else this.EditOrder.AgentId = null
-    this.EditOrder.Cost = city.deliveryCost
+    this.EditOrder.DeliveryCost = city.deliveryCost
   }
   showMessageCode: boolean = false
   changeClientId() {
@@ -212,7 +212,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     if (this.checkLengthPhoneNumber(this.Order.RecipientPhones))
       return
     if (!this.Order.Code || !this.Order.ClientId ||
-      !this.Order.RecipientPhones||!this.Order.Amount
+      !this.Order.RecipientPhones||!this.Order.Cost
       || !this.Order.AgentId || this.showMessageCode) {
       this.submitted = true
       return
@@ -251,7 +251,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
 
     this.editNewCountry()
     if (!this.EditOrder.Code || !this.EditOrder.ClientId ||
-      !this.EditOrder.RecipientPhones||!this.EditOrder.Amount
+      !this.EditOrder.RecipientPhones||!this.EditOrder.Cost
       || !this.EditOrder.AgentId || !this.EditOrder.OrderplacedId
       || order.showEditMessageCode) {
       this.Editsubmitted = true

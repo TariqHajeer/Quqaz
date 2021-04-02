@@ -1,5 +1,21 @@
+
 <div class="row">
-    <div class="col-sm-6 col-md-3">
+  <div class="col-md-3 col-sm-4">
+    <div class="wrimagecard wrimagecard-topimage" style="text-align: center;">
+            <a href="#">
+            <div class="wrimagecard-topimage_header" style="background-color:rgba(99, 172, 221, 0.1);text-align: center; ">
+             <i class="fa fa-users" style="color:#0e82b8;"></i>
+            </div>
+            <div class="wrimagecard-topimage_title">
+              <h3 style="text-align: center;">
+              {{agent.name}}
+            </h3>
+            </div>
+          </a>
+        </div>
+     
+        </div>
+   <!-- <div class="col-sm-6 col-md-3">
       <div class="stat-card">
         <div class="stat-card__content">
           <p class="text-uppercase mb-1 text-muted"></p>
@@ -16,12 +32,30 @@
         </div>
       </div>
     </div>
-   
+      <div class="col-sm-6 col-md-3 ">
+      <div class="stat-card">
+        <div class="stat-card__content">
+          <p class="text-uppercase mb-1 text-muted"></p>
+         <h2> </h2>
+         <span class="text-success font-weight-bold mr-1"> <i class="fa fa-arrow-up"></i></span>
+          <div>
+           
+            <span class="text-muted"> عدد الطلبيات تم توصيلها</span>
+          </div>
+        </div>
+        <div class="stat-card__icon stat-card__icon--warning">
+          <div class="stat-card__icon-circle">
+            <i class="fa fa-suitcase"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+   -->
     <div class="col-sm-6 col-md-3">
       <div class="stat-card">
         <div class="stat-card__content">
           <p class="text-uppercase mb-1 text-muted"></p>
-         <h2> </h2><span class="text-success font-weight-bold mr-1"> <i class="fa fa-arrow-up"></i></span>
+         <h2> {{userStatics.orderInStore}}</h2><span class="text-success font-weight-bold mr-1"> <i class="fa fa-arrow-up"></i></span>
           <div>
            
             <span class="text-muted">عدد الطلبيات في المخزن </span>
@@ -41,11 +75,11 @@
       <div class="stat-card">
         <div class="stat-card__content">
           <p class="text-uppercase mb-1 text-muted"></p>
-         <h2></h2>
+         <h2>{{userStatics.orderInWay}}</h2>
          <span class="text-success font-weight-bold mr-1"> <i class="fa fa-arrow-up"></i></span>
           <div>
            
-            <span class="text-muted">عدد الطلبيات خارج المخزن</span>
+            <span class="text-muted">عدد الطلبيات  في الطريق</span>
           </div>
         </div>
         <div class="stat-card__icon stat-card__icon--success">
@@ -55,23 +89,6 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-6 col-md-3 ">
-      <div class="stat-card">
-        <div class="stat-card__content">
-          <p class="text-uppercase mb-1 text-muted"></p>
-         <h2> </h2>
-         <span class="text-success font-weight-bold mr-1"> <i class="fa fa-arrow-up"></i></span>
-          <div>
-           
-            <span class="text-muted"> عدد الطلبيات تم توصيلها</span>
-          </div>
-        </div>
-        <div class="stat-card__icon stat-card__icon--warning">
-          <div class="stat-card__icon-circle">
-            <i class="fa fa-suitcase"></i>
-          </div>
-        </div>
-      </div>
-    </div>
+  
  
   </div>

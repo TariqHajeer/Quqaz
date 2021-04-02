@@ -121,7 +121,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     if(this.Agents.length!=0)
     this.Order.AgentId = this.Agents[0].id
     else this.Order.AgentId=null
-    this.Order.Cost = city.deliveryCost
+    this.Order.DeliveryCost = city.deliveryCost
 
   }
   changeCountryEdit() {
@@ -130,7 +130,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     if(this.Agents.length!=0)
     this.EditOrder.AgentId = this.Agents[0].id
     else this.EditOrder.AgentId=null
-    this.EditOrder.Cost = city.deliveryCost
+    this.EditOrder.DeliveryCost = city.deliveryCost
   }
   showMessageCode: boolean = false
   CheckCode() {
@@ -186,7 +186,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
   onEnter() {
     if (!this.Order.Code || !this.Order.ClientId ||
       !this.Order.CountryId || !this.Order.RecipientPhones
-      || !this.Order.AgentId || this.showMessageCode||!this.Order.Amount) {
+      || !this.Order.AgentId || this.showMessageCode||!this.Order.Cost) {
       this.submitted = true
       return
     } else this.submitted = false
@@ -226,7 +226,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     if (!this.EditOrder.Code || !this.EditOrder.ClientId ||
       !this.EditOrder.CountryId || !this.EditOrder.RecipientPhones
       || !this.EditOrder.AgentId || !this.EditOrder.OrderplacedId
-      || order.showEditMessageCode||!this.EditOrder.Amount) {
+      || order.showEditMessageCode||!this.EditOrder.Cost) {
       this.Editsubmitted = true
       return
     } else this.Editsubmitted = false
