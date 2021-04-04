@@ -25,6 +25,14 @@
         <ng-template  #template let-data>
           <div>
                 <span class="btn btn-xs badge-primary mx-1" (click)="onEditClicked(data.id)">{{'forms.edit' | translate}}</span>
+                <!-- Button trigger modal -->
+<button type="button"class="btn btn-xs badge-primary mx-1"
+ data-toggle="modal" data-target="#exampleModal"
+ (click)="getClient(data)">
+  صرف
+</button>
+
+
         </div>
       </ng-template>
       </e-column>
@@ -34,7 +42,30 @@
 </div>
 </div>
 </div>
-
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">مبلغ العميل </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label>المبلغ</label>
+        <input  type="text" class="form-control"[(ngModel)]="cost"
+        [ngModelOptions]="{standalone: true}"
+        oninput="this.value = this.value.replace(/[^a-zA-Z_0-9-]/g, '').replace(/(\..*)\./g, '$1');"  
+        >
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="printcatch()">قبض</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="printpay()">صرف</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div bsModal #addClientModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
   aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog modal-md modal-right " style="max-width: 90%;">

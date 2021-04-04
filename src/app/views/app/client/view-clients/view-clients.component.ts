@@ -12,9 +12,9 @@ import { ClientService } from '../client.service'
 })
 export class ViewClientsComponent implements OnInit {
 
-  constructor(private clientService: ClientService, 
+  constructor(private clientService: ClientService,
     private notifications: NotificationsService,
-    public route:Router) { }
+    public route: Router) { }
   cities: any[] = [];
   tempRegion: any;
   public stTime: any;
@@ -31,8 +31,8 @@ export class ViewClientsComponent implements OnInit {
   editClicked: any;
   addClicked: any;
   currentClientId: any;
-  EditClient:Client
-  formatOptions:Object
+  EditClient: Client
+  formatOptions: Object
   ngOnInit(): void {
     this.getClients();
     this.editSettings = { showDeleteConfirmDialog: true, allowDeleting: true };
@@ -45,8 +45,8 @@ export class ViewClientsComponent implements OnInit {
     this.pageSettings = { pageSize: 5, pageSizes: true };
     this.selectionSettings = { persistSelection: true, type: "Multiple" };
     this.lines = 'Horizontal';
-    this.formatOptions = {type: 'date', format: 'dd/MM/yyyy'};
-
+    this.formatOptions = { type: 'date', format: 'dd/MM/yyyy' };
+    localStorage.removeItem('client')
   }
   load() {
     const rowHeight: number = this.gridInstance.getRowHeight();  // height of the each row
@@ -68,11 +68,11 @@ export class ViewClientsComponent implements OnInit {
     )
   }
   onEditClicked(id) {
-    this.route.navigate(['/app/client/edit',id])
+    this.route.navigate(['/app/client/edit', id])
 
   }
   addFinish(value) {
-    this.formatOptions = {type: 'date', format: 'dd/MM/yyyy'};
+    this.formatOptions = { type: 'date', format: 'dd/MM/yyyy' };
     // this.clients.push(value)
     // this.gridInstance.refresh();
     this.getClients()
@@ -92,5 +92,33 @@ export class ViewClientsComponent implements OnInit {
         this.gridInstance.refresh();
       }
     }
+  }
+  client: {
+    client: any,
+    cost: number,
+    pay: boolean
+  }
+  cost = 0
+  getClient(data) {
+    this.client = {
+      client: null,
+      cost: 0,
+      pay: true
+    }
+    this.client.client = data
+    console.log(data)
+  }
+  printpay() {
+    this.client.pay = true
+    this.client.cost = this.cost
+    localStorage.setItem('client', JSON.stringify(this.client ))
+    this.route.navigate(['/app/reports/pay'])
+
+  }
+  printcatch() {
+    this.client.pay = false
+    this.client.cost = this.cost
+    localStorage.setItem('client',JSON.stringify(this.client ))
+    this.route.navigate(['/app/reports/pay'])
   }
 }

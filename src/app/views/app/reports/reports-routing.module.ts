@@ -5,6 +5,7 @@ import { UserPermission } from 'src/app/shared/auth.roles';
 import { ClientOrderComponent } from './client-order/client-order.component';
 import { AgentComponent } from './printpreview/agent/agent.component';
 import { ClientComponent } from './printpreview/client/client.component';
+import { PayComponent } from './printpreview/pay/pay.component';
 import { SetPrintNumberClientComponent } from './printpreview/set-print-number-client/set-print-number-client.component';
 import { SetPrintNumberComponent } from './printpreview/set-print-number/set-print-number.component';
 import { ReceiptShipmentAgentComponent } from './receipt-shipment-agent/receipt-shipment-agent.component';
@@ -65,6 +66,11 @@ const routes: Routes = [
   {
     path:'Statistics',
     component: StatisticsComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
+  },
+  {
+    path:'pay',
+    component: PayComponent,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowReports]}
   },
  

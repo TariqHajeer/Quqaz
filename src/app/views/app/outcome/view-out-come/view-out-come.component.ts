@@ -29,7 +29,7 @@ export class ViewOutComeComponent implements OnInit {
   coins: Coin[];
   exportTypes: any[] = [];
   totalRecoreds: number;
-  displayedColumns: string[] = ['outComeType', 'amount', 'currency', 'date', 'reason', 'note',"createdBy", "Edit","Delete"];
+  displayedColumns: string[] = ['outComeType', 'amount',  'date', 'reason', 'note',"createdBy", "Edit","Delete"];
   dataSource: MatTableDataSource<Outcome>;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
