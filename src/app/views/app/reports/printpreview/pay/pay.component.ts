@@ -32,7 +32,7 @@ export class PayComponent implements OnInit {
   }
   public convetToPDF() {
     const elementToPrint = document.getElementById('print'); //The html element to become a pdf
-    const pdf = new jspdf('l', 'in', 'a4');
+    const pdf = new jspdf("p", "cm", "a4");
     pdf.internal.scaleFactor = 30;
     pdf.addHTML(elementToPrint, () => {
       pdf.save('file'+'.pdf');

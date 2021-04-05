@@ -4,6 +4,7 @@ import { EditSettingsModel, GridComponent, SaveEventArgs, ToolbarItems } from '@
 import { ClickEventArgs } from '@syncfusion/ej2-navigations';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { Client } from '../client.model';
+import { Account } from '../client.model';
 import { ClientService } from '../client.service'
 @Component({
   selector: 'app-view-clients',
@@ -99,6 +100,7 @@ export class ViewClientsComponent implements OnInit {
     pay: boolean
   }
   cost = 0
+  Account:Account
   getClient(data) {
     this.client = {
       client: null,
@@ -109,6 +111,14 @@ export class ViewClientsComponent implements OnInit {
     console.log(data)
   }
   printpay() {
+    //صرف
+    this.Account=new Account()
+    this.Account.ClinetId=  this.client.client.id
+    this.Account.Amount=-(this.cost)
+   
+    this.clientService.Account(this.Account).subscribe(res=>{
+
+    })
     this.client.pay = true
     this.client.cost = this.cost
     localStorage.setItem('client', JSON.stringify(this.client ))
@@ -116,6 +126,13 @@ export class ViewClientsComponent implements OnInit {
 
   }
   printcatch() {
+    //قبض
+    this.Account=new Account()
+    this.Account.ClinetId=  this.client.client.id
+    this.Account.Amount=this.cost
+    this.clientService.Account(this.Account).subscribe(res=>{
+
+    })
     this.client.pay = false
     this.client.cost = this.cost
     localStorage.setItem('client',JSON.stringify(this.client ))

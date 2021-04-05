@@ -16,3 +16,8 @@ export class Client {
   canDelete?:any;
   phones?:any[]
 }
+export class Account
+    {
+        ClinetId 
+        Amount
+    }

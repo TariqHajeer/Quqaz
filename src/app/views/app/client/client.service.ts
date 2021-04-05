@@ -50,4 +50,7 @@ export class ClientService {
     { params: new HttpParams().set('id', id) } : {};
     return this.http.put(this.controler+"deletePhone/"+id,options)
   }
+  Account(item){
+    return this.http.post(this.controler+"Account",item)
+  }
 }
