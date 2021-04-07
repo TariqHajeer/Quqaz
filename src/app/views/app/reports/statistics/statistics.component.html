@@ -4,7 +4,30 @@
 			<h1 class="text-center text-uppercase">الإحصائيات</h1>
 			<br>
 			<br>
+			
 
+			<div class="card">
+			  <div class="card-body">
+				<div class="row">
+				  <div class="col-3">
+					<label>من تاريخ</label>
+					<ejs-datepicker  name="FromDate" [(ngModel)]='filtering.FromDate' (ngModelChange)="get()"
+					 id="fromdate" placeholder='اختر تاريخ'>
+					</ejs-datepicker>
+			  
+				  </div>
+				  <div class="col-3">
+					<label>الى تاريخ</label>
+					<ejs-datepicker name="ToDate"[(ngModel)]='filtering.ToDate' (ngModelChange)="get()"
+					 id="todate" placeholder='اختر تاريخ'>
+					</ejs-datepicker>
+			  
+				  </div>
+				
+				</div>
+				
+			  </div>
+			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-3 ">
 					<div class="stat-card">

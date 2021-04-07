@@ -23,7 +23,12 @@ import { SetPrintNumberClientComponent } from './printpreview/set-print-number-c
 import { StatisticsComponent } from './statistics/statistics.component';
 import { PayComponent } from './printpreview/pay/pay.component';
 import { AgentStatisticsComponent } from './agent-statistics/agent-statistics.component';
-
+import {
+  CategoryService, DateTimeService, ScrollBarService, ColumnSeriesService, LineSeriesService,
+  ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService, LegendService, TooltipService
+} from '@syncfusion/ej2-angular-charts';
+import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
+import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
 @NgModule({
   declarations: [ShipmentInStockComponent,
     ClientOrderComponent,
@@ -51,7 +56,12 @@ import { AgentStatisticsComponent } from './agent-statistics/agent-statistics.co
     ReactiveFormsModule,
     SimpleNotificationsModule.forRoot(),
     NgxPrintModule,
+    DatePickerModule,
+    DateRangePickerModule,
 
-  ], schemas: [CUSTOM_ELEMENTS_SCHEMA]
+
+  ]
+  , providers: [CategoryService, DateTimeService, ScrollBarService, LineSeriesService, ColumnSeriesService,
+    ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService, LegendService, TooltipService,], schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ReportsModule { }
