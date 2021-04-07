@@ -1,36 +1,61 @@
-<div class="example-container mat-elevation-z8" >
-    <h2 style="margin: 15px 15px;">تفاصيل المندوبين</h2>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> الاسم </th>
-        <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.name}}</td>
-      </ng-container>
+<div class="container" style="padding-right: 10%;"> 
   
-      <ng-container matColumnDef="orderInStore">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> طلبات في المخزن</th>
-        <td mat-cell *matCellDef="let element"> {{element.userStatics.orderInStore}}</td>
-      </ng-container>
-      <ng-container matColumnDef="orderInWay">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> طلبات في الطريق</th>
-        <td mat-cell *matCellDef="let element"> {{element.userStatics.orderInWay}}</td>
-      </ng-container>
-    
-  
-    
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
-      </tr>
-    </table>
-    <h5 style="padding-top: 20px; padding-right: 10px;"  *ngIf="noDataFound">لايوجد بيانات للعرض</h5>
-
-    
-    
-    
-    </div>
-    <mat-paginator [length]="100"
-    [pageSize]="10"
-    [pageSizeOptions]="[ 10, 25,50, 100]">
-  </mat-paginator>
-  
-  <simple-notifications></simple-notifications>
+    <div class="row" *ngFor="let agent of agents">
+        <div class="col-md-3 col-sm-4">
+          <div class="wrimagecard wrimagecard-topimage" style="text-align: center;">
+                  <a href="#">
+                  <div class="wrimagecard-topimage_header" style="background-color:rgba(99, 172, 221, 0.1);text-align: center; ">
+                   <i class="fa fa-users" style="color:#0e82b8;"></i>
+                  </div>
+                  <div class="wrimagecard-topimage_title">
+                    <h3 style="text-align: center;">
+                        {{agent.name}}
+                  </h3>
+                  </div>
+                </a>
+              </div>
+           
+              </div>
+        
+          <div class="col-sm-6 col-md-3">
+            <div class="stat-card">
+              <div class="stat-card__content">
+                <p class="text-uppercase mb-1 text-muted"></p>
+               <h2>{{agent.userStatics.orderInStore}} </h2><span class="text-success font-weight-bold mr-1"> <i class="fa fa-arrow-up"></i></span>
+                <div>
+                 
+                  <span class="text-muted">عدد الطلبيات في المخزن </span>
+                 
+        
+                </div>
+              </div>
+              <div class="stat-card__icon stat-card__icon--primary">
+                <div class="stat-card__icon-circle">
+                  <i class="fa fa-suitcase"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          <div class="col-sm-6 col-md-3">
+            <div class="stat-card">
+              <div class="stat-card__content">
+                <p class="text-uppercase mb-1 text-muted"></p>
+               <h2>{{agent.userStatics.orderInWay}}</h2>
+               <span class="text-success font-weight-bold mr-1"> <i class="fa fa-arrow-up"></i></span>
+                <div>
+                 
+                  <span class="text-muted">عدد الطلبيات  في الطريق</span>
+                </div>
+              </div>
+              <div class="stat-card__icon stat-card__icon--success">
+                <div class="stat-card__icon-circle">
+                  <i class="fa fa-suitcase"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+       
+        </div>
+</div>
