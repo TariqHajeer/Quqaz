@@ -117,7 +117,7 @@ export class StartComponent implements OnInit {
     this.router.navigate(['/app/reports/Statistics'])
   }
   StatisticsForAgent() {
-    this.router.navigate(['/app/reports/ShipmentInStock'])
+    this.router.navigate(['/app/reports/AgentStatistics'])
   }
 
   //order

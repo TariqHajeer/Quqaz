@@ -24,6 +24,8 @@ export class UserService {
         }
       }
       this.users = res;
+      console.log(res)
+
       this.users.forEach(e=>{
         e.phonesAsString = e.phones.map(c=>c.phone).join(',');
       })

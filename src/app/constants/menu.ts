@@ -84,6 +84,12 @@ const data: IMenuItem[] = [
           },
           {
             icon: 'simple-icon-layers',
+            label: 'تفاصيل المندوبين ',
+            to: `${adminRoot}/reports/AgentStatistics`,
+    
+          },
+          {
+            icon: 'simple-icon-layers',
             label: 'شحنات حسب رقم الطباعة ',
             to: `${adminRoot}/reports/printsetprintnumberagentpreview`,
     

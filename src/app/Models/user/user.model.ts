@@ -17,4 +17,10 @@ export class User {
       groupsId:number[] 
       phones:Phone[]
       employeeType:string = this.canWorkAsAgent==true?"مندوب":"عميل"
+      UserStatics:UserStatics
+}
+export class UserStatics
+{
+    OrderInStore 
+    OrderInWay 
 }

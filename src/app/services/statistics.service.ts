@@ -11,9 +11,13 @@ export class StatisticsService {
   controler = environment.baseUrl + "api/Statistics/";
 
   MainStatics() {
-   return this.http.get<any>(this.controler+"MainStatics")
+    return this.http.get<any>(this.controler + "MainStatics")
   }
   GetAggregate() {
-    return this.http.get<any>(this.controler+"GetAggregate")
-   }
+    return this.http.get<any>(this.controler + "GetAggregate")
+  }
+  AgnetStatics() {
+    return this.http.get<any>(this.controler + "AgnetStatics")
+
+  }
 }

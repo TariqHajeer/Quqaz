@@ -22,6 +22,7 @@ import { SetPrintNumberComponent } from './printpreview/set-print-number/set-pri
 import { SetPrintNumberClientComponent } from './printpreview/set-print-number-client/set-print-number-client.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { PayComponent } from './printpreview/pay/pay.component';
+import { AgentStatisticsComponent } from './agent-statistics/agent-statistics.component';
 
 @NgModule({
   declarations: [ShipmentInStockComponent,
@@ -37,7 +38,8 @@ import { PayComponent } from './printpreview/pay/pay.component';
     SetPrintNumberComponent,
     SetPrintNumberClientComponent,
     StatisticsComponent,
-    PayComponent,],
+    PayComponent,
+    AgentStatisticsComponent,],
   imports: [
     CommonModule,
     ReportsRoutingModule,

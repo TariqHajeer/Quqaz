@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/auth.guard';
 import { UserPermission } from 'src/app/shared/auth.roles';
+import { AgentStatisticsComponent } from './agent-statistics/agent-statistics.component';
 import { ClientOrderComponent } from './client-order/client-order.component';
 import { AgentComponent } from './printpreview/agent/agent.component';
 import { ClientComponent } from './printpreview/client/client.component';
@@ -66,6 +67,11 @@ const routes: Routes = [
   {
     path:'Statistics',
     component: StatisticsComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
+  },
+  {
+    path:'AgentStatistics',
+    component: AgentStatisticsComponent,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowReports]}
   },
   {
