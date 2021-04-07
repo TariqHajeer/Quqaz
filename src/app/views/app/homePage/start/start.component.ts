@@ -6,6 +6,7 @@ import { ChartTheme, ILoadedEventArgs } from '@syncfusion/ej2-angular-charts';
 import { ThemePalette } from '@angular/material/core';
 import { ProgressBarMode } from '@angular/material/progress-bar';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-start',
@@ -16,10 +17,11 @@ export class StartComponent implements OnInit {
 
   constructor(private authenticationService: AuthService,
     private StatisticsService: StatisticsService,
-    private spinner: NgxSpinnerService) {
+    private spinner: NgxSpinnerService,
+    private router: Router) {
 
   }
-  public data: Object[]=[]
+  public data: Object[] = []
   //Initializing Primary X Axis
   public primaryXAxis: Object = {
     majorGridLines: { width: 0 },
@@ -61,17 +63,17 @@ export class StartComponent implements OnInit {
   public width: string = '100%';
 
 
- public MainStatics: MainStatics
+  public MainStatics: MainStatics
   ngOnInit() {
     this.MainStatics = new MainStatics()
     this.GetMainStatics()
-    
-    
-      // this.datalabel = { visible: true };
-      // this.piedata = [
-      //             { 'x': 'Chrome', y: 37 }, { 'x': 'UC Browser', y: 17 },
-      //             { 'x': 'iPhone', y: 19 }, { 'x': 'Others', y: 4 }, { 'x': 'Opera', y: 11 }
-      //         ];
+
+
+    // this.datalabel = { visible: true };
+    // this.piedata = [
+    //             { 'x': 'Chrome', y: 37 }, { 'x': 'UC Browser', y: 17 },
+    //             { 'x': 'iPhone', y: 19 }, { 'x': 'Others', y: 4 }, { 'x': 'Opera', y: 11 }
+    //         ];
     // this.authenticationService.startTokenTimer()
   }
 
@@ -88,16 +90,75 @@ export class StartComponent implements OnInit {
         { x: 'شحنات خارج المخزن', y4: this.MainStatics.totalOrderOutStore },
         { x: 'الشحنات', y5: this.MainStatics.totlaOrder },
       ];
-    },err=>{
+    }, err => {
       this.spinner.hide()
     })
   }
+  //reports
+  ShipmentInStock() {
+    this.router.navigate(['/app/reports/ShipmentInStock'])
+  }
+  Shipmentonway() {
+    this.router.navigate(['/app/reports/Shipmentonway'])
+  }
+  printsetprintnumberagentpreview() {
+    this.router.navigate(['/app/reports/printsetprintnumberagentpreview'])
+  }
+  Shipmentsnotbeendelivered() {
+    this.router.navigate(['/app/reports/Shipmentsnotbeendelivered'])
+  }
+  printsetprintnumberclientpreview() {
+    this.router.navigate(['/app/reports/printsetprintnumberclientpreview'])
+  }
+  ProfitsOfOrders() {
+    this.router.navigate(['/app/reports/ProfitsOfOrders'])
+  }
+  Statistics() {
+    this.router.navigate(['/app/reports/Statistics'])
+  }
+  StatisticsForAgent() {
+    this.router.navigate(['/app/reports/ShipmentInStock'])
+  }
 
+  //order
+  neworders() {
+    this.router.navigate(['/app/order/neworders'])
+  }
+  order() {
+    this.router.navigate(['/app/order/'])
+  }
+  ReceiptShipmentAgentComponent() {
+    this.router.navigate(['/app/reports/ReceiptShipmentAgentComponent'])
+  }
+  addorder() {
+    this.router.navigate(['/app/order/addorder'])
+  }
+  addMulitpleOrders() {
+    this.router.navigate(['/app/order/addMulitpleOrders'])
+  }
+  addMulitpleOrdersfromClient() {
+    this.router.navigate(['/app/order/addMulitpleOrdersfromClient'])
+  }
+  //client
+  client() {
+    this.router.navigate(['/app/client'])
+  }
+  //income
+  income() {
+    this.router.navigate(['/app/income'])
+  }
+  //outcome
+  outcome() {
+    this.router.navigate(['/app/outcome'])
+  }
+   //user
+   user() {
+    this.router.navigate(['/app/user'])
+  }
   //دائرة
-
   // public piedata: Object[];
   // public datalabel: Object;
- //progres par mat
- color: ThemePalette = 'primary';
- mode: ProgressBarMode = 'determinate';
+  //progres par mat
+  color: ThemePalette = 'primary';
+  mode: ProgressBarMode = 'determinate';
 }
