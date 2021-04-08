@@ -43,10 +43,14 @@ export class RegionComponent implements OnInit {
     this.pageSettings = { pageCount: 5 };
     this.selectionSettings = { persistSelection: true, type: "Multiple" };
     this.lines = 'Horizontal';
+    console.log(localStorage.getItem('token'))
     this.citiesParameter = {
       params: {
         allowFiltering: true,
-        dataSource: new DataManager({ url: this.countryapi }),
+        dataSource: new DataManager({ url: this.countryapi,
+          headers: [{'Authorization': 'Bearer '  + localStorage.getItem('token') }]
+        }, 
+         ),
         fields: { text: 'name', value: 'id' },
         actionComplete: () => false
       }
