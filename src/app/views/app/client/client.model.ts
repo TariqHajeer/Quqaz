@@ -11,7 +11,7 @@ export class Client {
   regionId?:number;
   region?:Region
   address?:any;
-  firstDate:Date=new Date;
+  firstDate:any=new Date;
   note?:any;
   canDelete?:any;
   phones?:any[]

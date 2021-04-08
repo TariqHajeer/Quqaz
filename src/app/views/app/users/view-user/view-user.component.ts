@@ -6,6 +6,7 @@ import { User } from 'src/app/Models/user/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { CreateUser } from 'src/app/Models/user/create-user';
+import { Phone } from 'src/app/Models/phone.model';
 
 @Component({
   selector: 'app-view-user',
@@ -66,7 +67,9 @@ export class ViewUserComponent implements OnInit {
     this.route.navigate(['/app/user/edit', id])
 
   }
+  Phone:Phone=new Phone
   addFinish(value: CreateUser) {
+    this.User=new User
     this.User.userName = value.UserName
     this.User.experince = value.Experince
     this.User.hireDate = value.HireDate
@@ -77,7 +80,13 @@ export class ViewUserComponent implements OnInit {
     this.User.groupsId = value.GroupsId
     this.User.countryId = value.CountryId
     this.User.canWorkAsAgent = value.CanWorkAsAgent
-    this.User.phones = this.User.phones.filter(p => value.Phones.includes(p.phone))
+    for (let index = 0; index < value.Phones.length; index++) {
+      this.Phone.phone=value.Phones[index]
+      this.User.phones.push(this.Phone)
+
+    }
+    this.User.UserStatics.OrderInStore=0
+    this.User.UserStatics.OrderInWay=0
     this.UserService.users.push(this.User)
     this.gridInstance.refresh();
 

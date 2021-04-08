@@ -74,6 +74,7 @@ export class AddUserComponent implements OnInit, OnChanges {
       res => {
         if (this.addClicked) {
           this.addFinish.emit(this.CreateUser);
+          this.submitted = false;
           this.CreateUser=new CreateUser
           this.notifications.create('success', 'تم اضافة موظف بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         }

@@ -65,6 +65,9 @@ export class ViewClientsComponent implements OnInit {
     this.clientService.getClients().subscribe(
       res => {
         this.clients = res;
+        this.clients.forEach(element => {
+          element.firstDate = element.firstDate.split('T')[0];
+        });
       }
     )
   }
