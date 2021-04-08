@@ -109,4 +109,28 @@ export class AddClientComponent implements OnInit, OnChanges {
     this.client.phones.push(this.tempPhone);
     this.tempPhone = '';
   }
+  RecipientPhoneslength = ""
+  checkLengthPhoneNumber(phone) {
+    console.log(phone)
+    if (phone&&phone.length < 11) {
+      this.RecipientPhoneslength = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
+      return true
+    } 
+    else {
+      this.RecipientPhoneslength = ""
+      return false
+    }
+  }
+  RecipientPhoneslengthEdit = ""
+  checkLengthPhoneNumberForEdit(phone) {
+    console.log(phone)
+    if (phone&&phone.length < 11) {
+      this.RecipientPhoneslengthEdit = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
+      return true
+    } 
+    else {
+      this.RecipientPhoneslengthEdit = ""
+      return false
+    }
+  }
 }

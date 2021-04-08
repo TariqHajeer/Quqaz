@@ -74,14 +74,20 @@
     <label>{{'client.phone' | translate}}-{{i+1}}</label>
     <input type="text" maxlength="11" oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"  class="form-control"
      [ngModelOptions]="{standalone: true}"
-     [(ngModel)]="client.phones[i]">
+     [(ngModel)]="client.phones[i]"(ngModelChange)="checkLengthPhoneNumberForEdit(client.phones[i])">
     </ng-container>
+    <div class="message" *ngIf="client.phones[i]&& checkLengthPhoneNumberForEdit(client.phones[i])">
+      {{RecipientPhoneslengthEdit}}
+  </div>
 </div>
 <div class="col-md-3">
   <label>{{'client.phone' | translate}}</label>
   <input type="text" maxlength="11" oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"  class="form-control"
    [ngModelOptions]="{standalone: true}"
-   [(ngModel)]="tempPhone">
+   [(ngModel)]="tempPhone"(ngModelChange)="checkLengthPhoneNumber(tempPhone)">
+   <div class="message" *ngIf="tempPhone&& checkLengthPhoneNumber(tempPhone)">
+    {{RecipientPhoneslength}}
+</div>
 </div>
 
 <div class="col-2">

@@ -156,5 +156,16 @@ export class EditUserComponent implements OnInit {
       this.notifications.create('success', 'تم حذف المستخدم من المجموعة بنجاح ', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
     })
   }
-  
+  RecipientPhoneslength = ""
+  checkLengthPhoneNumber(phone) {
+    console.log(phone)
+    if (phone&&phone.length < 11) {
+      this.RecipientPhoneslength = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
+      return true
+    } 
+    else {
+      this.RecipientPhoneslength = ""
+      return false
+    }
+  }
 }

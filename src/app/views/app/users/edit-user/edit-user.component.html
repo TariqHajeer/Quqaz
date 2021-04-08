@@ -113,7 +113,12 @@
                           <label for="phone" class="col-form-label">الرقم:</label>
                           <input id="phone" type="text" maxlength="11"
                             oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
-                            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="phone.phone"> </div>
+                            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="phone.phone"
+                            (ngModelChange)="checkLengthPhoneNumber(phone.phone)" > 
+                        <div class="message" *ngIf="phone.phone&& checkLengthPhoneNumber(phone.phone)">
+                          {{RecipientPhoneslength}}
+                      </div> 
+                          </div>
                         <button type="button" class="btn btn-primary" (click)="addNewPhone()">اضافة</button>
                       </form>
                       <table class="table">
