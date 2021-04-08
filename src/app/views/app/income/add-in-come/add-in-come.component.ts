@@ -37,15 +37,17 @@ export class AddInComeComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.CreateIncome = new CreateIncome()
     this.submitted=false
+    console.log( this.CreateIncome)
+    console.log(this.Income)
     if (!this.addClicked&&this.Income!=null&&this.Income!=undefined) {
       this.CreateIncome.Id = this.Income.id
       this.CreateIncome.Amount = this.Income.amount
       this.CreateIncome.Date = this.Income.date
-      this.CreateIncome.CurrencyId = this.Income.currency.id
+     // this.CreateIncome.CurrencyId = this.Income.currency.id
       this.CreateIncome.Note = this.Income.note
       this.CreateIncome.Earining = this.Income.earining
       this.CreateIncome.IncomeTypeId = this.Income.incomeType.id
-      this.CreateIncome.Source = this.Income.source
+     // this.CreateIncome.Source = this.Income.source
     }
 
 
