@@ -35,7 +35,7 @@ export class PayComponent implements OnInit {
     const pdf = new jspdf("p", "cm", "a4");
     pdf.internal.scaleFactor = 30;
     pdf.addHTML(elementToPrint, () => {
-      pdf.save('file'+'.pdf');
+      pdf.save(this.client.client.name+'.pdf');
     });
    
     

@@ -7,11 +7,11 @@
   </svg> &nbsp;تحميل
 </button>
 
-<div id="print" >
-  <div class="card" style="margin-left: 20%;margin-right: 20%;">
+
+  <div id="print" class="card" style="margin-left: 20%;margin-right: 20%;color: black;">
     <div class="card-body">
       <div class="row ">
-        <div class="col-md-6" style="text-align: right; ">
+        <div class="col-md-4" style="text-align: right; ">
           <table>
 
 
@@ -44,8 +44,7 @@
           </table>
 
         </div>
-        <div class="col-md-2">
-          <h4> </h4>
+        <div class="col-md-4">
         </div>
         <div class="col-md-4">
           <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="100px" height="75px"
@@ -55,14 +54,13 @@
 
       </div>
       <br>
-      <div class="row" style="font-size: 16px;margin-left: 5%;margin-right: 5%;">
-        <div class="col-md-4">اسم العميل : {{client.client.name}} </div>
-        <div class="col-md-4">النوع : {{client.pay==true?'صرف':'قبض'}}</div>
-        <div class="col-md-4"> المبلغ : {{client.cost}}</div>
+      <div class="row" style="font-size: 16px;margin-left: 5%;margin-right: 5%;border: black 2px solid;">
+        <div class="col-md-4" style="border: black 2px solid;">اسم العميل : {{client.client.name}} </div>
+        <div class="col-md-4"style="border: black 2px solid;">النوع : {{client.pay==true?'صرف':'قبض'}}</div>
+        <div class="col-md-4"style="border: black 2px solid;"> المبلغ : {{client.cost}}</div>
       </div>
     </div>
 
   </div>
-</div>
 
 <simple-notifications></simple-notifications>
