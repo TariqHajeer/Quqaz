@@ -1,8 +1,62 @@
+
+<div class="row" >
+<div class="col-6">
+
+</div>
+<div class="col-6">
+  <form #loginForm="ngForm" novalidate (ngSubmit)="onSubmit()">
+    <label for="userName"><span>{{ 'user.username' | translate }}</span></label>  
+
+    <div class="input-group "style="border-bottom: black 2px solid;" >
+
+    
+      <input class="form-control" required  ngModel #userName="ngModel" name="userName" [(ngModel)]="userNameModel"
+      aria-describedby="inputGroupPrepend2" id="userName"
+      style=" background-color: rgba(235, 233, 233, 0);padding-bottom: 20px;" />
+      <div *ngIf="!userName.valid && loginForm.submitted" class="invalid-tooltip">اسم المستخدم حقل مطلوب!</div>
+      <div class="input-group-prepend">
+        <span  id="inputGroupPrepend2">
+          <svg xmlns="http://www.w3.org/2000/svg" style="color: black;" width="30" height="30" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+          </svg>
+        </span>
+      </div>
+    </div>
+    <label for="password" style="padding-top: 20px;"><span>{{ 'user.password' | translate }}</span></label> 
+
+    <div class="input-group "style="border-bottom: black 2px solid;"  >
+   
+      <input class="form-control" type="password"id="password" placeholder="" required ngModel #password="ngModel" name="password"
+        [(ngModel)]="passwordModel"aria-describedby="inputGroupPrepend1"
+        style=" background-color: rgba(235, 233, 233, 0);padding-top: 20px;" />
+        <div class="input-group-prepend">
+          <span  id="inputGroupPrepend1">
+            <svg xmlns="http://www.w3.org/2000/svg" style="color: black;" width="30" height="28" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16">
+              <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
+            </svg>
+          </span>
+        </div>
+       
+        <div *ngIf="!password.valid && loginForm.submitted" class="invalid-tooltip">كلمة المرور حقل مطلوب !</div>
+
+    </div>
+    <br>
+    <div  class="w-100 p-3">
+      <!-- <a routerLink="/user/forgot-password">{{ 'user.forgot-password' | translate }}?</a> -->
+      <app-state-button [btnClass]="'btn btn-dark btn-lg btn-shadow'" [currentState]="buttonState"
+        [isDisabled]="buttonDisabled" click="onLoginClick()"style="width: 100%;">
+        {{ 'user.login-button' | translate | uppercase }}
+      </app-state-button>
+    </div>
+  </form>
+</div>
+</div>
+<!--
 <div class="card auth-card">
   <div class="position-relative image-side ">
-    <p class=" text-white h2">تسجيل الدخول</p>
+  <p class=" text-white h2">تسجيل الدخول</p>
     <p class="white mb-0">
-      <!-- <a routerLink="/user/register" class="white white-underline-link">register</a>. -->
+       <a routerLink="/user/register" class="white white-underline-link">register</a>. 
     </p>
   </div>
   <div class="form-side">
@@ -10,7 +64,7 @@
       <span class="logo-single"></span>
     </a>
     <h6 class="mb-4"></h6>
-
+    <p class="  h2">تسجيل الدخول</p>
     <form #loginForm="ngForm" novalidate (ngSubmit)="onSubmit()">
       <label class="form-group has-float-label">
         <input class="form-control" required  ngModel #userName="ngModel" name="userName" [(ngModel)]="userNameModel" />
@@ -24,7 +78,7 @@
         <div *ngIf="!password.valid && loginForm.submitted" class="invalid-tooltip">كلمة المرور حقل مطلوب !</div>
       </label>
       <div class="d-flex justify-content-between align-items-center">
-        <!-- <a routerLink="/user/forgot-password">{{ 'user.forgot-password' | translate }}?</a> -->
+        <a routerLink="/user/forgot-password">{{ 'user.forgot-password' | translate }}?</a> 
         <app-state-button [btnClass]="'btn btn-primary btn-lg btn-shadow'" [currentState]="buttonState"
           [isDisabled]="buttonDisabled" click="onLoginClick()">
           {{ 'user.login-button' | translate | uppercase }}
@@ -33,5 +87,5 @@
     </form>
 
   </div>
-</div>
+</div>-->
 <simple-notifications></simple-notifications>
