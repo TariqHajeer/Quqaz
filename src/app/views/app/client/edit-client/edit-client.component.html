@@ -1,47 +1,48 @@
+<div class="card">
+  <div class="card-body">
+    <h3>تعديل العميل</h3>
+    <form (ngSubmit)="addOrEditClient()" class="row">
+      <div class="row w-100 align-items-end mb-3">
+        <div class="col-md-3" style="padding-bottom: 10px;">
+          <label>{{'client.name' | translate}}</label><span class="text-danger text-one align-bottom mx-1">*</span>
+          <input (keyup)='checkName()' type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="client.name">
+          <div *ngIf="!client.name && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
+          <div *ngIf="nameIsRepeated&&client.name!=''" class="invalid-tooltip">الأسم مكرر</div>
 
-    <div class="card">
-      <div class="card-body">
-        <h3 >تعديل العميل</h3>
-        <form (ngSubmit)="addOrEditClient()" class="row">
-          <div class="row w-100 align-items-end mb-3" >
-            <div class="col-md-3"style="padding-bottom: 10px;">
-              <label>{{'client.name' | translate}}</label><span class="text-danger text-one align-bottom mx-1">*</span>
-              <input (keyup)='checkName()' type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.name">
-              <div *ngIf="!client.name && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
-              <div *ngIf="nameIsRepeated&&client.name!=''" class="invalid-tooltip">الأسم مكرر</div>
+        </div>
+        <div class="col-md-3" style="padding-bottom: 10px;">
+          <label>{{'client.user-name' | translate}}<span class="text-danger text-one align-bottom mx-1">*</span></label>
+          <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" (keyup)='checkUserName()'
+            [(ngModel)]="client.userName"
+            oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '').replace(/(\..*)\./g, '$1');">
+          <div *ngIf="!client.userName && submitted" class="invalid-tooltip">اسم المستخدم حقل مطلوب</div>
+          <div *ngIf="usernameIsRepeated&&client.userName!=''" class="invalid-tooltip">اسم المستخدم مكرر</div>
 
-            </div>
-            <div class="col-md-3"style="padding-bottom: 10px;">
-              <label>{{'client.user-name' | translate}}<span class="text-danger text-one align-bottom mx-1">*</span></label>
-              <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-              (keyup)='checkUserName()'  [(ngModel)]="client.userName"oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '').replace(/(\..*)\./g, '$1');">
-              <div *ngIf="!client.userName && submitted" class="invalid-tooltip">اسم المستخدم حقل مطلوب</div>
-              <div *ngIf="usernameIsRepeated&&client.userName!=''" class="invalid-tooltip">اسم المستخدم مكرر</div>
-           
-            </div>
-            <div class="col-md-3"style="padding-bottom: 10px;">
-              <label>{{'client.first-date' | translate}}<span class="text-danger text-one align-bottom mx-1">*</span></label>
-              <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="client.firstDate" bsDatepicker [container]="'html'"
-                [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
-                <div *ngIf="!client.firstDate && submitted" class="invalid-tooltip">  تاريخ الإنضمام حقل مطلوب</div>
+        </div>
+        <div class="col-md-3" style="padding-bottom: 10px;">
+          <label>{{'client.first-date' | translate}}<span
+              class="text-danger text-one align-bottom mx-1">*</span></label>
+          <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="client.firstDate" bsDatepicker [container]="'html'"
+            [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
+          <div *ngIf="!client.firstDate && submitted" class="invalid-tooltip"> تاريخ الإنضمام حقل مطلوب</div>
 
-              </div>
-            <div class="col-md-3"style="padding-bottom: 10px;">
-              <label>{{'client.region' | translate}}</label>
-              <ng-select [(ngModel)]="client.regionId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
-                <ng-option *ngFor="let region of regions" [value]="region.id">{{region.name}}</ng-option>
-              </ng-select>
-            </div>
-            <div class="col-md-3"style="padding-bottom: 10px;">
-              <label>{{'client.address' | translate}}</label>
-              <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="client.address">
-            </div>
-          
-            <div  class="col-md-3"style="padding-bottom: 10px;">
-                <!-- Modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+        </div>
+        <div class="col-md-3" style="padding-bottom: 10px;">
+          <label>المدينة</label>
+          <ng-select [(ngModel)]="client.Countryid" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
+            <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
+          </ng-select>
+        </div>
+        <div class="col-md-3" style="padding-bottom: 10px;">
+          <label>{{'client.address' | translate}}</label>
+          <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.address">
+        </div>
+
+        <div class="col-md-3" style="padding-bottom: 10px;">
+          <!-- Modal -->
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
             data-whatever="@getbootstrap">رقم الهاتف</button>
 
           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -61,11 +62,11 @@
                       <input id="phone" type="text" maxlength="11"
                         oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
                         class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="phone.phone"
-                        (ngModelChange)="checkLengthPhoneNumber(phone.phone)" > 
-                        <div class="message" *ngIf="phone.phone&& checkLengthPhoneNumber(phone.phone)">
-                          {{RecipientPhoneslength}}
+                        (ngModelChange)="checkLengthPhoneNumber(phone.phone)">
+                      <div class="message" *ngIf="phone.phone&& checkLengthPhoneNumber(phone.phone)">
+                        {{RecipientPhoneslength}}
                       </div>
-                      </div>
+                    </div>
                     <button type="button" class="btn btn-primary" (click)="addNewPhone()">اضافة</button>
                   </form>
                   <table class="table">
@@ -84,12 +85,12 @@
                         <td>{{phone.phone}}</td>
                         <td>
                           <svg (click)="DeletePhone(phone)" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                          fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"style="cursor: pointer;">
-                          <path
-                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                          <path fill-rule="evenodd"
-                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                        </svg>حذف
+                            fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16" style="cursor: pointer;">
+                            <path
+                              d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                            <path fill-rule="evenodd"
+                              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                          </svg>حذف
                         </td>
                       </tr>
                     </tbody>
@@ -101,45 +102,45 @@
               </div>
             </div>
           </div>
-            </div>
-            
-            <div class="col-md-12"style="padding-bottom: 10px;">
-              <label>{{'client.note' | translate}}</label>
-              <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.note">
-            </div>
+        </div>
 
-          
+        <div class="col-md-12" style="padding-bottom: 10px;">
+          <label>{{'client.note' | translate}}</label>
+          <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.note">
+        </div>
 
 
-          </div>
-          <h4 class="card-title">تغيير كلمة المرور</h4>
 
-          <div class="row w-100" style="padding-bottom: 10px;">
-           
-            <div class="col-md-3">
-              <label>{{'client.password' | translate}}<span class="text-danger text-one align-bottom mx-1">*</span></label>
-              <input type="password" class="form-control" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="client.password">
-                
-            </div>
-            <div class="col-md-3">
-              <label>تأكيد كلمة المرور<span class="text-danger text-one align-bottom mx-1">*</span></label>
-              <input (keyup)="CheckPassword()" type="password" class="form-control" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="confirmpassword">
-                <div *ngIf="checkPassword" class="invalid-tooltip">كلمة السر غير متطابقة</div>
-                <div *ngIf="!client.password && submitted" class="invalid-tooltip">تأكيد كلمة السر حقل مطلوب</div>
-             
-              </div> 
-          </div>
-         
-          <div class="row w-100">
-            <div class="col-3">
-              <button type="submit" class="btn btn-primary"> {{'forms.save' | translate}}</button>
 
-            </div>
-          </div>
-        </form>
       </div>
-    </div>
- 
+      <h4 class="card-title">تغيير كلمة المرور</h4>
+
+      <div class="row w-100" style="padding-bottom: 10px;">
+
+        <div class="col-md-3">
+          <label>{{'client.password' | translate}}<span class="text-danger text-one align-bottom mx-1">*</span></label>
+          <input type="password" class="form-control" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="client.password">
+
+        </div>
+        <div class="col-md-3">
+          <label>تأكيد كلمة المرور<span class="text-danger text-one align-bottom mx-1">*</span></label>
+          <input (keyup)="CheckPassword()" type="password" class="form-control" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="confirmpassword">
+          <div *ngIf="checkPassword" class="invalid-tooltip">كلمة السر غير متطابقة</div>
+          <div *ngIf="!client.password && submitted" class="invalid-tooltip">تأكيد كلمة السر حقل مطلوب</div>
+
+        </div>
+      </div>
+
+      <div class="row w-100">
+        <div class="col-3">
+          <button type="submit" class="btn btn-primary"> {{'forms.save' | translate}}</button>
+
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
 <simple-notifications></simple-notifications>

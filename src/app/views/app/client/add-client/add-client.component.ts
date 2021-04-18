@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
+import { City } from 'src/app/Models/Cities/city.Model';
 import { CustomService } from 'src/app/services/custom.service';
 import { Client } from '../client.model';
 import { ClientService } from '../client.service';
@@ -30,6 +31,7 @@ export class AddClientComponent implements OnInit, OnChanges {
    this.client=new Client
     this.getRegions();
     this.getClient()
+    this.getCities()
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (this.currentClientId && !this.addClicked) {
@@ -132,5 +134,14 @@ export class AddClientComponent implements OnInit, OnChanges {
       this.RecipientPhoneslengthEdit = ""
       return false
     }
+  }
+  cities: City[] = [];
+  apiName: string = "Country"
+  getCities() {
+    this.customService.getAll(this.apiName).subscribe(
+      res => {
+        this.cities = res;
+      }
+    )
   }
 }

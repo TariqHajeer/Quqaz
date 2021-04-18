@@ -49,10 +49,10 @@
         <div *ngIf="!client.firstDate && submitted" class="invalid-tooltip">  تاريخ الإنضمام حقل مطلوب</div>
       </div>
     <div class="col-md-3">
-      <label>{{'client.region' | translate}}</label>
-      <ng-select   [(ngModel)]="client.regionId" [ngModelOptions]="{standalone: true}"
+      <label>المدينة</label>
+      <ng-select   [(ngModel)]="client.Countryid" [ngModelOptions]="{standalone: true}"
       [closeOnSelect]="true">
-      <ng-option *ngFor="let region of regions" [value]="region.id">{{region.name}}</ng-option>
+      <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
     </ng-select>
     </div>
     <div class="col-md-3">

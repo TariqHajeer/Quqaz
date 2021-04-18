@@ -8,6 +8,7 @@ export class Client {
   name:any;
   userName:any;
   password:any;
+  Countryid:number
   regionId?:number;
   region?:Region
   address?:any;

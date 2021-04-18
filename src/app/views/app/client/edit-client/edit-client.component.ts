@@ -5,6 +5,7 @@ import { CustomService } from 'src/app/services/custom.service';
 import { Client } from '../client.model';
 import { ClientService } from '../client.service';
 import { Phone } from 'src/app/Models/phone.model'
+import { City } from 'src/app/Models/Cities/city.Model';
 
 @Component({
   selector: 'app-edit-client',
@@ -36,6 +37,7 @@ export class EditClientComponent implements OnInit {
     });
     this.getRegions();
     this.getClientById()
+    this.getCities()
   }
   checkName() {
     if (this.clients.filter(c => c.name == this.client.name && c.id != this.client.id).length > 0) {
@@ -75,6 +77,7 @@ export class EditClientComponent implements OnInit {
       note: null,
       phones: [],
       regionId: null,
+      Countryid:null
     }
   }
   getClientById() {
@@ -143,5 +146,14 @@ export class EditClientComponent implements OnInit {
       this.RecipientPhoneslength = ""
       return false
     }
+  }
+  cities: City[] = [];
+  apiName: string = "Country"
+  getCities() {
+    this.customService.getAll(this.apiName).subscribe(
+      res => {
+        this.cities = res;
+      }
+    )
   }
 }
