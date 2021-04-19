@@ -333,6 +333,122 @@
     </div>
   </div>
 </div>
+
+<h2 style="text-align: center;">الطلبات</h2>
+
+<div class="row">
+  <div class="col-sm-6 col-md-3">
+    <div class="stat-card">
+      <div class="stat-card__content">
+        <p class="text-uppercase mb-1 text-muted"></p>
+        <h2></h2><span class="text-success font-weight-bold mr-1"> </span>
+        <div>
+
+          <span class="text-muted"(click)="neworders()"> الطلبات الجديدة </span>
+        </div>
+      </div>
+      <div class="stat-card__icon stat-card__icon--danger">
+        <div class="stat-card__icon-circle">
+          <i class="fa fa-suitcase"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-md-3">
+    <div class="stat-card">
+      <div class="stat-card__content">
+        <p class="text-uppercase mb-1 text-muted"></p>
+        <h2> </h2><span class="text-success font-weight-bold mr-1"> </span>
+        <div>
+
+          <span class="text-muted"(click)="order()">عرض الطلبات</span>
+
+
+        </div>
+      </div>
+      <div class="stat-card__icon stat-card__icon--primary">
+        <div class="stat-card__icon-circle">
+          <i class="fa fa-suitcase"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-md-3">
+    <div class="stat-card">
+      <div class="stat-card__content">
+        <p class="text-uppercase mb-1 text-muted"></p>
+        <h2></h2>
+        <span class="text-success font-weight-bold mr-1"> </span>
+        <div>
+
+          <span class="text-muted"(click)="ReceiptShipmentAgentComponent()">استلام حالة الشحنة</span>
+        </div>
+      </div>
+      <div class="stat-card__icon stat-card__icon--success">
+        <div class="stat-card__icon-circle">
+          <i class="fa fa-suitcase"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3 ">
+    <div class="stat-card">
+      <div class="stat-card__content">
+        <p class="text-uppercase mb-1 text-muted"></p>
+        <h2> </h2>
+        <span class="text-success font-weight-bold mr-1"> </span>
+        <div>
+
+          <span class="text-muted"(click)="addorder()">  إضافة طلب</span>
+        </div>
+      </div>
+      <div class="stat-card__icon stat-card__icon--warning">
+        <div class="stat-card__icon-circle">
+          <i class="fa fa-suitcase"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3 ">
+    <div class="stat-card">
+      <div class="stat-card__content">
+        <p class="text-uppercase mb-1 text-muted"></p>
+        <h2> </h2>
+        <span class="text-success font-weight-bold mr-1"> </span>
+        <div>
+
+          <span class="text-muted"(click)="addMulitpleOrders()">إضافة طلبات متعددة </span>
+        </div>
+      </div>
+      <div class="stat-card__icon stat-card__icon--warning">
+        <div class="stat-card__icon-circle">
+          <i class="fa fa-suitcase"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3 ">
+    <div class="stat-card">
+      <div class="stat-card__content">
+        <p class="text-uppercase mb-1 text-muted"></p>
+        <h2> </h2>
+        <span class="text-success font-weight-bold mr-1"> </span>
+        <div>
+
+          <span class="text-muted"(click)="addMulitpleOrdersfromClient()"> إضافة طلبات متعددة للعميل</span>
+        </div>
+      </div>
+      <div class="stat-card__icon stat-card__icon--warning">
+        <div class="stat-card__icon-circle">
+          <i class="fa fa-suitcase"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+</div>
 <h2 style="text-align: center;">التقارير</h2>
 
 <div class="row">
@@ -485,121 +601,6 @@
     </div>
   </div>
 </div>
-<h2 style="text-align: center;">الطلبات</h2>
-
-<div class="row">
-  <div class="col-sm-6 col-md-3">
-    <div class="stat-card">
-      <div class="stat-card__content">
-        <p class="text-uppercase mb-1 text-muted"></p>
-        <h2></h2><span class="text-success font-weight-bold mr-1"> </span>
-        <div>
-
-          <span class="text-muted"(click)="neworders()"> الطلبات الجديدة </span>
-        </div>
-      </div>
-      <div class="stat-card__icon stat-card__icon--danger">
-        <div class="stat-card__icon-circle">
-          <i class="fa fa-suitcase"></i>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-sm-6 col-md-3">
-    <div class="stat-card">
-      <div class="stat-card__content">
-        <p class="text-uppercase mb-1 text-muted"></p>
-        <h2> </h2><span class="text-success font-weight-bold mr-1"> </span>
-        <div>
-
-          <span class="text-muted"(click)="order()">عرض الطلبات</span>
-
-
-        </div>
-      </div>
-      <div class="stat-card__icon stat-card__icon--primary">
-        <div class="stat-card__icon-circle">
-          <i class="fa fa-suitcase"></i>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-sm-6 col-md-3">
-    <div class="stat-card">
-      <div class="stat-card__content">
-        <p class="text-uppercase mb-1 text-muted"></p>
-        <h2></h2>
-        <span class="text-success font-weight-bold mr-1"> </span>
-        <div>
-
-          <span class="text-muted"(click)="ReceiptShipmentAgentComponent()">استلام حالة الشحنة</span>
-        </div>
-      </div>
-      <div class="stat-card__icon stat-card__icon--success">
-        <div class="stat-card__icon-circle">
-          <i class="fa fa-suitcase"></i>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-md-3 ">
-    <div class="stat-card">
-      <div class="stat-card__content">
-        <p class="text-uppercase mb-1 text-muted"></p>
-        <h2> </h2>
-        <span class="text-success font-weight-bold mr-1"> </span>
-        <div>
-
-          <span class="text-muted"(click)="addorder()">  إضافة طلب</span>
-        </div>
-      </div>
-      <div class="stat-card__icon stat-card__icon--warning">
-        <div class="stat-card__icon-circle">
-          <i class="fa fa-suitcase"></i>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-md-3 ">
-    <div class="stat-card">
-      <div class="stat-card__content">
-        <p class="text-uppercase mb-1 text-muted"></p>
-        <h2> </h2>
-        <span class="text-success font-weight-bold mr-1"> </span>
-        <div>
-
-          <span class="text-muted"(click)="addMulitpleOrders()">إضافة طلبات متعددة </span>
-        </div>
-      </div>
-      <div class="stat-card__icon stat-card__icon--warning">
-        <div class="stat-card__icon-circle">
-          <i class="fa fa-suitcase"></i>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-md-3 ">
-    <div class="stat-card">
-      <div class="stat-card__content">
-        <p class="text-uppercase mb-1 text-muted"></p>
-        <h2> </h2>
-        <span class="text-success font-weight-bold mr-1"> </span>
-        <div>
-
-          <span class="text-muted"(click)="addMulitpleOrdersfromClient()"> إضافة طلبات متعددة للعميل</span>
-        </div>
-      </div>
-      <div class="stat-card__icon stat-card__icon--warning">
-        <div class="stat-card__icon-circle">
-          <i class="fa fa-suitcase"></i>
-        </div>
-      </div>
-    </div>
-  </div>
- 
-</div>
 <h2 style="text-align: center;">صادرات وواردات</h2>
 
 <div class="row">
@@ -640,4 +641,121 @@
   </div>
 
  
+</div>
+<h2 style="text-align: center;">الإعدادات</h2>
+
+<div class="row">
+  <div class="col-sm-6 col-md-3">
+    <div class="stat-card">
+      <div class="stat-card__content">
+        <p class="text-uppercase mb-1 text-muted"></p>
+        <h2></h2><span class="text-success font-weight-bold mr-1"> </span>
+        <div>
+
+         <a>
+          <span class="text-muted"(click)="cities()"> المدن </span>
+         </a>
+        </div>
+      </div>
+      <div class="stat-card__icon stat-card__icon--danger">
+        <div class="stat-card__icon-circle">
+          <i class="fa fa-suitcase"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-md-3">
+    <div class="stat-card">
+      <div class="stat-card__content">
+        <p class="text-uppercase mb-1 text-muted"></p>
+        <h2> </h2><span class="text-success font-weight-bold mr-1"> </span>
+        <div>
+
+          <span class="text-muted"(click)="region()">المناطق</span>
+
+
+        </div>
+      </div>
+      <div class="stat-card__icon stat-card__icon--primary">
+        <div class="stat-card__icon-circle">
+          <i class="fa fa-suitcase"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-md-3">
+    <div class="stat-card">
+      <div class="stat-card__content">
+        <p class="text-uppercase mb-1 text-muted"></p>
+        <h2></h2>
+        <span class="text-success font-weight-bold mr-1"> </span>
+        <div>
+
+          <span class="text-muted"(click)="outcomeType()">أنواع الصادرات</span>
+        </div>
+      </div>
+      <div class="stat-card__icon stat-card__icon--success">
+        <div class="stat-card__icon-circle">
+          <i class="fa fa-suitcase"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3 ">
+    <div class="stat-card">
+      <div class="stat-card__content">
+        <p class="text-uppercase mb-1 text-muted"></p>
+        <h2> </h2>
+        <span class="text-success font-weight-bold mr-1"> </span>
+        <div>
+
+          <span class="text-muted"(click)="incometype()">أنواع الواردات</span>
+        </div>
+      </div>
+      <div class="stat-card__icon stat-card__icon--warning">
+        <div class="stat-card__icon-circle">
+          <i class="fa fa-suitcase"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3 ">
+    <div class="stat-card">
+      <div class="stat-card__content">
+        <p class="text-uppercase mb-1 text-muted"></p>
+        <h2> </h2>
+        <span class="text-success font-weight-bold mr-1"> </span>
+        <div>
+
+          <span class="text-muted"(click)="ordertype()"> أنواع الشحنات</span>
+        </div>
+      </div>
+      <div class="stat-card__icon stat-card__icon--warning">
+        <div class="stat-card__icon-circle">
+          <i class="fa fa-suitcase"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3 ">
+    <div class="stat-card">
+      <div class="stat-card__content">
+        <p class="text-uppercase mb-1 text-muted"></p>
+        <h2> </h2>
+        <span class="text-success font-weight-bold mr-1"> </span>
+        <div>
+
+          <span class="text-muted"(click)="group()">المجموعات</span>
+        </div>
+      </div>
+      <div class="stat-card__icon stat-card__icon--warning">
+        <div class="stat-card__icon-circle">
+          <i class="fa fa-suitcase"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

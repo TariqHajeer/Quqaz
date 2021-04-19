@@ -155,6 +155,25 @@ export class StartComponent implements OnInit {
    user() {
     this.router.navigate(['/app/user'])
   }
+  //setting
+  region(){
+    this.router.navigate(['/app/setting/regions'])
+  }
+  cities(){
+    this.router.navigate(['/app/setting/cities'])
+  }
+  outcomeType(){
+    this.router.navigate(['/app/setting/exportTypes'])
+  }
+  incometype(){
+    this.router.navigate(['/app/setting/importTypes'])
+  }
+  ordertype(){
+    this.router.navigate(['/app/setting/shipmentsTypes'])
+  }
+  group(){
+    this.router.navigate(['/app/setting/group'])
+  }
   //دائرة
   // public piedata: Object[];
   // public datalabel: Object;
