@@ -111,7 +111,7 @@ export class ViewOrdersComponent implements OnInit {
     localStorage.setItem('editorder', JSON.stringify(element))
   }
   getAgent() {
-    this.userService.GetAgent().subscribe(res => {
+    this.userService.ActiveAgent().subscribe(res => {
       this.Agents = res
     })
   }

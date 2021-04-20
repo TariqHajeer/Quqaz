@@ -149,7 +149,7 @@ this.getorder()
     })
   }
   getAgent() {
-    this.userService.GetAgent().subscribe(res => {
+    this.userService.ActiveAgent().subscribe(res => {
       this.Agents = res
     })
   }

@@ -40,7 +40,7 @@ export class UserService {
       )
     )
   }
-  GetAgent(){
+  ActiveAgent(){
     return this.http.get<any>(this.controler + "Agent")
   }
   Creat(item: CreateUser) {

@@ -97,7 +97,7 @@ export class ShipmentInStockComponent implements OnInit {
   //   })
   // }
   getAgent() {
-    this.userService.GetAgent().subscribe(res => {
+    this.userService.ActiveAgent().subscribe(res => {
       this.Agents = res
     })
   }

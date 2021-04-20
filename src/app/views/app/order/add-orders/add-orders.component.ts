@@ -75,7 +75,7 @@ export class AddOrdersComponent implements OnInit {
     this.GetRegion()
     this.Getcities()
     this.GetClient()
-    this.getAgent()
+    this.ActiveAgent()
     this.getOrderTypes()
   }
   AddOrder() {
@@ -130,8 +130,8 @@ export class AddOrdersComponent implements OnInit {
       this.Regions = res
     })
   }
-  getAgent() {
-    this.userService.GetAgent().subscribe(res => {
+  ActiveAgent() {
+    this.userService.ActiveAgent().subscribe(res => {
       this.Agents = res
     })
   }

@@ -88,7 +88,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
   }
 
   getAgent() {
-    this.userService.GetAgent().subscribe(res => {
+    this.userService.ActiveAgent().subscribe(res => {
       this.GetAgents = res
       this.Agents=this.GetAgents.filter(a=>a.countryId== this.Order.CountryId)
       // if(this.Agents.length!=0)
