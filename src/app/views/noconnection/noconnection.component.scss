@@ -1,0 +1,18 @@
+.body {
+    display: inline-block;
+    background: #00AFF9 url(/assets/img/error/error.png) center/cover no-repeat;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    color: rgb(35, 0, 117);
+  }
+  
+  h1 {
+    margin: .8em 3rem;
+    font: 4em Roboto;
+  }
+  p {
+    display: inline-block;
+    margin: .5em 6rem;
+    font: 2em Roboto;
+  }

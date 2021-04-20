@@ -280,16 +280,24 @@
                         <input type="text" maxlength="11"
                             oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
                             class="form-control" [ngModelOptions]="{standalone: true}"
-                            [(ngModel)]="Order.RecipientPhones[i]">
-                    </ng-container>
+                            [(ngModel)]="Order.RecipientPhones[i]"(ngModelChange)="checkLengthPhoneNumberForEdit(Order.RecipientPhones[i])">
+                            <div class="invalid-tooltip" *ngIf="Order.RecipientPhones[i]&& checkLengthPhoneNumberForEdit(Order.RecipientPhones[i])">
+                                {{RecipientPhoneslengthEdit}}
+                              </div>
+                        </ng-container>
+                   
                 </div>
                 <div class="col-md-3">
                     <label>هاتف المستلم<span class="text-danger text-one align-bottom mx-1">*</span></label>
                     <input type="text" maxlength="11"
                         oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
-                        class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="tempPhone">
+                        class="form-control"(ngModelChange)="checkLengthPhoneNumber(tempPhone)"
+                         [ngModelOptions]="{standalone: true}" [(ngModel)]="tempPhone">
                     <div *ngIf="!tempPhone&&Order.RecipientPhones!=null&&Order.RecipientPhones!=undefined&&Order.RecipientPhones.length==0 && submitted" class="invalid-tooltip">هاتف
                         المستلم حقل مطلوب</div>
+                        <div class="invalid-tooltip" *ngIf="tempPhone&& checkLengthPhoneNumber(tempPhone)">
+                            {{RecipientPhoneslength}}
+                          </div>
 
                 </div>
 

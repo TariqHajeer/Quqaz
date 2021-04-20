@@ -5,6 +5,7 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { environment } from 'src/environments/environment';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from '../shared/auth.guard';
+import { NoconnectionComponent } from './noconnection/noconnection.component';
 
 
 let routes = [
@@ -30,6 +31,7 @@ let routes = [
         import('./user/user.module').then((m) => m.UserModule),
     },
     { path: 'error', component: ErrorComponent },
+    { path: 'noconnection', component: NoconnectionComponent },
   { path: 'unauthorized', component: UnauthorizedComponent },
   ];
 

@@ -12,8 +12,9 @@ import { HeadroomModule } from '@ctrl/ngx-headroom';
 import { HomeComponent } from './home/home.component';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { AuthGuard } from '../shared/auth.guard';
+import { NoconnectionComponent } from './noconnection/noconnection.component';
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [HomeComponent, NoconnectionComponent],
   imports: [
     CommonModule,
     ViewRoutingModule,

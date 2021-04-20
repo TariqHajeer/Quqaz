@@ -117,7 +117,6 @@ export class AddClientComponent implements OnInit, OnChanges {
   }
   RecipientPhoneslength = null
   checkLengthPhoneNumber(phone) {
-    console.log(phone)
     if (phone&&phone.length < 11) {
       this.RecipientPhoneslength = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
       return true
@@ -129,7 +128,6 @@ export class AddClientComponent implements OnInit, OnChanges {
   }
   RecipientPhoneslengthEdit = null
   checkLengthPhoneNumberForEdit(phone) {
-    console.log(phone)
     if (phone&&phone.length < 11) {
       this.RecipientPhoneslengthEdit = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
       return true

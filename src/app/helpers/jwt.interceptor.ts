@@ -4,12 +4,14 @@ import { AuthService } from '../shared/auth.service';
 import { catchError, filter, take, switchMap, finalize, tap } from 'rxjs/operators';
 import { throwError as observableThrowError, Observable, BehaviorSubject, throwError } from 'rxjs';
 import { UserLogin } from '../Models/userlogin.model';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
 
 
-  constructor(private authenticationService: AuthService, private injector: Injector) { }
+  constructor(private authenticationService: AuthService,
+     private injector: Injector,private router:Router) { }
 
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
@@ -38,6 +40,8 @@ export class JwtInterceptor implements HttpInterceptor {
                   else {
                     return this.logoutUser();
                   }
+                  case 0:
+                  this.router.navigate(['/noconnection']);
                 default:
                   return this.generalErrorHandling(error);
               }

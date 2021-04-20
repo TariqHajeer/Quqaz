@@ -63,7 +63,7 @@ export class AddOrdersComponent implements OnInit {
     this.EditorderType = new OrderType
     this.EditOrderItem = new OrderItem
     this.submitted = false;
-   
+
     this.int()
 
   }
@@ -80,14 +80,20 @@ export class AddOrdersComponent implements OnInit {
   }
   AddOrder() {
 
-    this.submitted = true;
     if (this.tempPhone != '' && this.tempPhone != undefined) {
       this.Order.RecipientPhones.push(this.tempPhone);
       this.tempPhone = ''
     }
-    if (this.Order.RecipientPhones.length == 0) {
-      return;
-    }
+ 
+    if (this.showMessageCode || this.Order.RecipientPhones.length == 0 ||
+      !this.Order.Cost || !this.Order.Code || !this.Order.ClientId
+      || !this.Order.AgentId || !this.Order.CountryId
+      || !this.Order.OrderplacedId || !this.Order.MoenyPlacedId||
+      this.RecipientPhoneslengthEdit!=null||this.RecipientPhoneslength!=null) {
+      this.submitted = true;
+      return
+    } else
+      this.submitted = false;
 
     if (isNaN(this.Order.RegionId)) {
       this.Order.RegionName = this.Order.RegionId.label;
@@ -95,9 +101,11 @@ export class AddOrdersComponent implements OnInit {
     }
     console.log(this.Order)
     this.spinner.show()
-   this.orderservice.Creat(this.Order).subscribe(res => {
+    this.orderservice.Creat(this.Order).subscribe(res => {
       this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.int()
+      this.spinner.hide()
+    }, err => {
       this.spinner.hide()
     });
 
@@ -135,12 +143,12 @@ export class AddOrdersComponent implements OnInit {
       this.Agents = res
     })
   }
-  AllorderTypes:any[]=[]
+  AllorderTypes: any[] = []
   getOrderTypes() {
     this.customerService.getAll(this.ordertypeapi).subscribe(
       res => {
         this.orderTypes = res;
-        this.AllorderTypes=res
+        this.AllorderTypes = res
       }
     )
   }
@@ -173,7 +181,7 @@ export class AddOrdersComponent implements OnInit {
     var city = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.Cost = city.deliveryCost
     this.Region = this.Regions.filter(r => r.country.id == this.Order.CountryId)
-    this.Order.RegionId=this.Region[0].id
+    this.Order.RegionId = this.Region[0].id
     this.Order.AgentId = this.Agents[0].id
   }
   showMessageCode: boolean = false
@@ -189,13 +197,37 @@ export class AddOrdersComponent implements OnInit {
   }
 
   addNewPhone() {
+    if(this.checkLengthPhoneNumber(this.tempPhone))
+    return
     this.Order.RecipientPhones.push(this.tempPhone);
     this.tempPhone = '';
+  }
+  RecipientPhoneslength = null
+  checkLengthPhoneNumber(phone) {
+    if (phone&&phone.length < 11) {
+      this.RecipientPhoneslength = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
+      return true
+    } 
+    else {
+      this.RecipientPhoneslength = null
+      return false
+    }
+  }
+  RecipientPhoneslengthEdit = null
+  checkLengthPhoneNumberForEdit(phone) {
+    if (phone&&phone.length < 11) {
+      this.RecipientPhoneslengthEdit = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
+      return true
+    } 
+    else {
+      this.RecipientPhoneslengthEdit = null
+      return false
+    }
   }
   tempEditOrderType
   EditOrderType(OrderType: OrderItem) {
     OrderType.CanEdit = true
-    this.EditorderType =this.AllorderTypes.find(o=>o.id==OrderType.OrderTypeId) 
+    this.EditorderType = this.AllorderTypes.find(o => o.id == OrderType.OrderTypeId)
     this.Editcount = OrderType.Count
     this.tempEditOrderType = Object.assign({}, OrderType);
   }
@@ -206,7 +238,7 @@ export class AddOrdersComponent implements OnInit {
     this.EditOrderItem.OrderTypeId = this.EditorderType.id
     OrderType = Object.assign(OrderType, this.EditOrderItem);
   }
- 
+
   deleteOrderType(OrderType) {
     this.Order.OrderTypeDtos = this.Order.OrderTypeDtos.filter(o => o != OrderType)
 
@@ -216,5 +248,5 @@ export class AddOrdersComponent implements OnInit {
     OrderType = Object.assign(OrderType, this.tempEditOrderType);
 
   }
- 
+
 }

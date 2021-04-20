@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { EditSettingsModel, GridComponent, SaveEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { CustomService } from 'src/app/services/custom.service';
-import { User } from 'src/app/Models/user/user.model';
+import { User, UserStatics } from 'src/app/Models/user/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { CreateUser } from 'src/app/Models/user/create-user';
@@ -70,6 +70,7 @@ export class ViewUserComponent implements OnInit {
   Phone:Phone=new Phone
   addFinish(value: CreateUser) {
     this.User=new User
+    console.log(value)
     this.User.userName = value.UserName
     this.User.experince = value.Experince
     this.User.hireDate = value.HireDate
@@ -85,9 +86,11 @@ export class ViewUserComponent implements OnInit {
       this.User.phones.push(this.Phone)
 
     }
+    this.User.UserStatics=new UserStatics
     this.User.UserStatics.OrderInStore=0
     this.User.UserStatics.OrderInWay=0
     this.UserService.users.push(this.User)
+    console.log( this.UserService.users)
     this.gridInstance.refresh();
 
   }
