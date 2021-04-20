@@ -20,7 +20,6 @@
             </ng-select>
             <div *ngIf="!ClientId && submitedSave" class="message">العميل حقل مطلوب</div>
 
-            <div *ngIf="showMessageCode" class="message">يوجد شحنة مسبقا لهذا العميل بنفس الكود</div>
 
 
 
@@ -28,16 +27,16 @@
     </div>
 
     <br>
-    <div class="example-container">
-        <table class="table">
+    <div class="example-container" >
+        <table class="table" >
             <thead>
                 <th>كود الشحنة</th>
                 <th>المحافظة</th>
                 <th>اسم المندوب</th>
-                <th>حالة الشحنة</th>
                 <th>رقم الهاتف </th>
                 <th>الكلفة الكلية</th>
                 <th>كلفة التوصيل</th>
+                <th>حالة الشحنة</th>
                 <th></th>
 
             </thead>
@@ -51,7 +50,7 @@
                             [(ngModel)]="EditOrder.Code" (keyup)="CheckCodeForEdit()" style="width: 100px;"
                             *ngIf="order.CanEdit" tabindex="1">
                         <div *ngIf="!EditOrder.Code && Editsubmitted&&order.CanEdit" class="message">كود الشحنة حقل مطلوب</div>
-
+                        <div *ngIf="showMessageCode" class="message">يوجد شحنة مسبقا لهذا العميل بنفس الكود</div>
                     </td>
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.CountryName}}</h4>
@@ -98,18 +97,7 @@
                     -->
 
 
-                    <td (click)="Edit(order)">
-                        <h4 *ngIf="!order.CanEdit">{{order.OrderplacedName}}</h4>
-                        <ng-select appendTo="body" [(ngModel)]="EditOrder.OrderplacedId"
-                            [ngModelOptions]="{standalone: true}" style="width: 100px;" [clearable]="false"
-                            *ngIf="order.CanEdit" name="Orderplaced ">
-                            <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}
-                            </ng-option>
-                        </ng-select>
-                        <div *ngIf="!EditOrder.OrderplacedId && Editsubmitted&&order.CanEdit" class="message">حالة الشحنة حقل مطلوب
-                        </div>
-
-                    </td>
+                   
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.RecipientPhones}}</h4>
                         <input type="text" maxlength="11"
@@ -141,7 +129,18 @@
                             [(ngModel)]="EditOrder.DeliveryCost" >
 
                     </td>
+                    <td (click)="Edit(order)">
+                        <h4 *ngIf="!order.CanEdit">{{order.OrderplacedName}}</h4>
+                        <ng-select appendTo="body" [(ngModel)]="EditOrder.OrderplacedId"
+                            [ngModelOptions]="{standalone: true}" style="width: 100px;" [clearable]="false"
+                            *ngIf="order.CanEdit" name="Orderplaced ">
+                            <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}
+                            </ng-option>
+                        </ng-select>
+                        <div *ngIf="!EditOrder.OrderplacedId && Editsubmitted&&order.CanEdit" class="message">حالة الشحنة حقل مطلوب
+                        </div>
 
+                    </td>
                     <td>
                         <!--edit icone-->
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -182,7 +181,7 @@
 
 
                 </tr>
-                <tr>
+                <tr >
 
                     <td>
                         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" #code
@@ -209,16 +208,7 @@
 
                     </td>
 
-                    <td>
-                        <ng-select appendTo="body" [(ngModel)]="Order.OrderplacedId"
-                            [ngModelOptions]="{standalone: true}" (keyup.enter)="onEnter()" style="width: 100px;"
-                            [clearable]="false" name="Orderplaced">
-                            <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}
-                            </ng-option>
-                        </ng-select>
-                        <div *ngIf="!Order.OrderplacedId && submitted" class="message">حالة الشحنة حقل مطلوب</div>
-
-                    </td>
+                   
                     <td>
                         <input type="text" maxlength="11"
                             oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
@@ -243,7 +233,16 @@
                         <input type="number" class="form-control" [ngModelOptions]="{standalone: true}"
                             (keyup.enter)="onEnter()" style="width: 100px;" [(ngModel)]="Order.DeliveryCost" >
                     </td>
+                    <td>
+                        <ng-select appendTo="body" [(ngModel)]="Order.OrderplacedId"
+                            [ngModelOptions]="{standalone: true}" (keyup.enter)="onEnter()" style="width: 100px;"
+                            [clearable]="false" name="Orderplaced">
+                            <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}
+                            </ng-option>
+                        </ng-select>
+                        <div *ngIf="!Order.OrderplacedId && submitted" class="message">حالة الشحنة حقل مطلوب</div>
 
+                    </td>
                     <td>
                         <button type="button" class="btn" (click)="onEnter()"><i class="iconsminds-add  text-primary"
                                 style="font-size: 22px;"></i></button>

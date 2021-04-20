@@ -91,9 +91,9 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     this.userService.GetAgent().subscribe(res => {
       this.GetAgents = res
       this.Agents=this.GetAgents.filter(a=>a.countryId== this.Order.CountryId)
-      if(this.Agents.length!=0)
-      this.Order.AgentId = this.Agents[0].id
-      else this.Order.AgentId=null
+      // if(this.Agents.length!=0)
+      // this.Order.AgentId = this.Agents[0].id
+      // else this.Order.AgentId=null
 
     })
   }
@@ -101,16 +101,16 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
   GetClient() {
     this.clientService.getClients().subscribe(res => {
       this.clients = res
-      this.Order.ClientId = res[0].id
+      // this.Order.ClientId = res[0].id
     })
   }
   Getcities() {
     this.customerService.getAll(this.cityapi).subscribe(res => {
       this.cities = res
-      if( this.cities.length!=0)
-      this.Order.CountryId =  this.cities[0].id
+      // if( this.cities.length!=0)
+      // this.Order.CountryId =  this.cities[0].id
       
-      this.changeCountry()
+     // this.changeCountry()
     })
   }
 

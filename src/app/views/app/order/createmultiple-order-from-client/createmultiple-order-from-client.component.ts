@@ -75,7 +75,9 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   }
 
   addNewCountry() {
-    if (!this.clients.find(c => c.name == this.Order.Country.name)) {
+    var find=this.cities.find(c => c.name == this.Order.Country.name)
+    console.log(find)
+    if (!find) {
       this.customerService.Create(this.cityapi, this.Order.Country).subscribe(res => {
         this.Order.Country = res
         this.Getcities()
@@ -85,7 +87,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
 
   }
   editNewCountry() {
-    if (!this.clients.find(c => c.name == this.EditOrder.Country.name)) {
+    if (!this.cities.find(c => c.name == this.EditOrder.Country.name)) {
       this.customerService.Create(this.cityapi, this.EditOrder.Country).subscribe(res => {
         this.EditOrder.Country = res
         this.Getcities()
@@ -105,9 +107,9 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     this.userService.GetAgent().subscribe(res => {
       this.GetAgents = res
       this.Agents = this.GetAgents.filter(a => a.countryId == this.Order.CountryId)
-      if (this.Agents.length != 0)
-        this.Order.AgentId = this.Agents[0].id
-      else this.Order.AgentId = null
+      // if (this.Agents.length != 0)
+      //   this.Order.AgentId = this.Agents[0].id
+      // else this.Order.AgentId = null
 
     })
   }
@@ -115,14 +117,14 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   GetClient() {
     this.clientService.getClients().subscribe(res => {
       this.clients = res
-      this.Order.ClientId = res[0].id
+      // this.Order.ClientId = res[0].id
     })
   }
   Getcities() {
     this.customerService.getAll(this.cityapi).subscribe(res => {
       this.cities = res
-      if (this.cities.length != 0)
-        this.Order.CountryId = this.cities[0].id
+      // if (this.cities.length != 0)
+      //   this.Order.CountryId = this.cities[0].id
       this.Order.Country = this.cities.find(c => c.id == this.Order.CountryId)
       this.changeCountry()
     })
@@ -132,9 +134,9 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
 
     var city = this.cities.find(c => c == this.Order.Country)
     this.Agents = this.GetAgents.filter(a => a.countryId == this.Order.Country.id)
-    if (this.Agents.length != 0)
-      this.Order.AgentId = this.Agents[0].id
-    else this.Order.AgentId = null
+    // if (this.Agents.length != 0)
+    //   this.Order.AgentId = this.Agents[0].id
+    // else this.Order.AgentId = null
     this.Order.DeliveryCost = city.deliveryCost
 
   }
@@ -209,6 +211,8 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   }
   onEnter() {
     this.addNewCountry()
+    this.Order.CountryId = this.Order.Country.id
+
     if (this.checkLengthPhoneNumber(this.Order.RecipientPhones))
       return
     if (!this.Order.Code || !this.Order.ClientId ||
@@ -218,7 +222,6 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
       return
     } else this.submitted = false
 
-    this.Order.CountryId = this.Order.Country.id
     // var country = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.CountryName = this.Order.Country.name
     var orderplace = this.orderPlace.find(c => c.id == this.Order.OrderplacedId)

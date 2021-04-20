@@ -78,16 +78,19 @@
     </ng-container>
     <div class="message" *ngIf="client.phones[i]&& checkLengthPhoneNumberForEdit(client.phones[i])">
       {{RecipientPhoneslengthEdit}}
+
   </div>
 </div>
 <div class="col-md-3">
-  <label>{{'client.phone' | translate}}</label>
+  <label>{{'client.phone' | translate}} <span class="text-danger text-one align-bottom mx-1">*</span></label>
   <input type="text" maxlength="11" oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"  class="form-control"
    [ngModelOptions]="{standalone: true}"
    [(ngModel)]="tempPhone"(ngModelChange)="checkLengthPhoneNumber(tempPhone)">
-   <div class="message" *ngIf="tempPhone&& checkLengthPhoneNumber(tempPhone)">
+   <div class="invalid-tooltip" *ngIf="tempPhone&& checkLengthPhoneNumber(tempPhone)">
     {{RecipientPhoneslength}}
 </div>
+<div *ngIf="!tempPhone&&client.phones.length==0&& submitted" class="invalid-tooltip">رقم الهاتف حقل مطلوب</div>
+
 </div>
 
 <div class="col-2">
