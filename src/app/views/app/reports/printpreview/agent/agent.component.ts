@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, HostListener, Input, OnChanges, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { UserLogin } from 'src/app/Models/userlogin.model';
@@ -26,15 +26,15 @@ export class AgentComponent implements OnInit {
   userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
   printnumber
   PrintNumberOrder: PrintNumberOrder
-  address="أربيل - شارع 40 - قرب تقاطع كوك"
-  companyPhone="07514550880 - 07700890880"
+  address = "أربيل - شارع 40 - قرب تقاطع كوك"
+  companyPhone = "07514550880 - 07700890880"
   ngOnInit(): void {
     this.PrintNumberOrder = new PrintNumberOrder
     this.orders = JSON.parse(localStorage.getItem('printordersagent'))
-    this.agent =  JSON.parse(localStorage.getItem('printagent'))
+    this.agent = JSON.parse(localStorage.getItem('printagent'))
     this.orderplaced = this.orders.map(o => o.orderplaced)[0]
     this.sumCost()
-   // this.getPrintnumber()
+    // this.getPrintnumber()
   }
 
   sumCost() {
@@ -45,24 +45,31 @@ export class AgentComponent implements OnInit {
       })
     return this.count
   }
-  showPrintbtn=false
+  showPrintbtn = false
   afterPrint() {
     this.orderservice.MakeOrderInWay(this.orders.map(o => o.id)).subscribe(res => {
       this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       //this.orders=[]
-      
-      this.printnumber=res.printNumber
-      this.showPrintbtn=true
-    //  this.setPrintnumber()
+
+      this.printnumber = res.printNumber
+      this.showPrintbtn = true
+      //  this.setPrintnumber()
 
     })
+  }
+  @HostListener('window:keydown', ['$event'])
+  onKeyPress($event: KeyboardEvent) {
+    if (($event.ctrlKey || $event.metaKey) && $event.keyCode == 80) {
+      this.convetToPDF()
+      return false
+    }
   }
   public convetToPDF() {
     const elementToPrint = document.getElementById('contentToConvert'); //The html element to become a pdf
     const pdf = new jspdf('p', 'mm', 'a4');
     pdf.addHTML(elementToPrint, () => {
-      pdf.save('web.pdf');
+      pdf.save( this.dateOfPrint+'.pdf');
     });
   }
-  
+
 }

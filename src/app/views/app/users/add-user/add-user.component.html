@@ -104,7 +104,7 @@
           [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Phones[i]"
           (ngModelChange)="checkLengthPhoneNumberForEdit(CreateUser.Phones[i])">
       </ng-container>
-      <div class="message" *ngIf="CreateUser.Phones[i]&& checkLengthPhoneNumberForEdit(CreateUser.Phones[i])">
+      <div  class="invalid-tooltip" *ngIf="CreateUser.Phones[i]&& checkLengthPhoneNumberForEdit(CreateUser.Phones[i])">
         {{RecipientPhoneslengthEdit}}
     </div>
     </div>
@@ -113,7 +113,7 @@
       <input type="text" maxlength="11"
         oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" class="form-control"
         [ngModelOptions]="{standalone: true}" [(ngModel)]="tempPhone"(ngModelChange)="checkLengthPhoneNumber(tempPhone)">
-        <div class="message" *ngIf="tempPhone&& checkLengthPhoneNumber(tempPhone)">
+        <div  class="invalid-tooltip" *ngIf="tempPhone&& checkLengthPhoneNumber(tempPhone)">
          {{RecipientPhoneslength}}
      </div>
     </div>

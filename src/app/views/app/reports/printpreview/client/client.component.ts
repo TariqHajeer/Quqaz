@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnChanges, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, Input, OnChanges, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { UserLogin } from 'src/app/Models/userlogin.model';
@@ -61,6 +61,13 @@ export class ClientComponent implements OnInit {
 
     })
 
+  }
+  @HostListener('window:keydown', ['$event'])
+  onKeyPress($event: KeyboardEvent) {
+    if (($event.ctrlKey || $event.metaKey) && $event.keyCode == 80) {
+      this.convetToPDF()
+      return false
+    }
   }
   public convetToPDF() {
     const elementToPrint = document.getElementById('contentToConvert'); //The html element to become a pdf

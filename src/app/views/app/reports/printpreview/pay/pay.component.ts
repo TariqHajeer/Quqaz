@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as jspdf from 'jspdf';
 import { UserLogin } from 'src/app/Models/userlogin.model';
@@ -29,6 +29,13 @@ export class PayComponent implements OnInit {
     }
     this.client=JSON.parse(localStorage.getItem('client'))
     console.log(this.client)
+  }
+  @HostListener('window:keydown', ['$event'])
+  onKeyPress($event: KeyboardEvent) {
+    if (($event.ctrlKey || $event.metaKey) && $event.keyCode == 80) {
+      this.convetToPDF()
+      return false
+    }
   }
   public convetToPDF() {
     const elementToPrint = document.getElementById('print'); //The html element to become a pdf

@@ -83,6 +83,8 @@ export class AddClientComponent implements OnInit, OnChanges {
   }
   addOrEditClient() {
     this.submitted = true;
+    if(this.RecipientPhoneslengthEdit!=null||this.RecipientPhoneslength!=null)
+    return
     if (this.tempPhone)
       this.client.phones.push(this.tempPhone)
     this.clientService.addClient(this.client).subscribe(
@@ -108,10 +110,12 @@ export class AddClientComponent implements OnInit, OnChanges {
   }
 
   addNewPhone() {
+    if(this.checkLengthPhoneNumber(this.tempPhone))
+    return
     this.client.phones.push(this.tempPhone);
     this.tempPhone = '';
   }
-  RecipientPhoneslength = ""
+  RecipientPhoneslength = null
   checkLengthPhoneNumber(phone) {
     console.log(phone)
     if (phone&&phone.length < 11) {
@@ -119,11 +123,11 @@ export class AddClientComponent implements OnInit, OnChanges {
       return true
     } 
     else {
-      this.RecipientPhoneslength = ""
+      this.RecipientPhoneslength = null
       return false
     }
   }
-  RecipientPhoneslengthEdit = ""
+  RecipientPhoneslengthEdit = null
   checkLengthPhoneNumberForEdit(phone) {
     console.log(phone)
     if (phone&&phone.length < 11) {
@@ -131,7 +135,7 @@ export class AddClientComponent implements OnInit, OnChanges {
       return true
     } 
     else {
-      this.RecipientPhoneslengthEdit = ""
+      this.RecipientPhoneslengthEdit = null
       return false
     }
   }

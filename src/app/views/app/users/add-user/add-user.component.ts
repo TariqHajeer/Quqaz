@@ -70,6 +70,9 @@ export class AddUserComponent implements OnInit, OnChanges {
   }
   addOrEditUser() {
     this.submitted = true;
+    console.log(this.RecipientPhoneslength)
+    if(this.RecipientPhoneslengthEdit!=null||this.RecipientPhoneslength!=null)
+    return
     this.UserService.Creat(this.CreateUser).subscribe(
       res => {
         if (this.addClicked) {
@@ -96,30 +99,30 @@ export class AddUserComponent implements OnInit, OnChanges {
   }
 
   addNewPhone() {
+    if(this.checkLengthPhoneNumber(this.tempPhone))
+    return
     this.CreateUser.Phones.push(this.tempPhone);
     this.tempPhone = '';
   }
-  RecipientPhoneslength = ""
+  RecipientPhoneslength = null
   checkLengthPhoneNumber(phone) {
-    console.log(phone)
     if (phone&&phone.length < 11) {
       this.RecipientPhoneslength = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
       return true
     } 
     else {
-      this.RecipientPhoneslength = ""
+      this.RecipientPhoneslength = null
       return false
     }
   }
-  RecipientPhoneslengthEdit = ""
+  RecipientPhoneslengthEdit = null
   checkLengthPhoneNumberForEdit(phone) {
-    console.log(phone)
     if (phone&&phone.length < 11) {
       this.RecipientPhoneslengthEdit = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
       return true
     } 
     else {
-      this.RecipientPhoneslengthEdit = ""
+      this.RecipientPhoneslengthEdit = null
       return false
     }
   }
