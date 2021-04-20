@@ -50,7 +50,6 @@
                             [(ngModel)]="EditOrder.Code" (keyup)="CheckCodeForEdit()" style="width: 100px;"
                             *ngIf="order.CanEdit" tabindex="1">
                         <div *ngIf="!EditOrder.Code && Editsubmitted&&order.CanEdit" class="message">كود الشحنة حقل مطلوب</div>
-                        <div *ngIf="showMessageCode" class="message">يوجد شحنة مسبقا لهذا العميل بنفس الكود</div>
                     </td>
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.CountryName}}</h4>
@@ -188,6 +187,8 @@
                             [(ngModel)]="Order.Code" (keyup)="CheckCode()" (keyup.enter)="onEnter()"
                             style="width: 100px;">
                         <div *ngIf="!Order.Code && submitted" class="message">كود الشحنة حقل مطلوب</div>
+                        <div *ngIf="showMessageCode" class="message">يوجد شحنة مسبقا لهذا العميل بنفس الكود</div>
+
                     </td>
                     <td >
                         <ng-select [items]="cities"style="width: 100px;"

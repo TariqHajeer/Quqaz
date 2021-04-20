@@ -212,7 +212,8 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   onEnter() {
     this.addNewCountry()
     this.Order.CountryId = this.Order.Country.id
-
+    this.Order.ClientId=this.ClientId
+console.log(this.Order)
     if (this.checkLengthPhoneNumber(this.Order.RecipientPhones))
       return
     if (!this.Order.Code || !this.Order.ClientId ||
@@ -296,10 +297,10 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
       this.submitedSave = true
       return
     }
-    this.Orders.forEach(o => {
+    // this.Orders.forEach(o => {
 
-      o.ClientId = this.ClientId
-    })
+    //   o.ClientId = this.ClientId
+    // })
     this.orderservice.createMultiple(this.Orders).subscribe(res => {
       this.notifications.create('success', 'تم اضافة الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Orders = []
