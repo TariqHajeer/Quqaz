@@ -217,7 +217,7 @@ console.log(this.Order)
     if (this.checkLengthPhoneNumber(this.Order.RecipientPhones))
       return
     if (!this.Order.Code || !this.Order.ClientId ||
-      !this.Order.RecipientPhones||!this.Order.Cost
+      !this.Order.RecipientPhones
       || !this.Order.AgentId || this.showMessageCode) {
       this.submitted = true
       return
@@ -255,7 +255,7 @@ console.log(this.Order)
 
     this.editNewCountry()
     if (!this.EditOrder.Code || !this.EditOrder.ClientId ||
-      !this.EditOrder.RecipientPhones||!this.EditOrder.Cost
+      !this.EditOrder.RecipientPhones
       || !this.EditOrder.AgentId || !this.EditOrder.OrderplacedId
       || order.showEditMessageCode) {
       this.Editsubmitted = true

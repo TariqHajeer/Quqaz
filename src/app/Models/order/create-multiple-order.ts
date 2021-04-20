@@ -7,7 +7,7 @@ export class CreateMultipleOrder {
     AgentName:string
     OrderplacedId:number
     OrderplacedName:string
-    Cost:number
+    Cost:number=0
     RecipientName:string 
     RecipientPhones:string
     ClientId:number
