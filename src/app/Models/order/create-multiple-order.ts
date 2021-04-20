@@ -16,4 +16,5 @@ export class CreateMultipleOrder {
     CanEdit:boolean=false 
     showEditMessageCode:boolean=false 
     DeliveryCost:number
+    Note:string
 }

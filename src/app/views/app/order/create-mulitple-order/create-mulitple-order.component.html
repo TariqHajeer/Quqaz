@@ -22,8 +22,8 @@
                 <th>الكلفة الكلية</th>
                 <th>كلفة التوصيل</th>
                 <th>حالة الشحنة</th>
+                <th>ملاحظات</th>
                 <th></th>
-
             </thead>
             <tbody>
                 <tr *ngFor="let order of Orders">
@@ -123,7 +123,14 @@
                     </td>
                    
 
-                   
+                    <td (click)="Edit(order)">
+                        <h4 *ngIf="!order.CanEdit">{{order.Note}}</h4>
+                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="EditOrder.Note"  style="width: 100px;"
+                            *ngIf="order.CanEdit" >
+                       
+
+                    </td>
 
                     <td>
                         <!--edit icone-->
@@ -238,7 +245,11 @@
 
                     </td>
                    
-
+                    <td> 
+                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="Order.Note" (keyup.enter)="onEnter()" style="width: 100px;" >
+                       
+                    </td>
 
                   
 

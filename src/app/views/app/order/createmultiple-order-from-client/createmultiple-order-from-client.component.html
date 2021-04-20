@@ -37,6 +37,7 @@
                 <th>الكلفة الكلية</th>
                 <th>كلفة التوصيل</th>
                 <th>حالة الشحنة</th>
+                <th>ملاحظات</th>
                 <th></th>
 
             </thead>
@@ -140,6 +141,15 @@
                         </div>
 
                     </td>
+                    <td (click)="Edit(order)">
+                        <h4 *ngIf="!order.CanEdit">{{order.Note}}</h4>
+                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="EditOrder.Note"  style="width: 100px;"
+                            *ngIf="order.CanEdit" >
+                       
+
+                    </td>
+
                     <td>
                         <!--edit icone-->
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -243,6 +253,11 @@
                         </ng-select>
                         <div *ngIf="!Order.OrderplacedId && submitted" class="message">حالة الشحنة حقل مطلوب</div>
 
+                    </td>
+                    <td> 
+                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="Order.Note" (keyup.enter)="onEnter()" style="width: 100px;" >
+                       
                     </td>
                     <td>
                         <button type="button" class="btn" (click)="onEnter()"><i class="iconsminds-add  text-primary"
