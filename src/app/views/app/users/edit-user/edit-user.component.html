@@ -22,12 +22,7 @@
               <div *ngIf="!User.name && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
               <div *ngIf="nameIsRepeated&&User.name!=''" class="invalid-tooltip">الأسم مكرر</div>
             </div>
-            <div class="col-md-3" >
-              <div class="custom-control custom-checkbox mr-sm-2">
-                <input type="checkbox" class="custom-control-input"[(ngModel)]="User.isActive" name="IsActive">
-                <label class="custom-control-label" for="customControlAutosizing"> </label>
-              </div>
-            </div>
+           
             <!-- <div class="col-md-3">
               <label>القسم<span class="text-danger text-one align-bottom mx-1">*</span></label>
               <ng-select [(ngModel)]="User.departmentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
@@ -36,10 +31,7 @@
               </ng-select>
               <div *ngIf="!User.department && submitted" class="invalid-tooltip">القسم حقل مطلوب</div>
             </div> -->
-          </div>
-
-          <div class="row w-100 align-items-end mb-3" *ngIf="!User.canWorkAsAgent">
-            <div class="col-md-3" >
+            <div class="col-md-3" *ngIf="!User.canWorkAsAgent">
               <label>اسم المستخدم<span class="text-danger text-one align-bottom mx-1">*</span></label>
               <input type="text"
                 oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
@@ -48,9 +40,15 @@
               <div *ngIf="usernameIsRepeated&&User.userName!=''" class="invalid-tooltip">اسم المستخدم مكرر</div>
 
             </div>
-        
-            
+            <div class="col-md-3" >
+              <div class="custom-control custom-checkbox mr-sm-2">
+                <input type="checkbox" id="customControlAutosizing" class="custom-control-input"[(ngModel)]="User.isActive" name="IsActive">
+                <label class="custom-control-label" for="customControlAutosizing"> مفعل</label>
+              </div>
+            </div>
           </div>
+
+        
           <div class="row w-100 align-items-end mb-3">
             <div class="col-md-3" *ngIf="!User.canWorkAsAgent">
               <label>تاريخ التوظيف<span class="text-danger text-one align-bottom mx-1">*</span></label>
