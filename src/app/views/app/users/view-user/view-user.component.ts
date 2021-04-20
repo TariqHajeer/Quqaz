@@ -60,6 +60,7 @@ export class ViewUserComponent implements OnInit {
     this.getUser();
   }
   getUser() {
+    console.log( this.UserService.users)
 
     this.UserService.GetAll();
   }
@@ -70,7 +71,6 @@ export class ViewUserComponent implements OnInit {
   Phone:Phone=new Phone
   addFinish(value: CreateUser) {
     this.User=new User
-    console.log(value)
     this.User.userName = value.UserName
     this.User.experince = value.Experince
     this.User.hireDate = value.HireDate
@@ -90,7 +90,6 @@ export class ViewUserComponent implements OnInit {
     this.User.UserStatics.OrderInStore=0
     this.User.UserStatics.OrderInWay=0
     this.UserService.users.push(this.User)
-    console.log( this.UserService.users)
     this.gridInstance.refresh();
 
   }

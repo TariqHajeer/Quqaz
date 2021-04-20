@@ -48,7 +48,7 @@ export class EditUserComponent implements OnInit {
     this.UserService.GetAll()
     //  this.User = this.UserService.users.find(u => u.id == this.id)
     this.getCountry()
-    this.getDepartments()
+    //this.getDepartments()
     this.GetAllGroups()
 
   }
@@ -82,6 +82,7 @@ export class EditUserComponent implements OnInit {
   GetUserById() {
     this.UserService.GetById(this.id).subscribe(res => {
       this.User = res
+      
       this.phones = this.User.phones
     })
   }

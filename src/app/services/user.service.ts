@@ -16,6 +16,7 @@ export class UserService {
   GetAll() :void {
     this.http.get<any>(this.controler).subscribe(res=>{
       let temp = res as User[];
+      console.log(res)
       for(let i =0 ; i<temp.length;i++){
         if(temp[i].canWorkAsAgent){
           temp[i].employeeType="مندوب";
@@ -41,7 +42,7 @@ export class UserService {
     )
   }
   ActiveAgent(){
-    return this.http.get<any>(this.controler + "Agent")
+    return this.http.get<any>(this.controler + "ActiveAgent")
   }
   Creat(item: CreateUser) {
     return this.http.post(this.controler, item)

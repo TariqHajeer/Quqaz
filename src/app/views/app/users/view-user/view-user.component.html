@@ -21,8 +21,16 @@
           <e-column field='employeeType' [allowEditing]='false' textAlign="Center" headerText="نوع الموظف" width='170'></e-column>
           <e-column field='userStatics.orderInStore' [allowEditing]='false' textAlign="Center" headerText="طلبات في المخزن" width='170'></e-column>
           <e-column field='userStatics.orderInWay' [allowEditing]='false' textAlign="Center" headerText=" طلبات في الطريق" width='170'></e-column>
-
           <e-column field='phonesAsString' [allowEditing]='false' textAlign="Center" headerText="ارقام الهاتف" width='140'>
+          </e-column>
+          <e-column  [allowEditing]='false' textAlign="Center" headerText=" مفعل" width='140'>
+            <ng-template  #template let-data1>
+           
+            <div class="custom-control custom-checkbox mr-sm-2">
+              <input type="checkbox" class="custom-control-input" [checked]="data1.isActive">
+              <label class="custom-control-label" for="customControlAutosizing"> </label>
+            </div>
+            </ng-template>
           </e-column>
           <e-column    [allowEditing]='false' textAlign="Center" headerText="" width='140'>
             <ng-template  #template let-data>
@@ -38,6 +46,8 @@
     </div>
   </div>
 </div>
+
+
 
 <div bsModal #addUserModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
   aria-labelledby="dialog-sizes-name1">

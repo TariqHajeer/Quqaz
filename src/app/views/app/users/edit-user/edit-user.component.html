@@ -22,6 +22,12 @@
               <div *ngIf="!User.name && submitted" class="invalid-tooltip">الاسم حقل مطلوب</div>
               <div *ngIf="nameIsRepeated&&User.name!=''" class="invalid-tooltip">الأسم مكرر</div>
             </div>
+            <div class="col-md-3" >
+              <div class="custom-control custom-checkbox mr-sm-2">
+                <input type="checkbox" class="custom-control-input"[(ngModel)]="User.isActive" name="IsActive">
+                <label class="custom-control-label" for="customControlAutosizing"> </label>
+              </div>
+            </div>
             <!-- <div class="col-md-3">
               <label>القسم<span class="text-danger text-one align-bottom mx-1">*</span></label>
               <ng-select [(ngModel)]="User.departmentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">

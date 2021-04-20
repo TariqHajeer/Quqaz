@@ -18,6 +18,7 @@ export class User {
       phones:Phone[]
       employeeType:string = this.canWorkAsAgent==true?"مندوب":"عميل"
       UserStatics:UserStatics
+      isActive:boolean
 }
 export class UserStatics
 {
