@@ -99,6 +99,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
       this.Order.OrderplacedId = this.orderPlace[1].id
+      this.orderPlace= this.orderPlace.filter(o=>o.id!=1)
 
     })
   }
