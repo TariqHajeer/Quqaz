@@ -135,6 +135,9 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   findorder
   Ordersfilter: any[] = []
   addOrder() {
+    this.Ordersfilter=[]
+    this.showTable = false
+
     if (this.Code) {
       this.orderservice.GetOrderByAgent(this.Code).subscribe(res => {
         console.log(res)
