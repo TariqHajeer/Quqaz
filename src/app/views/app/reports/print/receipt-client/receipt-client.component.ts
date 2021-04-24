@@ -22,6 +22,8 @@ export class ReceiptClientComponent implements OnInit {
   @Input() client
   @Input() printnumber
   dateOfPrint=new Date()
+  address="أربيل - شارع 40 - قرب تقاطع كوك"
+  companyPhone="07514550880 - 07700890880"
   userName:any=JSON.parse(localStorage.getItem('kokazUser'))as UserLogin
 
   ngOnInit(): void {

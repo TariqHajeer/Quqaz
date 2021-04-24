@@ -16,7 +16,7 @@
                        </svg> &nbsp;طباعة 
                </button>&nbsp;
                <app-receipt-agent id="printpage"[orders]="orders" [agent]="agent"[printnumber]="printnumber"
-               [hidden]="true" ></app-receipt-agent>
+               [hidden]="true" [orderplaced]="orderplaced" ></app-receipt-agent>
                <button  class="btn btn-primary" (click)="convetToPDF()"
                 >
                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-printer"

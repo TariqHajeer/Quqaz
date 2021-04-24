@@ -16,9 +16,7 @@
                 <th>
                     رقم الوصل
                 </th>
-                <th>
-                    المبلغ القديم
-                </th>
+               
                 <th>
                     الإجمالي
                 </th>
@@ -35,6 +33,9 @@
                     الهاتف
                 </th>
                 <th>
+                    المبلغ القديم
+                </th>
+                <th>
                     ملاحظات
                 </th>
             </thead>
@@ -44,15 +45,13 @@
                         <div class="content">
                 <tr style="  margin-bottom: 20%;font-size: 18px;" class=" table-bordered"
                     *ngFor="let order of orders;index as i">
-                    <td>
+                    <td  style="width: 5px;">
                         {{i+1}}
                     </td>
                     <td>
                         {{order.code}}
                     </td>
-                    <td>
-                        {{order.oldCost}}
-                    </td>
+                    
                     <td>
                         {{order.cost}}
                     </td>
@@ -65,17 +64,18 @@
                     <td>
                         {{order.country!=null||order.country!=undefined?order.country.name:null}}
                     </td>
-                    <!-- 
-                        <td>
-                {{order.monePlaced.name}}
-            </td>
-            <td>
-                {{order.orderplaced.name}}
-            </td>-->
+                    <!--   <td>
+                        {{order.monePlaced.name}}
+                    </td>
+                    <td>
+                        {{order.orderplaced.name}}
+                    </td>-->
                     <td>
                         {{order.recipientPhones}}
                     </td>
-
+                    <td>
+                        {{order.oldCost}}
+                    </td>
                     <td>
                         {{order.note}}
                     </td>
@@ -144,7 +144,7 @@
 
 
             </table>
-
+            
 
         </div>
         <div class="col-md-5" style="direction: rtl;">
