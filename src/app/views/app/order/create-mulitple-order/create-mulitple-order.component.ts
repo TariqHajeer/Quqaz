@@ -138,7 +138,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     if (this.Order.Code != null && this.Order.Code != undefined) {
       this.orderservice.chekcCode(this.Order.Code, this.Order.ClientId).subscribe(res => {
 
-        if (res || this.Orders.filter(o => o.Code == this.Order.Code).length > 0) {
+        if (res || this.Orders.filter(o => o.Code == this.Order.Code&&this.Order.ClientId==o.ClientId).length > 0) {
           this.showMessageCode = true
         } else
           this.showMessageCode = false
@@ -152,7 +152,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     if (this.EditOrder.Code != null) {
       this.orderservice.chekcCode(this.EditOrder.Code, this.EditOrder.ClientId).subscribe(res => {
         if (this.EditOrder.CanEdit == true)
-          if (res || this.Orders.filter(o => o.Code == this.EditOrder.Code && o != this.tempcode).length > 0) {
+          if (res || this.Orders.filter(o => o.Code == this.EditOrder.Code && o != this.tempcode&&this.EditOrder.ClientId==o.ClientId).length > 0) {
             order.showEditMessageCode = true
           } else
             order.showEditMessageCode = false
