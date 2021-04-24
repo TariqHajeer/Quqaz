@@ -29,6 +29,7 @@ import {
 } from '@syncfusion/ej2-angular-charts';
 import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
+import { ReceiptSetPrintNumberClientComponent } from './print/receipt-set-print-number-client/receipt-set-print-number-client.component';
 @NgModule({
   declarations: [ShipmentInStockComponent,
     ClientOrderComponent,
@@ -44,7 +45,8 @@ import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
     SetPrintNumberClientComponent,
     StatisticsComponent,
     PayComponent,
-    AgentStatisticsComponent,],
+    AgentStatisticsComponent,
+    ReceiptSetPrintNumberClientComponent,],
   imports: [
     CommonModule,
     ReportsRoutingModule,

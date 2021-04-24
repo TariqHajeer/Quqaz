@@ -22,13 +22,13 @@
                 {{order.cost}}
             </td>
             <td>
-                {{order.country.name}}
+                {{order.country?order.country.name:null}}
             </td>
             <td>
                 {{order.recipientPhones}}
             </td>
             <td>
-                {{order.client.name}}
+                {{order.client?order.client.name:null}}
             </td>
             <td>
                 {{order.note}}

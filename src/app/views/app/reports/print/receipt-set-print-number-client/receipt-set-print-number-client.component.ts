@@ -5,11 +5,11 @@ import { UserLogin } from 'src/app/Models/userlogin.model';
 import { OrderService } from 'src/app/services/order.service';
 
 @Component({
-  selector: 'app-receipt-client',
-  templateUrl: './receipt-client.component.html',
-  styleUrls: ['./receipt-client.component.scss']
+  selector: 'app-receipt-set-print-number-client',
+  templateUrl: './receipt-set-print-number-client.component.html',
+  styleUrls: ['./receipt-set-print-number-client.component.scss']
 })
-export class ReceiptClientComponent implements OnInit ,OnChanges{
+export class ReceiptSetPrintNumberClientComponent implements OnInit ,OnChanges{
 
   constructor(private orderservice: OrderService,
     private notifications: NotificationsService,
@@ -21,11 +21,12 @@ export class ReceiptClientComponent implements OnInit ,OnChanges{
   count = 0
   @Input() client
   @Input() printnumber
+  @Input()destinationPhone
+
   dateOfPrint=new Date()
   address="أربيل - شارع 40 - قرب تقاطع كوك"
   companyPhone="07514550880 - 07700890880"
-  userName:any=JSON.parse(localStorage.getItem('kokazUser'))as UserLogin
-
+  @Input() userName
   ngOnInit(): void {
 
   }
