@@ -3,17 +3,30 @@
     <h3>استلام حالة الشحنة</h3>
 
     <div class="row">
-    <!-- <div class="col-md-3">
-        <label>المندوب</label>
-        <ng-select [(ngModel)]="AgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Agent"
-          (change)="ChangeAgentId()">
-          <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
-        </ng-select>
-      </div>--> 
-      <div class="col-md-3">
+      <div class="col-md-5">
         <label>كود الشحنة</label>
-        <input type="text" class="form-control" (keyup.enter)="addOrder()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Code">
+        <input type="text" class="form-control"  (keyup.enter)="addOrder()" [ngModelOptions]="{standalone: true}" [(ngModel)]="Code">
+        <br>
+        <table class="table mat-elevation-z8" *ngIf="showTable">
+          <thead>
+            <th>الكود</th>
+            <th>العميل</th>
+            <th>المندوب</th>
+            <th></th>
 
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of Ordersfilter">
+              <td>{{order.code}}</td>
+              <td>{{order.client.name}}</td>
+              <td>{{order.agent.name}}</td>
+              <td>
+          <button class="btn btn-primary" (click)="add(order)">اضافة</button>&nbsp;
+          <button class="btn btn-primary"(click)="cancel(order)">تجاهل</button>
+              </td>
+            </tr>
+          </tbody>
+          </table>
       </div>
       <div class="col-md-3" style="padding-top: 25px;">
         <button (click)="addOrder()"  class="btn btn-primary"> عرض شحنة</button>

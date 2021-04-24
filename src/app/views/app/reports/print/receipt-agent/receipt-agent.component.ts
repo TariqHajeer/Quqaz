@@ -15,7 +15,7 @@ export class ReceiptAgentComponent implements OnInit ,OnChanges{
     private notifications: NotificationsService,
     public sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef) { }
-  heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'الهاتف',  'ملاحظات']
+    heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'الهاتف', 'اسم العميل', 'ملاحظات']
   @Input() orders: any[] = []
   count = 0
   @Input() agent
@@ -28,11 +28,12 @@ export class ReceiptAgentComponent implements OnInit ,OnChanges{
   ngOnInit(): void {
 
   }
-  @HostListener('window:afterprint')
-  onafterprint() {
-    console.log("tr")
-  }
+  // @HostListener('window:afterprint')
+  // onafterprint() {
+  //   console.log("tr")
+  // }
   ngOnChanges() {
+    console.log(this.orders)
     this.sumCost()
   }
   sumCost() {

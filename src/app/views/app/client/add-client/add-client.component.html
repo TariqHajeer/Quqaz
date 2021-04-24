@@ -63,9 +63,11 @@
         <label>{{'client.note' | translate}}</label>
         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.note">
       </div>
-      <div *ngFor="let phone of client.phones;let i=index" class="col-md-3">
+      <div *ngFor="let phone of client.phones;let i=index;trackBy: onTrackBy" class="col-md-3">
         <ng-container>
-          <label>{{'client.phone' | translate}}-{{i+1}}</label>
+          <label>{{'client.phone' | translate}}-{{i+1}}
+            <span (click)="deletePhone(phone)"><i class="text-danger iconsminds-close" style="font-size: 18px;"></i></span>
+          </label>
           <input type="text" maxlength="11"
             oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');" class="form-control"
             [ngModelOptions]="{standalone: true}" [(ngModel)]="client.phones[i]"

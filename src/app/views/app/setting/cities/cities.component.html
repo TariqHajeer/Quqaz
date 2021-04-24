@@ -17,7 +17,7 @@
             <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="city.deliveryCost"
             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '');" >
           </div>
-          <ng-container *ngFor="let item of city.regions;let i= index">
+          <ng-container *ngFor="let item of city.regions;let i= index; trackBy: onTrackBy">
             <div class="col-2">
             <label >منقطة{{i+1}}
               <span (click)="deldetRegionFromCity(i)"><i class="text-danger iconsminds-close" style="font-size: 18px;"></i></span>

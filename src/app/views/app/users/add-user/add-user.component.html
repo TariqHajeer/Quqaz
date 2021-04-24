@@ -96,9 +96,11 @@
   </div>
   <div class="row w-100 align-items-end mb-3">
     <!--add phones-->
-    <div *ngFor="let phone of CreateUser.Phones;let i=index" class="col-md-3">
+    <div *ngFor="let phone of CreateUser.Phones;let i=index;trackBy: onTrackBy" class="col-md-3">
       <ng-container>
-        <label>رقم الهاتف-{{i+1}}</label>
+        <label>رقم الهاتف-{{i+1}}
+          <span (click)="deletePhone(phone)"><i class="text-danger iconsminds-close" style="font-size: 18px;"></i></span>
+        </label>
         <input type="text" maxlength="11"
           oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" class="form-control"
           [ngModelOptions]="{standalone: true}" [(ngModel)]="CreateUser.Phones[i]"

@@ -39,7 +39,9 @@ export class AddUserComponent implements OnInit, OnChanges {
     this.CreateUser.Phones = []
   }
 
-
+  onTrackBy (index) {
+    return index;
+  }
   ngOnChanges(changes: SimpleChanges): void {
   }
   checkName() {
@@ -103,6 +105,9 @@ export class AddUserComponent implements OnInit, OnChanges {
     return
     this.CreateUser.Phones.push(this.tempPhone);
     this.tempPhone = '';
+  }
+  deletePhone(phone){
+    this.CreateUser.Phones=this.CreateUser.Phones.filter(p=>p!=phone)
   }
   RecipientPhoneslength = null
   checkLengthPhoneNumber(phone) {

@@ -101,6 +101,9 @@ export class AddClientComponent implements OnInit, OnChanges {
       }
     )
   }
+  onTrackBy (index) {
+    return index;
+  }
   getRegions() {
     this.customService.getAll('Region').subscribe(
       res => {
@@ -114,6 +117,9 @@ export class AddClientComponent implements OnInit, OnChanges {
     return
     this.client.phones.push(this.tempPhone);
     this.tempPhone = '';
+  }
+  deletePhone(phone){
+    this.client.phones=this.client.phones.filter(p=>p!=phone)
   }
   RecipientPhoneslength = null
   checkLengthPhoneNumber(phone) {

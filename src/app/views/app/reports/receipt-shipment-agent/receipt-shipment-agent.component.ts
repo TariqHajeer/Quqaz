@@ -75,7 +75,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
 
     })
   }
-  getmony(){
+  getmony() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
 
@@ -84,13 +84,13 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   changeMoenyPlaced() {
     if (this.getorders.length != 0) {
       this.getorders.forEach(o => {
-        o.order.monePlaced = this.MoenyPlaced.find(m=>m.id==this.MoenyPlacedId.id)
+        o.order.monePlaced = this.MoenyPlaced.find(m => m.id == this.MoenyPlacedId.id)
         if (this.OrderplacedId.id == 4 && this.MoenyPlacedId.id == 4) {
           if (o.order.isClientDiliverdMoney) {
-            o.order.monePlaced = this.MoenyPlaced.find(m=>m.id==4)
+            o.order.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
           }
           else {
-            o.order.monePlaced = this.MoenyPlaced.find(m=>m.id==3)
+            o.order.monePlaced = this.MoenyPlaced.find(m => m.id == 3)
           }
         }
 
@@ -99,7 +99,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
 
     }
   }
-  
+
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
@@ -133,39 +133,22 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   // }
   showcount = false
   findorder
+  Ordersfilter: any[] = []
   addOrder() {
     if (this.Code) {
       this.orderservice.GetOrderByAgent(this.Code).subscribe(res => {
+        console.log(res)
         this.findorder = res
         if (this.findorder) {
-          if (this.getorders.filter(o => o.order.code == this.findorder.code).length > 0) {
-            this.notifications.create("error", "الشحنة مضافة مسبقا", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
-            return
+          if (this.findorder.length == 1) {
+           this.addOrders()
           }
-          this.getorder.order = { ...this.findorder }
-          this.getorder.MoenyPlaced = [...this.MoenyPlaced]
-          this.getorder.OrderPlaced = [...this.orderPlace]
-          this.getorder.canEditCount = true
-          this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced)
-          this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced)
-          this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced)
-          this.orderplacedstate.unacceptable(this.getorder, this.MoenyPlaced)
-          this.orderplacedstate.isClientDiliverdMoney(this.getorder, this.MoenyPlaced)
-          if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2) {
-            this.getorder.order.orderplaced = this.getorder.OrderPlaced.find(o => o.id == 3)
+          else if (this.findorder.length > 1) {
+            this.showTable = true
+            this.Ordersfilter = res as []
           }
-
-          this.getorders.push({ ...this.getorder })
-          this.sumCost()
-          this.showcount = true
-          this.dataSource = new MatTableDataSource(this.getorders)
-          this.totalCount = this.dataSource.data.length
-          this.temporderscost = Object.assign({}, this.getorders.map(o => o.order.cost));
-          this.tempordersmonePlaced = Object.assign({}, this.getorders.map(o => o.order.monePlaced));
-          this.tempisClientDiliverdMoney = Object.assign({}, this.getorders.map(o => o.order.isClientDiliverdMoney));
-          this.Code = ""
-          this.getorder = new GetOrder
-        } else {
+        }
+        else {
           this.notifications.create("error", "ليس هناك شحنة لهذا الكود", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
         }
       }, err => {
@@ -176,6 +159,54 @@ export class ReceiptShipmentAgentComponent implements OnInit {
 
     } else this.notifications.create("error", " يجب اختيار مندوب واضافة كود الشحنة  ", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
 
+  }
+  addOrders(){
+    if (this.getorders.filter(o => o.order.code == this.findorder[0].code).length > 0) {
+      this.notifications.create("error", "الشحنة مضافة مسبقا", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
+      return
+    }
+    this.getorder.order = { ...this.findorder[0] }
+    this.getorder.MoenyPlaced = [...this.MoenyPlaced]
+    this.getorder.OrderPlaced = [...this.orderPlace]
+    this.getorder.canEditCount = true
+    this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced)
+    this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced)
+    this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced)
+    this.orderplacedstate.unacceptable(this.getorder, this.MoenyPlaced)
+    this.orderplacedstate.isClientDiliverdMoney(this.getorder, this.MoenyPlaced)
+    if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2) {
+      this.getorder.order.orderplaced = this.getorder.OrderPlaced.find(o => o.id == 3)
+    }
+
+    this.getorders.push({ ...this.getorder })
+    this.sumCost()
+    this.showcount = true
+    this.dataSource = new MatTableDataSource(this.getorders)
+    this.totalCount = this.dataSource.data.length
+    this.temporderscost = Object.assign({}, this.getorders.map(o => o.order.cost));
+    this.tempordersmonePlaced = Object.assign({}, this.getorders.map(o => o.order.monePlaced));
+    this.tempisClientDiliverdMoney = Object.assign({}, this.getorders.map(o => o.order.isClientDiliverdMoney));
+    this.Code = ""
+    this.getorder = new GetOrder
+  }
+  showTable: boolean = false
+  add(order) {
+    this.findorder=this.Ordersfilter.filter(o=>o==order)
+    this.addOrders()
+    this.Ordersfilter = this.Ordersfilter.filter(o => o != order)
+    if (this.Ordersfilter.length == 0) {
+      this.showTable = false
+      this.Code = ""
+
+    }
+  }
+  cancel(order) {
+    this.Ordersfilter = this.Ordersfilter.filter(o => o != order)
+    if (this.Ordersfilter.length == 0) {
+      this.showTable = false
+      this.Code = ""
+
+    }
   }
   ChangeOrderplacedId(element, index) {
     // this.GetMoenyPlaced()
@@ -222,7 +253,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     if (this.getorders)
       this.getorders.forEach(o => {
         this.count += o.order.cost
-        this.deliveryCostCount +=o.order.deliveryCost
+        this.deliveryCostCount += o.order.deliveryCost
       })
     return this.count
   }

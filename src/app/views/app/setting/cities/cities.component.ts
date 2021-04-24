@@ -56,6 +56,9 @@ export class CitiesComponent implements OnInit {
     this.selectionSettings = { persistSelection: true, type: "Multiple" };
     this.lines = 'Horizontal';
   }
+  onTrackBy (index) {
+    return index;
+  }
   addRegionToCity() {
     if (!this.tempRegion) {
       return;

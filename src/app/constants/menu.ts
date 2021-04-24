@@ -25,6 +25,7 @@ const data: IMenuItem[] = [
         icon: 'iconsminds-box-close',
         label: 'الطلبات الجديدة',
         to: `${adminRoot}/order/neworders`,
+        //permission:[UserPermission.ShowOrder]
 
       },
 
@@ -32,26 +33,36 @@ const data: IMenuItem[] = [
         icon: 'iconsminds-box-close',
         label: 'عرض الطلبات',
         to: `${adminRoot}/order/`,
+        //permission:[UserPermission.ShowOrder]
+
       },
       {
         icon: 'iconsminds-box-close',
         label: 'استلام حالة الشحنة ',
         to: `${adminRoot}/reports/ReceiptShipmentAgentComponent`,
+        //permission:[UserPermission.AddOrder]
+
       },
       {
         icon: 'iconsminds-add',
         label: 'إضافة طلب',
         to: `${adminRoot}/order/addorder`,
+        //permission:[UserPermission.AddOrder]
+
       },
       {
         icon: 'iconsminds-add',
         label: 'إضافة طلبات متعددة ',
         to: `${adminRoot}/order/addMulitpleOrders`,
+        //permission:[UserPermission.AddOrder]
+
       },
       {
         icon: 'iconsminds-add',
         label: 'إضافة طلبات متعددة للعميل',
         to: `${adminRoot}/order/addMulitpleOrdersfromClient`,
+        //permission:[UserPermission.AddOrder]
+
       },
       // {
       //   icon: 'iconsminds-add',
@@ -59,7 +70,9 @@ const data: IMenuItem[] = [
       //   to: `${adminRoot}/order/OrderNotBeenFullyPaid`,
       // },
       
-    ]
+    ],
+    //permission:[UserPermission.ShowOrder]
+
   },
   //reports
   {
@@ -76,23 +89,29 @@ const data: IMenuItem[] = [
             icon: 'simple-icon-layers',
             label: 'كشف شحنات  في المخزن',
             to: `${adminRoot}/reports/ShipmentInStock`,
+            //permission:[UserPermission.ShowOrder]
+
           },
           {
             icon: 'simple-icon-layers',
             label: 'كشف شحنات   في الطريق',
             to: `${adminRoot}/reports/Shipmentonway`,
+            //permission:[UserPermission.ShowOrder]
+
           },
           {
             icon: 'simple-icon-layers',
             label: 'تفاصيل المندوبين ',
             to: `${adminRoot}/reports/AgentStatistics`,
-    
+            //permission:[UserPermission.ShowOrder]
+
           },
           {
             icon: 'simple-icon-layers',
             label: 'شحنات حسب رقم الطباعة ',
             to: `${adminRoot}/reports/printsetprintnumberagentpreview`,
-    
+            //permission:[UserPermission.ShowOrder]
+
           },
         ]
       },
@@ -101,12 +120,12 @@ const data: IMenuItem[] = [
         label: 'العميل',
         to: `${adminRoot}/reports/Shipmentonway`,
         subs: [
-         
-         
           {
             icon: 'simple-icon-layers',
             label: 'تسديد العميل',
             to: `${adminRoot}/reports/Shipmentsnotbeendelivered`,
+            //permission:[UserPermission.ShowOrder]
+
           },
           // {
           //   icon: 'simple-icon-layers',
@@ -117,6 +136,8 @@ const data: IMenuItem[] = [
             icon: 'simple-icon-layers',
             label: 'شحنات حسب رقم الطباعة ',
             to: `${adminRoot}/reports/printsetprintnumberclientpreview`,
+            //permission:[UserPermission.ShowOrder]
+
     
           },
         ]
@@ -127,12 +148,16 @@ const data: IMenuItem[] = [
         icon: 'simple-icon-layers',
         label: ' أرباح الطلبات ',
         to: `${adminRoot}/order/ProfitsOfOrders`,
+        //permission:[UserPermission.ShowOrder]
+
 
       },
       {
         icon: 'simple-icon-layers',
         label: ' الإحصائيات  ',
         to: `${adminRoot}/reports/Statistics`,
+        //permission:[UserPermission.ShowOrder]
+
 
       },
       
@@ -143,24 +168,32 @@ const data: IMenuItem[] = [
     icon: 'simple-icon-people',
     label: 'menu.clients',
     to: `${adminRoot}/client`,
+    //permission:[UserPermission.ShowClient]
+
   },
   //income tab
   {
     icon: 'iconsminds-inbox-into',
     label: 'menu.income',
     to: `${adminRoot}/income`,
+    //permission:[UserPermission.ShowIncome]
+
   },
   //outcom tab
   {
     icon: 'iconsminds-inbox-out',
     label: 'menu.outcome',
     to: `${adminRoot}/outcome`,
+    //permission:[UserPermission.ShowOutCome]
+
   },
   //users
   {
     icon: 'simple-icon-people',
     label: 'menu.employees',
     to: `${adminRoot}/user`,
+    //permission:[UserPermission.ShowUser]
+
   },
 
 
@@ -174,27 +207,37 @@ const data: IMenuItem[] = [
         icon: 'iconsminds-map2',
         label: 'menu.setting.cities',
         to: `${adminRoot}/setting/cities`,
+        //permission:[UserPermission.ShowCountry]
+
       },
       {
         icon: 'iconsminds-map2',
         label: 'menu.setting.regions',
         to: `${adminRoot}/setting/regions`,
+        //permission:[UserPermission.ShowRegion]
+
       },
 
       {
         icon: 'iconsminds-inbox-out',
         label: 'menu.setting.exportTypes',
         to: `${adminRoot}/setting/exportTypes`,
+        //permission:[UserPermission.ShowOutComeType]
+
       },
       {
         icon: 'iconsminds-inbox-into',
         label: 'menu.setting.importTypes',
         to: `${adminRoot}/setting/importTypes`,
+        //permission:[UserPermission.ShowIncomeType]
+
       },
       {
         icon: 'iconsminds-box-close',
         label: 'menu.setting.shipmentsTypes',
         to: `${adminRoot}/setting/shipmentsTypes`,
+        //permission:[UserPermission.ShowOrderType]
+
       },
       // {
       //   icon: 'iconsminds-coins',
@@ -206,6 +249,8 @@ const data: IMenuItem[] = [
         icon: 'simple-icon-layers',
         label: 'المجموعات',
         to: `${adminRoot}/setting/group`,
+        //permission:[UserPermission.ShowGroup]
+
       }
     ]
   },

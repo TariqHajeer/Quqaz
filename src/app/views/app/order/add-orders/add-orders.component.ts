@@ -195,12 +195,18 @@ export class AddOrdersComponent implements OnInit {
       })
     }
   }
-
+  //input inside ng for
+  onTrackBy (index) {
+    return index;
+  }
   addNewPhone() {
     if(this.checkLengthPhoneNumber(this.tempPhone))
     return
     this.Order.RecipientPhones.push(this.tempPhone);
     this.tempPhone = '';
+  }
+  deletePhone(phone){
+    this.Order.RecipientPhones=this.Order.RecipientPhones.filter(p=>p!=phone)
   }
   RecipientPhoneslength = null
   checkLengthPhoneNumber(phone) {

@@ -4,6 +4,7 @@ import { AuthGuard } from 'src/app/shared/auth.guard';
 import { UserPermission } from 'src/app/shared/auth.roles';
 import { AgentStatisticsComponent } from './agent-statistics/agent-statistics.component';
 import { ClientOrderComponent } from './client-order/client-order.component';
+import { ReceiptAgentComponent } from './print/receipt-agent/receipt-agent.component';
 import { AgentComponent } from './printpreview/agent/agent.component';
 import { ClientComponent } from './printpreview/client/client.component';
 import { PayComponent } from './printpreview/pay/pay.component';
@@ -77,6 +78,11 @@ const routes: Routes = [
   {
     path:'pay',
     component: PayComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
+  },
+  {
+    path:'test',
+    component: ReceiptAgentComponent,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowReports]}
   },
  
