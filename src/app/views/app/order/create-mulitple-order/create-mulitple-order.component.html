@@ -226,7 +226,6 @@
                         <input type="number" class="form-control" [ngModelOptions]="{standalone: true}"
                             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                             (keyup.enter)="onEnter()" style="width: 100px;" [(ngModel)]="Order.Cost">
-                        <div *ngIf="!Order.Cost && submitted" class="message">الكلفة الكلية حقل مطلوب</div>
 
                     </td>
                     <td>
