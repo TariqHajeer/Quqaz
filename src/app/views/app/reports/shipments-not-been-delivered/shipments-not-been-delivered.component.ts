@@ -130,19 +130,23 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     var orderPlace = this.orderPlace.filter(o => o.checked == true)
     this.order.OrderPlacedId = orderPlace.map(o => o.id)
     console.log(this.order)
-    this.orderservice.ClientDontDiliverdMoney(this.order).subscribe(response => {
-      if (response)
-        if (response.length == 0)
-          this.noDataFound = true
-        else this.noDataFound = false
-      this.dataSource = new MatTableDataSource(response)
-      //this.dataSource.data = this.dataSource.data.filter(d => d.agent.id == this.ClientId)
-      this.totalCount = response.length
-    },
-      err => {
-
-      });
-  }
+    if( this.orderPlace.filter(o => o.checked == true).length>0&&(this.IsClientDeleviredMoney||this.ClientDoNotDeleviredMoney)){
+      this.orderservice.ClientDontDiliverdMoney(this.order).subscribe(response => {
+        if (response)
+          if (response.length == 0)
+            this.noDataFound = true
+          else this.noDataFound = false
+        this.dataSource = new MatTableDataSource(response)
+        //this.dataSource.data = this.dataSource.data.filter(d => d.agent.id == this.ClientId)
+        this.totalCount = response.length
+      },
+        err => {
+  
+        });
+  
+    }
+    else return
+     }
   print() {
     if (this.noDataFound == true || this.orders.length == 0) {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });

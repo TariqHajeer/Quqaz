@@ -28,7 +28,7 @@ export class AddClientComponent implements OnInit, OnChanges {
   confirmpassword
   checkPassword: boolean = false
   ngOnInit(): void {
-   this.client=new Client
+    this.client = new Client
     this.getRegions();
     this.getClient()
     this.getCities()
@@ -47,7 +47,7 @@ export class AddClientComponent implements OnInit, OnChanges {
       this.checkPassword = false
     }
   }
- 
+
   getClient() {
     this.clientService.getClients().subscribe(
       res => {
@@ -82,26 +82,36 @@ export class AddClientComponent implements OnInit, OnChanges {
       this.usernameIsRepeated = false
   }
   addOrEditClient() {
-    this.submitted = true;
-    if(this.RecipientPhoneslengthEdit!=null||this.RecipientPhoneslength!=null)
-    return
-    if (this.tempPhone)
+    console.log(this.client)
+    if (this.RecipientPhoneslengthEdit != null || this.RecipientPhoneslength != null)
+      return
+    if (this.tempPhone) {
       this.client.phones.push(this.tempPhone)
+      this.tempPhone = ''
+    }
+    if (this.client.phones.length == 0 || !this.client.name ||! this.client.userName
+      || !this.client.password || !this.client.firstDate) {
+      this.submitted = true;
+      return
+    }
+    else {
+      this.submitted = false;
+    } 
     this.clientService.addClient(this.client).subscribe(
       res => {
         this.addFinish.emit(this.client);
         if (this.addClicked) {
-          this.client=new Client
+          this.client = new Client
           this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
           this.tempPhone = '';
           this.submitted = false;
         }
 
-        this.client=new Client
+        this.client = new Client
       }
     )
   }
-  onTrackBy (index) {
+  onTrackBy(index) {
     return index;
   }
   getRegions() {
@@ -113,20 +123,20 @@ export class AddClientComponent implements OnInit, OnChanges {
   }
 
   addNewPhone() {
-    if(this.checkLengthPhoneNumber(this.tempPhone))
-    return
+    if (this.checkLengthPhoneNumber(this.tempPhone))
+      return
     this.client.phones.push(this.tempPhone);
     this.tempPhone = '';
   }
-  deletePhone(phone){
-    this.client.phones=this.client.phones.filter(p=>p!=phone)
+  deletePhone(phone) {
+    this.client.phones = this.client.phones.filter(p => p != phone)
   }
   RecipientPhoneslength = null
   checkLengthPhoneNumber(phone) {
-    if (phone&&phone.length < 11) {
+    if (phone && phone.length < 11) {
       this.RecipientPhoneslength = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
       return true
-    } 
+    }
     else {
       this.RecipientPhoneslength = null
       return false
@@ -134,10 +144,10 @@ export class AddClientComponent implements OnInit, OnChanges {
   }
   RecipientPhoneslengthEdit = null
   checkLengthPhoneNumberForEdit(phone) {
-    if (phone&&phone.length < 11) {
+    if (phone && phone.length < 11) {
       this.RecipientPhoneslengthEdit = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
       return true
-    } 
+    }
     else {
       this.RecipientPhoneslengthEdit = null
       return false

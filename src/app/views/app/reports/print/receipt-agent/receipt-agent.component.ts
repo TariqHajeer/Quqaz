@@ -22,6 +22,7 @@ export class ReceiptAgentComponent implements OnInit ,OnChanges{
   @Input() orderplaced
   @Input() printnumber
   @Input() phones
+
   dateOfPrint=new Date()
   userName:any=JSON.parse(localStorage.getItem('kokazUser'))as UserLogin
 
@@ -37,11 +38,11 @@ export class ReceiptAgentComponent implements OnInit ,OnChanges{
     this.sumCost()
   }
   sumCost() {
-    this.count=0
-    if(this.orders)
-    this.orders.forEach(o => {
-      this.count += o.total
-    })
+    this.count = 0
+    if (this.orders)
+      this.orders.forEach(o => {
+        this.count += o.cost
+      })
     return this.count
   }
 }
