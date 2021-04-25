@@ -13,10 +13,12 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { EditClientComponent } from './edit-client/edit-client.component';
+import { ReceiptAndExchangeComponent } from './receipt-and-exchange/receipt-and-exchange.component';
+import { NgxPrintModule } from 'ngx-print';
 
 
 @NgModule({
-  declarations: [AddClientComponent, ViewClientsComponent, EditClientComponent],
+  declarations: [AddClientComponent, ViewClientsComponent, EditClientComponent, ReceiptAndExchangeComponent],
   imports: [
     CommonModule,
     ClientRoutingModule,
@@ -30,6 +32,8 @@ import { EditClientComponent } from './edit-client/edit-client.component';
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
     NgSelectModule,
+    NgxPrintModule,
+
 
   ]
 })

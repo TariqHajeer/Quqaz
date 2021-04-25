@@ -112,7 +112,8 @@ export class ViewClientsComponent implements OnInit {
       pay: true
     }
     this.client.client = data
-    console.log(data)
+    localStorage.setItem('client', JSON.stringify(this.client ))
+    this.route.navigate(['/app/client/ReceiptAndExchange'])
   }
   printpay() {
     //صرف

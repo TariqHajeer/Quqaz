@@ -4,6 +4,7 @@ import { AuthGuard } from 'src/app/shared/auth.guard';
 import { UserPermission } from 'src/app/shared/auth.roles';
 import { AddClientComponent } from './add-client/add-client.component';
 import { EditClientComponent } from './edit-client/edit-client.component';
+import { ReceiptAndExchangeComponent } from './receipt-and-exchange/receipt-and-exchange.component';
 import { ViewClientsComponent } from './view-clients/view-clients.component';
 
 
@@ -22,6 +23,10 @@ const routes: Routes = [
       path:'edit/:id',
       component:EditClientComponent ,canActivate: [AuthGuard],
       data: { roles: [UserPermission.UpdateClient]}
+    },
+    {
+      path:'ReceiptAndExchange',
+      component:ReceiptAndExchangeComponent ,canActivate: [AuthGuard],
     }
 ];
 

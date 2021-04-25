@@ -164,10 +164,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
 
   }
   addOrders(){
-    if (this.getorders.filter(o => o.order.code == this.findorder[0].code).length > 0) {
-      this.notifications.create("error", "الشحنة مضافة مسبقا", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
-      return
-    }
+    
     this.getorder.order = { ...this.findorder[0] }
     this.getorder.MoenyPlaced = [...this.MoenyPlaced]
     this.getorder.OrderPlaced = [...this.orderPlace]
@@ -180,7 +177,10 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2) {
       this.getorder.order.orderplaced = this.getorder.OrderPlaced.find(o => o.id == 3)
     }
-
+    if (this.getorders.filter(o => o.order.code == this.getorder.order .code&&o.order.client.id==this.getorder.order.client.id).length > 0) {
+      this.notifications.create("error", "الشحنة مضافة مسبقا", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
+      return
+    }
     this.getorders.push({ ...this.getorder })
     this.sumCost()
     this.showcount = true

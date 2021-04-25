@@ -79,8 +79,8 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   paging: Paging
   filtering: OrderFilter
   noDataFound: boolean = false
-  IsClientDeleviredMoney: boolean = true
-  ClientDoNotDeleviredMoney: boolean = true
+  IsClientDeleviredMoney: boolean = false
+  ClientDoNotDeleviredMoney: boolean = false
   @Input() totalCount: number;
 
   ngOnInit(): void {
@@ -96,9 +96,9 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
-      this.orderPlace.forEach(item => {
-        item.checked = true
-      })
+      // this.orderPlace.forEach(item => {
+      //   item.checked = true
+      // })
       this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
 
     })

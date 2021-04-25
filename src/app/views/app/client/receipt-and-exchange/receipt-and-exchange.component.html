@@ -1,0 +1,149 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-3">
+                <label> العميل</label>
+                <h4>{{client.client.name}}</h4>
+            </div>
+            <div class="col-3">
+                <label>المبلغ</label>
+                <input type="number" class="form-control" [(ngModel)]="cost" [ngModelOptions]="{standalone: true}"
+                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                >
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-3">
+                <label>وذلك عن </label>
+                <input type="text" class="form-control" [(ngModel)]="aboutas" [ngModelOptions]="{standalone: true}"
+                   >
+            </div>
+            <div class="col-3">
+                <label> اعدها </label>
+                <input type="text" class="form-control" [(ngModel)]="Prepare" [ngModelOptions]="{standalone: true}"
+                   >
+            </div>
+            <div class="col-3">
+                <label> المستلم</label>
+                <input type="text" class="form-control" [(ngModel)]="recipient" [ngModelOptions]="{standalone: true}"
+                   >
+            </div>
+            <div class="col-3">
+                <label> المدير </label>
+                <input type="text" class="form-control" [(ngModel)]="Manager" [ngModelOptions]="{standalone: true}"
+                   >
+            </div>
+
+        </div>
+        <br>
+        <div class="row" *ngIf="showButton">
+            <div class="col-1">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="printcatch()">قبض</button>
+
+            </div>
+            <div class="col-1">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="printpay()">صرف</button>
+
+            </div>
+        </div>
+        <div class="row" *ngIf="!showButton">
+            <div class="col-1">
+                <button class="btn btn-primary" (click)="convetToPDF()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-printer" viewBox="0 0 16 16">
+                        <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+                        <path
+                            d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
+                    </svg> &nbsp;تحميل
+                </button>
+
+            </div>
+            <div class="col-1">
+                <button printSectionId="contentToConvert" class="btn btn-primary"
+                styleSheetFile="/assets/css/vendor/bootstrap.min.css" [useExistingCss]="true" ngxPrint>
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
+                    class="bi bi-printer" viewBox="0 0 16 16">
+                    <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+                    <path
+                        d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
+                </svg> &nbsp;طباعة
+            </button>&nbsp;
+
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div id="contentToConvert">
+    <div class="card"  style=" width: 18cm;margin-right: 18%;
+    font-size: 18px;direction: rtl;text-align: right;"*ngIf="!showButton">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-4">
+                    <h2 style="padding-top: 10%;text-align: center;"><b>القوقز للتوصيل السريع</b></h2>
+                </div>
+                <div class="col-4">
+                    <h2 style="padding-top: 30%;text-align: center;"><b>
+                        سند قبض
+                        <br>
+                        Receipt Voucher
+                    </b> </h2>
+                </div>
+                <div class="col-4">
+                    <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px"
+                        style="margin-right: 20%;" />
+                </div>
+            </div>
+            <div class="row" style="direction: ltr;">
+                <div class="col-4">
+                    <h4 style="text-align: left;"> No:
+                        <br>
+                        Date : {{dateOfPrint|date:'dd/mm/yyyy'}}</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    استلمنا من السيد/ة :&nbsp;{{recipient}}
+                    <hr style="border-bottom: black 2px dotted;width: 80%;">
+                </div>
+                <div class="col-12">
+                    مبلغ قدره : &nbsp;{{cost}}
+                    <hr style="border-bottom: black 2px dotted;width: 80%;">
+                </div>
+                <div class="col-12">
+                    وذلك عن :&nbsp;{{aboutas}}
+                    <hr style="border-bottom: black 2px dotted;width: 80%;">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    أعدها : {{Prepare}}
+                    <hr style="border-bottom: black 2px dotted;width: 80%;">
+    
+                </div>
+                <div class="col-4">
+                    المستلم : {{recipient}}
+                    <hr style="border-bottom: black 2px dotted;width: 80%;">
+    
+                </div>
+                <div class="col-4">
+                    المدير : {{Manager}}
+                    <hr style="border-bottom: black 2px dotted;width: 80%;">
+    
+                </div>
+            </div>
+            <hr style="width: 100%;height: 5px;color: black;">
+            <div class="row">
+                <div class="col-2">
+                   
+                </div>
+                <div class="col-10">
+                  <b>العنوان : {{address}}&nbsp; جوال :{{companyPhone}}</b> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
