@@ -16,7 +16,9 @@
                 <th>
                     رقم الوصل
                 </th>
-               
+               <th>
+                   تاريخ اضافة الطلب
+               </th>
                 <th>
                     الإجمالي
                 </th>
@@ -51,7 +53,9 @@
                     <td>
                         {{order.code}}
                     </td>
-                    
+                    <td>
+                        {{order.date| date: 'yyyy/MM/dd'}}
+                    </td>
                     <td>
                         {{order.cost}}
                     </td>
@@ -85,7 +89,7 @@
     </td>
     </tr>
     <tr class=" table-bordered trbordered" style="font-size: 18px;">
-        <td colspan="2">
+        <td colspan="3">
             الإجمالي :
         </td>
         <td>
@@ -100,7 +104,7 @@
         <td colspan="4"></td>
     </tr>
     <tr class=" table-bordered " style="font-size: 18px;background-color: rgba(144, 177, 240, 0.877);">
-        <td colspan="4">
+        <td colspan="5">
             حساب العميل :
         </td>
        
@@ -111,7 +115,7 @@
         <td colspan="4"></td>
     </tr>
     <tr class=" table-bordered trbordered" style="font-size: 18px;">
-        <td colspan="9">
+        <td colspan="10">
             المبلغ النهائي  :  {{count-deliveryCostCount}}
 
         </td>

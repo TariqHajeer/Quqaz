@@ -17,7 +17,7 @@ export class AgentComponent implements OnInit {
     private notifications: NotificationsService,
     public sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef) { }
-  heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'الهاتف', 'اسم العميل', 'ملاحظات']
+  heads = ['ترقيم', 'كود','تاريخ انشاء الطلب', 'الإجمالي', 'المحافظة ', 'الهاتف', 'اسم العميل', 'ملاحظات']
   orders: any[] = []
   count = 0
   agent

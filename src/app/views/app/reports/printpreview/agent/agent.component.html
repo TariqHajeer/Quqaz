@@ -116,6 +116,9 @@
                         {{order.code}}
                     </td>
                     <td>
+                        {{order.date| date: 'yyyy/MM/dd'}}
+                    </td>
+                    <td>
                         {{order.cost}}
                     </td>
                     <td>
@@ -134,7 +137,7 @@
 
 
                 <tr class=" table-bordered trbordered" style="font-size: 18px;">
-                    <td colspan="2">
+                    <td colspan="3">
                         الإجمالي :
                     </td>
                     <td colspan="5">
