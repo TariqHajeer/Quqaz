@@ -27,8 +27,6 @@ export class PayComponent implements OnInit {
       pay: true,
       deliveryCost:0
     }
-    this.client=JSON.parse(localStorage.getItem('client'))
-    console.log(this.client)
   }
   @HostListener('window:keydown', ['$event'])
   onKeyPress($event: KeyboardEvent) {
