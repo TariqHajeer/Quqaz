@@ -109,7 +109,7 @@
                     </td>
                     <td>
                         <h4 *ngIf="!order.CanEdit">{{order.OrderplacedName}}</h4>
-                        <ng-select appendTo="body" [(ngModel)]="EditOrder.OrderplacedId"
+                        <ng-select [disabled]="true" appendTo="body" [(ngModel)]="EditOrder.OrderplacedId"
                             [ngModelOptions]="{standalone: true}" style="width: 100px;" [clearable]="false"
                             *ngIf="order.CanEdit" name="Orderplaced">
                             <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}
@@ -233,7 +233,7 @@
                             (keyup.enter)="onEnter()" style="width: 100px;" [(ngModel)]="Order.DeliveryCost" >
                     </td>
                     <td>
-                        <ng-select appendTo="body" [(ngModel)]="Order.OrderplacedId"
+                        <ng-select [disabled]="true" appendTo="body" [(ngModel)]="Order.OrderplacedId"
                             [ngModelOptions]="{standalone: true}" (keyup.enter)="onEnter()" style="width: 100px;"
                             [clearable]="false" name="Orderplaced">
                             <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}
