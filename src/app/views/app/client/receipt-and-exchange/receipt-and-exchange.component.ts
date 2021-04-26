@@ -34,7 +34,7 @@ export class ReceiptAndExchangeComponent implements OnInit {
   Prepare
   recipient
   Manager
-  address = "أربيل -  مبرايتي - قرب  مميز البصير"
+  address = "اربيل - برايتي - قرب ماركيت آيه "
   companyPhone = "07714400880"
   showButton=true
   dateOfPrint = new Date()

@@ -87,9 +87,9 @@
                 </div>
                 <div class="col-4">
                     <h2 style="padding-top: 30%;text-align: center;"><b>
-                        سند قبض
+                        سند {{!client.pay?'قبض':'صرف'}}
                         <br>
-                        Receipt Voucher
+                        {{!client.pay?'Receipt':'Exchange'}}    Voucher 
                     </b> </h2>
                 </div>
                 <div class="col-4">
@@ -101,7 +101,7 @@
                 <div class="col-4">
                     <h4 style="text-align: left;"> No:
                         <br>
-                        Date : {{dateOfPrint|date:'dd/mm/yyyy'}}</h4>
+                        Date : {{dateOfPrint| date: 'yyyy/MM/dd'}}</h4>
                 </div>
             </div>
             <div class="row">
@@ -121,18 +121,17 @@
             <div class="row">
                 <div class="col-4">
                     أعدها : {{Prepare}}
-                    <hr style="border-bottom: black 2px dotted;width: 80%;">
     
                 </div>
                 <div class="col-4">
                     المستلم : {{recipient}}
-                    <hr style="border-bottom: black 2px dotted;width: 80%;">
     
                 </div>
                 <div class="col-4">
                     المدير : {{Manager}}
-                    <hr style="border-bottom: black 2px dotted;width: 80%;">
-    
+                  <!--
+                      <hr style="border-bottom: black 2px dotted;width: 80%;">
+                  -->  
                 </div>
             </div>
             <hr style="width: 100%;height: 5px;color: black;">
