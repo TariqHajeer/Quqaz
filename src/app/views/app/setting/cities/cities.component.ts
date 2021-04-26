@@ -53,7 +53,7 @@ export class CitiesComponent implements OnInit {
 
       }
     };
-    this.selectionSettings = { persistSelection: true, type: "Multiple" };
+    this.selectionSettings = {  type: "Multiple" };
     this.lines = 'Horizontal';
   }
   onTrackBy (index) {

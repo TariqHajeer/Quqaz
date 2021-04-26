@@ -43,7 +43,7 @@ export class ImportsTypesComponent implements OnInit {
     });
     
     
-    this.selectionSettings = { persistSelection: true, type: "Multiple"};
+    this.selectionSettings = {  type: "Multiple"};
     this.lines = 'Horizontal';
   }
 

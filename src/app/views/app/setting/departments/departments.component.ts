@@ -38,7 +38,7 @@ export class DepartmentsComponent implements OnInit {
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
     this.pageSettings = { pageCount: 5 };
-    this.selectionSettings = { persistSelection: true, type: "Multiple" };
+    this.selectionSettings = {  type: "Multiple" };
     this.lines = 'Horizontal';
   }
 

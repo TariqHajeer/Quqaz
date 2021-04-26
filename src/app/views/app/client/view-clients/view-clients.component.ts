@@ -44,7 +44,7 @@ export class ViewClientsComponent implements OnInit {
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
     this.pageSettings = { pageSize: 5, pageSizes: true };
-    this.selectionSettings = { persistSelection: true, type: "Multiple" };
+    this.selectionSettings = {  type: "Multiple" };
     this.lines = 'Horizontal';
     this.formatOptions = { type: 'date', format: 'dd/MM/yyyy' };
     localStorage.removeItem('client')
