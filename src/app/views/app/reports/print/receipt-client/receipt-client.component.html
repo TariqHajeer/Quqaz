@@ -105,20 +105,25 @@
     </tr>
     <tr class=" table-bordered " style="font-size: 18px;background-color: rgba(144, 177, 240, 0.877);">
         <td colspan="5">
-            حساب العميل :
+            حساب العميل 
         </td>
-       
-       
-        <td >
-            {{count-deliveryCostCount}}
+
+
+        <td>
+            {{client.total}}
         </td>
         <td colspan="4"></td>
     </tr>
     <tr class=" table-bordered trbordered" style="font-size: 18px;">
-        <td colspan="10">
-            المبلغ النهائي  :  {{count-deliveryCostCount}}
+        <td colspan="5">
+            المبلغ النهائي في المقاصة  
 
         </td>
+        <td>
+            {{(count-deliveryCostCount)+client.total}}
+        </td>
+        <td colspan="4"></td>
+
     </tr>
     </tbody>
 
