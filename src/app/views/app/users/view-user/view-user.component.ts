@@ -71,6 +71,7 @@ export class ViewUserComponent implements OnInit {
   Phone:Phone=new Phone
   addFinish(value: CreateUser) {
     this.User=new User
+    this.User.phones=[]
     this.User.userName = value.UserName
     this.User.experince = value.Experince
     this.User.hireDate = value.HireDate
@@ -81,6 +82,7 @@ export class ViewUserComponent implements OnInit {
     this.User.groupsId = value.GroupsId
     this.User.countryId = value.CountryId
     this.User.canWorkAsAgent = value.CanWorkAsAgent
+    this.User.isActive=true
     for (let index = 0; index < value.Phones.length; index++) {
       this.Phone.phone=value.Phones[index]
       this.User.phones.push(this.Phone)

@@ -39,7 +39,7 @@ export class AddUserComponent implements OnInit, OnChanges {
     this.CreateUser.Phones = []
   }
 
-  onTrackBy (index) {
+  onTrackBy(index) {
     return index;
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -66,21 +66,42 @@ export class AddUserComponent implements OnInit, OnChanges {
     if (this.CreateUser.Password != this.confirmpassword) {
       this.checkPassword = true
     }
-    else{
+    else {
       this.checkPassword = false
     }
   }
   addOrEditUser() {
-    this.submitted = true;
-    console.log(this.RecipientPhoneslength)
-    if(this.RecipientPhoneslengthEdit!=null||this.RecipientPhoneslength!=null)
-    return
+    if (this.RecipientPhoneslengthEdit != null || this.RecipientPhoneslength != null)
+      return
+      else if (this.tempPhone) {
+        this.CreateUser.Phones.push(this.tempPhone)
+        this.tempPhone = ''
+      }
+    if (this.CreateUser.CanWorkAsAgent) {
+      if (!this.CreateUser.Name||!this.CreateUser.CountryId||!this.CreateUser.Salary||
+        this.CreateUser.Phones.length==0) {
+        this.submitted = true;
+        return
+      }else{
+        this.submitted = false;
+      }
+    }
+    else if(!this.CreateUser.CanWorkAsAgent) {
+      if (!this.CreateUser.Name||!this.CreateUser.UserName||!this.CreateUser.Password||
+        this.CreateUser.GroupsId.length==0||!this.CreateUser.HireDate||this.CreateUser.Phones.length==0) {
+        this.submitted = true;
+        return
+      }else{
+        this.submitted = false;
+      }
+    }
     this.UserService.Creat(this.CreateUser).subscribe(
       res => {
         if (this.addClicked) {
           this.addFinish.emit(this.CreateUser);
           this.submitted = false;
-          this.CreateUser=new CreateUser
+          this.CreateUser = new CreateUser
+          this.CreateUser.Phones=[]
           this.notifications.create('success', 'تم اضافة موظف بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         }
 
@@ -101,20 +122,20 @@ export class AddUserComponent implements OnInit, OnChanges {
   }
 
   addNewPhone() {
-    if(this.checkLengthPhoneNumber(this.tempPhone))
-    return
+    if (this.checkLengthPhoneNumber(this.tempPhone))
+      return
     this.CreateUser.Phones.push(this.tempPhone);
     this.tempPhone = '';
   }
-  deletePhone(phone){
-    this.CreateUser.Phones=this.CreateUser.Phones.filter(p=>p!=phone)
+  deletePhone(phone) {
+    this.CreateUser.Phones = this.CreateUser.Phones.filter(p => p != phone)
   }
   RecipientPhoneslength = null
   checkLengthPhoneNumber(phone) {
-    if (phone&&phone.length < 11) {
+    if (phone && phone.length < 11) {
       this.RecipientPhoneslength = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
       return true
-    } 
+    }
     else {
       this.RecipientPhoneslength = null
       return false
@@ -122,10 +143,10 @@ export class AddUserComponent implements OnInit, OnChanges {
   }
   RecipientPhoneslengthEdit = null
   checkLengthPhoneNumberForEdit(phone) {
-    if (phone&&phone.length < 11) {
+    if (phone && phone.length < 11) {
       this.RecipientPhoneslengthEdit = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
       return true
-    } 
+    }
     else {
       this.RecipientPhoneslengthEdit = null
       return false

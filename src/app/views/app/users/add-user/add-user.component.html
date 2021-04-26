@@ -2,11 +2,12 @@
   <div class="row w-100 align-items-end mb-3">
     <div class="col-md-3">
       <label> نوع الموظف<span class="text-danger text-one align-bottom mx-1">*</span></label>
-      <ng-select [(ngModel)]="CreateUser.CanWorkAsAgent" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
+      <ng-select [(ngModel)]="CreateUser.CanWorkAsAgent" 
+      [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
         <ng-option [value]="true">مندوب</ng-option>
         <ng-option [value]="false"> موظف</ng-option>
       </ng-select>
-      <div *ngIf="!CreateUser.CanWorkAsAgent && submitted" class="invalid-tooltip">نوع الموظف حقل مطلوب</div>
+      <div *ngIf="CreateUser.CanWorkAsAgent==null||CreateUser.CanWorkAsAgent==undefined && submitted" class="invalid-tooltip">نوع الموظف حقل مطلوب</div>
 
     </div>
    
@@ -77,7 +78,7 @@
       [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
         <ng-option *ngFor="let country of Countries" [value]="country.id">{{country.name}}</ng-option>
       </ng-select>
-      <div *ngIf="!CreateUser.CountryId && submitted" class="invalid-tooltip">نوع الموظف حقل مطلوب</div>
+      <div *ngIf="!CreateUser.CountryId && submitted" class="invalid-tooltip">المدينة  حقل مطلوب</div>
 
     </div>
     <div class="col-md-3" *ngIf="CreateUser.CanWorkAsAgent">
@@ -111,13 +112,15 @@
     </div>
     </div>
     <div class="col-md-3">
-      <label>رقم الهاتف</label>
+      <label>رقم الهاتف<span class="text-danger text-one align-bottom mx-1">*</span></label>
       <input type="text" maxlength="11"
         oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" class="form-control"
         [ngModelOptions]="{standalone: true}" [(ngModel)]="tempPhone"(ngModelChange)="checkLengthPhoneNumber(tempPhone)">
         <div  class="invalid-tooltip" *ngIf="tempPhone&& checkLengthPhoneNumber(tempPhone)">
          {{RecipientPhoneslength}}
      </div>
+     <div *ngIf="!tempPhone&&CreateUser.Phones.length==0 && submitted" class="invalid-tooltip">الهاتف حقل مطلوب </div>
+
     </div>
 
     <div class="col-2">
