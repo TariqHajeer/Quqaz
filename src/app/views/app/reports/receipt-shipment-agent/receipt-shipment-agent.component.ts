@@ -19,7 +19,7 @@ import { OrderState } from 'src/app/Models/order/order.model';
 })
 export class ReceiptShipmentAgentComponent implements OnInit {
 
-  displayedColumns: string[] = ['code', 'country', 'region'
+  displayedColumns: string[] = ['code','client', 'country', 'region'
     , 'cost', 'isClientDiliverdMoney', 'orderplaced', 'monePlaced', 'edit'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);

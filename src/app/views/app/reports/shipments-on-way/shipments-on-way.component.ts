@@ -19,7 +19,7 @@ import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed
 })
 export class ShipmentsOnWayComponent implements OnInit {
 
-  displayedColumns: string[] = ['code', 'country', 'region'
+  displayedColumns: string[] = ['code', 'client','country', 'region'
     , 'cost','isClientDiliverdMoney', 'orderplaced', 'monePlaced','agentPrintNumber','clientPrintNumber'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
