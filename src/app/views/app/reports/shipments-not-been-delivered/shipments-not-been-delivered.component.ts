@@ -19,7 +19,7 @@ import { OrderClientDontDiliverdMoney } from 'src/app/Models/order/order-client-
 export class ShipmentsNotBeenDeliveredComponent implements OnInit {
 
   displayedColumns: string[] = ['select', 'code', 'oldCost', 'cost', 'deliveryCost', 'clientCost', 'country', 'region'
-    , 'monePlaced', 'orderplaced', 'agentPrintNumber', 'clientPrintNumber', 'isClientDiliverdMoney'];
+    , 'monePlaced', 'orderplaced', 'date','agentPrintNumber', 'clientPrintNumber', 'isClientDiliverdMoney'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
 
@@ -129,7 +129,6 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     this.order.ClientDoNotDeleviredMoney = this.ClientDoNotDeleviredMoney
     var orderPlace = this.orderPlace.filter(o => o.checked == true)
     this.order.OrderPlacedId = orderPlace.map(o => o.id)
-    console.log(this.order)
     if( this.orderPlace.filter(o => o.checked == true).length>0&&(this.IsClientDeleviredMoney||this.ClientDoNotDeleviredMoney)){
       this.orderservice.ClientDontDiliverdMoney(this.order).subscribe(response => {
         if (response)
