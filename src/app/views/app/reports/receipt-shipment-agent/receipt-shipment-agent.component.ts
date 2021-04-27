@@ -286,5 +286,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     var index = this.dataSource.data.indexOf(order);
     this.dataSource.data.splice(index, 1);
     this.dataSource._updateChangeSubscription();
+    this.sumCost()
+
   }
 }
