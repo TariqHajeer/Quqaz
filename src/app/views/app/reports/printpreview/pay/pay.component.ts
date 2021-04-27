@@ -2,6 +2,8 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as jspdf from 'jspdf';
 import { UserLogin } from 'src/app/Models/userlogin.model';
+import { StatisticsService } from 'src/app/services/statistics.service';
+import { ClientBlanace } from 'src/app/Models/client-blanace.model';
 
 @Component({
   selector: 'app-pay',
@@ -10,7 +12,8 @@ import { UserLogin } from 'src/app/Models/userlogin.model';
 })
 export class PayComponent implements OnInit {
 
-  constructor(public sanitizer: DomSanitizer,) { }
+  constructor(public sanitizer: DomSanitizer,
+    private staticService:StatisticsService) { }
   client: {
     client: any,
     cost: number,
@@ -21,6 +24,7 @@ export class PayComponent implements OnInit {
   dateOfPrint = new Date()
 
   ngOnInit(): void {
+    this.get()
     this.client = {
       client: null,
       cost: 0,
@@ -40,9 +44,16 @@ export class PayComponent implements OnInit {
     const pdf = new jspdf("p", "cm", "a4");
     pdf.internal.scaleFactor = 30;
     pdf.addHTML(elementToPrint, () => {
-      pdf.save(this.client.client.name+'.pdf');
+      pdf.save(this.dateOfPrint+'.pdf');
     });
    
     
+  }
+  ClientBlanace:ClientBlanace[]=[]
+  get(){
+    this.staticService.ClientBalance().subscribe(res=>{
+      this.ClientBlanace=res
+      console.log(res)
+    })
   }
 }

@@ -29,4 +29,8 @@ export class StatisticsService {
       params = params.append("ToDate", datefilter.ToDate);
     return this.http.get<any>(this.controler + "GetAggregate", { params: params })
   }
+  ClientBalance(){
+   return this.http.get<any>(this.controler+"ClientBalance")
+  }
 }
+

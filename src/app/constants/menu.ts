@@ -160,7 +160,14 @@ const data: IMenuItem[] = [
 
 
       },
-      
+      {
+        icon: 'simple-icon-layers',
+        label: ' المقاصة  ',
+        to: `${adminRoot}/reports/pay`,
+        //permission:[UserPermission.ShowOrder]
+
+
+      },
     ]
   },
   //clients  
