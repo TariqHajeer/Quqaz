@@ -106,13 +106,13 @@ export class ViewClientsComponent implements OnInit {
   cost = 0
   Account:Account
   getClient(data) {
-    this.client = {
-      client: null,
-      cost: 0,
-      pay: true
-    }
-    this.client.client = data
-    localStorage.setItem('client', JSON.stringify(this.client ))
+    // this.client = {
+    //   client: null,
+    //   cost: 0,
+    //   pay: true
+    // }
+    // this.client.client = data
+    localStorage.setItem('client', JSON.stringify(data ))
     this.route.navigate(['/app/client/ReceiptAndExchange'])
   }
   printpay() {

@@ -1,8 +1,10 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Account } from '../client.model';
+import { Account, Client } from '../client.model';
 import { ClientService } from '../client.service';
 import * as jspdf from 'jspdf';
 import { DomSanitizer } from '@angular/platform-browser';
+import { UserLogin } from 'src/app/Models/userlogin.model';
+import { ReceiptAndExchange } from 'src/app/Models/receipt-and-exchange.model';
 
 @Component({
   selector: 'app-receipt-and-exchange',
@@ -13,27 +15,17 @@ export class ReceiptAndExchangeComponent implements OnInit {
 
   constructor(private clientService: ClientService,
     public sanitizer: DomSanitizer,) { }
+    userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
 
   ngOnInit(): void {
-    this.client = {
-      client: null,
-      cost: 0,
-      pay: true,
-    }
-    this.client=JSON.parse(localStorage.getItem('client'))
+    this.client = new ReceiptAndExchange()
+    this.client.client=new Client
+    this.client.cost=0
+    this.client.client=JSON.parse(localStorage.getItem('client'))
     console.log(this.client)
   }
   Account:Account
-  client: {
-    client: any,
-    cost: number,
-    pay: boolean
-  }
-  cost = 0
-  aboutas
-  Prepare
-  recipient
-  Manager
+  client: ReceiptAndExchange 
   address = "اربيل - برايتي - قرب ماركيت آيه "
   companyPhone = "07714400880"
   showButton=true
@@ -43,10 +35,10 @@ export class ReceiptAndExchangeComponent implements OnInit {
     //صرف
     this.Account=new Account()
     this.Account.ClinetId=  this.client.client.id
-    this.Account.Amount=-(this.cost)
+    this.Account.Amount=-(this.client.cost)
+    console.log(this.Account)
     this.clientService.Account(this.Account).subscribe(res=>{
       this.client.pay = true
-      this.client.cost = this.cost
       this.showButton=false
     })
    
@@ -56,10 +48,9 @@ export class ReceiptAndExchangeComponent implements OnInit {
     //قبض
     this.Account=new Account()
     this.Account.ClinetId=  this.client.client.id
-    this.Account.Amount=this.cost
+    this.Account.Amount=this.client.cost
     this.clientService.Account(this.Account).subscribe(res=>{
       this.client.pay = false
-      this.client.cost = this.cost
       this.showButton=false
     })
   }

@@ -5,9 +5,9 @@
                 <label> العميل</label>
                 <h4>{{client.client.name}}</h4>
             </div>
-            <div class="col-3">
+            <div class="col-3" *ngIf="showButton">
                 <label>المبلغ</label>
-                <input type="number" class="form-control" [(ngModel)]="cost" [ngModelOptions]="{standalone: true}"
+                <input type="number" class="form-control" [(ngModel)]="client.cost" [ngModelOptions]="{standalone: true}"
                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                 >
 
@@ -18,25 +18,25 @@
 
             <div class="col-3">
                 <label>وذلك عن </label>
-                <input type="text" class="form-control" [(ngModel)]="aboutas" [ngModelOptions]="{standalone: true}"
+                <input type="text" class="form-control" [(ngModel)]="client.aboutas" [ngModelOptions]="{standalone: true}"
                    >
             </div>
-            <div class="col-3">
-                <label> اعدها </label>
-                <input type="text" class="form-control" [(ngModel)]="Prepare" [ngModelOptions]="{standalone: true}"
-                   >
-            </div>
+           
             <div class="col-3">
                 <label> المستلم</label>
-                <input type="text" class="form-control" [(ngModel)]="recipient" [ngModelOptions]="{standalone: true}"
+                <input type="text" class="form-control" [(ngModel)]="client.recipient" [ngModelOptions]="{standalone: true}"
                    >
             </div>
             <div class="col-3">
                 <label> المدير </label>
-                <input type="text" class="form-control" [(ngModel)]="Manager" [ngModelOptions]="{standalone: true}"
+                <input type="text" class="form-control" [(ngModel)]="client.Manager" [ngModelOptions]="{standalone: true}"
                    >
             </div>
-
+            <div class="col-9">
+                <label> ملاحظات </label>
+                <input type="text" class="form-control" [(ngModel)]="client.note" [ngModelOptions]="{standalone: true}"
+                   >
+            </div>
         </div>
         <br>
         <div class="row" *ngIf="showButton">
@@ -101,34 +101,38 @@
                 <div class="col-4">
                     <h4 style="text-align: left;"> No:
                         <br>
-                        Date : {{dateOfPrint| date: 'yyyy/MM/dd'}}</h4>
+                        Date : {{client.date| date: 'yyyy/MM/dd'}}</h4>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
-                    استلمنا من السيد/ة :&nbsp;{{recipient}}
+                    {{!client.pay?'قبضنا':'صرفنا'}} من السيد/ة :&nbsp;{{client.recipient}}
                     <hr style="border-bottom: black 2px dotted;width: 80%;">
                 </div>
                 <div class="col-12">
-                    مبلغ قدره : &nbsp;{{cost}}
+                    مبلغ قدره : &nbsp;{{client.cost}}
                     <hr style="border-bottom: black 2px dotted;width: 80%;">
                 </div>
                 <div class="col-12">
-                    وذلك عن :&nbsp;{{aboutas}}
+                    وذلك عن :&nbsp;{{client.aboutas}}
+                    <hr style="border-bottom: black 2px dotted;width: 80%;">
+                </div>
+                <div class="col-12">
+                     ملاحظات :&nbsp;{{client.note}}
                     <hr style="border-bottom: black 2px dotted;width: 80%;">
                 </div>
             </div>
             <div class="row">
                 <div class="col-4">
-                    أعدها : {{Prepare}}
+                    أعدها : {{userName.name}}
     
                 </div>
                 <div class="col-4">
-                    المستلم : {{recipient}}
+                  <!--المستلم : {{recipient}} -->  
     
                 </div>
                 <div class="col-4">
-                    المدير : {{Manager}}
+                    المدير : {{client.Manager}}
                   <!--
                       <hr style="border-bottom: black 2px dotted;width: 80%;">
                   -->  
