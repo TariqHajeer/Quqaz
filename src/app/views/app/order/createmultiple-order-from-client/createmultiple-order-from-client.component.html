@@ -68,7 +68,7 @@
                         <h4 *ngIf="!order.CanEdit">{{order.AgentName}}</h4>
                         <ng-select appendTo="body" [(ngModel)]="order.AgentId" [ngModelOptions]="{standalone: true}"
                             style="width: 100px;" *ngIf="order.CanEdit" [clearable]="false" name="Agent"
-                            >
+                            placeholder="اختر مندوب" >
                             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                         </ng-select>
                         <div *ngIf="!EditOrder.AgentId && Editsubmitted&&order.CanEdit" class="message">المندوب حقل مطلوب</div>
@@ -211,7 +211,7 @@
                     </td>
                     <td>
                         <ng-select [disabled]="!ClientId" appendTo="body" [(ngModel)]="Order.AgentId" [ngModelOptions]="{standalone: true}"
-                            style="width: 100px;" [clearable]="false" name="Agent" (keyup.enter)="onEnter()">
+                        placeholder="اختر مندوب" style="width: 100px;" [clearable]="false" name="Agent" (keyup.enter)="onEnter()">
                             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                         </ng-select>
                         <div *ngIf="!Order.AgentId && submitted" class="message">المندوب حقل مطلوب</div>

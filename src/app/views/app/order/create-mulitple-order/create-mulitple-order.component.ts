@@ -119,7 +119,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
 
     var city = this.cities.find(c => c.id == this.Order.CountryId)
     this.Agents=this.GetAgents.filter(a=>a.countryId== this.Order.CountryId)
-    if(this.Agents.length!=0)
+    if(this.Agents.length!=0&&this.Agents.length==1)
     this.Order.AgentId = this.Agents[0].id
     else this.Order.AgentId=null
     this.Order.DeliveryCost = city.deliveryCost
@@ -128,7 +128,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
   changeCountryEdit() {
     var city = this.cities.find(c => c.id == this.EditOrder.CountryId)
     this.Agents=this.GetAgents.filter(a=>a.countryId== this.EditOrder.CountryId)
-    if(this.Agents.length!=0)
+    if(this.Agents.length!=0&&this.Agents.length==1)
     this.EditOrder.AgentId = this.Agents[0].id
     else this.EditOrder.AgentId=null
     this.EditOrder.DeliveryCost = city.deliveryCost

@@ -67,7 +67,7 @@
 
                     <td>
                         <h4 *ngIf="!order.CanEdit">{{order.AgentName}}</h4>
-                        <ng-select [(ngModel)]="EditOrder.AgentId" [ngModelOptions]="{standalone: true}"
+                        <ng-select [(ngModel)]="EditOrder.AgentId" [ngModelOptions]="{standalone: true}"placeholder="اختر مندوب"
                             *ngIf="order.CanEdit" [clearable]="false" name="Agent" style="width: 100px;">
                             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                         </ng-select>
@@ -203,7 +203,7 @@
                     <td>
 
                         <ng-select [(ngModel)]="Order.AgentId" [ngModelOptions]="{standalone: true}" [clearable]="false"
-                            name="Agent" style="width: 100px;">
+                            name="Agent" style="width: 100px;"placeholder="اختر مندوب" >
                             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                         </ng-select>
                         <div *ngIf="!Order.AgentId && submitted" class="message">المندوب حقل مطلوب</div>

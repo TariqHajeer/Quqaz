@@ -135,7 +135,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   changeCountry() {
     var city = this.cities.find(c => c == this.Order.Country)
     this.Agents = this.GetAgents.filter(a => a.countryId == this.Order.Country.id)
-    if (this.Agents.length != 0)
+    if (this.Agents.length != 0&&this.Agents.length == 1)
       this.Order.AgentId = this.Agents[0].id
     else this.Order.AgentId = null
     this.Order.DeliveryCost = city.deliveryCost
@@ -144,7 +144,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   changeCountryEdit() {
     var city = this.cities.find(c => c.id == this.EditOrder.Country)
     this.Agents = this.GetAgents.filter(a => a.countryId == this.EditOrder.Country.id)
-    if (this.Agents.length != 0)
+    if (this.Agents.length != 0&&this.Agents.length == 1)
       this.EditOrder.AgentId = this.Agents[0].id
     else this.EditOrder.AgentId = null
     this.EditOrder.DeliveryCost = city.deliveryCost
