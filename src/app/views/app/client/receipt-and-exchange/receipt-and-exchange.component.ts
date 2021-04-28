@@ -20,7 +20,7 @@ export class ReceiptAndExchangeComponent implements OnInit {
   ngOnInit(): void {
     this.client = new ReceiptAndExchange()
     this.client.client=new Client
-    this.client.cost=0
+    this.client.Amount=0
     this.client.client=JSON.parse(localStorage.getItem('client'))
     console.log(this.client)
   }
@@ -33,12 +33,11 @@ export class ReceiptAndExchangeComponent implements OnInit {
 
   printpay() {
     //صرف
-    this.Account=new Account()
-    this.Account.ClinetId=  this.client.client.id
-    this.Account.Amount=-(this.client.cost)
-    console.log(this.Account)
-    this.clientService.Account(this.Account).subscribe(res=>{
-      this.client.pay = true
+    this.client.date=this.dateOfPrint
+    this.client.ClinetId=  this.client.client.id
+    this.client.IsPay = true
+    this.clientService.Account(this.client).subscribe(res=>{
+      this.client.id=res as number
       this.showButton=false
     })
    
@@ -46,11 +45,11 @@ export class ReceiptAndExchangeComponent implements OnInit {
   }
   printcatch() {
     //قبض
-    this.Account=new Account()
-    this.Account.ClinetId=  this.client.client.id
-    this.Account.Amount=this.client.cost
-    this.clientService.Account(this.Account).subscribe(res=>{
-      this.client.pay = false
+    this.client.ClinetId=  this.client.client.id
+    this.client.IsPay = false
+    this.client.date=this.dateOfPrint
+    this.clientService.Account(this.client).subscribe(res=>{
+      this.client.id=res as number
       this.showButton=false
     })
   }

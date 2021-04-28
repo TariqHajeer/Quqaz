@@ -8,7 +8,7 @@
             style="font-size: 38px;"></i></button>
       </div>
 
-      <ejs-grid #normalgrid id='normalgrid' (load)='load()' [allowPaging]='true' [gridLines]="lines"
+      <ejs-grid style="text-align: center;" #normalgrid id='normalgrid' (load)='load()' [allowPaging]='true' [gridLines]="lines"
         [pageSettings]='pageSettings' [toolbar]='toolbar' [editSettings]='editSettings' [dataSource]='UserService.users'
         rowHeight='38' [allowSorting]='true' height='400' [enableHover]='true' [selectionSettings]='selectionSettings'
         [filterSettings]='filterSettings' [allowSorting]='true' [allowFiltering]='true'(actionComplete)="actionComplete($event)">
@@ -23,7 +23,7 @@
           <e-column field='userStatics.orderInWay' [allowEditing]='false' textAlign="Center" headerText=" طلبات في الطريق" width='170'></e-column>
           <e-column field='phonesAsString' [allowEditing]='false' textAlign="Center" headerText="ارقام الهاتف" width='140'>
           </e-column>
-          <e-column  [allowEditing]='false' textAlign="Center" headerText=" مفعل" width='140'>
+          <e-column  [allowEditing]='false' textAlign="Center" headerText=" مفعل" width='120'>
             <ng-template  #template let-data1>
            
             <div class="custom-control custom-checkbox mr-sm-2">

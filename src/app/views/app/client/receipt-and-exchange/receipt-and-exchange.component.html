@@ -7,7 +7,7 @@
             </div>
             <div class="col-3" *ngIf="showButton">
                 <label>المبلغ</label>
-                <input type="number" class="form-control" [(ngModel)]="client.cost" [ngModelOptions]="{standalone: true}"
+                <input type="number" class="form-control" [(ngModel)]="client.Amount" [ngModelOptions]="{standalone: true}"
                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                 >
 
@@ -18,15 +18,11 @@
 
             <div class="col-3">
                 <label>وذلك عن </label>
-                <input type="text" class="form-control" [(ngModel)]="client.aboutas" [ngModelOptions]="{standalone: true}"
+                <input type="text" class="form-control" [(ngModel)]="client.About" [ngModelOptions]="{standalone: true}"
                    >
             </div>
            
-            <div class="col-3">
-                <label> المستلم</label>
-                <input type="text" class="form-control" [(ngModel)]="client.recipient" [ngModelOptions]="{standalone: true}"
-                   >
-            </div>
+           
             <div class="col-3">
                 <label> المدير </label>
                 <input type="text" class="form-control" [(ngModel)]="client.Manager" [ngModelOptions]="{standalone: true}"
@@ -34,7 +30,7 @@
             </div>
             <div class="col-9">
                 <label> ملاحظات </label>
-                <input type="text" class="form-control" [(ngModel)]="client.note" [ngModelOptions]="{standalone: true}"
+                <input type="text" class="form-control" [(ngModel)]="client.Note" [ngModelOptions]="{standalone: true}"
                    >
             </div>
         </div>
@@ -87,9 +83,9 @@
                 </div>
                 <div class="col-4">
                     <h2 style="padding-top: 30%;text-align: center;"><b>
-                        سند {{!client.pay?'قبض':'صرف'}}
+                        سند {{!client.IsPay?'قبض':'صرف'}}
                         <br>
-                        {{!client.pay?'Receipt':'Exchange'}}    Voucher 
+                        {{!client.IsPay?'Receipt':'Exchange'}}    Voucher 
                     </b> </h2>
                 </div>
                 <div class="col-4">
@@ -99,26 +95,26 @@
             </div>
             <div class="row" style="direction: ltr;">
                 <div class="col-4">
-                    <h4 style="text-align: left;"> No:
+                    <h4 style="text-align: left;"> No:{{client.id}}
                         <br>
                         Date : {{client.date| date: 'yyyy/MM/dd'}}</h4>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
-                    {{!client.pay?'قبضنا':'صرفنا'}} من السيد/ة :&nbsp;{{client.recipient}}
+                    {{!client.IsPay?'قبضنا':'صرفنا'}} من السيد/ة :&nbsp;{{client.client.name}}
                     <hr style="border-bottom: black 2px dotted;width: 80%;">
                 </div>
                 <div class="col-12">
-                    مبلغ قدره : &nbsp;{{client.cost}}
+                    مبلغ قدره : &nbsp;{{client.Amount}}
                     <hr style="border-bottom: black 2px dotted;width: 80%;">
                 </div>
                 <div class="col-12">
-                    وذلك عن :&nbsp;{{client.aboutas}}
+                    وذلك عن :&nbsp;{{client.About}}
                     <hr style="border-bottom: black 2px dotted;width: 80%;">
                 </div>
                 <div class="col-12">
-                     ملاحظات :&nbsp;{{client.note}}
+                     ملاحظات :&nbsp;{{client.Note}}
                     <hr style="border-bottom: black 2px dotted;width: 80%;">
                 </div>
             </div>

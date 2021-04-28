@@ -2,14 +2,15 @@ import { from } from "rxjs"
 import { Client } from '../views/app/client/client.model';
 export class ReceiptAndExchange {
     id:number
-    cost: number
-    aboutas: string
+    Amount: number
+    About: string
     createdby
     recipient: string
     Manager: string
     client: Client
+    ClinetId:number
     date:Date
-    note:string
+    Note:string
     //يعني اذا صرف او قبض
-    pay: boolean
+    IsPay: boolean
 }
