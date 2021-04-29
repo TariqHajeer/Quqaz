@@ -13,12 +13,12 @@ import { ClientBlanace } from 'src/app/Models/client-blanace.model';
 export class PayComponent implements OnInit {
 
   constructor(public sanitizer: DomSanitizer,
-    private staticService:StatisticsService) { }
+    private staticService: StatisticsService) { }
   client: {
     client: any,
     cost: number,
     pay: boolean,
-    deliveryCost:number
+    deliveryCost: number
   }
   userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
   dateOfPrint = new Date()
@@ -29,7 +29,7 @@ export class PayComponent implements OnInit {
       client: null,
       cost: 0,
       pay: true,
-      deliveryCost:0
+      deliveryCost: 0
     }
   }
   @HostListener('window:keydown', ['$event'])
@@ -44,16 +44,24 @@ export class PayComponent implements OnInit {
     const pdf = new jspdf("p", "cm", "a4");
     pdf.internal.scaleFactor = 30;
     pdf.addHTML(elementToPrint, () => {
-      pdf.save(this.dateOfPrint+'.pdf');
+      pdf.save(this.dateOfPrint + '.pdf');
     });
-   
-    
+
+
   }
-  ClientBlanace:ClientBlanace[]=[]
-  get(){
-    this.staticService.ClientBalance().subscribe(res=>{
-      this.ClientBlanace=res
-      console.log(res)
+  ClientBlanace: ClientBlanace[] = []
+  get() {
+    this.staticService.ClientBalance().subscribe(res => {
+      this.ClientBlanace = res
+      this.count()
+    })
+  }
+  totalOrder = 0
+  totalaccount = 0
+  count() {
+    this.ClientBlanace.forEach(c => {
+      this.totalOrder += c.totalOrder
+      this.totalaccount+=c.account
     })
   }
 }
