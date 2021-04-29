@@ -5,4 +5,6 @@ export class MainStatics {
     totalOrderInSotre
     totalOrderOutStore
     totlaOrder
+    totalOrderCountInProcess
+    totalOrderCountInProcessAmount
 }
