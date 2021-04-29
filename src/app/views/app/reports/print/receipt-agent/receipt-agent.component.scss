@@ -24,3 +24,14 @@
 tr.trbordered{
   background-color: rgb(218, 218, 219);
 }
+@page {
+  size: A4;
+  margin: 0;
+}
+@media print {
+  .print {
+    width:297mm ;
+    height:210mm ;
+  }
+  /* ... the rest of the rules ... */
+}

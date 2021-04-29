@@ -4,6 +4,7 @@ import { AuthGuard } from 'src/app/shared/auth.guard';
 import { UserPermission } from 'src/app/shared/auth.roles';
 import { AgentStatisticsComponent } from './agent-statistics/agent-statistics.component';
 import { ClientOrderComponent } from './client-order/client-order.component';
+import { OrderVicdanAgentComponent } from './order-vicdan-agent/order-vicdan-agent.component';
 import { ReceiptAgentComponent } from './print/receipt-agent/receipt-agent.component';
 import { AgentComponent } from './printpreview/agent/agent.component';
 import { ClientComponent } from './printpreview/client/client.component';
@@ -83,6 +84,11 @@ const routes: Routes = [
   {
     path:'test',
     component: ReceiptAgentComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
+  },
+  {
+    path:'OrderVicdanAgent',
+    component: OrderVicdanAgentComponent,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowReports]}
   },
  

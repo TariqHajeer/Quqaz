@@ -108,6 +108,13 @@ const data: IMenuItem[] = [
           },
           {
             icon: 'simple-icon-layers',
+            label: ' طلبات في ذمة المندوب ',
+            to: `${adminRoot}/reports/OrderVicdanAgent`,
+            //permission:[UserPermission.ShowOrder]
+
+          },
+          {
+            icon: 'simple-icon-layers',
             label: 'شحنات حسب رقم الطباعة ',
             to: `${adminRoot}/reports/printsetprintnumberagentpreview`,
             //permission:[UserPermission.ShowOrder]

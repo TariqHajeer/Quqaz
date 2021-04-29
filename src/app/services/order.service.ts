@@ -162,5 +162,8 @@ export class OrderService {
 }
     return this.http.get<any>(this.controler + "OrdersDontFinished", { params: params })
    }
+   OrderVicdanAgent(AgentId){
+     return this.http.get(this.controler+"OrderVicdanAgent/"+AgentId)
+   }
 }
 
