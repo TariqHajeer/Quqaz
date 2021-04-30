@@ -161,6 +161,7 @@ export class ProfitsOfOrdersComponent implements OnInit {
     allfiltering() {
         this.orderservice.GetEarning(this.paging, this.filtering).subscribe(res => {
             console.log(res)
+            this.GetEarning=[]
             if (res.data && res.data.orders.length == 0)
                 this.noDataFound = true
             else this.noDataFound = false
