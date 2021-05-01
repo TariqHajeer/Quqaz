@@ -101,6 +101,12 @@ export class StartComponent implements OnInit {
   Shipmentonway() {
     this.router.navigate(['/app/reports/Shipmentonway'])
   }
+  AgentStatistics(){
+    this.router.navigate(['/app/reports/AgentStatistics'])
+  }
+  OrderVicdanAgent(){
+    this.router.navigate(['/app/reports/OrderVicdanAgent'])
+  }
   printsetprintnumberagentpreview() {
     this.router.navigate(['/app/reports/printsetprintnumberagentpreview'])
   }
@@ -116,10 +122,9 @@ export class StartComponent implements OnInit {
   Statistics() {
     this.router.navigate(['/app/reports/Statistics'])
   }
-  StatisticsForAgent() {
-    this.router.navigate(['/app/reports/AgentStatistics'])
+  pay() {
+    this.router.navigate(['/app/reports/pay'])
   }
-
   //order
   neworders() {
     this.router.navigate(['/app/order/neworders'])
