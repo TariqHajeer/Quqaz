@@ -61,13 +61,13 @@
             <div class="row w-100 align-items-end mb-3">
                 <div class="col-md-3">
                     <label>كلفة التوصيل</label>
-                    <input type="number" class="form-control" [ngModelOptions]="{standalone: true}"
+                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                         [(ngModel)]="Order.Cost" readonly>
                 </div>
 
                 <div class="col-md-3">
                     <label>الكلفة الكلية<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                    <input type="number" class="form-control" [ngModelOptions]="{standalone: true}"
+                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                         [(ngModel)]="Order.Amount">
                     <div *ngIf="!Order.Amount && submitted" class="invalid-tooltip">الكلفة حقل مطلوب</div>
@@ -162,7 +162,7 @@
                                         <div class="col-md-6">
                                          
                                             <label>العدد</label>
-                                            <input type="number"
+                                            <input type="text"
                                                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                                 class="form-control" [ngModelOptions]="{standalone: true}"
                                                 [(ngModel)]="count">
@@ -206,7 +206,7 @@
                                                 </td>
                                                 <td>
                                                     <h4 *ngIf="!OrderType.CanEdit">{{OrderType.Count}}</h4>
-                                                    <input  type="number" 
+                                                    <input  type="text" 
                                                         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                                         *ngIf="OrderType.CanEdit"  class="form-control"
                                                         [ngModelOptions]="{standalone: true}"

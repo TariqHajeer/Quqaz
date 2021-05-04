@@ -7,7 +7,7 @@
             </div>
             <div class="col-3" *ngIf="showButton">
                 <label>المبلغ</label>
-                <input type="number" class="form-control" [(ngModel)]="client.Amount" [ngModelOptions]="{standalone: true}"
+                <input type="text" class="form-control" [(ngModel)]="client.Amount" [ngModelOptions]="{standalone: true}"
                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                 >
 

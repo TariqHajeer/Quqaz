@@ -94,7 +94,7 @@
                     </td>
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.Cost}}</h4>
-                        <input type="number" class="form-control" [ngModelOptions]="{standalone: true}"
+                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                             style="width: 100px;" *ngIf="order.CanEdit"
                             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                             [(ngModel)]="EditOrder.Cost" #Cost="ngModel">
@@ -103,7 +103,7 @@
                     </td>
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.DeliveryCost}}</h4>
-                        <input type="number" class="form-control" [ngModelOptions]="{standalone: true}"
+                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                             *ngIf="order.CanEdit" (keyup.enter)="onEnter()" style="width: 100px;"
                             [(ngModel)]="EditOrder.DeliveryCost" >
 
@@ -225,13 +225,13 @@
                            
                     </td>
                     <td>
-                        <input type="number" class="form-control" [ngModelOptions]="{standalone: true}"
+                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                             (keyup.enter)="onEnter()" style="width: 100px;" [(ngModel)]="Order.Cost">
 
                     </td>
                     <td>
-                        <input type="number" class="form-control" [ngModelOptions]="{standalone: true}"
+                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                             (keyup.enter)="onEnter()" style="width: 100px;" [(ngModel)]="Order.DeliveryCost" >
                     </td>
                     <td>

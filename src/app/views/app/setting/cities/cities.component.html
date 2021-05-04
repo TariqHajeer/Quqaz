@@ -14,7 +14,7 @@
           </div>
           <div class="col-3">
             <label>كلفة التوصيل</label>
-            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="city.deliveryCost"
+            <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="city.deliveryCost"
             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '');" >
           </div>
           <ng-container *ngFor="let item of city.regions;let i= index; trackBy: onTrackBy">
