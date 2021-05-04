@@ -49,6 +49,7 @@
                         <h4 *ngIf="!order.CanEdit">{{order.Code}}</h4>
                         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                             [(ngModel)]="EditOrder.Code" (keyup)="CheckCodeForEdit()" style="width: 100px;"
+                            oninput="this.value = this.value.replace(/[^0-9.A-Za-z]/g, '').replace(/(\..*)\./g, '$1');"
                             *ngIf="order.CanEdit" tabindex="1">
                         <div *ngIf="!EditOrder.Code && Editsubmitted&&order.CanEdit" class="message">كود الشحنة حقل مطلوب</div>
                     </td>
@@ -194,6 +195,7 @@
                     <td>
                         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" #code
                             [(ngModel)]="Order.Code" (keyup)="CheckCode()" (keyup.enter)="onEnter()"
+                            oninput="this.value = this.value.replace(/[^0-9.A-Za-z]/g, '').replace(/(\..*)\./g, '$1');"
                             style="width: 100px;"[disabled]="!ClientId">
                         <div *ngIf="!Order.Code && submitted" class="message">كود الشحنة حقل مطلوب</div>
                         <div *ngIf="showMessageCode" class="message">يوجد شحنة مسبقا لهذا العميل بنفس الكود</div>

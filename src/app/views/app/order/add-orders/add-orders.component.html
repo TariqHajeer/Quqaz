@@ -15,7 +15,8 @@
                 <div class="col-md-3">
                     <label>كود الشحنة<span class="text-danger text-one align-bottom mx-1">*</span></label>
                     <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                        [(ngModel)]="Order.Code" (keyup)="CheckCode()">
+                    oninput="this.value = this.value.replace(/[^0-9.A-Za-z]/g, '').replace(/(\..*)\./g, '$1');"
+                    [(ngModel)]="Order.Code" (keyup)="CheckCode()">
                     <div *ngIf="!Order.Code && submitted" class="invalid-tooltip">كود الشحنة حقل مطلوب</div>
 
                 </div>
