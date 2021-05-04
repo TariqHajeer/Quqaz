@@ -116,7 +116,6 @@ export class ClientOrderComponent implements OnInit {
   }
   allFilter() {
     this.orderservice.ShortageOfCash(this.ClientId).subscribe(response => {
-      console.log(response)
       if (response)
         if (response.length == 0)
           this.noDataFound = true

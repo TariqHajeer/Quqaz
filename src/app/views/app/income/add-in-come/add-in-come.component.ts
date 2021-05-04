@@ -37,8 +37,6 @@ export class AddInComeComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.CreateIncome = new CreateIncome()
     this.submitted=false
-    console.log( this.CreateIncome)
-    console.log(this.Income)
     if (!this.addClicked&&this.Income!=null&&this.Income!=undefined) {
       this.CreateIncome.Id = this.Income.id
       this.CreateIncome.Amount = this.Income.amount
@@ -75,7 +73,6 @@ export class AddInComeComponent implements OnInit, OnChanges {
     this.submitted = true;
     this.CreateIncome.Amount = Number(this.CreateIncome.Amount);
     this.CreateIncome.Earining = Number(this.CreateIncome.Earining);
-    console.log(  this.CreateIncome)
     if (this.addClicked) {
       this.IncomeService.Create(this.CreateIncome).subscribe(res => {
         this.addFinish.emit();

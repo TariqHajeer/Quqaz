@@ -159,7 +159,6 @@ export class EditUserComponent implements OnInit {
   }
   RecipientPhoneslength = ""
   checkLengthPhoneNumber(phone) {
-    console.log(phone)
     if (phone&&phone.length < 11) {
       this.RecipientPhoneslength = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
       return true

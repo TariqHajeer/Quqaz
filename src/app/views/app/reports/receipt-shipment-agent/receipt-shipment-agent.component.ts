@@ -69,7 +69,6 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
-      console.log(res)
       this.getMoenyPlaced = [...res]
       // this.MoenyPlaced = this.MoenyPlaced.filter(o => o.id != 4)
 
@@ -140,7 +139,6 @@ export class ReceiptShipmentAgentComponent implements OnInit {
 
     if (this.Code) {
       this.orderservice.GetOrderByAgent(this.Code).subscribe(res => {
-        console.log(res)
         this.findorder = res
         if (this.findorder) {
           if (this.findorder.length == 1) {

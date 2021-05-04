@@ -99,7 +99,6 @@ export class AddOrdersComponent implements OnInit {
       this.Order.RegionName = this.Order.RegionId.label;
       this.Order.RegionId = null;
     }
-    console.log(this.Order)
     this.spinner.show()
     this.orderservice.Creat(this.Order).subscribe(res => {
       this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
@@ -162,7 +161,6 @@ export class AddOrdersComponent implements OnInit {
     if (this.orderTypes.filter(o => o.name == this.orderType.name).length < 1) {
 
       this.customerService.Create(this.ordertypeapi, this.orderType).subscribe(res => {
-        //console.log(res)
       })
     }
     this.OrderItem.OrderTypeId = this.orderType.id

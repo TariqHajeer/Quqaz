@@ -162,7 +162,6 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
   }
   RecipientPhoneslength = ""
   checkLengthPhoneNumber(phone) {
-    console.log(phone)
     if (phone&&phone.length < 11) {
       this.RecipientPhoneslength = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
       return true
@@ -174,7 +173,6 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
   }
   RecipientPhoneslengthEdit = ""
   checkLengthPhoneNumberForEdit(phone) {
-    console.log(phone)
     if (phone&&phone.length < 11) {
       this.RecipientPhoneslengthEdit = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
       return true

@@ -16,7 +16,6 @@ export class ReceiptComponent implements OnInit {
   orders: any[] = []
   ngOnInit(): void {
     this.orders = JSON.parse(localStorage.getItem('printorders'))
-    console.log(this.orders)
   }
   afterPrint() {
     // const printContent = document.getElementById("print");

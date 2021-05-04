@@ -22,7 +22,6 @@ export class ReceiptAndExchangeComponent implements OnInit {
     this.client.client=new Client
     this.client.Amount=0
     this.client.client=JSON.parse(localStorage.getItem('client'))
-    console.log(this.client)
   }
   Account:Account
   client: ReceiptAndExchange 

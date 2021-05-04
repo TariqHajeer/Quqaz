@@ -62,7 +62,6 @@ export class ViewIncomComponent implements OnInit {
   }
   allFilter() {
     this.incomeService.Get(this.filtering, this.paging).subscribe(response => {
-      console.log(response)
       if (response.data.length == 0)
         this.noDataFound = true
       else this.noDataFound = false

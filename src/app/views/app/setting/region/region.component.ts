@@ -43,7 +43,6 @@ export class RegionComponent implements OnInit {
     this.pageSettings = { pageCount: 5 };
     this.selectionSettings = {  type: "Multiple" };
     this.lines = 'Horizontal';
-    console.log(localStorage.getItem('token'))
     this.citiesParameter = {
       params: {
         allowFiltering: true,
@@ -115,7 +114,6 @@ export class RegionComponent implements OnInit {
         this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
         args.cancel = true;
       } let countryId = args.data['country']['id'];
-console.log(countryId)
       if (this.regions.filter(c => c.name == name && c.country.id != countryId).length != 0) {
         this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
         args.cancel = true;

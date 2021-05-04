@@ -60,8 +60,6 @@ export class ViewUserComponent implements OnInit {
     this.getUser();
   }
   getUser() {
-    console.log( this.UserService.users)
-
     this.UserService.GetAll();
   }
   onEditClicked(id) {

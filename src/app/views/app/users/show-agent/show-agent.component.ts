@@ -23,7 +23,6 @@ export class ShowAgentComponent implements OnInit {
       this.id = par['id'] as string
     });
     this.userService.GetById(this.id).subscribe(res=>{
-      console.log(res)
       this.userStatics=res.userStatics
       this.agent=res
     })

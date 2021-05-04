@@ -24,7 +24,6 @@ noDataFound: boolean = false
   agents:User[]=[]
 get(){
   this.statisticservice.AgnetStatics().subscribe(res=>{
-    console.log(res)
     this.agents=res
     this.dataSource=new MatTableDataSource(this.agents)
   })

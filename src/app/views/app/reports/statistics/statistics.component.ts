@@ -28,7 +28,6 @@ if (this.filtering.ToDate != undefined || this.filtering.ToDate != null)
     this.filtering.ToDate = formatDate(this.filtering.ToDate, 'yyyy-MM-dd', 'en-US');
 
     this.StatisticsService.GetAggregate(this.filtering).subscribe(res => {
-      console.log(res)
       this.shipmentTotal = res.shipmentTotal
       this.totalIncome = res.totalIncome
       this.totalOutCome = res.totalOutCome

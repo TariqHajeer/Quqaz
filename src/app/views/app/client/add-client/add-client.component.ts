@@ -82,7 +82,6 @@ export class AddClientComponent implements OnInit, OnChanges {
       this.usernameIsRepeated = false
   }
   addOrEditClient() {
-    console.log(this.client)
     if (this.RecipientPhoneslengthEdit != null || this.RecipientPhoneslength != null)
       return
     if (this.tempPhone) {

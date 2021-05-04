@@ -64,7 +64,6 @@ export class ImportsTypesComponent implements OnInit {
   actionComplete(args: SaveEventArgs) {
 
     if (args.action === "edit") {
-      console.log(args.cancel);
       let obj: any = { id: Number.parseInt(args.data['id']), name: args.data['name'] }
       this.customService.addOrUpdate(this.apiName, obj, 'update').subscribe(
         res => {

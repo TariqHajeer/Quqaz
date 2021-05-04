@@ -113,7 +113,6 @@ export class AddMoreOutcomeComponent implements OnInit {
     this.customService.getAll('OutComeType').subscribe(
       res => {
         this.exportTypes = res;
-       console.log(res)
         this.outComeTypeDs = new DataManager()
         this.outComeTypeDs.dataSource.data= res as JSON
 

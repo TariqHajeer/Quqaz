@@ -33,7 +33,6 @@ export class ReceiptSetPrintNumberComponent implements OnInit, OnChanges {
   //   console.log("tr")
   // }
   ngOnChanges() {
-    console.log(this.orders)
     this.sumCost()
   }
   sumCost() {

@@ -76,7 +76,6 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
 
   addNewCountry() {
     var find = this.cities.find(c => c.name == this.Order.Country.name)
-    console.log(find)
     if (!find) {
       this.customerService.Create(this.cityapi, this.Order.Country).subscribe(res => {
         this.Order.Country = res
@@ -214,7 +213,6 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     this.addNewCountry()
     this.Order.CountryId = this.Order.Country.id
     this.Order.ClientId = this.ClientId
-    console.log(this.Order)
     if (this.checkLengthPhoneNumber(this.Order.RecipientPhones))
       return
     if (!this.Order.Code || !this.Order.ClientId ||

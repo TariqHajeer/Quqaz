@@ -16,7 +16,6 @@ export class UserService {
   GetAll() :void {
     this.http.get<any>(this.controler).subscribe(res=>{
       let temp = res as User[];
-      console.log(res)
       for(let i =0 ; i<temp.length;i++){
         if(temp[i].canWorkAsAgent){
           temp[i].employeeType="مندوب";
@@ -25,7 +24,6 @@ export class UserService {
         }
       }
       this.users = res;
-      console.log(res)
 
       this.users.forEach(e=>{
         e.phonesAsString = e.phones.map(c=>c.phone).join(',');

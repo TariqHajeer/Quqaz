@@ -71,7 +71,6 @@ export class ViewOutComeComponent implements OnInit {
       if (response.data.length == 0)
         this.noDataFound = true
       else this.noDataFound = false
-      console.log(response.data);
       response.data.forEach(e => {
         e.date = e.date.split('T')[0];
       });

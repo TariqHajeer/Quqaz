@@ -47,7 +47,6 @@ export class GroupsComponent implements OnInit {
   AddGroup() {
   if(this.validation(this.CreateGroup))return;
     this.GroupService.Creat(this.CreateGroup).subscribe(res => {
-      console.log(res)
       this.notifications.create('success', 'تم اضافة مجموعة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Group.name = this.CreateGroup.Name
       this.Group.privilegesId = this.CreateGroup.PrivilegesId

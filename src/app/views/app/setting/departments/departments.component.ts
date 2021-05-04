@@ -61,7 +61,6 @@ export class DepartmentsComponent implements OnInit {
   actionComplete(args: SaveEventArgs) {
 
     if (args.action === "edit") {
-      console.log(args.cancel);
       let obj: any = { id: Number.parseInt(args.data['id']), name: args.data['name'] }
       this.customService.addOrUpdate(this.apiName, obj, 'update').subscribe(
         res => {
@@ -101,7 +100,6 @@ export class DepartmentsComponent implements OnInit {
         else {
           let obj: any = { name: args.data['name'] }
           args.cancel = true;
-          console.log(obj)
           this.customService.addOrUpdate(this.apiName, obj, 'add').subscribe(
             res => {
               this.notifications.create('success', 'تم اضافة القسم  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });

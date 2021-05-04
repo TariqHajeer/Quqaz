@@ -54,7 +54,6 @@ export class AuthService implements OnDestroy{
   }
   Test(){
     this.http.get(this.baseUrl+"api/Default/De").subscribe(res=>{
-      console.log(res)
     });
   }
   public get authenticatedUser(): any {

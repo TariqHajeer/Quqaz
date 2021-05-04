@@ -41,10 +41,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     if (currentUser) {
       if (route.data && route.data.roles) {
         if (route.data.roles.filter(p => currentUser.privileges.map(p => p.sysName).includes(p)).length > 0) {
-          console.log("true")
           return true;
         } else {
-          console.log("false")
           //this.router.navigate(['/user/login']);
            this.router.navigate(['/unauthorized']);
           // return false;

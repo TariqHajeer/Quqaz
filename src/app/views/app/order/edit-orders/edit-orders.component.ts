@@ -76,7 +76,6 @@ this.getorder()
   }
   getorder() {
     var editorder = JSON.parse(localStorage.getItem('editorder')) 
-    console.log(editorder)
     this.Order.Address = editorder.address
     this.Order.AgentId=editorder.agent.id
     this.Order.ClientId=editorder.client.id
@@ -171,7 +170,6 @@ this.getorder()
     else this.submitordertype = false
     if (this.orderTypes.filter(o => o.name == this.orderType.name).length < 1) {
       this.customerService.Create(this.ordertypeapi, this.orderType).subscribe(res => {
-        //console.log(res)
       })
     }
     this.OrderItem.OrderTypeId = this.orderType.id

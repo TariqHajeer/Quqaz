@@ -155,7 +155,6 @@ export class AddMoreIncomeComponent implements OnInit {
   }
 
   AddIncome() {
-    console.log(this.Incomes)
     this.IncomeService.AddMultiple(this.Incomes).subscribe(res=>{
       this.notifications.create('success', 'تم اضافة واردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Incomes = []

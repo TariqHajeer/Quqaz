@@ -160,7 +160,6 @@ export class ProfitsOfOrdersComponent implements OnInit {
     showcount=false
     allfiltering() {
         this.orderservice.GetEarning(this.paging, this.filtering).subscribe(res => {
-            console.log(res)
             this.GetEarning=[]
             if (res.data && res.data.orders.length == 0)
                 this.noDataFound = true
@@ -183,7 +182,6 @@ export class ProfitsOfOrdersComponent implements OnInit {
     changeRange() {
         this.filtering.FromDate=this.FromDate
         this.filtering.ToDate=this.ToDate
-        console.log(this.filtering)
         if (this.filtering.FromDate != undefined || this.filtering.FromDate != null)
             this.filtering.FromDate = formatDate(this.filtering.FromDate, 'yyyy-MM-dd', 'en-US');
         if (this.filtering.ToDate != undefined || this.filtering.ToDate != null)
