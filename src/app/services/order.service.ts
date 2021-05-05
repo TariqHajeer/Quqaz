@@ -165,5 +165,23 @@ export class OrderService {
    OrderVicdanAgent(AgentId){
      return this.http.get(this.controler+"OrderVicdanAgent/"+AgentId)
    }
+   GetClientprint(paging){
+    let params = new HttpParams();
+    if (paging.RowCount != undefined || paging.RowCount != null)
+      params = params.append("RowCount", paging.RowCount);
+    if (paging.Page != undefined || paging.Page != null)
+      params = params.append("Page", paging.Page);
+      return this.http.get<any>(this.controler + "GetClientprint", { params: params })
+
+   }
+   GetAgentPrint(paging){
+    let params = new HttpParams();
+    if (paging.RowCount != undefined || paging.RowCount != null)
+      params = params.append("RowCount", paging.RowCount);
+    if (paging.Page != undefined || paging.Page != null)
+      params = params.append("Page", paging.Page);
+      return this.http.get<any>(this.controler + "GetAgentPrint", { params: params })
+
+   }
 }
 

@@ -2,8 +2,10 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/auth.guard';
 import { UserPermission } from 'src/app/shared/auth.roles';
+import { AgentPrintComponent } from './agent-print/agent-print.component';
 import { AgentStatisticsComponent } from './agent-statistics/agent-statistics.component';
 import { ClientOrderComponent } from './client-order/client-order.component';
+import { ClientPrintComponent } from './client-print/client-print.component';
 import { OrderVicdanAgentComponent } from './order-vicdan-agent/order-vicdan-agent.component';
 import { ReceiptAgentComponent } from './print/receipt-agent/receipt-agent.component';
 import { AgentComponent } from './printpreview/agent/agent.component';
@@ -91,7 +93,16 @@ const routes: Routes = [
     component: OrderVicdanAgentComponent,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowReports]}
   },
- 
+  {
+    path:'agentprint',
+    component: AgentPrintComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
+  },
+  {
+    path:'clientprint',
+    component: ClientPrintComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
+  },
 ];
 
 @NgModule({

@@ -31,6 +31,8 @@ import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { ReceiptSetPrintNumberClientComponent } from './print/receipt-set-print-number-client/receipt-set-print-number-client.component';
 import { OrderVicdanAgentComponent } from './order-vicdan-agent/order-vicdan-agent.component';
+import { ClientPrintComponent } from './client-print/client-print.component';
+import { AgentPrintComponent } from './agent-print/agent-print.component';
 @NgModule({
   declarations: [ShipmentInStockComponent,
     ClientOrderComponent,
@@ -48,7 +50,9 @@ import { OrderVicdanAgentComponent } from './order-vicdan-agent/order-vicdan-age
     PayComponent,
     AgentStatisticsComponent,
     ReceiptSetPrintNumberClientComponent,
-    OrderVicdanAgentComponent,],
+    OrderVicdanAgentComponent,
+    ClientPrintComponent,
+    AgentPrintComponent,],
   imports: [
     CommonModule,
     ReportsRoutingModule,

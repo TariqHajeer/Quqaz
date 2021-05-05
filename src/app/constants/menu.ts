@@ -120,6 +120,13 @@ const data: IMenuItem[] = [
             //permission:[UserPermission.ShowOrder]
 
           },
+          {
+            icon: 'simple-icon-layers',
+            label: 'شحنات حسب رقم الطباعة ',
+            to: `${adminRoot}/reports/agentprint`,
+            //permission:[UserPermission.ShowOrder]
+
+          },
         ]
       },
       {//client
@@ -143,6 +150,14 @@ const data: IMenuItem[] = [
             icon: 'simple-icon-layers',
             label: 'شحنات حسب رقم الطباعة ',
             to: `${adminRoot}/reports/printsetprintnumberclientpreview`,
+            //permission:[UserPermission.ShowOrder]
+
+    
+          },
+          {
+            icon: 'simple-icon-layers',
+            label: 'شحنات حسب رقم الطباعة ',
+            to: `${adminRoot}/reports/clientprint`,
             //permission:[UserPermission.ShowOrder]
 
     
