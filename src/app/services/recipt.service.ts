@@ -22,7 +22,7 @@ export class ReciptService {
       params = params.append("Date", account.Date);
       if (account.IsPay != undefined)
       params = params.append("IsPay", account.IsPay);
-      return this.http.get<any>(this.controler + "Account", { params: params })
+      return this.http.get<any>(this.controler, { params: params })
 
    }
 }
