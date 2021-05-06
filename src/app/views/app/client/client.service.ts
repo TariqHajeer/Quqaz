@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AccountFilter } from 'src/app/Models/account-filter.model';
 import { environment } from 'src/environments/environment.prod';
 import { Client } from './client.model'
 @Injectable({
@@ -53,7 +54,19 @@ export class ClientService {
   Account(item){
     return this.http.post(this.controler+"Account",item)
   }
-  GetAccount(){
-    return this.http.get(this.controler+"Account")
-  }
+  GetAccount(paging,account:AccountFilter){
+    let params = new HttpParams();
+    if (paging.RowCount != undefined || paging.RowCount != null)
+      params = params.append("RowCount", paging.RowCount);
+    if (paging.Page != undefined || paging.Page != null)
+      params = params.append("Page", paging.Page);
+      if (account.ClientId != undefined || account.ClientId != null)
+      params = params.append("ClientId", account.ClientId);
+    if (account.Date != undefined || account.Date != null)
+      params = params.append("Date", account.Date);
+      if (account.IsPay != undefined)
+      params = params.append("IsPay", account.IsPay);
+      return this.http.get<any>(this.controler + "Account", { params: params })
+
+   }
 }
