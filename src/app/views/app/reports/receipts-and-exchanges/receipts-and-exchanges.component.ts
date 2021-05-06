@@ -6,6 +6,7 @@ import { ClientService } from '../../client/client.service';
 import { AccountFilter } from 'src/app/Models/account-filter.model';
 import { Client } from '../../client/client.model';
 import { MatSort } from '@angular/material/sort';
+import { ReciptService } from 'src/app/services/recipt.service';
 
 @Component({
   selector: 'app-receipts-and-exchanges',
@@ -14,7 +15,8 @@ import { MatSort } from '@angular/material/sort';
 })
 export class ReceiptsAndExchangesComponent implements OnInit {
 
-  constructor(public clientservice: ClientService) { }
+  constructor(public clientservice: ClientService,
+    public receptservice: ReciptService) { }
   dataSource 
   displayedColumns: string[] = ['clientName', 'amount', 'isPay', 'about'
     , 'date', 'printId', 'manager', 'createdBy', 'note', 'delete'];
@@ -41,8 +43,8 @@ export class ReceiptsAndExchangesComponent implements OnInit {
     this.filter.IsPay=false
     if(this.exchange==true)
     this.filter.IsPay=true
-    this.clientservice.GetAccount(this.paging, this.filter).subscribe(res => {
-      console.log(res)
+    console.log(this.filter)
+    this.receptservice.GetAccount(this.paging, this.filter).subscribe(res => {
       res.data.forEach(e => {
         e.date = e.date.split('T')[0];
       });
@@ -63,6 +65,6 @@ export class ReceiptsAndExchangesComponent implements OnInit {
     })
   }
   delete(element){
-    
+
   }
 }
