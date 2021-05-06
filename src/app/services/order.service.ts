@@ -106,8 +106,8 @@ export class OrderService {
   SetPrintNumber(number) {
     return this.http.post<any>(this.controler + "SetPrintNumber", number)
   }
-  GetOrderByAgent( orderCode) {
-    return this.http.get(this.controler + "GetOrderByAgent/"  + orderCode)
+  GetOrderByAgent(orderCode) {
+    return this.http.get(this.controler + "GetOrderByAgent/" + orderCode)
   }
   GetEarning(paging: Paging, datefilter: DateFiter) {
     let params = new HttpParams();
@@ -127,61 +127,63 @@ export class OrderService {
   ShortageOfCash(clientId) {
     let params = new HttpParams();
     params = params.append("clientId", clientId);
-    return this.http.get<any>(this.controler + "ShortageOfCash" , { params: params })
+    return this.http.get<any>(this.controler + "ShortageOfCash", { params: params })
   }
   ReiveMoneyFromClient(ids) {
     return this.http.put<any>(this.controler + "ReiveMoneyFromClient", ids)
   }
-  GetOrderByAgnetPrintNumber(printNumber){
+  GetOrderByAgnetPrintNumber(printNumber) {
     let params = new HttpParams();
     params = params.append("printNumber", printNumber);
-    return this.http.get<any>(this.controler + "GetOrderByAgnetPrintNumber" , { params: params })
-   }
-   GetOrderByClientPrintNumber(printnumber){
+    return this.http.get<any>(this.controler + "GetOrderByAgnetPrintNumber", { params: params })
+  }
+  GetOrderByClientPrintNumber(printnumber) {
     let params = new HttpParams();
     params = params.append("printNumber", printnumber);
-    return this.http.get<any>(this.controler + "GetOrderByClientPrintNumber" , { params: params })
-   }
-   ClientDontDiliverdMoney(item:OrderClientDontDiliverdMoney){
+    return this.http.get<any>(this.controler + "GetOrderByClientPrintNumber", { params: params })
+  }
+  ClientDontDiliverdMoney(item: OrderClientDontDiliverdMoney) {
     let params = new HttpParams();
-  
-    if (item.ClientId != undefined || item.ClientId!= null)
+
+    if (item.ClientId != undefined || item.ClientId != null)
       params = params.append("ClientId", item.ClientId);
-      if (item.ClientDoNotDeleviredMoney != undefined || item.ClientDoNotDeleviredMoney!= null)
+    if (item.ClientDoNotDeleviredMoney != undefined || item.ClientDoNotDeleviredMoney != null)
       params = params.append("ClientDoNotDeleviredMoney", item.ClientDoNotDeleviredMoney);
-      if (item.IsClientDeleviredMoney != undefined || item.IsClientDeleviredMoney!= null)
+    if (item.IsClientDeleviredMoney != undefined || item.IsClientDeleviredMoney != null)
       params = params.append("IsClientDeleviredMoney", item.IsClientDeleviredMoney);
-    if (item.OrderPlacedId.length!=0)
-    { // params = params.append("OrderPlacedId", item.OrderPlacedId);
-      let index=0
+    if (item.OrderPlacedId.length != 0) { // params = params.append("OrderPlacedId", item.OrderPlacedId);
+      let index = 0
       item.OrderPlacedId.forEach(element => {
-        var key="OrderPlacedId["+index+"]"
+        var key = "OrderPlacedId[" + index + "]"
         params = params.append(key, element);
         index++;
       });
-}
+    }
     return this.http.get<any>(this.controler + "OrdersDontFinished", { params: params })
-   }
-   OrderVicdanAgent(AgentId){
-     return this.http.get(this.controler+"OrderVicdanAgent/"+AgentId)
-   }
-   GetClientprint(paging){
+  }
+  OrderVicdanAgent(AgentId) {
+    return this.http.get(this.controler + "OrderVicdanAgent/" + AgentId)
+  }
+  GetClientprint(paging) {
     let params = new HttpParams();
     if (paging.RowCount != undefined || paging.RowCount != null)
       params = params.append("RowCount", paging.RowCount);
     if (paging.Page != undefined || paging.Page != null)
       params = params.append("Page", paging.Page);
-      return this.http.get<any>(this.controler + "GetClientprint", { params: params })
+    return this.http.get<any>(this.controler + "GetClientprint", { params: params })
 
-   }
-   GetAgentPrint(paging){
+  }
+  GetAgentPrint(paging) {
     let params = new HttpParams();
     if (paging.RowCount != undefined || paging.RowCount != null)
       params = params.append("RowCount", paging.RowCount);
     if (paging.Page != undefined || paging.Page != null)
       params = params.append("Page", paging.Page);
-      return this.http.get<any>(this.controler + "GetAgentPrint", { params: params })
+    return this.http.get<any>(this.controler + "GetAgentPrint", { params: params })
 
-   }
+  }
+  OrderInCompany(ClientId, code) {
+    return this.http.get(this.controler+"OrderInCompany/"+ClientId+"/"+code)
+  }
 }
 

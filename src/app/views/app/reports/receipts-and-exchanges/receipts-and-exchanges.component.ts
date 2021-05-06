@@ -64,6 +64,8 @@ export class ReceiptsAndExchangesComponent implements OnInit {
     })
   }
   delete(element) {
-
+    this.receptservice.Delete(element.id).subscribe(res => {
+      this.Get()
+    })
   }
 }

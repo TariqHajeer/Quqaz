@@ -1,0 +1,223 @@
+<div class="card wtable">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3" *ngIf="!showPrintbtn">
+                <button (click)="changeDeleiverMoneyForClient()" class="btn btn-primary"> تسليم المبلغ</button>
+
+            </div>
+            <div class="col-md-3" *ngIf="showPrintbtn">
+                <button class="btn btn-primary" (click)="convetToPDF()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-printer" viewBox="0 0 16 16">
+                        <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+                        <path
+                            d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
+                    </svg> &nbsp;تحميل
+                </button>
+
+            </div>
+            <div class="col-md-3" *ngIf="showPrintbtn">
+                <button printSectionId="printpage" class="btn btn-primary"
+                    styleSheetFile="/assets/css/vendor/bootstrap.min.css" [useExistingCss]="true" ngxPrint>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
+                        class="bi bi-printer" viewBox="0 0 16 16">
+                        <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+                        <path
+                            d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
+                    </svg> &nbsp;طباعة
+                </button>&nbsp;
+                <app-receipt-order-in-company id="printpage" [orders]="orders" [client]="client" [printnumber]="printnumber"
+                    [hidden]="true"></app-receipt-order-in-company>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="card wtable" style="direction:rtl" id="contentToConvert">
+    <div class="card-body">
+        <div class="row ">
+            <div class="col-md-4" style="text-align: right; ">
+                <table>
+
+                    <tr>
+                        <td>
+                            رقم الطباعة :
+                        </td>
+                        <td>
+                            {{printnumber}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            مستخدم الطابعة :
+                        </td>
+                        <td>
+                            {{userName.name}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            تاريخ الطباعة :
+                        </td>
+                        <td>
+                            {{dateOfPrint | date:"dd/MM/yyyy"}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            وقت الطباعة :
+                        </td>
+                        <td>
+                            {{dateOfPrint | date:"HH:mm:ss"}}
+                        </td>
+                    </tr>
+
+
+                </table>
+
+            </div>
+            <div class="col-md-5">
+                <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px"
+                    style="margin-right: 20%;" />
+            </div>
+            <div class="col-md-3" style="text-align: right;">
+                <br>
+                <h3>
+                    اسم العميل : {{client!=null||client!=undefined?client.name:null}}
+                    <br>
+                    أرقام هاتف العميل :
+
+                    <div *ngFor="let phone of client.phones">
+                        {{phone.phone}}
+                    </div>
+                </h3>
+
+            </div>
+
+
+        </div>
+        <table>
+            <thead>
+                <th>
+                    ترقيم
+                </th>
+                <th>
+                    رقم الوصل
+                </th>
+                <th>
+                    تاريخ اضافة الطلب
+                </th>
+                <th>
+                    الإجمالي
+                </th>
+                <th>
+                    الرسوم
+                </th>
+                <th>
+                    يدفع للعميل
+                </th>
+                <th>
+                    المحافظة
+                </th>
+                <th>
+                    الهاتف
+                </th>
+                <th>
+                    المبلغ القديم
+                </th>
+                <th>
+                    ملاحظات
+                </th>
+                <!--<th *ngFor="let head of heads" style="font-size: 20px;">{{head}}</th>-->
+            </thead>
+            <tbody>
+                <tr *ngFor="let order of orders;index as i"[ngClass]="RowClass(order)">
+                    <td style="width: 5px;">
+                        {{i+1}}
+                    </td>
+                    <td>
+                        {{order.code}}
+                    </td>
+                    <td>
+                        {{order.date| date: 'yyyy/MM/dd'}}
+                    </td>
+                    <td>
+                        {{order.cost}}
+                    </td>
+                    <td>
+                        {{order.deliveryCost}}
+                    </td>
+                    <td>
+                        {{order.cost-order.deliveryCost}}
+                    </td>
+                    <td>
+                        {{order.country!=null||order.country!=undefined?order.country.name:null}}
+                    </td>
+                    <!--   <td>
+                        {{order.monePlaced.name}}
+                    </td>
+                    <td>
+                        {{order.orderplaced.name}}
+                    </td>-->
+                    <td>
+                        {{order.recipientPhones}}
+                    </td>
+                    <td>
+                        {{order.oldCost}}
+                    </td>
+                    <td>
+                        {{order.note}}
+                    </td>
+                </tr>
+
+
+                <tr class=" table-bordered trbordered" style="font-size: 18px;">
+                    <td colspan="3">
+                        الإجمالي :
+                    </td>
+                    <td>
+                        {{ count}}
+                    </td>
+                    <td>
+                        {{ deliveryCostCount}}
+                    </td>
+                    <td>
+                        {{count-deliveryCostCount}}
+                    </td>
+                    <td colspan="4"></td>
+                </tr>
+                <tr class=" table-bordered " style="font-size: 18px;background-color: rgba(144, 177, 240, 0.877);">
+                    <td colspan="5">
+                        حساب العميل 
+                    </td>
+
+
+                    <td>
+                        {{client.total}}
+                    </td>
+                    <td colspan="4"></td>
+                </tr>
+                <tr class=" table-bordered trbordered" style="font-size: 18px;">
+                    <td colspan="5">
+                        المبلغ النهائي في المقاصة  
+
+                    </td>
+                    <td>
+                        {{(count-deliveryCostCount)+client.total}}
+                    </td>
+                    <td colspan="4"></td>
+
+                </tr>
+            </tbody>
+
+        </table>
+        <div class="card-footer">
+            <h4 style="margin-right: 25%;">{{address}} &nbsp; {{companyPhone}}</h4>
+        </div>
+    </div>
+</div>
+
+
+<simple-notifications></simple-notifications>

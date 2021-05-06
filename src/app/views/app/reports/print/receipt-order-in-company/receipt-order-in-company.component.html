@@ -1,0 +1,194 @@
+<div class="card" style="direction:rtl">
+    <div class="card-body">
+
+        <table>
+            <thead>
+
+                <tr>
+                    <td>
+                        <div class="header-space"></div>
+                    </td>
+                </tr>
+
+                <th>
+                    ترقيم
+                </th>
+                <th>
+                    رقم الوصل
+                </th>
+               <th>
+                   تاريخ اضافة الطلب
+               </th>
+                <th>
+                    الإجمالي
+                </th>
+                <th>
+                    الرسوم
+                </th>
+                <th>
+                    يدفع للعميل
+                </th>
+                <th>
+                    المحافظة
+                </th>
+                <th>
+                    الهاتف
+                </th>
+                <th>
+                    المبلغ القديم
+                </th>
+                <th>
+                    ملاحظات
+                </th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="content">
+                <tr style="  margin-bottom: 20%;font-size: 18px;" class=" table-bordered"
+                    *ngFor="let order of orders;index as i" [ngClass]="RowClass(order)">
+                    <td  style="width: 5px;">
+                        {{i+1}}
+                    </td>
+                    <td>
+                        {{order.code}}
+                    </td>
+                    <td>
+                        {{order.date| date: 'yyyy/MM/dd'}}
+                    </td>
+                    <td>
+                        {{order.cost}}
+                    </td>
+                    <td>
+                        {{order.deliveryCost}}
+                    </td>
+                    <td>
+                        {{order.cost-order.deliveryCost}}
+                    </td>
+                    <td>
+                        {{order.country!=null||order.country!=undefined?order.country.name:null}}
+                    </td>
+                    <!--   <td>
+                        {{order.monePlaced.name}}
+                    </td>
+                    <td>
+                        {{order.orderplaced.name}}
+                    </td>-->
+                    <td>
+                        {{order.recipientPhones}}
+                    </td>
+                    <td>
+                        {{order.oldCost}}
+                    </td>
+                    <td>
+                        {{order.note}}
+                    </td>
+                </tr>
+
+    </div>
+    </td>
+    </tr>
+    <tr class=" table-bordered trbordered" style="font-size: 18px;">
+        <td colspan="3">
+            الإجمالي :
+        </td>
+        <td>
+            {{ count}}
+        </td>
+        <td>
+            {{ deliveryCostCount}}
+        </td>
+        <td >
+            {{count-deliveryCostCount}}
+        </td>
+        <td colspan="4"></td>
+    </tr>
+    <tr class=" table-bordered " style="font-size: 18px;background-color: rgba(144, 177, 240, 0.877);">
+        <td colspan="5">
+            حساب العميل 
+        </td>
+
+
+        <td>
+            {{client.total}}
+        </td>
+        <td colspan="4"></td>
+    </tr>
+    <tr class=" table-bordered trbordered" style="font-size: 18px;">
+        <td colspan="5">
+            المبلغ النهائي في المقاصة  
+
+        </td>
+        <td>
+            {{(count-deliveryCostCount)+client.total}}
+        </td>
+        <td colspan="4"></td>
+
+    </tr>
+    </tbody>
+
+    </table>
+</div>
+</div>
+<div class="header">
+    <div class="row ">
+        <div class="col-md-4" style="text-align: right; ">
+            <table border="2px">
+
+                <tr>
+                    <td>
+                        رقم الطباعة :
+                    </td>
+                    <td>
+                        {{printnumber}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        مستخدم الطابعة :
+                    </td>
+                    <td>
+                        {{userName.name}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        تاريخ الطباعة :
+                    </td>
+                    <td>
+                        {{dateOfPrint | date:"dd/MM/yyyy"}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        وقت الطباعة :
+                    </td>
+                    <td>
+                        {{dateOfPrint | date:"HH:mm:ss"}}
+                    </td>
+                </tr>
+
+
+            </table>
+            
+
+        </div>
+        <div class="col-md-5" style="direction: rtl;">
+            <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px"
+                style="margin-left: 20%;" />
+        </div>
+        <div class="col-md-3" style="text-align: right;">
+            <br>
+            <h3>
+                اسم العميل : {{client!=null||client!=undefined?client.name:null}}
+                <br>
+                أرقام هاتف العميل :
+
+                <div *ngFor="let phone of client.phones">
+                    {{phone.phone}}
+                </div>
+            </h3>
+
+        </div>
+    </div>
+</div>

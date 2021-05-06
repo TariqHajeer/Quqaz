@@ -25,4 +25,7 @@ export class ReciptService {
       return this.http.get<any>(this.controler, { params: params })
 
    }
+   Delete(id){
+     return this.http.delete(this.controler+id)
+   }
 }

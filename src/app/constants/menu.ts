@@ -143,6 +143,20 @@ const data: IMenuItem[] = [
           },
           {
             icon: 'simple-icon-layers',
+            label: 'طلبات التي في الشركة ',
+            to: `${adminRoot}/reports/orderincompany`,
+            //permission:[UserPermission.ShowOrder]
+
+          },
+          // {
+          //   icon: 'simple-icon-layers',
+          //   label: 'ارجاع الشحنات ',
+          //   to: `${adminRoot}/reports/clientorder`,
+          //   //permission:[UserPermission.ShowOrder]
+
+          // },
+          {
+            icon: 'simple-icon-layers',
             label: ' صرف وقبض ',
             to: `${adminRoot}/reports/receiptsandexchanges`,
           },

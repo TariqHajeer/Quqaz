@@ -12,15 +12,17 @@ import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { OrderState } from 'src/app/Models/order/order.model';
+import { ClientService } from '../../client/client.service';
+import { Client } from '../../client/client.model';
 @Component({
-  selector: 'app-receipt-shipment-agent',
-  templateUrl: './receipt-shipment-agent.component.html',
-  styleUrls: ['./receipt-shipment-agent.component.scss']
+  selector: 'app-order-in-company',
+  templateUrl: './order-in-company.component.html',
+  styleUrls: ['./order-in-company.component.scss']
 })
-export class ReceiptShipmentAgentComponent implements OnInit {
+export class OrderInCompanyComponent implements OnInit {
 
-  displayedColumns: string[] = ['code','client', 'country', 'region'
-    , 'cost', 'isClientDiliverdMoney', 'orderplaced', 'monePlaced', 'edit'];
+  displayedColumns: string[] = ['code', 'country', 'region'
+    , 'cost', 'orderplaced', 'monePlaced', 'edit'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
   Code
@@ -33,19 +35,13 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   MoenyPlaced: any[] = []
   getMoenyPlaced: any[] = []
   OrderplacedId
-  constructor(
-    private orderservice: OrderService,
-    public userService: UserService,
-    private notifications: NotificationsService,
-    public route: Router,
-    public orderplacedstate: OrderPlacedStateService
-  ) { }
+  ClientId
+  Clients: Client[] = []
   AgentId
-
   orderPlace: NameAndIdDto[] = []
   Agents: User[] = []
-  paging: Paging
-  filtering: OrderFilter
+  // paging: Paging
+  // filtering: OrderFilter
   noDataFound: boolean = false
   canEditCount: boolean[] = []
   temporderscost: any[] = []
@@ -54,13 +50,22 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   orderstates: OrderState[] = []
   orderstate: OrderState = new OrderState()
   @Input() totalCount: number;
+  constructor(
+    private orderservice: OrderService,
+    public userService: UserService,
+    private notifications: NotificationsService,
+    public route: Router,
+    public orderplacedstate: OrderPlacedStateService,
+    public clientService: ClientService,
+  ) { }
+
 
   ngOnInit(): void {
-    this.getAgent()
     this.GetMoenyPlaced()
     this.GetorderPlace()
-    this.paging = new Paging
-    this.filtering = new OrderFilter
+    this.getClients()
+    // this.paging = new Paging
+    // this.filtering = new OrderFilter
     this.dataSource = new MatTableDataSource([])
     this.getorder = new GetOrder
 
@@ -102,7 +107,6 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
-      console.log(res)
       this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
     })
   }
@@ -120,35 +124,22 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     }
 
   }
-  getAgent() {
-    this.userService.ActiveAgent().subscribe(res => {
-      this.Agents = res
-    })
-  }
-  // ChangeAgentId() {
-  //   if (this.AgentId != null) {
-  //     this.filtering.AgentId = this.AgentId
-  //     this.allFilter();
-  //   }
-  // }
+  
   showcount = false
   findorder
-  Ordersfilter: any[] = []
+  // Ordersfilter: any[] = []
   addOrder() {
-    this.Ordersfilter=[]
     this.showTable = false
-
+    if (!this.ClientId) {
+      this.notifications.create("error", "يجب اختيار عميل", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
+      return
+    }
     if (this.Code) {
-      this.orderservice.GetOrderByAgent(this.Code).subscribe(res => {
+      this.orderservice.OrderInCompany(this.ClientId, this.Code).subscribe(res => {
         this.findorder = res
+        console.log(res)
         if (this.findorder) {
-          if (this.findorder.length == 1) {
-           this.addOrders()
-          }
-          else if (this.findorder.length > 1) {
-            this.showTable = true
-            this.Ordersfilter = res as []
-          }
+          this.addOrders()
         }
         else {
           this.notifications.create("error", "ليس هناك شحنة لهذا الكود", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
@@ -159,11 +150,11 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       )
 
 
-    } else this.notifications.create("error", " يجب اضافة كود الشحنة  ", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
+    } else this.notifications.create("error", "    يجب اضافة كود الشحنة  ", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
 
   }
-  addOrders(){
-    
+  addOrders() {
+
     this.getorder.order = { ...this.findorder[0] }
     this.getorder.MoenyPlaced = [...this.MoenyPlaced]
     this.getorder.OrderPlaced = [...this.orderPlace]
@@ -176,7 +167,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2) {
       this.getorder.order.orderplaced = this.getorder.OrderPlaced.find(o => o.id == 3)
     }
-    if (this.getorders.filter(o => o.order.code == this.getorder.order .code&&o.order.client.id==this.getorder.order.client.id).length > 0) {
+    if (this.getorders.filter(o => o.order.code == this.getorder.order.code && o.order.client.id == this.getorder.order.client.id).length > 0) {
       this.notifications.create("error", "الشحنة مضافة مسبقا", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       return
     }
@@ -192,24 +183,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.getorder = new GetOrder
   }
   showTable: boolean = false
-  add(order) {
-    this.findorder=this.Ordersfilter.filter(o=>o==order)
-    this.addOrders()
-    this.Ordersfilter = this.Ordersfilter.filter(o => o != order)
-    if (this.Ordersfilter.length == 0) {
-      this.showTable = false
-      this.Code = ""
 
-    }
-  }
-  cancel(order) {
-    this.Ordersfilter = this.Ordersfilter.filter(o => o != order)
-    if (this.Ordersfilter.length == 0) {
-      this.showTable = false
-      this.Code = ""
-
-    }
-  }
   ChangeOrderplacedId(element, index) {
     // this.GetMoenyPlaced()
     this.getmony()
@@ -226,26 +200,13 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     } else
       element.messageCost = " الكلفة لايمكن أن تتجاوز " + this.temporderscost[index]
   }
-  switchPage(event: PageEvent) {
-    this.paging.allItemsLength = event.length
-    this.paging.RowCount = event.pageSize
-    this.paging.Page = event.pageIndex + 1
-    this.allFilter();
-  }
-  allFilter() {
-    this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
-      this.canEditCount = []
-      if (response)
-        if (response.data.length == 0)
-          this.noDataFound = true
-        else this.noDataFound = false
-      this.orders = response.data
+  // switchPage(event: PageEvent) {
+  //   this.paging.allItemsLength = event.length
+  //   this.paging.RowCount = event.pageSize
+  //   this.paging.Page = event.pageIndex + 1
+  //   this.allFilter();
+  // }
 
-    },
-      err => {
-
-      });
-  }
   count = 0
 
   deliveryCostCount
@@ -260,32 +221,30 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     return this.count
   }
 
-  saveEdit() {
-    for (let i = 0; i < this.dataSource.data.length; i++) {
-      this.orderstate.Id = this.dataSource.data[i].order.id
-      this.orderstate.Cost = this.dataSource.data[i].order.cost
-      this.orderstate.MoenyPlacedId = this.dataSource.data[i].order.monePlaced.id
-      this.orderstate.OrderplacedId = this.dataSource.data[i].order.orderplaced.id
-      this.orderstates.push(this.orderstate)
-      this.orderstate = new OrderState
-    }
-
-    this.orderservice.UpdateOrdersStatusFromAgent(this.orderstates).subscribe(res => {
-      this.allFilter()
-      this.orderstates = []
-      this.dataSource = new MatTableDataSource([])
-      this.getorders = []
-      this.sumCost()
-      this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-    })
+  print() {
+    localStorage.setItem('orderincompany',JSON.stringify(this.getorders))
+    localStorage.setItem('clientorderincompany',JSON.stringify(this.Clients.find(c=>c.id==this.ClientId)))
+   this.route.navigate(['/app/reports/printorderincompany'])
   }
 
-  CancelOrder(order){
-    this.getorders=this.getorders.filter(o=>o!=order);
+  CancelOrder(order) {
+    this.getorders = this.getorders.filter(o => o != order);
     var index = this.dataSource.data.indexOf(order);
     this.dataSource.data.splice(index, 1);
     this.dataSource._updateChangeSubscription();
     this.sumCost()
 
   }
+  getClients() {
+    this.clientService.getClients().subscribe(res => {
+      this.Clients = res
+    })
+  }
+  changeClientId(){
+    this.Code=null
+    this.getorders=[]
+    this.dataSource = new MatTableDataSource(this.getorders)
+
+  }
+
 }

@@ -6,11 +6,13 @@ import { AgentPrintComponent } from './agent-print/agent-print.component';
 import { AgentStatisticsComponent } from './agent-statistics/agent-statistics.component';
 import { ClientOrderComponent } from './client-order/client-order.component';
 import { ClientPrintComponent } from './client-print/client-print.component';
+import { OrderInCompanyComponent } from './order-in-company/order-in-company.component';
 import { OrderVicdanAgentComponent } from './order-vicdan-agent/order-vicdan-agent.component';
 import { ReceiptAgentComponent } from './print/receipt-agent/receipt-agent.component';
 import { AgentComponent } from './printpreview/agent/agent.component';
 import { ClientComponent } from './printpreview/client/client.component';
 import { PayComponent } from './printpreview/pay/pay.component';
+import { PrintOrderInCompanyComponent } from './printpreview/print-order-in-company/print-order-in-company.component';
 import { SetPrintNumberClientComponent } from './printpreview/set-print-number-client/set-print-number-client.component';
 import { SetPrintNumberComponent } from './printpreview/set-print-number/set-print-number.component';
 import { ReceiptShipmentAgentComponent } from './receipt-shipment-agent/receipt-shipment-agent.component';
@@ -107,6 +109,16 @@ const routes: Routes = [
   {
     path:'receiptsandexchanges',
     component: ReceiptsAndExchangesComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
+  },
+  {
+    path:'orderincompany',
+    component: OrderInCompanyComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
+  },
+  {
+    path:'printorderincompany',
+    component: PrintOrderInCompanyComponent,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowReports]}
   },
 ];

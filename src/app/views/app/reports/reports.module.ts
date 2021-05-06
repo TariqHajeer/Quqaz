@@ -34,6 +34,9 @@ import { OrderVicdanAgentComponent } from './order-vicdan-agent/order-vicdan-age
 import { ClientPrintComponent } from './client-print/client-print.component';
 import { AgentPrintComponent } from './agent-print/agent-print.component';
 import { ReceiptsAndExchangesComponent } from './receipts-and-exchanges/receipts-and-exchanges.component';
+import { OrderInCompanyComponent } from './order-in-company/order-in-company.component';
+import { PrintOrderInCompanyComponent } from './printpreview/print-order-in-company/print-order-in-company.component';
+import { ReceiptOrderInCompanyComponent } from './print/receipt-order-in-company/receipt-order-in-company.component';
 @NgModule({
   declarations: [ShipmentInStockComponent,
     ClientOrderComponent,
@@ -54,7 +57,10 @@ import { ReceiptsAndExchangesComponent } from './receipts-and-exchanges/receipts
     OrderVicdanAgentComponent,
     ClientPrintComponent,
     AgentPrintComponent,
-    ReceiptsAndExchangesComponent,],
+    ReceiptsAndExchangesComponent,
+    OrderInCompanyComponent,
+    PrintOrderInCompanyComponent,
+    ReceiptOrderInCompanyComponent,],
   imports: [
     CommonModule,
     ReportsRoutingModule,
