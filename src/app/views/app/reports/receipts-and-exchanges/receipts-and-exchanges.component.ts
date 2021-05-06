@@ -17,7 +17,7 @@ export class ReceiptsAndExchangesComponent implements OnInit {
 
   constructor(public clientservice: ClientService,
     public receptservice: ReciptService) { }
-  dataSource 
+  dataSource
   displayedColumns: string[] = ['clientName', 'amount', 'isPay', 'about'
     , 'date', 'printId', 'manager', 'createdBy', 'note', 'delete'];
   noDataFound: boolean = false
@@ -26,8 +26,8 @@ export class ReceiptsAndExchangesComponent implements OnInit {
   paging: Paging
   filter: AccountFilter
   Clients: Client[] = []
-  receipt:boolean
-  exchange:boolean
+  receipt: boolean
+  exchange: boolean
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   ngOnInit(): void {
@@ -37,19 +37,19 @@ export class ReceiptsAndExchangesComponent implements OnInit {
     this.getClients()
   }
   Get() {
-    if(this.receipt==true&&this.exchange==true)
-    this.filter.IsPay=null
-    if(this.receipt==true)
-    this.filter.IsPay=false
-    if(this.exchange==true)
-    this.filter.IsPay=true
+    if (this.receipt == true && this.exchange == true)
+      this.filter.IsPay = null
+    else if (this.receipt == true)
+      this.filter.IsPay = false
+    else if (this.exchange == true)
+      this.filter.IsPay = true
     console.log(this.filter)
     this.receptservice.GetAccount(this.paging, this.filter).subscribe(res => {
       res.data.forEach(e => {
         e.date = e.date.split('T')[0];
       });
       this.dataSource = new MatTableDataSource(res.data)
-      this.totalCount=res.total
+      this.totalCount = res.total
     })
   }
   switchPage(event: PageEvent) {
@@ -64,7 +64,7 @@ export class ReceiptsAndExchangesComponent implements OnInit {
       this.Clients = res
     })
   }
-  delete(element){
+  delete(element) {
 
   }
 }
