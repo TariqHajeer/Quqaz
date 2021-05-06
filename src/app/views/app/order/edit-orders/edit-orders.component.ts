@@ -88,7 +88,7 @@ this.getorder()
     this.Order.MoenyPlacedId=editorder.monePlaced.id
     this.Order.Note = editorder.note
     this.Order.OrderTypeDtos=editorder.orderItems
-    this.Order.MoenyPlacedId=editorder.monePlaced.id
+    this.Order.OrderplacedId=editorder.orderplaced.id
     this.Order.RecipientName=editorder.recipientName
     this.Order.RecipientPhones.push(editorder.recipientPhones)
     this.Order.RegionId=editorder.region!=null?editorder.region.Id:null
@@ -122,14 +122,14 @@ this.getorder()
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
-      this.Order.OrderplacedId = this.orderPlace[1].id
+      //this.Order.OrderplacedId = this.orderPlace[1].id
 
     })
   }
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
-      this.Order.MoenyPlacedId = this.MoenyPlaced[0].id
+     // this.Order.MoenyPlacedId = this.MoenyPlaced[0].id
     })
   }
   GetClient() {
@@ -188,7 +188,17 @@ this.getorder()
     var city = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.Cost = city.deliveryCost
     this.Region = this.Regions.filter(r => r.country.id == this.Order.CountryId)
+    this.Agents = this.Agents.filter(r => r.countryId== this.Order.CountryId)
+    if(this.Agents.length==1)
     this.Order.AgentId = this.Agents[0].id
+    else
+    this.Order.AgentId =null
+    if(this.Region.length==1)
+    this.Order.RegionId = this.Region[0].id
+    else
+    this.Order.RegionId =null
+    this.Order.OrderplacedId = this.orderPlace[1].id
+    this.Order.MoenyPlacedId = this.MoenyPlaced[0].id
   }
   showMessageCode: boolean = false
   CheckCode() {
