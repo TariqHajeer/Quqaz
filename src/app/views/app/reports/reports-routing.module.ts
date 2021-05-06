@@ -14,6 +14,7 @@ import { PayComponent } from './printpreview/pay/pay.component';
 import { SetPrintNumberClientComponent } from './printpreview/set-print-number-client/set-print-number-client.component';
 import { SetPrintNumberComponent } from './printpreview/set-print-number/set-print-number.component';
 import { ReceiptShipmentAgentComponent } from './receipt-shipment-agent/receipt-shipment-agent.component';
+import { ReceiptsAndExchangesComponent } from './receipts-and-exchanges/receipts-and-exchanges.component';
 import { ShipmentInStockComponent } from './shipment-in-stock/shipment-in-stock.component';
 import { ShipmentsNotBeenDeliveredComponent } from './shipments-not-been-delivered/shipments-not-been-delivered.component';
 import { ShipmentsOnWayComponent } from './shipments-on-way/shipments-on-way.component';
@@ -101,6 +102,11 @@ const routes: Routes = [
   {
     path:'clientprint',
     component: ClientPrintComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
+  },
+  {
+    path:'receiptsandexchanges',
+    component: ReceiptsAndExchangesComponent,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowReports]}
   },
 ];

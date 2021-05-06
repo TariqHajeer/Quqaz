@@ -53,4 +53,7 @@ export class ClientService {
   Account(item){
     return this.http.post(this.controler+"Account",item)
   }
+  GetAccount(){
+    return this.http.get(this.controler+"Account")
+  }
 }

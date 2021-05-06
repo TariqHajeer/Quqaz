@@ -33,6 +33,7 @@ import { ReceiptSetPrintNumberClientComponent } from './print/receipt-set-print-
 import { OrderVicdanAgentComponent } from './order-vicdan-agent/order-vicdan-agent.component';
 import { ClientPrintComponent } from './client-print/client-print.component';
 import { AgentPrintComponent } from './agent-print/agent-print.component';
+import { ReceiptsAndExchangesComponent } from './receipts-and-exchanges/receipts-and-exchanges.component';
 @NgModule({
   declarations: [ShipmentInStockComponent,
     ClientOrderComponent,
@@ -52,7 +53,8 @@ import { AgentPrintComponent } from './agent-print/agent-print.component';
     ReceiptSetPrintNumberClientComponent,
     OrderVicdanAgentComponent,
     ClientPrintComponent,
-    AgentPrintComponent,],
+    AgentPrintComponent,
+    ReceiptsAndExchangesComponent,],
   imports: [
     CommonModule,
     ReportsRoutingModule,

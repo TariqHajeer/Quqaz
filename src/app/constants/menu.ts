@@ -122,7 +122,7 @@ const data: IMenuItem[] = [
           },
           {
             icon: 'simple-icon-layers',
-            label: 'شحنات حسب رقم الطباعة ',
+            label: 'عمليات الطباعة ',
             to: `${adminRoot}/reports/agentprint`,
             //permission:[UserPermission.ShowOrder]
 
@@ -141,11 +141,11 @@ const data: IMenuItem[] = [
             //permission:[UserPermission.ShowOrder]
 
           },
-          // {
-          //   icon: 'simple-icon-layers',
-          //   label: 'ارجاع الشحنات',
-          //   to: `${adminRoot}/reports/clientorder`,
-          // },
+          {
+            icon: 'simple-icon-layers',
+            label: ' صرف وقبض ',
+            to: `${adminRoot}/reports/receiptsandexchanges`,
+          },
           {
             icon: 'simple-icon-layers',
             label: 'شحنات حسب رقم الطباعة ',
@@ -156,7 +156,7 @@ const data: IMenuItem[] = [
           },
           {
             icon: 'simple-icon-layers',
-            label: 'شحنات حسب رقم الطباعة ',
+            label: 'عمليات الطباعة ',
             to: `${adminRoot}/reports/clientprint`,
             //permission:[UserPermission.ShowOrder]
 
