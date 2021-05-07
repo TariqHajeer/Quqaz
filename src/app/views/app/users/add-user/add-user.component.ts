@@ -95,6 +95,7 @@ export class AddUserComponent implements OnInit, OnChanges {
         this.submitted = false;
       }
     }
+    this.CreateUser.Salary=this.CreateUser.Salary*1
     this.UserService.Creat(this.CreateUser).subscribe(
       res => {
         if (this.addClicked) {

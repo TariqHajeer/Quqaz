@@ -125,6 +125,9 @@
                     الهاتف
                 </th>
                 <th>
+                    حالة الشحنة
+                </th>
+                <th>
                     المبلغ القديم
                 </th>
                 <th>
@@ -133,27 +136,34 @@
                 <!--<th *ngFor="let head of heads" style="font-size: 20px;">{{head}}</th>-->
             </thead>
             <tbody>
-                <tr *ngFor="let order of orders;index as i"[ngClass]="RowClass(order)">
+                <tr *ngFor="let order of orders;index as i"
+                [ngClass]="{ 
+                    'delay': order.order.orderplaced.id==8,
+                'Holisticrebound': order.order.orderplaced.id==5,
+                'Partialrefund': order.order.orderplaced.id==6,
+                'unacceptable': order.order.orderplaced.id==7,
+                'Delivery': order.order.orderplaced.id==4,
+                'default': order.order.orderplaced.id==3}">
                     <td style="width: 5px;">
                         {{i+1}}
                     </td>
                     <td>
-                        {{order.code}}
+                        {{order.order.code}}
                     </td>
                     <td>
-                        {{order.date| date: 'yyyy/MM/dd'}}
+                        {{order.order.date| date: 'yyyy/MM/dd'}}
                     </td>
                     <td>
-                        {{order.cost}}
+                        {{order.order.cost}}
                     </td>
                     <td>
-                        {{order.deliveryCost}}
+                        {{order.order.deliveryCost}}
                     </td>
                     <td>
-                        {{order.cost-order.deliveryCost}}
+                        {{order.order.cost-order.order.deliveryCost}}
                     </td>
                     <td>
-                        {{order.country!=null||order.country!=undefined?order.country.name:null}}
+                        {{order.order.country!=null||order.order.country!=undefined?order.order.country.name:null}}
                     </td>
                     <!--   <td>
                         {{order.monePlaced.name}}
@@ -162,13 +172,16 @@
                         {{order.orderplaced.name}}
                     </td>-->
                     <td>
-                        {{order.recipientPhones}}
+                        {{order.order.recipientPhones}}
                     </td>
                     <td>
-                        {{order.oldCost}}
+                        {{order.order.orderplaced.name}}
                     </td>
                     <td>
-                        {{order.note}}
+                        {{order.order.oldCost}}
+                    </td>
+                    <td>
+                        {{order.order.note}}
                     </td>
                 </tr>
 
@@ -186,7 +199,7 @@
                     <td>
                         {{count-deliveryCostCount}}
                     </td>
-                    <td colspan="4"></td>
+                    <td colspan="5"></td>
                 </tr>
                 <tr class=" table-bordered " style="font-size: 18px;background-color: rgba(144, 177, 240, 0.877);">
                     <td colspan="5">
@@ -197,7 +210,7 @@
                     <td>
                         {{client.total}}
                     </td>
-                    <td colspan="4"></td>
+                    <td colspan="5"></td>
                 </tr>
                 <tr class=" table-bordered trbordered" style="font-size: 18px;">
                     <td colspan="5">
@@ -207,7 +220,7 @@
                     <td>
                         {{(count-deliveryCostCount)+client.total}}
                     </td>
-                    <td colspan="4"></td>
+                    <td colspan="5"></td>
 
                 </tr>
             </tbody>

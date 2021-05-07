@@ -180,6 +180,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       this.notifications.create("error", "الشحنة مضافة مسبقا", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       return
     }
+    this.getorder.order.Cost= this.getorder.order.Cost*1
     this.getorders.push({ ...this.getorder })
     this.sumCost()
     this.showcount = true

@@ -230,6 +230,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     this.Order.ClientName = client.name
     var agent = this.Agents.find(c => c.id == this.Order.AgentId)
     this.Order.AgentName = agent.name
+    this.Order.Cost=this.Order.Cost*1
     this.Orders.push(this.Order)
     this.submitted = false
     this.Order = new CreateMultipleOrder

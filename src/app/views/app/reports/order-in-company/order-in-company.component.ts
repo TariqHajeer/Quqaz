@@ -155,7 +155,7 @@ export class OrderInCompanyComponent implements OnInit {
   }
   addOrders() {
 
-    this.getorder.order = { ...this.findorder[0] }
+    this.getorder.order = { ...this.findorder }
     this.getorder.MoenyPlaced = [...this.MoenyPlaced]
     this.getorder.OrderPlaced = [...this.orderPlace]
     this.getorder.canEditCount = true

@@ -41,8 +41,8 @@ export class PrintOrderInCompanyComponent implements OnInit {
     this.deliveryCostCount = 0
     if (this.orders)
       this.orders.forEach(o => {
-        this.count += o.cost
-        this.deliveryCostCount +=o.deliveryCost
+        this.count += o.order.cost
+        this.deliveryCostCount +=o.order.deliveryCost
       })
     return this.count
   }
@@ -50,7 +50,7 @@ export class PrintOrderInCompanyComponent implements OnInit {
   showPrintbtn = false
 
   changeDeleiverMoneyForClient() {
-    this.orderservice.DeleiverMoneyForClient(this.orders.map(o => o.id)).subscribe(res => {
+    this.orderservice.DeleiverMoneyForClientWithStatus(this.orders.map(o => o.order.id)).subscribe(res => {
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.showPrintbtn = true
       this.printnumber=res.printNumber
@@ -78,7 +78,8 @@ export class PrintOrderInCompanyComponent implements OnInit {
    
     
   }
-  RowClass(order){
+  RowClass(order):string{
+    console.log(order)
     switch(order.orderplaced.id){
       case"5":
       return"Holisticrebound"

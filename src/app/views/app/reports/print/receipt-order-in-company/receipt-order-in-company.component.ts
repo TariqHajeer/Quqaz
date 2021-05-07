@@ -38,8 +38,8 @@ export class ReceiptOrderInCompanyComponent implements OnInit {
     this.deliveryCostCount = 0
     if (this.orders)
       this.orders.forEach(o => {
-        this.count += o.cost
-        this.deliveryCostCount +=  o.deliveryCost
+        this.count += o.order.cost
+        this.deliveryCostCount +=o.order.deliveryCost
       })
     return this.count
   }
