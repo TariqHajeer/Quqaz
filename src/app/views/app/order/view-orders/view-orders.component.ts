@@ -16,6 +16,7 @@ import { CustomService } from 'src/app/services/custom.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/Models/user/user.model';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { NotificationsService, NotificationType } from 'angular2-notifications';
 
 @Component({
   selector: 'app-view-orders',
@@ -46,7 +47,8 @@ export class ViewOrdersComponent implements OnInit {
     private clientService: ClientService
     , private customerService: CustomService,
     private userService: UserService,
-    public spinner: NgxSpinnerService) { }
+    public spinner: NgxSpinnerService,
+    private notifications: NotificationsService,) { }
 
   ngOnInit(): void {
     this.paging = new Paging
@@ -103,6 +105,7 @@ export class ViewOrdersComponent implements OnInit {
   }
   delete(element) {
     this.orderservice.Delete(element.id).subscribe(res => {
+      this.notifications.create('success', 'تم  حذف الطلبية بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.allFilter()
     })
   }
