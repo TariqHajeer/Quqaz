@@ -195,6 +195,8 @@ export class OrderInCompanyComponent implements OnInit {
 
   changeCost(element, index) {
     element.order.cost=element.order.cost*1
+    this.sumCost()
+
     // if (this.orderplacedstate.rangeCost(element, this.temporderscost[index])) {
     //   element.messageCost = ""
     // } else

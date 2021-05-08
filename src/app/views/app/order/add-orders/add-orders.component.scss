@@ -1,3 +1,7 @@
-ng-select[disabled]{
-    cursor: not-allowed;
+.ng-select{
+    .ng-select-container{
+        cursor: not-allowed;
+        background-color: rgb(206, 206, 206);
+        }
+   
    }
