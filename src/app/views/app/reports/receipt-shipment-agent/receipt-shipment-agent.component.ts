@@ -181,7 +181,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       return
     }
     this.getorder.order.Cost= this.getorder.order.Cost*1
-    this.getorders.push({ ...this.getorder })
+    this.getorders.unshift({ ...this.getorder })
     this.sumCost()
     this.showcount = true
     this.dataSource = new MatTableDataSource(this.getorders)
@@ -222,10 +222,11 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   }
 
   changeCost(element, index) {
-    if (this.orderplacedstate.rangeCost(element, this.temporderscost[index])) {
-      element.messageCost = ""
-    } else
-      element.messageCost = " الكلفة لايمكن أن تتجاوز " + this.temporderscost[index]
+    element.order.cost=element.order.cost*1
+    // if (this.orderplacedstate.rangeCost(element, this.temporderscost[index])) {
+    //   element.messageCost = ""
+    // } else
+    //   element.messageCost = " الكلفة لايمكن أن تتجاوز " + this.temporderscost[index]
   }
   switchPage(event: PageEvent) {
     this.paging.allItemsLength = event.length

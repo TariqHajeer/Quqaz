@@ -49,7 +49,11 @@
                     <td>
                         <div class="content">
                 <tr style="  margin-bottom: 20%;font-size: 18px;" class=" table-bordered"
-                    *ngFor="let order of orders;index as i"
+                    *ngFor="let order of orders;index as i">
+                    <td style="width: 5px;">
+                        {{i+1}}
+                    </td>
+                    <td
                     [ngClass]="{ 
                         'delay': order.order.orderplaced.id==8,
                     'Holisticrebound': order.order.orderplaced.id==5,
@@ -57,10 +61,6 @@
                     'unacceptable': order.order.orderplaced.id==7,
                     'Delivery': order.order.orderplaced.id==4,
                     'default': order.order.orderplaced.id==3}">
-                    <td style="width: 5px;">
-                        {{i+1}}
-                    </td>
-                    <td>
                         {{order.order.code}}
                     </td>
                     <td>

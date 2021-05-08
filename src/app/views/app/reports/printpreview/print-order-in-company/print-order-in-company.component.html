@@ -136,18 +136,18 @@
                 <!--<th *ngFor="let head of heads" style="font-size: 20px;">{{head}}</th>-->
             </thead>
             <tbody>
-                <tr *ngFor="let order of orders;index as i"
-                [ngClass]="{ 
-                    'delay': order.order.orderplaced.id==8,
-                'Holisticrebound': order.order.orderplaced.id==5,
-                'Partialrefund': order.order.orderplaced.id==6,
-                'unacceptable': order.order.orderplaced.id==7,
-                'Delivery': order.order.orderplaced.id==4,
-                'default': order.order.orderplaced.id==3}">
+                <tr *ngFor="let order of orders;index as i">
                     <td style="width: 5px;">
                         {{i+1}}
                     </td>
-                    <td>
+                    <td
+                    [ngClass]="{ 
+                        'delay': order.order.orderplaced.id==8,
+                    'Holisticrebound': order.order.orderplaced.id==5,
+                    'Partialrefund': order.order.orderplaced.id==6,
+                    'unacceptable': order.order.orderplaced.id==7,
+                    'Delivery': order.order.orderplaced.id==4,
+                    'default': order.order.orderplaced.id==3}">
                         {{order.order.code}}
                     </td>
                     <td>
