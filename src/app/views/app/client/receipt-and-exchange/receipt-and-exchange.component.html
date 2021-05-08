@@ -106,7 +106,7 @@
                     <hr style="border-bottom: black 2px dotted;width: 80%;">
                 </div>
                 <div class="col-12">
-                    مبلغ قدره : &nbsp;{{client.Amount}}
+                    مبلغ قدره : &nbsp;{{client.IsPay?client.Amount*-1:client.Amount}}
                     <hr style="border-bottom: black 2px dotted;width: 80%;">
                 </div>
                 <div class="col-12">

@@ -19,7 +19,7 @@ import { OrderState } from 'src/app/Models/order/order.model';
 })
 export class ReceiptShipmentAgentComponent implements OnInit {
 
-  displayedColumns: string[] = ['code','client', 'country', 'region'
+  displayedColumns: string[] = ['code', 'client', 'country', 'region'
     , 'cost', 'isClientDiliverdMoney', 'orderplaced', 'monePlaced', 'edit'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
@@ -134,7 +134,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   findorder
   Ordersfilter: any[] = []
   addOrder() {
-    this.Ordersfilter=[]
+    this.Ordersfilter = []
     this.showTable = false
 
     if (this.Code) {
@@ -142,7 +142,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
         this.findorder = res
         if (this.findorder) {
           if (this.findorder.length == 1) {
-           this.addOrders()
+            this.addOrders()
           }
           else if (this.findorder.length > 1) {
             this.showTable = true
@@ -161,8 +161,8 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     } else this.notifications.create("error", " يجب اضافة كود الشحنة  ", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
 
   }
-  addOrders(){
-    
+  addOrders() {
+
     this.getorder.order = { ...this.findorder[0] }
     this.getorder.MoenyPlaced = [...this.MoenyPlaced]
     this.getorder.OrderPlaced = [...this.orderPlace]
@@ -175,11 +175,11 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2) {
       this.getorder.order.orderplaced = this.getorder.OrderPlaced.find(o => o.id == 3)
     }
-    if (this.getorders.filter(o => o.order.code == this.getorder.order .code&&o.order.client.id==this.getorder.order.client.id).length > 0) {
+    if (this.getorders.filter(o => o.order.code == this.getorder.order.code && o.order.client.id == this.getorder.order.client.id).length > 0) {
       this.notifications.create("error", "الشحنة مضافة مسبقا", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       return
     }
-    this.getorder.order.Cost= this.getorder.order.Cost*1
+    this.getorder.order.Cost = this.getorder.order.Cost * 1
     this.getorders.unshift({ ...this.getorder })
     this.sumCost()
     this.showcount = true
@@ -193,7 +193,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   }
   showTable: boolean = false
   add(order) {
-    this.findorder=this.Ordersfilter.filter(o=>o==order)
+    this.findorder = this.Ordersfilter.filter(o => o == order)
     this.addOrders()
     this.Ordersfilter = this.Ordersfilter.filter(o => o != order)
     if (this.Ordersfilter.length == 0) {
@@ -221,7 +221,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   }
 
   changeCost(element, index) {
-    element.order.cost=element.order.cost*1
+    element.order.cost = element.order.cost * 1
     this.sumCost()
     // if (this.orderplacedstate.rangeCost(element, this.temporderscost[index])) {
     //   element.messageCost = ""
@@ -271,7 +271,6 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       this.orderstates.push(this.orderstate)
       this.orderstate = new OrderState
     }
-
     this.orderservice.UpdateOrdersStatusFromAgent(this.orderstates).subscribe(res => {
       this.allFilter()
       this.orderstates = []
@@ -282,8 +281,8 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     })
   }
 
-  CancelOrder(order){
-    this.getorders=this.getorders.filter(o=>o!=order);
+  CancelOrder(order) {
+    this.getorders = this.getorders.filter(o => o != order);
     var index = this.dataSource.data.indexOf(order);
     this.dataSource.data.splice(index, 1);
     this.dataSource._updateChangeSubscription();
