@@ -30,7 +30,6 @@ export class ClientPrintComponent implements OnInit {
   noDataFound: boolean = false
   Get() {
     this.orderService.GetClientprint(this.paging).subscribe(res => {
-      console.log(res)
       this.dataSource = new MatTableDataSource(res)
       this.totalCount = res.total
 

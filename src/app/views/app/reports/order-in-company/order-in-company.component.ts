@@ -137,7 +137,6 @@ export class OrderInCompanyComponent implements OnInit {
     if (this.Code) {
       this.orderservice.OrderInCompany(this.ClientId, this.Code).subscribe(res => {
         this.findorder = res
-        console.log(res)
         if (this.findorder) {
           this.addOrders()
         }
@@ -195,10 +194,11 @@ export class OrderInCompanyComponent implements OnInit {
   }
 
   changeCost(element, index) {
-    if (this.orderplacedstate.rangeCost(element, this.temporderscost[index])) {
-      element.messageCost = ""
-    } else
-      element.messageCost = " الكلفة لايمكن أن تتجاوز " + this.temporderscost[index]
+    element.order.cost=element.order.cost*1
+    // if (this.orderplacedstate.rangeCost(element, this.temporderscost[index])) {
+    //   element.messageCost = ""
+    // } else
+    //   element.messageCost = " الكلفة لايمكن أن تتجاوز " + this.temporderscost[index]
   }
   // switchPage(event: PageEvent) {
   //   this.paging.allItemsLength = event.length

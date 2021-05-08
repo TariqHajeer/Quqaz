@@ -79,7 +79,6 @@ export class PrintOrderInCompanyComponent implements OnInit {
     
   }
   RowClass(order):string{
-    console.log(order)
     switch(order.orderplaced.id){
       case"5":
       return"Holisticrebound"
