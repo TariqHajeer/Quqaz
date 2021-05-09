@@ -4,11 +4,12 @@
 import { UserPermission } from '../app/shared/auth.roles';
 
 export const environment = {
- // baseUrl: "http://tariqhajeer2-001-site1.etempurl.com/",
-   baseUrl:"https://localhost:44333/",
+  //baseUrl: "http://tariqhajeer2-001-site1.etempurl.com/",
+  baseUrl: "backend.quqaz.com",
+  //baseUrl:"https://localhost:44333/",
   production: true,
   SCARF_ANALYTICS: false,
-  adminRoot: '/app',
+  adminRoot: '/app',  
   apiUrl: 'https://api.coloredstrategies.com',
   defaultMenuType: 'menu-default',
   subHiddenBreakpoint: 1440,
