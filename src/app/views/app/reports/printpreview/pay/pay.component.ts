@@ -49,9 +49,10 @@ export class PayComponent implements OnInit {
 
 
   }
-  ClientBlanace: ClientBlanace[] = []
+  ClientBlanace:any[] = []
   get() {
     this.staticService.ClientBalance().subscribe(res => {
+      console.log(res)
       this.ClientBlanace = res
       this.count()
     })
@@ -60,8 +61,7 @@ export class PayComponent implements OnInit {
   totalaccount = 0
   count() {
     this.ClientBlanace.forEach(c => {
-      this.totalOrder += c.totalOrder
-      this.totalaccount+=c.account
+      this.totalOrder += c.amount
     })
   }
 }

@@ -68,22 +68,16 @@ styleSheetFile="/assets/css/vendor/bootstrap.min.css" [useExistingCss]="true" ng
        <table class="table1 " >
   <thead>
     <th>العميل</th>
-    <th>حساب الطلبات</th>
-    <th>حساب</th>
-    <th>الإجمالي</th>
+    <th>المبلغ</th>
   </thead>
   <tbody>
     <tr *ngFor="let clientBlanace of ClientBlanace">
       <td>{{clientBlanace.clientName}}</td>
-      <td>{{clientBlanace.totalOrder}}</td>
-      <td>{{clientBlanace.account}}</td>
-      <td>{{clientBlanace.account+clientBlanace.totalOrder}}</td>
+      <td>{{clientBlanace.amount}}</td>
     </tr>
     <tr style="background-color: rgb(216, 212, 212);">
       <td>الإجمالي </td>
       <td>{{totalOrder}}</td>
-      <td>{{totalaccount}}</td>
-      <td>{{totalOrder+totalaccount}}</td>
     </tr>
   </tbody>
 </table>

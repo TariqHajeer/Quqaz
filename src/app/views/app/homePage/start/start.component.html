@@ -331,13 +331,13 @@
 <div class="row">
   <div class="col-md-3 col-sm-4">
 
-    <div class="wrimagecard wrimagecard-topimage" style="text-align: center;">
+    <div class="wrimagecard wrimagecard-topimage text-muted"(click)="client()" style="text-align: center;">
       <a >
         <div class="wrimagecard-topimage_header" style="background-color:rgba(99, 172, 221, 0.1);text-align: center; ">
           <i class="fa fa-users" style="color:#0e82b8;"></i>
         </div>
         <div class="wrimagecard-topimage_title">
-          <h4 (click)="client()">عدد العملاء
+          <h4 >عدد العملاء
             <div class="pull-right badge">{{MainStatics.totalClient}}</div>
           </h4>
         </div>
@@ -345,13 +345,13 @@
     </div>
   </div>
   <div class="col-md-3 col-sm-4">
-    <div class="wrimagecard wrimagecard-topimage" style="text-align: center;">
+    <div class="wrimagecard wrimagecard-topimage text-muted"(click)="user()" style="text-align: center;">
       <a >
         <div class="wrimagecard-topimage_header" style="background-color:rgba(99, 172, 221, 0.1);text-align: center; ">
           <i class="fa fa-users" style="color:#0e82b8;"></i>
         </div>
         <div class="wrimagecard-topimage_title">
-          <h4 (click)="user()">عدد المندوبين
+          <h4 >عدد المندوبين
             <div class="pull-right badge">{{MainStatics.totalAgent}}</div>
           </h4>
         </div>
@@ -361,13 +361,13 @@
   </div>
   <div class="col-md-3 col-sm-4">
 
-    <div class="wrimagecard wrimagecard-topimage" style="text-align: center;">
+    <div class="wrimagecard wrimagecard-topimage text-muted" (click)="user()"style="text-align: center;">
       <a >
         <div class="wrimagecard-topimage_header" style="background-color:rgba(99, 172, 221, 0.1);text-align: center; ">
           <i class="fa fa-users" style="color:#0e82b8;"></i>
         </div>
         <div class="wrimagecard-topimage_title">
-          <h4 (click)="user()">الموظفين
+          <h4 >الموظفين
           </h4>
         </div>
       </a>
@@ -378,13 +378,13 @@
 
 <div class="row">
   <div class="col-sm-6 col-md-3">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="neworders()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2></h2><span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
-          <span class="text-muted"(click)="neworders()"> الطلبات الجديدة </span>
+          <span class="text-muted"> الطلبات الجديدة </span>
         </div>
       </div>
       <div class="stat-card__icon stat-card__icon--danger">
@@ -396,13 +396,13 @@
   </div>
 
   <div class="col-sm-6 col-md-3">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="order()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2> </h2><span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
-          <span class="text-muted"(click)="order()">عرض الطلبات</span>
+          <span class="text-muted">عرض الطلبات</span>
 
 
         </div>
@@ -416,14 +416,14 @@
   </div>
 
   <div class="col-sm-6 col-md-3">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="ReceiptShipmentAgentComponent()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2></h2>
         <span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
-          <span class="text-muted"(click)="ReceiptShipmentAgentComponent()">استلام حالة الشحنة</span>
+          <span class="text-muted">استلام حالة الشحنة</span>
         </div>
       </div>
       <div class="stat-card__icon stat-card__icon--success">
@@ -434,14 +434,14 @@
     </div>
   </div>
   <div class="col-sm-6 col-md-3 ">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="addorder()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2> </h2>
         <span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
-          <span class="text-muted"(click)="addorder()">  إضافة طلب</span>
+          <span class="text-muted">  إضافة طلب</span>
         </div>
       </div>
       <div class="stat-card__icon stat-card__icon--warning">
@@ -452,14 +452,14 @@
     </div>
   </div>
   <div class="col-sm-6 col-md-3 ">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="addMulitpleOrders()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2> </h2>
         <span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
-          <span class="text-muted"(click)="addMulitpleOrders()">إضافة طلبات متعددة </span>
+          <span class="text-muted">إضافة طلبات متعددة </span>
         </div>
       </div>
       <div class="stat-card__icon stat-card__icon--warning">
@@ -470,14 +470,14 @@
     </div>
   </div>
   <div class="col-sm-6 col-md-3 ">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="addMulitpleOrdersfromClient()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2> </h2>
         <span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
-          <span class="text-muted"(click)="addMulitpleOrdersfromClient()"> إضافة طلبات متعددة للعميل</span>
+          <span class="text-muted"> إضافة طلبات متعددة للعميل</span>
         </div>
       </div>
       <div class="stat-card__icon stat-card__icon--warning">
@@ -493,14 +493,14 @@
 
 <div class="row">
   <div class="col-sm-6 col-md-3">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="ShipmentInStock()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2></h2><span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
          <a>
-          <span class="text-muted"(click)="ShipmentInStock()"> كشف شحنات في المخزن </span>
+          <span class="text-muted"> كشف شحنات في المخزن </span>
          </a>
         </div>
       </div>
@@ -513,13 +513,13 @@
   </div>
 
   <div class="col-sm-6 col-md-3">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="Shipmentonway()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2> </h2><span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
-          <span class="text-muted"(click)="Shipmentonway()">كشف شحنات في الطريق </span>
+          <span class="text-muted">كشف شحنات في الطريق </span>
 
 
         </div>
@@ -533,14 +533,14 @@
   </div>
 
   <div class="col-sm-6 col-md-3">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="printsetprintnumberagentpreview()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2></h2>
         <span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
-          <span class="text-muted"(click)="printsetprintnumberagentpreview()">كشف شحنات للمندوب  حسب رقم الطباعة </span>
+          <span class="text-muted">كشف شحنات للمندوب  حسب رقم الطباعة </span>
         </div>
       </div>
       <div class="stat-card__icon stat-card__icon--success">
@@ -551,14 +551,14 @@
     </div>
   </div>
   <div class="col-sm-6 col-md-3 ">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="Shipmentsnotbeendelivered()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2> </h2>
         <span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
-          <span class="text-muted"(click)="Shipmentsnotbeendelivered()"> تسديد العميل</span>
+          <span class="text-muted"> تسديد العميل</span>
         </div>
       </div>
       <div class="stat-card__icon stat-card__icon--warning">
@@ -569,14 +569,14 @@
     </div>
   </div>
   <div class="col-sm-6 col-md-3 ">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="printsetprintnumberclientpreview()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2> </h2>
         <span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
-          <span class="text-muted"(click)="printsetprintnumberclientpreview()"> كشف شحنات العميل حسب رقم الطباعة </span>
+          <span class="text-muted"> كشف شحنات العميل حسب رقم الطباعة </span>
         </div>
       </div>
       <div class="stat-card__icon stat-card__icon--warning">
@@ -587,14 +587,14 @@
     </div>
   </div>
   <div class="col-sm-6 col-md-3 ">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="ProfitsOfOrders()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2> </h2>
         <span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
-          <span class="text-muted"(click)="ProfitsOfOrders()"> ارباح الطلبيات</span>
+          <span class="text-muted"> ارباح الطلبيات</span>
         </div>
       </div>
       <div class="stat-card__icon stat-card__icon--warning">
@@ -605,14 +605,14 @@
     </div>
   </div>
   <div class="col-sm-6 col-md-3 ">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="Statistics()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2> </h2>
         <span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
-          <span class="text-muted"(click)="Statistics()"> الاحصائيات</span>
+          <span class="text-muted"> الاحصائيات</span>
         </div>
       </div>
       <div class="stat-card__icon stat-card__icon--warning">
@@ -623,14 +623,14 @@
     </div>
   </div>
   <div class="col-sm-6 col-md-3 ">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="AgentStatistics()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2> </h2>
         <span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
-          <span class="text-muted"(click)="AgentStatistics()"> تفاصيل المندوبين</span>
+          <span class="text-muted"> تفاصيل المندوبين</span>
         </div>
       </div>
       <div class="stat-card__icon stat-card__icon--warning">
@@ -641,14 +641,14 @@
     </div>
   </div>
   <div class="col-sm-6 col-md-3 ">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="OrderVicdanAgent()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2> </h2>
         <span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
-          <span class="text-muted"(click)="OrderVicdanAgent()"> طلبات في ذمة المندوب </span>
+          <span class="text-muted"> طلبات في ذمة المندوب </span>
         </div>
       </div>
       <div class="stat-card__icon stat-card__icon--warning">
@@ -659,14 +659,14 @@
     </div>
   </div>
   <div class="col-sm-6 col-md-3 ">
-    <div class="stat-card">
+    <div class="stat-card text-muted" (click)="pay()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2> </h2>
         <span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
-          <span class="text-muted"(click)="pay()"> المقاصة </span>
+          <span class="text-muted"> المقاصة </span>
         </div>
       </div>
       <div class="stat-card__icon stat-card__icon--warning">
@@ -681,13 +681,13 @@
 
 <div class="row">
   <div class="col-sm-6 col-md-3">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="outcome()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2></h2><span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
-          <span class="text-muted"(click)="outcome()"> صادرات </span>
+          <span class="text-muted"> صادرات </span>
         </div>
       </div>
       <div class="stat-card__icon stat-card__icon--danger">
@@ -698,14 +698,14 @@
     </div>
   </div>
   <div class="col-sm-6 col-md-3 ">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="income()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2> </h2>
         <span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
-          <span class="text-muted"(click)="income()">واردات</span>
+          <span class="text-muted">واردات</span>
         </div>
       </div>
       <div class="stat-card__icon stat-card__icon--warning">
@@ -722,14 +722,14 @@
 
 <div class="row">
   <div class="col-sm-6 col-md-3">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="cities()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2></h2><span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
          <a>
-          <span class="text-muted"(click)="cities()"> المدن </span>
+          <span class="text-muted"> المدن </span>
          </a>
         </div>
       </div>
@@ -742,13 +742,13 @@
   </div>
 
   <div class="col-sm-6 col-md-3">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="region()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2> </h2><span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
-          <span class="text-muted"(click)="region()">المناطق</span>
+          <span class="text-muted">المناطق</span>
 
 
         </div>
@@ -762,14 +762,14 @@
   </div>
 
   <div class="col-sm-6 col-md-3">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="outcomeType()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2></h2>
         <span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
-          <span class="text-muted"(click)="outcomeType()">أنواع الصادرات</span>
+          <span class="text-muted">أنواع الصادرات</span>
         </div>
       </div>
       <div class="stat-card__icon stat-card__icon--success">
@@ -780,14 +780,14 @@
     </div>
   </div>
   <div class="col-sm-6 col-md-3 ">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="incometype()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2> </h2>
         <span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
-          <span class="text-muted"(click)="incometype()">أنواع الواردات</span>
+          <span class="text-muted">أنواع الواردات</span>
         </div>
       </div>
       <div class="stat-card__icon stat-card__icon--warning">
@@ -798,14 +798,14 @@
     </div>
   </div>
   <div class="col-sm-6 col-md-3 ">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="ordertype()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2> </h2>
         <span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
-          <span class="text-muted"(click)="ordertype()"> أنواع الشحنات</span>
+          <span class="text-muted"> أنواع الشحنات</span>
         </div>
       </div>
       <div class="stat-card__icon stat-card__icon--warning">
@@ -816,14 +816,14 @@
     </div>
   </div>
   <div class="col-sm-6 col-md-3 ">
-    <div class="stat-card">
+    <div class="stat-card text-muted"(click)="group()">
       <div class="stat-card__content">
         <p class="text-uppercase mb-1 text-muted"></p>
         <h2> </h2>
         <span class="text-success font-weight-bold mr-1"> </span>
         <div>
 
-          <span class="text-muted"(click)="group()">المجموعات</span>
+          <span class="text-muted">المجموعات</span>
         </div>
       </div>
       <div class="stat-card__icon stat-card__icon--warning">

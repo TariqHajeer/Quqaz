@@ -88,7 +88,6 @@ export class ViewOrdersComponent implements OnInit {
   allFilter() {
     this.spinner.show()
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
-      console.log(response)
       this.spinner.hide()
       if (response.data.length == 0)
         this.noDataFound = true
@@ -132,14 +131,12 @@ export class ViewOrdersComponent implements OnInit {
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
-      console.log(res)
 
     })
   }
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
-      console.log(res)
     })
   }
   GetClient() {
