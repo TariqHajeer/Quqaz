@@ -53,7 +53,6 @@ export class ViewOrdersComponent implements OnInit {
   ngOnInit(): void {
     this.paging = new Paging
     this.filtering = new OrderFilter
-    this.allFilter()
     this.get()
     this.GetMoenyPlaced()
     this.GetorderPlace()
@@ -61,6 +60,8 @@ export class ViewOrdersComponent implements OnInit {
     this.Getcities()
     this.GetClient()
     this.getAgent()
+    this.allFilter()
+
   }
   get() {
     this.dataSource = new MatTableDataSource(this.orders);
@@ -87,11 +88,21 @@ export class ViewOrdersComponent implements OnInit {
   allFilter() {
     this.spinner.show()
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
-     
+      console.log(response)
       this.spinner.hide()
       if (response.data.length == 0)
         this.noDataFound = true
       else this.noDataFound = false
+      response.data.forEach(element => {
+        if (element.orderStateId == 2) {
+          element.monePlaced.name="لديك مبلغ مع العميل"
+          element.orderplaced.name="لديك مبلغ مع العميل"
+        }
+        else if (element.orderStateId == 3) {
+          element.monePlaced=this.MoenyPlaced.find(m=>m.id==4)
+          element.orderplaced=this.orderPlace.find(o=>o.id==4)
+        }
+      });
       this.dataSource = new MatTableDataSource(response.data)
       this.totalCount = response.total
     },
@@ -121,11 +132,14 @@ export class ViewOrdersComponent implements OnInit {
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
+      console.log(res)
+
     })
   }
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
+      console.log(res)
     })
   }
   GetClient() {
