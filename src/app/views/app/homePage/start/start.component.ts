@@ -107,6 +107,9 @@ export class StartComponent implements OnInit {
   OrderVicdanAgent(){
     this.router.navigate(['/app/reports/OrderVicdanAgent'])
   }
+  agentprint(){
+    this.router.navigate(['/app/reports/agentprint'])
+  }
   printsetprintnumberagentpreview() {
     this.router.navigate(['/app/reports/printsetprintnumberagentpreview'])
   }
@@ -115,6 +118,12 @@ export class StartComponent implements OnInit {
   }
   printsetprintnumberclientpreview() {
     this.router.navigate(['/app/reports/printsetprintnumberclientpreview'])
+  }
+  clientprint(){
+    this.router.navigate(['/app/reports/clientprint'])
+  }
+  orderincompany(){
+    this.router.navigate(['/app/reports/orderincompany'])
   }
   ProfitsOfOrders() {
     this.router.navigate(['/app/reports/ProfitsOfOrders'])

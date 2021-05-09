@@ -52,7 +52,6 @@ export class PayComponent implements OnInit {
   ClientBlanace:any[] = []
   get() {
     this.staticService.ClientBalance().subscribe(res => {
-      console.log(res)
       this.ClientBlanace = res
       this.count()
     })
