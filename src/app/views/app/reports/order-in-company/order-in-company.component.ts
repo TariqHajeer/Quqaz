@@ -30,6 +30,7 @@ export class OrderInCompanyComponent implements OnInit {
   orders: any[] = []
   getorders: GetOrder[] = []
   getorder: GetOrder = new GetOrder()
+  temporders: GetOrder[] = []
   statu
   MoenyPlacedId
   MoenyPlaced: any[] = []
@@ -157,20 +158,21 @@ export class OrderInCompanyComponent implements OnInit {
     this.getorder.order = { ...this.findorder }
     this.getorder.MoenyPlaced = [...this.MoenyPlaced]
     this.getorder.OrderPlaced = [...this.orderPlace]
-    this.getorder.canEditCount = true
-    this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced)
-    this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced)
-    this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced)
-    this.orderplacedstate.unacceptable(this.getorder, this.MoenyPlaced)
-    this.orderplacedstate.isClientDiliverdMoney(this.getorder, this.MoenyPlaced)
-    if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2) {
-      this.getorder.order.orderplaced = this.getorder.OrderPlaced.find(o => o.id == 3)
-    }
+    // this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced)
+    // this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced)
+    // this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced)
+    // this.orderplacedstate.unacceptable(this.getorder, this.MoenyPlaced)
+    // this.orderplacedstate.isClientDiliverdMoney(this.getorder, this.MoenyPlaced)
+    // if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2) {
+    //   this.getorder.order.orderplaced = this.getorder.OrderPlaced.find(o => o.id == 3)
+    // }
     if (this.getorders.filter(o => o.order.code == this.getorder.order.code && o.order.client.id == this.getorder.order.client.id).length > 0) {
       this.notifications.create("error", "الشحنة مضافة مسبقا", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       return
     }
+    this.getorder.canEditCount=false
     this.getorders.push({ ...this.getorder })
+    this.temporders.push({ ...this.getorder })
     this.sumCost()
     this.showcount = true
     this.dataSource = new MatTableDataSource(this.getorders)
@@ -194,6 +196,7 @@ export class OrderInCompanyComponent implements OnInit {
   }
 
   changeCost(element, index) {
+    element.canEditCount=true
     element.order.cost=element.order.cost*1
     this.sumCost()
 
@@ -225,6 +228,7 @@ export class OrderInCompanyComponent implements OnInit {
 
   print() {
     localStorage.setItem('orderincompany',JSON.stringify(this.getorders))
+    localStorage.setItem('temporderincompany',JSON.stringify(this.temporders))
     localStorage.setItem('clientorderincompany',JSON.stringify(this.Clients.find(c=>c.id==this.ClientId)))
    this.route.navigate(['/app/reports/printorderincompany'])
   }

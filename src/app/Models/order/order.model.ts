@@ -29,3 +29,7 @@ export class OrderState {
       OrderplacedId: number
 
 }
+export class IdCost{
+      Id
+      Cost
+}
