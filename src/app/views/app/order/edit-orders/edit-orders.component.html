@@ -18,7 +18,7 @@
                 </div>
                 <div class="col-md-3">
                     <label>العميل<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                    <ng-select [(ngModel)]="Order.ClientId" (change)="CheckCode();changeAgentOrClient()" [ngModelOptions]="{standalone: true}"
+                    <ng-select [(ngModel)]="Order.ClientId" (change)="CheckCode()" [ngModelOptions]="{standalone: true}"
                         [closeOnSelect]="true" name="Client">
                         <ng-option *ngFor="let Client of clients" [value]="Client.id">{{Client.name}}</ng-option>
                     </ng-select>
@@ -101,14 +101,14 @@
 
                 <div class="col-md-3">
                     <label>التاريخ</label>
-                    <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
+                    <input type="text" [disabled]="true" readonly class="form-control" [ngModelOptions]="{standalone: true}"
                         [(ngModel)]="Order.Date" name="Date" bsDatepicker [container]="'html'"
                         [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
 
                 </div>
                 <div class="col-md-3">
                     <label>تاريخ التسليم</label>
-                    <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
+                    <input type="text" [disabled]="true" readonly class="form-control" [ngModelOptions]="{standalone: true}"
                         [(ngModel)]="Order.DiliveryDate" name="DiliveryDate" bsDatepicker [container]="'html'"
                         [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
 

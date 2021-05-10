@@ -100,6 +100,8 @@ export class AddOrdersComponent implements OnInit {
       this.Order.RegionId = null;
     }
     this.spinner.show()
+    this.Order.DeliveryCost=Number(this.Order.DeliveryCost)
+
     this.orderservice.Creat(this.Order).subscribe(res => {
       this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.int()

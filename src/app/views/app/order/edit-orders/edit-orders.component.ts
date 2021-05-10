@@ -77,6 +77,7 @@ this.getorder()
   }
   getorder() {
     var editorder = JSON.parse(localStorage.getItem('editorder')) 
+    this.Order.Id=editorder.id
     this.Order.Address = editorder.address
     this.Order.AgentId=editorder.agent.id
     this.Order.ClientId=editorder.client.id
@@ -113,8 +114,10 @@ this.getorder()
       this.Order.RegionName = this.Order.RegionId.label;
       this.Order.RegionId = null;
     }
-    this.orderservice.Creat(this.Order).subscribe(res => {
-     // this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    this.Order.DeliveryCost=Number(this.Order.DeliveryCost)
+    this.Order.RecipientPhones= [this.Order.RecipientPhones+""]
+    this.orderservice.Update(this.Order).subscribe(res => {
+      this.notifications.create('success', 'تم تعديل  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.int()
       localStorage.removeItem('editorder')
       this.router.navigate(['/app/order/'])
