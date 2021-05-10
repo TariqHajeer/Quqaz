@@ -26,6 +26,7 @@ export class CreateOrdersFromEmployee {
     Note:string
     RecipientPhones:string[]
     OrderTypeDtos:OrderItem[]
+    DeliveryCost
 }
 export class OrderItem{
     OrderTypeName:string

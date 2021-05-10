@@ -177,7 +177,7 @@ export class AddOrdersComponent implements OnInit {
     this.Region = []
     this.Order.RegionId = null
     var city = this.cities.find(c => c.id == this.Order.CountryId)
-    this.Order.Cost = city.deliveryCost
+    this.Order.DeliveryCost = city.deliveryCost
     this.Region = this.Regions.filter(r => r.country.id == this.Order.CountryId)
     this.Order.RegionId = this.Region[0].id
     this.Order.AgentId = this.Agents[0].id

@@ -18,7 +18,7 @@
                 </div>
                 <div class="col-md-3">
                     <label>العميل<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                    <ng-select [(ngModel)]="Order.ClientId" (change)="CheckCode()" [ngModelOptions]="{standalone: true}"
+                    <ng-select [(ngModel)]="Order.ClientId" (change)="CheckCode();changeAgentOrClient()" [ngModelOptions]="{standalone: true}"
                         [closeOnSelect]="true" name="Client">
                         <ng-option *ngFor="let Client of clients" [value]="Client.id">{{Client.name}}</ng-option>
                     </ng-select>
@@ -48,7 +48,7 @@
                 <div class="col-md-3">
                     <label>المندوب<span class="text-danger text-one align-bottom mx-1">*</span></label>
                     <ng-select [(ngModel)]="Order.AgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-                        name="Agent" placeholder="اختر مندوب">
+                        name="Agent" placeholder="اختر مندوب"  (change)="changeAgentOrClient()">
                         <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                     </ng-select>
                     <div *ngIf="!Order.AgentId && submitted" class="invalid-tooltip">المندوب حقل مطلوب</div>
@@ -58,32 +58,36 @@
                 <div class="col-md-3">
                     <label>كلفة التوصيل</label>
                     <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                        [(ngModel)]="Order.Cost" readonly>
+                    oninput="this.value = this.value.replace(/[^0-9.-]/g, '').replace(/(\..*)\./g, '$1');"
+
+                    [(ngModel)]="Order.DeliveryCost" >
                 </div>
 
                 <div class="col-md-3">
                     <label>الكلفة الكلية<span class="text-danger text-one align-bottom mx-1">*</span></label>
                     <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                        oninput="this.value = this.value.replace(/[^0-9.-]/g, '').replace(/(\..*)\./g, '$1');"
                         [(ngModel)]="Order.Amount">
                     <div *ngIf="!Order.Amount && submitted" class="invalid-tooltip">الكلفة حقل مطلوب</div>
                 </div>
                 <div class="col-md-3">
                     <label>موقع المبلغ<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                    <ng-select [(ngModel)]="Order.MoenyPlacedId" [ngModelOptions]="{standalone: true}"
-                        [closeOnSelect]="true" name="MonePlaced">
-                        <ng-option *ngFor="let moenyPlaced of MoenyPlaced" [value]="moenyPlaced.id">{{moenyPlaced.name}}
-                        </ng-option>
-                    </ng-select>
+                    <select [(ngModel)]="Order.MoenyPlacedId" [ngModelOptions]="{standalone: true}"
+                    class="custom-select"  style="font-size: 16px;" [disabled]="disabledselect">
+                       <option *ngFor="let moenyPlaced of MoenyPlaced" [value]="moenyPlaced.id">{{moenyPlaced.name}}</option>
+                       
+                     </select>
                     <div *ngIf="!Order.MoenyPlacedId && submitted" class="invalid-tooltip">موقع المبلغ حقل مطلوب</div>
-
+                   
                 </div>
                 <div class="col-md-3">
                     <label>حالة الشحنة<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                    <ng-select [(ngModel)]="Order.OrderplacedId" [ngModelOptions]="{standalone: true}"
-                        [closeOnSelect]="true" name="Orderplaced">
-                        <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}</ng-option>
-                    </ng-select>
+                   
+                    <select [(ngModel)]="Order.OrderplacedId" style="font-size: 16px;" [ngModelOptions]="{standalone: true}"
+                    class="custom-select" [disabled]="disabledselect">
+                       <option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}</option>
+                       
+                     </select>
                     <div *ngIf="!Order.OrderplacedId && submitted" class="invalid-tooltip">حالة الشحنة حقل مطلوب</div>
 
                 </div>

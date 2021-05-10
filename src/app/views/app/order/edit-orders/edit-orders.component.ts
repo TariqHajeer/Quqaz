@@ -185,11 +185,12 @@ this.getorder()
     this.count = null
 
   }
+  disabledselect=false
   changeCountry() {
     this.Region = []
     this.Order.RegionId = null
     var city = this.cities.find(c => c.id == this.Order.CountryId)
-    this.Order.Cost = city.deliveryCost
+    this.Order.DeliveryCost = city.deliveryCost
     this.Region = this.Regions.filter(r => r.country.id == this.Order.CountryId)
     this.Agents = this.Agents.filter(r => r.countryId== this.Order.CountryId)
     if(this.Agents.length==1)
@@ -202,6 +203,12 @@ this.getorder()
     this.Order.RegionId =null
     this.Order.OrderplacedId = this.orderPlace[1].id
     this.Order.MoenyPlacedId = this.MoenyPlaced[0].id
+    this.disabledselect=true
+  }
+  changeAgentOrClient(){
+    this.Order.OrderplacedId = this.orderPlace[1].id
+    this.Order.MoenyPlacedId = this.MoenyPlaced[0].id
+    this.disabledselect=true
   }
   showMessageCode: boolean = false
   CheckCode() {
