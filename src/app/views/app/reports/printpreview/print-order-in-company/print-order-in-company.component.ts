@@ -31,6 +31,7 @@ export class PrintOrderInCompanyComponent implements OnInit {
   ngOnInit(): void {
     this.PrintNumberOrder = new PrintNumberOrder
     this.orders = JSON.parse(localStorage.getItem('orderincompany'))
+    console.log(this.orders)
     this.client = JSON.parse(localStorage.getItem('clientorderincompany'))
     this.sumCost()
   //  this.getPrintnumber()
