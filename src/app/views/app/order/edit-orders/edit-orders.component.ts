@@ -31,6 +31,7 @@ export class EditOrdersComponent implements OnInit {
     private router: Router,) { }
 
   Order: CreateOrdersFromEmployee
+  tempOrdercode
   submitted = false;
   orderPlace: NameAndIdDto[] = []
   MoenyPlaced: NameAndIdDto[] = []
@@ -80,6 +81,7 @@ this.getorder()
     this.Order.AgentId=editorder.agent.id
     this.Order.ClientId=editorder.client.id
     this.Order.Code = editorder.code
+    this.tempOrdercode= editorder.code
     this.Order.Amount=editorder.cost
     this.Order.CountryId=editorder.country.id
     this.Order.Date = editorder.date
@@ -90,7 +92,8 @@ this.getorder()
     this.Order.OrderTypeDtos=editorder.orderItems
     this.Order.OrderplacedId=editorder.orderplaced.id
     this.Order.RecipientName=editorder.recipientName
-    this.Order.RecipientPhones.push(editorder.recipientPhones)
+    this.Order.RecipientPhones=JSON.parse("["+editorder.recipientPhones+"]")
+    //this.Order.RecipientPhones.push(editorder.recipientPhones)
     this.Order.RegionId=editorder.region!=null?editorder.region.Id:null
 
 
@@ -202,7 +205,7 @@ this.getorder()
   }
   showMessageCode: boolean = false
   CheckCode() {
-    if (this.Order.ClientId != null && this.Order.ClientId != undefined) {
+    if (this.Order.ClientId != null && this.Order.ClientId != undefined&&this.Order.Code!=this.tempOrdercode) {
       this.orderservice.chekcCode(this.Order.Code, this.Order.ClientId).subscribe(res => {
         if (res) {
           this.showMessageCode = true
