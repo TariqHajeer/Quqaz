@@ -30,7 +30,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     , private customerService: CustomService,
     public userService: UserService,
     private notifications: NotificationsService,
-    public spinner: NgxSpinnerService) {super(spinner) }
+    public spinner: NgxSpinnerService) { super(spinner) }
 
   Order: CreateMultipleOrder
   EditOrder: CreateMultipleOrder
@@ -69,7 +69,10 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     this.EditOrder = new CreateMultipleOrder();
     this.submitted = false;
     this.int()
-
+    var order = JSON.parse(localStorage.getItem('refrshorder'))
+    if (order&&order.length != 0) {
+      this.Orders = order
+    }
   }
   int() {
     this.GetorderPlace()
@@ -83,7 +86,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
       this.Order.OrderplacedId = this.orderPlace[1].id
-      this.orderPlace= this.orderPlace.filter(o=>o.id!=1)
+      this.orderPlace = this.orderPlace.filter(o => o.id != 1)
 
     })
   }
@@ -91,7 +94,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
       this.GetAgents = res
-      this.Agents=this.GetAgents.filter(a=>a.countryId== this.Order.CountryId)
+      this.Agents = this.GetAgents.filter(a => a.countryId == this.Order.CountryId)
       // if(this.Agents.length!=0)
       // this.Order.AgentId = this.Agents[0].id
       // else this.Order.AgentId=null
@@ -110,27 +113,27 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
       this.cities = res
       // if( this.cities.length!=0)
       // this.Order.CountryId =  this.cities[0].id
-      
-     // this.changeCountry()
+
+      // this.changeCountry()
     })
   }
 
   changeCountry() {
 
     var city = this.cities.find(c => c.id == this.Order.CountryId)
-    this.Agents=this.GetAgents.filter(a=>a.countryId== this.Order.CountryId)
-    if(this.Agents.length!=0&&this.Agents.length==1)
-    this.Order.AgentId = this.Agents[0].id
-    else this.Order.AgentId=null
+    this.Agents = this.GetAgents.filter(a => a.countryId == this.Order.CountryId)
+    if (this.Agents.length != 0 && this.Agents.length == 1)
+      this.Order.AgentId = this.Agents[0].id
+    else this.Order.AgentId = null
     this.Order.DeliveryCost = city.deliveryCost
 
   }
   changeCountryEdit() {
     var city = this.cities.find(c => c.id == this.EditOrder.CountryId)
-    this.Agents=this.GetAgents.filter(a=>a.countryId== this.EditOrder.CountryId)
-    if(this.Agents.length!=0&&this.Agents.length==1)
-    this.EditOrder.AgentId = this.Agents[0].id
-    else this.EditOrder.AgentId=null
+    this.Agents = this.GetAgents.filter(a => a.countryId == this.EditOrder.CountryId)
+    if (this.Agents.length != 0 && this.Agents.length == 1)
+      this.EditOrder.AgentId = this.Agents[0].id
+    else this.EditOrder.AgentId = null
     this.EditOrder.DeliveryCost = city.deliveryCost
   }
   showMessageCode: boolean = false
@@ -139,7 +142,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     if (this.Order.Code != null && this.Order.Code != undefined) {
       this.orderservice.chekcCode(this.Order.Code, this.Order.ClientId).subscribe(res => {
 
-        if (res || this.Orders.filter(o => o.Code == this.Order.Code&&this.Order.ClientId==o.ClientId).length > 0) {
+        if (res || this.Orders.filter(o => o.Code == this.Order.Code && this.Order.ClientId == o.ClientId).length > 0) {
           this.showMessageCode = true
         } else
           this.showMessageCode = false
@@ -153,7 +156,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     if (this.EditOrder.Code != null) {
       this.orderservice.chekcCode(this.EditOrder.Code, this.EditOrder.ClientId).subscribe(res => {
         if (this.EditOrder.CanEdit == true)
-          if (res || this.Orders.filter(o => o.Code == this.EditOrder.Code && o != this.tempcode&&this.EditOrder.ClientId==o.ClientId).length > 0) {
+          if (res || this.Orders.filter(o => o.Code == this.EditOrder.Code && o != this.tempcode && this.EditOrder.ClientId == o.ClientId).length > 0) {
             order.showEditMessageCode = true
           } else
             order.showEditMessageCode = false
@@ -162,10 +165,10 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
   }
   RecipientPhoneslength = ""
   checkLengthPhoneNumber(phone) {
-    if (phone&&phone.length < 11) {
+    if (phone && phone.length < 11) {
       this.RecipientPhoneslength = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
       return true
-    } 
+    }
     else {
       this.RecipientPhoneslength = ""
       return false
@@ -173,10 +176,10 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
   }
   RecipientPhoneslengthEdit = ""
   checkLengthPhoneNumberForEdit(phone) {
-    if (phone&&phone.length < 11) {
+    if (phone && phone.length < 11) {
       this.RecipientPhoneslengthEdit = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
       return true
-    } 
+    }
     else {
       this.RecipientPhoneslengthEdit = ""
       return false
@@ -190,7 +193,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
       return
     } else this.submitted = false
     if (this.checkLengthPhoneNumber(this.Order.RecipientPhones))
-    return
+      return
     var country = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.CountryName = country.name
     var orderplace = this.orderPlace.find(c => c.id == this.Order.OrderplacedId)
@@ -199,8 +202,9 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     this.Order.ClientName = client.name
     var agent = this.Agents.find(c => c.id == this.Order.AgentId)
     this.Order.AgentName = agent.name
-    this.Order.Cost=this.Order.Cost*1
+    this.Order.Cost = this.Order.Cost * 1
     this.Orders.push(this.Order)
+    localStorage.setItem('refrshorder', JSON.stringify(this.Orders))
     this.submitted = false
     this.Order = new CreateMultipleOrder
     setTimeout(() => {
@@ -219,7 +223,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     order.CanEdit = true
     this.tempEdit = Object.assign({}, order);
     this.EditOrder = order
-    this.Agents=this.Agents.filter(a=>a.countryId== this.EditOrder.CountryId)
+    this.Agents = this.Agents.filter(a => a.countryId == this.EditOrder.CountryId)
 
   }
   Save(order: CreateMultipleOrder) {
@@ -231,7 +235,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
       return
     } else this.Editsubmitted = false
     if (this.checkLengthPhoneNumberForEdit(this.EditOrder.RecipientPhones))
-    return
+      return
     this.EditOrder.CanEdit = false
     var country = this.cities.find(c => c.id == this.EditOrder.CountryId)
     this.EditOrder.CountryName = country.name
@@ -242,6 +246,8 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     var agent = this.Agents.find(c => c.id == this.EditOrder.AgentId)
     this.EditOrder.AgentName = agent.name
     order = Object.assign(order, this.EditOrder);
+    localStorage.setItem('refrshorder', JSON.stringify(this.Orders))
+
 
   }
 
@@ -253,6 +259,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
   }
   delete(order) {
     this.Orders = this.Orders.filter(o => o != order)
+    localStorage.setItem('refrshorder', JSON.stringify(this.Orders))
   }
   submitedSave = false
   AddOrder() {
@@ -270,11 +277,14 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     //   o.AgentId=this.AgentId
     // })
     this.showSpinner()
+
     this.orderservice.createMultiple(this.Orders).subscribe(res => {
       this.hideSpinner()
       this.notifications.create('success', 'تم اضافة الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Orders = []
-    },err=>{
+      localStorage.setItem('refrshorder', JSON.stringify(this.Orders))
+
+    }, err => {
       this.hideSpinner()
     })
 

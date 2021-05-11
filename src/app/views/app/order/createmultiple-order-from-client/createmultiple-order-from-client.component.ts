@@ -65,7 +65,14 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     this.EditOrder = new CreateMultipleOrder();
     this.submitted = false;
     this.int()
-
+    var order = JSON.parse(localStorage.getItem('refrshorderclient'))
+    if (order && order.length != 0) {
+      this.Orders = order
+    }
+    var clientid=JSON.parse(localStorage.getItem('ClientId'))
+    if (clientid) {
+      this.ClientId = clientid
+    }
   }
   int() {
     this.GetorderPlace()
@@ -98,7 +105,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
       this.Order.OrderplacedId = this.orderPlace[1].id
-      this.orderPlace= this.orderPlace.filter(o=>o.id!=1)
+      this.orderPlace = this.orderPlace.filter(o => o.id != 1)
 
     })
   }
@@ -134,7 +141,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   changeCountry() {
     var city = this.cities.find(c => c == this.Order.Country)
     this.Agents = this.GetAgents.filter(a => a.countryId == this.Order.Country.id)
-    if (this.Agents.length != 0&&this.Agents.length == 1)
+    if (this.Agents.length != 0 && this.Agents.length == 1)
       this.Order.AgentId = this.Agents[0].id
     else this.Order.AgentId = null
     this.Order.DeliveryCost = city.deliveryCost
@@ -143,7 +150,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   changeCountryEdit() {
     var city = this.cities.find(c => c.id == this.EditOrder.Country)
     this.Agents = this.GetAgents.filter(a => a.countryId == this.EditOrder.Country.id)
-    if (this.Agents.length != 0&&this.Agents.length == 1)
+    if (this.Agents.length != 0 && this.Agents.length == 1)
       this.EditOrder.AgentId = this.Agents[0].id
     else this.EditOrder.AgentId = null
     this.EditOrder.DeliveryCost = city.deliveryCost
@@ -158,9 +165,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
           this.showMessageCode = false
       })
     });
-
-
-
+    localStorage.setItem('ClientId', this.ClientId)
   }
   CheckCode() {
     if (!this.Order.Code || !this.ClientId) return
@@ -172,6 +177,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
           this.showMessageCode = false
       })
     }
+    localStorage.setItem('ClientId', this.ClientId)
   }
   tempcode
   CheckCodeForEdit() {
@@ -230,8 +236,9 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     this.Order.ClientName = client.name
     var agent = this.Agents.find(c => c.id == this.Order.AgentId)
     this.Order.AgentName = agent.name
-    this.Order.Cost=this.Order.Cost*1
+    this.Order.Cost = this.Order.Cost * 1
     this.Orders.push(this.Order)
+    localStorage.setItem('refrshorderclient', JSON.stringify(this.Orders))
     this.submitted = false
     this.Order = new CreateMultipleOrder
     setTimeout(() => {
@@ -273,6 +280,8 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     var agent = this.Agents.find(c => c.id == this.EditOrder.AgentId)
     this.EditOrder.AgentName = agent.name
     order = Object.assign(order, this.EditOrder);
+    localStorage.setItem('refrshorderclient', JSON.stringify(this.Orders))
+
 
   }
 
@@ -284,6 +293,8 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   }
   delete(order) {
     this.Orders = this.Orders.filter(o => o != order)
+    localStorage.setItem('refrshorderclient', JSON.stringify(this.Orders))
+
   }
   submitedSave = false
   AddOrder() {
@@ -304,6 +315,8 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     this.orderservice.createMultiple(this.Orders).subscribe(res => {
       this.notifications.create('success', 'تم اضافة الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Orders = []
+      localStorage.setItem('refrshorderclient', JSON.stringify(this.Orders))
+
     })
 
   }
