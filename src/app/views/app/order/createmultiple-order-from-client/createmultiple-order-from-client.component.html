@@ -118,7 +118,7 @@
                         <h4 *ngIf="!order.CanEdit">{{order.Cost}}</h4>
                         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                             style="width: 100px;" *ngIf="order.CanEdit"
-                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                            oninput="this.value = this.value.replace(/[^0-9.]-/g, '').replace(/(\..*)\./g, '$1');"
                             [(ngModel)]="EditOrder.Cost" #Cost="ngModel">
 
                     </td>
@@ -236,8 +236,8 @@
 
                     <td>
                         <input [disabled]="!ClientId" type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                            (keyup.enter)="onEnter()" style="width: 100px;" [(ngModel)]="Order.Cost">
+                        oninput="this.value = this.value.replace(/[^0-9.]-/g, '').replace(/(\..*)\./g, '$1');"
+                        (keyup.enter)="onEnter()" style="width: 100px;" [(ngModel)]="Order.Cost">
 
                     </td>
                     <td>

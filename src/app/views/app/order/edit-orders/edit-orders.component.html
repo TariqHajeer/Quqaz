@@ -58,7 +58,7 @@
                 <div class="col-md-3">
                     <label>كلفة التوصيل</label>
                     <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                    oninput="this.value = this.value.replace(/[^0-9.-]/g, '').replace(/(\..*)\./g, '$1');"
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
 
                     [(ngModel)]="Order.DeliveryCost" >
                 </div>
@@ -66,9 +66,9 @@
                 <div class="col-md-3">
                     <label>الكلفة الكلية<span class="text-danger text-one align-bottom mx-1">*</span></label>
                     <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                        oninput="this.value = this.value.replace(/[^0-9.-]/g, '').replace(/(\..*)\./g, '$1');"
-                        [(ngModel)]="Order.Amount">
-                    <div *ngIf="!Order.Amount && submitted" class="invalid-tooltip">الكلفة حقل مطلوب</div>
+                    oninput="this.value = this.value.replace(/[^0-9.]-/g, '').replace(/(\..*)\./g, '$1');"
+                    [(ngModel)]="Order.Cost">
+                    <div *ngIf="!Order.Cost && submitted" class="invalid-tooltip">الكلفة حقل مطلوب</div>
                 </div>
                 <div class="col-md-3">
                     <label>موقع المبلغ<span class="text-danger text-one align-bottom mx-1">*</span></label>

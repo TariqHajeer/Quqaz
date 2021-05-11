@@ -77,17 +77,18 @@ this.getorder()
   }
   getorder() {
     var editorder = JSON.parse(localStorage.getItem('editorder')) 
+    console.log(editorder)
     this.Order.Id=editorder.id
     this.Order.Address = editorder.address
     this.Order.AgentId=editorder.agent.id
     this.Order.ClientId=editorder.client.id
     this.Order.Code = editorder.code
     this.tempOrdercode= editorder.code
-    this.Order.Amount=editorder.cost
+    this.Order.Cost=editorder.cost
     this.Order.CountryId=editorder.country.id
     this.Order.Date = editorder.date
     this.Order.DiliveryDate=editorder.diliveryDate
-    this.Order.Cost=editorder.deliveryCost
+    this.Order.DeliveryCost=editorder.deliveryCost
     this.Order.MoenyPlacedId=editorder.monePlaced.id
     this.Order.Note = editorder.note
     this.Order.OrderTypeDtos=editorder.orderItems
@@ -115,6 +116,7 @@ this.getorder()
       this.Order.RegionId = null;
     }
     this.Order.DeliveryCost=Number(this.Order.DeliveryCost)
+    this.Order.Cost = Number(this.Order.Cost)
     this.Order.RecipientPhones= [this.Order.RecipientPhones+""]
     this.orderservice.Update(this.Order).subscribe(res => {
       this.notifications.create('success', 'تم تعديل  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });

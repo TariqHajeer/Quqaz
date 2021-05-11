@@ -84,12 +84,12 @@ export class AddOrdersComponent implements OnInit {
       this.Order.RecipientPhones.push(this.tempPhone);
       this.tempPhone = ''
     }
- 
+
     if (this.showMessageCode || this.Order.RecipientPhones.length == 0 ||
       !this.Order.Cost || !this.Order.Code || !this.Order.ClientId
       || !this.Order.AgentId || !this.Order.CountryId
-      || !this.Order.OrderplacedId || !this.Order.MoenyPlacedId||
-      this.RecipientPhoneslengthEdit!=null||this.RecipientPhoneslength!=null) {
+      || !this.Order.OrderplacedId || !this.Order.MoenyPlacedId ||
+      this.RecipientPhoneslengthEdit != null || this.RecipientPhoneslength != null) {
       this.submitted = true;
       return
     } else
@@ -100,7 +100,8 @@ export class AddOrdersComponent implements OnInit {
       this.Order.RegionId = null;
     }
     this.spinner.show()
-    this.Order.DeliveryCost=Number(this.Order.DeliveryCost)
+    this.Order.DeliveryCost = Number(this.Order.DeliveryCost)
+    this.Order.Cost = Number(this.Order.Cost)
 
     this.orderservice.Creat(this.Order).subscribe(res => {
       this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
@@ -110,6 +111,12 @@ export class AddOrdersComponent implements OnInit {
       this.spinner.hide()
     });
 
+  }
+  changeCost(cost) {
+    if (cost.filter(c => c == '.').length > 1)
+      return 0
+      if (cost.filter(c => c == '-').length > 1)
+      return 0
   }
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
@@ -196,24 +203,24 @@ export class AddOrdersComponent implements OnInit {
     }
   }
   //input inside ng for
-  onTrackBy (index) {
+  onTrackBy(index) {
     return index;
   }
   addNewPhone() {
-    if(this.checkLengthPhoneNumber(this.tempPhone))
-    return
+    if (this.checkLengthPhoneNumber(this.tempPhone))
+      return
     this.Order.RecipientPhones.push(this.tempPhone);
     this.tempPhone = '';
   }
-  deletePhone(phone){
-    this.Order.RecipientPhones=this.Order.RecipientPhones.filter(p=>p!=phone)
+  deletePhone(phone) {
+    this.Order.RecipientPhones = this.Order.RecipientPhones.filter(p => p != phone)
   }
   RecipientPhoneslength = null
   checkLengthPhoneNumber(phone) {
-    if (phone&&phone.length < 11) {
+    if (phone && phone.length < 11) {
       this.RecipientPhoneslength = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
       return true
-    } 
+    }
     else {
       this.RecipientPhoneslength = null
       return false
@@ -221,10 +228,10 @@ export class AddOrdersComponent implements OnInit {
   }
   RecipientPhoneslengthEdit = null
   checkLengthPhoneNumberForEdit(phone) {
-    if (phone&&phone.length < 11) {
+    if (phone && phone.length < 11) {
       this.RecipientPhoneslengthEdit = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
       return true
-    } 
+    }
     else {
       this.RecipientPhoneslengthEdit = null
       return false

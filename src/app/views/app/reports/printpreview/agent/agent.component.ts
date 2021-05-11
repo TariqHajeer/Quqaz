@@ -32,6 +32,7 @@ export class AgentComponent implements OnInit {
     this.PrintNumberOrder = new PrintNumberOrder
     this.orders = JSON.parse(localStorage.getItem('printordersagent'))
     this.agent = JSON.parse(localStorage.getItem('printagent'))
+    console.log(this.agent)
     this.orderplaced = this.orders.map(o => o.orderplaced)[0]
     this.sumCost()
     // this.getPrintnumber()
