@@ -19,11 +19,15 @@
             border-color:#636363; 
             margin:10px;
             padding: 5px;
-            font-size: 16px;
+            font-size: 18px;
 }
 tr.trbordered{
   background-color: rgb(218, 218, 219);
 }
+.content{
+  font-size: 22px;
+}
+table{font-size: 18px;}
 @page {
   size: A4;
   margin: 0;

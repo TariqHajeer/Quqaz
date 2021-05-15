@@ -47,6 +47,7 @@ export class SetPrintNumberClientComponent implements OnInit {
   changeDeleiverMoneyForClient() {
     this.orderservice.GetOrderByClientPrintNumber(this.printnumber).subscribe(res => {
       this.showPrintbtn = true
+      console.log(res)
       this.orders = res.orders
       this.client = res.destinationName
       this.destinationPhone = res.destinationPhone

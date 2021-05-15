@@ -12,6 +12,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { OrderState } from 'src/app/Models/order/order.model';
 import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed-state.service';
+import { DatePipe, formatDate } from '@angular/common';
 @Component({
   selector: 'app-shipments-on-way',
   templateUrl: './shipments-on-way.component.html',
@@ -19,8 +20,8 @@ import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed
 })
 export class ShipmentsOnWayComponent implements OnInit {
 
-  displayedColumns: string[] = ['code', 'client','country', 'region'
-    , 'cost','isClientDiliverdMoney', 'orderplaced', 'monePlaced','agentPrintNumber','clientPrintNumber'];
+  displayedColumns: string[] = ['code', 'client', 'country', 'region'
+    , 'cost', 'isClientDiliverdMoney', 'orderplaced', 'monePlaced', 'agentPrintNumber', 'clientPrintNumber'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
   ids: any[] = []
@@ -33,7 +34,7 @@ export class ShipmentsOnWayComponent implements OnInit {
     public userService: UserService,
     private notifications: NotificationsService,
     public route: Router,
-    public orderplacedstate: OrderPlacedStateService
+    public orderplacedstate: OrderPlacedStateService,
   ) { }
   AgentId
   OrderplacedId
@@ -61,7 +62,7 @@ export class ShipmentsOnWayComponent implements OnInit {
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
-     // this.MoenyPlaced = this.MoenyPlaced.filter(o => o.id != 4)
+      // this.MoenyPlaced = this.MoenyPlaced.filter(o => o.id != 4)
     })
   }
   GetorderPlace() {
@@ -85,21 +86,34 @@ export class ShipmentsOnWayComponent implements OnInit {
   ChangeOrderplacedId(element, index) {
     this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
     this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced, this.tempordersmonePlaced[index], this.tempisClientDiliverdMoney[index])
-    this.orderplacedstate.onWay(element,this.MoenyPlaced)
-    this.orderplacedstate.unacceptable(element,this.MoenyPlaced)
-    this.orderplacedstate.isClientDiliverdMoney(element,this.MoenyPlaced)
+    this.orderplacedstate.onWay(element, this.MoenyPlaced)
+    this.orderplacedstate.unacceptable(element, this.MoenyPlaced)
+    this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
   }
   changeCost(element, index) {
     if (this.orderplacedstate.rangeCost(element, this.temporderscost[index])) {
-     element.messageCost=""
-    }else
-    element.messageCost=" الكلفة لايمكن أن تتجاوز "+this.temporderscost[index]
+      element.messageCost = ""
+    } else
+      element.messageCost = " الكلفة لايمكن أن تتجاوز " + this.temporderscost[index]
   }
   switchPage(event: PageEvent) {
     this.paging.allItemsLength = event.length
     this.paging.RowCount = event.pageSize
     this.paging.Page = event.pageIndex + 1
     this.allFilter();
+  }
+  date
+  tempdate
+  temporder
+  filterOfDate() {
+    this.getorders = this.temporder
+    this.date = formatDate(this.date, 'MM/dd/yyyy', 'en');
+    this.getorders.forEach(o => {
+      o.order.date = formatDate(o.order.date, 'MM/dd/yyyy', 'en');
+    })
+    this.getorders = this.getorders.filter(o => o.order.date == this.date)
+    this.dataSource = new MatTableDataSource(this.getorders)
+
   }
   allFilter() {
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
@@ -108,22 +122,25 @@ export class ShipmentsOnWayComponent implements OnInit {
         if (response.data.length == 0)
           this.noDataFound = true
         else this.noDataFound = false
-        response.data.forEach(element => {
-          this.getorder.order=element
-          this.getorder.MoenyPlaced = this.MoenyPlaced
-          this.getorder.OrderPlaced = this.orderPlace
-          this.getorder.canEditCount = true
-          this.orderplacedstate.onWay(this.getorder,this.MoenyPlaced)
-         if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2)
-            this.getorder.order.orderplaced = this.getorder.OrderPlaced[0]
-          this.getorders.push(this.getorder)
-          this.getorder=new GetOrder()
-        });
-      this.temporderscost = Object.assign({},  this.getorders .map(o => o.order.cost));
-      this.tempordersmonePlaced = Object.assign({},  this.getorders .map(o => o.order.monePlaced));
-      this.tempisClientDiliverdMoney = Object.assign({},  this.getorders .map(o => o.order.isClientDiliverdMoney));
-      this.dataSource = new MatTableDataSource( this.getorders )
-      
+      response.data.forEach(element => {
+        this.getorder.order = element
+        this.getorder.MoenyPlaced = this.MoenyPlaced
+        this.getorder.OrderPlaced = this.orderPlace
+        this.getorder.canEditCount = true
+        this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced)
+        if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2)
+          this.getorder.order.orderplaced = this.getorder.OrderPlaced[0]
+        this.getorder.order.date = this.getorder.order.date.split('T')[0]
+        this.getorder.order.date = new Date(this.getorder.order.date)
+        this.getorders.push(this.getorder)
+        this.getorder = new GetOrder()
+      });
+      this.temporderscost = Object.assign({}, this.getorders.map(o => o.order.cost));
+      this.tempordersmonePlaced = Object.assign({}, this.getorders.map(o => o.order.monePlaced));
+      this.tempisClientDiliverdMoney = Object.assign({}, this.getorders.map(o => o.order.isClientDiliverdMoney));
+      this.temporder = this.getorders
+      this.dataSource = new MatTableDataSource(this.getorders)
+
       this.totalCount = response.total
     },
       err => {
@@ -146,5 +163,15 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
     })
   }
+  print() {
+    if (this.noDataFound == true || this.getorders.length == 0) {
+      this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      return
+    }
+    localStorage.setItem('printagent', JSON.stringify(this.Agents.find(c => c.id == this.AgentId)))
 
+    localStorage.setItem('printordersagent', JSON.stringify(this.getorders.map(o => o.order)))
+    this.route.navigate(['app/reports/printagentpreview'])
+
+  }
 }

@@ -32,9 +32,9 @@ export class AgentComponent implements OnInit {
     this.PrintNumberOrder = new PrintNumberOrder
     this.orders = JSON.parse(localStorage.getItem('printordersagent'))
     this.agent = JSON.parse(localStorage.getItem('printagent'))
-    console.log(this.agent)
     this.orderplaced = this.orders.map(o => o.orderplaced)[0]
     this.sumCost()
+    this.onAWay()
     // this.getPrintnumber()
   }
 
@@ -47,6 +47,12 @@ export class AgentComponent implements OnInit {
     return this.count
   }
   showPrintbtn = false
+  onAWay(){
+    if(this.orderplaced.id==2)
+    this.showPrintbtn=false
+    else
+    this.showPrintbtn=true
+  }
   afterPrint() {
     this.orderservice.MakeOrderInWay(this.orders.map(o => o.id)).subscribe(res => {
       this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });

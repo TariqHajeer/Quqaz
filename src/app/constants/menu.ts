@@ -143,7 +143,7 @@ const data: IMenuItem[] = [
           },
           {
             icon: 'simple-icon-layers',
-            label: 'طلبات التي في الشركة ',
+            label: 'تسديد الشحنات ',
             to: `${adminRoot}/reports/orderincompany`,
             //permission:[UserPermission.ShowOrder]
 
