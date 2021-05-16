@@ -41,14 +41,14 @@
                                             <label>المنطقة</label>
                                             <ng-select [(ngModel)]="orderResend.RegionId" placeholder="اختر منطقة"
                                                 [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Region" [addTag]="true">
-                                                <ng-option *ngFor="let region of Region" [value]="region.id">{{region.name}}</ng-option>
+                                                <ng-option *ngFor="let region of Regionsresend" [value]="region.id">{{region.name}}</ng-option>
                                             </ng-select>
                                         </div>
                                         <div class="col-md-4">
                                             <label>المندوب<span class="text-danger text-one align-bottom mx-1">*</span></label>
                                             <ng-select [(ngModel)]="orderResend.AgnetId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-                                                name="Agent" placeholder="اختر مندوب" (change)="changeAgentOrClient()">
-                                                <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
+                                                name="Agent" placeholder="اختر مندوب" >
+                                                <ng-option *ngFor="let Agent of Agentsresend" [value]="Agent.id">{{Agent.name}}</ng-option>
                                             </ng-select>
                                         </div>
                                     </div>

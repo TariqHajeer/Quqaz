@@ -40,6 +40,8 @@ export class EditOrdersComponent implements OnInit {
   Region: Region[] = []
   Regions: Region[] = []
   Agents: User[] = []
+  Agentsresend: User[] = []
+  Regionsresend: Region[] = []
   orderTypes: OrderType[] = []
   orderType: OrderType
   OrderItem: OrderItem
@@ -68,17 +70,8 @@ this.getorder()
   changeCountryResend(){
     this.Region = []
     this.orderResend.RegionId = null
-    var city = this.cities.find(c => c.id == this.orderResend.CountryId)
-    this.Region = this.Regions.filter(r => r.country.id == this.orderResend.CountryId)
-    this.Agents = this.Agents.filter(r => r.countryId== this.orderResend.CountryId)
-    if(this.Agents.length==1)
-    this.Order.AgentId = this.Agents[0].id
-    else
-    this.Order.AgentId =null
-    if(this.Region.length==1)
-    this.Order.RegionId = this.Region[0].id
-    else
-    this.Order.RegionId =null
+    this.Regionsresend = this.Regions.filter(r => r.country.id == this.orderResend.CountryId)
+    this.Agentsresend = this.Agents.filter(r => r.countryId== this.orderResend.CountryId)
    
   }
   Resend(){
@@ -178,11 +171,13 @@ this.orderservice.ReSend(this.orderResend).subscribe(res=>{
   GetRegion() {
     this.customerService.getAll(this.regionapi).subscribe(res => {
       this.Regions = res
+      this.Regionsresend=res
     })
   }
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
       this.Agents = res
+      this.Agentsresend=res
     })
   }
   AllorderTypes: any[] = []
