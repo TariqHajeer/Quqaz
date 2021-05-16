@@ -28,8 +28,8 @@
                                 </div>
                                 <div class="modal-body">
                                     <h3>{{canResned}}</h3>
-                                    <div class="row w-100 align-items-end mb-3"*ngIf="showRsendButton">
-                                        <div class="col-md-4">
+                                    <div class="row "*ngIf="showRsendButton">
+                                        <div class="col-md-3">
                                             <label>المدينة<span class="text-danger text-one align-bottom mx-1">*</span></label>
                                             <ng-select [(ngModel)]="orderResend.CountryId" (change)="changeCountryResend()"
                                                 [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Country">
@@ -38,25 +38,31 @@
                                         </div>
                         
                         
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label>المنطقة</label>
                                             <ng-select [(ngModel)]="orderResend.RegionId" placeholder="اختر منطقة"
                                                 [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Region" [addTag]="true">
                                                 <ng-option *ngFor="let region of Regionsresend" [value]="region.id">{{region.name}}</ng-option>
                                             </ng-select>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label>المندوب<span class="text-danger text-one align-bottom mx-1">*</span></label>
                                             <ng-select [(ngModel)]="orderResend.AgnetId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
                                                 name="Agent" placeholder="اختر مندوب" >
                                                 <ng-option *ngFor="let Agent of Agentsresend" [value]="Agent.id">{{Agent.name}}</ng-option>
                                             </ng-select>
                                         </div>
+                                        <div class="col-md-3">
+                                            <label>كلفة التوصيل</label>
+                                            <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                                [(ngModel)]="orderResend.DeliveryCost">
+                                        </div>
                                     </div>
 
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" (click)="Resend()" data-dismiss="modal">اعادة ارسال</button>&nbsp;
+                                    <button type="button" class="btn btn-primary"*ngIf="showRsendButton" (click)="Resend()" data-dismiss="modal">اعادة ارسال</button>&nbsp;
                                     <button type="button" class="btn btn-primary" data-dismiss="modal">اغلاق</button>
 
                                 </div>

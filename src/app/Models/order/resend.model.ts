@@ -3,4 +3,5 @@ export class Resend {
     CountryId
     RegionId
     AgnetId
+    DeliveryCost
 }
