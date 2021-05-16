@@ -277,8 +277,10 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     this.EditOrder.OrderplacedName = orderplace.name
     var client = this.clients.find(c => c.id == this.EditOrder.ClientId)
     this.EditOrder.ClientName = client.name
+    this.EditOrder.DeliveryCost=this.EditOrder.DeliveryCost*1
+    this.EditOrder.Cost=this.EditOrder.Cost*1
     var agent = this.Agents.find(c => c.id == this.EditOrder.AgentId)
-    this.EditOrder.AgentName = agent.name
+   // this.EditOrder.AgentName = agent.name
     order = Object.assign(order, this.EditOrder);
     localStorage.setItem('refrshorderclient', JSON.stringify(this.Orders))
 
@@ -308,10 +310,10 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
       this.submitedSave = true
       return
     }
-    // this.Orders.forEach(o => {
-
-    //   o.ClientId = this.ClientId
-    // })
+    this.Orders.forEach(o=>{
+      o.Cost=o.Cost*1
+      o.DeliveryCost=o.DeliveryCost*1
+    })
     this.orderservice.createMultiple(this.Orders).subscribe(res => {
       this.notifications.create('success', 'تم اضافة الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Orders = []

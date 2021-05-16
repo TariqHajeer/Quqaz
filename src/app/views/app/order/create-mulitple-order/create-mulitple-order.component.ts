@@ -244,7 +244,9 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     var client = this.clients.find(c => c.id == this.EditOrder.ClientId)
     this.EditOrder.ClientName = client.name
     var agent = this.Agents.find(c => c.id == this.EditOrder.AgentId)
-    this.EditOrder.AgentName = agent.name
+    this.EditOrder.DeliveryCost=this.EditOrder.DeliveryCost*1
+    this.EditOrder.Cost=this.EditOrder.Cost*1
+  //  this.EditOrder.AgentName = agent.name
     order = Object.assign(order, this.EditOrder);
     localStorage.setItem('refrshorder', JSON.stringify(this.Orders))
 
@@ -272,10 +274,10 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
       //this.submitedSave=true
       return
     }
-    // this.Orders.forEach(o=>{
-    //   o.CountryId=this.CountryId
-    //   o.AgentId=this.AgentId
-    // })
+    this.Orders.forEach(o=>{
+      o.Cost=o.Cost*1
+      o.DeliveryCost=o.DeliveryCost*1
+    })
     this.showSpinner()
 
     this.orderservice.createMultiple(this.Orders).subscribe(res => {
