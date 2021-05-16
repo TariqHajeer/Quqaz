@@ -91,12 +91,20 @@ export class EditOrdersComponent implements OnInit {
     this.getAgent()
     this.getOrderTypes()
   }
+  canResned
   getorder() {
     var editorder = JSON.parse(localStorage.getItem('editorder'))
-    if (editorder.orderplaced.id == 5 || editorder.orderplaced.id == 7 || editorder.orderplaced.id == 8)
+    console.log(editorder)
+    // if (editorder.orderplaced.id == 5 || editorder.orderplaced.id == 7 || editorder.orderplaced.id == 8)
+    //   this.showRsendButton = true
+    //   else
+    //   this.showRsendButton=false
+    if (editorder.canResned == null)
       this.showRsendButton = true
-      else
-      this.showRsendButton=false
+    else {
+      this.showRsendButton = false
+      this.canResned=editorder.canResned
+    } 
     this.orderResend.Id = editorder.id
     this.orderResend.AgnetId = editorder.agent.id
     this.orderResend.CountryId = editorder.country.id

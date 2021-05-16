@@ -10,11 +10,11 @@
 
             <div class="row w-100 align-items-end mb-3">
 
-
+                <div class="col-md-9"></div>
                 <div class="col-md-3">
 
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-                        data-whatever="@getbootstrap"*ngIf="showRsendButton">اعادة ارسال</button>
+                        data-whatever="@getbootstrap">اعادة ارسال</button>
 
                     <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -27,7 +27,8 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="row w-100 align-items-end mb-3">
+                                    <h3>{{canResned}}</h3>
+                                    <div class="row w-100 align-items-end mb-3"*ngIf="showRsendButton">
                                         <div class="col-md-4">
                                             <label>المدينة<span class="text-danger text-one align-bottom mx-1">*</span></label>
                                             <ng-select [(ngModel)]="orderResend.CountryId" (change)="changeCountryResend()"
@@ -131,9 +132,20 @@
                     <div *ngIf="!Order.Cost && submitted" class="invalid-tooltip">الكلفة حقل مطلوب</div>
                 </div>
                 <div class="col-md-3">
+                    <label>حالة الشحنة<span class="text-danger text-one align-bottom mx-1">*</span></label>
+
+                    <select [(ngModel)]="Order.OrderplacedId" style="font-size: 16px;"
+                        [ngModelOptions]="{standalone: true}" class="custom-select" [disabled]="true">
+                        <option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}</option>
+
+                    </select>
+                    <div *ngIf="!Order.OrderplacedId && submitted" class="invalid-tooltip">حالة الشحنة حقل مطلوب</div>
+
+                </div>
+                <div class="col-md-3">
                     <label>موقع المبلغ<span class="text-danger text-one align-bottom mx-1">*</span></label>
                     <select [(ngModel)]="Order.MoenyPlacedId" [ngModelOptions]="{standalone: true}"
-                        class="custom-select" style="font-size: 16px;" [disabled]="disabledselect">
+                        class="custom-select" style="font-size: 16px;" [disabled]="true">
                         <option *ngFor="let moenyPlaced of MoenyPlaced" [value]="moenyPlaced.id">{{moenyPlaced.name}}
                         </option>
 
@@ -141,17 +153,7 @@
                     <div *ngIf="!Order.MoenyPlacedId && submitted" class="invalid-tooltip">موقع المبلغ حقل مطلوب</div>
 
                 </div>
-                <div class="col-md-3">
-                    <label>حالة الشحنة<span class="text-danger text-one align-bottom mx-1">*</span></label>
-
-                    <select [(ngModel)]="Order.OrderplacedId" style="font-size: 16px;"
-                        [ngModelOptions]="{standalone: true}" class="custom-select" [disabled]="disabledselect">
-                        <option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}</option>
-
-                    </select>
-                    <div *ngIf="!Order.OrderplacedId && submitted" class="invalid-tooltip">حالة الشحنة حقل مطلوب</div>
-
-                </div>
+           
 
                 <div class="col-md-3">
                     <label>العنوان</label>
