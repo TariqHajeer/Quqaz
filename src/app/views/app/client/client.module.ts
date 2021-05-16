@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ClientRoutingModule } from './client-routing.module';
@@ -15,6 +15,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { EditClientComponent } from './edit-client/edit-client.component';
 import { ReceiptAndExchangeComponent } from './receipt-and-exchange/receipt-and-exchange.component';
 import { NgxPrintModule } from 'ngx-print';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -33,8 +34,9 @@ import { NgxPrintModule } from 'ngx-print';
     BsDatepickerModule.forRoot(),
     NgSelectModule,
     NgxPrintModule,
+    NgxSpinnerModule
 
-
-  ]
+  ],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ClientModule { }

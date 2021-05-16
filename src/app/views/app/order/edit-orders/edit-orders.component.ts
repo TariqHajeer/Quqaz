@@ -5,7 +5,7 @@ import { City } from 'src/app/Models/Cities/city.Model';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { CreateOrdersFromEmployee, OrderItem } from 'src/app/Models/order/create-orders-from-employee.model';
-import { Order } from 'src/app/Models/order/order.model';
+import { Resend } from 'src/app/Models/order/resend.model';
 import { OrderType } from 'src/app/Models/OrderTypes/order-type.model';
 import { Region } from 'src/app/Models/Regions/region.model';
 import { User } from 'src/app/Models/user/user.model';
@@ -64,6 +64,28 @@ export class EditOrdersComponent implements OnInit {
     this.int()
 this.getorder()
   }
+  orderResend:Resend=new Resend()
+  changeCountryResend(){
+    this.Region = []
+    this.orderResend.RegionId = null
+    var city = this.cities.find(c => c.id == this.orderResend.CountryId)
+    this.Region = this.Regions.filter(r => r.country.id == this.orderResend.CountryId)
+    this.Agents = this.Agents.filter(r => r.countryId== this.orderResend.CountryId)
+    if(this.Agents.length==1)
+    this.Order.AgentId = this.Agents[0].id
+    else
+    this.Order.AgentId =null
+    if(this.Region.length==1)
+    this.Order.RegionId = this.Region[0].id
+    else
+    this.Order.RegionId =null
+   
+  }
+  Resend(){
+this.orderservice.ReSend(this.orderResend).subscribe(res=>{
+
+})
+  }
   int() {
     this.Order = new CreateOrdersFromEmployee()
     this.submitted = false;
@@ -77,7 +99,10 @@ this.getorder()
   }
   getorder() {
     var editorder = JSON.parse(localStorage.getItem('editorder')) 
-    console.log(editorder)
+    this.orderResend.Id=editorder.id
+    this.orderResend.AgnetId=editorder.agent.id
+    this.orderResend.CountryId=editorder.country.id
+    this.orderResend.RegionId=editorder.region!=null?editorder.region.Id:null
     this.Order.Id=editorder.id
     this.Order.Address = editorder.address
     this.Order.AgentId=editorder.agent.id

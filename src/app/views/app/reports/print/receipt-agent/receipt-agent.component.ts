@@ -22,7 +22,7 @@ export class ReceiptAgentComponent implements OnInit ,OnChanges{
   @Input() orderplaced
   @Input() printnumber
   @Input() phones
-
+  @Input() showPrintbtn
   dateOfPrint=new Date()
   userName:any=JSON.parse(localStorage.getItem('kokazUser'))as UserLogin
 

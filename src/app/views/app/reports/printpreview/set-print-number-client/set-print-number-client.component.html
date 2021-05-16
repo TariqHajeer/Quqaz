@@ -160,10 +160,10 @@
                         {{order.total}}
                     </td>
                     <td>
-                        {{order.deliveryCost}}
+                        {{order.deliveCost}}
                     </td>
                     <td>
-                        {{order.cost-order.deliveryCost}}
+                        {{order.total-order.deliveCost}}
                     </td>
                     <td>
                         {{order.country!=null||order.country!=undefined?order.country:null}}
@@ -178,7 +178,7 @@
                         {{order.phone}}
                     </td>
                     <td>
-                        {{order.oldCost}}
+                        {{order.lastTotal}}
                     </td>
                     <td>
                         {{order.note}}

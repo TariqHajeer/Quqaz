@@ -188,5 +188,9 @@ export class OrderService {
   DeleiverMoneyForClientWithStatus(ids){
     return this.http.put<any>(this.controler + "DeleiverMoneyForClientWithStatus", ids)
   }
+  ReSend(order){
+    return this.http.put<any>(this.controler + "ReSend", order)
+
+  }
 }
 

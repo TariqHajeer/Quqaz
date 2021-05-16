@@ -26,7 +26,7 @@
                 </svg> &nbsp;طباعة
             </button>&nbsp;
             <app-receipt-agent id="printpage" [orders]="orders" [agent]="agent" [printnumber]="printnumber"
-                [hidden]="true" [orderplaced]="orderplaced"></app-receipt-agent>
+                [hidden]="true" [showPrintbtn]="showPrintbtn" [orderplaced]="orderplaced"></app-receipt-agent>
             </div>
 
         </div>
@@ -40,7 +40,7 @@
             <div class="col-md-4" style="text-align: right;">
                 <table>
 
-                    <tr>
+                    <tr *ngIf="!showPrintbtn"> 
                         <td>
                             رقم الطباعة :
                         </td>

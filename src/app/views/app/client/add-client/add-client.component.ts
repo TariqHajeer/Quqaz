@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { CustomService } from 'src/app/services/custom.service';
 import { Client } from '../client.model';
@@ -13,7 +14,8 @@ import { ClientService } from '../client.service';
 export class AddClientComponent implements OnInit, OnChanges {
 
   constructor(private customService: CustomService, private clientService: ClientService,
-    private notifications: NotificationsService) { }
+    private notifications: NotificationsService,
+    private spinner: NgxSpinnerService,) { }
   client: Client;
   clients: Client[] = [];
   regions: any[] = [];
@@ -96,8 +98,10 @@ export class AddClientComponent implements OnInit, OnChanges {
     else {
       this.submitted = false;
     } 
+    this.spinner.show()
     this.clientService.addClient(this.client).subscribe(
       res => {
+        this.spinner.hide()
         this.addFinish.emit(this.client);
         if (this.addClicked) {
           this.client = new Client
