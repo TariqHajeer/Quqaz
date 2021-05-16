@@ -64,20 +64,21 @@ export class EditOrdersComponent implements OnInit {
     this.submitted = false;
 
     this.int()
-this.getorder()
+    this.getorder()
   }
-  orderResend:Resend=new Resend()
-  changeCountryResend(){
+  orderResend: Resend = new Resend()
+  showRsendButton: boolean = false
+  changeCountryResend() {
     this.Region = []
     this.orderResend.RegionId = null
     this.Regionsresend = this.Regions.filter(r => r.country.id == this.orderResend.CountryId)
-    this.Agentsresend = this.Agents.filter(r => r.countryId== this.orderResend.CountryId)
-   
-  }
-  Resend(){
-this.orderservice.ReSend(this.orderResend).subscribe(res=>{
+    this.Agentsresend = this.Agents.filter(r => r.countryId == this.orderResend.CountryId)
 
-})
+  }
+  Resend() {
+    this.orderservice.ReSend(this.orderResend).subscribe(res => {
+
+    })
   }
   int() {
     this.Order = new CreateOrdersFromEmployee()
@@ -91,30 +92,34 @@ this.orderservice.ReSend(this.orderResend).subscribe(res=>{
     this.getOrderTypes()
   }
   getorder() {
-    var editorder = JSON.parse(localStorage.getItem('editorder')) 
-    this.orderResend.Id=editorder.id
-    this.orderResend.AgnetId=editorder.agent.id
-    this.orderResend.CountryId=editorder.country.id
-    this.orderResend.RegionId=editorder.region!=null?editorder.region.Id:null
-    this.Order.Id=editorder.id
+    var editorder = JSON.parse(localStorage.getItem('editorder'))
+    if (editorder.orderplaced.id == 5 || editorder.orderplaced.id == 7 || editorder.orderplaced.id == 8)
+      this.showRsendButton = true
+      else
+      this.showRsendButton=false
+    this.orderResend.Id = editorder.id
+    this.orderResend.AgnetId = editorder.agent.id
+    this.orderResend.CountryId = editorder.country.id
+    this.orderResend.RegionId = editorder.region != null ? editorder.region.Id : null
+    this.Order.Id = editorder.id
     this.Order.Address = editorder.address
-    this.Order.AgentId=editorder.agent.id
-    this.Order.ClientId=editorder.client.id
+    this.Order.AgentId = editorder.agent.id
+    this.Order.ClientId = editorder.client.id
     this.Order.Code = editorder.code
-    this.tempOrdercode= editorder.code
-    this.Order.Cost=editorder.cost
-    this.Order.CountryId=editorder.country.id
+    this.tempOrdercode = editorder.code
+    this.Order.Cost = editorder.cost
+    this.Order.CountryId = editorder.country.id
     this.Order.Date = editorder.date
-    this.Order.DiliveryDate=editorder.diliveryDate
-    this.Order.DeliveryCost=editorder.deliveryCost
-    this.Order.MoenyPlacedId=editorder.monePlaced.id
+    this.Order.DiliveryDate = editorder.diliveryDate
+    this.Order.DeliveryCost = editorder.deliveryCost
+    this.Order.MoenyPlacedId = editorder.monePlaced.id
     this.Order.Note = editorder.note
-    this.Order.OrderTypeDtos=editorder.orderItems
-    this.Order.OrderplacedId=editorder.orderplaced.id
-    this.Order.RecipientName=editorder.recipientName
-    this.Order.RecipientPhones=JSON.parse("["+editorder.recipientPhones+"]")
+    this.Order.OrderTypeDtos = editorder.orderItems
+    this.Order.OrderplacedId = editorder.orderplaced.id
+    this.Order.RecipientName = editorder.recipientName
+    this.Order.RecipientPhones = JSON.parse("[" + editorder.recipientPhones + "]")
     //this.Order.RecipientPhones.push(editorder.recipientPhones)
-    this.Order.RegionId=editorder.region!=null?editorder.region.Id:null
+    this.Order.RegionId = editorder.region != null ? editorder.region.Id : null
 
 
   }
@@ -133,9 +138,9 @@ this.orderservice.ReSend(this.orderResend).subscribe(res=>{
       this.Order.RegionName = this.Order.RegionId.label;
       this.Order.RegionId = null;
     }
-    this.Order.DeliveryCost=Number(this.Order.DeliveryCost)
+    this.Order.DeliveryCost = Number(this.Order.DeliveryCost)
     this.Order.Cost = Number(this.Order.Cost)
-    this.Order.RecipientPhones= [this.Order.RecipientPhones+""]
+    this.Order.RecipientPhones = [this.Order.RecipientPhones + ""]
     this.orderservice.Update(this.Order).subscribe(res => {
       this.notifications.create('success', 'تم تعديل  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.int()
@@ -148,6 +153,7 @@ this.orderservice.ReSend(this.orderResend).subscribe(res=>{
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
+      // console.log(res)
       //this.Order.OrderplacedId = this.orderPlace[1].id
 
     })
@@ -155,7 +161,7 @@ this.orderservice.ReSend(this.orderResend).subscribe(res=>{
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
-     // this.Order.MoenyPlacedId = this.MoenyPlaced[0].id
+      // this.Order.MoenyPlacedId = this.MoenyPlaced[0].id
     })
   }
   GetClient() {
@@ -171,13 +177,13 @@ this.orderservice.ReSend(this.orderResend).subscribe(res=>{
   GetRegion() {
     this.customerService.getAll(this.regionapi).subscribe(res => {
       this.Regions = res
-      this.Regionsresend=res
+      this.Regionsresend = res
     })
   }
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
       this.Agents = res
-      this.Agentsresend=res
+      this.Agentsresend = res
     })
   }
   AllorderTypes: any[] = []
@@ -210,34 +216,34 @@ this.orderservice.ReSend(this.orderResend).subscribe(res=>{
     this.count = null
 
   }
-  disabledselect=false
+  disabledselect = false
   changeCountry() {
     this.Region = []
     this.Order.RegionId = null
     var city = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.DeliveryCost = city.deliveryCost
     this.Region = this.Regions.filter(r => r.country.id == this.Order.CountryId)
-    this.Agents = this.Agents.filter(r => r.countryId== this.Order.CountryId)
-    if(this.Agents.length==1)
-    this.Order.AgentId = this.Agents[0].id
+    this.Agents = this.Agents.filter(r => r.countryId == this.Order.CountryId)
+    if (this.Agents.length == 1)
+      this.Order.AgentId = this.Agents[0].id
     else
-    this.Order.AgentId =null
-    if(this.Region.length==1)
-    this.Order.RegionId = this.Region[0].id
+      this.Order.AgentId = null
+    if (this.Region.length == 1)
+      this.Order.RegionId = this.Region[0].id
     else
-    this.Order.RegionId =null
+      this.Order.RegionId = null
     this.Order.OrderplacedId = this.orderPlace[1].id
     this.Order.MoenyPlacedId = this.MoenyPlaced[0].id
-    this.disabledselect=true
+    this.disabledselect = true
   }
-  changeAgentOrClient(){
+  changeAgentOrClient() {
     this.Order.OrderplacedId = this.orderPlace[1].id
     this.Order.MoenyPlacedId = this.MoenyPlaced[0].id
-    this.disabledselect=true
+    this.disabledselect = true
   }
   showMessageCode: boolean = false
   CheckCode() {
-    if (this.Order.ClientId != null && this.Order.ClientId != undefined&&this.Order.Code!=this.tempOrdercode) {
+    if (this.Order.ClientId != null && this.Order.ClientId != undefined && this.Order.Code != this.tempOrdercode) {
       this.orderservice.chekcCode(this.Order.Code, this.Order.ClientId).subscribe(res => {
         if (res) {
           this.showMessageCode = true
