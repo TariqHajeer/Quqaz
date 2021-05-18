@@ -89,7 +89,6 @@ export class ViewOrdersComponent implements OnInit {
     this.spinner.show()
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
       this.spinner.hide()
-      console.log(response.data)
       if (response.data.length == 0)
         this.noDataFound = true
       else this.noDataFound = false
