@@ -129,11 +129,37 @@ export class EditOrdersComponent implements OnInit {
     this.Order.OrderTypeDtos = editorder.orderItems
     this.Order.OrderplacedId = editorder.orderplaced.id
     this.Order.RecipientName = editorder.recipientName
-    this.Order.RecipientPhones = JSON.parse("[" + editorder.recipientPhones + "]")
+    this.Order.RecipientPhones = editorder.recipientPhones.split(',')
+    this.Order.OldCost=editorder.oldCost
     //this.Order.RecipientPhones.push(editorder.recipientPhones)
     this.Order.RegionId = editorder.region != null ? editorder.region.Id : null
 
 
+  }
+  onTrackBy(index) {
+    return index;
+  }
+  RecipientPhoneslength = null
+  checkLengthPhoneNumber(phone) {
+    if (phone && phone.length < 11) {
+      this.RecipientPhoneslength = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
+      return true
+    }
+    else {
+      this.RecipientPhoneslength = null
+      return false
+    }
+  }
+  RecipientPhoneslengthEdit = null
+  checkLengthPhoneNumberForEdit(phone) {
+    if (phone && phone.length < 11) {
+      this.RecipientPhoneslengthEdit = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
+      return true
+    }
+    else {
+      this.RecipientPhoneslengthEdit = null
+      return false
+    }
   }
   AddOrder() {
 

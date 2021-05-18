@@ -89,6 +89,7 @@ export class ViewOrdersComponent implements OnInit {
     this.spinner.show()
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
       this.spinner.hide()
+      console.log(response.data)
       if (response.data.length == 0)
         this.noDataFound = true
       else this.noDataFound = false
@@ -114,10 +115,11 @@ export class ViewOrdersComponent implements OnInit {
     this.router.navigate(['/app/order/addorder'])
   }
   delete(element) {
-    this.orderservice.Delete(element.id).subscribe(res => {
-      this.notifications.create('success', 'تم  حذف الطلبية بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      this.allFilter()
-    })
+    console.log(element)
+    // this.orderservice.Delete(element.id).subscribe(res => {
+    //   this.notifications.create('success', 'تم  حذف الطلبية بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    //   this.allFilter()
+    // })
   }
   Edit(element) {
     this.router.navigate(['/app/order/editorder'])
