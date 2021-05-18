@@ -95,12 +95,12 @@ export class ViewOrdersComponent implements OnInit {
       else this.noDataFound = false
       response.data.forEach(element => {
         if (element.orderStateId == 2) {
-          element.monePlaced.name="لديك مبلغ مع العميل"
-          element.orderplaced.name="لديك مبلغ مع العميل"
+          element.monePlaced.name = "لديك مبلغ مع العميل"
+          element.orderplaced.name = "لديك مبلغ مع العميل"
         }
         else if (element.orderStateId == 3) {
-          element.monePlaced=this.MoenyPlaced.find(m=>m.id==4)
-          element.orderplaced=this.orderPlace.find(o=>o.id==4)
+          element.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
+          element.orderplaced = this.orderPlace.find(o => o.id == 4)
         }
       });
       this.dataSource = new MatTableDataSource(response.data)
@@ -114,12 +114,15 @@ export class ViewOrdersComponent implements OnInit {
   AddOrder() {
     this.router.navigate(['/app/order/addorder'])
   }
-  delete(element) {
-    console.log(element)
-    // this.orderservice.Delete(element.id).subscribe(res => {
-    //   this.notifications.create('success', 'تم  حذف الطلبية بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-    //   this.allFilter()
-    // })
+  delete() {
+    this.orderservice.Delete(this.element.id).subscribe(res => {
+      this.notifications.create('success', 'تم  حذف الطلبية بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.allFilter()
+    })
+  }
+  element
+  getElement(element) {
+    this.element = element
   }
   Edit(element) {
     this.router.navigate(['/app/order/editorder'])

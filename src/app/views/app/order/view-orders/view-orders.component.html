@@ -200,7 +200,7 @@
     <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> خيارات</th>
 
     <td mat-cell *matCellDef="let element" style="padding: 10px;">
-      <svg
+      <svg (click)="getElement(element)"
       data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"
       xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
         class="bi bi-trash" viewBox="0 0 16 16" style="cursor: pointer;">
@@ -211,7 +211,7 @@
       </svg>
      
 
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+  <div class="modal fade" id="exampleModal"  role="dialog"
       aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -222,7 +222,7 @@
                   </button>
               </div>
               <div class="modal-body" style="text-align: center;">
-                <button type="button" class="btn btn-primary"  (click)="delete(element)" data-dismiss="modal">حذف</button>&nbsp;
+                <button type="button" class="btn btn-primary"  (click)="delete()" data-dismiss="modal">حذف</button>&nbsp;
                 <button type="button" class="btn btn-primary"   data-dismiss="modal">الغاء</button>
               </div>
               
