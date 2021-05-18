@@ -102,17 +102,24 @@ export class ShipmentsOnWayComponent implements OnInit {
     this.paging.Page = event.pageIndex + 1
     this.allFilter();
   }
-  date
+  todate
+  fordate
   tempdate
   temporder
   filterOfDate() {
     this.getorders = this.temporder
-    this.date = formatDate(this.date, 'MM/dd/yyyy', 'en');
-    this.getorders.forEach(o => {
-      o.order.date = formatDate(o.order.date, 'MM/dd/yyyy', 'en');
-    })
-    this.getorders = this.getorders.filter(o => o.order.date == this.date)
-    this.dataSource = new MatTableDataSource(this.getorders)
+    if(this.fordate&&this.todate){
+      console.log(this.getorders)
+      this.todate = formatDate(this.todate, 'MM/dd/yyyy', 'en');
+      this.fordate = formatDate(this.fordate, 'MM/dd/yyyy', 'en');
+      this.getorders.forEach(o => {
+        o.order.date = formatDate(o.order.date, 'MM/dd/yyyy', 'en');
+      })
+      this.getorders = this.getorders.filter(o => o.order.date >= this.todate&&
+        o.order.date <= this.fordate)
+      this.dataSource = new MatTableDataSource(this.getorders)
+    }
+    
 
   }
   allFilter() {

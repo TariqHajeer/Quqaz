@@ -4,23 +4,32 @@
       <h3>كشف شحنات المندوب التي في الطريق </h3>
 
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <label>المندوب</label>
             <ng-select [(ngModel)]="AgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
                 name="Agent" (change)="ChangeAgentId()">
                 <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
             </ng-select>
         </div>
-        <div class="col-md-4" >
+        <div class="col-md-3" >
           
-            <label> تاريخ</label>
-            <ejs-datepicker  name="FromDate" [(ngModel)]='date' (ngModelChange)="filterOfDate()"
+            <label> من تاريخ</label>
+            <ejs-datepicker  name="FromDate" [(ngModel)]='todate' (ngModelChange)="filterOfDate()"
              id="fromdate" placeholder='اختر تاريخ'>
             </ejs-datepicker>
       
          
         </div>
-        <div class="col-md-4" >
+        <div class="col-md-3" >
+          
+          <label> الى تاريخ</label>
+          <ejs-datepicker  name="FromDate" [(ngModel)]='fordate' (ngModelChange)="filterOfDate()"
+           id="fromdate" placeholder='اختر تاريخ'>
+          </ejs-datepicker>
+    
+       
+      </div>
+        <div class="col-md-3" >
           <button (click)="saveEdit()" class="btn btn-primary"> حفظ</button>&nbsp;
           <button (click)="print()" class="btn btn-primary">  <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-printer"
             viewBox="0 0 16 16">

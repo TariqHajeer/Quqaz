@@ -112,11 +112,10 @@ export class AddOrdersComponent implements OnInit {
     });
 
   }
-  changeCost(cost) {
-    if (cost.filter(c => c == '.').length > 1)
-      return 0
-      if (cost.filter(c => c == '-').length > 1)
-      return 0
+  changeCost(event) {
+    var k;  
+   k = event.charCode;  //         k = event.keyCode;  (Both can be used)
+console.log(k)
   }
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
