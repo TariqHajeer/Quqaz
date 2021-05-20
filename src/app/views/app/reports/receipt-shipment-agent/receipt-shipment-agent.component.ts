@@ -12,6 +12,7 @@ import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { OrderState } from 'src/app/Models/order/order.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-receipt-shipment-agent',
   templateUrl: './receipt-shipment-agent.component.html',
@@ -38,7 +39,9 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     public userService: UserService,
     private notifications: NotificationsService,
     public route: Router,
-    public orderplacedstate: OrderPlacedStateService
+    public orderplacedstate: OrderPlacedStateService,
+    private spinner: NgxSpinnerService,
+
   ) { }
   AgentId
 
@@ -271,13 +274,17 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       this.orderstates.push(this.orderstate)
       this.orderstate = new OrderState
     }
+    this.spinner.show();
     this.orderservice.UpdateOrdersStatusFromAgent(this.orderstates).subscribe(res => {
       this.allFilter()
+      this.spinner.hide();
       this.orderstates = []
       this.dataSource = new MatTableDataSource([])
       this.getorders = []
       this.sumCost()
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    },err=>{
+      this.spinner.hide();
     })
   }
 

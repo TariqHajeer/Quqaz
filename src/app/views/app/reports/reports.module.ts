@@ -37,6 +37,7 @@ import { ReceiptsAndExchangesComponent } from './receipts-and-exchanges/receipts
 import { OrderInCompanyComponent } from './order-in-company/order-in-company.component';
 import { PrintOrderInCompanyComponent } from './printpreview/print-order-in-company/print-order-in-company.component';
 import { ReceiptOrderInCompanyComponent } from './print/receipt-order-in-company/receipt-order-in-company.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 @NgModule({
   declarations: [ShipmentInStockComponent,
     ClientOrderComponent,
@@ -74,6 +75,7 @@ import { ReceiptOrderInCompanyComponent } from './print/receipt-order-in-company
     NgxPrintModule,
     DatePickerModule,
     DateRangePickerModule,
+    NgxSpinnerModule,
 
 
   ]

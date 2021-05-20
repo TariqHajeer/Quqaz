@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { OrderState } from 'src/app/Models/order/order.model';
 import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed-state.service';
 import { DatePipe, formatDate } from '@angular/common';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-shipments-on-way',
   templateUrl: './shipments-on-way.component.html',
@@ -35,6 +36,8 @@ export class ShipmentsOnWayComponent implements OnInit {
     private notifications: NotificationsService,
     public route: Router,
     public orderplacedstate: OrderPlacedStateService,
+    private spinner: NgxSpinnerService,
+
   ) { }
   AgentId
   OrderplacedId
@@ -108,18 +111,18 @@ export class ShipmentsOnWayComponent implements OnInit {
   temporder
   filterOfDate() {
     this.getorders = this.temporder
-    if(this.fordate&&this.todate){
+    if (this.fordate && this.todate) {
       console.log(this.getorders)
       this.todate = formatDate(this.todate, 'MM/dd/yyyy', 'en');
       this.fordate = formatDate(this.fordate, 'MM/dd/yyyy', 'en');
       this.getorders.forEach(o => {
         o.order.date = formatDate(o.order.date, 'MM/dd/yyyy', 'en');
       })
-      this.getorders = this.getorders.filter(o => o.order.date >= this.todate&&
+      this.getorders = this.getorders.filter(o => o.order.date >= this.todate &&
         o.order.date <= this.fordate)
       this.dataSource = new MatTableDataSource(this.getorders)
     }
-    
+
 
   }
   allFilter() {
@@ -163,11 +166,14 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.orderstates.push(this.orderstate)
       this.orderstate = new OrderState
     }
-
+    this.spinner.show();
     this.orderservice.UpdateOrdersStatusFromAgent(this.orderstates).subscribe(res => {
       this.allFilter()
+      this.spinner.hide()
       this.orderstates = []
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    },err=>{
+      this.spinner.hide()
     })
   }
   print() {
