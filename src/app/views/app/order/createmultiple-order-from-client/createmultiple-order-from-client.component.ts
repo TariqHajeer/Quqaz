@@ -116,7 +116,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
       this.GetAgents = res
-     // this.Agents = this.GetAgents.filter(a => a.countryId == this.Order.CountryId)
+      this.Agents = this.GetAgents.filter(a => a.countryId == this.Order.CountryId)
       // if(this.Agents.length!=0)
       // this.Order.AgentId = this.Agents[0].id
       // else this.Order.AgentId=null
