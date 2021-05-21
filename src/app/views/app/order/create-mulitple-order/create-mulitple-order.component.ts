@@ -70,7 +70,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     this.submitted = false;
     this.int()
     var order = JSON.parse(localStorage.getItem('refrshorder'))
-    if (order&&order.length != 0) {
+    if (order && order.length != 0) {
       this.Orders = order
     }
   }
@@ -244,9 +244,9 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     var client = this.clients.find(c => c.id == this.EditOrder.ClientId)
     this.EditOrder.ClientName = client.name
     var agent = this.Agents.find(c => c.id == this.EditOrder.AgentId)
-    this.EditOrder.DeliveryCost=this.EditOrder.DeliveryCost*1
-    this.EditOrder.Cost=this.EditOrder.Cost*1
-  //  this.EditOrder.AgentName = agent.name
+    this.EditOrder.DeliveryCost = this.EditOrder.DeliveryCost * 1
+    this.EditOrder.Cost = this.EditOrder.Cost * 1
+    //  this.EditOrder.AgentName = agent.name
     order = Object.assign(order, this.EditOrder);
     localStorage.setItem('refrshorder', JSON.stringify(this.Orders))
 
@@ -274,20 +274,19 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
       //this.submitedSave=true
       return
     }
-    this.Orders.forEach(o=>{
-      o.Cost=o.Cost*1
-      o.DeliveryCost=o.DeliveryCost*1
+    this.Orders.forEach(o => {
+      o.Cost = o.Cost * 1
+      o.DeliveryCost = o.DeliveryCost * 1
     })
-    this.showSpinner()
-
+    this.spinner.show()
     this.orderservice.createMultiple(this.Orders).subscribe(res => {
-      this.hideSpinner()
+      this.spinner.hide()
       this.notifications.create('success', 'تم اضافة الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Orders = []
       localStorage.setItem('refrshorder', JSON.stringify(this.Orders))
 
     }, err => {
-      this.hideSpinner()
+      this.spinner.hide()
     })
 
   }

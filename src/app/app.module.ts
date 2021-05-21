@@ -17,6 +17,7 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools'
 import {EffectsModule } from '@ngrx/effects'
 import { NotificationsService } from 'angular2-notifications';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { OnReturnDirective } from './helpers/on-return.directive';
 //import { allIcons, NgxBootstrapIconsModule } from 'ngx-bootstrap-icons';
 
 @NgModule({
@@ -37,12 +38,14 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   ],
   declarations: [
     AppComponent,
+    OnReturnDirective,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
-  ,schemas:[CUSTOM_ELEMENTS_SCHEMA]
+  ,schemas:[CUSTOM_ELEMENTS_SCHEMA],
+  exports:[OnReturnDirective]
 })
 export class AppModule { }

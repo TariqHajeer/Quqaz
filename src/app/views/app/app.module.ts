@@ -16,7 +16,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
-  declarations: [AppComponent, SpinnerComponent],
+  declarations: [AppComponent, SpinnerComponent,],
   imports: [
     CommonModule,
     AppRoutingModule,

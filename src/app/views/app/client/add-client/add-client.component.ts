@@ -111,6 +111,8 @@ export class AddClientComponent implements OnInit, OnChanges {
         }
 
         this.client = new Client
+      }, err => {
+        this.spinner.hide()
       }
     )
   }

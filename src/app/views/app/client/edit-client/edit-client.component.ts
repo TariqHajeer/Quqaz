@@ -6,6 +6,7 @@ import { Client } from '../client.model';
 import { ClientService } from '../client.service';
 import { Phone } from 'src/app/Models/phone.model'
 import { City } from 'src/app/Models/Cities/city.Model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-edit-client',
@@ -17,7 +18,8 @@ export class EditClientComponent implements OnInit {
   constructor(private customService: CustomService, private clientService: ClientService,
     private notifications: NotificationsService,
     private getroute: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private spinner: NgxSpinnerService) { }
   client: Client;
   clients: Client[] = []
   regions: any[] = [];
@@ -96,11 +98,15 @@ export class EditClientComponent implements OnInit {
   }
 
   addOrEditClient() {
+    this.spinner.show()
     this.clientService.Update(this.client).subscribe(
       res => {
+        this.spinner.hide()
         this.notifications.create('success', 'تم تعديل عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         //this.router.navigate(['/app/client'])
 
+      }, err => {
+        this.spinner.hide()
       }
     )
   }

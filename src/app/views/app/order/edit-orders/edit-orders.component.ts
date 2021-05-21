@@ -283,7 +283,7 @@ export class EditOrdersComponent implements OnInit {
   }
   showMessageCode: boolean = false
   CheckCode() {
-    if (this.Order.ClientId != null && this.Order.ClientId != undefined && this.Order.Code != this.tempOrdercode) {
+    if (this.Order.ClientId && this.Order.Code != this.tempOrdercode) {
       this.orderservice.chekcCode(this.Order.Code, this.Order.ClientId).subscribe(res => {
         if (res) {
           this.showMessageCode = true

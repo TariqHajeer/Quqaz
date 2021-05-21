@@ -7,6 +7,7 @@ import { Coin } from 'src/app/Models/Coins/coin.model';
 import { IncomeService } from '../income.service';
 import { FormGroup } from '@angular/forms';
 import { Income } from '../income.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-add-in-come',
@@ -18,7 +19,8 @@ export class AddInComeComponent implements OnInit, OnChanges {
   constructor(public IncomeService: IncomeService,
     private customService: CustomService,
     private notifications: NotificationsService,
-    public UserService: UserService
+    public UserService: UserService,
+    private spinner: NgxSpinnerService
   ) { }
   @Input() Income;
   @Input() addClicked;
@@ -74,15 +76,23 @@ export class AddInComeComponent implements OnInit, OnChanges {
     this.CreateIncome.Amount = Number(this.CreateIncome.Amount);
     this.CreateIncome.Earining = Number(this.CreateIncome.Earining);
     if (this.addClicked) {
+      this.spinner.show()
       this.IncomeService.Create(this.CreateIncome).subscribe(res => {
+        this.spinner.hide()
         this.addFinish.emit();
         this.notifications.create('', 'تم الاضافة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      }, err => {
+        this.spinner.hide()
       })
     }
     else if (!this.addClicked) {
+      this.spinner.show()
       this.IncomeService.Ubdate(this.CreateIncome).subscribe(res => {
+        this.spinner.hide()
         this.addFinish.emit();
         this.notifications.create('', 'تم التعديل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      }, err => {
+        this.spinner.hide()
       })
     }
   }

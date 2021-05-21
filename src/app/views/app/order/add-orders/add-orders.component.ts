@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { concat, Observable, of, Subject } from 'rxjs';
@@ -26,7 +26,7 @@ import { ClientService } from '../../client/client.service';
 export class AddOrdersComponent implements OnInit {
 
   constructor(private orderservice: OrderService,
-
+    private elementRef: ElementRef,
     private clientService: ClientService
     , private customerService: CustomService,
     public userService: UserService,
@@ -113,9 +113,9 @@ export class AddOrdersComponent implements OnInit {
 
   }
   changeCost(event) {
-    var k;  
-   k = event.charCode;  //         k = event.keyCode;  (Both can be used)
-console.log(k)
+    var k;
+    k = event.charCode;  //         k = event.keyCode;  (Both can be used)
+    console.log(k)
   }
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
@@ -260,5 +260,20 @@ console.log(k)
     OrderType = Object.assign(OrderType, this.tempEditOrderType);
 
   }
+  index = 0
+  changeIndex(number) {
+    this.index = number
+  }
 
+  // @HostListener('keydown', ['$event'])
+  // onKeyDown(e) {
+  //   if ((e.which == 13 || e.keyCode == 13)) {
+
+  //     this.elementRef.nativeElement.lastChild[this.index + 1].focus();
+  //     console.log(this.elementRef)
+  //   }
+
+  // }
+
+ 
 }

@@ -9,6 +9,7 @@ import { CreateIncome } from 'src/app/Models/inCome/create-income.model';
 import { UserService } from 'src/app/services/user.service';
 import { IncomeService } from '../income.service';
 import { environment } from 'src/environments/environment.prod';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-add-more-income',
@@ -47,7 +48,8 @@ export class AddMoreIncomeComponent implements OnInit {
   constructor(public IncomeService: IncomeService,
     private customService: CustomService,
     private notifications: NotificationsService,
-    private userservic:UserService
+    private userservic:UserService,
+    private spinner: NgxSpinnerService
     
   ) { }
 
@@ -155,9 +157,13 @@ export class AddMoreIncomeComponent implements OnInit {
   }
 
   AddIncome() {
+    this.spinner.show()
     this.IncomeService.AddMultiple(this.Incomes).subscribe(res=>{
+     this.spinner.hide()
       this.notifications.create('success', 'تم اضافة واردات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Incomes = []
+  }, err => {
+    this.spinner.hide()
   })
    
   }
