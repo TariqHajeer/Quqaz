@@ -22,7 +22,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   templateUrl: './create-mulitple-order.component.html',
   styleUrls: ['./create-mulitple-order.component.scss']
 })
-export class CreateMulitpleOrderComponent extends SpinnerComponent implements OnInit {
+export class CreateMulitpleOrderComponent implements OnInit {
 
   constructor(private orderservice: OrderService,
 
@@ -32,7 +32,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     private notifications: NotificationsService,
     public spinner: NgxSpinnerService,
     private renderer: Renderer2, private elementRef: ElementRef,
-    ) { super(spinner) }
+    ) { }
 
   Order: CreateMultipleOrder
   EditOrder: CreateMultipleOrder
@@ -196,7 +196,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
   onKeyDown(e) {
     console.log("ddd")
     if ((e.which == 13 || e.keyCode == 13)) {
-      this.renderer.parentNode(this.elementRef.nativeElement).focus();
+      this.renderer.parentNode(e.nativeElement).focus();
     }
 
   }
@@ -238,7 +238,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     order.CanEdit = true
     this.tempEdit = Object.assign({}, order);
     this.EditOrder = order
-    this.Agents = this.Agents.filter(a => a.countryId == this.EditOrder.CountryId)
+    this.Agents = this.GetAgents.filter(a => a.countryId == this.EditOrder.CountryId)
 
   }
   Save(order: CreateMultipleOrder) {

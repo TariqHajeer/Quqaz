@@ -56,7 +56,7 @@
                     </td>
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.CountryName}}</h4>
-                        <ng-select appendTo="body" [(ngModel)]="order.Country" [ngModelOptions]="{standalone: true}"
+                        <ng-select appendTo="body" [(ngModel)]="order.CountryId" [ngModelOptions]="{standalone: true}"
                             (change)="changeCountryEdit()" style="width: 100px;" *ngIf="order.CanEdit"
                             [clearable]="false" name="Country">
                             <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
@@ -206,8 +206,8 @@
                     </td>
                     <td>
                         
-                        <ng-select appendTo="body"[disabled]="!ClientId" [(ngModel)]="Order.Country" [ngModelOptions]="{standalone: true}"
-                            (change)="changeCountry()" style="width: 100px;" 
+                        <ng-select appendTo="body"[disabled]="!ClientId" [(ngModel)]="Order.CountryId" [ngModelOptions]="{standalone: true}"
+                            (ngModelChange)="changeCountry()" style="width: 100px;" 
                             [clearable]="false" name="Country">
                             <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
                         </ng-select>

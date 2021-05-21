@@ -84,6 +84,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   }
 
   addNewCountry() {
+    this.Order.Country= this.cities.find(c => c.id == this.Order.CountryId)
     var find = this.cities.find(c => c.name == this.Order.Country.name)
     if (!find) {
       this.customerService.Create(this.cityapi, this.Order.Country).subscribe(res => {
@@ -115,7 +116,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
       this.GetAgents = res
-      this.Agents = this.GetAgents.filter(a => a.countryId == this.Order.CountryId)
+     // this.Agents = this.GetAgents.filter(a => a.countryId == this.Order.CountryId)
       // if(this.Agents.length!=0)
       // this.Order.AgentId = this.Agents[0].id
       // else this.Order.AgentId=null
@@ -141,8 +142,8 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   }
 
   changeCountry() {
-    var city = this.cities.find(c => c == this.Order.Country)
-    this.Agents = this.GetAgents.filter(a => a.countryId == this.Order.Country.id)
+    var city = this.cities.find(c => c.id == this.Order.CountryId)
+    this.Agents = this.GetAgents.filter(a => a.countryId == this.Order.CountryId)
     if (this.Agents.length != 0 && this.Agents.length == 1)
       this.Order.AgentId = this.Agents[0].id
     else this.Order.AgentId = null
@@ -150,8 +151,8 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
 
   }
   changeCountryEdit() {
-    var city = this.cities.find(c => c.id == this.EditOrder.Country)
-    this.Agents = this.GetAgents.filter(a => a.countryId == this.EditOrder.Country.id)
+    var city = this.cities.find(c => c.id == this.EditOrder.CountryId)
+    this.Agents = this.GetAgents.filter(a => a.countryId == this.EditOrder.CountryId)
     if (this.Agents.length != 0 && this.Agents.length == 1)
       this.EditOrder.AgentId = this.Agents[0].id
     else this.EditOrder.AgentId = null
@@ -219,7 +220,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   }
   onEnter() {
     this.addNewCountry()
-    this.Order.CountryId = this.Order.Country.id
+    this.Order.Country=this.cities.find(c=>c.id==this.Order.CountryId) 
     this.Order.ClientId = this.ClientId
     if (this.checkLengthPhoneNumber(this.Order.RecipientPhones))
       return
@@ -259,9 +260,9 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     order.CanEdit = true
     this.tempEdit = Object.assign({}, order);
     this.EditOrder = order
+    this.Agents = this.GetAgents.filter(a => a.countryId == this.EditOrder.CountryId)
   }
   Save(order: CreateMultipleOrder) {
-
     this.editNewCountry()
     if (!this.EditOrder.Code || !this.EditOrder.ClientId ||
       !this.EditOrder.RecipientPhones
@@ -282,7 +283,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     this.EditOrder.DeliveryCost=this.EditOrder.DeliveryCost*1
     this.EditOrder.Cost=this.EditOrder.Cost*1
     var agent = this.Agents.find(c => c.id == this.EditOrder.AgentId)
-   // this.EditOrder.AgentName = agent.name
+    this.EditOrder.AgentName = agent.name
     order = Object.assign(order, this.EditOrder);
     localStorage.setItem('refrshorderclient', JSON.stringify(this.Orders))
 
