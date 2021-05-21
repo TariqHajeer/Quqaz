@@ -164,13 +164,13 @@
 
                     <td>
                         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" #code
-                            [(ngModel)]="Order.Code" (keyup)="CheckCode()" (keyup.enter)="onEnter()"
+                            [(ngModel)]="Order.Code" (keyup)="CheckCode()" (change)="changeIndex(0)"
                             oninput="this.value = this.value.replace(/[^0-9.A-Za-z]/g, '').replace(/(\..*)\./g, '$1');"
                             style="width: 100px;">
                         <div *ngIf="!Order.Code && submitted" class="message">كود الشحنة حقل مطلوب</div>
                     </td>
                     <td>
-                        <ng-select appendTo="body" [(ngModel)]="Order.ClientId" (change)="CheckCode()"
+                        <ng-select  appendTo="body" [(ngModel)]="Order.ClientId" (change)="CheckCode();changeIndex(1)"
                             (keyup.enter)="onEnter()" style="width: 125px;" [ngModelOptions]="{standalone: true}"
                             [clearable]="false" name="Client">
                             <ng-option *ngFor="let Client of clients" [value]="Client.id">{{Client.name}}
@@ -182,7 +182,7 @@
                     </td>
                     <td>
 
-                        <ng-select [(ngModel)]="Order.CountryId" style="width: 100px;" (change)="changeCountry()"
+                        <ng-select [(ngModel)]="Order.CountryId" style="width: 100px;" (change)="changeCountry();changeIndex(2)"
                             [ngModelOptions]="{standalone: true}" [clearable]="false" name="Country">
                             <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
                         </ng-select>
@@ -193,7 +193,7 @@
                     <td>
 
                         <ng-select [(ngModel)]="Order.AgentId" [ngModelOptions]="{standalone: true}" [clearable]="false"
-                            name="Agent" style="width: 100px;"placeholder="اختر مندوب" >
+                        (change)="changeIndex(3)"name="Agent" style="width: 100px;"placeholder="اختر مندوب" >
                             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                         </ng-select>
                         <div *ngIf="!Order.AgentId && submitted" class="message">المندوب حقل مطلوب</div>
@@ -202,7 +202,7 @@
                     <td>
                         <input type="text" maxlength="11"name="phoneadd"
                             oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
-                            (keyup.enter)="onEnter()" style="width: 100px;" class="form-control" [ngModelOptions]="{standalone: true}"
+                            (change)="changeIndex(4)" (keyup.enter)="onEnter()" style="width: 100px;" class="form-control" [ngModelOptions]="{standalone: true}"
                             [(ngModel)]="Order.RecipientPhones" (keyup)="checkLengthPhoneNumber(Order.RecipientPhones)">
                         <div *ngIf="!Order.RecipientPhones&& submitted" class="message">رقم الهاتف
                             حقل مطلوب
@@ -215,19 +215,19 @@
                     <td>
                         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                             oninput="this.value = this.value.replace(/[^0-9.]-/g, '').replace(/(\..*)\./g, '$1');"
-                            (keyup.enter)="onEnter()" style="width: 100px;" [(ngModel)]="Order.Cost">
+                            (change)="changeIndex(5)" (keyup.enter)="onEnter()" style="width: 100px;" [(ngModel)]="Order.Cost">
 
                     </td>
                     <td>
                         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                         oninput="this.value = this.value.replace(/[^0-9.]-/g, '').replace(/(\..*)\./g, '$1');"
-                            (keyup.enter)="onEnter()" style="width: 100px;" [(ngModel)]="Order.DeliveryCost" >
+                        (change)="changeIndex(6)" (keyup.enter)="onEnter()" style="width: 100px;" [(ngModel)]="Order.DeliveryCost" >
                     </td>
                  
                    
                     <td> 
                         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                            [(ngModel)]="Order.Note" (keyup.enter)="onEnter()" style="width: 100px;" >
+                         [(ngModel)]="Order.Note" (keyup.enter)="onEnter()" style="width: 100px;" >
                        
                     </td>
 

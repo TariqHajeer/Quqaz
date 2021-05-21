@@ -80,7 +80,7 @@ export class EditOrdersComponent implements OnInit {
     this.orderResend.DeliveryCost= this.orderResend.DeliveryCost*1
     this.orderservice.ReSend(this.orderResend).subscribe(res => {
       this.notifications.create('success', 'تمت  اعادة الارسال بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-
+      location.reload();
     })
   }
   int() {

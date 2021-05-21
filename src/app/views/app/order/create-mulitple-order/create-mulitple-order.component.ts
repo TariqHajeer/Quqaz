@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { CustomService } from 'src/app/services/custom.service';
 import { UserService } from 'src/app/services/user.service';
@@ -30,7 +30,9 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     , private customerService: CustomService,
     public userService: UserService,
     private notifications: NotificationsService,
-    public spinner: NgxSpinnerService) { super(spinner) }
+    public spinner: NgxSpinnerService,
+    private renderer: Renderer2, private elementRef: ElementRef,
+    ) { super(spinner) }
 
   Order: CreateMultipleOrder
   EditOrder: CreateMultipleOrder
@@ -81,7 +83,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
     this.getAgent()
   }
 
-
+ 
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
@@ -185,6 +187,19 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
       return false
     }
   }
+  index = 0
+  changeIndex(number) {
+    this.index = number
+  }
+
+  @HostListener('keydown', ['$event'])
+  onKeyDown(e) {
+    console.log("ddd")
+    if ((e.which == 13 || e.keyCode == 13)) {
+      this.renderer.parentNode(this.elementRef.nativeElement).focus();
+    }
+
+  }
   onEnter() {
     if (!this.Order.Code || !this.Order.ClientId ||
       !this.Order.CountryId || !this.Order.RecipientPhones
@@ -211,7 +226,7 @@ export class CreateMulitpleOrderComponent extends SpinnerComponent implements On
       this.codeElement.nativeElement.focus();
     }, 0);
     this.int()
-  }
+    }
   tempEdit: CreateMultipleOrder
   Edit(order: CreateMultipleOrder) {
     this.EditOrder = new CreateMultipleOrder
