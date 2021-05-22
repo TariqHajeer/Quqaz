@@ -74,20 +74,20 @@ export class EditOrdersComponent implements OnInit {
     var city = this.cities.find(c => c.id == this.orderResend.CountryId)
     this.orderResend.DeliveryCost = city.deliveryCost
     this.orderResend.RegionId = null
-    this.Regionsresend = this.Regions.filter(r => r.country.id == this.orderResend.CountryId)
-    this.Agentsresend = this.Agents.filter(r => r.countryId == this.orderResend.CountryId)
+    this.Regionsresend = this.tempRegions.filter(r => r.country.id == this.orderResend.CountryId)
+    this.Agentsresend = this.tempAgent.filter(r => r.countryId == this.orderResend.CountryId)
 
   }
   Resend() {
     this.orderResend.DeliveryCost = this.orderResend.DeliveryCost * 1
     this.orderservice.ReSend(this.orderResend).subscribe(res => {
       this.notifications.create('success', 'تمت  اعادة الارسال بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      location.reload();
+      this.router.navigate(['/app/order'])
     })
   }
   completelyReturn() {
     this.orderservice.MakeStoreOrderCompletelyReturned(this.Order.Id).subscribe(res => {
-      this.Order.OrderplacedId = 5
+      this.router.navigate(['/app/order'])
     })
   }
   int() {
@@ -96,10 +96,11 @@ export class EditOrdersComponent implements OnInit {
     this.GetMoenyPlaced()
     this.GetorderPlace()
     this.GetRegion()
-    this.Getcities()
     this.GetClient()
     this.getAgent()
     this.getOrderTypes()
+    this.Getcities()
+
   }
   canResned
   getorder() {
@@ -119,7 +120,6 @@ export class EditOrdersComponent implements OnInit {
     this.orderResend.AgnetId = editorder.agent.id
     this.orderResend.CountryId = editorder.country.id
     this.orderResend.RegionId = editorder.region != null ? editorder.region.Id : null
-    this.orderResend.DeliveryCost = editorder.deliveryCost
     this.Regionsresend = this.Regions.filter(r => r.country.id == this.orderResend.CountryId)
     this.Agentsresend = this.Agents.filter(r => r.countryId == this.orderResend.CountryId)
     this.Order.Id = editorder.id
@@ -223,18 +223,29 @@ export class EditOrdersComponent implements OnInit {
   Getcities() {
     this.customerService.getAll(this.cityapi).subscribe(res => {
       this.cities = res
+      var country=this.cities.find(c=>c.id==this.Order.CountryId)
+      this.orderResend.DeliveryCost = country.deliveryCost
+      this.Regionsresend = this.tempRegions.filter(r => r.country.id == this.orderResend.CountryId)
+      this.Agentsresend = this.tempAgent.filter(r => r.countryId == this.orderResend.CountryId)
+      this.Regions = this.tempRegions.filter(r => r.country.id == this.Order.CountryId)
+      this.Agents = this.tempAgent.filter(r => r.countryId == this.Order.CountryId)
+
+
     })
   }
+  tempRegions
   GetRegion() {
     this.customerService.getAll(this.regionapi).subscribe(res => {
-      this.Regions = res
       this.Regionsresend = res
+      this.tempRegions=res
     })
   }
+  tempAgent
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
-      this.Agents = res
       this.Agentsresend = res
+      this.tempAgent=res
+
     })
   }
   AllorderTypes: any[] = []
@@ -273,8 +284,8 @@ export class EditOrdersComponent implements OnInit {
     this.Order.RegionId = null
     var city = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.DeliveryCost = city.deliveryCost
-    this.Region = this.Regions.filter(r => r.country.id == this.Order.CountryId)
-    this.Agents = this.Agents.filter(r => r.countryId == this.Order.CountryId)
+    this.Regions = this.tempRegions.filter(r => r.country.id == this.Order.CountryId)
+    this.Agents = this.tempAgent.filter(r => r.countryId == this.Order.CountryId)
     if (this.Agents.length == 1)
       this.Order.AgentId = this.Agents[0].id
     else

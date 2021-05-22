@@ -5,6 +5,7 @@ import { UserLogin } from 'src/app/Models/userlogin.model';
 import { OrderService } from 'src/app/services/order.service';
 import { PrintNumberOrder } from 'src/app/Models/order/PrintNumberOrder.model';
 import * as jspdf from 'jspdf';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-agent',
@@ -16,7 +17,9 @@ export class AgentComponent implements OnInit {
   constructor(private orderservice: OrderService,
     private notifications: NotificationsService,
     public sanitizer: DomSanitizer,
-    private cdr: ChangeDetectorRef) { }
+    private cdr: ChangeDetectorRef,
+    private spinner: NgxSpinnerService,
+  ) { }
   heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'الهاتف', 'اسم العميل', 'ملاحظات']
   orders: any[] = []
   count = 0
@@ -47,21 +50,24 @@ export class AgentComponent implements OnInit {
     return this.count
   }
   showPrintbtn = false
-  onAWay(){
-    if(this.orderplaced.id==2)
-    this.showPrintbtn=false
+  onAWay() {
+    if (this.orderplaced.id == 2)
+      this.showPrintbtn = false
     else
-    this.showPrintbtn=true
+      this.showPrintbtn = true
   }
   afterPrint() {
+    this.spinner.show()
     this.orderservice.MakeOrderInWay(this.orders.map(o => o.id)).subscribe(res => {
       this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       //this.orders=[]
-
+      this.spinner.hide()
       this.printnumber = res.printNumber
       this.showPrintbtn = true
       //  this.setPrintnumber()
 
+    },err=>{
+      this.spinner.hide()
     })
   }
   @HostListener('window:keydown', ['$event'])
@@ -75,7 +81,7 @@ export class AgentComponent implements OnInit {
     const elementToPrint = document.getElementById('contentToConvert'); //The html element to become a pdf
     const pdf = new jspdf('p', 'mm', 'a4');
     pdf.addHTML(elementToPrint, () => {
-      pdf.save( this.dateOfPrint+'.pdf');
+      pdf.save(this.dateOfPrint + '.pdf');
     });
   }
 

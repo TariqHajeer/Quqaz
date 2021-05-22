@@ -5,6 +5,7 @@ import { UserLogin } from 'src/app/Models/userlogin.model';
 import { PrintNumberOrder } from 'src/app/Models/order/PrintNumberOrder.model';
 import { OrderService } from 'src/app/services/order.service';
 import * as jspdf from 'jspdf';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-client',
@@ -16,7 +17,9 @@ export class ClientComponent implements OnInit {
   constructor(private orderservice: OrderService,
     private notifications: NotificationsService,
     public sanitizer: DomSanitizer,
-    private cdr: ChangeDetectorRef) { }
+    private cdr: ChangeDetectorRef,
+    private spinner: NgxSpinnerService,
+    ) { }
     // 'موقع المبلغ', 'حالة الشحنة '
   heads = ['ترقيم', 'كود', 'الإجمالي','الرسوم',' يدفع للعميل', 'المحافظة ', 'الهاتف', 'ملاحظات']
   orders: any[] = []
@@ -50,13 +53,16 @@ export class ClientComponent implements OnInit {
   showPrintbtn = false
 
   changeDeleiverMoneyForClient() {
+    this.spinner.show()
     this.orderservice.DeleiverMoneyForClient(this.orders.map(o => o.id)).subscribe(res => {
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.showPrintbtn = true
+      this.spinner.hide()
       this.printnumber=res.printNumber
      // this.setPrintnumber()
     }, err => {
       this.showPrintbtn = true
+      this.spinner.hide()
 
     })
 

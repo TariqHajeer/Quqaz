@@ -248,7 +248,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
   Save(order: CreateMultipleOrder) {
     if (!this.EditOrder.Code || !this.EditOrder.ClientId ||
       !this.EditOrder.CountryId || !this.EditOrder.RecipientPhones
-      || !this.EditOrder.AgentId || !this.EditOrder.OrderplacedId
+      || !this.EditOrder.AgentId 
       || order.showEditMessageCode) {
       this.Editsubmitted = true
       return

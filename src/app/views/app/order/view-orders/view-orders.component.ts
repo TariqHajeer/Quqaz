@@ -138,9 +138,14 @@ export class ViewOrdersComponent implements OnInit {
     })
   }
   completelyReturn (id){
+    this.spinner.show()
     this.orderservice.MakeStoreOrderCompletelyReturned(id).subscribe(res=>{
       this.allFilter();
-    });
+      this.spinner.hide()
+    },err=>{
+      this.spinner.hide()
+    }
+   );
   }
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {

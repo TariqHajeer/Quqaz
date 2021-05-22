@@ -6,6 +6,7 @@ import { PrintNumberOrder } from 'src/app/Models/order/PrintNumberOrder.model';
 import { OrderService } from 'src/app/services/order.service';
 import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-set-print-number',
   templateUrl: './set-print-number.component.html',
@@ -17,6 +18,8 @@ export class SetPrintNumberComponent implements OnInit {
     private notifications: NotificationsService,
     public sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef,
+    private spinner: NgxSpinnerService,
+
   ) { }
   heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'الهاتف', 'ملاحظات']
   orders: any[] = []
@@ -44,7 +47,9 @@ export class SetPrintNumberComponent implements OnInit {
   showPrintbtn = false
   phones
   changeDeleiverMoneyForClient() {
+    this.spinner.show()
     this.orderservice.GetOrderByAgnetPrintNumber(this.printnumber).subscribe(res => {
+      this.spinner.hide()
       this.showPrintbtn = true
       this.orders = res.orders
       this.agent = res.destinationName
@@ -54,6 +59,7 @@ export class SetPrintNumberComponent implements OnInit {
       this.userName = res.printerName
       this.sumCost()
     }, err => {
+      this.spinner.hide()
       this.showPrintbtn = false
       this.notifications.create('success', 'رقم الطباعة غير موجود', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 
