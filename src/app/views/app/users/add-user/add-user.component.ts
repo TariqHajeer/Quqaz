@@ -6,6 +6,7 @@ import { GroupService } from 'src/app/services/group.service';
 import { UserService } from 'src/app/services/user.service';
 import { CreateUser } from 'src/app/Models/user/create-user'
 import { Group } from 'src/app/Models/Group/group.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
@@ -17,6 +18,8 @@ export class AddUserComponent implements OnInit, OnChanges {
     public GroupService: GroupService,
     private customService: CustomService,
     private notifications: NotificationsService,
+    public spinner: NgxSpinnerService
+
   ) { }
   @Input() currentUserId;
   @Input() editClicked;
@@ -96,8 +99,10 @@ export class AddUserComponent implements OnInit, OnChanges {
       }
     }
     this.CreateUser.Salary=this.CreateUser.Salary*1
+    this.spinner.show()
     this.UserService.Creat(this.CreateUser).subscribe(
       res => {
+        this.spinner.hide()
         if (this.addClicked) {
           this.addFinish.emit(this.CreateUser);
           this.submitted = false;
@@ -106,6 +111,8 @@ export class AddUserComponent implements OnInit, OnChanges {
           this.notifications.create('success', 'تم اضافة موظف بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         }
 
+      },err=>{
+        this.spinner.hide()
       }
     )
   }

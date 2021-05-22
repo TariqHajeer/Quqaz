@@ -7,6 +7,7 @@ import { CreateOutCome } from 'src/app/Models/OutCome/create-out-come.model';
 import { Coin } from 'src/app/Models/Coins/coin.model';
 import { DatePipe } from '@angular/common';
 import { Data } from '@syncfusion/ej2-angular-grids';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-add-out-come',
@@ -18,7 +19,8 @@ export class AddOutComeComponent implements OnInit, OnChanges {
   constructor(public OutcomeService: OutcomeService,
     private customService: CustomService,
     private notifications: NotificationsService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    public spinner: NgxSpinnerService
   ) { }
   @Input() currentUserId;
   @Input() outcome;
@@ -66,21 +68,28 @@ export class AddOutComeComponent implements OnInit, OnChanges {
     this.submitted = true;
     this.CreateOutCome.Amount = Number(this.CreateOutCome.Amount);
     if (this.addClicked) {
+      this.spinner.show()
       this.OutcomeService.Create(this.CreateOutCome).subscribe(res => {
+        this.spinner.hide()
         this.CreateOutCome = new CreateOutCome();
         this.submitted =false; 
         this.addFinish.emit();
         this.notifications.create('', 'تم الاضافة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
     
+    },err=>{
+      this.spinner.hide()
     })
     }
     else if (!this.addClicked){
+      this.spinner.show()
       this.OutcomeService.Ubdate(this.CreateOutCome).subscribe(res => {
+        this.spinner.hide()
         this.CreateOutCome = new CreateOutCome();
         this.submitted =false; 
         this.addFinish.emit();
         this.notifications.create('', 'تم التعديل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-    
+    },err=>{
+      this.spinner.hide()
     })
     }
     

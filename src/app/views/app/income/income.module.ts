@@ -16,6 +16,7 @@ import { AddMoreIncomeComponent } from './add-more-income/add-more-income.compon
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { NgxSpinnerModule } from 'ngx-spinner';
 @NgModule({
   declarations: [ViewIncomComponent, AddInComeComponent, AddMoreIncomeComponent],
   imports: [
@@ -34,6 +35,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    NgxSpinnerModule
     
 
   ],schemas:[CUSTOM_ELEMENTS_SCHEMA],

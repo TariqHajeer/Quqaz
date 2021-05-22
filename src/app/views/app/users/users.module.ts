@@ -14,6 +14,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { ShowAgentComponent } from './show-agent/show-agent.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [AddUserComponent, ViewUserComponent, EditUserComponent, ShowAgentComponent],
@@ -30,6 +31,7 @@ import { ShowAgentComponent } from './show-agent/show-agent.component';
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
     NgSelectModule,
+    NgxSpinnerModule
   ]
 })
 export class UsersModule { }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
@@ -28,7 +29,8 @@ export class EditOrdersComponent implements OnInit {
     , private customerService: CustomService,
     public userService: UserService,
     private notifications: NotificationsService,
-    private router: Router,) { }
+    private router: Router,
+    public spinner: NgxSpinnerService) { }
 
   Order: CreateOrdersFromEmployee
   tempOrdercode
@@ -181,12 +183,16 @@ export class EditOrdersComponent implements OnInit {
     this.Order.DeliveryCost = Number(this.Order.DeliveryCost)
     this.Order.Cost = Number(this.Order.Cost)
     this.Order.RecipientPhones = [this.Order.RecipientPhones + ""]
+    this.spinner.show()
     this.orderservice.Update(this.Order).subscribe(res => {
+      this.spinner.hide()
       this.notifications.create('success', 'تم تعديل  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.int()
       localStorage.removeItem('editorder')
       this.router.navigate(['/app/order/'])
 
+    },err=>{
+      this.spinner.hide()
     });
 
   }

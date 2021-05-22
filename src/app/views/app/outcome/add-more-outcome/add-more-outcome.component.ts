@@ -9,6 +9,7 @@ import { DropDownList } from '@syncfusion/ej2-dropdowns';
 import { Query, DataManager } from '@syncfusion/ej2-data';
 import { environment } from 'src/environments/environment.prod';
 import { DatePipe } from '@angular/common';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-add-more-outcome',
   templateUrl: './add-more-outcome.component.html',
@@ -42,13 +43,14 @@ export class AddMoreOutcomeComponent implements OnInit {
   constructor(public OutcomeService: OutcomeService,
     private customService: CustomService,
     private notifications: NotificationsService,
-    public datepipe: DatePipe
+    public datepipe: DatePipe,
+    public spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
-     this.GetOutComeType()
+    this.GetOutComeType()
     // this.Getcoins() 
-   // this.coinDs = new DataManager({url:this.coinsapi})
+    // this.coinDs = new DataManager({url:this.coinsapi})
     this.editSettings = { showDeleteConfirmDialog: false, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
     this.toolbar = [
       { text: 'اضافة', tooltipText: 'اضافة', prefixIcon: 'e-add', id: 'normalgrid_add' },
@@ -61,7 +63,7 @@ export class AddMoreOutcomeComponent implements OnInit {
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
     this.pageSettings = { pageCount: 5 };
-    this.selectionSettings = {  type: "Multiple" };
+    this.selectionSettings = { type: "Multiple" };
     this.lines = 'Horizontal';
 
   }
@@ -102,10 +104,13 @@ export class AddMoreOutcomeComponent implements OnInit {
     this.OutComes.forEach(c => {
       c.Date = this.datepipe.transform(c.Date, 'yyyy-MM-dd');
     });
-
+    this.spinner.show()
     this.OutcomeService.CreateMulitpleOutCome(this.OutComes).subscribe(res => {
       this.notifications.create('', 'تم اضافة صادرات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.OutComes = []
+      this.spinner.hide()
+    },err=>{
+      this.spinner.hide()
     });
 
   }
@@ -114,7 +119,7 @@ export class AddMoreOutcomeComponent implements OnInit {
       res => {
         this.exportTypes = res;
         this.outComeTypeDs = new DataManager()
-        this.outComeTypeDs.dataSource.data= res as JSON
+        this.outComeTypeDs.dataSource.data = res as JSON
 
       }
     )
@@ -122,7 +127,7 @@ export class AddMoreOutcomeComponent implements OnInit {
   Getcoins() {
     this.customService.getAll(this.apiName).subscribe(res => {
       this.coins = res;
-      this.coinDs =  res as object[]
+      this.coinDs = res as object[]
     });
   }
 }

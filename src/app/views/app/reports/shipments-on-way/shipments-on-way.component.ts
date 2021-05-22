@@ -22,7 +22,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class ShipmentsOnWayComponent implements OnInit {
 
   displayedColumns: string[] = ['code', 'client', 'country', 'region'
-    , 'cost', 'isClientDiliverdMoney', 'orderplaced', 'monePlaced', 'agentPrintNumber', 'clientPrintNumber'];
+    , 'cost', 'deliveryCost', 'isClientDiliverdMoney', 'orderplaced', 'monePlaced', 'agentPrintNumber', 'clientPrintNumber'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
   ids: any[] = []
@@ -62,9 +62,12 @@ export class ShipmentsOnWayComponent implements OnInit {
     this.paging = new Paging
     this.filtering = new OrderFilter
   }
+
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
+      this.getMoenyPlaced = [...res]
+
       // this.MoenyPlaced = this.MoenyPlaced.filter(o => o.id != 4)
     })
   }
@@ -73,6 +76,42 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.orderPlace = res
       this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
     })
+  }
+
+  changeMoenyPlaced() {
+    if (this.getorders.length != 0) {
+      this.getorders.forEach(o => {
+        o.order.monePlaced = this.MoenyPlaced.find(m => m.id == this.MoenyPlacedId.id)
+        if (this.OrderplacedId.id == 4 && this.MoenyPlacedId.id == 4) {
+          if (o.order.isClientDiliverdMoney) {
+            o.order.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
+          }
+          else {
+            o.order.monePlaced = this.MoenyPlaced.find(m => m.id == 3)
+          }
+        }
+
+
+      })
+
+    }
+    this.total()
+  }
+
+  getMoenyPlaced
+  changeOrderPlaced() {
+    if (this.getorders.length != 0) {
+      this.getorders.forEach(o => {
+        o.order.orderplaced = { ...this.OrderplacedId }
+        this.ChangeOrderplacedId(o, this.getorders.indexOf(o))
+      })
+      this.MoenyPlacedId = null
+      this.getMoenyPlaced = [...this.getorders[0].MoenyPlaced]
+      if (this.OrderplacedId.id == 4)
+        this.getMoenyPlaced = [{ id: 2, name: "مندوب" }, { id: 4, name: "تم تسليمها/داخل الشركة" }]
+
+    }
+    this.total()
   }
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
@@ -92,12 +131,15 @@ export class ShipmentsOnWayComponent implements OnInit {
     this.orderplacedstate.onWay(element, this.MoenyPlaced)
     this.orderplacedstate.unacceptable(element, this.MoenyPlaced)
     this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
+    this.total()
+
   }
   changeCost(element, index) {
     if (this.orderplacedstate.rangeCost(element, this.temporderscost[index])) {
       element.messageCost = ""
     } else
       element.messageCost = " الكلفة لايمكن أن تتجاوز " + this.temporderscost[index]
+      this.total()
   }
   switchPage(event: PageEvent) {
     this.paging.allItemsLength = event.length
@@ -149,8 +191,8 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.tempordersmonePlaced = Object.assign({}, this.getorders.map(o => o.order.monePlaced));
       this.tempisClientDiliverdMoney = Object.assign({}, this.getorders.map(o => o.order.isClientDiliverdMoney));
       this.temporder = this.getorders
+      this.total()
       this.dataSource = new MatTableDataSource(this.getorders)
-
       this.totalCount = response.total
     },
       err => {
@@ -172,7 +214,7 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.spinner.hide()
       this.orderstates = []
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-    },err=>{
+    }, err => {
       this.spinner.hide()
     })
   }
@@ -186,5 +228,20 @@ export class ShipmentsOnWayComponent implements OnInit {
     localStorage.setItem('printordersagent', JSON.stringify(this.getorders.map(o => o.order)))
     this.route.navigate(['app/reports/printagentpreview'])
 
+  }
+  totalCost:number=0
+  totalDelaveryCost:number=0
+  endTotal:number=0
+  total() {
+    this.totalCost=0
+    this.totalDelaveryCost=0
+    this.endTotal=0
+    this.getorders.forEach(d => {
+      if(d.order.orderplaced.id==4||d.order.orderplaced.id==6)
+      this.totalCost += d.order.cost
+      if(d.order.orderplaced.id==4||d.order.orderplaced.id==6||d.order.orderplaced.id==7)
+      this.totalDelaveryCost+=d.order.deliveryCost
+    })
+    this.endTotal=this.totalCost-this.totalDelaveryCost
   }
 }

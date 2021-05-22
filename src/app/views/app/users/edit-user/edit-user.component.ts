@@ -8,6 +8,7 @@ import { Group } from 'src/app/Models/Group/group.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/Models/user/user.model';
 import { Phone } from 'src/app/Models/phone.model'
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-edit-user',
@@ -21,7 +22,9 @@ export class EditUserComponent implements OnInit {
     private customService: CustomService,
     private notifications: NotificationsService,
     private getroute: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    public spinner: NgxSpinnerService
+    ) { }
   User: User = new User()
   countries: any[] = [];
   departments: any[] = [];
@@ -72,10 +75,14 @@ export class EditUserComponent implements OnInit {
     this.User.id = Number(this.id)
     this.User.groupsId = []
     this.User.phones = []
+    this.spinner.show()
     this.UserService.Update(this.User).subscribe(
       res => {
+        this.spinner.hide()
         this.notifications.create('success', 'تم التعديل بنجاح ', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         //this.router.navigate(['/app/user'])
+      },err=>{
+        this.spinner.hide()
       }
     )
   }
