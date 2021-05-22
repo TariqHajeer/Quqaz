@@ -79,10 +79,15 @@ export class EditOrdersComponent implements OnInit {
 
   }
   Resend() {
-    this.orderResend.DeliveryCost= this.orderResend.DeliveryCost*1
+    this.orderResend.DeliveryCost = this.orderResend.DeliveryCost * 1
     this.orderservice.ReSend(this.orderResend).subscribe(res => {
       this.notifications.create('success', 'تمت  اعادة الارسال بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       location.reload();
+    })
+  }
+  completelyReturn() {
+    this.orderservice.MakeStoreOrderCompletelyReturned(this.Order.Id).subscribe(res => {
+      this.Order.OrderplacedId = 5
     })
   }
   int() {
@@ -108,8 +113,8 @@ export class EditOrdersComponent implements OnInit {
       this.showRsendButton = true
     else {
       this.showRsendButton = false
-      this.canResned=editorder.canResned
-    } 
+      this.canResned = editorder.canResned
+    }
     this.orderResend.Id = editorder.id
     this.orderResend.AgnetId = editorder.agent.id
     this.orderResend.CountryId = editorder.country.id
@@ -134,7 +139,7 @@ export class EditOrdersComponent implements OnInit {
     this.Order.OrderplacedId = editorder.orderplaced.id
     this.Order.RecipientName = editorder.recipientName
     this.Order.RecipientPhones = editorder.recipientPhones.split(',')
-    this.Order.OldCost=editorder.oldCost
+    this.Order.OldCost = editorder.oldCost
     //this.Order.RecipientPhones.push(editorder.recipientPhones)
     this.Order.RegionId = editorder.region != null ? editorder.region.Id : null
 
@@ -191,7 +196,7 @@ export class EditOrdersComponent implements OnInit {
       localStorage.removeItem('editorder')
       this.router.navigate(['/app/order/'])
 
-    },err=>{
+    }, err => {
       this.spinner.hide()
     });
 
@@ -199,7 +204,7 @@ export class EditOrdersComponent implements OnInit {
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
-      // console.log(res)
+      //  console.log(res)
       //this.Order.OrderplacedId = this.orderPlace[1].id
 
     })
@@ -223,13 +228,13 @@ export class EditOrdersComponent implements OnInit {
   GetRegion() {
     this.customerService.getAll(this.regionapi).subscribe(res => {
       this.Regions = res
-       this.Regionsresend = res
+      this.Regionsresend = res
     })
   }
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
       this.Agents = res
-       this.Agentsresend = res
+      this.Agentsresend = res
     })
   }
   AllorderTypes: any[] = []

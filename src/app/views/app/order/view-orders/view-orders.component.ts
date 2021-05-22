@@ -135,8 +135,13 @@ export class ViewOrdersComponent implements OnInit {
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
+    })
+  }
+  completelyReturn (id){
+    this.orderservice.MakeStoreOrderCompletelyReturned(id).subscribe(res=>{
 
     })
+    this.allFilter()
   }
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {

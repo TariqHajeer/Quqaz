@@ -190,7 +190,9 @@ export class OrderService {
   }
   ReSend(order){
     return this.http.put<any>(this.controler + "ReSend", order)
-
+  }
+  MakeStoreOrderCompletelyReturned(id){
+    return this.http.put<any>(this.controler + "MakeStoreOrderCompletelyReturned", id)
   }
 }
 

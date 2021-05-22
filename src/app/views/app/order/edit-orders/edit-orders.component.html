@@ -18,7 +18,9 @@
                 <div class="col-md-3">
 
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-                        data-whatever="@getbootstrap">اعادة ارسال</button>
+                        data-whatever="@getbootstrap">اعادة ارسال</button><br><br>
+                        <button class="btn btn-primary"*ngIf="Order.OrderplacedId==2" (click)="completelyReturn()">مرتجع كلي</button>&nbsp;
+
 
                     <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
