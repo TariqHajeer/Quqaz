@@ -139,9 +139,8 @@ export class ViewOrdersComponent implements OnInit {
   }
   completelyReturn (id){
     this.orderservice.MakeStoreOrderCompletelyReturned(id).subscribe(res=>{
-
-    })
-    this.allFilter()
+      this.allFilter();
+    });
   }
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
