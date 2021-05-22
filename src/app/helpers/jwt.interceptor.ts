@@ -5,13 +5,15 @@ import { catchError, filter, take, switchMap, finalize, tap } from 'rxjs/operato
 import { throwError as observableThrowError, Observable, BehaviorSubject, throwError } from 'rxjs';
 import { UserLogin } from '../Models/userlogin.model';
 import { Router } from '@angular/router';
+import { NotificationsService, NotificationType } from 'angular2-notifications';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
 
 
   constructor(private authenticationService: AuthService,
-     private injector: Injector,private router:Router) { }
+    private injector: Injector, private router: Router,
+    private notifications: NotificationsService) { }
 
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
@@ -21,16 +23,16 @@ export class JwtInterceptor implements HttpInterceptor {
       const clonedReq = req.clone({
         headers: req.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'))
       }
-      
+
       )
 
       return next.handle(clonedReq).pipe(
         tap(
           succ => {
-           
+
           },
           error => {
-         
+
             if (error instanceof HttpErrorResponse) {
               switch ((<HttpErrorResponse>error).status) {
                 case 401:
@@ -40,8 +42,17 @@ export class JwtInterceptor implements HttpInterceptor {
                   else {
                     return this.logoutUser();
                   }
-                  case 0:
+                case 0:
                   this.router.navigate(['/noconnection']);
+                case 403:
+                  this.router.navigate(['/noconnection']);
+                case 400:
+                  this.notifications.error('error', 'يجب التأكد من ادخال البيانات', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+                case 409:
+                  this.notifications.error('error', error.message, NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+                case 500:
+                  this.notifications.error('error', error.message, NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+
                 default:
                   return this.generalErrorHandling(error);
               }
@@ -51,7 +62,7 @@ export class JwtInterceptor implements HttpInterceptor {
           }
         ))
     } else {
-     
+
       return next.handle(req.clone());
 
     }
@@ -85,7 +96,7 @@ export class JwtInterceptor implements HttpInterceptor {
   logoutUser() {
     // Route to the login page (implementation up to you)
     const authService = this.injector.get(AuthService);
-    localStorage.removeItem('token') 
+    localStorage.removeItem('token')
     authService.signOut();
     return observableThrowError("");
   }

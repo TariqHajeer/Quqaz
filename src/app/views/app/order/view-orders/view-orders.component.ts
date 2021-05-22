@@ -69,7 +69,7 @@ export class ViewOrdersComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.displayedColumns = ['code', 'deliveryCost', 'cost', 'recipientName',
       'recipientPhones', 'client', 'clientPrintNumber', 'country'
-      , 'region', 'agent', 'agentPrintNumber', 'monePlaced', 'orderplaced', 'address', 'createdBy', 'date', 'diliveryDate', 'note', 'Edit', 'Delete'];
+      , 'region', 'agent', 'agentPrintNumber', 'monePlaced', 'orderplaced', 'address', 'createdBy', 'date', 'diliveryDate', 'note', 'test','Edit', 'Delete'];
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

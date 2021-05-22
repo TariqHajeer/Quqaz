@@ -15,7 +15,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import {StoreModule} from '@ngrx/store'
 import {StoreDevtoolsModule} from '@ngrx/store-devtools'
 import {EffectsModule } from '@ngrx/effects'
-import { NotificationsService } from 'angular2-notifications';
+import { NotificationsService, SimpleNotificationsModule } from 'angular2-notifications';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { OnReturnDirective } from './helpers/on-return.directive';
 //import { allIcons, NgxBootstrapIconsModule } from 'ngx-bootstrap-icons';
@@ -33,6 +33,8 @@ import { OnReturnDirective } from './helpers/on-return.directive';
     StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot([]),
     NgxSpinnerModule,
+    SimpleNotificationsModule.forRoot(),
+
   //  NgxBootstrapIconsModule.forRoot(allIcons) 
 
   ],
