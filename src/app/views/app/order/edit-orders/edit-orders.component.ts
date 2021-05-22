@@ -76,7 +76,14 @@ export class EditOrdersComponent implements OnInit {
     this.orderResend.RegionId = null
     this.Regionsresend = this.tempRegions.filter(r => r.country.id == this.orderResend.CountryId)
     this.Agentsresend = this.tempAgent.filter(r => r.countryId == this.orderResend.CountryId)
-
+    if (this.Agentsresend.length == 1)
+      this.orderResend.AgnetId = this.Agentsresend[0].id
+    else
+      this.orderResend.AgnetId = null
+    if (this.Regionsresend.length == 1)
+      this.orderResend.RegionId = this.Regionsresend[0].id
+    else
+      this.orderResend.RegionId = null
   }
   Resend() {
     this.orderResend.DeliveryCost = this.orderResend.DeliveryCost * 1
@@ -223,7 +230,7 @@ export class EditOrdersComponent implements OnInit {
   Getcities() {
     this.customerService.getAll(this.cityapi).subscribe(res => {
       this.cities = res
-      var country=this.cities.find(c=>c.id==this.Order.CountryId)
+      var country = this.cities.find(c => c.id == this.Order.CountryId)
       this.orderResend.DeliveryCost = country.deliveryCost
       this.Regionsresend = this.tempRegions.filter(r => r.country.id == this.orderResend.CountryId)
       this.Agentsresend = this.tempAgent.filter(r => r.countryId == this.orderResend.CountryId)
@@ -237,14 +244,14 @@ export class EditOrdersComponent implements OnInit {
   GetRegion() {
     this.customerService.getAll(this.regionapi).subscribe(res => {
       this.Regionsresend = res
-      this.tempRegions=res
+      this.tempRegions = res
     })
   }
   tempAgent
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
       this.Agentsresend = res
-      this.tempAgent=res
+      this.tempAgent = res
 
     })
   }
