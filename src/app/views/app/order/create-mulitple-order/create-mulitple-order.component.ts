@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { CustomService } from 'src/app/services/custom.service';
 import { UserService } from 'src/app/services/user.service';
@@ -23,7 +23,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./create-mulitple-order.component.scss']
 })
 export class CreateMulitpleOrderComponent implements OnInit {
-
+  test(e) {
+    e.target.blur();
+  }
   constructor(private orderservice: OrderService,
 
     private clientService: ClientService
@@ -32,7 +34,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
     private notifications: NotificationsService,
     public spinner: NgxSpinnerService,
     private renderer: Renderer2, private elementRef: ElementRef,
-    ) { }
+  ) { }
 
   Order: CreateMultipleOrder
   EditOrder: CreateMultipleOrder
@@ -76,6 +78,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
       this.Orders = order
     }
   }
+
   int() {
     this.GetorderPlace()
     this.Getcities()
@@ -83,7 +86,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
     this.getAgent()
   }
 
- 
+
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
@@ -187,19 +190,20 @@ export class CreateMulitpleOrderComponent implements OnInit {
       return false
     }
   }
-  index = 0
-  changeIndex(number) {
-    this.index = number
-  }
+  // index = 0
+  // changeIndex(number) {
+  //   this.index = number
+  // }
 
-  @HostListener('keydown', ['$event'])
-  onKeyDown(e) {
-    console.log("ddd")
-    if ((e.which == 13 || e.keyCode == 13)) {
-      this.renderer.parentNode(e.nativeElement).focus();
-    }
+  // @HostListener('keydown', ['$event'])
+  // onKeyDown(e) {
+  //   console.log("ddd")
+  //   if ((e.which == 13 || e.keyCode == 13)) {
+  //     console.log(this.renderer)
+  //     this.renderer.parentNode(e.nativeElement).focus();
+  //   }
 
-  }
+  // }
   onEnter() {
     if (!this.Order.Code || !this.Order.ClientId ||
       !this.Order.CountryId || !this.Order.RecipientPhones
@@ -226,7 +230,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
       this.codeElement.nativeElement.focus();
     }, 0);
     this.int()
-    }
+  }
   tempEdit: CreateMultipleOrder
   Edit(order: CreateMultipleOrder) {
     this.EditOrder = new CreateMultipleOrder
@@ -304,5 +308,20 @@ export class CreateMulitpleOrderComponent implements OnInit {
       this.spinner.hide()
     })
 
+  }
+  @ViewChild('myTr') inputEl:ElementRef;
+  changed(index) {
+    if(index==7){this.onEnter(); return}
+    const inputs = this.inputEl.nativeElement.querySelectorAll('input');
+    if (inputs.length > index + 1) {
+      inputs[index + 1].focus();
+    }
+  }
+  @ViewChild('TrFor') inputEle:ElementRef;
+  changedngFor(index) {
+    const inputs = this.inputEle.nativeElement.querySelectorAll('input');
+    if (inputs.length > index + 1) {
+      inputs[index + 1].focus();
+    }
   }
 }
