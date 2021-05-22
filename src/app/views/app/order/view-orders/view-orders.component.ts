@@ -67,9 +67,10 @@ export class ViewOrdersComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.orders);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.displayedColumns = ['code', 'deliveryCost', 'cost', 'recipientName',
+    this.displayedColumns = ['code', 'deliveryCost', 'cost','oldCost', 'recipientName',
       'recipientPhones', 'client', 'clientPrintNumber', 'country'
-      , 'region', 'agent', 'agentPrintNumber', 'monePlaced', 'orderplaced', 'address', 'createdBy', 'date', 'diliveryDate', 'note', 'test','Edit', 'Delete'];
+      , 'region', 'agent', 'agentPrintNumber', 'monePlaced', 'orderplaced', 'address'
+      , 'createdBy', 'date', 'diliveryDate', 'note', 'test','Edit', 'Delete'];
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
