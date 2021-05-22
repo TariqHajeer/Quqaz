@@ -178,7 +178,7 @@
 
 <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
   [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
-  <div class="row" style=" background-color: white;font-size: 15px;">
+  <div class="row" style=" background-color: white;font-size: 15px;text-align: center;">
     <div class="col-3">
       الإجمالي
     </div>
@@ -188,8 +188,8 @@
     <div class="col-1">
       {{totalDelaveryCost}}
     </div>
-    <div class="col-1">
-      {{endTotal}}
+    <div class="col-5">
+     الإجمالي النهائي : {{endTotal}} 
     </div>
   </div>
 <simple-notifications></simple-notifications>
