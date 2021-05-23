@@ -27,6 +27,7 @@ import {
 import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { CreateMultiOrderAgentAndClientComponent } from './create-multi-order-agent-and-client/create-multi-order-agent-and-client.component';
 @NgModule({
   declarations: [
     ViewOrdersComponent,
@@ -36,6 +37,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     CreateMulitpleOrderComponent,
     CreatemultipleOrderFromClientComponent,
     ProfitsOfOrdersComponent,
+    CreateMultiOrderAgentAndClientComponent,
   ],
   imports: [
     CommonModule,

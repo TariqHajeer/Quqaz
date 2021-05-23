@@ -63,7 +63,7 @@ export class AgentComponent implements OnInit {
       //this.orders=[]
       this.spinner.hide()
       this.printnumber = res.printNumber
-      this.showPrintbtn = true
+      this.showPrintbtn = false
       //  this.setPrintnumber()
 
     },err=>{

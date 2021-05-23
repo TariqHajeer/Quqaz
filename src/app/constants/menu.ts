@@ -64,6 +64,13 @@ const data: IMenuItem[] = [
         //permission:[UserPermission.AddOrder]
 
       },
+      {
+        icon: 'iconsminds-add',
+        label: ' إضافة  متعددة للعميل والمندوب',
+        to: `${adminRoot}/order/addMulitpleOrdersfromClientandAgent`,
+        //permission:[UserPermission.AddOrder]
+
+      },
       // {
       //   icon: 'iconsminds-add',
       //   label: 'طلبات لم يتم سداد مبلغها كاملا',
@@ -198,7 +205,7 @@ const data: IMenuItem[] = [
       },
       {
         icon: 'simple-icon-layers',
-        label: ' المقاصة  ',
+        label: ' للقاصة  ',
         to: `${adminRoot}/reports/pay`,
         //permission:[UserPermission.ShowOrder]
 

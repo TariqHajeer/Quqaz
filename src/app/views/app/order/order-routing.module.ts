@@ -4,6 +4,7 @@ import { AuthGuard } from 'src/app/shared/auth.guard';
 import { UserPermission } from 'src/app/shared/auth.roles';
 import { AddOrdersComponent } from './add-orders/add-orders.component';
 import { CreateMulitpleOrderComponent } from './create-mulitple-order/create-mulitple-order.component';
+import { CreateMultiOrderAgentAndClientComponent } from './create-multi-order-agent-and-client/create-multi-order-agent-and-client.component';
 import { CreatemultipleOrderFromClientComponent } from './createmultiple-order-from-client/createmultiple-order-from-client.component';
 import { EditOrdersComponent } from './edit-orders/edit-orders.component';
 import { ProfitsOfOrdersComponent } from './profits-of-orders/profits-of-orders.component';
@@ -30,6 +31,11 @@ const routes: Routes = [
   {
     path:'addMulitpleOrdersfromClient',
     component:CreatemultipleOrderFromClientComponent ,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.AddOrder]}
+  },
+  {
+    path:'addMulitpleOrdersfromClientandAgent',
+    component:CreateMultiOrderAgentAndClientComponent ,canActivate: [AuthGuard],
     data: { roles: [UserPermission.AddOrder]}
   },
   {
