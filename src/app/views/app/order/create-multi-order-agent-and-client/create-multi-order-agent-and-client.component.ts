@@ -187,7 +187,7 @@ export class CreateMultiOrderAgentAndClientComponent implements OnInit {
           this.showMessageCode = false
       })
     });
-    localStorage.setItem('ClientId', this.ClientId)
+    localStorage.setItem('ClientIda', this.ClientId)
   }
   CheckCode() {
     if (!this.Order.Code || !this.ClientId) return
@@ -199,7 +199,7 @@ export class CreateMultiOrderAgentAndClientComponent implements OnInit {
           this.showMessageCode = false
       })
     }
-    localStorage.setItem('ClientId', this.ClientId)
+    localStorage.setItem('ClientIda', this.ClientId)
   }
   tempcode
   CheckCodeForEdit() {
@@ -331,6 +331,14 @@ export class CreateMultiOrderAgentAndClientComponent implements OnInit {
       this.spinner.hide()
       this.notifications.create('success', 'تم اضافة الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Orders = []
+      this.Order=new CreateMultipleOrder
+      this.ClientId=null
+      this.AgentId=null
+      this.CountryId=null
+      localStorage.setItem('ClientIda', this.ClientId)
+      localStorage.setItem('AgentId', this.AgentId)
+      localStorage.setItem('CountryId', this.CountryId)
+
       localStorage.setItem('refrshorderclientandAgent', JSON.stringify(this.Orders))
 
     }, err => {

@@ -322,6 +322,9 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
       this.spinner.hide()
       this.notifications.create('success', 'تم اضافة الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Orders = []
+      this.ClientId=null
+      localStorage.setItem('ClientId', this.ClientId)
+
       localStorage.setItem('refrshorderclient', JSON.stringify(this.Orders))
 
     },err=>{
