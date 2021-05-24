@@ -112,17 +112,17 @@ export class EditOrdersComponent implements OnInit {
   canResned
   getorder() {
     var editorder = JSON.parse(localStorage.getItem('editorder'))
-    console.log(editorder)
-    // if (editorder.orderplaced.id == 5 || editorder.orderplaced.id == 7 || editorder.orderplaced.id == 8)
-    //   this.showRsendButton = true
-    //   else
-    //   this.showRsendButton=false
-    if (editorder.canResned == null)
+    console.log(editorder.orderplaced.id )
+    if (editorder.orderplaced.id == 5 || editorder.orderplaced.id == 7 || editorder.orderplaced.id == 8)
       this.showRsendButton = true
-    else {
-      this.showRsendButton = false
-      this.canResned = editorder.canResned
-    }
+      else
+      this.showRsendButton=false
+    // if (editorder.canResned == null)
+    //   this.showRsendButton = true
+    // else {
+    //   this.showRsendButton = false
+    //   this.canResned = editorder.canResned
+    // }
     this.orderResend.Id = editorder.id
     this.orderResend.AgnetId = editorder.agent.id
     this.orderResend.CountryId = editorder.country.id
@@ -211,7 +211,7 @@ export class EditOrdersComponent implements OnInit {
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
-      //  console.log(res)
+        console.log(res)
       //this.Order.OrderplacedId = this.orderPlace[1].id
 
     })
