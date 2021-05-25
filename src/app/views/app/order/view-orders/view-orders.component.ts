@@ -17,6 +17,7 @@ import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/Models/user/user.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
+import { Resend } from 'src/app/Models/order/resend.model';
 
 @Component({
   selector: 'app-view-orders',
@@ -67,10 +68,10 @@ export class ViewOrdersComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.orders);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.displayedColumns = ['code', 'deliveryCost', 'cost','oldCost', 'recipientName',
+    this.displayedColumns = ['code', 'deliveryCost', 'cost', 'oldCost', 'recipientName',
       'recipientPhones', 'client', 'clientPrintNumber', 'country'
       , 'region', 'agent', 'agentPrintNumber', 'monePlaced', 'orderplaced', 'address'
-      , 'createdBy', 'date', 'diliveryDate', 'note', 'test','Edit', 'Delete'];
+      , 'createdBy', 'date', 'diliveryDate', 'note', 'completelyReturn', 'Edit', 'Delete'];
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -85,6 +86,38 @@ export class ViewOrdersComponent implements OnInit {
 
     this.allFilter();
 
+  }
+  orderResend: Resend = new Resend()
+  fillResend(order){
+    this.orderResend.Id=order.id
+    this.orderResend.AgnetId=order.agent.id
+    this.orderResend.CountryId=order.country.id
+    this.orderResend.RegionId=order.region?order.region.id:null
+    this.orderResend.DeliveryCost = order.country.deliveryCost * 1
+    this.Regionsresend = this.Region.filter(r => r.country.id == this.orderResend.CountryId)
+    this.Agentsresend = this.Agents.filter(r => r.countryId == this.orderResend.CountryId)
+   
+  }
+  Resend() {
+    this.orderResend.DeliveryCost = this.orderResend.DeliveryCost * 1
+    this.orderservice.ReSend(this.orderResend).subscribe(res => {
+      this.allFilter()
+    })
+  }
+  changeCountryResend() {
+    var city = this.cities.find(c => c.id == this.orderResend.CountryId)
+    this.orderResend.DeliveryCost = city.deliveryCost
+    this.orderResend.RegionId = null
+    this.Regionsresend = this.tempRegions.filter(r => r.country.id == this.orderResend.CountryId)
+    this.Agentsresend = this.tempAgent.filter(r => r.countryId == this.orderResend.CountryId)
+    if (this.Agentsresend.length == 1)
+      this.orderResend.AgnetId = this.Agentsresend[0].id
+    else
+      this.orderResend.AgnetId = null
+    if (this.Regionsresend.length == 1)
+      this.orderResend.RegionId = this.Regionsresend[0].id
+    else
+      this.orderResend.RegionId = null
   }
   allFilter() {
     this.spinner.show()
@@ -131,22 +164,28 @@ export class ViewOrdersComponent implements OnInit {
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
       this.Agents = res
+      this.Agentsresend = res
+      this.tempAgent = res
+      
     })
   }
+  tempRegions
+  tempAgent
+  
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
     })
   }
-  completelyReturn (id){
+  completelyReturn(id) {
     this.spinner.show()
-    this.orderservice.MakeStoreOrderCompletelyReturned(id).subscribe(res=>{
+    this.orderservice.MakeStoreOrderCompletelyReturned(id).subscribe(res => {
       this.allFilter();
       this.spinner.hide()
-    },err=>{
+    }, err => {
       this.spinner.hide()
     }
-   );
+    );
   }
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
@@ -163,9 +202,14 @@ export class ViewOrdersComponent implements OnInit {
       this.cities = res
     })
   }
+  Agentsresend: User[] = []
+  Regionsresend: Region[] = []
+
   GetRegion() {
     this.customerService.getAll(this.regionapi).subscribe(res => {
       this.Region = res
+      this.Regionsresend = res
+      this.tempRegions = res
     })
   }
 

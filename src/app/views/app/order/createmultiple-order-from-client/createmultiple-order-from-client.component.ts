@@ -184,7 +184,6 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   CheckCodeForChange(code) {
     if (!code || !this.ClientId) return
     this.orderservice.chekcCode(code, this.ClientId).subscribe(res => {
-      console.log(this.tempOrder)
       if (res || this.Orders.filter(o => o.Code == code && this.ClientId == o.ClientId).length > 0) {
         this.showMessageCodeChange = true
         return
