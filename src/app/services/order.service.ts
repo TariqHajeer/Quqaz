@@ -76,6 +76,9 @@ export class OrderService {
     params = params.append("clientid", ClientId != null || ClientId != undefined ? ClientId : null);
     return this.http.get<any>(this.controler + "chekcCode", { params: params })
   }
+  CheckMulieCode(code, ClientId) {
+    return this.http.post<any>(this.controler+"CheckMulieCode/"+ClientId,code)
+  }
   GetNewOrder() {
     return this.http.get<any>(this.controler + "NewOrders")
   }
@@ -183,15 +186,15 @@ export class OrderService {
 
   }
   OrderInCompany(ClientId, code) {
-    return this.http.get(this.controler+"OrderInCompany/"+ClientId+"/"+code)
+    return this.http.get(this.controler + "OrderInCompany/" + ClientId + "/" + code)
   }
-  DeleiverMoneyForClientWithStatus(ids){
+  DeleiverMoneyForClientWithStatus(ids) {
     return this.http.put<any>(this.controler + "DeleiverMoneyForClientWithStatus", ids)
   }
-  ReSend(order){
+  ReSend(order) {
     return this.http.put<any>(this.controler + "ReSend", order)
   }
-  MakeStoreOrderCompletelyReturned(id){
+  MakeStoreOrderCompletelyReturned(id) {
     return this.http.put<any>(this.controler + "MakeStoreOrderCompletelyReturned", id)
   }
 }
