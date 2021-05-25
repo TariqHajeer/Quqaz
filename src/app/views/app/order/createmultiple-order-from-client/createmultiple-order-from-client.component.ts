@@ -200,6 +200,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
          return
          }
       else if (!this.showMessageCodeChange) {
+        this.showMessageCodeChange = false
         var find = this.Orders.find(o => o.Code == order.beforCode)
         find.Code = order.Code
         this.tempOrder = this.tempOrder.filter(o => o != order)
