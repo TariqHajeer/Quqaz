@@ -163,23 +163,21 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   //#region changeClientId
   tempOrder: any[] = []
 changeClientId() {
+  localStorage.setItem('ClientId', this.ClientId)
   this.orderservice.CheckMulieCode(this.Orders.map(o => o.Code), this.ClientId).subscribe(res => {
     for (let i = 0; i < res.length; i++) {
       this.Orders[i].ClientId = this.ClientId
-      if (this.Orders[i].Code == res[i].code && !res[i].avilabe) {
+      if (this.Orders.find(o=>o.Code== res[i].code&& res[i].avilabe==false)  ) {
         this.Orders[i].beforCode = this.Orders[i].Code
         this.tempOrder.push({ ...this.Orders[i] })
       }
     }
-    console.log(res)
-    console.log(this.tempOrder)
+    // console.log(res)
+    // console.log(this.tempOrder)
     if (this.tempOrder.length != 0)
       document.getElementById("openModalButton").click();
 
   })
-  localStorage.setItem('ClientId', this.ClientId)
-  // document.getElementById("openModalButton").click();
-  // document.getElementById("closeModalButton").click();
 
 }
 showMessageCodeChange = false
