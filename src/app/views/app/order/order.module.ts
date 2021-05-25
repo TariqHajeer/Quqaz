@@ -28,6 +28,9 @@ import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CreateMultiOrderAgentAndClientComponent } from './create-multi-order-agent-and-client/create-multi-order-agent-and-client.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
+
 @NgModule({
   declarations: [
     ViewOrdersComponent,
@@ -57,6 +60,8 @@ import { CreateMultiOrderAgentAndClientComponent } from './create-multi-order-ag
     DatePickerModule,
     DateRangePickerModule,
     NgxSpinnerModule,
+    MatDialogModule,
+    MatButtonModule
 
   ], providers: [CategoryService, DateTimeService, ScrollBarService, LineSeriesService, ColumnSeriesService,
     ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService, LegendService, TooltipService,]

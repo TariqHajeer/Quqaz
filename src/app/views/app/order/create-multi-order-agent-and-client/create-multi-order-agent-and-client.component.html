@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-md-3">
             <label>العميل</label>
-            <ng-select appendTo="body" [(ngModel)]="ClientId" (ngModelChange)="changeClientId()"
+            <ng-select appendTo="body" [(ngModel)]="ClientId" (change)="changeClientId()"
                 [ngModelOptions]="{standalone: true}" [clearable]="false" name="Client">
                 <ng-option *ngFor="let Client of clients" [value]="Client.id">{{Client.name}}
                 </ng-option>
@@ -21,10 +21,9 @@
         </div>
         <div class="col-md-3">
             <label>المحافظة</label>
- 
-            <ng-select  appendTo="body" [(ngModel)]="CountryId" [ngModelOptions]="{standalone: true}"
-                (ngModelChange)="changeCountry()" 
-                [clearable]="false" name="Country">
+
+            <ng-select appendTo="body" [(ngModel)]="CountryId" [ngModelOptions]="{standalone: true}"
+                (ngModelChange)="changeCountry()" [clearable]="false" name="Country">
                 <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
             </ng-select>
             <div *ngIf="!CountryId && submitted" class="message">المحافظة حقل مطلوب</div>
@@ -33,15 +32,14 @@
         <div class="col-md-3">
             <label>المندوب</label>
 
-            <ng-select   appendTo="body" [(ngModel)]="AgentId"
-                [ngModelOptions]="{standalone: true}" placeholder="اختر مندوب" 
-                [clearable]="false" name="Agent"  (ngModelChange)="changeAgent()">
+            <ng-select appendTo="body" [(ngModel)]="AgentId" [ngModelOptions]="{standalone: true}"
+                placeholder="اختر مندوب" [clearable]="false" name="Agent" (ngModelChange)="changeAgent()">
                 <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
             </ng-select>
             <div *ngIf="!AgentId && submitted" class="message">المندوب حقل مطلوب</div>
 
         </div>
-       
+
     </div>
 
     <br>
@@ -68,9 +66,11 @@
                             *ngIf="order.CanEdit" tabindex="1">
                         <div *ngIf="!EditOrder.Code && Editsubmitted&&order.CanEdit" class="message">كود الشحنة حقل
                             مطلوب</div>
+                            <div *ngIf="showEditMessageCode" class="message">يوجد شحنة مسبقا لهذا العميل بنفس الكود</div>
+
                     </td>
-                   
-                    
+
+
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.RecipientPhones}}</h4>
                         <input type="text" maxlength="11"
@@ -99,11 +99,10 @@
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.DeliveryCost}}</h4>
                         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                            *ngIf="order.CanEdit"  style="width: 150px;"
-                            [(ngModel)]="EditOrder.DeliveryCost">
+                            *ngIf="order.CanEdit" style="width: 150px;" [(ngModel)]="EditOrder.DeliveryCost">
 
                     </td>
-                   
+
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.Note}}</h4>
                         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
@@ -155,23 +154,22 @@
                 <tr #myTr>
 
                     <td>
-                        <input (keydown.enter)="changed(0)" type="text" class="form-control" [ngModelOptions]="{standalone: true}" #code
-                            [(ngModel)]="Order.Code" (keyup)="CheckCode()" 
+                        <input (keydown.enter)="changed(0)" type="text" class="form-control"
+                            [ngModelOptions]="{standalone: true}" #code [(ngModel)]="Order.Code" (keyup)="CheckCode()"
                             oninput="this.value = this.value.replace(/[^0-9.A-Za-z]/g, '').replace(/(\..*)\./g, '$1');"
                             style="width: 150px;" [disabled]="!ClientId">
                         <div *ngIf="!Order.Code && submitted" class="message">كود الشحنة حقل مطلوب</div>
                         <div *ngIf="showMessageCode" class="message">يوجد شحنة مسبقا لهذا العميل بنفس الكود</div>
 
                     </td>
-                    
+
 
 
                     <td>
                         <input (keydown.enter)="changed(1)" [disabled]="!ClientId" type="text" maxlength="11"
                             oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
                             style="width: 150px;" class="form-control" [ngModelOptions]="{standalone: true}"
-                             [(ngModel)]="Order.RecipientPhones"
-                            (keyup)="checkLengthPhoneNumber(Order.RecipientPhones)">
+                            [(ngModel)]="Order.RecipientPhones" (keyup)="checkLengthPhoneNumber(Order.RecipientPhones)">
                         <div *ngIf="!Order.RecipientPhones&& submitted" class="message">رقم الهاتف
                             حقل مطلوب</div>
                         <div class="message"
@@ -185,18 +183,18 @@
                         <input (keydown.enter)="changed(2)" [disabled]="!ClientId" type="text" class="form-control"
                             [ngModelOptions]="{standalone: true}"
                             oninput="this.value = this.value.replace(/[^0-9.]-/g, '').replace(/(\..*)\./g, '$1');"
-                             style="width: 150px;" [(ngModel)]="Order.Cost">
+                            style="width: 150px;" [(ngModel)]="Order.Cost">
 
                     </td>
                     <td>
                         <input (keydown.enter)="changed(3)" [disabled]="!ClientId" type="text" class="form-control"
-                            [ngModelOptions]="{standalone: true}"  style="width: 150px;"
+                            [ngModelOptions]="{standalone: true}" style="width: 150px;"
                             [(ngModel)]="Order.DeliveryCost">
                     </td>
-                   
+
                     <td>
-                        <input (keydown.enter)="changed(4)" type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                            [(ngModel)]="Order.Note"  style="width: 150px;">
+                        <input (keydown.enter)="changed(4)" type="text" class="form-control"
+                            [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.Note" style="width: 150px;">
 
                     </td>
                     <td>
@@ -209,8 +207,91 @@
 
     </div>
 </div>
-<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff"
- type = "ball-pulse" [fullScreen] = "true">
-    <p style="color: white" > </p>
+<button type="button" id="openModalButton" [hidden]="true" class="btn btn-primary" data-toggle="modal"
+    data-target="#exampleModal">  </button>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="exampleModal"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h3>الطلبات التي تحوي على اكواد مكررة</h3>
+                <table class="table">
+                    <thead>
+                        <th>كود الشحنة</th>
+                        <th>رقم الهاتف </th>
+                        <th>الكلفة الكلية</th>
+                        <th>كلفة التوصيل</th>
+                        <th>ملاحظات</th>
+                        <th></th>
+
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let order of tempOrder">
+                            <td>
+                                <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="order.Code" (keyup)="CheckCodeForChange(order.Code)" style="width: 100px;"
+                                    oninput="this.value = this.value.replace(/[^0-9.A-Za-z]/g, '').replace(/(\..*)\./g, '$1');"
+                                    >
+                                    <div *ngIf="showMessageCodeChange" class="message">يوجد شحنة مسبقا لهذا العميل بنفس الكود</div>
+
+                            </td>
+                            <td>
+                                <h4>{{order.RecipientPhones}}</h4>
+
+
+                            </td>
+                            <td>
+                                <h4>{{order.Cost}}</h4>
+
+                            </td>
+                            <td>
+                                <h4>{{order.DeliveryCost}}</h4>
+
+                            </td>
+                            <td>
+                                <h4>{{order.Note}}</h4>
+
+                            </td>
+                            <td>
+
+                                &nbsp;&nbsp;
+
+                                <!--chech icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    (click)="changeCodeAfterChecked(order)"  style="cursor: pointer;"
+                                    class="bi bi-check2" viewBox="0 0 16 16">
+                                    <path
+                                        d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+                                </svg>
+
+
+                                &nbsp;&nbsp;
+                                <!--cansle icone-->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    (click)="deleteCodeAfterChecked(order)"  style="cursor: pointer;"
+                                    class="bi bi-x" viewBox="0 0 16 16">
+                                    <path
+                                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                </svg>
+                            </td>
+
+
+
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button id="closeModalButton" [hidden]="true" type="button" class="btn btn-primary" data-dismiss="modal">اغلاق</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-pulse" [fullScreen]="true">
+    <p style="color: white"> </p>
 </ngx-spinner>
 <simple-notifications></simple-notifications>

@@ -61,12 +61,13 @@ export class AgentComponent implements OnInit {
     this.orderservice.MakeOrderInWay(this.orders.map(o => o.id)).subscribe(res => {
       this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       //this.orders=[]
-      this.spinner.hide()
       this.printnumber = res.printNumber
-      this.showPrintbtn = false
+      this.showPrintbtn = true
+      this.spinner.hide()
+
       //  this.setPrintnumber()
 
-    },err=>{
+    }, err => {
       this.spinner.hide()
     })
   }
@@ -84,5 +85,23 @@ export class AgentComponent implements OnInit {
       pdf.save(this.dateOfPrint + '.pdf');
     });
   }
+  print() {
+    var divToPrint = document.getElementById('contentToConvert');
+    var css = '@page { size: landscape; }',
+      style = document.createElement('style');
+    style.type = 'text/css';
+    style.media = 'print';
+    style.appendChild(document.createTextNode(css));
+    divToPrint.appendChild(style);
+    var newWin = window.open('', 'Print-Window');
+    newWin?.document.open();
+    newWin?.document.write('<html dir="rtl"><head><style media="print">th{background-color: rgb(153, 1, 1);color: rgb(250, 250, 250);}</style><link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" media="print"/><link rel="stylesheet/less" type="text/css" href="app/reports/printpreview/agent/agent.component.less" /></head><body onload="window.print()">' + divToPrint?.innerHTML + '</body></html>');
+    newWin?.document.close();
+    setTimeout(function () {
+      newWin?.close();
+      // location.reload();
 
+    }, 10);
+
+  }
 }

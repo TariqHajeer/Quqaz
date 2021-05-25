@@ -67,14 +67,16 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     this.EditOrder = new CreateMultipleOrder();
     this.submitted = false;
     this.int()
-    var order = JSON.parse(localStorage.getItem('refrshorderclient'))
-    if (order && order.length != 0) {
-      this.Orders = order
-    }
     var clientid=JSON.parse(localStorage.getItem('ClientId'))
     if (clientid) {
       this.ClientId = clientid
     }
+    var order = JSON.parse(localStorage.getItem('refrshorderclient'))
+    if (order && order.length != 0) {
+      this.Orders = order
+      this.changeClientId()
+    }
+   
   }
   int() {
     this.GetorderPlace()
@@ -158,18 +160,63 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     else this.EditOrder.AgentId = null
     this.EditOrder.DeliveryCost = city.deliveryCost
   }
-  showMessageCode: boolean = false
-  changeClientId() {
-    this.Orders.map(o => o.Code).forEach(element => {
-      this.orderservice.chekcCode(element, this.ClientId).subscribe(res => {
-        if (res) {
-          this.showMessageCode = true
-        } else
-          this.showMessageCode = false
-      })
-    });
-    localStorage.setItem('ClientId', this.ClientId)
+  //#region changeClientId
+  tempOrder: any[] = []
+changeClientId() {
+  this.orderservice.CheckMulieCode(this.Orders.map(o => o.Code), this.ClientId).subscribe(res => {
+    for (let i = 0; i < res.length; i++) {
+      this.Orders[i].ClientId = this.ClientId
+      if (this.Orders[i].Code == res[i].code && !res[i].avilabe) {
+        this.Orders[i].beforCode = this.Orders[i].Code
+        this.tempOrder.push({ ...this.Orders[i] })
+      }
+    }
+    console.log(res)
+    console.log(this.tempOrder)
+    if (this.tempOrder.length != 0)
+      document.getElementById("openModalButton").click();
+
+  })
+  localStorage.setItem('ClientId', this.ClientId)
+  // document.getElementById("openModalButton").click();
+  // document.getElementById("closeModalButton").click();
+
+}
+showMessageCodeChange = false
+CheckCodeForChange(code) {
+  if (!code || !this.ClientId) return
+  this.orderservice.chekcCode(code, this.ClientId).subscribe(res => {
+    console.log(this.tempOrder)
+    if (res || this.Orders.filter(o => o.Code == code && this.ClientId == o.ClientId).length > 0) {
+      this.showMessageCodeChange = true
+    } else
+      this.showMessageCodeChange = false
+  })
+  localStorage.setItem('ClientId', this.ClientId)
+}
+changeCodeAfterChecked(order) {
+  if (!this.showMessageCodeChange) {
+    var find = this.Orders.find(o => o.Code == order.beforCode)
+    find.Code = order.Code
+    this.tempOrder=this.tempOrder.filter(o=>o!=order)
+    if(this.tempOrder.length==0)
+    document.getElementById("closeModalButton").click();
+    localStorage.setItem('refrshorderclient', JSON.stringify(this.Orders))
   }
+  else return
+}
+deleteCodeAfterChecked(order){
+  var find = this.Orders.find(o => o.Code == order.beforCode)
+  this.Orders=this.Orders.filter(o=>o!=find)
+  this.tempOrder=this.tempOrder.filter(o=>o!=order)
+  if(this.tempOrder.length==0)
+    document.getElementById("closeModalButton").click();
+    localStorage.setItem('refrshorderclient', JSON.stringify(this.Orders))
+}
+//#endregion
+ 
+  showMessageCode: boolean = false
+  
   CheckCode() {
     if (!this.Order.Code || !this.ClientId) return
     if (this.Order.Code != null && this.Order.Code != undefined) {
@@ -183,6 +230,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     localStorage.setItem('ClientId', this.ClientId)
   }
   tempcode
+  showEditMessageCode=false
   CheckCodeForEdit() {
     this.tempcode = this.EditOrder
     if (!this.EditOrder.Code || !this.ClientId) return
@@ -191,9 +239,9 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
         if (this.EditOrder.CanEdit == true)
           if (res || this.Orders.filter(o => o.Code == this.EditOrder.Code && o != this.tempcode).length > 0) {
 
-            this.showMessageCode = true
+            this.showEditMessageCode = true
           } else
-            this.showMessageCode = false
+            this.showEditMessageCode = false
       })
     }
   }
