@@ -67,7 +67,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     this.EditOrder = new CreateMultipleOrder();
     this.submitted = false;
     this.int()
-    var clientid=JSON.parse(localStorage.getItem('ClientId'))
+    var clientid = JSON.parse(localStorage.getItem('ClientId'))
     if (clientid) {
       this.ClientId = clientid
     }
@@ -76,7 +76,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
       this.Orders = order
       this.changeClientId()
     }
-   
+
   }
   int() {
     this.GetorderPlace()
@@ -86,7 +86,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   }
 
   addNewCountry() {
-    this.Order.Country= this.cities.find(c => c.id == this.Order.CountryId)
+    this.Order.Country = this.cities.find(c => c.id == this.Order.CountryId)
     var find = this.cities.find(c => c.name == this.Order.Country.name)
     if (!find) {
       this.customerService.Create(this.cityapi, this.Order.Country).subscribe(res => {
@@ -162,59 +162,68 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   }
   //#region changeClientId
   tempOrder: any[] = []
-changeClientId() {
-  localStorage.setItem('ClientId', this.ClientId)
-  this.orderservice.CheckMulieCode(this.Orders.map(o => o.Code), this.ClientId).subscribe(res => {
-    for (let i = 0; i < res.length; i++) {
-      this.Orders[i].ClientId = this.ClientId
-      if (this.Orders.find(o=>o.Code== res[i].code&& res[i].avilabe==false)  ) {
-        this.Orders[i].beforCode = this.Orders[i].Code
-        this.tempOrder.push({ ...this.Orders[i] })
+  changeClientId() {
+    localStorage.setItem('ClientId', this.ClientId)
+    this.orderservice.CheckMulieCode(this.Orders.map(o => o.Code), this.ClientId).subscribe(res => {
+      for (let i = 0; i < res.length; i++) {
+        this.Orders[i].ClientId = this.ClientId
+        if (this.Orders.find(o => o.Code == res[i].code && res[i].avilabe == false)) {
+          this.Orders[i].beforCode = this.Orders[i].Code
+          this.tempOrder.push({ ...this.Orders[i] })
+        }
       }
-    }
-    // console.log(res)
-    // console.log(this.tempOrder)
-    if (this.tempOrder.length != 0)
-      document.getElementById("openModalButton").click();
+      // console.log(res)
+      // console.log(this.tempOrder)
+      if (this.tempOrder.length != 0)
+        document.getElementById("openModalButton").click();
 
-  })
+    })
 
-}
-showMessageCodeChange = false
-CheckCodeForChange(code) {
-  if (!code || !this.ClientId) return
-  this.orderservice.chekcCode(code, this.ClientId).subscribe(res => {
-    console.log(this.tempOrder)
-    if (res || this.Orders.filter(o => o.Code == code && this.ClientId == o.ClientId).length > 0) {
-      this.showMessageCodeChange = true
-    } else
-      this.showMessageCodeChange = false
-  })
-  localStorage.setItem('ClientId', this.ClientId)
-}
-changeCodeAfterChecked(order) {
-  if (!this.showMessageCodeChange) {
+  }
+  showMessageCodeChange = false
+  CheckCodeForChange(code) {
+    if (!code || !this.ClientId) return
+    this.orderservice.chekcCode(code, this.ClientId).subscribe(res => {
+      console.log(this.tempOrder)
+      if (res || this.Orders.filter(o => o.Code == code && this.ClientId == o.ClientId).length > 0) {
+        this.showMessageCodeChange = true
+        return
+      } else
+        this.showMessageCodeChange = false
+    })
+    localStorage.setItem('ClientId', this.ClientId)
+  }
+  changeCodeAfterChecked(order) {
+    this.orderservice.chekcCode(order.Code, this.ClientId).subscribe(res => {
+      if (res) {
+        this.showMessageCodeChange = true
+         return
+         }
+      else if (!this.showMessageCodeChange) {
+        var find = this.Orders.find(o => o.Code == order.beforCode)
+        find.Code = order.Code
+        this.tempOrder = this.tempOrder.filter(o => o != order)
+        if (this.tempOrder.length == 0)
+          document.getElementById("closeModalButton").click();
+        localStorage.setItem('refrshorderclient', JSON.stringify(this.Orders))
+      }
+      else return
+    })
+
+
+  }
+  deleteCodeAfterChecked(order) {
     var find = this.Orders.find(o => o.Code == order.beforCode)
-    find.Code = order.Code
-    this.tempOrder=this.tempOrder.filter(o=>o!=order)
-    if(this.tempOrder.length==0)
-    document.getElementById("closeModalButton").click();
+    this.Orders = this.Orders.filter(o => o != find)
+    this.tempOrder = this.tempOrder.filter(o => o != order)
+    if (this.tempOrder.length == 0)
+      document.getElementById("closeModalButton").click();
     localStorage.setItem('refrshorderclient', JSON.stringify(this.Orders))
   }
-  else return
-}
-deleteCodeAfterChecked(order){
-  var find = this.Orders.find(o => o.Code == order.beforCode)
-  this.Orders=this.Orders.filter(o=>o!=find)
-  this.tempOrder=this.tempOrder.filter(o=>o!=order)
-  if(this.tempOrder.length==0)
-    document.getElementById("closeModalButton").click();
-    localStorage.setItem('refrshorderclient', JSON.stringify(this.Orders))
-}
-//#endregion
- 
+  //#endregion
+
   showMessageCode: boolean = false
-  
+
   CheckCode() {
     if (!this.Order.Code || !this.ClientId) return
     if (this.Order.Code != null && this.Order.Code != undefined) {
@@ -228,7 +237,7 @@ deleteCodeAfterChecked(order){
     localStorage.setItem('ClientId', this.ClientId)
   }
   tempcode
-  showEditMessageCode=false
+  showEditMessageCode = false
   CheckCodeForEdit() {
     this.tempcode = this.EditOrder
     if (!this.EditOrder.Code || !this.ClientId) return
@@ -266,7 +275,7 @@ deleteCodeAfterChecked(order){
   }
   onEnter() {
     this.addNewCountry()
-    this.Order.Country=this.cities.find(c=>c.id==this.Order.CountryId) 
+    this.Order.Country = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.ClientId = this.ClientId
     if (this.checkLengthPhoneNumber(this.Order.RecipientPhones))
       return
@@ -312,7 +321,7 @@ deleteCodeAfterChecked(order){
     this.editNewCountry()
     if (!this.EditOrder.Code || !this.EditOrder.ClientId ||
       !this.EditOrder.RecipientPhones
-      || !this.EditOrder.AgentId 
+      || !this.EditOrder.AgentId
       || order.showEditMessageCode) {
       this.Editsubmitted = true
       return
@@ -326,8 +335,8 @@ deleteCodeAfterChecked(order){
     this.EditOrder.OrderplacedName = orderplace.name
     var client = this.clients.find(c => c.id == this.EditOrder.ClientId)
     this.EditOrder.ClientName = client.name
-    this.EditOrder.DeliveryCost=this.EditOrder.DeliveryCost*1
-    this.EditOrder.Cost=this.EditOrder.Cost*1
+    this.EditOrder.DeliveryCost = this.EditOrder.DeliveryCost * 1
+    this.EditOrder.Cost = this.EditOrder.Cost * 1
     var agent = this.Agents.find(c => c.id == this.EditOrder.AgentId)
     this.EditOrder.AgentName = agent.name
     order = Object.assign(order, this.EditOrder);
@@ -359,28 +368,28 @@ deleteCodeAfterChecked(order){
       this.submitedSave = true
       return
     }
-    this.Orders.forEach(o=>{
-      o.Cost=o.Cost*1
-      o.DeliveryCost=o.DeliveryCost*1
+    this.Orders.forEach(o => {
+      o.Cost = o.Cost * 1
+      o.DeliveryCost = o.DeliveryCost * 1
     })
     this.spinner.show()
     this.orderservice.createMultiple(this.Orders).subscribe(res => {
       this.spinner.hide()
       this.notifications.create('success', 'تم اضافة الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Orders = []
-      this.ClientId=null
+      this.ClientId = null
       localStorage.setItem('ClientId', this.ClientId)
 
       localStorage.setItem('refrshorderclient', JSON.stringify(this.Orders))
 
-    },err=>{
+    }, err => {
       this.spinner.hide()
     })
 
   }
-  @ViewChild('myTr') inputEl:ElementRef;
+  @ViewChild('myTr') inputEl: ElementRef;
   changed(index) {
-    if(index==6){this.onEnter(); return}
+    if (index == 6) { this.onEnter(); return }
     const inputs = this.inputEl.nativeElement.querySelectorAll('input');
     if (inputs.length > index + 1) {
       inputs[index + 1].focus();

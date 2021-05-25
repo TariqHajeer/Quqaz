@@ -194,24 +194,31 @@ showMessageCodeChange = false
 CheckCodeForChange(code) {
   if (!code || !this.ClientId) return
   this.orderservice.chekcCode(code, this.ClientId).subscribe(res => {
-    console.log(this.tempOrder)
     if (res || this.Orders.filter(o => o.Code == code && this.ClientId == o.ClientId).length > 0) {
       this.showMessageCodeChange = true
+      return
     } else
       this.showMessageCodeChange = false
   })
   localStorage.setItem('ClientIda', this.ClientId)
 }
 changeCodeAfterChecked(order) {
-  if (!this.showMessageCodeChange) {
-    var find = this.Orders.find(o => o.Code == order.beforCode)
-    find.Code = order.Code
-    this.tempOrder=this.tempOrder.filter(o=>o!=order)
-    if(this.tempOrder.length==0)
-    document.getElementById("closeModalButton").click();
-    localStorage.setItem('refrshorderclientandAgent', JSON.stringify(this.Orders))
-  }
-  else return
+  this.orderservice.chekcCode(order.Code, this.ClientId).subscribe(res => {
+    if (res) {
+      this.showMessageCodeChange = true
+       return
+       }
+    else if (!this.showMessageCodeChange) {
+      var find = this.Orders.find(o => o.Code == order.beforCode)
+      find.Code = order.Code
+      this.tempOrder = this.tempOrder.filter(o => o != order)
+      if (this.tempOrder.length == 0)
+        document.getElementById("closeModalButton").click();
+      localStorage.setItem('refrshorderclient', JSON.stringify(this.Orders))
+    }
+    else return
+  })
+
 }
 deleteCodeAfterChecked(order){
   var find = this.Orders.find(o => o.Code == order.beforCode)
