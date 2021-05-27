@@ -22,7 +22,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class ShipmentsOnWayComponent implements OnInit {
 
   displayedColumns: string[] = ['code', 'client', 'country', 'region'
-    , 'cost', 'deliveryCost', 'isClientDiliverdMoney', 'orderplaced', 'monePlaced', 'agentPrintNumber', 'clientPrintNumber'];
+    ,'agentCost', 'cost', 'deliveryCost', 'isClientDiliverdMoney', 'orderplaced', 'monePlaced', 'agentPrintNumber', 'clientPrintNumber'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
   ids: any[] = []
@@ -62,7 +62,49 @@ export class ShipmentsOnWayComponent implements OnInit {
     this.paging = new Paging
     this.filtering = new OrderFilter
   }
+/** Whether the number of selected elements matches the total number of rows. */
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
 
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => { this.selection.select(row) });
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: any): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    this.checkboxId(row)
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+  }
+  
+  client = this.orders.map(o => o.agent)[0]
+  orderplaced = this.orders.map(o => o.orderplaced)[0]
+  checkboxId(row) {
+    console.log(row)
+    if (this.selection.isSelected(row))
+      if (this.ids.filter(d => d == row.id).length > 0)
+        return
+      else {
+        this.ids.push(row.order.id)
+        this.orders.push(row.order)
+        localStorage.setItem('orders', JSON.stringify(this.orders))
+        this.client = this.orders.map(o => o.client)[0]
+        this.orderplaced = this.orders.map(o => o.orderplaced)[0]
+      }
+    if (!this.selection.isSelected(row)) {
+      this.ids = this.ids.filter(i => i != row.id)
+      this.orders = this.orders.filter(o => o != row)
+    }
+  }
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
@@ -224,8 +266,7 @@ export class ShipmentsOnWayComponent implements OnInit {
       return
     }
     localStorage.setItem('printagent', JSON.stringify(this.Agents.find(c => c.id == this.AgentId)))
-
-    localStorage.setItem('printordersagent', JSON.stringify(this.getorders.map(o => o.order)))
+     localStorage.setItem('printordersagent', JSON.stringify(this.orders))
     this.route.navigate(['app/reports/printagentpreview'])
 
   }

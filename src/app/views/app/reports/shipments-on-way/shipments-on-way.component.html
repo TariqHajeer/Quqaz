@@ -73,7 +73,7 @@
 <div class="example-container mat-elevation-z8">
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
+   
     <ng-container matColumnDef="code">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> كود </th>
       <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.order.code}}</td>
@@ -89,6 +89,10 @@
     <ng-container matColumnDef="region">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> المنطقة</th>
       <td mat-cell *matCellDef="let element"> {{element.order.region!=null?element.order.region.name:null}}</td>
+    </ng-container>
+    <ng-container matColumnDef="agentCost">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> كلفة توصيل المندوب </th>
+      <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.order.agentCost}}</td>
     </ng-container>
     <ng-container matColumnDef="cost">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> كلفة الطلب</th>

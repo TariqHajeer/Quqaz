@@ -27,6 +27,8 @@
                             d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
                     </svg> &nbsp;طباعة
                 </button>&nbsp;
+
+                
                 <app-receipt-agent id="printpage" [orders]="orders" [agent]="agent" [printnumber]="printnumber"
                     [hidden]="true" [showPrintbtn]="showPrintbtn" [orderplaced]="orderplaced"></app-receipt-agent>
             </div>
@@ -119,36 +121,36 @@ direction:rtl;text-align: right;margin: 5%;" id="contentToConvert">
         <table class="table  table-bordered">
 
             <thead
-            style="background-color: rgb(153, 1, 1)!important;
-                color: rgb(250, 250, 250)!important;
+            style="-webkit-print-color-adjust: exact;
+            background-color: #800000!important;
+                color: rgba(250, 250, 250, 0.945)!important;
                 font-size: 20px;
-                -webkit-print-color-adjust:exact;
                 ">
                     <th *ngFor="let head of heads">{{head}}</th>
             </thead>
             <tbody>
 
                 <tr style="border: 1px black solid;" *ngFor="let order of orders;index as i">
-                    <td style="width: 5px;color: rgb(153, 1, 1);">
+                    <td class="card-footer"style="width: 5px;color: #800000!important;">
                         {{i+1}}
                     </td>
                     <td>
                         {{order.code}}
                     </td>
 
-                    <td>
+                    <td >
                         {{order.cost}}
                     </td>
                     <td>
                         {{order.country.name}}
                     </td>
-                    <td>
+                    <td >
                         {{order.recipientPhones}}
                     </td>
-                    <td>
+                    <td >
                         {{order.client.name}}
                     </td>
-                    <td>
+                    <td >
                         {{order.note}}
                     </td>
                 </tr>
