@@ -23,10 +23,7 @@
   width: 21cm;
   color:#000000;
 }
-th{ font-size: 18px; 
-   padding: 10px;
-   border-width:1px;
-    border-color:#000000;  }
+
 // .tdstyle{
 //   border-style:solid; 
 //             border-width:1px; 
@@ -37,17 +34,4 @@ th{ font-size: 18px;
 // }
 tr.trbordered{
   background-color: rgb(218, 218, 219);
-}
-thead {
-  background-color:rgb(153, 1, 1)!important;
-  color: rgb(250, 250, 250)!important;
-  -webkit-print-color-adjust: exact; 
-  font-size: 20px;
-}
-@media screen {
-thead {
-  background-color:rgb(153, 1, 1)!important;
-  color: rgb(250, 250, 250)!important;
-  -webkit-print-color-adjust: exact; 
-}
 }

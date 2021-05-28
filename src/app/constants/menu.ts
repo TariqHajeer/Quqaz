@@ -205,7 +205,7 @@ const data: IMenuItem[] = [
       },
       {
         icon: 'simple-icon-layers',
-        label: ' للقاصة  ',
+        label: ' القاصة  ',
         to: `${adminRoot}/reports/pay`,
         //permission:[UserPermission.ShowOrder]
 

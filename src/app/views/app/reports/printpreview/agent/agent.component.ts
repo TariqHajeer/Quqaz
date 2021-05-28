@@ -83,10 +83,23 @@ export class AgentComponent implements OnInit {
   public convetToPDF() {
    
     const elementToPrint = document.getElementById('contentToConvert'); //The html element to become a pdf
-    const pdf = new jspdf('p', 'cm', 'a5');
+    const pdf = new jspdf('p', 'mm', 'a5');
     pdf.addHTML(elementToPrint, () => {
       pdf.save(this.dateOfPrint + '.pdf');
     });
+    //  var data = document.getElementById('contentToConvert');
+    // html2canvas(data).then(canvas => {
+    //   var imgWidth = 208;
+    //   var imgHeight = canvas.height * imgWidth / canvas.width;
+    //   const contentDataURL = canvas.toDataURL('image/png')
+    //   let pdf = new jspdf('p', 'mm', 'a4');
+    //   var position = 0;
+    //   pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+    //   pdf.save('newPDF.pdf');
+    // });
+
+   
+
   }
   print() {
     var divToPrint = document.getElementById('contentToConvert');
@@ -98,7 +111,7 @@ export class AgentComponent implements OnInit {
     divToPrint.appendChild(style);
     var newWin = window.open('', 'Print-Window');
     newWin?.document.open();
-    newWin?.document.write('<html dir="rtl"><head><style media="print">th{background-color: rgb(153, 1, 1);color: rgb(250, 250, 250);}</style><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"><link rel="stylesheet/less" type="text/css" href="app/reports/printpreview/agent/agent.component.less" /></head><body onload="window.print()">' + divToPrint?.innerHTML + '</body></html>');
+    newWin?.document.write('<html dir="rtl"><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"><link rel="stylesheet/less" type="text/css" href="app/reports/printpreview/agent/agent.component.less" /></head><body onload="window.print()">' + divToPrint?.innerHTML + '</body></html>');
     newWin?.document.close();
     setTimeout(function () {
       newWin?.close();

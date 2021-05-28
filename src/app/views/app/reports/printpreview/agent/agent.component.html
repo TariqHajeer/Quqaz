@@ -118,45 +118,39 @@ direction:rtl;text-align: right;margin: 5%;" id="contentToConvert">
 
 
         </div>
-        <table class="table  table-bordered">
-
-            <thead
-            style="-webkit-print-color-adjust: exact;
-            background-color: #800000!important;
-                color: rgba(250, 250, 250, 0.945)!important;
-                font-size: 20px;
-                ">
-                    <th *ngFor="let head of heads">{{head}}</th>
+        <table class="table" style="border: 1px black solid;font-size: 18px;">
+            <thead style="border: 1px black solid;font-size: 20px;">
+                    <th  style="border: 1px black solid;" *ngFor="let head of heads">{{head}}</th>
             </thead>
             <tbody>
 
                 <tr style="border: 1px black solid;" *ngFor="let order of orders;index as i">
-                    <td class="card-footer"style="width: 5px;color: #800000!important;">
+                    <td style="width: 5px;border: 1px black solid;">
                         {{i+1}}
                     </td>
-                    <td>
+                    <td style="border: 1px black solid;">
                         {{order.code}}
                     </td>
 
-                    <td >
+                    <td style="border: 1px black solid;">
                         {{order.cost}}
                     </td>
-                    <td>
+                    <td style="border: 1px black solid;">
                         {{order.country.name}}
                     </td>
-                    <td >
+                    <td style="border: 1px black solid;">
                         {{order.recipientPhones}}
                     </td>
-                    <td >
+                    <td style="border: 1px black solid;">
                         {{order.client.name}}
                     </td>
-                    <td >
+                    <td style="border: 1px black solid;">
                         {{order.note}}
                     </td>
                 </tr>
 
 
-                <tr class=" table-bordered trbordered" style="font-size: 18px;  background-color: rgb(218, 218, 219);">
+                <tr class=" table-bordered trbordered border: 1px black solid;" style="font-size: 18px;  background-color: rgb(218, 218, 219);">
                     <td colspan="2">
                         الإجمالي :
                     </td>
