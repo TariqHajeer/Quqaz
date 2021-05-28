@@ -21,10 +21,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class ShipmentsOnWayComponent implements OnInit {
 
-  displayedColumns: string[] = ['code', 'client', 'country', 'region'
+  displayedColumns: string[] = ['select','code', 'client', 'country', 'region'
     ,'agentCost', 'cost', 'deliveryCost', 'isClientDiliverdMoney', 'orderplaced', 'monePlaced', 'agentPrintNumber', 'clientPrintNumber'];
   dataSource = new MatTableDataSource([]);
-  selection = new SelectionModel<any>(true, []);
   ids: any[] = []
   orders: any[] = []
   statu
@@ -61,9 +60,11 @@ export class ShipmentsOnWayComponent implements OnInit {
     this.GetorderPlace()
     this.paging = new Paging
     this.filtering = new OrderFilter
+    localStorage.removeItem('printordersagent')
+    localStorage.removeItem('printagent')
   }
-/** Whether the number of selected elements matches the total number of rows. */
-  /** Whether the number of selected elements matches the total number of rows. */
+  selection = new SelectionModel<any>(true, []);
+
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
@@ -85,24 +86,23 @@ export class ShipmentsOnWayComponent implements OnInit {
     this.checkboxId(row)
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
-  
+ 
   client = this.orders.map(o => o.agent)[0]
   orderplaced = this.orders.map(o => o.orderplaced)[0]
   checkboxId(row) {
-    console.log(row)
     if (this.selection.isSelected(row))
-      if (this.ids.filter(d => d == row.id).length > 0)
+      if (this.ids.filter(d => d == row.order.id).length > 0)
         return
       else {
         this.ids.push(row.order.id)
         this.orders.push(row.order)
-        localStorage.setItem('orders', JSON.stringify(this.orders))
-        this.client = this.orders.map(o => o.client)[0]
-        this.orderplaced = this.orders.map(o => o.orderplaced)[0]
+        localStorage.setItem('printordersagent', JSON.stringify(this.orders))
+       // this.client = this.orders.map(o => o.order.client)[0]
+        //this.orderplaced = this.orders.map(o => o.order.orderplaced)[0]
       }
     if (!this.selection.isSelected(row)) {
-      this.ids = this.ids.filter(i => i != row.id)
-      this.orders = this.orders.filter(o => o != row)
+      this.ids = this.ids.filter(i => i != row.order.id)
+      this.orders = this.orders.filter(o => o != row.order)
     }
   }
   GetMoenyPlaced() {
