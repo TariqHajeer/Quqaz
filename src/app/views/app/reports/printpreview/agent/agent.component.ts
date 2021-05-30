@@ -81,25 +81,13 @@ export class AgentComponent implements OnInit {
     }
   }
   public convetToPDF() {
-   
     const elementToPrint = document.getElementById('contentToConvert'); //The html element to become a pdf
-    const pdf = new jspdf('p', 'mm', 'a5');
+    const pdf = new jspdf('l', 'in', 'a4');
     pdf.addHTML(elementToPrint, () => {
       pdf.save(this.dateOfPrint + '.pdf');
     });
-    //  var data = document.getElementById('contentToConvert');
-    // html2canvas(data).then(canvas => {
-    //   var imgWidth = 208;
-    //   var imgHeight = canvas.height * imgWidth / canvas.width;
-    //   const contentDataURL = canvas.toDataURL('image/png')
-    //   let pdf = new jspdf('p', 'mm', 'a4');
-    //   var position = 0;
-    //   pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
-    //   pdf.save('newPDF.pdf');
-    // });
-
    
-
+    
   }
   print() {
     var divToPrint = document.getElementById('contentToConvert');
