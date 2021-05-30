@@ -1,7 +1,7 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="line-scale-party" [fullScreen]="true">
     <p style="color: white"> </p>
   </ngx-spinner>
-<div class="card wtable">
+<div class="card ">
     <div class="card-body">
         <div class="row">
             <div class="col-md-3" *ngIf="!showPrintbtn">
@@ -20,8 +20,7 @@
 
             </div>
             <div class="col-md-3" *ngIf="showPrintbtn">
-                <button printSectionId="printpage" class="btn btn-primary"
-                    styleSheetFile="/assets/css/vendor/bootstrap.min.css" [useExistingCss]="true" ngxPrint>
+                <button class="btn btn-primary" (click)="print()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
                         class="bi bi-printer" viewBox="0 0 16 16">
                         <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
@@ -38,124 +37,134 @@
 </div>
 
 
-<div class="card wtable" style="direction:rtl" id="contentToConvert">
+<div class="card " style="direction:rtl" id="contentToConvert">
     <div class="card-body">
-        <div class="row ">
-            <div class="col-md-4" style="text-align: right; ">
-                <table>
+        <div class="row " style="margin-bottom: 3%;">
+            <div class="col-4" style="text-align: right; direction: rtl;">
+                <div  style="border-bottom:3px brown solid;
+                        padding-bottom: 15px;text-align: right;font-size: 18px;">
 
-                    <tr>
-                        <td>
-                            رقم الطباعة :
-                        </td>
-                        <td>
-                            {{printnumber}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            مستخدم الطابعة :
-                        </td>
-                        <td>
-                            {{userName.name}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            تاريخ الطباعة :
-                        </td>
-                        <td>
-                            {{dateOfPrint | date:"dd/MM/yyyy"}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            وقت الطباعة :
-                        </td>
-                        <td>
-                            {{dateOfPrint | date:"HH:mm:ss"}}
-                        </td>
-                    </tr>
+                    رقم الطباعة :
 
 
-                </table>
+                    {{printnumber}}
 
+                </div>
+                <div style="padding-bottom: 15px;border-bottom:3px brown solid;">
+
+                    مستخدم الطابعة :
+
+
+                    {{userName.name}}
+
+                </div>
+                <div style="padding-bottom: 15px;border-bottom:3px brown solid;">
+
+                    تاريخ الطباعة :
+
+                    {{dateOfPrint | date:"dd/MM/yyyy"}}
+
+                </div>
+                <div style="padding-bottom: 15px;border-bottom:3px brown solid;">
+
+                    وقت الطباعة :
+
+                    {{dateOfPrint | date:"HH:mm:ss"}}
+
+                </div>
             </div>
-            <div class="col-md-5">
-                <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px"
-                    style="margin-right: 20%;" />
+            <div class="col-3">
+                <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px" />
             </div>
-            <div class="col-md-3" style="text-align: right;">
-                <br>
-                <h3>
-                    اسم العميل : {{client!=null||client!=undefined?client.name:null}}
+            <div class="col-2"></div>
+            <div class="col-3" style="text-align: right;font-size: 18px;">
+                <div style="text-align: right;font-size: 18px; margin-bottom: 10px;">
+                    <h4> كشف حساب </h4>
+                    <svg style="color: rgb(153, 1, 1);" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                        <path
+                            d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+                    </svg>
+                    {{client!=null||client!=undefined?client.name:null}}
+
                     <br>
-                    أرقام هاتف العميل :
+                </div>
+                <div *ngFor="let phone of client.phones">
+                    <svg style="color: rgb(153, 1, 1);" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
+                        <path
+                            d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                    </svg>
+                    {{phone.phone}}
 
-                    <div *ngFor="let phone of client.phones">
-                        {{phone.phone}}
-                    </div>
-                </h3>
+                </div>
+                <br>
+                <!--   <div *ngIf="orderplaced!=null||orderplaced!=undefined">
+                        {{orderplaced.name}}
+                    </div>-->
+
+                  
 
             </div>
 
 
         </div>
-        <table>
+        <table class="table" style="border: 1px black solid;font-size: 18px;">
+            
             <thead>
-                <th>
+                <th style="border: 1px black solid;">
                     ترقيم
                 </th>
-                <th>
+                <th style="border: 1px black solid;">
                     رقم الوصل
                 </th>
-                <th>
+                <th style="border: 1px black solid;">
                     تاريخ اضافة الطلب
                 </th>
-                <th>
+                <th style="border: 1px black solid;">
                     الإجمالي
                 </th>
-                <th>
+                <th style="border: 1px black solid;">
                     الرسوم
                 </th>
-                <th>
+                <th style="border: 1px black solid;">
                     يدفع للعميل
                 </th>
-                <th>
+                <th style="border: 1px black solid;">
                     المحافظة
                 </th>
-                <th>
+                <th style="border: 1px black solid;">
                     الهاتف
                 </th>
-                <th>
+                <th style="border: 1px black solid;">
                     المبلغ القديم
                 </th>
-                <th>
+                <th style="border: 1px black solid;">
                     ملاحظات
                 </th>
-                <!--<th *ngFor="let head of heads" style="font-size: 20px;">{{head}}</th>-->
+                <!--<th style="border: 1px black solid;" *ngFor="let head of heads" style="font-size: 20px;">{{head}}</th>-->
             </thead>
             <tbody>
-                <tr *ngFor="let order of orders;index as i">
-                    <td style="width: 5px;">
+                <tr *ngFor="let order of orders;index as i" style="border: 1px black solid;">
+                    <td style="width: 5px;border: 1px black solid;">
                         {{i+1}}
                     </td>
-                    <td>
+                    <td style="border: 1px black solid;">
                         {{order.code}}
                     </td>
-                    <td>
+                    <td style="border: 1px black solid;">
                         {{order.date| date: 'yyyy/MM/dd'}}
                     </td>
-                    <td>
+                    <td style="border: 1px black solid;">
                         {{order.cost}}
                     </td>
-                    <td>
+                    <td style="border: 1px black solid;">
                         {{order.deliveryCost}}
                     </td>
-                    <td>
+                    <td style="border: 1px black solid;">
                         {{order.cost-order.deliveryCost}}
                     </td>
-                    <td>
+                    <td style="border: 1px black solid;">
                         {{order.country!=null||order.country!=undefined?order.country.name:null}}
                     </td>
                     <!--   <td>
@@ -164,60 +173,63 @@
                     <td>
                         {{order.orderplaced.name}}
                     </td>-->
-                    <td>
+                    <td style="border: 1px black solid;">
                         {{order.recipientPhones}}
                     </td>
-                    <td>
+                    <td style="border: 1px black solid;">
                         {{order.oldCost}}
                     </td>
-                    <td>
+                    <td style="border: 1px black solid;">
                         {{order.note}}
                     </td>
                 </tr>
 
 
-                <tr class=" table-bordered trbordered" style="font-size: 18px;">
-                    <td colspan="3">
+                <tr  style="
+                font-size: 18px;border: 1px black solid;">
+                    <td style="border: 1px black solid;" colspan="3">
                         الإجمالي :
                     </td>
-                    <td>
+                    <td style="border: 1px black solid;">
                         {{ count}}
                     </td>
-                    <td>
+                    <td style="border: 1px black solid;">
                         {{ deliveryCostCount}}
                     </td>
-                    <td>
+                    <td style="border: 1px black solid;">
                         {{count-deliveryCostCount}}
                     </td>
-                    <td colspan="4"></td>
+                    <td style="border: 1px black solid;" colspan="4"></td>
                 </tr>
-                <tr class=" table-bordered " style="font-size: 18px;background-color: rgba(144, 177, 240, 0.877);">
-                    <td colspan="5">
+                <tr  style="
+                border: 1px black solid;font-size: 18px;background-color: rgba(144, 177, 240, 0.877);">
+                    <td style="border: 1px black solid;" colspan="5">
                         حساب العميل 
                     </td>
 
 
-                    <td>
+                    <td style="border: 1px black solid;">
                         {{client.total}}
                     </td>
-                    <td colspan="4"></td>
+                    <td style="border: 1px black solid;" colspan="4"></td>
                 </tr>
-                <tr class=" table-bordered trbordered" style="font-size: 18px;">
-                    <td colspan="5">
+                <tr  style="font-size: 18px;
+                border: 1px black solid;">
+                    <td style="border: 1px black solid;" colspan="5">
                         المبلغ النهائي في القاصة  
 
                     </td>
-                    <td>
+                    <td style="border: 1px black solid;">
                         {{(count-deliveryCostCount)+client.total}}
                     </td>
-                    <td colspan="4"></td>
+                    <td style="border: 1px black solid;" colspan="4"></td>
 
                 </tr>
             </tbody>
 
         </table>
-        <div class="card-footer">
-            <h4 style="margin-right: 25%;">{{address}} &nbsp; {{companyPhone}}</h4>
+        <div class="card-footer" style="text-align: center;">
+            <h5>{{address}} &nbsp; {{companyPhone}}</h5>
         </div>
     </div>
 </div>
