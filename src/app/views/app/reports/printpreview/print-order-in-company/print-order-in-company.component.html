@@ -154,13 +154,13 @@
                         {{order.order.date| date: 'yyyy/MM/dd'}}
                     </td>
                     <td>
-                        {{order.order.cost}}
+                        {{order.order.cost| number}}
                     </td>
                     <td>
-                        {{order.order.deliveryCost}}
+                        {{order.order.deliveryCost| number}}
                     </td>
                     <td>
-                        {{order.order.cost-order.order.deliveryCost}}
+                        {{order.order.cost-order.order.deliveryCost| number}}
                     </td>
                     <td>
                         {{order.order.country!=null||order.order.country!=undefined?order.order.country.name:null}}
@@ -191,13 +191,13 @@
                         الإجمالي :
                     </td>
                     <td>
-                        {{ count}}
+                        {{ count| number}}
                     </td>
                     <td>
-                        {{ deliveryCostCount}}
+                        {{ deliveryCostCount| number}}
                     </td>
                     <td>
-                        {{count-deliveryCostCount}}
+                        {{count-deliveryCostCount| number}}
                     </td>
                     <td colspan="5"></td>
                 </tr>
@@ -208,7 +208,7 @@
 
 
                     <td>
-                        {{client.total}}
+                        {{client.total| number}}
                     </td>
                     <td colspan="5"></td>
                 </tr>
@@ -218,7 +218,7 @@
 
                     </td>
                     <td>
-                        {{(count-deliveryCostCount)+client.total}}
+                        {{(count-deliveryCostCount)+client.total| number}}
                     </td>
                     <td colspan="5"></td>
 

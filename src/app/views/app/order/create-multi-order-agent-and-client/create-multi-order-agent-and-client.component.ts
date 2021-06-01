@@ -182,7 +182,6 @@ export class CreateMultiOrderAgentAndClientComponent implements OnInit {
           this.tempOrder.push({ ...this.Orders[i] })
         }
       }
-      // console.log(res)
       // console.log(this.tempOrder)
       if (this.tempOrder.length != 0)
         document.getElementById("openModalButton").click();
@@ -371,6 +370,7 @@ deleteCodeAfterChecked(order){
       o.AgentId = this.AgentId
 
     })
+    
     this.spinner.show()
     this.orderservice.createMultiple(this.Orders).subscribe(res => {
       this.spinner.hide()

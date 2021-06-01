@@ -160,13 +160,13 @@
                     </td>
                    
                     <td>
-                        {{order.total}}
+                        {{order.total| number}}
                     </td>
                     <td>
-                        {{order.deliveCost}}
+                        {{order.deliveCost| number}}
                     </td>
                     <td>
-                        {{order.total-order.deliveCost}}
+                        {{order.total-order.deliveCost| number}}
                     </td>
                     <td>
                         {{order.country!=null||order.country!=undefined?order.country:null}}
@@ -194,13 +194,13 @@
                         الإجمالي :
                     </td>
                     <td>
-                        {{ count}}
+                        {{ count| number}}
                     </td>
                     <td>
-                        {{ deliveryCostCount}}
+                        {{ deliveryCostCount| number}}
                     </td>
                     <td >
-                        {{count-deliveryCostCount}}
+                        {{count-deliveryCostCount| number}}
                     </td>
                     <td colspan="4"></td>
                 </tr>

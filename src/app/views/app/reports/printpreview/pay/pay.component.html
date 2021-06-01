@@ -76,11 +76,11 @@ styleSheetFile="/assets/css/vendor/bootstrap.min.css" [useExistingCss]="true" ng
   <tbody>
     <tr *ngFor="let clientBlanace of ClientBlanace">
       <td>{{clientBlanace.clientName}}</td>
-      <td>{{clientBlanace.amount}}</td>
+      <td>{{clientBlanace.amount| number}}</td>
     </tr>
     <tr style="background-color: rgb(216, 212, 212);">
       <td>الإجمالي </td>
-      <td>{{totalOrder}}</td>
+      <td>{{totalOrder| number}}</td>
     </tr>
   </tbody>
 </table>

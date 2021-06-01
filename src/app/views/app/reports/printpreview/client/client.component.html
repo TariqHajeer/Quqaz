@@ -156,13 +156,13 @@
                         {{order.date| date: 'yyyy/MM/dd'}}
                     </td>
                     <td style="border: 1px black solid;">
-                        {{order.cost}}
+                        {{order.cost| number}}
                     </td>
                     <td style="border: 1px black solid;">
-                        {{order.deliveryCost}}
+                        {{order.deliveryCost| number}}
                     </td>
                     <td style="border: 1px black solid;">
-                        {{order.cost-order.deliveryCost}}
+                        {{TestCalc(order)| number}}
                     </td>
                     <td style="border: 1px black solid;">
                         {{order.country!=null||order.country!=undefined?order.country.name:null}}
@@ -191,13 +191,13 @@
                         الإجمالي :
                     </td>
                     <td style="border: 1px black solid;">
-                        {{ count}}
+                        {{ count| number}}
                     </td>
                     <td style="border: 1px black solid;">
-                        {{ deliveryCostCount}}
+                        {{ deliveryCostCount| number}}
                     </td>
                     <td style="border: 1px black solid;">
-                        {{count-deliveryCostCount}}
+                        {{clientCalc| number}}
                     </td>
                     <td style="border: 1px black solid;" colspan="4"></td>
                 </tr>
@@ -209,7 +209,7 @@
 
 
                     <td style="border: 1px black solid;">
-                        {{client.total}}
+                        {{client.total| number}}
                     </td>
                     <td style="border: 1px black solid;" colspan="4"></td>
                 </tr>
@@ -220,7 +220,7 @@
 
                     </td>
                     <td style="border: 1px black solid;">
-                        {{(count-deliveryCostCount)+client.total}}
+                        {{clientCalc+client.total| number}}
                     </td>
                     <td style="border: 1px black solid;" colspan="4"></td>
 

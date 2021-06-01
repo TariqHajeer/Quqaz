@@ -126,7 +126,7 @@ direction:rtl;text-align: right;margin: 5%;" >
                     </td>
 
                     <td style="border: 1px black solid;">
-                        {{order.cost}}
+                        {{order.cost| number}}
                     </td>
                     <td style="border: 1px black solid;">
                         {{order.country.name}}
@@ -148,7 +148,7 @@ direction:rtl;text-align: right;margin: 5%;" >
                         الإجمالي :
                     </td>
                     <td colspan="5">
-                        <!----> {{ count}}
+                        <!----> {{ count| number}}
                     </td>
 
                 </tr>
