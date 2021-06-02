@@ -100,6 +100,8 @@ export class AddUserComponent implements OnInit, OnChanges {
     }
     this.CreateUser.Salary=this.CreateUser.Salary*1
     this.spinner.show()
+    this.CreateUser.Salary =0;
+    //this.CreateUser.HireDate =
     this.UserService.Creat(this.CreateUser).subscribe(
       res => {
         this.spinner.hide()

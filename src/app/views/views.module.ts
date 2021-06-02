@@ -19,7 +19,7 @@ import { NoconnectionComponent } from './noconnection/noconnection.component';
     CommonModule,
     ViewRoutingModule,
     SharedModule,
-    AngularFireAuthModule,
+    AngularFireAuthModule,  
     AngularFireAuthGuardModule,
     ComponentsCarouselModule,
     TabsModule.forRoot(),
