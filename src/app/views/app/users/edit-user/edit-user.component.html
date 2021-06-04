@@ -76,7 +76,7 @@
               <ng-select multiple="true"[clearable]="true" [searchable]="true" [selectableGroup]="true"
               [selectableGroupAsModel]="false"  [(ngModel)]="User.countries" 
               [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
-                <ng-option *ngFor="let country of Countries" [value]="country.id">{{country.name}}</ng-option>
+                <ng-option *ngFor="let country of countries" [value]="country.id">{{country.name}}</ng-option>
               </ng-select>
               <div *ngIf="!User.Countries && submitted " class="invalid-tooltip">المدينة  حقل مطلوب</div>
 
