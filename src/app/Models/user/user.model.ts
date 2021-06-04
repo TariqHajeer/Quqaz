@@ -19,6 +19,7 @@ export class User {
       employeeType:string = this.canWorkAsAgent==true?"مندوب":"عميل"
       UserStatics:UserStatics
       isActive:boolean
+      countries
 }
 export class UserStatics
 {

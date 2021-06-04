@@ -89,6 +89,7 @@ export class EditUserComponent implements OnInit {
   }
   GetUserById() {
     this.UserService.GetById(this.id).subscribe(res => {
+      console.log(res)
       this.User = res
       
       this.phones = this.User.phones

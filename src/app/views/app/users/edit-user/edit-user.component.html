@@ -74,7 +74,7 @@
             <div class="col-md-3" *ngIf="User.canWorkAsAgent">
               <label>المدينة<span class="text-danger text-one align-bottom mx-1">*</span></label>
               <ng-select multiple="true"[clearable]="true" [searchable]="true" [selectableGroup]="true"
-              [selectableGroupAsModel]="false"  [(ngModel)]="CreateUser.Countries" 
+              [selectableGroupAsModel]="false"  [(ngModel)]="User.countries" 
               [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
                 <ng-option *ngFor="let country of Countries" [value]="country.id">{{country.name}}</ng-option>
               </ng-select>
