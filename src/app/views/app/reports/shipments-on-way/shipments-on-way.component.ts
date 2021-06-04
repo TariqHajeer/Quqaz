@@ -21,7 +21,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class ShipmentsOnWayComponent implements OnInit {
 
-  displayedColumns: string[] = ['select','code', 'client', 'country', 'region'
+  displayedColumns: string[] = ['select','index','code', 'client', 'country', 'region'
     ,'agentCost', 'cost', 'deliveryCost', 'isClientDiliverdMoney', 'orderplaced', 'monePlaced', 'agentPrintNumber', 'clientPrintNumber'];
   dataSource = new MatTableDataSource([]);
   ids: any[] = []
@@ -196,14 +196,14 @@ export class ShipmentsOnWayComponent implements OnInit {
   filterOfDate() {
     this.getorders = this.temporder
     if (this.fordate && this.todate) {
-      console.log(this.getorders)
       this.todate = formatDate(this.todate, 'MM/dd/yyyy', 'en');
       this.fordate = formatDate(this.fordate, 'MM/dd/yyyy', 'en');
       this.getorders.forEach(o => {
         o.order.date = formatDate(o.order.date, 'MM/dd/yyyy', 'en');
       })
-      this.getorders = this.getorders.filter(o => o.order.date >= this.todate &&
-        o.order.date <= this.fordate)
+      this.getorders = [...this.getorders.filter(o => o.order.date >= this.todate &&
+        o.order.date <= this.fordate)]
+        console.log(this.getorders)
       this.dataSource = new MatTableDataSource(this.getorders)
     }
 
@@ -251,6 +251,7 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.orderstate = new OrderState
     }
     this.spinner.show();
+    console.log(this.orderstates)
     this.orderservice.UpdateOrdersStatusFromAgent(this.orderstates).subscribe(res => {
       this.allFilter()
       this.spinner.hide()

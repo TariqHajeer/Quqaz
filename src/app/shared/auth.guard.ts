@@ -9,10 +9,12 @@ import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { UserLogin } from '../Models/userlogin.model';
 import { UserPermission } from './auth.roles';
+import { GroupService } from '../services/group.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate, CanActivateChild {
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router,
+    private groupService: GroupService) { }
   async canActivateChild(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -41,10 +43,25 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     if (currentUser) {
       if (route.data && route.data.roles) {
         if (route.data.roles.filter(p => currentUser.privileges.map(p => p.sysName).includes(p)).length > 0) {
+          this.groupService.GetPrivileges().subscribe(res => {
+            console.log(res)
+            var pr = route.data.roles.filter(p =>res.map(p => p.sysName).includes(p))
+           console.log(pr)
+           localStorage.setItem('route', pr)
+          //  this.router.navigate(['/unauthorized']);
+          })
           return true;
         } else {
-          //this.router.navigate(['/user/login']);
+          this.groupService.GetPrivileges().subscribe(res => {
+            console.log(res)
+            var pr = route.data.roles.filter(p =>res.map(p => p.sysName).includes(p))
+           console.log(pr)
+           localStorage.setItem('route', pr)
            this.router.navigate(['/unauthorized']);
+          })
+          //let privileges = JSON.parse(localStorage.getItem('GetPrivileges')) as any
+         
+          //this.router.navigate(['/user/login']);
           // return false;
           return false
         }

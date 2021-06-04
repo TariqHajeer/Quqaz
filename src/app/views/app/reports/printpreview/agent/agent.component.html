@@ -39,12 +39,11 @@
 </div>
 
 <div class="card " id="contentToConvert"  style="
-direction:rtl;text-align: right;margin: 5%;" >
+direction:rtl;text-align: right;" >
     <div class="card-body">
         <div class="row " style="margin-bottom: 3%;">
             <div class="col-4" style="text-align: right; direction: rtl;">
-                <div *ngIf="!showPrintbtn" style="border-bottom:3px brown solid;
-                        padding-bottom: 15px;text-align: right;font-size: 18px;">
+                <div *ngIf="!showPrintbtn" style="padding-bottom: 15px;border-bottom:3px brown solid;">
 
                     رقم الطباعة :
 
@@ -79,9 +78,9 @@ direction:rtl;text-align: right;margin: 5%;" >
                 <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px" />
             </div>
             <div class="col-2"></div>
-            <div class="col-3" style="text-align: right;font-size: 18px;">
-                <div style="text-align: right;font-size: 18px; margin-bottom: 10px;">
-                    <h4> كشف حساب </h4>
+            <div class="col-3" style="text-align: right;font-size: 14px;">
+                <div style="text-align: right;font-size: 14px; margin-bottom: 10px;">
+                    <h4> كشف طلبات</h4>
                     <svg style="color: rgb(153, 1, 1);" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                         fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
                         <path
@@ -111,43 +110,43 @@ direction:rtl;text-align: right;margin: 5%;" >
 
 
         </div>
-        <table  class="table" style="border: 1px black solid;font-size: 18px;">
-            <thead style="border: 1px black solid;font-size: 20px;">
-                    <th  style="border: 1px black solid;" *ngFor="let head of heads">{{head}}</th>
+        <table  style="border: 1px black solid;padding: 5px;font-size: 14px; padding: 5px; width: 100%;">
+            <thead style="border: 1px black solid;padding: 5px;font-size: 20px;">
+                    <th  style="border: 1px black solid;padding: 5px;" *ngFor="let head of heads">{{head}}</th>
             </thead>
             <tbody>
 
-                <tr style="border: 1px black solid;" *ngFor="let order of orders;index as i">
-                    <td style="width: 5px;border: 1px black solid;">
+                <tr style="border: 1px black solid;padding: 5px;" *ngFor="let order of orders;index as i">
+                    <td style="width: 5px;border: 1px black solid;padding: 5px;">
                         {{i+1}}
                     </td>
-                    <td style="border: 1px black solid;">
+                    <td style="border: 1px black solid;padding: 5px;">
                         {{order.code}}
                     </td>
 
-                    <td style="border: 1px black solid;">
+                    <td style="border: 1px black solid;padding: 5px;">
                         {{order.cost| number}}
                     </td>
-                    <td style="border: 1px black solid;">
+                    <td style="border: 1px black solid;padding: 5px;">
                         {{order.country.name}}
                     </td>
-                    <td style="border: 1px black solid;">
+                    <td style="border: 1px black solid;padding: 5px;">
                         {{order.recipientPhones}}
                     </td>
-                    <td style="border: 1px black solid;">
+                    <td style="border: 1px black solid;padding: 5px;">
                         {{order.client.name}}
                     </td>
-                    <td style="border: 1px black solid;">
+                    <td style="border: 1px black solid;padding: 5px;">
                         {{order.note}}
                     </td>
                 </tr>
 
 
-                <tr class=" table-bordered trbordered border: 1px black solid;" style="font-size: 18px;  background-color: rgb(218, 218, 219);">
-                    <td colspan="2">
+                <tr class=" table-bordered trbordered border: 1px black solid;padding: 5px;" style="font-size: 14px;  background-color: rgb(218, 218, 219);">
+                    <td colspan="2"style="border: 1px black solid;padding: 5px;">
                         الإجمالي :
                     </td>
-                    <td colspan="5">
+                    <td colspan="5"style="border: 1px black solid;padding: 5px;">
                         <!----> {{ count| number}}
                     </td>
 

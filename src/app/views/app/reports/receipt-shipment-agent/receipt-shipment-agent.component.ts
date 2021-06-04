@@ -20,7 +20,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class ReceiptShipmentAgentComponent implements OnInit {
 
-  displayedColumns: string[] = ['code', 'client', 'country', 'region'
+  displayedColumns: string[] = ['index','code', 'client', 'country', 'region'
     , 'cost', 'isClientDiliverdMoney', 'orderplaced', 'monePlaced', 'edit'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);

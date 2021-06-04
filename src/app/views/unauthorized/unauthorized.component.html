@@ -15,11 +15,14 @@
                 </a>
                 <h6 class="mb-4"></h6>
                 <p class="mb-0 text-muted text-small mb-0">
-                  {{ "unauthorized.detail" | translate }}
+                  عفوا يجب عليك ان تملك الصلاحيات التالية للقيام بهذه العملية
+                  <li>
+                    {{prv}}
+                  </li>
                 </p>
                 <p class="display-1 font-weight-bold mb-5">403</p>
                 <a [routerLink]="adminRoot" class="btn btn-primary btn-lg btn-shadow" type="submit">
-                العودة الى الصفحة الرئيسية
+                  العودة الى الصفحة الرئيسية
                 </a>
               </div>
             </div>

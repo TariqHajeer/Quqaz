@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 import { environment } from 'src/environments/environment';
 import { UserLogin } from 'src/app/Models/userlogin.model'
 import { from } from 'rxjs';
+import { GroupService } from 'src/app/services/group.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html'
@@ -18,7 +19,10 @@ export class LoginComponent implements OnInit {
   buttonDisabled = false;
   buttonState = '';
 
-  constructor(private authService: AuthService, private notifications: NotificationsService, private router: Router) { }
+  constructor(private authService: AuthService
+    , private notifications: NotificationsService
+    , private router: Router
+    , private groupService: GroupService) { }
 
   ngOnInit() {
     this.myDate = new Date
@@ -30,7 +34,7 @@ export class LoginComponent implements OnInit {
     // if (!this.loginForm.valid || this.buttonDisabled) {
     //   return;
     // }
-
+   
     this.buttonDisabled = true;
     this.buttonState = 'show-spinner';
     if (this.loginForm.value)

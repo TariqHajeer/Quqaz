@@ -5,7 +5,8 @@ import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { AuthService } from 'src/app/shared/auth.service';
 import { Router } from '@angular/router';
-import { throwError as observableThrowError} from 'rxjs';
+import { throwError as observableThrowError } from 'rxjs';
+import { GroupService } from './services/group.service';
 
 @Component({
   selector: 'app-root',
@@ -16,21 +17,26 @@ import { throwError as observableThrowError} from 'rxjs';
 export class AppComponent implements OnInit, AfterViewInit {
   isMultiColorActive = true;
   constructor(private langService: LangService, private renderer: Renderer2,
-    private location: Location,private injector: Injector,
-    private authService: AuthService, private _router: Router) {
+    private location: Location, private injector: Injector,
+    private authService: AuthService, private _router: Router,
+    private groupService: GroupService) {
 
   }
   logoutUser() {
     const authService = this.injector.get(AuthService);
-    localStorage.removeItem('token') 
+    localStorage.removeItem('token')
     authService.signOut();
     return observableThrowError("");
   }
   ngOnInit() {
+    this.groupService.GetPrivileges().subscribe(res => {
+      localStorage.setItem('GetPrivileges', res)
+      console.log(res)
+    })
     this.langService.init();
     //this.authService.
-    if(localStorage.getItem('kokazUser')==null||localStorage.getItem('kokazUser')==undefined||localStorage.getItem('kokazUser')=='')
-    return this._router.navigate(['/user/login']);
+    if (localStorage.getItem('kokazUser') == null || localStorage.getItem('kokazUser') == undefined || localStorage.getItem('kokazUser') == '')
+      return this._router.navigate(['/user/login']);
     // this.authService.TestLogin();
     var user = this.authService.authenticatedUser
     if (user == null || (user.expiry && (new Date().getTime() - user.expiry > 7 * 60 * 60 * 1000))) {

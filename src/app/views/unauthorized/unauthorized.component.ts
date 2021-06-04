@@ -9,9 +9,11 @@ export class UnauthorizedComponent implements OnInit, OnDestroy {
   adminRoot = '/app/HomePage/start';
 
   constructor() { }
-
+prv=[]
   ngOnInit() {
     document.body.classList.add('background');
+   this.prv=localStorage.getItem('route') as any
+   console.log(this.prv)
   }
 
   ngOnDestroy() {

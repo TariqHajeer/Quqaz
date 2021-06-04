@@ -81,7 +81,7 @@ export class AddUserComponent implements OnInit, OnChanges {
         this.tempPhone = ''
       }
     if (this.CreateUser.CanWorkAsAgent) {
-      if (!this.CreateUser.Name||!this.CreateUser.CountryId||!this.CreateUser.Salary||
+      if (!this.CreateUser.Name||this.CreateUser.Countries.length==0||!this.CreateUser.Salary||
         this.CreateUser.Phones.length==0) {
         this.submitted = true;
         return

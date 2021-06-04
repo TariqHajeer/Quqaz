@@ -73,10 +73,12 @@
           <div class="row w-100 align-items-end mb-3">
             <div class="col-md-3" *ngIf="User.canWorkAsAgent">
               <label>المدينة<span class="text-danger text-one align-bottom mx-1">*</span></label>
-              <ng-select [(ngModel)]="User.countryId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
-                <ng-option *ngFor="let country of countries" [value]="country.id">{{country.name}}</ng-option>
+              <ng-select multiple="true"[clearable]="true" [searchable]="true" [selectableGroup]="true"
+              [selectableGroupAsModel]="false"  [(ngModel)]="CreateUser.Countries" 
+              [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
+                <ng-option *ngFor="let country of Countries" [value]="country.id">{{country.name}}</ng-option>
               </ng-select>
-              <div *ngIf="!User.countryId && submitted " class="invalid-tooltip">المدينة  حقل مطلوب</div>
+              <div *ngIf="!User.Countries && submitted " class="invalid-tooltip">المدينة  حقل مطلوب</div>
 
             </div>
             <div class="col-md-3" *ngIf="User.canWorkAsAgent">

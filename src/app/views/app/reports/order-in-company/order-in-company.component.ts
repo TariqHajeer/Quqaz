@@ -21,7 +21,7 @@ import { Client } from '../../client/client.model';
 })
 export class OrderInCompanyComponent implements OnInit {
 
-  displayedColumns: string[] = ['code', 'country', 'region'
+  displayedColumns: string[] = ['index','code', 'country', 'region'
     , 'cost', 'orderplaced', 'monePlaced', 'edit'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);

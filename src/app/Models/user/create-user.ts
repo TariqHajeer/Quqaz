@@ -12,4 +12,5 @@ export class CreateUser {
       Password:any 
       GroupsId:number[] 
       Phones:string[] 
+      Countries:number[]
 }

@@ -50,6 +50,7 @@ export class AuthService implements OnDestroy{
   signOut() {
     this.resetAuthenticated();
     localStorage.removeItem('token')
+    localStorage.clear();
     this.rout.navigate(['user/login']);  
   }
   Test(){
