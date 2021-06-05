@@ -43,7 +43,7 @@ direction:rtl;text-align: right;" >
     <div class="card-body">
         <div class="row " style="margin-bottom: 3%;">
             <div class="col-4" style="text-align: right; direction: rtl;">
-                <div *ngIf="!showPrintbtn" style="padding-bottom: 15px;border-bottom:3px brown solid;">
+                <div *ngIf="!showPrintnumber" style="padding-bottom: 15px;border-bottom:3px brown solid;">
 
                     رقم الطباعة :
 
@@ -117,26 +117,26 @@ direction:rtl;text-align: right;" >
             <tbody>
 
                 <tr style="border: 1px black solid;padding: 5px;" *ngFor="let order of orders;index as i">
-                    <td style="width: 5px;border: 1px black solid;padding: 5px;">
+                    <td style="width: 5%;border: 1px black solid;padding: 5px;">
                         {{i+1}}
                     </td>
-                    <td style="border: 1px black solid;padding: 5px;">
+                    <td style="width: 7%;border: 1px black solid;padding: 5px;">
                         {{order.code}}
                     </td>
 
-                    <td style="border: 1px black solid;padding: 5px;">
+                    <td style="width: 15%;border: 1px black solid;padding: 5px;">
                         {{order.cost| number}}
                     </td>
-                    <td style="border: 1px black solid;padding: 5px;">
+                    <td style="width: 15%;border: 1px black solid;padding: 5px;">
                         {{order.country.name}}
                     </td>
-                    <td style="border: 1px black solid;padding: 5px;">
+                    <td style="width: 15%;border: 1px black solid;padding: 5px;">
                         {{order.recipientPhones}}
                     </td>
-                    <td style="border: 1px black solid;padding: 5px;">
+                    <td style="width: 15%;border: 1px black solid;padding: 5px;">
                         {{order.client.name}}
                     </td>
-                    <td style="border: 1px black solid;padding: 5px;">
+                    <td style="width: 45%;border: 1px black solid;padding: 5px;">
                         {{order.note}}
                     </td>
                 </tr>

@@ -7,7 +7,7 @@ import { PrintNumberOrder } from 'src/app/Models/order/PrintNumberOrder.model';
 import * as jspdf from 'jspdf';
 import { NgxSpinnerService } from 'ngx-spinner';
 import html2canvas from 'html2canvas';
-import * as jsPDF from 'jspdf';  
+import * as jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-agent',
@@ -52,11 +52,16 @@ export class AgentComponent implements OnInit {
     return this.count
   }
   showPrintbtn = false
+  showPrintnumber = false
   onAWay() {
-    if (this.orderplaced.id == 2)
-      this.showPrintbtn = false
-    else
-      this.showPrintbtn = true
+    if (this.showPrintnumber == true) return
+    if (this.orderplaced.id == 2) {
+      this.showPrintnumber = false
+      this.showPrintbtn=false
+    } else {
+      this.showPrintnumber = true
+      this.showPrintbtn=true
+    }
   }
   afterPrint() {
     this.spinner.show()
@@ -86,8 +91,8 @@ export class AgentComponent implements OnInit {
     pdf.addHTML(elementToPrint, () => {
       pdf.save(this.dateOfPrint + '.pdf');
     });
-   
-    
+
+
   }
   print() {
     var divToPrint = document.getElementById('contentToConvert');
@@ -106,7 +111,6 @@ export class AgentComponent implements OnInit {
       // location.reload();
 
     }, 10);
-
   }
 
 }

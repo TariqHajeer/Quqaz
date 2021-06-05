@@ -29,10 +29,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     return observableThrowError("");
   }
   ngOnInit() {
-    this.groupService.GetPrivileges().subscribe(res => {
-      localStorage.setItem('GetPrivileges', res)
-      console.log(res)
-    })
+   
     this.langService.init();
     //this.authService.
     if (localStorage.getItem('kokazUser') == null || localStorage.getItem('kokazUser') == undefined || localStorage.getItem('kokazUser') == '')
