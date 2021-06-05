@@ -146,25 +146,25 @@
             </thead>
             <tbody>
                 <tr *ngFor="let order of orders;index as i" style="border: 1px black solid;">
-                    <td style="width: 5px;border: 1px black solid;">
+                    <td style="width: 5%;border: 1px black solid;">
                         {{i+1}}
                     </td>
-                    <td style="border: 1px black solid;">
+                    <td style="width: 7%;border: 1px black solid;">
                         {{order.code}}
                     </td>
-                    <td style="border: 1px black solid;">
+                    <td style="width: 10%;border: 1px black solid;">
                         {{order.date| date: 'yyyy/MM/dd'}}
                     </td>
-                    <td style="border: 1px black solid;">
+                    <td style="width: 15%;border: 1px black solid;">
                         {{order.cost| number}}
                     </td>
-                    <td style="border: 1px black solid;">
+                    <td style="width: 15%;border: 1px black solid;">
                         {{order.deliveryCost| number}}
                     </td>
-                    <td style="border: 1px black solid;">
+                    <td style="width: 15%;border: 1px black solid;">
                         {{TestCalc(order)| number}}
                     </td>
-                    <td style="border: 1px black solid;">
+                    <td style="width: 15%;border: 1px black solid;">
                         {{order.country!=null||order.country!=undefined?order.country.name:null}}
                     </td>
                     <!--   <td>
@@ -173,13 +173,13 @@
                     <td>
                         {{order.orderplaced.name}}
                     </td>-->
-                    <td style="border: 1px black solid;">
+                    <td style="width: 15%;border: 1px black solid;">
                         {{order.recipientPhones}}
                     </td>
-                    <td style="border: 1px black solid;">
+                    <td style="width: 15%;border: 1px black solid;">
                         {{order.oldCost}}
                     </td>
-                    <td style="border: 1px black solid;">
+                    <td style="width: 30%;border: 1px black solid;">
                         {{order.note}}
                     </td>
                 </tr>
