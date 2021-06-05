@@ -15,9 +15,9 @@
                 </a>
                 <h6 class="mb-4"></h6>
                 <p class="mb-0 text-muted text-small mb-0">
-                  عفوا يجب عليك ان تملك الصلاحيات التالية للقيام بهذه العملية
-                  <li>
-                    {{prv}}
+                   :عفوا يجب عليك ان تملك الصلاحيات التالية للقيام بهذه العملية
+                  <li *ngFor="let p of prv">
+                    {{p.name}}
                   </li>
                 </p>
                 <p class="display-1 font-weight-bold mb-5">403</p>

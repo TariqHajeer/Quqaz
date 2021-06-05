@@ -12,8 +12,7 @@ export class UnauthorizedComponent implements OnInit, OnDestroy {
 prv=[]
   ngOnInit() {
     document.body.classList.add('background');
-   this.prv=localStorage.getItem('route') as any
-   console.log(this.prv)
+   this.prv=JSON.parse(localStorage.getItem('route')) as any
   }
 
   ngOnDestroy() {

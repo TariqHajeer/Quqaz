@@ -43,24 +43,17 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     if (currentUser) {
       if (route.data && route.data.roles) {
         if (route.data.roles.filter(p => currentUser.privileges.map(p => p.sysName).includes(p)).length > 0) {
-          this.groupService.GetPrivileges().subscribe(res => {
-            console.log(res)
-            var pr = route.data.roles.filter(p =>res.map(p => p.sysName).includes(p))
-           console.log(pr)
-           localStorage.setItem('route', pr)
-          //  this.router.navigate(['/unauthorized']);
-          })
+         
           return true;
         } else {
           this.groupService.GetPrivileges().subscribe(res => {
-            console.log(res)
-            var pr = route.data.roles.filter(p =>res.map(p => p.sysName).includes(p))
-           console.log(pr)
-           localStorage.setItem('route', pr)
-           this.router.navigate(['/unauthorized']);
+            // var pr = route.data.roles.filter(p =>res.map(p => p.sysName).includes(p))
+            var pr = res.filter(p => route.data.roles.filter(r => p.sysName == r).length > 0)
+            localStorage.setItem('route', JSON.stringify(pr))
+            this.router.navigate(['/unauthorized']);
           })
           //let privileges = JSON.parse(localStorage.getItem('GetPrivileges')) as any
-         
+
           //this.router.navigate(['/user/login']);
           // return false;
           return false

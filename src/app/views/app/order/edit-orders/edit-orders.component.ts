@@ -252,6 +252,8 @@ export class EditOrdersComponent implements OnInit {
     this.userService.ActiveAgent().subscribe(res => {
       this.Agentsresend = res
       this.tempAgent = res
+      this.Agents = this.tempAgent.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.Order.CountryId).length>0 )
+
       // console.log(res)
     })
   }
