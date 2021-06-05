@@ -95,7 +95,7 @@ export class ViewOrdersComponent implements OnInit {
     this.orderResend.RegionId=order.region?order.region.id:null
     this.orderResend.DeliveryCost = order.country.deliveryCost * 1
     this.Regionsresend = this.Region.filter(r => r.country.id == this.orderResend.CountryId)
-    this.Agentsresend = this.Agents.filter(r => r.countryId == this.orderResend.CountryId)
+    this.Agentsresend = this.tempAgent.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.orderResend.CountryId).length>0 )
    
   }
   Resend() {
@@ -166,6 +166,8 @@ export class ViewOrdersComponent implements OnInit {
       this.Agents = res
       this.Agentsresend = res
       this.tempAgent = res
+      this.Agentsresend = this.tempAgent.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.orderResend.CountryId).length>0 )
+
       
     })
   }
