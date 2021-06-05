@@ -159,7 +159,7 @@ export class CreateMultiOrderAgentAndClientComponent implements OnInit {
 
   changeCountry() {
     var city = this.cities.find(c => c.id == this.CountryId)
-    this.Agents = this.GetAgents.filter(a => a.countryId == this.CountryId)
+    this.Agents = this.GetAgents.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.CountryId).length>0 )
     if (this.Agents.length != 0 && this.Agents.length == 1)
       this.AgentId = this.Agents[0].id
     this.Order.DeliveryCost = city.deliveryCost

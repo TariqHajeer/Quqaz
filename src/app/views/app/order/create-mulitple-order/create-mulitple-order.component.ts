@@ -99,7 +99,8 @@ export class CreateMulitpleOrderComponent implements OnInit {
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
       this.GetAgents = res
-      this.Agents = this.GetAgents.filter(a => a.countryId == this.Order.CountryId)
+      console.log(res)
+      this.Agents = this.GetAgents.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.Order.CountryId).length>0 )
       // if(this.Agents.length!=0)
       // this.Order.AgentId = this.Agents[0].id
       // else this.Order.AgentId=null
@@ -126,7 +127,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
   changeCountry() {
 
     var city = this.cities.find(c => c.id == this.Order.CountryId)
-    this.Agents = this.GetAgents.filter(a => a.countryId == this.Order.CountryId)
+    this.Agents = this.GetAgents.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.Order.CountryId).length>0 )
     if (this.Agents.length != 0 && this.Agents.length == 1)
       this.Order.AgentId = this.Agents[0].id
     else this.Order.AgentId = null
@@ -135,7 +136,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
   }
   changeCountryEdit() {
     var city = this.cities.find(c => c.id == this.EditOrder.CountryId)
-    this.Agents = this.GetAgents.filter(a => a.countryId == this.EditOrder.CountryId)
+    this.Agents = this.GetAgents.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.EditOrder.CountryId).length>0 )
     if (this.Agents.length != 0 && this.Agents.length == 1)
       this.EditOrder.AgentId = this.Agents[0].id
     else this.EditOrder.AgentId = null

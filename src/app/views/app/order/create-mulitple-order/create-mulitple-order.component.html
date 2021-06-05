@@ -55,12 +55,10 @@
 
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.CountryName}}</h4>
-                        
-                        <ng-select multiple="true"[clearable]="true" [searchable]="true" [selectableGroup]="true"
-                        [selectableGroupAsModel]="false"  [(ngModel)]="EditOrder.Countrys" 
-                        [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-                        (change)="changeCountryEdit()">
-                          <ng-option *ngFor="let country of cities" [value]="country.id">{{country.name}}</ng-option>
+                        <ng-select appendTo="body" [(ngModel)]="EditOrder.CountryId" style="width: 100px;"
+                            (change)="changeCountryEdit()" [ngModelOptions]="{standalone: true}" [clearable]="false"
+                            *ngIf="order.CanEdit" name="Country">
+                            <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
                         </ng-select>
                         <div *ngIf="!EditOrder.CountryId && Editsubmitted&&order.CanEdit" class="message">المحافظة حقل
                             مطلوب</div>
