@@ -99,7 +99,7 @@ export class AuthService implements OnDestroy{
     if (!accessToken) {
       return 0;
     }
-    return 1 * 60 * 60 * 1000*12
+    return 1 * 60 * 60 * 1000*14
   }
   public startTokenTimer() {
     const timeout = this.getTokenRemainingTime()
