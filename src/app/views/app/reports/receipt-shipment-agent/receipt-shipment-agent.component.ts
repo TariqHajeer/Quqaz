@@ -66,6 +66,8 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.filtering = new OrderFilter
     this.dataSource = new MatTableDataSource([])
     this.getorder = new GetOrder
+    this.getorder.order.index=0;
+
 
   }
 
@@ -139,7 +141,6 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   addOrder() {
     this.Ordersfilter = []
     this.showTable = false
-
     if (this.Code) {
       this.orderservice.GetOrderByAgent(this.Code).subscribe(res => {
         this.findorder = res
@@ -183,6 +184,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       return
     }
     this.getorder.order.Cost = this.getorder.order.Cost * 1
+    this.getorder.order.index=this.getorders.length+1;
     this.getorders.unshift({ ...this.getorder })
     this.sumCost()
     this.showcount = true
