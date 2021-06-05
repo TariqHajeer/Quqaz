@@ -75,7 +75,7 @@ export class EditOrdersComponent implements OnInit {
     this.orderResend.DeliveryCost = city.deliveryCost
     this.orderResend.RegionId = null
     this.Regionsresend = this.tempRegions.filter(r => r.country.id == this.orderResend.CountryId)
-    this.Agentsresend = this.tempAgent.filter(r => r.countryId == this.orderResend.CountryId)
+    this.Agentsresend = this.tempAgent.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.orderResend.CountryId).length>0 )
     if (this.Agentsresend.length == 1)
       this.orderResend.AgnetId = this.Agentsresend[0].id
     else
@@ -292,7 +292,7 @@ export class EditOrdersComponent implements OnInit {
     var city = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.DeliveryCost = city.deliveryCost
     this.Regions = this.tempRegions.filter(r => r.country.id == this.Order.CountryId)
-    this.Agents = this.tempAgent.filter(r => r.countryId == this.Order.CountryId)
+    this.Agents = this.tempAgent.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.Order.CountryId).length>0 )
     if (this.Agents.length == 1)
       this.Order.AgentId = this.Agents[0].id
     else

@@ -42,6 +42,7 @@ export class AddOrdersComponent implements OnInit {
   Region: Region[] = []
   Regions: Region[] = []
   Agents: User[] = []
+  GetAgents: User[] = []
   orderTypes: OrderType[] = []
   orderType: OrderType
   OrderItem: OrderItem
@@ -147,7 +148,7 @@ export class AddOrdersComponent implements OnInit {
   }
   ActiveAgent() {
     this.userService.ActiveAgent().subscribe(res => {
-      this.Agents = res
+      this.GetAgents = res
     })
   }
   AllorderTypes: any[] = []
@@ -188,6 +189,8 @@ export class AddOrdersComponent implements OnInit {
     this.Order.DeliveryCost = city.deliveryCost
     this.Region = this.Regions.filter(r => r.country.id == this.Order.CountryId)
     this.Order.RegionId = this.Region[0].id
+    this.Agents = this.GetAgents.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.Order.CountryId).length>0 )
+
     this.Order.AgentId = this.Agents[0].id
   }
   showMessageCode: boolean = false
