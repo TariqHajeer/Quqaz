@@ -227,9 +227,9 @@
 
           </div>
 
-          <h4 class="card-title">تغيير كلمة السر</h4>
+          <h4 class="card-title"*ngIf="!User.canWorkAsAgent">تغيير كلمة السر</h4>
 
-          <div class="row">
+          <div class="row"*ngIf="!User.canWorkAsAgent">
             <div class="col-md-3" >
               <label>كلمة السر <span class="text-danger text-one align-bottom mx-1">*</span></label>
               <input type="password"  class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.password">

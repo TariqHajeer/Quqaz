@@ -28,7 +28,7 @@
                     </svg> &nbsp;طباعة
                 </button>&nbsp;
 
-                
+
                 <app-receipt-agent id="printpage" [orders]="orders" [agent]="agent" [printnumber]="printnumber"
                     [hidden]="true" [showPrintbtn]="showPrintbtn" [orderplaced]="orderplaced"></app-receipt-agent>
             </div>
@@ -38,12 +38,12 @@
     </div>
 </div>
 
-<div class="card " id="contentToConvert"  style="
-direction:rtl;text-align: right;" >
+<div class="card " id="contentToConvert" style="
+direction:rtl;text-align: right;">
     <div class="card-body">
-        <div class="row " style="margin-bottom: 3%;">
+        <div class="row " style="margin-bottom: 7%;">
             <div class="col-4" style="text-align: right; direction: rtl;">
-                <div *ngIf="!showPrintnumber" style="padding-bottom: 15px;border-bottom:3px brown solid;">
+                <!-- <div *ngIf="!showPrintnumber" style="padding-bottom: 15px;border-bottom:3px brown solid;">
 
                     رقم الطباعة :
 
@@ -72,7 +72,44 @@ direction:rtl;text-align: right;" >
 
                     {{dateOfPrint | date:"HH:mm:ss"}}
 
-                </div>
+                </div> -->
+                <table>
+
+                    <tr *ngIf="!showPrintnumber">
+                        <td style="border: 1px black solid;padding: 7px;">
+                            رقم الطباعة
+                        </td>
+                        <td style="border: 1px black solid;padding: 7px;">
+                            {{printnumber}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px black solid;padding: 7px;">
+                            مستخدم الطابعة
+                        </td>
+                        <td style="border: 1px black solid;padding: 7px;">
+                            {{userName.name}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px black solid;padding: 7px;">
+                            تاريخ الطباعة
+                        </td>
+                        <td style="border: 1px black solid;padding: 7px;">
+                            {{dateOfPrint | date:"dd/MM/yyyy"}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px black solid;padding: 7px;">
+                            وقت الطباعة
+                        </td>
+                        <td style="border: 1px black solid;padding: 7px;">
+                            {{dateOfPrint | date:"HH:mm:ss"}}
+                        </td>
+                    </tr>
+
+
+                </table>
             </div>
             <div class="col-3">
                 <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px" />
@@ -110,17 +147,17 @@ direction:rtl;text-align: right;" >
 
 
         </div>
-        <table  style="border: 1px black solid;padding: 5px;font-size: 14px; padding: 5px; width: 100%;">
+        <table style="border: 1px black solid;padding: 5px;font-size: 14px; padding: 5px; width: 100%;">
             <thead style="border: 1px black solid;padding: 5px;font-size: 20px;">
-                    <th  style="border: 1px black solid;padding: 5px;" *ngFor="let head of heads">{{head}}</th>
+                <th style="border: 1px black solid;padding: 5px;" *ngFor="let head of heads">{{head}}</th>
             </thead>
             <tbody>
 
                 <tr style="border: 1px black solid;padding: 5px;" *ngFor="let order of orders;index as i">
-                    <td style="width: 5%;border: 1px black solid;padding: 5px;">
+                    <td style="width: 3%;border: 1px black solid;padding: 5px;">
                         {{i+1}}
                     </td>
-                    <td style="width: 7%;border: 1px black solid;padding: 5px;">
+                    <td style="width: 5%;border: 1px black solid;padding: 5px;">
                         {{order.code}}
                     </td>
 
@@ -136,17 +173,18 @@ direction:rtl;text-align: right;" >
                     <td style="width: 15%;border: 1px black solid;padding: 5px;">
                         {{order.client.name}}
                     </td>
-                    <td style="width: 45%;border: 1px black solid;padding: 5px;">
+                    <td style="width: 40%;border: 1px black solid;padding: 5px;">
                         {{order.note}}
                     </td>
                 </tr>
 
 
-                <tr class=" table-bordered trbordered border: 1px black solid;padding: 5px;" style="font-size: 14px;  background-color: rgb(218, 218, 219);">
-                    <td colspan="2"style="border: 1px black solid;padding: 5px;">
+                <tr class=" table-bordered trbordered border: 1px black solid;padding: 5px;"
+                    style="font-size: 14px;  background-color: rgb(218, 218, 219);">
+                    <td colspan="2" style="border: 1px black solid;padding: 5px;">
                         الإجمالي :
                     </td>
-                    <td colspan="5"style="border: 1px black solid;padding: 5px;">
+                    <td colspan="5" style="border: 1px black solid;padding: 5px;">
                         <!----> {{ count| number}}
                     </td>
 

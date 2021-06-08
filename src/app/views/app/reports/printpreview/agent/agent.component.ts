@@ -22,7 +22,7 @@ export class AgentComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private spinner: NgxSpinnerService,
   ) { }
-  heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'الهاتف', 'اسم العميل', 'ملاحظات']
+  heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'الهاتف', 'اسم العميل', 'مـلاحظـــــات']
   orders: any[] = []
   count = 0
   agent

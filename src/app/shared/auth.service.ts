@@ -50,7 +50,8 @@ export class AuthService implements OnDestroy{
   signOut() {
     this.resetAuthenticated();
     localStorage.removeItem('token')
-    localStorage.clear();
+    localStorage.removeIte("kokazUser");
+    //localStorage.clear();
     this.rout.navigate(['user/login']);  
   }
   Test(){
@@ -99,11 +100,13 @@ export class AuthService implements OnDestroy{
     if (!accessToken) {
       return 0;
     }
-    return 1 * 60 * 60 * 1000*14
+    return  60 * 60 * 1000 *14
   }
   public startTokenTimer() {
     const timeout = this.getTokenRemainingTime()
-    setTimeout(() =>this.signOut(),  timeout)
+    console.log("timeout");
+    console.log(timeout);
+    setTimeout(() =>{alert('log out'); this.signOut();},  timeout)
    
   }
  

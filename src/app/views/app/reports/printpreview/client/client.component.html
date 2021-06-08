@@ -1,6 +1,6 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="line-scale-party" [fullScreen]="true">
     <p style="color: white"> </p>
-  </ngx-spinner>
+</ngx-spinner>
 <div class="card ">
     <div class="card-body">
         <div class="row">
@@ -39,39 +39,45 @@
 
 <div class="card " style="direction:rtl" id="contentToConvert">
     <div class="card-body">
-        <div class="row " style="margin-bottom: 3%;">
+        <div class="row " style="margin-bottom: 7%;">
             <div class="col-4" style="text-align: right; direction: rtl;">
-                <div  style="border-bottom:3px brown solid;
-                        padding-bottom: 15px;text-align: right;font-size: 16px;">
+                <table>
 
-                    رقم الطباعة :
+                    <tr >
+                        <td style="border: 1px black solid;padding: 7px;">
+                            رقم الطباعة
+                        </td>
+                        <td style="border: 1px black solid;padding: 7px;">
+                            {{printnumber}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px black solid;padding: 7px;">
+                            مستخدم الطابعة
+                        </td>
+                        <td style="border: 1px black solid;padding: 7px;">
+                            {{userName.name}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px black solid;padding: 7px;">
+                            تاريخ الطباعة
+                        </td>
+                        <td style="border: 1px black solid;padding: 7px;">
+                            {{dateOfPrint | date:"dd/MM/yyyy"}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px black solid;padding: 7px;">
+                            وقت الطباعة
+                        </td>
+                        <td style="border: 1px black solid;padding: 7px;">
+                            {{dateOfPrint | date:"HH:mm:ss"}}
+                        </td>
+                    </tr>
 
 
-                    {{printnumber}}
-
-                </div>
-                <div style="padding-bottom: 15px;border-bottom:3px brown solid;">
-
-                    مستخدم الطابعة :
-
-
-                    {{userName.name}}
-
-                </div>
-                <div style="padding-bottom: 15px;border-bottom:3px brown solid;">
-
-                    تاريخ الطباعة :
-
-                    {{dateOfPrint | date:"dd/MM/yyyy"}}
-
-                </div>
-                <div style="padding-bottom: 15px;border-bottom:3px brown solid;">
-
-                    وقت الطباعة :
-
-                    {{dateOfPrint | date:"HH:mm:ss"}}
-
-                </div>
+                </table>
             </div>
             <div class="col-3">
                 <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px" />
@@ -103,20 +109,23 @@
                         {{orderplaced.name}}
                     </div>-->
 
-                  
+
 
             </div>
 
 
         </div>
         <table style="border: 1px black solid;padding: 5px;font-size: 14px; padding: 5px; width: 100%;">
-            
+
             <thead>
                 <th style="border: 1px black solid;">
                     ترقيم
                 </th>
                 <th style="border: 1px black solid;">
                     رقم الوصل
+                </th>
+                <th style="border: 1px black solid;">
+                    المحافظة
                 </th>
                 <th style="border: 1px black solid;">
                     تاريخ اضافة الطلب
@@ -130,9 +139,7 @@
                 <th style="border: 1px black solid;">
                     يدفع للعميل
                 </th>
-                <th style="border: 1px black solid;">
-                    المحافظة
-                </th>
+                
                 <th style="border: 1px black solid;">
                     الهاتف
                 </th>
@@ -152,6 +159,9 @@
                     <td style="width: 7%;border: 1px black solid;">
                         {{order.code}}
                     </td>
+                    <td style="width: 15%;border: 1px black solid;">
+                        {{order.country!=null||order.country!=undefined?order.country.name:null}}
+                    </td>
                     <td style="width: 10%;border: 1px black solid;">
                         {{order.date| date: 'yyyy/MM/dd'}}
                     </td>
@@ -164,15 +174,14 @@
                     <td style="width: 15%;border: 1px black solid;">
                         {{TestCalc(order)| number}}
                     </td>
-                    <td style="width: 15%;border: 1px black solid;">
-                        {{order.country!=null||order.country!=undefined?order.country.name:null}}
-                    </td>
+
                     <!--   <td>
                         {{order.monePlaced.name}}
                     </td>
                     <td>
                         {{order.orderplaced.name}}
                     </td>-->
+                   
                     <td style="width: 15%;border: 1px black solid;">
                         {{order.recipientPhones}}
                     </td>
@@ -185,10 +194,14 @@
                 </tr>
 
 
-                <tr  style="
+                <tr style="
                 font-size: 16px;border: 1px black solid;">
-                    <td style="border: 1px black solid;" colspan="3">
-                        الإجمالي :
+                    <td style="border: 1px black solid;">
+                        {{orders.length}}
+                    </td>
+                    <td style="border: 1px black solid;" colspan="2">العدد</td>
+                    <td style="border: 1px black solid;">
+                        الإجماليات
                     </td>
                     <td style="border: 1px black solid;">
                         {{ count| number}}
@@ -201,10 +214,10 @@
                     </td>
                     <td style="border: 1px black solid;" colspan="4"></td>
                 </tr>
-                <tr  style="
+                <tr style="
                 border: 1px black solid;font-size: 16px;background-color: rgba(144, 177, 240, 0.877);">
                     <td style="border: 1px black solid;" colspan="5">
-                        حساب العميل 
+                        حساب العميل
                     </td>
 
 
@@ -213,10 +226,11 @@
                     </td>
                     <td style="border: 1px black solid;" colspan="4"></td>
                 </tr>
-                <tr  style="font-size: 16px;
+                <tr style="font-size: 16px;
                 border: 1px black solid;">
+
                     <td style="border: 1px black solid;" colspan="5">
-                        المبلغ النهائي في القاصة  
+                        المبلغ النهائي في القاصة
 
                     </td>
                     <td style="border: 1px black solid;">

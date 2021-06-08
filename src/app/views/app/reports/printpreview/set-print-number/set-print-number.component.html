@@ -65,38 +65,45 @@
 
     <div class="card-body">
 
-        <div class="row " style="margin-bottom: 3%;">
+        <div class="row " style="margin-bottom: 7%;">
             <div class="col-4" style="text-align: right; direction: rtl;">
-                <div style="padding-bottom: 15px;border-bottom:3px brown solid;">
+                <table>
 
-                    رقم الطباعة :
+                    <tr >
+                        <td style="border: 1px black solid;padding: 7px;">
+                            رقم الطباعة
+                        </td>
+                        <td style="border: 1px black solid;padding: 7px;">
+                            {{printnumber}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px black solid;padding: 7px;">
+                            مستخدم الطابعة
+                        </td>
+                        <td style="border: 1px black solid;padding: 7px;">
+                            {{userName}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px black solid;padding: 7px;">
+                            تاريخ الطباعة
+                        </td>
+                        <td style="border: 1px black solid;padding: 7px;">
+                            {{dateOfPrint | date:"dd/MM/yyyy"}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px black solid;padding: 7px;">
+                            وقت الطباعة
+                        </td>
+                        <td style="border: 1px black solid;padding: 7px;">
+                            {{dateOfPrint | date:"HH:mm:ss"}}
+                        </td>
+                    </tr>
 
 
-                    {{printnumber}}
-
-                </div>
-                <div style="padding-bottom: 15px;border-bottom:3px brown solid;">
-
-                    مستخدم الطابعة :
-
-
-                    {{userName}}
-
-                </div>
-                <div style="padding-bottom: 15px;border-bottom:3px brown solid;">
-
-                    تاريخ الطباعة :
-
-                    {{dateOfPrint | date:"dd/MM/yyyy"}}
-
-                </div>
-                <div style="padding-bottom: 15px;border-bottom:3px brown solid;">
-
-                    وقت الطباعة :
-
-                    {{dateOfPrint | date:"HH:mm:ss"}}
-
-                </div>
+                </table>
             </div>
             <div class="col-3">
                 <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px" />
