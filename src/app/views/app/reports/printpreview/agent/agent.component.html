@@ -76,35 +76,51 @@ direction:rtl;text-align: right;">
                 <table>
 
                     <tr *ngIf="!showPrintnumber">
-                        <td style="border: 1px black solid;padding: 7px;">
-                            رقم الطباعة
+                        <td>
+                            <div style="border: 1px black solid;padding: 7px;margin: 1px;">
+                                رقم الطباعة
+                            </div>
                         </td>
-                        <td style="border: 1px black solid;padding: 7px;">
-                            {{printnumber}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px black solid;padding: 7px;">
-                            مستخدم الطابعة
-                        </td>
-                        <td style="border: 1px black solid;padding: 7px;">
-                            {{userName.name}}
+                        <td >
+                            <div style="border: 1px black solid;padding: 7px;margin: 1px;">
+                                {{printnumber}}
+                            </div>
                         </td>
                     </tr>
                     <tr>
-                        <td style="border: 1px black solid;padding: 7px;">
-                            تاريخ الطباعة
+                        <td >
+                            <div style="border: 1px black solid;padding: 7px;margin: 1px;">
+                                مستخدم الطابعة
+                            </div>
                         </td>
-                        <td style="border: 1px black solid;padding: 7px;">
-                            {{dateOfPrint | date:"dd/MM/yyyy"}}
+                        <td >
+                            <div style="border: 1px black solid;padding: 7px;margin: 1px;">
+                                {{userName.name}}
+                            </div>
                         </td>
                     </tr>
                     <tr>
-                        <td style="border: 1px black solid;padding: 7px;">
-                            وقت الطباعة
+                        <td >
+                            <div style="border: 1px black solid;padding: 7px;margin: 1px;">
+                                تاريخ الطباعة
+                            </div>
                         </td>
-                        <td style="border: 1px black solid;padding: 7px;">
-                            {{dateOfPrint | date:"HH:mm:ss"}}
+                        <td >
+                            <div style="border: 1px black solid;padding: 7px;margin: 1px;">
+                                {{dateOfPrint | date:"dd/MM/yyyy"}}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >
+                            <div style="border: 1px black solid;padding: 7px;margin: 1px;">
+                                وقت الطباعة
+                            </div>
+                        </td>
+                        <td >
+                            <div style="border: 1px black solid;padding: 7px;margin: 1px;">
+                                {{dateOfPrint | date:"HH:mm:ss"}}
+                            </div>
                         </td>
                     </tr>
 
