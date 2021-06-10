@@ -21,8 +21,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class ShipmentsOnWayComponent implements OnInit {
 
-  displayedColumns: string[] = ['select','index','code', 'client', 'country', 'region'
-    ,'agentCost', 'cost', 'deliveryCost', 'isClientDiliverdMoney', 'orderplaced', 'monePlaced', 'agentPrintNumber', 'clientPrintNumber'];
+  displayedColumns: string[] = ['select', 'index', 'code', 'client', 'country', 'region'
+    , 'agentCost', 'cost', 'deliveryCost', 'isClientDiliverdMoney', 'orderplaced', 'monePlaced', 'agentPrintNumber', 'clientPrintNumber'];
   dataSource = new MatTableDataSource([]);
   ids: any[] = []
   orders: any[] = []
@@ -86,7 +86,7 @@ export class ShipmentsOnWayComponent implements OnInit {
     this.checkboxId(row)
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
- 
+
   client = this.orders.map(o => o.agent)[0]
   orderplaced = this.orders.map(o => o.orderplaced)[0]
   checkboxId(row) {
@@ -97,7 +97,7 @@ export class ShipmentsOnWayComponent implements OnInit {
         this.ids.push(row.order.id)
         this.orders.push(row.order)
         localStorage.setItem('printordersagent', JSON.stringify(this.orders))
-       // this.client = this.orders.map(o => o.order.client)[0]
+        // this.client = this.orders.map(o => o.order.client)[0]
         //this.orderplaced = this.orders.map(o => o.order.orderplaced)[0]
       }
     if (!this.selection.isSelected(row)) {
@@ -181,7 +181,7 @@ export class ShipmentsOnWayComponent implements OnInit {
       element.messageCost = ""
     } else
       element.messageCost = " الكلفة لايمكن أن تتجاوز " + this.temporderscost[index]
-      this.total()
+    this.total()
   }
   switchPage(event: PageEvent) {
     this.paging.allItemsLength = event.length
@@ -203,12 +203,21 @@ export class ShipmentsOnWayComponent implements OnInit {
       })
       this.getorders = [...this.getorders.filter(o => o.order.date >= this.todate &&
         o.order.date <= this.fordate)]
-        console.log(this.getorders)
+      console.log(this.getorders)
       this.dataSource = new MatTableDataSource(this.getorders)
     }
 
-
   }
+  printNumber
+  filterprintNumber() {
+    this.getorders = this.temporder
+    this.getorders = [...this.getorders.filter(o => o.order.agentPrintNumber==this.printNumber)]
+      console.log(this.getorders)
+      if(!this.printNumber)
+      this.getorders = this.temporder
+      this.dataSource = new MatTableDataSource(this.getorders)
+  }
+
   allFilter() {
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
       this.getorders = []
@@ -267,23 +276,23 @@ export class ShipmentsOnWayComponent implements OnInit {
       return
     }
     localStorage.setItem('printagent', JSON.stringify(this.Agents.find(c => c.id == this.AgentId)))
-     localStorage.setItem('printordersagent', JSON.stringify(this.orders))
+    localStorage.setItem('printordersagent', JSON.stringify(this.orders))
     this.route.navigate(['app/reports/printagentpreview'])
 
   }
-  totalCost:number=0
-  totalDelaveryCost:number=0
-  endTotal:number=0
+  totalCost: number = 0
+  totalDelaveryCost: number = 0
+  endTotal: number = 0
   total() {
-    this.totalCost=0
-    this.totalDelaveryCost=0
-    this.endTotal=0
+    this.totalCost = 0
+    this.totalDelaveryCost = 0
+    this.endTotal = 0
     this.getorders.forEach(d => {
-      if(d.order.orderplaced.id==4||d.order.orderplaced.id==6)
-      this.totalCost += d.order.cost
-      if(d.order.orderplaced.id==4||d.order.orderplaced.id==6||d.order.orderplaced.id==7)
-      this.totalDelaveryCost+=d.order.deliveryCost
+      if (d.order.orderplaced.id == 4 || d.order.orderplaced.id == 6)
+        this.totalCost += d.order.cost
+      if (d.order.orderplaced.id == 4 || d.order.orderplaced.id == 6 || d.order.orderplaced.id == 7)
+        this.totalDelaveryCost += d.order.deliveryCost
     })
-    this.endTotal=this.totalCost-this.totalDelaveryCost
+    this.endTotal = this.totalCost - this.totalDelaveryCost
   }
 }

@@ -43,49 +43,49 @@
             <div class="col-4" style="text-align: right; direction: rtl;">
                 <table>
 
-                    <tr >
+                    <tr>
                         <td>
                             <div style="border: 1px black solid;padding: 7px;margin: 1px;">
                                 رقم الطباعة
                             </div>
                         </td>
-                        <td >
+                        <td>
                             <div style="border: 1px black solid;padding: 7px;margin: 1px;">
                                 {{printnumber}}
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td >
+                        <td>
                             <div style="border: 1px black solid;padding: 7px;margin: 1px;">
                                 مستخدم الطابعة
                             </div>
                         </td>
-                        <td >
+                        <td>
                             <div style="border: 1px black solid;padding: 7px;margin: 1px;">
                                 {{userName.name}}
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td >
+                        <td>
                             <div style="border: 1px black solid;padding: 7px;margin: 1px;">
                                 تاريخ الطباعة
                             </div>
                         </td>
-                        <td >
+                        <td>
                             <div style="border: 1px black solid;padding: 7px;margin: 1px;">
                                 {{dateOfPrint | date:"dd/MM/yyyy"}}
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td >
+                        <td>
                             <div style="border: 1px black solid;padding: 7px;margin: 1px;">
                                 وقت الطباعة
                             </div>
                         </td>
-                        <td >
+                        <td>
                             <div style="border: 1px black solid;padding: 7px;margin: 1px;">
                                 {{dateOfPrint | date:"HH:mm:ss"}}
                             </div>
@@ -131,64 +131,114 @@
 
 
         </div>
-        <table style="border: 1px black solid;padding: 5px;font-size: 16px; padding: 5px; width: 100%;">
+        <table style="font-size: 16px; width: 100%;">
 
-            <thead style="border: 1px black solid;padding: 5px;font-size: 16px;">
-                <th style="border: 1px black solid;padding: 5px;text-align: center;">
-                    ترقيم
+            <thead style="font-size: 16px;">
+                <th>
+                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                        ترقيم
+
+                    </div>
                 </th>
-                <th style="border: 1px black solid;padding: 5px;text-align: center;">
-                    رقم الوصل
+                <th>
+                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                        رقم الوصل
+
+                    </div>
                 </th>
-                <th style="border: 1px black solid;padding: 5px;text-align: center;">
-                    المحافظة
+                <th>
+                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                        المحافظة
+
+                    </div>
                 </th>
-                <th style="border: 1px black solid;padding: 5px;text-align: center;">
-                    تاريخ اضافة الطلب
+                <th>
+                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                        تاريخ اضافة الطلب
+
+                    </div>
                 </th>
-                <th style="border: 1px black solid;padding: 5px;text-align: center;">
-                    الإجمالي
+                <th>
+                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                        الإجمالي
+
+                    </div>
                 </th>
-                <th style="border: 1px black solid;padding: 5px;text-align: center;">
-                    الرسوم
+                <th>
+                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                        الرسوم
+                    </div>
+
                 </th>
-                <th style="border: 1px black solid;padding: 5px;text-align: center;">
-                    يدفع للعميل
+                <th>
+                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                        يدفع للعميل
+
+                    </div>
                 </th>
-                
-                <th style="border: 1px black solid;padding: 5px;text-align: center;">
-                    الهاتف
+
+                <th>
+                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                        الهاتف
+                    </div>
+
                 </th>
-                <th style="border: 1px black solid;padding: 5px;text-align: center;">
-                    المبلغ القديم
+                <th>
+                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                        المبلغ القديم
+
+                    </div>
                 </th>
-                <th style="border: 1px black solid;padding: 5px;text-align: center;">
-                    ملاحظات
+                <th>
+                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                        ملاحظات
+                    </div>
+
                 </th>
                 <!--<th style="border: 1px black solid;padding: 5px;text-align: center;" *ngFor="let head of heads" style="font-size: 20px;">{{head}}</th>-->
             </thead>
             <tbody>
-                <tr *ngFor="let order of orders;index as i" style="border: 1px black solid;padding: 5px;text-align: center;">
-                    <td style="width: 5%;border: 1px black solid;padding: 5px;">
-                        {{i+1}}
+                <tr *ngFor="let order of orders;index as i">
+                    <td>
+                        
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{i+1}}
+
+                        </div>
                     </td>
-                    <td style="width: 7%;border: 1px black solid;padding: 5px;text-align: center;">
-                        {{order.code}}
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{order.code}}
+                        </div>
                     </td>
-                    <td style="width: 15%;border: 1px black solid;padding: 5px;text-align: center;">
-                        {{order.country!=null||order.country!=undefined?order.country.name:null}}
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{order.country!=null||order.country!=undefined?order.country.name:null}}
+                        </div>
                     </td>
-                    <td style="width: 10%;border: 1px black solid;padding: 5px;text-align: center;">
-                        {{order.date| date: 'yyyy/MM/dd'}}
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{order.date| date: 'yyyy/MM/dd'}}
+
+                        </div>
                     </td>
-                    <td style="width: 15%;border: 1px black solid;padding: 5px;text-align: center;">
-                        {{order.cost| number}}
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{order.cost| number}}
+
+                        </div>
                     </td>
-                    <td style="width: 15%;border: 1px black solid;padding: 5px;text-align: center;">
-                        {{order.deliveryCost| number}}
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{order.deliveryCost| number}}
+
+                        </div>
                     </td>
-                    <td style="width: 15%;border: 1px black solid;padding: 5px;text-align: center;">
-                        {{TestCalc(order)| number}}
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{TestCalc(order)| number}}
+
+                        </div>
                     </td>
 
                     <!--   <td>
@@ -197,37 +247,66 @@
                     <td>
                         {{order.orderplaced.name}}
                     </td>-->
-                   
-                    <td style="width: 15%;border: 1px black solid;padding: 5px;">
-                        {{order.recipientPhones}}
+
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{order.recipientPhones}}
+
+                        </div>
                     </td>
-                    <td style="width: 15%;border: 1px black solid;padding: 5px;">
-                        {{order.oldCost}}
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{order.oldCost?order.oldCost:'-'}}
+
+                        </div>
                     </td>
-                    <td style="width: 30%;border: 1px black solid;padding: 5px;">
-                        {{order.note}}
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{order.note?order.note:"-"}}
+
+                        </div>
                     </td>
                 </tr>
 
 
-                <tr style="font-size: 14px;  background-color: rgb(218, 218, 219);">
-                    <td style="border: 1px black solid;padding: 5px;text-align: center;">
-                        {{orders.length}}
+                <tr style="font-size: 16px;  background-color: rgb(218, 218, 219);">
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{orders.length}}
+
+                        </div>
                     </td>
-                    <td style="border: 1px black solid;padding: 5px;text-align: center;" colspan="2">العدد</td>
-                    <td style="border: 1px black solid;padding: 5px;text-align: center;">
-                        الإجماليات
+                    <td >
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            العدد
+                        </div>
                     </td>
-                    <td style="border: 1px black solid;padding: 5px;text-align: center;">
-                        {{ count| number}}
+                    <td></td>
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            الإجماليات
+
+                        </div>
                     </td>
-                    <td style="border: 1px black solid;padding: 5px;text-align: center;">
-                        {{ deliveryCostCount| number}}
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{ count| number}}
+
+                        </div>
                     </td>
-                    <td style="border: 1px black solid;padding: 5px;text-align: center;">
-                        {{clientCalc| number}}
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{ deliveryCostCount| number}}
+
+                        </div>
                     </td>
-                    <td style="border: 1px black solid;padding: 5px;text-align: center;" colspan="4"></td>
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{clientCalc| number}}
+
+                        </div>
+                    </td>
+                    <td colspan="4"></td>
                 </tr>
                 <!-- <tr style="
                 border: 1px black solid;font-size: 16px;background-color: rgba(144, 177, 240, 0.877);">
