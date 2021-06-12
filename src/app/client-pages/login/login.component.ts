@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { GroupService } from 'src/app/services/group.service';
-import { AuthService } from 'src/app/shared/auth.service';
+import { ClientAuthService } from 'src/app/client-pages/service/client-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   buttonDisabled = false;
   buttonState = '';
 
-  constructor(private authService: AuthService
+  constructor(private authService: ClientAuthService
     , private notifications: NotificationsService
     , private router: Router
     , private groupService: GroupService) { }

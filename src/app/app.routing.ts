@@ -6,12 +6,12 @@ const routes: Routes = [
   import('./client-pages/client-pages.module').then(m => m.ClientPagesModule) },
   { path: 'view', loadChildren: () =>
    import('./views/views.module').then(m => m.ViewsModule) },
-
-  {
+   {
     path: '',
-    redirectTo: '',
+    redirectTo: 'clienthome',
     pathMatch: 'full'
   }
+  
 ];
 
 @NgModule({

@@ -8,7 +8,7 @@ const routes: Routes = [
     {
         path: '', component: HomePageComponent,
         children: [
-            { path: '', redirectTo: 'start', pathMatch: 'full'  ,canActivate: [AuthGuard],},
+           // { path: '', redirectTo: 'start', pathMatch: 'full'  ,canActivate: [AuthGuard],},
             { path: 'start', component: StartComponent, canActivate: [AuthGuard], },
         ]
     }

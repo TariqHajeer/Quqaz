@@ -1,44 +1,30 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { from, Observable, of, Subscription } from 'rxjs';
-
-import { getUserRole } from 'src/app/utils/util';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment.prod';
-import {LocalStorageService} from '../services/local-storage.service'
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { delay, tap } from 'rxjs/operators';
-import { UserLogin } from '../Models/userlogin.model';
-export interface user {
-  email: string;
-  password: string;
-}
-export interface ICreateCredentials {
-  email: string;
-  password: string;
-  displayName: string;
-}
+import { Observable } from 'rxjs';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { ICreateCredentials, IPasswordReset } from 'src/app/shared/auth.service';
+import { environment } from 'src/environments/environment.prod';
 
-export interface IPasswordReset {
-  code: string;
-  newPassword: string;
-}
+@Injectable({
+  providedIn: 'root'
+})
+export class ClientAuthService {
 
-@Injectable({ providedIn: 'root' })
-export class AuthService implements OnDestroy{
+  constructor(private http:HttpClient,private localStorageService:LocalStorageService,
+    private rout:Router) {
+     // this.startTokenTimer()
+    }
+    baseUrl=environment.baseUrl+"ClientAuth/";
+  signIn(user):Observable<any> {
+    return this.http.post(this.baseUrl,user) ;
+  }
   private localStorageKey: string = 'kokazUser';
   private permissionlocalStorageKey: string = 'permissions';
   ngOnDestroy(): void {
   }
  
-  constructor(private http:HttpClient,private localStorageService:LocalStorageService,
-    private rout:Router) {
-     // this.startTokenTimer()
-    }
-  baseUrl=environment.baseUrl;
-  signIn(user: user):Observable<any> {
-    return this.http.post(this.baseUrl+'api/EmployeeAuth',user) ;
-  }
+  
   TestLogin(){
     this.http.get(this.baseUrl+"api/Default/Check").subscribe(res=>{
       return true;
@@ -50,9 +36,9 @@ export class AuthService implements OnDestroy{
   signOut() {
     this.resetAuthenticated();
     localStorage.removeItem('token')
-    localStorage.removeItem("kokazUser");
+    localStorage.removeIte("kokazUser");
     //localStorage.clear();
-    this.rout.navigate(['/clienthome']);  
+    this.rout.navigate(['user/login']);  
   }
   Test(){
     this.http.get(this.baseUrl+"api/Default/De").subscribe(res=>{
@@ -109,5 +95,4 @@ export class AuthService implements OnDestroy{
     setTimeout(() =>{alert('log out'); this.signOut();},  timeout)
    
   }
- 
 }
