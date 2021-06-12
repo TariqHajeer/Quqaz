@@ -9,7 +9,7 @@ text-align: center;height: 100%;">
 		<div class="row justify-content-center">
 			<div class="col-md-6 col-lg-4">
 				<div class="login-wrap p-0">
-					<form action="#" class="signin-form">
+					<form action="#" class="signin-form"#loginForm="ngForm" novalidate (ngSubmit)="onSubmit()">
 						<div class="form-group">
 							<input type="text" class="form-control" placeholder="Username" required>
 						</div>
@@ -20,7 +20,7 @@ text-align: center;height: 100%;">
 								required>
 						</div>
 						<div class="form-group">
-							<button style="text-align: center;" type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
+							<button style="text-align: center;" type="submit" class="form-control btn btn-primary submit px-3"> تسجيل الدخول</button>
 						</div>
 						<!-- <div class="form-group d-md-flex">
 
