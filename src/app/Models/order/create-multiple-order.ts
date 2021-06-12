@@ -18,4 +18,5 @@ export class CreateMultipleOrder {
     showEditMessageCode:boolean=false 
     DeliveryCost:number
     Note:string
+    Date:Date=new Date
 }

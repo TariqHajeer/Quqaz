@@ -103,7 +103,7 @@ export class AddOrdersComponent implements OnInit {
     this.spinner.show()
     this.Order.DeliveryCost = Number(this.Order.DeliveryCost)
     this.Order.Cost = Number(this.Order.Cost)
-
+    this.Order.Date = new Date
     this.orderservice.Creat(this.Order).subscribe(res => {
       this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.int()
@@ -188,11 +188,11 @@ export class AddOrdersComponent implements OnInit {
     var city = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.DeliveryCost = city.deliveryCost
     this.Region = this.Regions.filter(r => r.country.id == this.Order.CountryId)
-    if(this.Region.length!=0)
-    this.Order.RegionId = this.Region[0].id
-    this.Agents = this.GetAgents.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.Order.CountryId).length>0 )
-    if(this.Agents.length!=0)
-    this.Order.AgentId = this.Agents[0].id
+    if (this.Region.length != 0)
+      this.Order.RegionId = this.Region[0].id
+    this.Agents = this.GetAgents.filter(a => a.countries.map(c => c.id).filter(co => co == this.Order.CountryId).length > 0)
+    if (this.Agents.length != 0)
+      this.Order.AgentId = this.Agents[0].id
   }
   showMessageCode: boolean = false
   CheckCode() {
@@ -279,5 +279,5 @@ export class AddOrdersComponent implements OnInit {
 
   // }
 
- 
+
 }
