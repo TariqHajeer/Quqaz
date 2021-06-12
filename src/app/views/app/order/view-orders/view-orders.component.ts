@@ -133,7 +133,7 @@ export class ViewOrdersComponent implements OnInit {
         }
         else if (element.orderStateId == 3) {
           element.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
-          element.orderplaced = this.orderPlace.find(o => o.id == 4)
+        //  element.orderplaced = this.orderPlace.find(o => o.id == 4)
         }
       });
       this.dataSource = new MatTableDataSource(response.data)
