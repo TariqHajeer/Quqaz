@@ -1,4 +1,5 @@
 import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
+import { Router } from '@angular/router';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 
 @Component({
@@ -8,7 +9,10 @@ import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scrol
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private renderer: Renderer2, private elRef: ElementRef,private scrollToService: ScrollToService) {}
+  constructor(private renderer: Renderer2,
+     private elRef: ElementRef,
+     private scrollToService: ScrollToService,
+     private router: Router) {}
 
   showMobileMenu = false;
  
@@ -61,5 +65,7 @@ export class NavbarComponent implements OnInit {
 
     this.scrollToService.scrollTo(config);
   }
-
+  login() {
+    this.router.navigate(['/clienthome/login'])
+  }
 }
