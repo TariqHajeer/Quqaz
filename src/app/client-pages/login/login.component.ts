@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
   }
   user: UserLogin
   myDate: Date
+  
   onSubmit() {
     // if (!this.loginForm.valid || this.buttonDisabled) {
     //   return;
@@ -40,20 +41,15 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.value)
       this.authService.signIn(this.loginForm.value).subscribe(
         response => {
-
           this.user = response as UserLogin
           this.user.expiry = new Date().getTime()
-          this.router.navigate(['/home']);
+          this.router.navigate(['/clienthome']);
           localStorage.setItem('token', this.user.token)
-          console.log(this.user)
           this.authService.setAuthenticatedUser(this.user);
-
-
         }, error => {
           this.buttonDisabled = false;
           this.buttonState = '';
           this.notifications.create('Error', ' اسم المستخدم او كلمة المرور غير صحيح', NotificationType.Error, { theClass: 'primary', timeOut: 6000, showProgressBar: false });
-
         }
 
       )

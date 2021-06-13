@@ -20,7 +20,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class ReceiptShipmentAgentComponent implements OnInit {
 
-  displayedColumns: string[] = ['index','code', 'client', 'country'
+  displayedColumns: string[] = ['index', 'code', 'client', 'country'
     , 'cost', 'isClientDiliverdMoney', 'orderplaced', 'monePlaced', 'edit'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
@@ -66,7 +66,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.filtering = new OrderFilter
     this.dataSource = new MatTableDataSource([])
     this.getorder = new GetOrder
-    this.getorder.order.index=0;
+    this.getorder.order.index = 0;
 
 
   }
@@ -184,7 +184,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       return
     }
     this.getorder.order.Cost = this.getorder.order.Cost * 1
-    this.getorder.order.index=this.getorders.length+1;
+    this.getorder.order.index = this.getorders.length + 1;
     this.getorders.unshift({ ...this.getorder })
     this.sumCost()
     this.showcount = true
@@ -285,16 +285,25 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       this.getorders = []
       this.sumCost()
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-    },err=>{
+    }, err => {
       this.spinner.hide();
     })
   }
-
+  tempOrders:any[]=[]
   CancelOrder(order) {
-    this.getorders = this.getorders.filter(o => o != order);
-    var index = this.dataSource.data.indexOf(order);
-    this.dataSource.data.splice(index, 1);
-    this.dataSource._updateChangeSubscription();
+    this.getorders = this.getorders.filter(o => o.order.id != order.order.id);
+    var index = 0
+    this.tempOrders=[]
+    this.getorders.forEach(o => {
+      o.order.index = index + 1;
+      index++;
+      this.tempOrders.unshift({ ...o })
+    })
+    this.dataSource = new MatTableDataSource(this.tempOrders)
+
+    // var index = this.dataSource.data.indexOf(order);
+    // this.dataSource.data.splice(index, 1);
+    // this.dataSource._updateChangeSubscription();
     this.sumCost()
 
   }

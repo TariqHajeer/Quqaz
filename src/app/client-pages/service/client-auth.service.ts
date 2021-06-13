@@ -15,7 +15,7 @@ export class ClientAuthService {
     private rout:Router) {
      // this.startTokenTimer()
     }
-    baseUrl=environment.baseUrl+"ClientAuth/";
+    baseUrl=environment.baseUrl+"api/ClientAuth/";
   signIn(user):Observable<any> {
     return this.http.post(this.baseUrl,user) ;
   }
