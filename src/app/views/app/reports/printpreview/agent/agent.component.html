@@ -39,9 +39,9 @@
 </div>
 
 <div class="card " id="contentToConvert" style="
-direction:rtl;text-align: right;">
+direction:rtl;text-align: center; margin-top: 0%;">
     <div class="card-body">
-        <div class="row " style="margin-bottom: 7%;">
+        <div class="row " style="margin-bottom: 1%;">
             <div class="col-4" style="text-align: right; direction: rtl;">
                 <!-- <div *ngIf="!showPrintnumber" style="padding-bottom: 15px;border-bottom:3px brown solid;">
 
@@ -184,6 +184,9 @@ direction:rtl;text-align: right;">
                         {{order.country.name}}
                     </td>
                     <td style="width: 15%;border: 1px black solid;padding: 5px;">
+                        {{order.region?order.region.name:'-'}}
+                    </td>
+                    <td style="width: 15%;border: 1px black solid;padding: 5px;">
                         {{order.recipientPhones}}
                     </td>
                     <td style="width: 15%;border: 1px black solid;padding: 5px;">
@@ -200,7 +203,7 @@ direction:rtl;text-align: right;">
                     <td colspan="2" style="border: 1px black solid;padding: 5px;">
                         الإجمالي :
                     </td>
-                    <td colspan="5" style="border: 1px black solid;padding: 5px;">
+                    <td colspan="6" style="border: 1px black solid;padding: 5px;">
                         <!----> {{ count| number}}
                     </td>
 

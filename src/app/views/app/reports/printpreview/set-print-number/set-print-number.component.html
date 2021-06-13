@@ -65,7 +65,7 @@
 
     <div class="card-body">
 
-        <div class="row " style="margin-bottom: 7%;">
+        <div class="row " style="margin-bottom: 1%;">
             <div class="col-4" style="text-align: right; direction: rtl;">
                 <table>
 
@@ -106,7 +106,12 @@
                 </table>
             </div>
             <div class="col-3">
-                <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px" />
+                <div style="margin-bottom: 10px;">
+                    <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" 
+                    width="150px" height="125px" />
+                    <br>
+                </div>
+               
             </div>
             <div class="col-2"></div>
             <div class="col-3" style="text-align: right;font-size: 14px;">
@@ -158,6 +163,9 @@
                     </td>
                     <td style="width: 15%;border: 1px black solid;padding: 5px;">
                         {{order.country}}
+                    </td>
+                    <td style="width: 15%;border: 1px black solid;padding: 5px;">
+                        {{'-'}}
                     </td>
                     <td style="width: 20%;border: 1px black solid;padding: 5px;">
                         {{order.phone}}

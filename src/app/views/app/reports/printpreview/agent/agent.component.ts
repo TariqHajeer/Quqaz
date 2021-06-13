@@ -22,7 +22,7 @@ export class AgentComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private spinner: NgxSpinnerService,
   ) { }
-  heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'الهاتف', 'اسم العميل', 'مـلاحظـــــات']
+  heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ','المنطقة', 'الهاتف', 'اسم العميل', 'مـلاحظـــــات']
   orders: any[] = []
   count = 0
   agent
@@ -36,6 +36,7 @@ export class AgentComponent implements OnInit {
   ngOnInit(): void {
     this.PrintNumberOrder = new PrintNumberOrder
     this.orders = JSON.parse(localStorage.getItem('printordersagent'))
+    console.log(this.orders)
     this.agent = JSON.parse(localStorage.getItem('printagent'))
     this.orderplaced = this.orders.map(o => o.orderplaced)[0]
     this.sumCost()

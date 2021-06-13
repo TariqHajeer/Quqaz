@@ -154,7 +154,13 @@
                 </th>
                 <th>
                     <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                        تاريخ اضافة الطلب
+                        حالة الطلب
+
+                    </div>
+                </th>
+                <th>
+                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                        تاريخ  الطلب
 
                     </div>
                 </th>
@@ -208,7 +214,12 @@
                     </td>
                     <td>
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                            {{order.country!=null||order.country!=undefined?order.country.name:null}}
+                            {{order.country?order.country.name:'-'}}
+                        </div>
+                    </td>
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{order.orderplaced?order.orderplaced.name:'-'}}
                         </div>
                     </td>
                     <td>
