@@ -38,7 +38,7 @@
 
 
 <div class="card " style="direction:rtl" id="contentToConvert">
-    <div class="card-body">
+    <div class="card-body ">
         <div class="row " style="margin-bottom: 1%;">
             <div class="col-4" style="text-align: right; direction: rtl;">
                 <table>
@@ -95,7 +95,7 @@
 
                 </table>
             </div>
-            <div class="col-3"style="margin-top: 3%;">
+            <div class="col-3" style="margin-top: 3%;">
                 <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="125px" />
             </div>
             <div class="col-2"></div>
@@ -160,7 +160,7 @@
                 </th>
                 <th>
                     <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                        تاريخ  الطلب
+                        تاريخ الطلب
 
                     </div>
                 </th>
@@ -183,7 +183,7 @@
                     </div>
                 </th>
 
-              
+
                 <th>
                     <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
                         المبلغ القديم
@@ -201,7 +201,7 @@
             <tbody>
                 <tr *ngFor="let order of orders;index as i">
                     <td>
-                        
+
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
                             {{i+1}}
 
@@ -254,7 +254,7 @@
                         {{order.orderplaced.name}}
                     </td>-->
 
-                   
+
                     <td>
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
                             {{order.oldCost?order.oldCost:'-'}}
@@ -263,8 +263,11 @@
                     </td>
                     <td>
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                            {{order.note?order.note:"-"}}
+                            <!--
+{{order.note?order.note:"-"}}
 
+                           -->
+                           hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
                         </div>
                     </td>
                 </tr>
@@ -277,7 +280,7 @@
 
                         </div>
                     </td>
-                    <td >
+                    <td>
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
                             العدد
                         </div>
@@ -337,9 +340,10 @@
             </tbody>
 
         </table>
-        <div class="card-footer" style="text-align: center;">
-            <h5>{{address}} &nbsp; {{companyPhone}}</h5>
-        </div>
+
+    </div>
+    <div class="card-footer " style="text-align: center;bottom: 0;position: fixed;width: 100%;">
+        <h5>{{address}} &nbsp; {{companyPhone}}</h5>
     </div>
 </div>
 

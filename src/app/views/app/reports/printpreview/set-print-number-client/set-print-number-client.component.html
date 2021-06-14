@@ -54,7 +54,7 @@
 
 
 <div class="card wtable" style="direction:rtl" *ngIf="showPrintbtn" id="contentToConvert">
-    <div class="card-body">
+    <div >
        
         <div class="row " style="margin-bottom: 1%;">
             <div class="col-4" style="text-align: right; direction: rtl;">
@@ -323,11 +323,13 @@
             </tbody>
 
         </table>
-        <div class="card-footer" style="text-align: center;">
-            <h5>{{address}} &nbsp; {{companyPhone}}</h5>
-        </div>
+        
+    </div>
+    <div class="card-footer " style="text-align: center;bottom: 0;position: fixed;width: 100%;">
+        <h5>{{address}} &nbsp; {{companyPhone}}</h5>
     </div>
 </div>
+
 
 
 <simple-notifications></simple-notifications>
