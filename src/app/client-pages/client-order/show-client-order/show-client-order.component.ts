@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-show-client-order',
@@ -7,11 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShowClientOrderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit(): void {
   }
 addorder(){
-  
+this.router.navigate(['/clienthome/orders/addorder'])
 }
 }
