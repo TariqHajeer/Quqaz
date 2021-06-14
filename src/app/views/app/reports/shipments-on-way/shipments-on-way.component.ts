@@ -94,9 +94,25 @@ export class ShipmentsOnWayComponent implements OnInit {
       if (this.ids.filter(d => d == row.order.id).length > 0)
         return
       else {
+     
         this.ids.push(row.order.id)
         this.orders.push(row.order)
         localStorage.setItem('printordersagent', JSON.stringify(this.orders))
+        if (this.OrderplacedId) {
+          row.order.orderplaced = this.OrderplacedId
+          this.ChangeOrderplacedId(row,this.orders.indexOf(row))
+        }
+         if (this.MoenyPlacedId) {
+          row.order.monePlaced = this.MoenyPlacedId
+          if (this.OrderplacedId.id == 4 && this.MoenyPlacedId.id == 4) {
+            if (row.order.isClientDiliverdMoney) {
+              row.order.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
+            }
+            else {
+              row.order.monePlaced = this.MoenyPlaced.find(m => m.id == 3)
+            }
+          }
+        }
         // this.client = this.orders.map(o => o.order.client)[0]
         //this.orderplaced = this.orders.map(o => o.order.orderplaced)[0]
       }
@@ -119,40 +135,39 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
     })
   }
-
   changeMoenyPlaced() {
-    if (this.getorders.length != 0) {
-      this.getorders.forEach(o => {
-        o.order.monePlaced = this.MoenyPlaced.find(m => m.id == this.MoenyPlacedId.id)
-        if (this.OrderplacedId.id == 4 && this.MoenyPlacedId.id == 4) {
-          if (o.order.isClientDiliverdMoney) {
-            o.order.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
-          }
-          else {
-            o.order.monePlaced = this.MoenyPlaced.find(m => m.id == 3)
-          }
-        }
+    // if (this.getorders.length != 0) {
+    //   this.getorders.forEach(o => {
+    //     o.order.monePlaced = this.MoenyPlaced.find(m => m.id == this.MoenyPlacedId.id)
+    //     if (this.OrderplacedId.id == 4 && this.MoenyPlacedId.id == 4) {
+    //       if (o.order.isClientDiliverdMoney) {
+    //         o.order.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
+    //       }
+    //       else {
+    //         o.order.monePlaced = this.MoenyPlaced.find(m => m.id == 3)
+    //       }
+    //     }
 
 
-      })
+    //   })
 
-    }
+    // }
     this.total()
   }
 
   getMoenyPlaced
   changeOrderPlaced() {
-    if (this.getorders.length != 0) {
-      this.getorders.forEach(o => {
-        o.order.orderplaced = { ...this.OrderplacedId }
-        this.ChangeOrderplacedId(o, this.getorders.indexOf(o))
-      })
-      this.MoenyPlacedId = null
-      this.getMoenyPlaced = [...this.getorders[0].MoenyPlaced]
-      if (this.OrderplacedId.id == 4)
-        this.getMoenyPlaced = [{ id: 2, name: "مندوب" }, { id: 4, name: "تم تسليمها/داخل الشركة" }]
+    this.getMoenyPlaced = [...this.MoenyPlaced]
+    this.MoenyPlacedId = null
+    if (this.OrderplacedId.id == 3)
+      this.getMoenyPlaced = this.getMoenyPlaced.filter(m => m.id == 1)
+    if (this.OrderplacedId.id == 6)
+      this.getMoenyPlaced = this.getMoenyPlaced.filter(m => m.id == 2 || m.id == 3)
+    if (this.OrderplacedId.id == 7 || this.OrderplacedId.id == 5)
+      this.getMoenyPlaced = this.getMoenyPlaced.filter(m => m.id == 3)
 
-    }
+    if (this.OrderplacedId.id == 4)
+      this.getMoenyPlaced = [{ id: 2, name: "مندوب" }, { id: 4, name: "تم تسليمها/داخل الشركة" }]
     this.total()
   }
   getAgent() {
@@ -211,11 +226,11 @@ export class ShipmentsOnWayComponent implements OnInit {
   printNumber
   filterprintNumber() {
     this.getorders = this.temporder
-    this.getorders = [...this.getorders.filter(o => o.order.agentPrintNumber==this.printNumber)]
-      console.log(this.getorders)
-      if(!this.printNumber)
+    this.getorders = [...this.getorders.filter(o => o.order.agentPrintNumber == this.printNumber)]
+    console.log(this.getorders)
+    if (!this.printNumber)
       this.getorders = this.temporder
-      this.dataSource = new MatTableDataSource(this.getorders)
+    this.dataSource = new MatTableDataSource(this.getorders)
   }
 
   allFilter() {
@@ -251,11 +266,11 @@ export class ShipmentsOnWayComponent implements OnInit {
       });
   }
   saveEdit() {
-    for (let i = 0; i < this.dataSource.data.length; i++) {
-      this.orderstate.Id = this.dataSource.data[i].order.id
-      this.orderstate.Cost = this.dataSource.data[i].order.cost
-      this.orderstate.MoenyPlacedId = this.dataSource.data[i].order.monePlaced.id
-      this.orderstate.OrderplacedId = this.dataSource.data[i].order.orderplaced.id
+    for (let i = 0; i < this.orders.length; i++) {
+      this.orderstate.Id = this.orders[i].id
+      this.orderstate.Cost = this.orders[i].cost
+      this.orderstate.MoenyPlacedId = this.orders[i].monePlaced.id
+      this.orderstate.OrderplacedId = this.orders[i].orderplaced.id
       this.orderstates.push(this.orderstate)
       this.orderstate = new OrderState
     }

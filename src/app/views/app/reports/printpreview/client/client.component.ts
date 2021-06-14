@@ -29,6 +29,7 @@ export class ClientComponent implements OnInit {
   userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
   printnumber
   PrintNumberOrder: PrintNumberOrder
+  orderplaced
   address = "أربيل - شارع 40 - قرب تقاطع كوك"
   companyPhone = "07514550880 - 07700890880"
   ngOnInit(): void {

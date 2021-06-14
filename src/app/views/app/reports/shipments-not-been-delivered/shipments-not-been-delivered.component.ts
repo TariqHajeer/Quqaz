@@ -18,8 +18,8 @@ import { OrderClientDontDiliverdMoney } from 'src/app/Models/order/order-client-
 })
 export class ShipmentsNotBeenDeliveredComponent implements OnInit {
 
-  displayedColumns: string[] = ['select','index', 'code','agent', 'oldCost', 'cost', 'deliveryCost', 'clientCost', 'country', 'region'
-    , 'monePlaced', 'orderplaced', 'date','agentPrintNumber', 'clientPrintNumber', 'isClientDiliverdMoney'];
+  displayedColumns: string[] = ['select', 'index', 'code', 'agent', 'oldCost', 'cost', 'deliveryCost', 'clientCost', 'country', 'region'
+    , 'monePlaced', 'orderplaced', 'date', 'agentPrintNumber', 'clientPrintNumber', 'isClientDiliverdMoney'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
 
@@ -123,13 +123,15 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     this.allFilter();
   }
   order: OrderClientDontDiliverdMoney
+  orderplace
   allFilter() {
     this.order.ClientId = this.ClientId
     this.order.IsClientDeleviredMoney = this.IsClientDeleviredMoney
     this.order.ClientDoNotDeleviredMoney = this.ClientDoNotDeleviredMoney
     var orderPlace = this.orderPlace.filter(o => o.checked == true)
+    this.orderplace = this.orderPlace.filter(o => o.checked == true)
     this.order.OrderPlacedId = orderPlace.map(o => o.id)
-    if( this.orderPlace.filter(o => o.checked == true).length>0&&(this.IsClientDeleviredMoney||this.ClientDoNotDeleviredMoney)){
+    if (this.orderPlace.filter(o => o.checked == true).length > 0 && (this.IsClientDeleviredMoney || this.ClientDoNotDeleviredMoney)) {
       this.orderservice.ClientDontDiliverdMoney(this.order).subscribe(response => {
         if (response)
           if (response.length == 0)
@@ -140,12 +142,12 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
         this.totalCount = response.length
       },
         err => {
-  
+
         });
-  
+
     }
     else return
-     }
+  }
   print() {
     if (this.noDataFound == true || this.orders.length == 0) {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
@@ -164,25 +166,25 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     })
   }
   TestCalc(element): number {
-    if (!element.isClientDiliverdMoney){
-      if(element.orderplaced.id==5)
-      return 0;
-      else if(element.orderplaced.id==7)
-      return element.deliveryCost;
+    if (!element.isClientDiliverdMoney) {
+      if (element.orderplaced.id == 5)
+        return 0;
+      else if (element.orderplaced.id == 7)
+        return element.deliveryCost;
       return element.cost - element.deliveryCost;
-     
+
     }
-    else{ 
+    else {
       //مرتجع كلي
-      if(element.orderplaced.id==5)
-      return element.deliveryCost- element.cost ;
+      if (element.orderplaced.id == 5)
+        return element.deliveryCost - element.cost;
       //مرفوض
-      else if(element.orderplaced.id==7)
-      return (-element.cost);
+      else if (element.orderplaced.id == 7)
+        return (-element.cost);
       //مرتجع جزئي
-      else if(element.orderplaced.id==6)
-      return element.cost-  element.oldCost;
+      else if (element.orderplaced.id == 6)
+        return element.cost - element.oldCost;
     }
-    
+
   }
 }
