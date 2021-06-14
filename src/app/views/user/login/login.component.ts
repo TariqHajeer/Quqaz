@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.value)
       this.authService.signIn(this.loginForm.value).subscribe(
         response => {
-
+          localStorage.setItem('user','employee')
           this.user = response as UserLogin
           this.user.expiry = new Date().getTime()
           //this.user.expiry.setMinutes(this.myDate.getMinutes()+1);
@@ -48,7 +48,6 @@ export class LoginComponent implements OnInit {
           //  this.authService.setAuthenticatedUser(response.data[0].user);
           this.router.navigate(['/app/HomePage']);
           localStorage.setItem('token', this.user.token)
-          console.log(this.user)
           this.authService.setAuthenticatedUser(this.user);
           // this.authService.setAuthenticatedUser(response);
           //  this.authService.setPermission(response.privileges);

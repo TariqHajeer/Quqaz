@@ -1,9 +1,21 @@
-<app-header [title]="'عرض الطلبات '"></app-header>
+<header>
+  <div class="card" style="background-color: rgba(5, 6, 8, 0.836); margin: 1%;
+text-align: center;">
+      <div class="card-body">
+          <br>
+          <br>
+          <h2 style="color: rgb(230, 17, 2); text-align: center;">عرض الطلبات</h2>
+          <h4 style="color: white; text-align: center;"></h4>
+      </div>
+  </div>
 
+</header>
 <div class="container-fluid">
   <section>
     <div class="row">
-      <i class="iconsminds-add  text-primary" style="font-size: 38px;"></i>
+      <button (click)="addorder()">
+        <i class="iconsminds-add  text-primary" style="font-size: 38px;"></i>
+      </button>
       <div class="col-12 mt-3 mb-1">
         <h5 class="text-uppercase">بحث</h5>
         <p>

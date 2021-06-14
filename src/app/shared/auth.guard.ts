@@ -47,15 +47,13 @@ export class AuthGuard implements CanActivate, CanActivateChild {
           return true;
         } else {
           this.groupService.GetPrivileges().subscribe(res => {
-            // var pr = route.data.roles.filter(p =>res.map(p => p.sysName).includes(p))
             var pr = res.filter(p => route.data.roles.filter(r => p.sysName == r).length > 0)
             localStorage.setItem('route', JSON.stringify(pr))
-            this.router.navigate(['/unauthorized']);
-          })
-          //let privileges = JSON.parse(localStorage.getItem('GetPrivileges')) as any
-
-          //this.router.navigate(['/clienthome']);
-          // return false;
+            var user=localStorage.getItem('user')
+            if(user=='client')
+            this.router.navigate(['/clienthome']);
+            else if(user=='employee')
+            this.router.navigate(['/unauthorized']);          })
           return false
         }
       } else {

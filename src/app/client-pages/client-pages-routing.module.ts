@@ -17,11 +17,15 @@ const routes: Routes = [
         component: ClienthomeComponent,
         pathMatch: 'full',
       },
-      {
-        path: 'orders',
-        component: ShowOrdersComponent,
-        pathMatch: 'full',
-      },
+      { path: 'orders', 
+      loadChildren: () => import('./client-order/client-order.module')
+      .then(m => m.ClientOrderModule) },
+
+      // {
+      //   path: 'orders',
+      //   component: ShowOrdersComponent,
+      //   pathMatch: 'full',
+      // },
       {
         path: 'login',
         component: LoginComponent,

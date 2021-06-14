@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit {
           this.user = response as UserLogin
           this.user.expiry = new Date().getTime()
           this.router.navigate(['/clienthome']);
+          localStorage.setItem('user','client');
           localStorage.setItem('token', this.user.token)
           this.authService.setAuthenticatedUser(this.user);
         }, error => {

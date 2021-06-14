@@ -19,10 +19,11 @@ import { ShowOrdersComponent } from './show-orders/show-orders.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { ClienthomeComponent } from './clienthome/clienthome.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
+import { ClientProfileComponent } from './client-profile/client-profile.component';
 
 
 @NgModule({
-  declarations: [ClientPagesComponent, LoginComponent, ShowOrdersComponent, HeaderComponent, ClienthomeComponent, NavbarComponent],
+  declarations: [ClientPagesComponent, LoginComponent, ShowOrdersComponent, HeaderComponent, ClienthomeComponent, NavbarComponent, ClientProfileComponent],
   imports: [
     CommonModule,
     ClientPagesRoutingModule,
@@ -38,7 +39,8 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
     ComponentsStateButtonModule
 
   ], providers: [AuthGuard],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA]
+  schemas:[CUSTOM_ELEMENTS_SCHEMA],
+  exports:[HeaderComponent]
 
 })
 export class ClientPagesModule { }
