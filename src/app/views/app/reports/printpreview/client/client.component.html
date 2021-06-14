@@ -121,10 +121,13 @@
 
                 </div>
                 <br>
-                <!--   <div *ngIf="orderplaced!=null||orderplaced!=undefined">
-                        {{orderplaced.name}}
-                    </div>-->
+                <div >
+                    <a  *ngFor="let order of orderplaced" style="border: 1px black solid;text-align: center;padding: 5px;">
+                        {{order.name}} 
+                  </a>
 
+                </div>
+                 
 
 
             </div>

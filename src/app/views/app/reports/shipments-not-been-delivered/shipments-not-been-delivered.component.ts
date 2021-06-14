@@ -86,6 +86,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   ngOnInit(): void {
     localStorage.removeItem('printordersclient')
     localStorage.removeItem('printclient')
+    localStorage.removeItem('printclientorderplaced')
     this.getClients()
     this.GetorderPlace()
     this.paging = new Paging
@@ -153,6 +154,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
+    localStorage.setItem('printclientorderplaced',JSON.stringify(this.orderplace))
     localStorage.setItem('printordersclient', JSON.stringify(this.orders))
     localStorage.setItem('printclient', JSON.stringify(this.Clients.find(c => c.id == this.ClientId)))
     this.route.navigate(['app/reports/printclientpreview'])
