@@ -21,7 +21,7 @@ export class SetPrintNumberComponent implements OnInit {
     private spinner: NgxSpinnerService,
 
   ) { }
-  heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'المنطقة','الهاتف', 'ملاحظات']
+  heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'المنطقة','الهاتف', 'مـلاحظـــــات']
   orders: any[] = []
   count = 0
   agent
