@@ -167,12 +167,10 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       this.allFilter()
     })
   }
-  TestCalc(element): number {
+  payForCleint(element): number {
     if (!element.isClientDiliverdMoney) {
       if (element.orderplaced.id == 5)
         return 0;
-      else if (element.orderplaced.id == 7)
-        return element.deliveryCost;
       return element.cost - element.deliveryCost;
 
     }
