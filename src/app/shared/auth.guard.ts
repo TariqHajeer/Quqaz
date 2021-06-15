@@ -43,7 +43,6 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     if (currentUser) {
       if (route.data && route.data.roles) {
         if (route.data.roles.filter(p => currentUser.privileges.map(p => p.sysName).includes(p)).length > 0) {
-         
           return true;
         } else {
           this.groupService.GetPrivileges().subscribe(res => {

@@ -297,7 +297,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.getorders.forEach(o => {
       o.order.index = index + 1;
       index++;
-      this.tempOrders.unshift({ ...o })
+      this.tempOrders.push({ ...o })
     })
     this.dataSource = new MatTableDataSource(this.tempOrders)
 

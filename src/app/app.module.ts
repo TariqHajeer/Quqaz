@@ -44,7 +44,7 @@ import { OnReturnDirective } from './helpers/on-return.directive';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    {provide: LocationStrategy, useClass: HashLocationStrategy}
+   // {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
   ,schemas:[CUSTOM_ELEMENTS_SCHEMA],

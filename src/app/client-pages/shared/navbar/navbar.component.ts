@@ -66,6 +66,6 @@ export class NavbarComponent implements OnInit {
     this.scrollToService.scrollTo(config);
   }
   login() {
-    this.router.navigate(['/clienthome/login'])
+    this.router.navigate(['/user/login'])
   }
 }

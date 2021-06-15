@@ -30,7 +30,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     
   ],
   providers: [PdfExportService
-    , { provide: LocationStrategy, useClass: HashLocationStrategy }
+  //  , { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],schemas:[CUSTOM_ELEMENTS_SCHEMA],
   exports:[SpinnerComponent]
 })
