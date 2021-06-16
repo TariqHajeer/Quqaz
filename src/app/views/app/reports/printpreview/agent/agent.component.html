@@ -166,11 +166,13 @@ direction:rtl;margin-top: 0%;">
 
 
         </div>
+        <div class="example-container mat-elevation-z8" >
+
         <table style="border: 1px black solid;padding: 5px;text-align: center;font-size: 14px; padding: 5px;text-align: center; width: 100%;">
             <thead style="border: 1px black solid;padding: 5px;text-align: center;font-size: 20px;">
                 <th style="border: 1px black solid;padding: 5px;text-align: center" *ngFor="let head of heads">{{head}}</th>
             </thead>
-            <tbody>
+            <tbody >
 
                 <tr style="border: 1px black solid;padding: 5px;text-align: center" *ngFor="let order of orders;index as i">
                     <td style="width: 3%;border: 1px black solid;padding: 5px;text-align: center">
@@ -209,15 +211,15 @@ direction:rtl;margin-top: 0%;">
                     <td  style="border: 1px black solid;padding: 5px;text-align: center;">
                         <!----> {{ count| number}}
                     </td>
-                    <td colspan="5"></td>
+                    <td style="border: 1px black solid;padding: 5px;text-align: center;" colspan="5"></td>
 
                 </tr>
             </tbody>
 
         </table>
-       
+       </div>
     </div>
-    <div class="card-footer " style="text-align: center;bottom: 0;position: fixed;width: 100%;">
+    <div class="footer" style="text-align: center;width: 100%;display: table-footer-group;">
         <h5>{{address}} &nbsp; {{companyPhone}}</h5>
     </div>
 </div>
