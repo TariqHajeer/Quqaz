@@ -96,19 +96,19 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
 
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
-     // this.orderPlace = res
+      // this.orderPlace = res
       // this.orderPlace.forEach(item => {
       //   item.checked = true
       // })
       //this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
-      this.orderPlace=[
-      {id:3,name:"في الطريق"},
-      {id:4,name:"تم التسليم"},
-      {id:5,name:"مرتجع كلي"},
-      {id:6,name:"مرتجع جزئي"},
-      {id:7,name:"مرفوض"},
-      {id:8,name:"مؤجل"}
-    ]
+      this.orderPlace = [
+        { id: 3, name: "في الطريق" },
+        { id: 4, name: "تم التسليم" },
+        { id: 5, name: "مرتجع كلي" },
+        { id: 6, name: "مرتجع جزئي" },
+        { id: 7, name: "مرفوض" },
+        { id: 8, name: "مؤجل" }
+      ]
 
     })
   }
@@ -146,6 +146,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
           if (response.length == 0)
             this.noDataFound = true
           else this.noDataFound = false
+          this.orderFilter=response
         this.dataSource = new MatTableDataSource(response)
         //this.dataSource.data = this.dataSource.data.filter(d => d.agent.id == this.ClientId)
         this.totalCount = response.length
@@ -162,7 +163,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    localStorage.setItem('printclientorderplaced',JSON.stringify(this.orderplace))
+    localStorage.setItem('printclientorderplaced', JSON.stringify(this.orderplace))
     localStorage.setItem('printordersclient', JSON.stringify(this.orders))
     localStorage.setItem('printclient', JSON.stringify(this.Clients.find(c => c.id == this.ClientId)))
     this.route.navigate(['app/reports/printclientpreview'])
@@ -194,5 +195,12 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
         return element.cost - element.oldCost;
     }
 
+  }
+  code
+  orderFilter
+  codeFillter() {
+    this.dataSource.data=this.orderFilter
+    if(this.dataSource.data.length!=0)
+   this.dataSource.data= this.dataSource.data.filter(d=>d.code.includes(this.code))
   }
 }

@@ -9,8 +9,6 @@
             <ng-option *ngFor="let Client of Clients" [value]="Client.id">{{Client.name}}</ng-option>
           </ng-select>
           <br>
-         
-          
         </div>
         <section class="example-section">
           <mat-checkbox class="example-margin" *ngFor="let orderplaced of orderPlace" [(ngModel)]="orderplaced.checked" (change)="allFilter()">&nbsp;{{orderplaced.name}}</mat-checkbox>
@@ -18,9 +16,12 @@
         <section class="example-section">
           <mat-checkbox class="example-margin" [(ngModel)]="IsClientDeleviredMoney" (change)="allFilter()">&nbsp;تسديد المبلغ مسبقاً</mat-checkbox>
           <mat-checkbox class="example-margin" [(ngModel)]="ClientDoNotDeleviredMoney" (change)="allFilter()">&nbsp; لم يتم تسديد المبلغ مسبقاً</mat-checkbox>
-
         </section>
-        <div class="col-md-8" style="padding-top: 25px;">
+        <div class="col-md-3">
+          <input type="text" class="form-control"placeholder="بحث على حسب كود الشحنة"
+           (keyup)="codeFillter()"  [ngModelOptions]="{standalone: true}" [(ngModel)]="code">
+        </div>
+        <div class="col-md-5" style="padding-top: 25px;">
           <button (click)="print()" class="btn  btn-primary"> 
             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-printer"
           viewBox="0 0 16 16">
