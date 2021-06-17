@@ -6,5 +6,6 @@ export class MainStatics {
     totalOrderOutStore
     totlaOrder
     totalOrderCountInProcess
-    totalOrderCountInProcessAmount
+    //totalOrderCountInProcessAmount
+    totalMoneyInComapny
 }
