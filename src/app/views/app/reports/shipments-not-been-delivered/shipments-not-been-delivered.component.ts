@@ -177,6 +177,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     })
   }
   payForCleint(element): number {
+    
     if (!element.isClientDiliverdMoney) {
       if (element.orderplaced.id == 5)
         return 0;
@@ -184,12 +185,14 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
 
     }
     else {
+      console.log(element);
+
       //مرتجع كلي
       if (element.orderplaced.id == 5)
-        return element.deliveryCost - element.cost;
+        return element.deliveryCost - element.oldCost;
       //مرفوض
       else if (element.orderplaced.id == 7)
-        return (-element.cost);
+        return (-element.oldCost);
       //مرتجع جزئي
       else if (element.orderplaced.id == 6)
         return element.cost - element.oldCost;
