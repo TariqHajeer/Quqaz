@@ -193,7 +193,25 @@
   <ng-container matColumnDef="completelyReturn">
     <th mat-header-cell *matHeaderCellDef>  </th>
     <td mat-cell *matCellDef="let element"style="padding:10px;"> 
-      <button class="btn btn-primary btn-sm"*ngIf="element.orderplaced.id==2" (click)="completelyReturn(element.id)">مرتجع كلي</button>
+      <button class="btn btn-primary btn-sm"*ngIf="element.orderplaced.id==2"data-toggle="modal"  data-target="#allmodel" >مرتجع كلي</button>
+      <div class="modal fade" id="allmodel"  role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                <h2 style="text-align: center;">تأكيد   </h2>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body" style="text-align: center;">
+                <button type="button" class="btn btn-primary"  (click)="completelyReturn(element.id)" data-dismiss="modal">مرتجع كلي</button>&nbsp;
+                <button type="button" class="btn btn-primary"   data-dismiss="modal">الغاء</button>
+              </div>
+              
+          </div>
+      </div>
+  </div>
       <button class="btn btn-primary btn-sm"data-toggle="modal"  data-target="#resend"
       *ngIf="element.orderplaced.id==5||element.orderplaced.id==7||element.orderplaced.id==8" (click)="fillResend(element)">اعادة ارسال </button>
 
