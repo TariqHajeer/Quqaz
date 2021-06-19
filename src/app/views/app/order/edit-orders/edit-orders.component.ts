@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -351,5 +351,13 @@ export class EditOrdersComponent implements OnInit {
     this.tempEditOrderType.CanEdit = false
     OrderType = Object.assign(OrderType, this.tempEditOrderType);
 
+  }
+  @HostListener('window:keydown', ['$event'])
+  onKeyPress($event: KeyboardEvent) {
+    if ( $event.keyCode == 13) {
+      console.log("mmmmm")
+      this.AddOrder()
+      return false
+    }
   }
 }
