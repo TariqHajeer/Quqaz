@@ -204,19 +204,22 @@
     </div>
   </div>
 </div> -->
-<table class="table" style="background-color:white;">
-<thead>
-    <th>المدينة</th>
-    <th>كلفة التوصيل</th>
-</thead>
-<tbody>
-    <tr *ngFor="let country of countries">
-        <td>{{country.name}}</td>
-        <td>{{country.deliveryCost}}</td>
+<div class="example-container mat-elevation-z8 " >
+    <table class="table " style="background-color:white;">
+        <thead>
+            <th>المدينة</th>
+            <th>كلفة التوصيل</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let country of countries">
+                <td>{{country.name}}</td>
+                <td>{{country.deliveryCost}}</td>
+        
+            </tr>
+        </tbody>
+        </table>
+</div>
 
-    </tr>
-</tbody>
-</table>
 
   <!-- <div class="row">
     <div class="col-12 mt-3 mb-1">

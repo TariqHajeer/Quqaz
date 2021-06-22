@@ -10,14 +10,20 @@ import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scrol
 export class NavbarComponent implements OnInit {
 
   constructor(private renderer: Renderer2,
-     private elRef: ElementRef,
-     private scrollToService: ScrollToService,
-     private router: Router) {}
+    private elRef: ElementRef,
+    private scrollToService: ScrollToService,
+    private router: Router) { }
 
   showMobileMenu = false;
- 
+  user
+  isLogin=false
   ngOnInit() {
     this.renderer.addClass(document.body, "no-footer");
+    if (localStorage.getItem('kokazUser')) {
+      this.user = JSON.parse(localStorage.getItem('kokazUser'))
+      this.isLogin=true
+    }
+    else this.isLogin=false
   }
   ngOnDestroy() {
     this.renderer.removeClass(document.body, "no-footer");
@@ -70,5 +76,11 @@ export class NavbarComponent implements OnInit {
   }
   loginclient() {
     this.router.navigate(['/clienthome/login'])
+  }
+  logout() {
+    localStorage.removeItem('token')
+    localStorage.removeItem('kokazUser')
+    this.isLogin=false
+    this.router.navigate(['/clienthome'])
   }
 }
