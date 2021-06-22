@@ -9,7 +9,7 @@ import { ShowOrdersComponent } from './show-orders/show-orders.component';
 
 const routes: Routes = [
   {
-    path: 'clienthome',
+    path: '',
     component: ClientPagesComponent,
     children:[
       {
@@ -20,27 +20,27 @@ const routes: Routes = [
       { path: 'orders', 
       loadChildren: () => import('./client-order/client-order.module')
       .then(m => m.ClientOrderModule) },
-
+      
       // {
       //   path: 'orders',
       //   component: ShowOrdersComponent,
       //   pathMatch: 'full',
       // },
-      {
-        path: 'login',
-        component: LoginComponent,
-        pathMatch: 'full',
     
-      },
      
-      {
-        path: '',
-        redirectTo: 'clienthome',
-        pathMatch: 'full'
-      }
+      // {
+      //   path: '',
+      //   redirectTo: 'clienthome',
+      //   pathMatch: 'full'
+      // }
     ]
   },
- 
+  {
+    path: 'login',
+    component: LoginComponent,
+    pathMatch: 'full',
+
+  },
 ];
 
 @NgModule({
