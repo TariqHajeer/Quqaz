@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { COrderService } from 'src/app/client-pages/service/c-order.service';
 import { Paging } from 'src/app/Models/paging';
 import { CFilter } from 'src/app/client-pages/model/cfilter.model';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CsettingService } from 'src/app/client-pages/service/csetting.service';
@@ -73,6 +73,12 @@ export class ShowClientOrderComponent implements OnInit {
       this.dataSource = new MatTableDataSource(res.data)
       this.totalCount = res.total
     })
+  }
+  switchPage(event: PageEvent) {
+    this.paging.allItemsLength = event.length
+    this.paging.RowCount = event.pageSize
+    this.paging.Page = event.pageIndex + 1
+    this.allFilter();
   }
   GetorderPlace() {
     this.settingservice.orderPlace().subscribe(res => {
