@@ -40,10 +40,10 @@ export class ShowClientOrderComponent implements OnInit {
   ngOnInit(): void {
     this.filtering=new CFilter
     this.paging=new Paging
-    this.displayedColumns = ['code', 'deliveryCost', 'cost', 'oldCost', 'recipientName',
+    this.displayedColumns = ['code', 'deliveryCost', 'cost', /*'oldCost',*/ 'recipientName',
     'recipientPhones', 'client', 'clientPrintNumber', 'country'
-    , 'region', 'agent', 'agentPrintNumber', 'monePlaced', 'orderplaced', 'address'
-    , 'createdBy', 'date', 'diliveryDate', 'note', 'completelyReturn', 'Edit', 'Delete'];
+    , 'region', 'agent'/*, 'agentPrintNumber'*/, 'monePlaced', 'orderplaced', 'address'
+    , /*'createdBy',*/ 'date', 'diliveryDate', 'note', /*'completelyReturn', 'Edit', 'Delete'*/];
     this.GetMoenyPlaced()
     this.GetorderPlace()
     this.GetRegion()

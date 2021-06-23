@@ -106,10 +106,10 @@ text-align: center;">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> كلفة الطلب</th>
     <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.cost}}</td>
   </ng-container>
-  <ng-container matColumnDef="oldCost">
+  <!-- <ng-container matColumnDef="oldCost">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>  الكلفة القديمة</th>
     <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.oldCost}}</td>
-  </ng-container>
+  </ng-container> -->
   <ng-container matColumnDef="recipientName">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> اسم المستلم</th>
     <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.recipientName}}</td>
@@ -141,10 +141,10 @@ text-align: center;">
     <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> المندوب</th>
     <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.agent!=null?element.agent.name:null}}</td>
   </ng-container>
-  <ng-container matColumnDef="agentPrintNumber">
+  <!-- <ng-container matColumnDef="agentPrintNumber">
     <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> اخر رقم طباعة للمندوب</th>
     <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.agentPrintNumber}}</td>
-  </ng-container>
+  </ng-container> -->
 
   
   <ng-container matColumnDef="monePlaced">
@@ -160,10 +160,10 @@ text-align: center;">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> العنوان</th>
     <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.address}}</td>
   </ng-container>
-  <ng-container matColumnDef="createdBy">
+  <!-- <ng-container matColumnDef="createdBy">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> بواسطه</th>
     <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.createdBy}}</td>
-  </ng-container>
+  </ng-container> -->
   <ng-container matColumnDef="date">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> التاريخ</th>
     <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.date| date: 'yyyy/MM/dd'}}</td>
@@ -178,7 +178,7 @@ text-align: center;">
     <th mat-header-cell *matHeaderCellDef  style="padding:10px "> ملاحظات</th>
     <td mat-cell *matCellDef="let element"style="padding:10px"> {{element.note}}</td>
   </ng-container>
-  <ng-container matColumnDef="completelyReturn">
+  <!-- <ng-container matColumnDef="completelyReturn">
     <th mat-header-cell *matHeaderCellDef>  </th>
     <td mat-cell *matCellDef="let element"style="padding:10px;"> 
      
@@ -231,7 +231,7 @@ text-align: center;">
   </div>
 
     </td>
-  </ng-container>
+  </ng-container> -->
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
