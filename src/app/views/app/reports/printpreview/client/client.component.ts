@@ -36,7 +36,7 @@ export class ClientComponent implements OnInit {
     this.PrintNumberOrder = new PrintNumberOrder
     this.orders = JSON.parse(localStorage.getItem('printordersclient'))
     this.client = JSON.parse(localStorage.getItem('printclient'))
-    this.orderplaced=JSON.parse(localStorage.getItem('printclientorderplaced'))
+    this.orderplaced = JSON.parse(localStorage.getItem('printclientorderplaced'))
     console.log(this.orderplaced)
     this.sumCost()
     //  this.getPrintnumber()
@@ -45,7 +45,7 @@ export class ClientComponent implements OnInit {
   sumCost() {
     this.count = 0
     this.deliveryCostCount = 0
-    this.clientCalc=0
+    this.clientCalc = 0
     if (this.orders)
       this.orders.forEach(o => {
         this.count += o.cost
@@ -61,22 +61,22 @@ export class ClientComponent implements OnInit {
           }
           this.clientCalc += o.cost - o.deliveryCost
           return o.cost - o.deliveryCost;
-    
+
         }
         else {
           //مرتجع كلي
           if (o.orderplaced.id == 5) {
-            this.clientCalc+=o.deliveryCost - o.cost
+            this.clientCalc += o.deliveryCost - o.cost
             return o.deliveryCost - o.cost;
           }
           //مرفوض
           else if (o.orderplaced.id == 7) {
-            this.clientCalc+=(-o.cost)
+            this.clientCalc += (-o.cost)
             return (-o.cost);
           }
           //مرتجع جزئي
           else if (o.orderplaced.id == 6) {
-            this.clientCalc+=o.cost - o.oldCost;
+            this.clientCalc += o.cost - o.oldCost;
             return o.cost - o.oldCost;
           }
         }
@@ -85,10 +85,17 @@ export class ClientComponent implements OnInit {
   }
 
   showPrintbtn = false
-
+  dateWithIds = {
+    Ids: this.orders.map(o => o.id),
+    Date: new Date
+  }
   changeDeleiverMoneyForClient() {
     this.spinner.show()
-    this.orderservice.DeleiverMoneyForClient(this.orders.map(o => o.id)).subscribe(res => {
+    this.dateWithIds = {
+      Ids: this.orders.map(o => o.id),
+      Date: new Date
+    }
+    this.orderservice.DeleiverMoneyForClient(this.dateWithIds).subscribe(res => {
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.showPrintbtn = true
       this.spinner.hide()
@@ -138,25 +145,25 @@ export class ClientComponent implements OnInit {
   }
   clientCalc = 0
   TestCalc(element): number {
-    if (!element.isClientDiliverdMoney){
-      if(element.orderplaced.id==5)
-      return 0;
-      else if(element.orderplaced.id==7)
-      return element.deliveryCost;
+    if (!element.isClientDiliverdMoney) {
+      if (element.orderplaced.id == 5)
+        return 0;
+      else if (element.orderplaced.id == 7)
+        return element.deliveryCost;
       return element.cost - element.deliveryCost;
-     
+
     }
-    else{ 
+    else {
       //مرتجع كلي
-      if(element.orderplaced.id==5)
-      return element.deliveryCost- element.cost ;
+      if (element.orderplaced.id == 5)
+        return element.deliveryCost - element.cost;
       //مرفوض
-      else if(element.orderplaced.id==7)
-      return (-element.cost);
+      else if (element.orderplaced.id == 7)
+        return (-element.cost);
       //مرتجع جزئي
-      else if(element.orderplaced.id==6)
-      return element.cost-  element.oldCost;
+      else if (element.orderplaced.id == 6)
+        return element.cost - element.oldCost;
     }
-    
+
   }
 }
