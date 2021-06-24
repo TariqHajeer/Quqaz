@@ -32,6 +32,8 @@ export class ShipmentInStockComponent implements OnInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
+    this.orders=[]
+    this.ids=[]
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => { this.selection.select(row) });
@@ -113,10 +115,10 @@ export class ShipmentInStockComponent implements OnInit {
     this.paging.allItemsLength = event.length
     this.paging.RowCount = event.pageSize
     this.paging.Page = event.pageIndex + 1
-    this.allFilter();
+    //this.allFilter();
   }
   allFilter() {
-    this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
+    this.orderservice.GetAll(this.filtering,this.paging).subscribe(response => {
       if (response)
         if (response.data.length == 0)
           this.noDataFound = true

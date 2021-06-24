@@ -32,6 +32,8 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
+    this.orders=[]
+    this.ids=[]
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => { this.selection.select(row) });
@@ -65,6 +67,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       this.ids = this.ids.filter(i => i != row.id)
       this.orders = this.orders.filter(o => o != row)
     }
+    console.log(this.orders)
   }
   constructor(
     private orderservice: OrderService,
@@ -185,7 +188,6 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
 
     }
     else {
-      console.log(element);
 
       //مرتجع كلي
       if (element.orderplaced.id == 5)

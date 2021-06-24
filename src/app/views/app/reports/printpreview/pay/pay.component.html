@@ -9,8 +9,7 @@
       d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
   </svg> &nbsp;تحميل
 </button>
-<button printSectionId="print" class="btn btn-primary"
-styleSheetFile="/assets/css/vendor/bootstrap.min.css" [useExistingCss]="true" ngxPrint>
+<button (click)="print()" class="btn btn-primary">
 <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
     class="bi bi-printer" viewBox="0 0 16 16">
     <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
@@ -18,36 +17,36 @@ styleSheetFile="/assets/css/vendor/bootstrap.min.css" [useExistingCss]="true" ng
         d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
 </svg> &nbsp;طباعة
 </button>&nbsp;
-<div id="print">
+<div id="contentToConvert">
   <div  class="card" style="color: black;direction: rtl;">
     <div class="card-body">
       <div class="row ">
         <div class="col-1"></div>
         <div class="col-md-3" style="text-align: right;direction: rtl; ">
-          <table>
+          <table style="width: 100%;border:black 1px solid;padding: 5px;">
 
 
             <tr>
-              <td>
+              <td style="border:black 1px solid;padding: 5px;">
                 مستخدم الطابعة :
               </td>
-              <td>
+              <td style="border:black 1px solid;padding: 5px;">
                 {{userName.name}}
               </td>
             </tr>
             <tr>
-              <td>
+              <td style="border:black 1px solid;padding: 5px;" >
                 تاريخ الطباعة :
               </td>
-              <td>
+              <td style="border:black 1px solid;padding: 5px;">
                 {{dateOfPrint | date:"dd/MM/yyyy"}}
               </td>
             </tr>
             <tr>
-              <td>
+              <td style="border:black 1px solid;padding: 5px;">
                 وقت الطباعة :
               </td>
-              <td>
+              <td style="border:black 1px solid;padding: 5px;">
                 {{dateOfPrint | date:"HH:mm:ss"}}
               </td>
             </tr>
@@ -68,19 +67,19 @@ styleSheetFile="/assets/css/vendor/bootstrap.min.css" [useExistingCss]="true" ng
       </div>
       <br>
       <div class="row" style="font-size: 16px;margin-left: 5%;margin-right: 5%;">
-       <table class="table1 " >
+       <table class="table1 "style="width: 100%;border:black 1px solid;padding: 5px;" >
   <thead>
-    <th>العميل</th>
-    <th>المبلغ</th>
+    <th style="border:black 1px solid;padding: 5px;">العميل</th>
+    <th style="border:black 1px solid;padding: 5px;">المبلغ</th>
   </thead>
   <tbody>
     <tr *ngFor="let clientBlanace of ClientBlanace">
-      <td>{{clientBlanace.clientName}}</td>
-      <td>{{clientBlanace.amount| number}}</td>
+      <td style="width: 75%;border:black 1px solid;padding: 5px;">{{clientBlanace.clientName}}</td>
+      <td style="width: 25%;border:black 1px solid;padding: 5px;">{{clientBlanace.amount| number}}</td>
     </tr>
     <tr style="background-color: rgb(216, 212, 212);">
-      <td>الإجمالي </td>
-      <td>{{totalOrder| number}}</td>
+      <td style="width: 75%;border:black 1px solid;padding: 5px;">الإجمالي </td>
+      <td style="width: 25%;border:black 1px solid;padding: 5px;">{{totalOrder| number}}</td>
     </tr>
   </tbody>
 </table>

@@ -73,6 +73,8 @@ export class ShipmentsOnWayComponent implements OnInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
+    this.orders=[]
+    this.ids=[]
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => { this.selection.select(row) });
