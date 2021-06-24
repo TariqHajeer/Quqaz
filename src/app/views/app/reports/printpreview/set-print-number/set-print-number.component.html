@@ -167,13 +167,13 @@
                         {{order.country}}
                     </td>
                     <td style="width: 12%;border: 1px black solid;padding: 5px;text-align: center;">
-                        {{'-'}}
+                        {{order.region?order.region.name:'-'}}
                     </td>
                     <td style="width: 13%;border: 1px black solid;padding: 5px;text-align: center;">
                         {{order.phone}}
                     </td>
                     <td style="width: 13%;border: 1px black solid;padding: 5px;text-align: center;">
-                        {{order.client?order.client.name:'-'}}
+                        {{order.clientName?order.clientName:'-'}}
 
                     </td>
                     <td style="width: 50%;border: 1px black solid;padding: 5px;text-align: center;">

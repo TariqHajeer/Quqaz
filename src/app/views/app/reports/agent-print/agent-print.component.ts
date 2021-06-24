@@ -30,7 +30,11 @@ export class AgentPrintComponent implements OnInit {
   noDataFound: boolean = false
   Get() {
     this.orderService.GetAgentPrint(this.paging).subscribe(res => {
-      this.dataSource = new MatTableDataSource(res)
+      this.orderFilter=res
+      this.orderFilter.forEach(o=>{
+        o.printNmber=JSON.stringify(o.printNmber)
+      })
+      this.dataSource = new MatTableDataSource( this.orderFilter)
       this.totalCount = res.total
 
     })
@@ -41,5 +45,12 @@ export class AgentPrintComponent implements OnInit {
     this.paging.Page = event.pageIndex + 1
     this.Get();
 
+  }
+  printNmber
+  orderFilter=[]
+  printNmberFillter() {
+    this.dataSource.data=this.orderFilter
+    if(this.dataSource.data.length!=0)
+   this.dataSource.data= this.dataSource.data.filter(d=>d.printNmber.includes(this.printNmber))
   }
 }

@@ -49,6 +49,7 @@ export class SetPrintNumberComponent implements OnInit {
   changeDeleiverMoneyForClient() {
     this.spinner.show()
     this.orderservice.GetOrderByAgnetPrintNumber(this.printnumber).subscribe(res => {
+      console.log(res)
       this.spinner.hide()
       this.showPrintbtn = true
       this.orders = res.orders
