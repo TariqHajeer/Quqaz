@@ -32,9 +32,11 @@ export class ClientComponent implements OnInit {
   orderplaced
   address = "أربيل - شارع 40 - قرب تقاطع كوك"
   companyPhone = "07514550880 - 07700890880"
+  reports:any[]=[]
   ngOnInit(): void {
     this.PrintNumberOrder = new PrintNumberOrder
     this.orders = JSON.parse(localStorage.getItem('printordersclient'))
+    this.orders=this.orders.sort((a,b)=>a.code-b.code)
     this.client = JSON.parse(localStorage.getItem('printclient'))
     this.orderplaced = JSON.parse(localStorage.getItem('printclientorderplaced'))
     console.log(this.orderplaced)
@@ -96,6 +98,7 @@ export class ClientComponent implements OnInit {
       Date: new Date
     }
     this.orderservice.DeleiverMoneyForClient(this.dateWithIds).subscribe(res => {
+     console.log(res)
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.showPrintbtn = true
       this.spinner.hide()
