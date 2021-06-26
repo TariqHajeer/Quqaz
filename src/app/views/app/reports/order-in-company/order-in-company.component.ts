@@ -21,7 +21,7 @@ import { Client } from '../../client/client.model';
 })
 export class OrderInCompanyComponent implements OnInit {
 
-  displayedColumns: string[] = ['index','code', 'country', 'region'
+  displayedColumns: string[] = ['index', 'code', 'country', 'region'
     , 'cost', 'orderplaced', 'monePlaced', 'edit'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
@@ -125,7 +125,7 @@ export class OrderInCompanyComponent implements OnInit {
     }
 
   }
-  
+
   showcount = false
   findorder
   // Ordersfilter: any[] = []
@@ -170,7 +170,11 @@ export class OrderInCompanyComponent implements OnInit {
       this.notifications.create("error", "الشحنة مضافة مسبقا", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       return
     }
-    this.getorder.canEditCount=false
+    if (this.getorder.order.orderplaced.id == 6 || this.getorder.order.orderplaced.id == 4)
+      this.getorder.canEditCount = false
+    else
+      this.getorder.canEditCount = true
+
     this.getorders.push({ ...this.getorder })
     this.temporders.push({ ...this.getorder })
     this.sumCost()
@@ -196,8 +200,8 @@ export class OrderInCompanyComponent implements OnInit {
   }
 
   changeCost(element, index) {
-    element.canEditCount=true
-    element.order.cost=element.order.cost*1
+    element.canEditCount = true
+    element.order.cost = element.order.cost * 1
     this.sumCost()
 
     // if (this.orderplacedstate.rangeCost(element, this.temporderscost[index])) {
@@ -227,10 +231,10 @@ export class OrderInCompanyComponent implements OnInit {
   }
 
   print() {
-    localStorage.setItem('orderincompany',JSON.stringify(this.getorders))
-    localStorage.setItem('temporderincompany',JSON.stringify(this.temporders))
-    localStorage.setItem('clientorderincompany',JSON.stringify(this.Clients.find(c=>c.id==this.ClientId)))
-   this.route.navigate(['/app/reports/printorderincompany'])
+    localStorage.setItem('orderincompany', JSON.stringify(this.getorders))
+    localStorage.setItem('temporderincompany', JSON.stringify(this.temporders))
+    localStorage.setItem('clientorderincompany', JSON.stringify(this.Clients.find(c => c.id == this.ClientId)))
+    this.route.navigate(['/app/reports/printorderincompany'])
   }
 
   CancelOrder(order) {
@@ -246,9 +250,9 @@ export class OrderInCompanyComponent implements OnInit {
       this.Clients = res
     })
   }
-  changeClientId(){
-    this.Code=null
-    this.getorders=[]
+  changeClientId() {
+    this.Code = null
+    this.getorders = []
     this.dataSource = new MatTableDataSource(this.getorders)
 
   }
