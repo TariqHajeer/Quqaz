@@ -144,22 +144,22 @@ export class ClientComponent implements OnInit {
     }, 10);
   }
   clientCalc = 0
-  TestCalc(element): number {
+  payForCleint(element): number {
+    
     if (!element.isClientDiliverdMoney) {
       if (element.orderplaced.id == 5)
         return 0;
-      else if (element.orderplaced.id == 7)
-        return element.deliveryCost;
       return element.cost - element.deliveryCost;
 
     }
     else {
+
       //مرتجع كلي
       if (element.orderplaced.id == 5)
-        return element.deliveryCost - element.cost;
+        return element.deliveryCost - element.oldCost;
       //مرفوض
       else if (element.orderplaced.id == 7)
-        return (-element.cost);
+        return (-element.oldCost);
       //مرتجع جزئي
       else if (element.orderplaced.id == 6)
         return element.cost - element.oldCost;

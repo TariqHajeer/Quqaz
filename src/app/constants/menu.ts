@@ -150,7 +150,7 @@ const data: IMenuItem[] = [
           },
           {
             icon: 'simple-icon-layers',
-            label: 'تسديد الشحنات ',
+            label: 'تسديد الشركات ',
             to: `${adminRoot}/reports/orderincompany`,
             //permission:[UserPermission.ShowOrder]
 

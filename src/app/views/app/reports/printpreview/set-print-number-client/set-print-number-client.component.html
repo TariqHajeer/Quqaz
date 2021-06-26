@@ -1,19 +1,19 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="line-scale-party" [fullScreen]="true">
     <p style="color: white"> </p>
-  </ngx-spinner>
+</ngx-spinner>
 <div class="card wtable">
-    <div class="card-body"> 
+    <div class="card-body">
         <h3>عرض شحنات حسب رقم الطباعة للعميل</h3>
         <div class="row">
-          
-            <div class="col-md-3" >
+
+            <div class="col-md-3">
                 <label>رقم الطباعة</label>
-                <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="printnumber" (keyup.enter)="changeDeleiverMoneyForClient()" >
+                <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="printnumber"
+                    (keyup.enter)="changeDeleiverMoneyForClient()">
                 <br>
-            
+
             </div>
-            <div class="col-md-3"  *ngIf="showPrintbtn"  >
+            <div class="col-md-3" *ngIf="showPrintbtn">
                 <button class="btn btn-primary" (click)="convetToPDF()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-printer" viewBox="0 0 16 16">
@@ -36,26 +36,26 @@
             </button>
             <app-receipt-client id="printpage" [orders]="orders" [client]="client" [printnumber]="printnumber" [hidden]="true">
             </app-receipt-client>-->
-            
+
             </div>
-           <div class="col-md-3"  *ngIf="showPrintbtn" >
-            <button class="btn btn-primary" (click)="print()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-printer"
-                      viewBox="0 0 16 16" >
-                      <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
-                      <path
-                          d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
-                  </svg> &nbsp;طباعة 
-          </button>&nbsp;
-           </div>
+            <div class="col-md-3" *ngIf="showPrintbtn">
+                <button class="btn btn-primary" (click)="print()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
+                        class="bi bi-printer" viewBox="0 0 16 16">
+                        <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+                        <path
+                            d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
+                    </svg> &nbsp;طباعة
+                </button>&nbsp;
+            </div>
         </div>
     </div>
-    </div>
+</div>
 
 
 <div class="card wtable" style="direction:rtl" *ngIf="showPrintbtn" id="contentToConvert">
-    <div >
-       
+    <div>
+
         <div class="row " style="margin-bottom: 1%;">
             <div class="col-4" style="text-align: right; direction: rtl;">
                 <table>
@@ -112,7 +112,7 @@
 
                 </table>
             </div>
-            <div class="col-3" >
+            <div class="col-3">
                 <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="150px" height="100px" />
             </div>
             <div class="col-2"></div>
@@ -128,7 +128,7 @@
 
                     <br>
                 </div>
-                <div >
+                <div>
                     <svg style="color: rgb(153, 1, 1);" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                         fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
                         <path
@@ -161,14 +161,14 @@
 
                     </div>
                 </th>
-               
+
                 <th>
                     <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
                         المحافظة
 
                     </div>
                 </th>
-              
+
                 <th>
                     <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
                         تاريخ الطلب
@@ -194,7 +194,7 @@
                     </div>
                 </th>
 
-              
+
                 <th>
                     <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
                         المبلغ القديم
@@ -212,7 +212,7 @@
             <tbody>
                 <tr *ngFor="let order of orders;index as i">
                     <td>
-                        
+
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
                             {{i+1}}
 
@@ -231,7 +231,7 @@
                     <td>
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
                             {{order.date| date: 'yyyy/MM/dd'}}
-                            
+
 
                         </div>
                     </td>
@@ -254,9 +254,9 @@
                         </div>
                     </td>
 
-                 
 
-                   
+
+
                     <td>
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
                             {{order.lastTotal?order.lastTotal:'-'}}
@@ -279,7 +279,7 @@
 
                         </div>
                     </td>
-                    <td >
+                    <td>
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
                             العدد
                         </div>
@@ -311,35 +311,46 @@
                     </td>
                     <td colspan="3"></td>
                 </tr>
-                <tr *ngIf="client.total!=0" style="
-                border: 1px black solid;font-size: 16px;background-color: rgba(144, 177, 240, 0.877);">
-                    <td style="border: 1px black solid;padding: 5px;text-align: center;" colspan="5">
-                        حساب العميل
+                <tr *ngIf="client.total!=0" style="font-size: 16px;background-color: rgba(144, 177, 240, 0.877);">
+                    <td colspan="4"></td>
+
+                    <td >
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            حساب العميل
+
+                        </div>
                     </td>
 
 
-                    <td style="border: 1px black solid;padding: 5px;text-align: center;">
-                        {{client.total| number}}
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{client.total| number}}
+
+                        </div>
                     </td>
-                    <td style="border: 1px black solid;padding: 5px;text-align: center;" colspan="4"></td>
+                    <td colspan="4"></td>
                 </tr>
-                <tr *ngIf="client.total!=0" style="font-size: 16px;
-                border: 1px black solid;">
+                <tr *ngIf="client.total!=0" style="font-size: 16px;background-color: rgb(224, 221, 221);">
+                    <td colspan="4"></td>
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            المبلغ النهائي
 
-                    <td style="border: 1px black solid;padding: 5px;text-align: center;" colspan="5">
-                        المبلغ النهائي في القاصة
+                        </div>
+                    </td>
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{clientCalc+client.total| number}}
 
+                        </div>
                     </td>
-                    <td style="border: 1px black solid;padding: 5px;text-align: center;">
-                        {{clientCalc+client.total| number}}
-                    </td>
-                    <td style="border: 1px black solid;padding: 5px;text-align: center;" colspan="4"></td>
+                    <td colspan="4"></td>
 
                 </tr>
             </tbody>
 
         </table>
-        
+
     </div>
     <div class="card-footer " style="text-align: center;bottom: 0;width: 100%;">
         <h5>{{address}} &nbsp; {{companyPhone}}</h5>

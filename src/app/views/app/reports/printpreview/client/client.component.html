@@ -236,7 +236,7 @@
                     </td>
                     <td>
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                            {{TestCalc(order)| number}}
+                            {{payForCleint(order)| number}}
 
                         </div>
                     </td>
@@ -305,29 +305,40 @@
                     </td>
                     <td colspan="4"></td>
                 </tr>
-                <tr *ngIf="client.total!=0" style="
-                border: 1px black solid;font-size: 16px;background-color: rgba(144, 177, 240, 0.877);">
-                    <td style="border: 1px black solid;padding: 5px;text-align: center;" colspan="5">
-                        حساب العميل
+                <tr *ngIf="client.total!=0" style="font-size: 16px;background-color: rgba(144, 177, 240, 0.877);">
+                    <td colspan="4"></td>
+
+                    <td >
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            حساب العميل
+
+                        </div>
                     </td>
 
 
-                    <td style="border: 1px black solid;padding: 5px;text-align: center;">
-                        {{client.total| number}}
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{client.total| number}}
+
+                        </div>
                     </td>
-                    <td style="border: 1px black solid;padding: 5px;text-align: center;" colspan="4"></td>
+                    <td colspan="4"></td>
                 </tr>
-                <tr *ngIf="client.total!=0" style="font-size: 16px;
-                border: 1px black solid;">
+                <tr *ngIf="client.total!=0" style="font-size: 16px;background-color: rgb(224, 221, 221);">
+                    <td colspan="4"></td>
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            المبلغ النهائي
 
-                    <td style="border: 1px black solid;padding: 5px;text-align: center;" colspan="5">
-                        المبلغ النهائي في القاصة
+                        </div>
+                    </td>
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{clientCalc+client.total| number}}
 
+                        </div>
                     </td>
-                    <td style="border: 1px black solid;padding: 5px;text-align: center;">
-                        {{clientCalc+client.total| number}}
-                    </td>
-                    <td style="border: 1px black solid;padding: 5px;text-align: center;" colspan="4"></td>
+                    <td colspan="4"></td>
 
                 </tr>
             </tbody>

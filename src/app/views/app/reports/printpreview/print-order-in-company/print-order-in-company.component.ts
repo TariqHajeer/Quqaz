@@ -139,25 +139,25 @@ export class PrintOrderInCompanyComponent implements OnInit {
       else return "rgb(255, 255, 255)"
   }
   clientCalc = 0
-  TestCalc(element): number {
-    if (!element.order.isClientDiliverdMoney) {
-      if (element.order.orderplaced.id == 5)
+  payForCleint(element): number {
+    
+    if (!element.isClientDiliverdMoney) {
+      if (element.orderplaced.id == 5)
         return 0;
-      else if (element.order.orderplaced.id == 7)
-        return element.order.deliveryCost;
-      return element.order.cost - element.order.deliveryCost;
+      return element.cost - element.deliveryCost;
 
     }
     else {
+
       //مرتجع كلي
-      if (element.order.orderplaced.id == 5)
-        return element.order.deliveryCost - element.order.cost;
+      if (element.orderplaced.id == 5)
+        return element.deliveryCost - element.oldCost;
       //مرفوض
-      else if (element.order.orderplaced.id == 7)
-        return (-element.order.cost);
+      else if (element.orderplaced.id == 7)
+        return (-element.oldCost);
       //مرتجع جزئي
-      else if (element.order.orderplaced.id == 6)
-        return element.order.cost - element.order.oldCost;
+      else if (element.orderplaced.id == 6)
+        return element.cost - element.oldCost;
     }
 
   }
