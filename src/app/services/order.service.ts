@@ -42,6 +42,31 @@ export class OrderService {
       params = params.append("Page", paging.Page);
     return this.http.get<any>(this.controler, { params: params })
   }
+  WithoutPaging(filter: OrderFilter){
+    let params = new HttpParams();
+    if (filter.Code != undefined || filter.Code != null)
+      params = params.append("Code", filter.Code);
+    if (filter.AgentId != undefined || filter.AgentId != null)
+      params = params.append("AgentId", filter.AgentId);
+    if (filter.Phone != undefined || filter.Phone != null)
+      params = params.append("Phone", filter.Phone);
+    if (filter.CountryId != undefined || filter.CountryId != null)
+      params = params.append("CountryId", filter.CountryId);
+    if (filter.RegionId != undefined || filter.RegionId != null)
+      params = params.append("RegionId", filter.RegionId);
+    if (filter.ClientId != undefined || filter.ClientId != null)
+      params = params.append("ClientId", filter.ClientId);
+    if (filter.RecipientName != undefined || filter.RecipientName != null)
+      params = params.append("RecipientName", filter.RecipientName);
+    if (filter.MonePlacedId != undefined || filter.MonePlacedId != null)
+      params = params.append("MonePlacedId", filter.MonePlacedId);
+    if (filter.OrderplacedId != undefined || filter.OrderplacedId != null)
+      params = params.append("OrderplacedId", filter.OrderplacedId);
+    if (filter.IsClientDiliverdMoney != undefined || filter.IsClientDiliverdMoney != null)
+      params = params.append("IsClientDiliverdMoney", filter.IsClientDiliverdMoney);
+      return this.http.get<any>(this.controler, { params: params })
+
+  }
   GetById(id) {
     return this.http.get<any>(this.controler + id)
   }

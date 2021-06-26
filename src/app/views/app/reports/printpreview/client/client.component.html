@@ -305,7 +305,7 @@
                     </td>
                     <td colspan="4"></td>
                 </tr>
-                <!-- <tr style="
+                <tr *ngIf="client.total!=0" style="
                 border: 1px black solid;font-size: 16px;background-color: rgba(144, 177, 240, 0.877);">
                     <td style="border: 1px black solid;padding: 5px;text-align: center;" colspan="5">
                         حساب العميل
@@ -317,7 +317,7 @@
                     </td>
                     <td style="border: 1px black solid;padding: 5px;text-align: center;" colspan="4"></td>
                 </tr>
-                <tr style="font-size: 16px;
+                <tr *ngIf="client.total!=0" style="font-size: 16px;
                 border: 1px black solid;">
 
                     <td style="border: 1px black solid;padding: 5px;text-align: center;" colspan="5">
@@ -329,7 +329,7 @@
                     </td>
                     <td style="border: 1px black solid;padding: 5px;text-align: center;" colspan="4"></td>
 
-                </tr> -->
+                </tr>
             </tbody>
 
         </table>

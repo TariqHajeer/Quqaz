@@ -118,7 +118,7 @@ export class ShipmentInStockComponent implements OnInit {
     //this.allFilter();
   }
   allFilter() {
-    this.orderservice.GetAll(this.filtering,this.paging).subscribe(response => {
+    this.orderservice.WithoutPaging(this.filtering).subscribe(response => {
       if (response)
         if (response.data.length == 0)
           this.noDataFound = true
