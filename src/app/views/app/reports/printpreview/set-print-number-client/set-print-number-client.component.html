@@ -272,6 +272,7 @@
                 </tr>
 
 
+              
                 <tr style="font-size: 16px;  background-color: rgb(218, 218, 219);">
                     <td>
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
@@ -284,10 +285,10 @@
                             العدد
                         </div>
                     </td>
-                    <td></td>
-                    <td>
+                   
+                    <td colspan="2">
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                            الإجماليات
+                            اجمالي كلفة الطلبات
 
                         </div>
                     </td>
@@ -305,16 +306,15 @@
                     </td>
                     <td>
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                            {{count-deliveryCostCount| number}}
+                            {{clientCalc| number}}
 
                         </div>
                     </td>
-                    <td colspan="3"></td>
+                    <td colspan="4"></td>
                 </tr>
                 <tr *ngIf="client.total!=0" style="font-size: 16px;background-color: rgba(144, 177, 240, 0.877);">
-                    <td colspan="4"></td>
 
-                    <td >
+                    <td colspan="6">
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
                             حساب العميل
 
@@ -331,8 +331,8 @@
                     <td colspan="4"></td>
                 </tr>
                 <tr *ngIf="client.total!=0" style="font-size: 16px;background-color: rgb(224, 221, 221);">
-                    <td colspan="4"></td>
-                    <td>
+
+                    <td colspan="6">
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
                             المبلغ النهائي
 
