@@ -140,7 +140,7 @@ export class PrintOrderInCompanyComponent implements OnInit {
   }
   clientCalc = 0
   payForCleint(element): number {
-    
+    element=element.order
     if (!element.isClientDiliverdMoney) {
       if (element.orderplaced.id == 5)
         return 0;
