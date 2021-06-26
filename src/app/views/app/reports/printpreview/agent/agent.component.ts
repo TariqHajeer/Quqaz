@@ -36,7 +36,7 @@ export class AgentComponent implements OnInit {
   ngOnInit(): void {
     this.PrintNumberOrder = new PrintNumberOrder
     this.orders = JSON.parse(localStorage.getItem('printordersagent'))
-    console.log(this.orders)
+    this.orders=this.orders.sort((a,b)=>a.code-b.code)
     this.agent = JSON.parse(localStorage.getItem('printagent'))
     this.orderplaced = this.orders.map(o => o.orderplaced)[0]
     this.sumCost()

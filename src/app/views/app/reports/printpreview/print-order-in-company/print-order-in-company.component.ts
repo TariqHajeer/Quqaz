@@ -36,6 +36,7 @@ export class PrintOrderInCompanyComponent implements OnInit {
     this.PrintNumberOrder = new PrintNumberOrder
     this.IdCost = new IdCost
     this.orders = JSON.parse(localStorage.getItem('orderincompany'))
+    this.orders=this.orders.sort((a,b)=>a.code-b.code)
     this.temporder = JSON.parse(localStorage.getItem('temporderincompany'))
     this.client = JSON.parse(localStorage.getItem('clientorderincompany'))
     this.orders.forEach(o => {

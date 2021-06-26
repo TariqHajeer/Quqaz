@@ -52,8 +52,8 @@ export class SetPrintNumberClientComponent implements OnInit {
     this.orderservice.GetOrderByClientPrintNumber(this.printnumber).subscribe(res => {
       this.showPrintbtn = true
       this.spinner.hide()
-      console.log(res)
       this.orders = res.orders
+      this.orders=this.orders.sort((a,b)=>a.code-b.code)
       this.client = res.destinationName
       this.destinationPhone = res.destinationPhone
       this.userName = res.printerName
