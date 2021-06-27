@@ -28,4 +28,8 @@ export class ReciptService {
    Delete(id){
      return this.http.delete(this.controler+id)
    }
+   UnPaidRecipt(ClientId){
+    return this.http.get<any>(this.controler+"UnPaidRecipt/"+ClientId)
+
+   }
 }

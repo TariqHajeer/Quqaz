@@ -306,9 +306,96 @@
                     </td>
                     <td colspan="4"></td>
                 </tr>
-                <tr *ngIf="client.total!=0" style="font-size: 16px;background-color: rgba(144, 177, 240, 0.877);">
+              
+                <tr *ngIf="reports.length!=0" style="text-align: center;background-color: rgba(144, 177, 240, 0.877);">
+                   <td colspan="9" style="text-align: center;font-size: 18px;">
+                    السندات
+                   </td>
+                </tr>
+            </tbody>
+        </table>
+        <table *ngIf="reports.length!=0">
+            <thead style="font-size: 16px;  background-color: rgb(218, 218, 219);">
+                <th>
+                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                        ترقيم
+                    </div>
+                </th>
+                <th>
+                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                        رقم السند
+                    </div>
+                </th>
+                <th>
+                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                        تاريخ
+                    </div>
+                </th>
+                <th>
+                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                        حالة السند
+                    </div>
+                </th>
+                <th>
+                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                        كلفة السند
+                    </div>
+                </th>
+                
+                <th>
+                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                        وذلك عن
+                    </div>
+                </th>
+                <th>
+                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                        ملاحظات
+                    </div>
+                </th>
 
-                    <td colspan="6">
+            </thead>
+            <tbody>
+                <tr *ngFor="let report of reports;index as i">
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{i+1}}
+                        </div>
+                    </td>
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{report.id}}
+                        </div>
+                    </td>
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{report.date| date: 'yyyy/MM/dd'}}
+                        </div>
+                    </td>
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{report.isPay?'صرف':'قبض'}}
+                        </div>
+                    </td>
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{report.amount<0?report.amount*-1:report.amount}}
+                        </div>
+                    </td>
+                  
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{report.about}}
+                        </div>
+                    </td>
+                    <td style="width:25%;">
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{report.note}}
+                        </div>
+                    </td>
+                </tr>
+                  <tr  style="font-size: 16px;background-color: rgb(224, 221, 221);">
+
+                    <td colspan="4">
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
                             حساب العميل
 
@@ -324,9 +411,9 @@
                     </td>
                     <td colspan="4"></td>
                 </tr>
-                <tr *ngIf="client.total!=0" style="font-size: 16px;background-color: rgb(224, 221, 221);">
+                <tr  style="font-size: 16px;background-color: rgb(224, 221, 221);">
 
-                    <td colspan="6">
+                    <td colspan="4">
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
                             المبلغ النهائي
 
@@ -340,60 +427,6 @@
                     </td>
                     <td colspan="4"></td>
 
-                </tr>
-                <tr *ngIf="reports.length!=0" style="text-align: center;background-color: rgb(219, 219, 219);">
-                   <td colspan="9" style="text-align: center;font-size: 18px;">
-                    السندات
-                   </td>
-                </tr>
-            </tbody>
-        </table>
-        <table *ngIf="reports.length!=0">
-            <thead style="font-size: 16px;  background-color: rgb(218, 218, 219);">
-                <th>
-                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                        رقم السند
-                    </div>
-                </th>
-                <th>
-                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                        كلفة السند
-                    </div>
-                </th>
-                <th>
-                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                        تاريخ
-                    </div>
-                </th>
-                <th>
-                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                        وذلك عن
-                    </div>
-                </th>
-
-            </thead>
-            <tbody>
-                <tr *ngFor="let report of reports">
-                    <td>
-                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                            {{report}}
-                        </div>
-                    </td>
-                    <td>
-                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                            {{report}}
-                        </div>
-                    </td>
-                    <td>
-                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                            {{report}}
-                        </div>
-                    </td>
-                    <td>
-                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                            {{report}}
-                        </div>
-                    </td>
                 </tr>
             </tbody>
         </table>
