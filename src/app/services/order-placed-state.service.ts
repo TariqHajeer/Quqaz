@@ -14,11 +14,11 @@ export class OrderPlacedStateService {
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 1)]
       element.order.monePlaced = element.MoenyPlaced[0]
     }
-    
+
   }
   //تم التسليم و مرتجع جزئي
   canChangeCost(element, MoenyPlaced, temporderscostindex?) {
-    if (element.order.orderplaced.id == 6||element.order.orderplaced.id == 4) {
+    if (element.order.orderplaced.id == 6 || element.order.orderplaced.id == 4) {
       element.canEditCount = false
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 2 || m.id == 3)]
       element.order.monePlaced = element.MoenyPlaced[0]
@@ -31,7 +31,7 @@ export class OrderPlacedStateService {
 
     }
   }
-  rangeCost(element, temporderscostindex):boolean {
+  rangeCost(element, temporderscostindex): boolean {
     if (element.order.cost <= temporderscostindex) {
       return true
     }
@@ -49,7 +49,7 @@ export class OrderPlacedStateService {
   }
   isClientDiliverdMoney(element, MoenyPlaced) {
     if (element.order.isClientDiliverdMoney == true && element.order.orderplaced.id == 4) {
-      element.MoenyPlaced = [...MoenyPlaced.filter(m =>  m.id == 4)]
+      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 4)]
       element.order.monePlaced = element.MoenyPlaced[0]
       element.messageCost = ""
       // element.order.monePlaced = element.MoenyPlaced[0]
@@ -58,7 +58,7 @@ export class OrderPlacedStateService {
   }
   //تم التسليم
   sentDeliveredHanded(element, MoenyPlaced, tempordersmonePlacedindex?, tempisClientDiliverdMoneyindex?) {
-    if (element.order.orderplaced.id == 4&&element.order.isClientDiliverdMoney == false) {
+    if (element.order.orderplaced.id == 4 && element.order.isClientDiliverdMoney == false) {
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 2 || m.id == 3)]
       element.order.monePlaced = element.MoenyPlaced[0]
 
@@ -73,19 +73,21 @@ export class OrderPlacedStateService {
       //   }
     }
   }
-  EditDeliveryCost(element,tempdeliveryCost?,tempagentCost?){
-    if (element.order.orderplaced.id == 7 || element.order.orderplaced.id == 5|| element.order.orderplaced.id == 8) {
-    if(element.order.orderplaced.id == 5){
-      element.order.deliveryCost=0
-      element.order.agentCost=0
-    }else{
+  EditDeliveryCost(element, tempdeliveryCost?, tempagentCost?) {
+    if (element.order.orderplaced.id == 7 || element.order.orderplaced.id == 5 || element.order.orderplaced.id == 8) {
+      if (element.order.orderplaced.id == 5) {
+        element.order.deliveryCost = 0
+        element.order.agentCost = 0
+      } else {
+        element.order.deliveryCost = Object.assign(tempdeliveryCost, tempdeliveryCost);
+        element.order.agentCost = Object.assign(tempagentCost, tempagentCost);
+      }
+      element.canEditDeliveryCost = false
+    } else {
+      element.canEditDeliveryCost = true
       element.order.deliveryCost=Object.assign(tempdeliveryCost, tempdeliveryCost);
       element.order.agentCost=Object.assign(tempagentCost, tempagentCost);
     }
-    element.canEditDeliveryCost=false
-    }else
-    element.canEditDeliveryCost=true
-
   }
 }
 export class GetOrder {

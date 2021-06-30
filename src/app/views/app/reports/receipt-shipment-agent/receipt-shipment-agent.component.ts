@@ -179,7 +179,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced)
     this.orderplacedstate.unacceptable(this.getorder, this.MoenyPlaced)
     this.orderplacedstate.isClientDiliverdMoney(this.getorder, this.MoenyPlaced)
-    this.orderplacedstate.EditDeliveryCost(this.getorder)
+    this.orderplacedstate.EditDeliveryCost(this.getorder,this.getorder.order.deliveryCost,this.getorder.order.agentCost)
 
     if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2) {
       this.getorder.order.orderplaced = this.getorder.OrderPlaced.find(o => o.id == 3)
