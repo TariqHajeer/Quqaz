@@ -73,11 +73,14 @@ export class OrderPlacedStateService {
       //   }
     }
   }
-  EditDeliveryCost(element){
+  EditDeliveryCost(element,tempdeliveryCost?,tempagentCost?){
     if (element.order.orderplaced.id == 7 || element.order.orderplaced.id == 5|| element.order.orderplaced.id == 8) {
     if(element.order.orderplaced.id == 5){
       element.order.deliveryCost=0
       element.order.agentCost=0
+    }else{
+      element.order.deliveryCost=Object.assign(tempdeliveryCost, tempdeliveryCost);
+      element.order.agentCost=Object.assign(tempagentCost, tempagentCost);
     }
     element.canEditDeliveryCost=false
     }else

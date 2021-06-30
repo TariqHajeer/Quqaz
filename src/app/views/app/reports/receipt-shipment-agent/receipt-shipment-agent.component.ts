@@ -52,6 +52,8 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   noDataFound: boolean = false
   canEditCount: boolean[] = []
   temporderscost: any[] = []
+  tempagentCost: any[] = []
+  tempdeliveryCost: any[] = []
   tempordersmonePlaced: GetOrder[] = []
   tempisClientDiliverdMoney: any[] = []
   orderstates: OrderState[] = []
@@ -194,6 +196,8 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.getorders)
     this.totalCount = this.dataSource.data.length
     this.temporderscost = Object.assign({}, this.getorders.map(o => o.order.cost));
+    this.tempdeliveryCost = Object.assign({}, this.getorders.map(o => o.order.deliveryCost));
+    this.tempagentCost = Object.assign({}, this.getorders.map(o => o.order.agentCost));
     this.tempordersmonePlaced = Object.assign({}, this.getorders.map(o => o.order.monePlaced));
     this.tempisClientDiliverdMoney = Object.assign({}, this.getorders.map(o => o.order.isClientDiliverdMoney));
     this.Code = ""
@@ -226,7 +230,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.orderplacedstate.onWay(element, this.MoenyPlaced)
     this.orderplacedstate.unacceptable(element, this.MoenyPlaced)
     this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
-    this.orderplacedstate.EditDeliveryCost(element)
+    this.orderplacedstate.EditDeliveryCost(element, this.tempdeliveryCost[index],this.tempagentCost[index])
 
   }
 
@@ -281,7 +285,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       this.orderstate.Note = this.dataSource.data[i].order.note
       this.orderstate.MoenyPlacedId = this.dataSource.data[i].order.monePlaced.id
       this.orderstate.OrderplacedId = this.dataSource.data[i].order.orderplaced.id
-      console.log(this.orderstate)
+      // console.log(this.orderstate)
       this.orderstates.push(this.orderstate)
       this.orderstate = new OrderState
     }
@@ -309,7 +313,12 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       this.tempOrders.push({ ...o })
     })
     this.dataSource = new MatTableDataSource(this.tempOrders)
-
+    this.totalCount = this.dataSource.data.length
+    this.temporderscost = Object.assign({}, this.getorders.map(o => o.order.cost));
+    this.tempordersmonePlaced = Object.assign({}, this.getorders.map(o => o.order.monePlaced));
+    this.tempisClientDiliverdMoney = Object.assign({}, this.getorders.map(o => o.order.isClientDiliverdMoney));
+    this.tempdeliveryCost = Object.assign({}, this.getorders.map(o => o.order.deliveryCost));
+    this.tempagentCost = Object.assign({}, this.getorders.map(o => o.order.agentCost));
     // var index = this.dataSource.data.indexOf(order);
     // this.dataSource.data.splice(index, 1);
     // this.dataSource._updateChangeSubscription();
