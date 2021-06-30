@@ -271,6 +271,9 @@ export class ShipmentsOnWayComponent implements OnInit {
     for (let i = 0; i < this.orders.length; i++) {
       this.orderstate.Id = this.orders[i].id
       this.orderstate.Cost = this.orders[i].cost
+      this.orderstate.DeliveryCost = this.orders[i].deliveryCost
+      this.orderstate.AgentCost = this.orders[i].agentCost
+      this.orderstate.Note = this.orders[i].note
       this.orderstate.MoenyPlacedId = this.orders[i].monePlaced.id
       this.orderstate.OrderplacedId = this.orders[i].orderplaced.id
       this.orderstates.push(this.orderstate)

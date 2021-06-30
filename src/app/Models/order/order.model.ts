@@ -27,6 +27,9 @@ export class OrderState {
       Cost: number
       MoenyPlacedId: number
       OrderplacedId: number
+      DeliveryCost:number
+      AgentCost:number
+      Note
 
 }
 export class IdCost{

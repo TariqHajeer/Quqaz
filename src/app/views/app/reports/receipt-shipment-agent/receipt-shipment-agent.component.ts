@@ -21,7 +21,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class ReceiptShipmentAgentComponent implements OnInit {
 
   displayedColumns: string[] = ['index', 'code', 'client', 'country'
-    , 'cost', 'isClientDiliverdMoney', 'orderplaced', 'monePlaced', 'edit'];
+    , 'cost', 'isClientDiliverdMoney', 'orderplaced', 'monePlaced','deliveryCost','agentCost','note', 'edit'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
   Code
@@ -143,6 +143,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.showTable = false
     if (this.Code) {
       this.orderservice.GetOrderByAgent(this.Code).subscribe(res => {
+        console.log(res)
         this.findorder = res
         if (this.findorder) {
           if (this.findorder.length == 1) {
@@ -271,6 +272,9 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     for (let i = 0; i < this.dataSource.data.length; i++) {
       this.orderstate.Id = this.dataSource.data[i].order.id
       this.orderstate.Cost = this.dataSource.data[i].order.cost
+      this.orderstate.DeliveryCost = this.dataSource.data[i].order.deliveryCost
+      this.orderstate.AgentCost = this.dataSource.data[i].order.agentCost
+      this.orderstate.Note = this.dataSource.data[i].order.note
       this.orderstate.MoenyPlacedId = this.dataSource.data[i].order.monePlaced.id
       this.orderstate.OrderplacedId = this.dataSource.data[i].order.orderplaced.id
       this.orderstates.push(this.orderstate)
