@@ -271,12 +271,13 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   saveEdit() {
     for (let i = 0; i < this.dataSource.data.length; i++) {
       this.orderstate.Id = this.dataSource.data[i].order.id
-      this.orderstate.Cost = this.dataSource.data[i].order.cost
-      this.orderstate.DeliveryCost = this.dataSource.data[i].order.deliveryCost
-      this.orderstate.AgentCost = this.dataSource.data[i].order.agentCost
+      this.orderstate.Cost = this.dataSource.data[i].order.cost*1
+      this.orderstate.DeliveryCost = this.dataSource.data[i].order.deliveryCost*1
+      this.orderstate.AgentCost = this.dataSource.data[i].order.agentCost*1
       this.orderstate.Note = this.dataSource.data[i].order.note
       this.orderstate.MoenyPlacedId = this.dataSource.data[i].order.monePlaced.id
       this.orderstate.OrderplacedId = this.dataSource.data[i].order.orderplaced.id
+      console.log(this.orderstate)
       this.orderstates.push(this.orderstate)
       this.orderstate = new OrderState
     }

@@ -220,7 +220,7 @@ export class ShipmentsOnWayComponent implements OnInit {
       })
       this.getorders = [...this.getorders.filter(o => o.order.date >= this.todate &&
         o.order.date <= this.fordate)]
-      console.log(this.getorders)
+      // console.log(this.getorders)
       this.dataSource = new MatTableDataSource(this.getorders)
     }
 
@@ -229,7 +229,6 @@ export class ShipmentsOnWayComponent implements OnInit {
   filterprintNumber() {
     this.getorders = this.temporder
     this.getorders = [...this.getorders.filter(o => o.order.agentPrintNumber == this.printNumber)]
-    console.log(this.getorders)
     if (!this.printNumber)
       this.getorders = this.temporder
     this.dataSource = new MatTableDataSource(this.getorders)
@@ -270,9 +269,9 @@ export class ShipmentsOnWayComponent implements OnInit {
   saveEdit() {
     for (let i = 0; i < this.orders.length; i++) {
       this.orderstate.Id = this.orders[i].id
-      this.orderstate.Cost = this.orders[i].cost
-      this.orderstate.DeliveryCost = this.orders[i].deliveryCost
-      this.orderstate.AgentCost = this.orders[i].agentCost
+      this.orderstate.Cost = this.orders[i].cost*1
+      this.orderstate.DeliveryCost = this.orders[i].deliveryCost*1
+      this.orderstate.AgentCost = this.orders[i].agentCost*1
       this.orderstate.Note = this.orders[i].note
       this.orderstate.MoenyPlacedId = this.orders[i].monePlaced.id
       this.orderstate.OrderplacedId = this.orders[i].orderplaced.id
@@ -280,7 +279,6 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.orderstate = new OrderState
     }
     this.spinner.show();
-    console.log(this.orderstates)
     this.orderservice.UpdateOrdersStatusFromAgent(this.orderstates).subscribe(res => {
       this.allFilter()
       this.spinner.hide()
