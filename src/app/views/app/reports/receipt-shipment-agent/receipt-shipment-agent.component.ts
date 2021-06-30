@@ -177,6 +177,8 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced)
     this.orderplacedstate.unacceptable(this.getorder, this.MoenyPlaced)
     this.orderplacedstate.isClientDiliverdMoney(this.getorder, this.MoenyPlaced)
+    this.orderplacedstate.EditDeliveryCost(this.getorder)
+
     if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2) {
       this.getorder.order.orderplaced = this.getorder.OrderPlaced.find(o => o.id == 3)
     }
@@ -224,6 +226,8 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.orderplacedstate.onWay(element, this.MoenyPlaced)
     this.orderplacedstate.unacceptable(element, this.MoenyPlaced)
     this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
+    this.orderplacedstate.EditDeliveryCost(element)
+
   }
 
   changeCost(element, index) {

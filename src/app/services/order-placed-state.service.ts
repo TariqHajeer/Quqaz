@@ -73,7 +73,17 @@ export class OrderPlacedStateService {
       //   }
     }
   }
+  EditDeliveryCost(element){
+    if (element.order.orderplaced.id == 7 || element.order.orderplaced.id == 5|| element.order.orderplaced.id == 8) {
+    if(element.order.orderplaced.id == 5){
+      element.order.deliveryCost=0
+      element.order.agentCost=0
+    }
+    element.canEditDeliveryCost=false
+    }else
+    element.canEditDeliveryCost=true
 
+  }
 }
 export class GetOrder {
   constructor() {
@@ -85,5 +95,6 @@ export class GetOrder {
   MoenyPlaced: NameAndIdDto[]
   OrderPlaced: NameAndIdDto[]
   messageCost
+  canEditDeliveryCost: boolean = true
 
 }
