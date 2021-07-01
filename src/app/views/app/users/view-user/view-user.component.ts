@@ -43,7 +43,7 @@ export class ViewUserComponent implements OnInit {
     this.filterSettings = { type: "CheckBox" };
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
-    this.pageSettings = { pageSize: 5, pageSizes: true };
+    this.pageSettings = { pageSize: 10, pageSizes: true };
     this.selectionSettings = {  type: "Multiple" };
     this.lines = 'Horizontal';
   }

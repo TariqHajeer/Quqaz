@@ -122,9 +122,9 @@ export class SetPrintNumberClientComponent implements OnInit {
     });
     this.spinner.show()
     this.orderservice.GetOrderByClientPrintNumber(this.printnumber).subscribe(res => {
-      // console.log(res)
+      console.log(res)
       this.sumCost()
-      this.reciptClient()
+      // this.reciptClient()
       this.showPrintbtn = true
       this.spinner.hide()
       this.orders = res.orders
@@ -133,6 +133,8 @@ export class SetPrintNumberClientComponent implements OnInit {
       this.destinationPhone = res.destinationPhone
       this.userName = res.printerName
       this.dateOfPrint = res.date
+      this.reports=res.receipts
+
     }, err => {
       this.spinner.hide()
       this.showPrintbtn = false
