@@ -92,20 +92,20 @@ export class SetPrintNumberClientComponent implements OnInit {
     if (!element.isClientDiliverdMoney) {
       if (element.orderplaced.id == 5)
         return 0;
-      return element.cost - element.deliveryCost;
+      return element.total - element.deliveCost;
 
     }
     else {
 
       //مرتجع كلي
       if (element.orderplaced.id == 5)
-        return element.deliveryCost - element.oldCost;
+        return element.deliveCost - element.lastTotal;
       //مرفوض
       else if (element.orderplaced.id == 7)
-        return (-element.oldCost);
+        return (-element.lastTotal);
       //مرتجع جزئي
       else if (element.orderplaced.id == 6)
-        return element.cost - element.oldCost;
+        return element.total - element.lastTotal;
     }
 
   }
@@ -175,26 +175,5 @@ export class SetPrintNumberClientComponent implements OnInit {
 
     }, 10);
   }
-  TestCalc(element): number {
-    if (!element.isClientDiliverdMoney) {
-      if (element.orderplaced.id == 5)
-        return 0;
-      else if (element.orderplaced.id == 7)
-        return element.deliveryCost;
-      return element.cost - element.deliveryCost;
-
-    }
-    else {
-      //مرتجع كلي
-      if (element.orderplaced.id == 5)
-        return element.deliveryCost - element.cost;
-      //مرفوض
-      else if (element.orderplaced.id == 7)
-        return (-element.cost);
-      //مرتجع جزئي
-      else if (element.orderplaced.id == 6)
-        return element.cost - element.oldCost;
-    }
-
-  }
+ 
 }
