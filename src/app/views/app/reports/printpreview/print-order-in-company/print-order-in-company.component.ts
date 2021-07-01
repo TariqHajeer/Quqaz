@@ -46,6 +46,8 @@ export class PrintOrderInCompanyComponent implements OnInit {
       this.IdCost.Id = o.order.id
       this.IdCost.Cost = o.order.cost
       this.IdCosts.push(this.IdCost)
+      this.IdCost = new IdCost
+
     })
     this.sumCost()
     //  this.getPrintnumber()
