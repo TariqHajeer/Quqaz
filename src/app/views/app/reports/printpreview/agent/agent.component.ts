@@ -8,6 +8,7 @@ import * as jspdf from 'jspdf';
 import { NgxSpinnerService } from 'ngx-spinner';
 import html2canvas from 'html2canvas';
 import * as jsPDF from 'jspdf';
+import { DateWithIds } from 'src/app/Models/date-with-ids.model';
 
 @Component({
   selector: 'app-agent',
@@ -64,9 +65,15 @@ export class AgentComponent implements OnInit {
       this.showPrintbtn=true
     }
   }
+  dateWithIds :DateWithIds=new DateWithIds
+
   afterPrint() {
     this.spinner.show()
-    this.orderservice.MakeOrderInWay(this.orders.map(o => o.id)).subscribe(res => {
+    this.dateWithIds = {
+      Ids: this.orders.map(o => o.id),
+      Date: new Date
+    }
+    this.orderservice.MakeOrderInWay(this.dateWithIds).subscribe(res => {
       this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       //this.orders=[]
       this.printnumber = res.printNumber

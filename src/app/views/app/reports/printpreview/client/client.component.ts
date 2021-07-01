@@ -7,7 +7,7 @@ import { OrderService } from 'src/app/services/order.service';
 import * as jspdf from 'jspdf';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ReciptService } from 'src/app/services/recipt.service';
-
+import{DateWithIds}from 'src/app/Models/date-with-ids.model';
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
@@ -89,10 +89,7 @@ export class ClientComponent implements OnInit {
   }
 
   showPrintbtn = false
-  dateWithIds = {
-    Ids: this.orders.map(o => o.id),
-    Date: new Date
-  }
+  dateWithIds :DateWithIds=new DateWithIds
   changeDeleiverMoneyForClient() {
     this.spinner.show()
     this.dateWithIds = {
@@ -173,7 +170,6 @@ export class ClientComponent implements OnInit {
   }
   reciptClient() {
     this.recepitservce.UnPaidRecipt(this.client.id).subscribe(res => {
-      console.log(res)
       this.reports=res
     })
   }

@@ -6,6 +6,7 @@ import { PrintNumberOrder } from 'src/app/Models/order/PrintNumberOrder.model';
 import { OrderService } from 'src/app/services/order.service';
 import * as jspdf from 'jspdf';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ReciptService } from 'src/app/services/recipt.service';
 
 @Component({
   selector: 'app-set-print-number-client',
@@ -19,7 +20,9 @@ export class SetPrintNumberClientComponent implements OnInit {
     public sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef,
     private spinner: NgxSpinnerService,
-    ) { }
+    private recepitservce: ReciptService
+
+  ) { }
   heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'موقع المبلغ', 'حالة الشحنة ', 'الهاتف', 'ملاحظات']
   orders: any[] = []
   count = 0
@@ -28,8 +31,10 @@ export class SetPrintNumberClientComponent implements OnInit {
   userName
   printnumber
   PrintNumberOrder: PrintNumberOrder
-  address="أربيل - شارع 40 - قرب تقاطع كوك"
-  companyPhone="07514550880 - 07700890880"
+  reports: any[] = []
+  clientCalc = 0
+  address = "أربيل - شارع 40 - قرب تقاطع كوك"
+  companyPhone = "07514550880 - 07700890880"
   ngOnInit(): void {
 
   }
@@ -38,27 +43,90 @@ export class SetPrintNumberClientComponent implements OnInit {
   sumCost() {
     this.count = 0
     this.deliveryCostCount = 0
+    this.clientCalc = 0
     if (this.orders)
       this.orders.forEach(o => {
-        this.count += o.total
-        this.deliveryCostCount += o.deliveCost
+        this.count += o.cost
+        this.deliveryCostCount += o.deliveryCost
+        if (!o.isClientDiliverdMoney) {
+          if (o.orderplaced.id == 5) {
+            this.clientCalc += 0
+            return 0;
+          }
+          else if (o.orderplaced.id == 7) {
+            this.clientCalc += o.deliveryCost
+            return o.deliveryCost;
+          }
+          this.clientCalc += o.cost - o.deliveryCost
+          return o.cost - o.deliveryCost;
+
+        }
+        else {
+          //مرتجع كلي
+          if (o.orderplaced.id == 5) {
+            this.clientCalc += o.deliveryCost - o.cost
+            return o.deliveryCost - o.cost;
+          }
+          //مرفوض
+          else if (o.orderplaced.id == 7) {
+            this.clientCalc += (-o.cost)
+            return (-o.cost);
+          }
+          //مرتجع جزئي
+          else if (o.orderplaced.id == 6) {
+            this.clientCalc += o.cost - o.oldCost;
+            return o.cost - o.oldCost;
+          }
+          
+          
+        }
       })
     return this.count
+  }
+  payForCleint(element): any {
+    if (element.orderplaced == null)
+    return "-"
+    if (!element.isClientDiliverdMoney) {
+      if (element.orderplaced.id == 5)
+        return 0;
+      return element.cost - element.deliveryCost;
+
+    }
+    else {
+
+      //مرتجع كلي
+      if (element.orderplaced.id == 5)
+        return element.deliveryCost - element.oldCost;
+      //مرفوض
+      else if (element.orderplaced.id == 7)
+        return (-element.oldCost);
+      //مرتجع جزئي
+      else if (element.orderplaced.id == 6)
+        return element.cost - element.oldCost;
+    }
+
+  }
+  reciptClient() {
+    this.recepitservce.UnPaidRecipt(this.client.id).subscribe(res => {
+      this.reports = res
+    })
   }
   showPrintbtn = false
   destinationPhone
   changeDeleiverMoneyForClient() {
     this.spinner.show()
     this.orderservice.GetOrderByClientPrintNumber(this.printnumber).subscribe(res => {
+      console.log(res)
+      this.sumCost()
+      this.reciptClient()
       this.showPrintbtn = true
       this.spinner.hide()
       this.orders = res.orders
-      this.orders=this.orders.sort((a,b)=>a.code-b.code)
+      this.orders = this.orders.sort((a, b) => a.code - b.code)
       this.client = res.destinationName
       this.destinationPhone = res.destinationPhone
       this.userName = res.printerName
-      this.dateOfPrint=res.date
-      this.sumCost()
+      this.dateOfPrint = res.date
     }, err => {
       this.spinner.hide()
       this.showPrintbtn = false
@@ -78,7 +146,7 @@ export class SetPrintNumberClientComponent implements OnInit {
     const elementToPrint = document.getElementById('contentToConvert'); //The html element to become a pdf
     const pdf = new jspdf('p', 'mm', 'a4');
     pdf.addHTML(elementToPrint, () => {
-      pdf.save( this.dateOfPrint+'.pdf');
+      pdf.save(this.dateOfPrint + '.pdf');
     });
   }
   print() {
@@ -100,25 +168,25 @@ export class SetPrintNumberClientComponent implements OnInit {
     }, 10);
   }
   TestCalc(element): number {
-    if (!element.isClientDiliverdMoney){
-      if(element.orderplaced.id==5)
-      return 0;
-      else if(element.orderplaced.id==7)
-      return element.deliveryCost;
+    if (!element.isClientDiliverdMoney) {
+      if (element.orderplaced.id == 5)
+        return 0;
+      else if (element.orderplaced.id == 7)
+        return element.deliveryCost;
       return element.cost - element.deliveryCost;
-     
+
     }
-    else{ 
+    else {
       //مرتجع كلي
-      if(element.orderplaced.id==5)
-      return element.deliveryCost- element.cost ;
+      if (element.orderplaced.id == 5)
+        return element.deliveryCost - element.cost;
       //مرفوض
-      else if(element.orderplaced.id==7)
-      return (-element.cost);
+      else if (element.orderplaced.id == 7)
+        return (-element.cost);
       //مرتجع جزئي
-      else if(element.orderplaced.id==6)
-      return element.cost-  element.oldCost;
+      else if (element.orderplaced.id == 6)
+        return element.cost - element.oldCost;
     }
-    
+
   }
 }
