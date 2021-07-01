@@ -1,8 +1,12 @@
 <h3>عمليات الطباعة الخاصة بالعميل</h3>
 <div class="col-md-3">
   <input type="text" class="form-control"placeholder="بحث على حسب  رقم الطباعة"
-   (keyup)="printNmberFillter()"  [ngModelOptions]="{standalone: true}" [(ngModel)]="printNmber">
+   (keyup.enter)="printNmberFillter()"  [ngModelOptions]="{standalone: true}" [(ngModel)]="printNmber">
 </div>
+<div class="col-md-3">
+<button class="btn" (click)="printNmberFillter()"></button>
+</div>
+<br>
 <div class="example-container mat-elevation-z8">
 
 

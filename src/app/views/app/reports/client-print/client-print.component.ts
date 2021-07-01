@@ -18,8 +18,8 @@ export class ClientPrintComponent implements OnInit {
     this.paging = new Paging
     this.Get()
   }
-  displayedColumns: string[] = ['date', 'destinationName', 'destinationPhone',
-   'printNmber', 'printerName'];
+  displayedColumns: string[] = [ 'printNmber', 'printerName','date', 'destinationName', 'destinationPhone'
+  ];
   ;
   dataSource
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -29,12 +29,12 @@ export class ClientPrintComponent implements OnInit {
   paging: Paging
   noDataFound: boolean = false
   Get() {
-    this.orderService.GetClientprint(this.paging).subscribe(res => {
-      this.orderFilter=res
-      this.orderFilter.forEach(o=>{
-        o.printNmber=JSON.stringify(o.printNmber)
-      })
-      this.dataSource = new MatTableDataSource( this.orderFilter)
+    this.orderService.GetClientprint(this.paging,this.printNmber).subscribe(res => {
+      // this.orderFilter=res
+      // this.orderFilter.forEach(o=>{
+      //   o.printNmber=JSON.stringify(o.printNmber)
+      // })
+      this.dataSource = new MatTableDataSource( res.data)
       this.totalCount = res.total
 
     })
@@ -46,11 +46,14 @@ export class ClientPrintComponent implements OnInit {
     this.Get();
 
   }
-  printNmber
-  orderFilter=[]
-  printNmberFillter() {
-    this.dataSource.data=this.orderFilter
-    if(this.dataSource.data.length!=0)
-   this.dataSource.data= this.dataSource.data.filter(d=>d.printNmber.includes(this.printNmber))
+  printNmberFillter(){
+    this.Get()
   }
+   printNmber:number=null
+  // orderFilter=[]
+  // printNmberFillter() {
+  //   this.dataSource.data=this.orderFilter
+  //   if(this.dataSource.data.length!=0)
+  //  this.dataSource.data= this.dataSource.data.filter(d=>d.printNmber.includes(this.printNmber))
+  // }
 }
