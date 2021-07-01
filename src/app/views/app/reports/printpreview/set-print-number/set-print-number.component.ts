@@ -7,6 +7,7 @@ import { OrderService } from 'src/app/services/order.service';
 import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-set-print-number',
   templateUrl: './set-print-number.component.html',
@@ -19,6 +20,8 @@ export class SetPrintNumberComponent implements OnInit {
     public sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef,
     private spinner: NgxSpinnerService,
+    public getroute: ActivatedRoute
+
 
   ) { }
   heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'المنطقة','الهاتف', 'اسم العميل', 'مـلاحظـــــات']
@@ -32,7 +35,7 @@ export class SetPrintNumberComponent implements OnInit {
   address="أربيل - شارع 40 - قرب تقاطع كوك"
   companyPhone="07514550880 - 07700890880"
   ngOnInit(): void {
-
+this.changeDeleiverMoneyForClient()
   }
 
   sumCost() {
@@ -47,6 +50,9 @@ export class SetPrintNumberComponent implements OnInit {
   showPrintbtn = false
   phones
   changeDeleiverMoneyForClient() {
+    this.getroute.params.subscribe(par => {
+      this.printnumber = par['printnumber'] as any
+    });
     this.spinner.show()
     this.orderservice.GetOrderByAgnetPrintNumber(this.printnumber).subscribe(res => {
       this.spinner.hide()

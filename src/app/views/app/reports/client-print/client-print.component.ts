@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Paging } from 'src/app/Models/paging';
 import { OrderService } from 'src/app/services/order.service';
 
@@ -12,7 +13,7 @@ import { OrderService } from 'src/app/services/order.service';
 })
 export class ClientPrintComponent implements OnInit {
 
-  constructor(public orderService: OrderService) { }
+  constructor(public orderService: OrderService, private router: Router) { }
 
   ngOnInit(): void {
     this.paging = new Paging
@@ -48,6 +49,9 @@ export class ClientPrintComponent implements OnInit {
   }
   printNmberFillter(){
     this.Get()
+  }
+  print(number) {
+    this.router.navigate(['/app/reports/clientprintnumber/',number])
   }
    printNmber:number=null
   // orderFilter=[]

@@ -120,13 +120,13 @@ const data: IMenuItem[] = [
             //permission:[UserPermission.ShowOrder]
 
           },
-          {
-            icon: 'simple-icon-layers',
-            label: 'شحنات حسب رقم الطباعة ',
-            to: `${adminRoot}/reports/printsetprintnumberagentpreview`,
-            //permission:[UserPermission.ShowOrder]
+          // {
+          //   icon: 'simple-icon-layers',
+          //   label: 'شحنات حسب رقم الطباعة ',
+          //   to: `${adminRoot}/reports/printsetprintnumberagentpreview`,
+          //   //permission:[UserPermission.ShowOrder]
 
-          },
+          // },
           {
             icon: 'simple-icon-layers',
             label: 'عمليات الطباعة ',
@@ -167,14 +167,14 @@ const data: IMenuItem[] = [
             label: ' صرف وقبض ',
             to: `${adminRoot}/reports/receiptsandexchanges`,
           },
-          {
-            icon: 'simple-icon-layers',
-            label: 'شحنات حسب رقم الطباعة ',
-            to: `${adminRoot}/reports/printsetprintnumberclientpreview`,
-            //permission:[UserPermission.ShowOrder]
+          // {
+          //   icon: 'simple-icon-layers',
+          //   label: 'شحنات حسب رقم الطباعة ',
+          //   to: `${adminRoot}/reports/printsetprintnumberclientpreview`,
+          //   //permission:[UserPermission.ShowOrder]
 
     
-          },
+          // },
           {
             icon: 'simple-icon-layers',
             label: 'عمليات الطباعة ',

@@ -7,6 +7,7 @@ import { OrderService } from 'src/app/services/order.service';
 import * as jspdf from 'jspdf';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ReciptService } from 'src/app/services/recipt.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-set-print-number-client',
@@ -20,7 +21,8 @@ export class SetPrintNumberClientComponent implements OnInit {
     public sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef,
     private spinner: NgxSpinnerService,
-    private recepitservce: ReciptService
+    private recepitservce: ReciptService,
+    public getroute: ActivatedRoute
 
   ) { }
   heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'موقع المبلغ', 'حالة الشحنة ', 'الهاتف', 'ملاحظات']
@@ -36,7 +38,8 @@ export class SetPrintNumberClientComponent implements OnInit {
   address = "أربيل - شارع 40 - قرب تقاطع كوك"
   companyPhone = "07514550880 - 07700890880"
   ngOnInit(): void {
-
+   
+    this.changeDeleiverMoneyForClient()
   }
 
   deliveryCostCount
@@ -107,16 +110,19 @@ export class SetPrintNumberClientComponent implements OnInit {
 
   }
   reciptClient() {
-    this.recepitservce.UnPaidRecipt(this.client.id).subscribe(res => {
-      this.reports = res
-    })
+    // this.recepitservce.UnPaidRecipt(this.client.id).subscribe(res => {
+    //   this.reports = res
+    // })
   }
   showPrintbtn = false
   destinationPhone
   changeDeleiverMoneyForClient() {
+    this.getroute.params.subscribe(par => {
+      this.printnumber = par['printnumber'] as any
+    });
     this.spinner.show()
     this.orderservice.GetOrderByClientPrintNumber(this.printnumber).subscribe(res => {
-      console.log(res)
+      // console.log(res)
       this.sumCost()
       this.reciptClient()
       this.showPrintbtn = true

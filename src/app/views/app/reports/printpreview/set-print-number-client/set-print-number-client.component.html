@@ -5,15 +5,15 @@
     <div class="card-body">
         <h3>عرض شحنات حسب رقم الطباعة للعميل</h3>
         <div class="row">
-
+<!-- 
             <div class="col-md-3">
                 <label>رقم الطباعة</label>
                 <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="printnumber"
                     (keyup.enter)="changeDeleiverMoneyForClient()">
                 <br>
 
-            </div>
-            <div class="col-md-3" *ngIf="showPrintbtn">
+            </div> -->
+            <div class="col-md-3" >
                 <button class="btn btn-primary" (click)="convetToPDF()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-printer" viewBox="0 0 16 16">
@@ -38,7 +38,7 @@
             </app-receipt-client>-->
 
             </div>
-            <div class="col-md-3" *ngIf="showPrintbtn">
+            <div class="col-md-3" >
                 <button class="btn btn-primary" (click)="print()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
                         class="bi bi-printer" viewBox="0 0 16 16">
@@ -53,7 +53,7 @@
 </div>
 
 
-<div class="card " style="direction:rtl" *ngIf="showPrintbtn" id="contentToConvert">
+<div class="card " style="direction:rtl"  id="contentToConvert">
     <div>
 
         <div class="row " style="margin-bottom: 1%;">

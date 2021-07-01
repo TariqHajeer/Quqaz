@@ -170,28 +170,7 @@ export class OrderService {
     params = params.append("printNumber", printnumber);
     return this.http.get<any>(this.controler + "GetOrderByClientPrintNumber", { params: params })
   }
-  ClientDontDiliverdMoney(item: OrderClientDontDiliverdMoney) {
-    let params = new HttpParams();
-
-    if (item.ClientId != undefined || item.ClientId != null)
-      params = params.append("ClientId", item.ClientId);
-    if (item.ClientDoNotDeleviredMoney != undefined || item.ClientDoNotDeleviredMoney != null)
-      params = params.append("ClientDoNotDeleviredMoney", item.ClientDoNotDeleviredMoney);
-    if (item.IsClientDeleviredMoney != undefined || item.IsClientDeleviredMoney != null)
-      params = params.append("IsClientDeleviredMoney", item.IsClientDeleviredMoney);
-    if (item.OrderPlacedId.length != 0) { // params = params.append("OrderPlacedId", item.OrderPlacedId);
-      let index = 0
-      item.OrderPlacedId.forEach(element => {
-        var key = "OrderPlacedId[" + index + "]"
-        params = params.append(key, element);
-        index++;
-      });
-    }
-    return this.http.get<any>(this.controler + "OrdersDontFinished", { params: params })
-  }
-  OrderVicdanAgent(AgentId) {
-    return this.http.get(this.controler + "OrderVicdanAgent/" + AgentId)
-  }
+ 
   GetClientprint(paging,number) {
     let params = new HttpParams();
     if (paging.RowCount != undefined || paging.RowCount != null)
@@ -213,6 +192,28 @@ export class OrderService {
       params = params.append("number", number);
     return this.http.get<any>(this.controler + "GetAgentPrint", { params: params })
 
+  }
+  ClientDontDiliverdMoney(item: OrderClientDontDiliverdMoney) {
+    let params = new HttpParams();
+
+    if (item.ClientId != undefined || item.ClientId != null)
+      params = params.append("ClientId", item.ClientId);
+    if (item.ClientDoNotDeleviredMoney != undefined || item.ClientDoNotDeleviredMoney != null)
+      params = params.append("ClientDoNotDeleviredMoney", item.ClientDoNotDeleviredMoney);
+    if (item.IsClientDeleviredMoney != undefined || item.IsClientDeleviredMoney != null)
+      params = params.append("IsClientDeleviredMoney", item.IsClientDeleviredMoney);
+    if (item.OrderPlacedId.length != 0) { // params = params.append("OrderPlacedId", item.OrderPlacedId);
+      let index = 0
+      item.OrderPlacedId.forEach(element => {
+        var key = "OrderPlacedId[" + index + "]"
+        params = params.append(key, element);
+        index++;
+      });
+    }
+    return this.http.get<any>(this.controler + "OrdersDontFinished", { params: params })
+  }
+  OrderVicdanAgent(AgentId) {
+    return this.http.get(this.controler + "OrderVicdanAgent/" + AgentId)
   }
   OrderInCompany(ClientId, code) {
     return this.http.get(this.controler + "OrderInCompany/" + ClientId + "/" + code)

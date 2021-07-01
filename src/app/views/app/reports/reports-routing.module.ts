@@ -62,12 +62,12 @@ const routes: Routes = [
     data: { roles: [UserPermission.ShowReports]}
   },
   {
-    path:'printsetprintnumberagentpreview',
+    path:'agentprintnumber/:printnumber',
     component: SetPrintNumberComponent,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowReports]}
   },
   {
-    path:'printsetprintnumberclientpreview',
+    path:'clientprintnumber/:printnumber',
     component: SetPrintNumberClientComponent,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowReports]}
   },

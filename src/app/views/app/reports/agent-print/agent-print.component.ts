@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Paging } from 'src/app/Models/paging';
 import { OrderService } from 'src/app/services/order.service';
 
@@ -12,13 +13,13 @@ import { OrderService } from 'src/app/services/order.service';
 })
 export class AgentPrintComponent implements OnInit {
 
-  constructor(public orderService: OrderService) { }
+  constructor(public orderService: OrderService, private router: Router) { }
 
   ngOnInit(): void {
     this.paging = new Paging
     this.Get()
   }
-  displayedColumns: string[] = [ 'printNmber', 'printerName','date', 'destinationName', 'destinationPhone'
+  displayedColumns: string[] = ['printNmber', 'printerName', 'date', 'destinationName', 'destinationPhone'
   ];
   ;
   dataSource
@@ -29,12 +30,12 @@ export class AgentPrintComponent implements OnInit {
   paging: Paging
   noDataFound: boolean = false
   Get() {
-    this.orderService.GetClientprint(this.paging,this.printNmber).subscribe(res => {
+    this.orderService.GetClientprint(this.paging, this.printNmber).subscribe(res => {
       // this.orderFilter=res
       // this.orderFilter.forEach(o=>{
       //   o.printNmber=JSON.stringify(o.printNmber)
       // })
-      this.dataSource = new MatTableDataSource( res.data)
+      this.dataSource = new MatTableDataSource(res.data)
       this.totalCount = res.total
 
     })
@@ -46,10 +47,13 @@ export class AgentPrintComponent implements OnInit {
     this.Get();
 
   }
-  printNmberFillter(){
+  printNmberFillter() {
     this.Get()
   }
-  printNmber:number=null
+  printNmber: number = null
+  print(number) {
+    this.router.navigate(['/app/reports/agentprintnumber/',number])
+  }
   //orderFilter=[]
   // printNmberFillter() {
   //   this.dataSource.data=this.orderFilter
