@@ -49,36 +49,36 @@ export class SetPrintNumberClientComponent implements OnInit {
     this.clientCalc = 0
     if (this.orders)
       this.orders.forEach(o => {
-        this.count += o.cost
-        this.deliveryCostCount += o.deliveryCost
+        this.count += o.total
+        this.deliveryCostCount += o.deliveCost
         if (!o.isClientDiliverdMoney) {
           if (o.orderplaced.id == 5) {
             this.clientCalc += 0
             return 0;
           }
           else if (o.orderplaced.id == 7) {
-            this.clientCalc += o.deliveryCost
-            return o.deliveryCost;
+            this.clientCalc += o.deliveCost
+            return o.deliveCost;
           }
-          this.clientCalc += o.cost - o.deliveryCost
-          return o.cost - o.deliveryCost;
+          this.clientCalc += o.total - o.deliveCost
+          return o.total - o.deliveCost;
 
         }
         else {
           //مرتجع كلي
           if (o.orderplaced.id == 5) {
-            this.clientCalc += o.deliveryCost - o.cost
-            return o.deliveryCost - o.cost;
+            this.clientCalc += o.deliveCost - o.total
+            return o.deliveCost - o.total;
           }
           //مرفوض
           else if (o.orderplaced.id == 7) {
-            this.clientCalc += (-o.cost)
-            return (-o.cost);
+            this.clientCalc += (-o.total)
+            return (-o.total);
           }
           //مرتجع جزئي
           else if (o.orderplaced.id == 6) {
-            this.clientCalc += o.cost - o.oldCost;
-            return o.cost - o.oldCost;
+            this.clientCalc += o.total - o.lastTotal;
+            return o.total - o.lastTotal;
           }
           
           
@@ -123,7 +123,6 @@ export class SetPrintNumberClientComponent implements OnInit {
     this.spinner.show()
     this.orderservice.GetOrderByClientPrintNumber(this.printnumber).subscribe(res => {
       console.log(res)
-      this.sumCost()
       // this.reciptClient()
       this.showPrintbtn = true
       this.spinner.hide()
@@ -134,6 +133,8 @@ export class SetPrintNumberClientComponent implements OnInit {
       this.userName = res.printerName
       this.dateOfPrint = res.date
       this.reports=res.receipts
+      this.sumCost()
+
 
     }, err => {
       this.spinner.hide()
