@@ -36,3 +36,7 @@ export class IdCost{
       Id
       Cost
 }
+export class DateIdCost{
+      Date
+      IdCost:IdCost[]
+}

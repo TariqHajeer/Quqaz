@@ -5,7 +5,7 @@ import { UserLogin } from 'src/app/Models/userlogin.model';
 import { PrintNumberOrder } from 'src/app/Models/order/PrintNumberOrder.model';
 import { OrderService } from 'src/app/services/order.service';
 import * as jspdf from 'jspdf';
-import { IdCost } from 'src/app/Models/order/order.model';
+import { DateIdCost, IdCost } from 'src/app/Models/order/order.model';
 
 @Component({
   selector: 'app-print-order-in-company',
@@ -98,9 +98,11 @@ export class PrintOrderInCompanyComponent implements OnInit {
   showPrintbtn = false
   IdCost: IdCost
   IdCosts: IdCost[] = []
-
+  DateIdCost:DateIdCost=new DateIdCost
   changeDeleiverMoneyForClient() {
-    this.orderservice.DeleiverMoneyForClientWithStatus(this.IdCosts).subscribe(res => {
+    this.DateIdCost.Date=new Date()
+    this.DateIdCost.IdCost=this.IdCosts
+    this.orderservice.DeleiverMoneyForClientWithStatus(this.DateIdCost).subscribe(res => {
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.showPrintbtn = true
       this.printnumber = res.printNumber
