@@ -1,6 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-navbar',
@@ -74,8 +75,9 @@ export class NavbarComponent implements OnInit {
   login() {
     this.router.navigate(['/user/login'])
   }
+  clientURL=environment.clientApp
   loginclient() {
-    this.router.navigate(['/clienthome/login'])
+    this.router.navigateByUrl(this.clientURL)
   }
   logout() {
     localStorage.removeItem('token')
