@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { CreateIncome } from 'src/app/Models/inCome/create-income.model';
 import { UserService } from 'src/app/services/user.service';
 import { IncomeService } from '../income.service';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({

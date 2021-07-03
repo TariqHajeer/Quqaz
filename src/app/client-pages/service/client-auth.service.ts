@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { ICreateCredentials, IPasswordReset } from 'src/app/shared/auth.service';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'

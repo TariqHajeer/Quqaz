@@ -263,15 +263,17 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       });
   }
   count = 0
-
+  agentCost
   deliveryCostCount
   sumCost() {
     this.count = 0
     this.deliveryCostCount = 0
+    this.agentCost=0
     if (this.getorders)
       this.getorders.forEach(o => {
         this.count += o.order.cost
         this.deliveryCostCount += o.order.deliveryCost
+        this.agentCost+=o.order.agentCost
       })
     return this.count
   }

@@ -4,7 +4,7 @@ import { from, Observable, of, Subscription } from 'rxjs';
 
 import { getUserRole } from 'src/app/utils/util';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import {LocalStorageService} from '../services/local-storage.service'
 import { Router } from '@angular/router';
 import { delay, tap } from 'rxjs/operators';

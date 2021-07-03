@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { UpdateGroupDto } from 'src/app/Models/Group/update-group-dto.model';
 import { CreateGroup } from 'src/app/Models/Group/create-group.model';
 

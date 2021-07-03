@@ -5,7 +5,7 @@ import { City } from 'src/app/Models/Cities/city.Model';
 import { CustomService } from 'src/app/services/custom.service';
 import { Region } from '../../../../Models/Regions/region.model';
 import { Query, DataManager } from '@syncfusion/ej2-data';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-region',
   templateUrl: './region.component.html',

@@ -7,7 +7,7 @@ import { CreateOutCome } from 'src/app/Models/OutCome/create-out-come.model';
 import { OutcomeService } from 'src/app/views/app/outcome/outcome.service';
 import { DropDownList } from '@syncfusion/ej2-dropdowns';
 import { Query, DataManager } from '@syncfusion/ej2-data';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { DatePipe } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
