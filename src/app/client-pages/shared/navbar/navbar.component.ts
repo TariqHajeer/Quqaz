@@ -1,7 +1,7 @@
-import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
+import {  Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-navbar',
@@ -17,14 +17,14 @@ export class NavbarComponent implements OnInit {
 
   showMobileMenu = false;
   user
-  isLogin=false
+  isLogin = false
   ngOnInit() {
     this.renderer.addClass(document.body, "no-footer");
     if (localStorage.getItem('kokazUser')) {
       this.user = JSON.parse(localStorage.getItem('kokazUser'))
-      this.isLogin=true
+      this.isLogin = true
     }
-    else this.isLogin=false
+    else this.isLogin = false
   }
   ngOnDestroy() {
     this.renderer.removeClass(document.body, "no-footer");
@@ -75,14 +75,14 @@ export class NavbarComponent implements OnInit {
   login() {
     this.router.navigate(['/user/login'])
   }
-  clientURL=environment.clientApp
+  clientURL = environment.clientApp
   loginclient() {
     this.router.navigateByUrl(this.clientURL)
   }
   logout() {
     localStorage.removeItem('token')
     localStorage.removeItem('kokazUser')
-    this.isLogin=false
+    this.isLogin = false
     this.router.navigate(['/clienthome'])
   }
 }
