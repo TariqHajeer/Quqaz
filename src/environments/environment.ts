@@ -4,14 +4,14 @@
 
 export const environment = {
   production: false,
-    defaultMenuType: 'menu-default',
+  defaultMenuType: 'menu-default',
   subHiddenBreakpoint: 1440,
-   menuHiddenBreakpoint: 768,
-   isMultiColorActive: true,
+  menuHiddenBreakpoint: 768,
+  isMultiColorActive: true,
   isDarkSwitchActive: true,
-   defaultColor: 'light.blueyale',
-   baseUrl: "https://localhost:44333/",
-   clientApp:"http://localhost:4201",
+  defaultColor: 'light.blueyale',
+  baseUrl: "https://localhost:44333/",
+  clientApp: "http://localhost:4201",
 };
 
 
