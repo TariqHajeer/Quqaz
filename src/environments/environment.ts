@@ -10,7 +10,8 @@ export const environment = {
    isMultiColorActive: true,
   isDarkSwitchActive: true,
    defaultColor: 'light.blueyale',
-  //  baseUrl:"https://localhost:44333/"
+   baseUrl: "https://localhost:44333/",
+   clientApp:"http://localhost:4201",
 };
 
 

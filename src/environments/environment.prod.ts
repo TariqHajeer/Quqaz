@@ -5,7 +5,6 @@ import { UserPermission } from '../app/shared/auth.roles';
 
 export const environment = {
   baseUrl: "http://backend.quqaz.com/",
-  //baseUrl: "https://localhost:44333/",
   clientApp:"http://client.quqaz.com",
   production: true,
   SCARF_ANALYTICS: false,
