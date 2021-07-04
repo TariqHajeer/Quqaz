@@ -55,10 +55,10 @@ export class OrdersTodayComponent implements OnInit {
   ngOnInit(): void {
     this.paging = new Paging
     this.filtering = new OrderFilter
-    this.filtering.CreatedDate=new Date
+    // this.filtering.CreatedDate=new Date
     this.get()
     this.GetClient()
-    this.allFilter()
+    // this.allFilter()
 
   }
   get() {
@@ -74,9 +74,11 @@ export class OrdersTodayComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
- 
+
   allFilter() {
-    this.spinner.show()
+    if(!this.filtering.ClientId||!this.filtering.CreatedDate)return
+    else{
+      this.spinner.show()
     this.orderservice.WithoutPaging(this.filtering).subscribe(response => {
       this.spinner.hide()
       if (response.data.length == 0)
@@ -98,6 +100,8 @@ export class OrdersTodayComponent implements OnInit {
       err => {
         this.spinner.hide()
       });
+    }
+    
   }
 
   

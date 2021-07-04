@@ -28,6 +28,7 @@ export class OrderService {
       params = params.append("RegionId", filter.RegionId);
     if (filter.ClientId != undefined || filter.ClientId != null)
       params = params.append("ClientId", filter.ClientId);
+    
     if (filter.RecipientName != undefined || filter.RecipientName != null)
       params = params.append("RecipientName", filter.RecipientName);
     if (filter.MonePlacedId != undefined || filter.MonePlacedId != null)
@@ -52,6 +53,8 @@ export class OrderService {
       params = params.append("Phone", filter.Phone);
     if (filter.CountryId != undefined || filter.CountryId != null)
       params = params.append("CountryId", filter.CountryId);
+      if (filter.CreatedDate != undefined || filter.CreatedDate != null)
+      params = params.append("CreatedDate", filter.CreatedDate);
     if (filter.RegionId != undefined || filter.RegionId != null)
       params = params.append("RegionId", filter.RegionId);
     if (filter.ClientId != undefined || filter.ClientId != null)
@@ -64,7 +67,7 @@ export class OrderService {
       params = params.append("OrderplacedId", filter.OrderplacedId);
     if (filter.IsClientDiliverdMoney != undefined || filter.IsClientDiliverdMoney != null)
       params = params.append("IsClientDiliverdMoney", filter.IsClientDiliverdMoney);
-      return this.http.get<any>(this.controler, { params: params })
+      return this.http.get<any>(this.controler+"WithoutPaging", { params: params })
 
   }
   GetById(id) {
