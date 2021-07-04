@@ -11,4 +11,5 @@ export class OrderFilter {
       IsClientDiliverdMoney
       AgentPrintNumber
       ClientPrintNumber
+      CreatedDate
 }

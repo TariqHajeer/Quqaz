@@ -8,6 +8,7 @@ import { ClientOrderComponent } from './client-order/client-order.component';
 import { ClientPrintComponent } from './client-print/client-print.component';
 import { OrderInCompanyComponent } from './order-in-company/order-in-company.component';
 import { OrderVicdanAgentComponent } from './order-vicdan-agent/order-vicdan-agent.component';
+import { OrdersTodayComponent } from './orders-today/orders-today.component';
 import { ReceiptAgentComponent } from './print/receipt-agent/receipt-agent.component';
 import { AgentComponent } from './printpreview/agent/agent.component';
 import { ClientComponent } from './printpreview/client/client.component';
@@ -119,6 +120,11 @@ const routes: Routes = [
   {
     path:'printorderincompany',
     component: PrintOrderInCompanyComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
+  },
+  {
+    path:'orderstoday',
+    component: OrdersTodayComponent,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowReports]}
   },
 ];

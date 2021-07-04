@@ -104,8 +104,8 @@ export class AuthService implements OnDestroy{
   }
   public startTokenTimer() {
     const timeout = this.getTokenRemainingTime()
-    console.log("timeout");
-    console.log(timeout);
+    // console.log("timeout");
+    // console.log(timeout);
     setTimeout(() =>{alert('log out'); this.signOut();},  timeout)
    
   }

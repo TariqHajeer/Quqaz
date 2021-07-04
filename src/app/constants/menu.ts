@@ -66,6 +66,13 @@ const data: IMenuItem[] = [
       },
       {
         icon: 'iconsminds-add',
+        label: 'إضافة طلبات متعددة للمندوب',
+        to: `${adminRoot}/order/addMulitpleOrdersfromAgent`,
+        //permission:[UserPermission.AddOrder]
+
+      },
+      {
+        icon: 'iconsminds-add',
         label: ' إضافة  متعددة للعميل والمندوب',
         to: `${adminRoot}/order/addMulitpleOrdersfromClientandAgent`,
         //permission:[UserPermission.AddOrder]
@@ -200,16 +207,18 @@ const data: IMenuItem[] = [
         label: ' الإحصائيات  ',
         to: `${adminRoot}/reports/Statistics`,
         //permission:[UserPermission.ShowOrder]
-
-
       },
       {
         icon: 'simple-icon-layers',
         label: ' القاصة  ',
         to: `${adminRoot}/reports/pay`,
         //permission:[UserPermission.ShowOrder]
-
-
+      },
+      {
+        icon: 'simple-icon-layers',
+        label: ' شحنات حسب تاريخ  ',
+        to: `${adminRoot}/reports/orderstoday`,
+        //permission:[UserPermission.ShowOrder]
       },
     ]
   },

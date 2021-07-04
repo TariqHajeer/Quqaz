@@ -30,6 +30,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { CreateMultiOrderAgentAndClientComponent } from './create-multi-order-agent-and-client/create-multi-order-agent-and-client.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
+import { CreatemultipulorderagentComponent } from './createmultipulorderagent/createmultipulorderagent.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import {MatButtonModule} from '@angular/material/button';
     CreatemultipleOrderFromClientComponent,
     ProfitsOfOrdersComponent,
     CreateMultiOrderAgentAndClientComponent,
+    CreatemultipulorderagentComponent,
   ],
   imports: [
     CommonModule,
