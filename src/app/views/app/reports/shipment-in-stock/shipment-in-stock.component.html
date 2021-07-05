@@ -3,14 +3,23 @@
 <div class="card-body">
   <h3>كشف شحنات في المخزن</h3>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <label>المندوب</label>
-        <ng-select [(ngModel)]="AgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+        <ng-select [(ngModel)]="filtering.AgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
             name="Agent" (change)="ChangeAgentIdOrOrderplacedId()">
             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
         </ng-select>
     </div>
-    <div class="col-md-8" style="padding-top: 25px;">
+    <div class="col-md-3">
+      <label>المحافظة</label>
+      <ng-select appOnReturn (change)="allFilter()" [(ngModel)]="filtering.CountryId" 
+          [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Country">
+          <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
+      </ng-select>
+  </div>
+
+
+    <div class="col-md-6" style="padding-top: 25px;">
       <button (click)="print()" class="btn btn-primary">  <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-printer"
         viewBox="0 0 16 16">
         <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />

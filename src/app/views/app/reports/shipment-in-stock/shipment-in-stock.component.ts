@@ -103,10 +103,13 @@ export class ShipmentInStockComponent implements OnInit {
       this.Agents = res
     })
   }
+  cities=[]
   ChangeAgentIdOrOrderplacedId() {
-    if (this.AgentId != null) {
-      this.filtering.OrderplacedId = 2
-      this.filtering.AgentId=this.AgentId
+    if (this.filtering.AgentId) {
+      this.cities=[]
+      this.filtering.CountryId=null
+      var agent=this.Agents.find(a=>a.id==this.filtering.AgentId)
+      this.cities=agent.countries
       this.allFilter();
     }
 
@@ -118,6 +121,7 @@ export class ShipmentInStockComponent implements OnInit {
     //this.allFilter();
   }
   allFilter() {
+    this.filtering.OrderplacedId = 2
     this.orderservice.WithoutPaging(this.filtering).subscribe(response => {
       if (response)
         if (response.data.length == 0)
