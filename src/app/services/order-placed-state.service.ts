@@ -49,7 +49,7 @@ export class OrderPlacedStateService {
   }
   isClientDiliverdMoney(element, MoenyPlaced) {
     if (element.order.isClientDiliverdMoney == true && element.order.orderplaced.id == 4) {
-      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 4)]
+      element.MoenyPlaced = [...MoenyPlaced.filter(m =>m.id == 2 || m.id == 4)]
       element.order.monePlaced = element.MoenyPlaced[0]
       element.messageCost = ""
       // element.order.monePlaced = element.MoenyPlaced[0]

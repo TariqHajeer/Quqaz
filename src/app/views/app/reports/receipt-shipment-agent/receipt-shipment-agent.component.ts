@@ -116,7 +116,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     if (this.getorders.length != 0) {
       this.getorders.forEach(o => {
         o.order.orderplaced = { ...this.OrderplacedId }
-        this.ChangeOrderplacedId(o, this.getorders.indexOf(o))
+        this.ChangeAllOrderplacedId(o, this.getorders.indexOf(o))
       })
       this.MoenyPlacedId = null
       this.getMoenyPlaced = [...this.getorders[0].MoenyPlaced]
@@ -222,7 +222,20 @@ export class ReceiptShipmentAgentComponent implements OnInit {
 
     }
   }
+  ChangeAllOrderplacedId(element, index) {
+    this.getmony()
+    this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
+    this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced)
+    this.orderplacedstate.onWay(element, this.MoenyPlaced)
+    this.orderplacedstate.unacceptable(element, this.MoenyPlaced)
+    this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
+    this.orderplacedstate.EditDeliveryCost(element, this.tempdeliveryCost[index],this.tempagentCost[index])
+
+  }
   ChangeOrderplacedId(element, index) {
+    this.OrderplacedId=null
+    this.MoenyPlacedId=null
+    this.getMoenyPlaced=[]
     // this.GetMoenyPlaced()
     this.getmony()
     this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
