@@ -233,10 +233,10 @@ export class ReceiptShipmentAgentComponent implements OnInit {
 
   }
   ChangeOrderplacedId(element, index) {
+    // this.GetMoenyPlaced()
     this.OrderplacedId=null
     this.MoenyPlacedId=null
     this.getMoenyPlaced=[]
-    // this.GetMoenyPlaced()
     this.getmony()
     this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
     this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced)
@@ -312,6 +312,9 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       this.dataSource = new MatTableDataSource([])
       this.getorders = []
       this.sumCost()
+      this.OrderplacedId=null
+      this.MoenyPlacedId=null
+      this.getMoenyPlaced=[]
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
     }, err => {
       this.spinner.hide();
