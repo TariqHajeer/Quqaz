@@ -105,7 +105,8 @@ export class ShipmentInStockComponent implements OnInit {
   }
   cities=[]
   ChangeAgentIdOrOrderplacedId() {
-    if (this.filtering.AgentId) {
+    if (this.AgentId) {
+      this.filtering.AgentId=this.AgentId
       this.cities=[]
       this.filtering.CountryId=null
       var agent=this.Agents.find(a=>a.id==this.filtering.AgentId)
