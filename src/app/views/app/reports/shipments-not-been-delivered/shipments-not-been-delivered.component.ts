@@ -77,7 +77,13 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   ) { }
   ClientId
   OrderplacedId
-  orderPlace: any[] = []
+  orderPlace: any[]  = [
+    { id: 3, name: "في الطريق" },
+    { id: 4, name: "تم التسليم" },
+    { id: 5, name: "مرتجع كلي" },
+    { id: 6, name: "مرتجع جزئي" },
+    { id: 7, name: "مرفوض" },
+  ]
   Clients: Client[] = []
   paging: Paging
   filtering: OrderFilter
@@ -91,30 +97,12 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     localStorage.removeItem('printclient')
     localStorage.removeItem('printclientorderplaced')
     this.getClients()
-    this.GetorderPlace()
+    // this.GetorderPlace()
     this.paging = new Paging
     this.filtering = new OrderFilter
     this.order = new OrderClientDontDiliverdMoney()
   }
 
-  GetorderPlace() {
-    this.orderservice.orderPlace().subscribe(res => {
-      // this.orderPlace = res
-      // this.orderPlace.forEach(item => {
-      //   item.checked = true
-      // })
-      //this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
-      this.orderPlace = [
-        { id: 3, name: "في الطريق" },
-        { id: 4, name: "تم التسليم" },
-        { id: 5, name: "مرتجع كلي" },
-        { id: 6, name: "مرتجع جزئي" },
-        { id: 7, name: "مرفوض" },
-        { id: 8, name: "مؤجل" }
-      ]
-
-    })
-  }
   getClients() {
     this.clientService.getClients().subscribe(res => {
       this.Clients = res
