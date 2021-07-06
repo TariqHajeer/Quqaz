@@ -39,6 +39,7 @@ export class ClientComponent implements OnInit {
     this.PrintNumberOrder = new PrintNumberOrder
     this.orders = JSON.parse(localStorage.getItem('printordersclient'))
     this.orders = this.orders.sort((a, b) => a.code - b.code)
+    console.log(this.orders)
     this.client = JSON.parse(localStorage.getItem('printclient'))
     this.orderplaced = JSON.parse(localStorage.getItem('printclientorderplaced'))
     this.sumCost()
@@ -70,8 +71,8 @@ export class ClientComponent implements OnInit {
         else {
           //مرتجع كلي
           if (o.orderplaced.id == 5) {
-            this.clientCalc += o.deliveryCost - o.cost
-            return o.deliveryCost - o.cost;
+            this.clientCalc += o.oldDeliveryCost - o.cost
+            return o.oldDeliveryCost - o.cost;
           }
           //مرفوض
           else if (o.orderplaced.id == 7) {
