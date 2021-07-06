@@ -38,7 +38,8 @@
     <ng-container matColumnDef="printNmber">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;">رقم الطباعة </th>
       <td mat-cell *matCellDef="let element" style="padding: 10px;">
-        <a class="btn" style="color: rgb(2, 52, 128);" (click)="print(element.printNmber)">{{element.printNmber}}</a>
+        <a  [routerLink]="['/app/reports/clientprintnumber/',element.printNmber]">{{element.printNmber}}</a>
+        <!-- <a class="btn" style="color: rgb(2, 52, 128);" (click)="print(element.printNmber)">{{element.printNmber}}</a> -->
       </td>    </ng-container>
     <ng-container matColumnDef="printerName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> المسؤول عن الطباعة</th>
