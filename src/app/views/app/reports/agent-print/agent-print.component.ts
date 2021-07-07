@@ -30,11 +30,12 @@ export class AgentPrintComponent implements OnInit {
   paging: Paging
   noDataFound: boolean = false
   Get() {
-    this.orderService.GetClientprint(this.paging, this.printNmber).subscribe(res => {
+    this.orderService.GetAgentPrint(this.paging, this.printNmber).subscribe(res => {
       // this.orderFilter=res
       // this.orderFilter.forEach(o=>{
       //   o.printNmber=JSON.stringify(o.printNmber)
       // })
+      // console.log(res.data)
       this.dataSource = new MatTableDataSource(res.data)
       this.totalCount = res.total
 
