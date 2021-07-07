@@ -84,8 +84,10 @@ export class OrderPlacedStateService {
       //   element.order.deliveryCost = Object.assign(tempdeliveryCost, tempdeliveryCost);
       //   element.order.agentCost = Object.assign(tempagentCost, tempagentCost);
       // }
+      //////////
       element.order.deliveryCost = Object.assign(tempdeliveryCost, tempdeliveryCost);
       element.order.agentCost = Object.assign(tempagentCost, tempagentCost);
+      //////////
       element.canEditDeliveryCost = false
     } else {
       element.canEditDeliveryCost = true
