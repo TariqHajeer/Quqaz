@@ -161,7 +161,7 @@ export class ClientComponent implements OnInit {
 
       //مرتجع كلي
       if (element.orderplaced.id == 5)
-        return element.deliveryCost - element.oldCost;
+        return element.oldDeliveryCost - element.oldCost;
       //مرفوض
       else if (element.orderplaced.id == 7)
         return (-element.oldCost);

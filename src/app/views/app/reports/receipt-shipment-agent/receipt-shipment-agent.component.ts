@@ -305,6 +305,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       this.orderstate = new OrderState
     }
     this.spinner.show();
+    // console.log(this.orderstates)
     this.orderservice.UpdateOrdersStatusFromAgent(this.orderstates).subscribe(res => {
       this.allFilter()
       this.spinner.hide();

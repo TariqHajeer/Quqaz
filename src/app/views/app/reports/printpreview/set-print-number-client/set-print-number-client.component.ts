@@ -101,7 +101,7 @@ export class SetPrintNumberClientComponent implements OnInit {
 
       //مرتجع كلي
       if (element.orderplaced.id == 5)
-        return element.deliveCost - element.lastTotal;
+        return element.oldDeliveryCost - element.lastTotal;
       //مرفوض
       else if (element.orderplaced.id == 7)
         return (-element.lastTotal);

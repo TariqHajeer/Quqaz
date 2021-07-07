@@ -12,7 +12,7 @@ export class OrderPlacedStateService {
     if (element.order.orderplaced.id == 3) {
       element.messageCost = ""
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 1)]
-       element.order.monePlaced = {...element.MoenyPlaced[0]}
+      element.order.monePlaced = { ...element.MoenyPlaced[0] }
     }
 
   }
@@ -22,7 +22,7 @@ export class OrderPlacedStateService {
     if (element.order.orderplaced.id == 6 || element.order.orderplaced.id == 4) {
       element.canEditCount = false
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 2 || m.id == 3)]
-       element.order.monePlaced = {...element.MoenyPlaced[0]}
+      element.order.monePlaced = { ...element.MoenyPlaced[0] }
     } else {
       if (temporderscostindex) {
         element.order.cost = Object.assign(temporderscostindex, temporderscostindex);
@@ -43,7 +43,7 @@ export class OrderPlacedStateService {
   unacceptable(element, MoenyPlaced) {
     if (element.order.orderplaced.id == 7 || element.order.orderplaced.id == 5) {
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 3)]
-       element.order.monePlaced = {...element.MoenyPlaced[0]}
+      element.order.monePlaced = { ...element.MoenyPlaced[0] }
       element.messageCost = ""
     }
 
@@ -51,10 +51,10 @@ export class OrderPlacedStateService {
   }
   isClientDiliverdMoney(element, MoenyPlaced) {
     if (element.order.isClientDiliverdMoney == true && element.order.orderplaced.id == 4) {
-      element.MoenyPlaced = [...MoenyPlaced.filter(m =>m.id == 2 || m.id == 4)]
-       element.order.monePlaced ={ ...element.MoenyPlaced[0]}
+      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 2 || m.id == 4)]
+      element.order.monePlaced = { ...element.MoenyPlaced[0] }
       element.messageCost = ""
-       element.order.monePlaced = {...element.MoenyPlaced[0]}
+      element.order.monePlaced = { ...element.MoenyPlaced[0] }
       //element.order.orderplaced = element.OrderPlaced[1]
     }
   }
@@ -62,7 +62,7 @@ export class OrderPlacedStateService {
   sentDeliveredHanded(element, MoenyPlaced, tempordersmonePlacedindex?, tempisClientDiliverdMoneyindex?) {
     if (element.order.orderplaced.id == 4 && element.order.isClientDiliverdMoney == false) {
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 2 || m.id == 3)]
-      element.order.monePlaced ={... element.MoenyPlaced[0]}
+      element.order.monePlaced = { ...element.MoenyPlaced[0] }
 
       element.messageCost = ""
       //element.order.isClientDiliverdMoney = true
@@ -77,18 +77,20 @@ export class OrderPlacedStateService {
   }
   EditDeliveryCost(element, tempdeliveryCost?, tempagentCost?) {
     if (element.order.orderplaced.id == 7 || element.order.orderplaced.id == 5 || element.order.orderplaced.id == 8) {
-      if (element.order.orderplaced.id == 5) {
-        element.order.deliveryCost = 0
-        element.order.agentCost = 0
-      } else {
-        element.order.deliveryCost = Object.assign(tempdeliveryCost, tempdeliveryCost);
-        element.order.agentCost = Object.assign(tempagentCost, tempagentCost);
-      }
+      // if (element.order.orderplaced.id == 5) {
+      //   element.order.deliveryCost = 0
+      //   element.order.agentCost = 0
+      // } else {
+      //   element.order.deliveryCost = Object.assign(tempdeliveryCost, tempdeliveryCost);
+      //   element.order.agentCost = Object.assign(tempagentCost, tempagentCost);
+      // }
+      element.order.deliveryCost = Object.assign(tempdeliveryCost, tempdeliveryCost);
+      element.order.agentCost = Object.assign(tempagentCost, tempagentCost);
       element.canEditDeliveryCost = false
     } else {
       element.canEditDeliveryCost = true
-      element.order.deliveryCost=Object.assign(tempdeliveryCost, tempdeliveryCost);
-      element.order.agentCost=Object.assign(tempagentCost, tempagentCost);
+      element.order.deliveryCost = Object.assign(tempdeliveryCost, tempdeliveryCost);
+      element.order.agentCost = Object.assign(tempagentCost, tempagentCost);
     }
   }
 }
