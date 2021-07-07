@@ -198,6 +198,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   orderFilter
   codeFillter() {
     this.dataSource.data=this.orderFilter
+    if(this.code)
     if(this.dataSource.data.length!=0)
    this.dataSource.data= this.dataSource.data.filter(d=>d.code.includes(this.code))
   }
