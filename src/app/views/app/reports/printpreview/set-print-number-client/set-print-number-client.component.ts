@@ -38,7 +38,7 @@ export class SetPrintNumberClientComponent implements OnInit {
   address = "أربيل - شارع 40 - قرب تقاطع كوك"
   companyPhone = "07514550880 - 07700890880"
   ngOnInit(): void {
-   
+
     this.changeDeleiverMoneyForClient()
   }
 
@@ -49,47 +49,49 @@ export class SetPrintNumberClientComponent implements OnInit {
     this.clientCalc = 0
     if (this.orders)
       this.orders.forEach(o => {
-        this.count += o.total
-        this.deliveryCostCount += o.deliveCost
+        this.count += o.cost
+        this.deliveryCostCount += o.deliveryCost
+        if (o.orderplaced == null)
+          return "-"
         if (!o.isClientDiliverdMoney) {
           if (o.orderplaced.id == 5) {
             this.clientCalc += 0
             return 0;
           }
           else if (o.orderplaced.id == 7) {
-            this.clientCalc += o.deliveCost
-            return o.deliveCost;
+            this.clientCalc += o.deliveryCost
+            return o.deliveryCost;
           }
-          this.clientCalc += o.total - o.deliveCost
-          return o.total - o.deliveCost;
+          this.clientCalc += o.cost - o.deliveryCost
+          return o.cost - o.deliveryCost;
 
         }
         else {
           //مرتجع كلي
           if (o.orderplaced.id == 5) {
-            this.clientCalc += o.deliveCost - o.total
-            return o.deliveCost - o.total;
+            this.clientCalc += o.oldDeliveryCost - o.cost
+            return o.oldDeliveryCost - o.cost;
           }
           //مرفوض
           else if (o.orderplaced.id == 7) {
-            this.clientCalc += (-o.total)
-            return (-o.total);
+            this.clientCalc += (-o.cost)
+            return (-o.cost);
           }
           //مرتجع جزئي
           else if (o.orderplaced.id == 6) {
-            this.clientCalc += o.total - o.lastTotal;
-            return o.total - o.lastTotal;
+            this.clientCalc += o.cost - o.oldCost;
+            return o.cost - o.oldCost;
           }
-          
-          
         }
       })
+
     return this.count
   }
   payForCleint(element): any {
     if (element.orderplaced == null)
-    return "-"
+      return "-"
     if (!element.isClientDiliverdMoney) {
+
       if (element.orderplaced.id == 5)
         return 0;
       return element.total - element.deliveCost;
@@ -116,6 +118,7 @@ export class SetPrintNumberClientComponent implements OnInit {
   }
   showPrintbtn = false
   destinationPhone
+  reportstotal
   changeDeleiverMoneyForClient() {
     this.getroute.params.subscribe(par => {
       this.printnumber = par['printnumber'] as any
@@ -132,7 +135,11 @@ export class SetPrintNumberClientComponent implements OnInit {
       this.destinationPhone = res.destinationPhone
       this.userName = res.printerName
       this.dateOfPrint = res.date
-      this.reports=res.receipts
+      this.reports = res.receipts
+      this.reportstotal = 0
+      this.reports.forEach(r => {
+        this.reportstotal += r.amount
+      })
       this.sumCost()
 
 
@@ -176,5 +183,5 @@ export class SetPrintNumberClientComponent implements OnInit {
 
     }, 10);
   }
- 
+
 }

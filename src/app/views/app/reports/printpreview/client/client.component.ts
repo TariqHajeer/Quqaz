@@ -7,7 +7,7 @@ import { OrderService } from 'src/app/services/order.service';
 import * as jspdf from 'jspdf';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ReciptService } from 'src/app/services/recipt.service';
-import{DateWithIds}from 'src/app/Models/date-with-ids.model';
+import { DateWithIds } from 'src/app/Models/date-with-ids.model';
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
@@ -42,8 +42,9 @@ export class ClientComponent implements OnInit {
     console.log(this.orders)
     this.client = JSON.parse(localStorage.getItem('printclient'))
     this.orderplaced = JSON.parse(localStorage.getItem('printclientorderplaced'))
-    this.sumCost()
     this.reciptClient()
+    this.sumCost()
+
     //  this.getPrintnumber()
   }
   deliveryCostCount
@@ -86,11 +87,12 @@ export class ClientComponent implements OnInit {
           }
         }
       })
+    
     return this.count
   }
 
   showPrintbtn = false
-  dateWithIds :DateWithIds=new DateWithIds
+  dateWithIds: DateWithIds = new DateWithIds
   changeDeleiverMoneyForClient() {
     this.spinner.show()
     this.dateWithIds = {
@@ -169,9 +171,15 @@ export class ClientComponent implements OnInit {
     }
 
   }
+  reportstotal
+
   reciptClient() {
     this.recepitservce.UnPaidRecipt(this.client.id).subscribe(res => {
-      this.reports=res
+      this.reports = res
+      this.  reportstotal=0
+      this.reports.forEach(r => {
+        this.reportstotal += r.amount
+      })
     })
   }
 }

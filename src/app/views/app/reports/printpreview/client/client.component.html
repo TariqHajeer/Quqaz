@@ -377,18 +377,18 @@
                     </td>
                     <td>
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                            {{report.amount<0?report.amount*-1:report.amount}}
+                            {{report.amount| number}}
                         </div>
                     </td>
                   
                     <td>
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                            {{report.about}}
+                            {{report.about?report.about:'-'}}
                         </div>
                     </td>
                     <td style="width:25%;">
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                            {{report.note}}
+                            {{report.note?report.note:'-'}}
                         </div>
                     </td>
                 </tr>
@@ -396,7 +396,7 @@
 
                     <td colspan="4">
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                            حساب العميل
+                            اجمالي كلفة السندات
 
                         </div>
                     </td>
@@ -404,7 +404,7 @@
 
                     <td>
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                            {{client.total| number}}
+                            {{reportstotal| number}}
 
                         </div>
                     </td>
@@ -420,7 +420,7 @@
                     </td>
                     <td>
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                            {{clientCalc+client.total| number}}
+                            {{clientCalc+reportstotal| number}}
 
                         </div>
                     </td>
