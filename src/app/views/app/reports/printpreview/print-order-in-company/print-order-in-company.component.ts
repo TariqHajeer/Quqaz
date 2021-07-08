@@ -45,6 +45,7 @@ export class PrintOrderInCompanyComponent implements OnInit {
       this.i++
       this.IdCost.Id = o.order.id
       this.IdCost.Cost = o.order.cost
+      this.IdCost.PayForClient = o.order.payForClient
       this.IdCosts.push(this.IdCost)
       this.IdCost = new IdCost
 
@@ -144,25 +145,28 @@ export class PrintOrderInCompanyComponent implements OnInit {
       else return "rgb(255, 255, 255)"
   }
   clientCalc = 0
-  payForCleint(element): number {
+  payForCleint(element) {
     element=element.order
+    if (element.orderplaced == null)
+      return "-"
     if (!element.isClientDiliverdMoney) {
+
       if (element.orderplaced.id == 5)
         return 0;
-      return element.cost - element.deliveryCost;
+      return element.total - element.deliveCost;
 
     }
     else {
 
       //مرتجع كلي
       if (element.orderplaced.id == 5)
-        return element.deliveryCost - element.oldCost;
+        return element.oldDeliveryCost - element.lastTotal;
       //مرفوض
       else if (element.orderplaced.id == 7)
-        return (-element.oldCost);
+        return (-element.lastTotal);
       //مرتجع جزئي
       else if (element.orderplaced.id == 6)
-        return element.cost - element.oldCost;
+        return element.total - element.lastTotal;
     }
 
   }

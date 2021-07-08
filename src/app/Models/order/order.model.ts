@@ -35,6 +35,7 @@ export class OrderState {
 export class IdCost{
       Id
       Cost
+      PayForClient
 }
 export class DateIdCost{
       Date

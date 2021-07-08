@@ -15,11 +15,23 @@
               <ng-option *ngFor="let client of clients" [value]="client.id">{{client.name}}
               </ng-option>
             </ng-select>
-          </div>
-          <div class="col-md-2">
+          </div> 
+           <div class="col-md-2">
             <label>التاريخ</label>
             <input type="date" 
             class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.CreatedDate"
+            (ngModelChange)="allFilter()">
+          </div>
+           <div class="col-md-2">
+            <label>الكود</label>
+            <input type="text" 
+            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Code"
+            (ngModelChange)="allFilter()">
+          </div>
+          <div class="col-md-2">
+            <label>رقم الهاتف</label>
+            <input type="text" 
+            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Phone"
             (ngModelChange)="allFilter()">
           </div>
         </div>
@@ -28,7 +40,10 @@
 <br>
 <div class="example-container mat-elevation-z8" >
   <table mat-table [dataSource]="dataSource" matSort >
-  
+    <ng-container matColumnDef="number">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> ترقيم </th>
+      <td mat-cell *matCellDef="let element;index as i" style="padding-right: 10px;"> {{i+1}}</td>
+    </ng-container>
   <ng-container matColumnDef="code">
     <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> كود </th>
     <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.code}}</td>
@@ -123,6 +138,18 @@
   <h5 style="padding-top: 20px; padding-right: 10px;"  *ngIf="noDataFound">  لايوجد بيانات للعرض</h5>
   
   </div>
+  <!-- <br>
+  <div class="row">
+    <div class="col-2">
+      {{totalCount}}
+    </div>
+    <div class="col-2">
+      
+    </div>
+    <div class="col-2">
+      
+    </div>
+  </div> -->
   <!-- <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
   [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator> -->
   

@@ -65,7 +65,7 @@ export class OrdersTodayComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.orders);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.displayedColumns = ['code', 'deliveryCost', 'cost', 'oldCost', 'recipientName',
+    this.displayedColumns = ['number','code', 'deliveryCost', 'cost', 'oldCost', 'recipientName',
       'recipientPhones', 'client', 'clientPrintNumber', 'country'
       , 'region', 'agent', 'agentPrintNumber', 'monePlaced', 'orderplaced', 'address'
       , 'createdBy', 'date', 'diliveryDate', 'note'];
@@ -76,8 +76,8 @@ export class OrdersTodayComponent implements OnInit {
   }
 
   allFilter() {
-    if(!this.filtering.ClientId||!this.filtering.CreatedDate)return
-    else{
+    // if(!this.filtering.ClientId||!this.filtering.CreatedDate)return
+   // else{
       this.spinner.show()
     this.orderservice.WithoutPaging(this.filtering).subscribe(response => {
       this.spinner.hide()
@@ -96,11 +96,12 @@ export class OrdersTodayComponent implements OnInit {
       });
       this.dataSource = new MatTableDataSource(response.data)
       this.totalCount = response.total
+      console.log(response)
     },
       err => {
         this.spinner.hide()
       });
-    }
+   // }
     
   }
 
