@@ -92,13 +92,14 @@ export class ClientComponent implements OnInit {
   }
 
   showPrintbtn = false
-  dateWithIds: DateWithIds<IdWithCost> = new DateWithIds
+  dateWithIds: any
   changeDeleiverMoneyForClient() {
     this.spinner.show()
     this.dateWithIds = {
-      Ids: this.orders.filter(o => o.id&&o.cost),
+      Ids: this.orders.map(c=>({id:c.id,cost:this.payForCleint(c)})),
       Date: new Date
-    }
+    } 
+    console.log(this.dateWithIds);
     this.orderservice.DeleiverMoneyForClient(this.dateWithIds).subscribe(res => {
       console.log(res)
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
@@ -109,7 +110,6 @@ export class ClientComponent implements OnInit {
     }, err => {
       this.showPrintbtn = true
       this.spinner.hide()
-
     })
 
   }
