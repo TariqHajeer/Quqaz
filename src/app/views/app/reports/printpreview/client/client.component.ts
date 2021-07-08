@@ -7,7 +7,7 @@ import { OrderService } from 'src/app/services/order.service';
 import * as jspdf from 'jspdf';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ReciptService } from 'src/app/services/recipt.service';
-import { DateWithIds } from 'src/app/Models/date-with-ids.model';
+import { DateWithIds, IdWithCost } from 'src/app/Models/date-with-ids.model';
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
@@ -72,8 +72,8 @@ export class ClientComponent implements OnInit {
         else {
           //مرتجع كلي
           if (o.orderplaced.id == 5) {
-            this.clientCalc += o.oldDeliveryCost - o.cost
-            return o.oldDeliveryCost - o.cost;
+            this.clientCalc += o.deliveryCost - o.cost
+            return o.deliveryCost - o.cost;
           }
           //مرفوض
           else if (o.orderplaced.id == 7) {
@@ -92,11 +92,11 @@ export class ClientComponent implements OnInit {
   }
 
   showPrintbtn = false
-  dateWithIds: DateWithIds = new DateWithIds
+  dateWithIds: DateWithIds<IdWithCost> = new DateWithIds
   changeDeleiverMoneyForClient() {
     this.spinner.show()
     this.dateWithIds = {
-      Ids: this.orders.map(o => o.id),
+      Ids: this.orders.filter(o => o.id&&o.cost),
       Date: new Date
     }
     this.orderservice.DeleiverMoneyForClient(this.dateWithIds).subscribe(res => {
@@ -161,7 +161,7 @@ export class ClientComponent implements OnInit {
 
       //مرتجع كلي
       if (element.orderplaced.id == 5)
-        return element.oldDeliveryCost - element.oldCost;
+        return element.deliveryCost - element.oldCost;
       //مرفوض
       else if (element.orderplaced.id == 7)
         return (-element.oldCost);

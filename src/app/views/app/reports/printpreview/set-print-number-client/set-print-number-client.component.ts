@@ -49,40 +49,9 @@ export class SetPrintNumberClientComponent implements OnInit {
     this.clientCalc = 0
     if (this.orders)
       this.orders.forEach(o => {
-        this.count += o.cost
-        this.deliveryCostCount += o.deliveryCost
-        if (o.orderplaced == null)
-          return "-"
-        if (!o.isClientDiliverdMoney) {
-          if (o.orderplaced.id == 5) {
-            this.clientCalc += 0
-            return 0;
-          }
-          else if (o.orderplaced.id == 7) {
-            this.clientCalc += o.deliveryCost
-            return o.deliveryCost;
-          }
-          this.clientCalc += o.cost - o.deliveryCost
-          return o.cost - o.deliveryCost;
-
-        }
-        else {
-          //مرتجع كلي
-          if (o.orderplaced.id == 5) {
-            this.clientCalc += o.oldDeliveryCost - o.cost
-            return o.oldDeliveryCost - o.cost;
-          }
-          //مرفوض
-          else if (o.orderplaced.id == 7) {
-            this.clientCalc += (-o.cost)
-            return (-o.cost);
-          }
-          //مرتجع جزئي
-          else if (o.orderplaced.id == 6) {
-            this.clientCalc += o.cost - o.oldCost;
-            return o.cost - o.oldCost;
-          }
-        }
+        this.count += o.total
+        this.deliveryCostCount += o.deliveCost
+       this.clientCalc+=o.payForClient
       })
 
     return this.count

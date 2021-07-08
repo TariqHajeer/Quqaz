@@ -65,7 +65,7 @@ export class AgentComponent implements OnInit {
       this.showPrintbtn=true
     }
   }
-  dateWithIds :DateWithIds=new DateWithIds
+  dateWithIds 
 
   afterPrint() {
     this.spinner.show()
