@@ -102,7 +102,8 @@ export class PrintOrderInCompanyComponent implements OnInit {
   DateIdCost:DateIdCost=new DateIdCost
   changeDeleiverMoneyForClient() {
     this.DateIdCost.Date=new Date()
-    this.DateIdCost.IdCost=this.IdCosts
+    this.DateIdCost.IdCosts=this.IdCosts
+    console.log(this.DateIdCost)
     this.orderservice.DeleiverMoneyForClientWithStatus(this.DateIdCost).subscribe(res => {
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.showPrintbtn = true
@@ -110,6 +111,7 @@ export class PrintOrderInCompanyComponent implements OnInit {
       // this.setPrintnumber()
     }, err => {
       this.showPrintbtn = true
+      console.log(err)
 
     })
 

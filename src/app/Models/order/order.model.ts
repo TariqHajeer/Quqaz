@@ -39,5 +39,5 @@ export class IdCost{
 }
 export class DateIdCost{
       Date
-      IdCost:IdCost[]
+      IdCosts:IdCost[]
 }
