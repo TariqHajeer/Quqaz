@@ -14,6 +14,7 @@ import { Region } from 'src/app/Models/Regions/region.model';
 import { User } from 'src/app/Models/user/user.model';
 import { Client } from '../../client/client.model';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 
 @Component({
   selector: 'app-createmultiple-order-from-client',
@@ -110,7 +111,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
       this.Order.OrderplacedId = this.orderPlace[1].id
-      this.orderPlace = this.orderPlace.filter(o => o.id != 1)
+      this.orderPlace = this.orderPlace.filter(o => o.id != OrderplacedEnum.Client)
 
     })
   }
