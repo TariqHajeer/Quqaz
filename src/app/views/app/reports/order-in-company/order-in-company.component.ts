@@ -14,6 +14,8 @@ import { Router } from '@angular/router';
 import { OrderState } from 'src/app/Models/order/order.model';
 import { ClientService } from '../../client/client.service';
 import { Client } from '../../client/client.model';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
+import { MoneyPalcedEnum } from 'src/app/Models/Enums/MoneyPalcedEnum';
 @Component({
   selector: 'app-order-in-company',
   templateUrl: './order-in-company.component.html',
@@ -90,12 +92,12 @@ export class OrderInCompanyComponent implements OnInit {
     if (this.getorders.length != 0) {
       this.getorders.forEach(o => {
         o.order.monePlaced = this.MoenyPlaced.find(m => m.id == this.MoenyPlacedId.id)
-        if (this.OrderplacedId.id == 4 && this.MoenyPlacedId.id == 4) {
+        if (this.OrderplacedId.id ==OrderplacedEnum.Delivered && this.MoenyPlacedId.id == MoneyPalcedEnum.Delivered) {
           if (o.order.isClientDiliverdMoney) {
-            o.order.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
+            o.order.monePlaced = this.MoenyPlaced.find(m => m.id == MoneyPalcedEnum.Delivered)
           }
           else {
-            o.order.monePlaced = this.MoenyPlaced.find(m => m.id == 3)
+            o.order.monePlaced = this.MoenyPlaced.find(m => m.id == MoneyPalcedEnum.InsideCompany)
           }
         }
 
@@ -108,7 +110,7 @@ export class OrderInCompanyComponent implements OnInit {
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
-      this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
+      this.orderPlace = this.orderPlace.filter(o => o.id != OrderplacedEnum.Client && o.id != OrderplacedEnum.Store)
     })
   }
   changeOrderPlaced() {
@@ -119,8 +121,8 @@ export class OrderInCompanyComponent implements OnInit {
       })
       this.MoenyPlacedId = null
       this.getMoenyPlaced = [...this.getorders[0].MoenyPlaced]
-      if (this.OrderplacedId.id == 4)
-        this.getMoenyPlaced = [{ id: 2, name: "مندوب" }, { id: 4, name: "تم تسليمها/داخل الشركة" }]
+      if (this.OrderplacedId.id == OrderplacedEnum.Delivered)
+        this.getMoenyPlaced = [{ id: MoneyPalcedEnum.WithAgent, name: "مندوب" }, { id: MoneyPalcedEnum.Delivered, name: "تم تسليمها/داخل الشركة" }]
 
     }
 
@@ -170,7 +172,7 @@ export class OrderInCompanyComponent implements OnInit {
       this.notifications.create("error", "الشحنة مضافة مسبقا", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       return
     }
-    if (this.getorder.order.orderplaced.id == 6 || this.getorder.order.orderplaced.id == 4)
+    if (this.getorder.order.orderplaced.id == OrderplacedEnum.PartialReturned || this.getorder.order.orderplaced.id == OrderplacedEnum.Delivered)
       this.getorder.canEditCount = false
     else
       this.getorder.canEditCount = true
