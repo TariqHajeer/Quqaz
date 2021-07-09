@@ -1,6 +1,7 @@
 import {  ChangeDetectorRef, Component, Input, OnChanges, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NotificationsService } from 'angular2-notifications';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { OrderService } from 'src/app/services/order.service';
 
@@ -45,16 +46,16 @@ export class ReceiptOrderInCompanyComponent implements OnInit {
   }
   RowClass(order){
     switch(order.orderplaced.id){
-      case"5":
-      return"Holisticrebound"
-      case"6":
-      return"Partialrefund"
-      case"8":
-      return"delay"
-      case"7":
-      return"unacceptable"
-      case"4":
+      case OrderplacedEnum.Delivered:
       return"Delivery"
+      case OrderplacedEnum.CompletelyReturned:
+      return"Holisticrebound"
+      case OrderplacedEnum.PartialReturned:
+      return"Partialrefund"
+      case OrderplacedEnum.Delayed:
+      return"delay"
+      case OrderplacedEnum.Unacceptable:
+      return"unacceptable"
       default:
       return "default"
     } 
