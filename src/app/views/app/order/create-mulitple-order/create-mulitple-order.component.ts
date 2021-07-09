@@ -16,6 +16,7 @@ import { Client } from '../../client/client.model';
 import { Order } from 'src/app/Models/order/order.model';
 import { SpinnerComponent } from '../../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 
 @Component({
   selector: 'app-create-mulitple-order',
@@ -91,7 +92,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
       this.Order.OrderplacedId = this.orderPlace[1].id
-      this.orderPlace = this.orderPlace.filter(o => o.id != 1)
+      this.orderPlace = this.orderPlace.filter(o => o.id != OrderplacedEnum.Client)
 
     })
   }
@@ -191,20 +192,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
       return false
     }
   }
-  // index = 0
-  // changeIndex(number) {
-  //   this.index = number
-  // }
-
-  // @HostListener('keydown', ['$event'])
-  // onKeyDown(e) {
-  //   console.log("ddd")
-  //   if ((e.which == 13 || e.keyCode == 13)) {
-  //     console.log(this.renderer)
-  //     this.renderer.parentNode(e.nativeElement).focus();
-  //   }
-
-  // }
+  
   onEnter() {
     if (!this.Order.Code || !this.Order.ClientId ||
       !this.Order.CountryId || !this.Order.RecipientPhones

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
-
+import{MoneyPalcedEnum} from '../Models/Enums/MoneyPalcedEnum';
+import{OrderplacedEnum} from '../Models/Enums/OrderplacedEnum';
+import{OrderStateEnum} from '../Models/Enums/OrderStateEnum';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,19 +11,22 @@ export class OrderPlacedStateService {
   constructor() { }
   //على الطريق
   onWay(element, MoenyPlaced) {
-    if (element.order.orderplaced.id == 3) {
+    
+    if (element.order.orderplaced.id == OrderplacedEnum.Way) {
       element.messageCost = ""
-      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 1)]
+      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.OutSideCompany)]
       element.order.monePlaced = { ...element.MoenyPlaced[0] }
     }
 
   }
   //تم التسليم و مرتجع جزئي
   canChangeCost(element, MoenyPlaced, temporderscostindex?) {
-    console.log(element)
-    if (element.order.orderplaced.id == 6 || element.order.orderplaced.id == 4) {
+    
+    
+    if (element.order.orderplaced.id == OrderplacedEnum.PartialReturned || element.order.orderplaced.id == OrderplacedEnum.Delivered) {
       element.canEditCount = false
-      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 2 || m.id == 3)]
+      
+      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent || m.id == MoneyPalcedEnum.InsideCompany)]
       element.order.monePlaced = { ...element.MoenyPlaced[0] }
     } else {
       if (temporderscostindex) {
@@ -41,8 +46,9 @@ export class OrderPlacedStateService {
   }
   //مرفوض, مرتجع كلي 
   unacceptable(element, MoenyPlaced) {
-    if (element.order.orderplaced.id == 7 || element.order.orderplaced.id == 5) {
-      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 3)]
+    
+    if (element.order.orderplaced.id == OrderplacedEnum.Unacceptable || element.order.orderplaced.id == OrderplacedEnum.CompletelyReturned) {
+      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.InsideCompany)]
       element.order.monePlaced = { ...element.MoenyPlaced[0] }
       element.messageCost = ""
     }
@@ -50,8 +56,8 @@ export class OrderPlacedStateService {
     return element
   }
   isClientDiliverdMoney(element, MoenyPlaced) {
-    if (element.order.isClientDiliverdMoney == true && element.order.orderplaced.id == 4) {
-      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 2 || m.id == 4)]
+    if (element.order.isClientDiliverdMoney == true && element.order.orderplaced.id == OrderplacedEnum.Delivered ){
+      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent || m.id == MoneyPalcedEnum.Delivered)]
       element.order.monePlaced = { ...element.MoenyPlaced[0] }
       element.messageCost = ""
       element.order.monePlaced = { ...element.MoenyPlaced[0] }
@@ -60,8 +66,8 @@ export class OrderPlacedStateService {
   }
   //تم التسليم
   sentDeliveredHanded(element, MoenyPlaced, tempordersmonePlacedindex?, tempisClientDiliverdMoneyindex?) {
-    if (element.order.orderplaced.id == 4 && element.order.isClientDiliverdMoney == false) {
-      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == 2 || m.id == 3)]
+    if (element.order.orderplaced.id == OrderplacedEnum.Delivered && element.order.isClientDiliverdMoney == false) {
+      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent || m.id == MoneyPalcedEnum.InsideCompany)]
       element.order.monePlaced = { ...element.MoenyPlaced[0] }
 
       element.messageCost = ""
@@ -76,7 +82,7 @@ export class OrderPlacedStateService {
     }
   }
   EditDeliveryCost(element, tempdeliveryCost?, tempagentCost?) {
-    if (element.order.orderplaced.id == 7 || element.order.orderplaced.id == 5 || element.order.orderplaced.id == 8) {
+    if (element.order.orderplaced.id == OrderplacedEnum.Unacceptable || element.order.orderplaced.id == OrderplacedEnum.CompletelyReturned || element.order.orderplaced.id == OrderplacedEnum.Delayed) {
       // if (element.order.orderplaced.id == 5) {
       //   element.order.deliveryCost = 0
       //   element.order.agentCost = 0

@@ -6,9 +6,10 @@ import { Router } from '@angular/router';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { City } from 'src/app/Models/Cities/city.Model';
+import { OrderStateEnum } from 'src/app/Models/Enums/OrderStateEnum';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
-import { Order } from 'src/app/Models/order/order.model';
+import { Order, OrderState } from 'src/app/Models/order/order.model';
 import { Resend } from 'src/app/Models/order/resend.model';
 import { Paging } from 'src/app/Models/paging';
 import { Region } from 'src/app/Models/Regions/region.model';
@@ -85,11 +86,11 @@ export class OrdersTodayComponent implements OnInit {
         this.noDataFound = true
       else this.noDataFound = false
       response.data.forEach(element => {
-        if (element.orderStateId == 2) {
+        if (element.orderStateId == OrderStateEnum.ShortageOfCash) {
           element.monePlaced.name = "لديك مبلغ مع العميل"
           element.orderplaced.name = "لديك مبلغ مع العميل"
         }
-        else if (element.orderStateId == 3) {
+        else if (element.orderStateId == OrderStateEnum.Finished) {
         //element.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
         //  element.orderplaced = this.orderPlace.find(o => o.id == 4)
         }

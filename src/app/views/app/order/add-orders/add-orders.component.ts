@@ -269,15 +269,4 @@ export class AddOrdersComponent implements OnInit {
     this.index = number
   }
 
-  // @HostListener('keydown', ['$event'])
-  // onKeyDown(e) {
-  //   if ((e.which == 13 || e.keyCode == 13)) {
-
-  //     this.elementRef.nativeElement.lastChild[this.index + 1].focus();
-  //     console.log(this.elementRef)
-  //   }
-
-  // }
-
-
 }

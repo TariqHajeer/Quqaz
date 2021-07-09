@@ -18,6 +18,7 @@ import { User } from 'src/app/Models/user/user.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { Resend } from 'src/app/Models/order/resend.model';
+import { OrderStateEnum } from 'src/app/Models/Enums/OrderStateEnum';
 
 @Component({
   selector: 'app-view-orders',
@@ -127,11 +128,11 @@ export class ViewOrdersComponent implements OnInit {
         this.noDataFound = true
       else this.noDataFound = false
       response.data.forEach(element => {
-        if (element.orderStateId == 2) {
+        if (element.orderStateId == OrderStateEnum.ShortageOfCash) {
           element.monePlaced.name = "لديك مبلغ مع العميل"
           element.orderplaced.name = "لديك مبلغ مع العميل"
         }
-        else if (element.orderStateId == 3) {
+        else if (element.orderStateId == OrderStateEnum.Finished) {
         //element.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
         //  element.orderplaced = this.orderPlace.find(o => o.id == 4)
         }

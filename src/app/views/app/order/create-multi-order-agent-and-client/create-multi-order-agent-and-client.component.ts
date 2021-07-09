@@ -15,6 +15,7 @@ import { User } from 'src/app/Models/user/user.model';
 import { Client } from '../../client/client.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatDialog } from '@angular/material/dialog';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 @Component({
   selector: 'app-create-multi-order-agent-and-client',
   templateUrl: './create-multi-order-agent-and-client.component.html',
@@ -120,7 +121,7 @@ export class CreateMultiOrderAgentAndClientComponent implements OnInit {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
       this.Order.OrderplacedId = this.orderPlace[1].id
-      this.orderPlace = this.orderPlace.filter(o => o.id != 1)
+      this.orderPlace = this.orderPlace.filter(o => o.id != OrderplacedEnum.Client)
 
     })
   }
