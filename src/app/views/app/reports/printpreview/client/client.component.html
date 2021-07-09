@@ -218,7 +218,7 @@
 
                     <td>
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                            {{order.date| date: 'yyyy/MM/dd'}}
+                            {{order.date| date: 'yyyy/MM/dd'}}{{order.date?null:'-'}}
 
                         </div>
                     </td>
@@ -251,7 +251,7 @@
 
                     <td>
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
-                            {{order.oldCost?order.oldCost:'-'}}
+                            {{order.oldCost|number}}{{order.oldCost?null:'-'}}
 
                         </div>
                     </td>
