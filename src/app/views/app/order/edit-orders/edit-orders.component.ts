@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { City } from 'src/app/Models/Cities/city.Model';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { CreateOrdersFromEmployee, OrderItem } from 'src/app/Models/order/create-orders-from-employee.model';
@@ -112,8 +113,7 @@ export class EditOrdersComponent implements OnInit {
   canResned
   getorder() {
     var editorder = JSON.parse(localStorage.getItem('editorder'))
-    console.log(editorder.orderplaced.id)
-    if (editorder.orderplaced.id == 5 || editorder.orderplaced.id == 7 || editorder.orderplaced.id == 8)
+    if (editorder.orderplaced.id == OrderplacedEnum.CompletelyReturned || editorder.orderplaced.id == OrderplacedEnum.Unacceptable || editorder.orderplaced.id == OrderplacedEnum.Delayed)
       this.showRsendButton = true
     else
       this.showRsendButton = false
@@ -355,7 +355,6 @@ export class EditOrdersComponent implements OnInit {
   @HostListener('window:keydown', ['$event'])
   onKeyPress($event: KeyboardEvent) {
     if ( $event.keyCode == 13) {
-      console.log("mmmmm")
       this.AddOrder()
       return false
     }
