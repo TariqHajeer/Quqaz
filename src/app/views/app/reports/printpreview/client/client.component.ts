@@ -8,6 +8,7 @@ import * as jspdf from 'jspdf';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ReciptService } from 'src/app/services/recipt.service';
 import { DateWithIds, IdWithCost } from 'src/app/Models/date-with-ids.model';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
@@ -57,11 +58,11 @@ export class ClientComponent implements OnInit {
         this.count += o.cost
         this.deliveryCostCount += o.deliveryCost
         if (!o.isClientDiliverdMoney) {
-          if (o.orderplaced.id == 5) {
+          if (o.orderplaced.id == OrderplacedEnum.CompletelyReturned) {
             this.clientCalc += 0
             return 0;
           }
-          else if (o.orderplaced.id == 7) {
+          else if (o.orderplaced.id == OrderplacedEnum.Unacceptable) {
             this.clientCalc += o.deliveryCost
             return o.deliveryCost;
           }
@@ -71,17 +72,17 @@ export class ClientComponent implements OnInit {
         }
         else {
           //مرتجع كلي
-          if (o.orderplaced.id == 5) {
+          if (o.orderplaced.id == OrderplacedEnum.CompletelyReturned) {
             this.clientCalc += o.deliveryCost - o.cost
             return o.deliveryCost - o.cost;
           }
           //مرفوض
-          else if (o.orderplaced.id == 7) {
+          else if (o.orderplaced.id == OrderplacedEnum.Unacceptable) {
             this.clientCalc += (-o.cost)
             return (-o.cost);
           }
           //مرتجع جزئي
-          else if (o.orderplaced.id == 6) {
+          else if (o.orderplaced.id == OrderplacedEnum.PartialReturned) {
             this.clientCalc += o.cost - o.oldCost;
             return o.cost - o.oldCost;
           }

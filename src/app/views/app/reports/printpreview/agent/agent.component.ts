@@ -9,6 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import html2canvas from 'html2canvas';
 import * as jsPDF from 'jspdf';
 import { DateWithIds } from 'src/app/Models/date-with-ids.model';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 
 @Component({
   selector: 'app-agent',
@@ -57,7 +58,7 @@ export class AgentComponent implements OnInit {
   showPrintnumber = false
   onAWay() {
     if (this.showPrintnumber == true) return
-    if (this.orderplaced.id == 2) {
+    if (this.orderplaced.id == OrderplacedEnum.Store) {
       this.showPrintnumber = false
       this.showPrintbtn=false
     } else {
