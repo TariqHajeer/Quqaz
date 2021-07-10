@@ -6,6 +6,7 @@ import { PrintNumberOrder } from 'src/app/Models/order/PrintNumberOrder.model';
 import { OrderService } from 'src/app/services/order.service';
 import * as jspdf from 'jspdf';
 import { DateIdCost, IdCost } from 'src/app/Models/order/order.model';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 
 @Component({
   selector: 'app-print-order-in-company',
@@ -63,11 +64,11 @@ export class PrintOrderInCompanyComponent implements OnInit {
         this.count += o.order.cost
         this.deliveryCostCount += o.order.deliveryCost
         if (!o.order.isClientDiliverdMoney) {
-          if (o.order.orderplaced.id == 5) {
+          if (o.order.orderplaced.id == OrderplacedEnum.CompletelyReturned) {
             this.clientCalc += 0
             return 0;
           }
-          else if (o.order.orderplaced.id == 7) {
+          else if (o.order.orderplaced.id == OrderplacedEnum.Unacceptable) {
             this.clientCalc += o.order.deliveryCost
             return o.order.deliveryCost;
           }
@@ -77,17 +78,17 @@ export class PrintOrderInCompanyComponent implements OnInit {
         }
         else {
           //مرتجع كلي
-          if (o.order.orderplaced.id == 5) {
+          if (o.order.orderplaced.id == OrderplacedEnum.CompletelyReturned) {
             this.clientCalc += o.order.deliveryCost - o.order.cost
             return o.order.deliveryCost - o.order.cost;
           }
           //مرفوض
-          else if (o.order.orderplaced.id == 7) {
+          else if (o.order.orderplaced.id == OrderplacedEnum.Unacceptable) {
             this.clientCalc += (-o.order.cost)
             return (-o.order.cost);
           }
           //مرتجع جزئي
-          else if (o.order.orderplaced.id == 6) {
+          else if (o.order.orderplaced.id == OrderplacedEnum.PartialReturned) {
             this.clientCalc += o.order.cost - o.order.oldCost;
             return o.order.cost - o.order.oldCost;
           }
@@ -134,15 +135,15 @@ export class PrintOrderInCompanyComponent implements OnInit {
 
   }
   style(order) {
-    if (order.orderplaced.id == 4)
+    if (order.orderplaced.id == OrderplacedEnum.Delivered)
       return "rgb(187, 253, 161)"
-    else if (order.orderplaced.id == 5)
+    else if (order.orderplaced.id == OrderplacedEnum.CompletelyReturned)
       return "rgb(250, 166, 166)"
-    else if (order.orderplaced.id == 6)
+    else if (order.orderplaced.id == OrderplacedEnum.PartialReturned)
       return "rgb(223, 221, 221)"
-    else if (order.orderplaced.id == 7)
+    else if (order.orderplaced.id == OrderplacedEnum.Unacceptable)
       return "rgb(139, 147, 255)"
-    else if (order.orderplaced.id == 8)
+    else if (order.orderplaced.id == OrderplacedEnum.Delayed)
       return "rgb(160, 243, 139)"
       else return "rgb(255, 255, 255)"
   }
@@ -151,7 +152,7 @@ export class PrintOrderInCompanyComponent implements OnInit {
     if (element.orderplaced == null)
       return "-"
       if (!element.isClientDiliverdMoney) {
-        if (element.orderplaced.id == 5)
+        if (element.orderplaced.id == OrderplacedEnum.CompletelyReturned)
           return 0;
         return element.cost - element.deliveryCost;
   
@@ -159,13 +160,13 @@ export class PrintOrderInCompanyComponent implements OnInit {
       else {
   
         //مرتجع كلي
-        if (element.orderplaced.id == 5)
+        if (element.orderplaced.id == OrderplacedEnum.CompletelyReturned)
           return element.deliveryCost - element.oldCost;
         //مرفوض
-        else if (element.orderplaced.id == 7)
+        else if (element.orderplaced.id == OrderplacedEnum.Unacceptable)
           return (-element.oldCost);
         //مرتجع جزئي
-        else if (element.orderplaced.id == 6)
+        else if (element.orderplaced.id == OrderplacedEnum.PartialReturned)
           return element.cost - element.oldCost;
       }
 
