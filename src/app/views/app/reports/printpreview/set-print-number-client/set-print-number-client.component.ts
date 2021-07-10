@@ -8,6 +8,7 @@ import * as jspdf from 'jspdf';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ReciptService } from 'src/app/services/recipt.service';
 import { ActivatedRoute } from '@angular/router';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 
 @Component({
   selector: 'app-set-print-number-client',
@@ -61,7 +62,7 @@ export class SetPrintNumberClientComponent implements OnInit {
       return "-"
     if (!element.isClientDiliverdMoney) {
 
-      if (element.orderplaced.id == 5)
+      if (element.orderplaced.id == OrderplacedEnum.CompletelyReturned)
         return 0;
       return element.total - element.deliveCost;
 
