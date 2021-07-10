@@ -21,11 +21,9 @@ export class OrderPlacedStateService {
   }
   //تم التسليم و مرتجع جزئي
   canChangeCost(element, MoenyPlaced, temporderscostindex?) {
-    
-    
-    if (element.order.orderplaced.id == OrderplacedEnum.PartialReturned || element.order.orderplaced.id == OrderplacedEnum.Delivered) {
+    if (element.order.orderplaced.id == OrderplacedEnum.PartialReturned
+       || element.order.orderplaced.id == OrderplacedEnum.Delivered) {
       element.canEditCount = false
-      
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent || m.id == MoneyPalcedEnum.InsideCompany)]
       element.order.monePlaced = { ...element.MoenyPlaced[0] }
     } else {
@@ -60,8 +58,14 @@ export class OrderPlacedStateService {
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent || m.id == MoneyPalcedEnum.Delivered)]
       element.order.monePlaced = { ...element.MoenyPlaced[0] }
       element.messageCost = ""
-      element.order.monePlaced = { ...element.MoenyPlaced[0] }
       //element.order.orderplaced = element.OrderPlaced[1]
+    }
+    if (element.order.isClientDiliverdMoney == true && (element.order.orderplaced.id == OrderplacedEnum.PartialReturned
+      || element.order.orderplaced.id == OrderplacedEnum.Unacceptable
+      || element.order.orderplaced.id == OrderplacedEnum.CompletelyReturned)){
+      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.InsideCompany)]
+      element.order.monePlaced = { ...element.MoenyPlaced[0] }
+      element.messageCost = ""
     }
   }
   //تم التسليم
