@@ -70,13 +70,13 @@ export class SetPrintNumberClientComponent implements OnInit {
     else {
 
       //مرتجع كلي
-      if (element.orderplaced.id == 5)
+      if (element.orderplaced.id == OrderplacedEnum.CompletelyReturned)
         return element.oldDeliveryCost - element.lastTotal;
       //مرفوض
-      else if (element.orderplaced.id == 7)
+      else if (element.orderplaced.id == OrderplacedEnum.Unacceptable)
         return (-element.lastTotal);
       //مرتجع جزئي
-      else if (element.orderplaced.id == 6)
+      else if (element.orderplaced.id == OrderplacedEnum.PartialReturned)
         return element.total - element.lastTotal;
     }
 
