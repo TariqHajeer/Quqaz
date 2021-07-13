@@ -1,9 +1,18 @@
 <h3>عمليات الطباعة الخاصة بالعميل</h3>
 <div class="row">
   <div class="col-md-3">
+    <label>رقم الطباعة</label>
     <input type="text" class="form-control"placeholder="بحث على حسب  رقم الطباعة"
      (keyup.enter)="printNmberFillter()"  [ngModelOptions]="{standalone: true}" [(ngModel)]="printNmber">
   
+    </div>
+    <div class="col-md-3">
+      <label>العميل</label>
+      <ng-select [(ngModel)]="Client" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Client"
+        (change)="changeClient()">
+        <ng-option *ngFor="let Client of Clients" [value]="Client">{{Client.name}}</ng-option>
+      </ng-select>
+      <br>
     </div>
   <div class="col-md-1">
   <a class="btn" (click)="printNmberFillter()">

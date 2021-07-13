@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Paging } from 'src/app/Models/paging';
 import { OrderService } from 'src/app/services/order.service';
+import { Client } from '../../client/client.model';
+import { ClientService } from '../../client/client.service';
 
 @Component({
   selector: 'app-client-print',
@@ -13,13 +15,15 @@ import { OrderService } from 'src/app/services/order.service';
 })
 export class ClientPrintComponent implements OnInit {
 
-  constructor(public orderService: OrderService, private router: Router) { }
+  constructor(public orderService: OrderService, private router: Router,
+    public clientService: ClientService,) { }
 
   ngOnInit(): void {
     this.paging = new Paging
     this.Get()
+    this.getClients()
   }
-  displayedColumns: string[] = [ 'printNmber', 'printerName','date', 'destinationName', 'destinationPhone'
+  displayedColumns: string[] = ['printNmber', 'printerName', 'date', 'destinationName', 'destinationPhone'
   ];
   ;
   dataSource
@@ -29,15 +33,19 @@ export class ClientPrintComponent implements OnInit {
   pageEvent: PageEvent;
   paging: Paging
   noDataFound: boolean = false
+  Clients: Client[] = []
+  Client
+  ClientPrints
   Get() {
-    this.orderService.GetClientprint(this.paging,this.printNmber).subscribe(res => {
+    this.orderService.GetClientprint(this.paging, this.printNmber).subscribe(res => {
       // this.orderFilter=res
       // this.orderFilter.forEach(o=>{
       //   o.printNmber=JSON.stringify(o.printNmber)
       // })
-      this.dataSource = new MatTableDataSource( res.data)
-      this.totalCount = res.total
 
+      this.dataSource = new MatTableDataSource(res.data)
+      this.totalCount = res.total
+      this.ClientPrints = res.data
     })
   }
   switchPage(event: PageEvent) {
@@ -47,17 +55,27 @@ export class ClientPrintComponent implements OnInit {
     this.Get();
 
   }
-  printNmberFillter(){
+  printNmberFillter() {
     this.Get()
   }
   print(number) {
-    this.router.navigate(['/app/reports/clientprintnumber/',number])
+    this.router.navigate(['/app/reports/clientprintnumber/', number])
   }
-   printNmber:number=null
+  printNmber: number = null
   // orderFilter=[]
   // printNmberFillter() {
   //   this.dataSource.data=this.orderFilter
   //   if(this.dataSource.data.length!=0)
   //  this.dataSource.data= this.dataSource.data.filter(d=>d.printNmber.includes(this.printNmber))
   // }
+  getClients() {
+    this.clientService.getClients().subscribe(res => {
+      this.Clients = res
+    })
+  }
+  changeClient() {
+    this.dataSource.data = this.ClientPrints
+    if (this.Client)
+      this.dataSource.data = this.dataSource.data.filter(d => d.destinationName == this.Client.name)
+  }
 }

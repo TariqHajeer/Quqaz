@@ -122,6 +122,10 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> اخر رقم طباعة للعميل</th>
         <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.clientPrintNumber}}</td>
       </ng-container>
+      <ng-container matColumnDef="note">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> ملاحظات</th>
+        <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.note}}</td>
+      </ng-container>
       <ng-container matColumnDef="isClientDiliverdMoney">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> تسليم المبلغ للعميل</th>
         <td mat-cell *matCellDef="let element"> 

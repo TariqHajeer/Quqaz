@@ -4,7 +4,9 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Paging } from 'src/app/Models/paging';
+import { User } from 'src/app/Models/user/user.model';
 import { OrderService } from 'src/app/services/order.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-agent-print',
@@ -13,11 +15,13 @@ import { OrderService } from 'src/app/services/order.service';
 })
 export class AgentPrintComponent implements OnInit {
 
-  constructor(public orderService: OrderService, private router: Router) { }
+  constructor(public orderService: OrderService, private router: Router,
+    public userService: UserService,) { }
 
   ngOnInit(): void {
     this.paging = new Paging
     this.Get()
+    this.getAgent()
   }
   displayedColumns: string[] = ['printNmber', 'printerName', 'date', 'destinationName', 'destinationPhone'
   ];
@@ -29,6 +33,9 @@ export class AgentPrintComponent implements OnInit {
   pageEvent: PageEvent;
   paging: Paging
   noDataFound: boolean = false
+  Agents: User[] = []
+  Agent
+  AgentPrints:any[]=[]
   Get() {
     this.orderService.GetAgentPrint(this.paging, this.printNmber).subscribe(res => {
       // this.orderFilter=res
@@ -36,6 +43,7 @@ export class AgentPrintComponent implements OnInit {
       //   o.printNmber=JSON.stringify(o.printNmber)
       // })
       // console.log(res.data)
+      this.AgentPrints=res.data
       this.dataSource = new MatTableDataSource(res.data)
       this.totalCount = res.total
 
@@ -53,7 +61,7 @@ export class AgentPrintComponent implements OnInit {
   }
   printNmber: number = null
   print(number) {
-    this.router.navigate(['/app/reports/agentprintnumber/',number])
+    this.router.navigate(['/app/reports/agentprintnumber/', number])
   }
   //orderFilter=[]
   // printNmberFillter() {
@@ -61,4 +69,14 @@ export class AgentPrintComponent implements OnInit {
   //   if(this.dataSource.data.length!=0)
   //  this.dataSource.data= this.dataSource.data.filter(d=>d.printNmber.includes(this.printNmber))
   // }
+  getAgent() {
+    this.userService.ActiveAgent().subscribe(res => {
+      this.Agents = res
+    })
+  }
+  ChangeAgentId() {
+    this.dataSource.data=this.AgentPrints
+    if (this.Agent)
+      this.dataSource.data = this.dataSource.data.filter(d => d.destinationName == this.Agent.name)
+  }
 }
