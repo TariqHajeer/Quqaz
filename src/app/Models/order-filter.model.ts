@@ -12,4 +12,5 @@ export class OrderFilter {
       AgentPrintNumber
       ClientPrintNumber
       CreatedDate
+      Note
 }

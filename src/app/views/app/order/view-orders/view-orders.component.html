@@ -99,6 +99,13 @@
             class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.ClientPrintNumber"
             (ngModelChange)="allFilter()">
           </div>
+          <div class="col-md-12">
+            <label> ملاحظات</label>
+            <input type="text" 
+            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Note"
+            (ngModelChange)="allFilter()">
+  
+          </div>
         </div>
        </div>
 </div>
