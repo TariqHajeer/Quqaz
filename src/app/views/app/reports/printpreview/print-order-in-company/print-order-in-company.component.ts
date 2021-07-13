@@ -173,7 +173,7 @@ export class PrintOrderInCompanyComponent implements OnInit {
   }
   print() {
     var divToPrint = document.getElementById('contentToConvert');
-    var css = '@page { size: landscape; }',
+    var css = '@page { size: A4 landscape; }',
       style = document.createElement('style');
     style.type = 'text/css';
     style.media = 'print';
