@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -22,8 +22,11 @@ export class ViewNewOrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.get()
-    this.order=new Order()
+    // this.order = new Order()
   }
+  // ngOnChanges() {
+  //   this.print()
+  // }
   get() {
     this.OrderService.GetNewOrder().subscribe(res => {
       this.orders = res
@@ -39,22 +42,23 @@ export class ViewNewOrderComponent implements OnInit {
     })
 
   }
-  order:Order=new Order
+  order: Order = new Order
   Accept(element) {
-    console.log(element)
-    this.OrderService.Accept(element.id).subscribe(res=>{
+    this.OrderService.Accept(element.id).subscribe(res => {
       this.get()
-      this.order=element
-      this.print(element)
+      this.order = element
+      setTimeout(function () {
+        this.print()
+      }, 1000);
+     
     })
   }
   DisAccept(elementid) {
-    this.OrderService.DisAccept(elementid).subscribe(res=>{
+    this.OrderService.DisAccept(elementid).subscribe(res => {
       this.get()
     })
   }
-  print(element) {
-    this.order=element
+  print() {
     console.log(this.order)
     var divToPrint = document.getElementById('contentToConvert');
     var css = '@page { size: A4 landscape }',

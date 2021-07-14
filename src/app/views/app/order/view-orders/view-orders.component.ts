@@ -159,8 +159,8 @@ export class ViewOrdersComponent implements OnInit {
     this.element = element
   }
   Edit(element) {
-    this.router.navigate(['/app/order/editorder'])
-    localStorage.setItem('editorder', JSON.stringify(element))
+    this.router.navigate(['/app/order/editorder',element.id])
+    // localStorage.setItem('editorder', JSON.stringify(element))
   }
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {

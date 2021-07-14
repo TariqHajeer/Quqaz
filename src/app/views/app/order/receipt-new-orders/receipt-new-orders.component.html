@@ -1,4 +1,4 @@
-<div class="card-body" style="width: 80%;margin-right: 10%;">
+<div class="card-body" style="width: 70%;margin-right: 10%;">
     <div class="row">
         <div class="col-4" style="text-align: right;">
             <p style="font-size: 16px;">
@@ -52,8 +52,8 @@
         </div>
         <div class="col-3" style="align-items: center;">
             <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/logoquqaz.png')" width="200px" height="170px" />
-            <p style="text-align: center;font-size: 16px;">
-                رقم الوصل:{{order.code}}
+            <p style="text-align: center;font-size: 16px;padding: 1px;margin-top: 0; background-color: rgb(212, 212, 212);">
+                رقم الوصل : {{order.code}}
             </p>
         </div>
         <div class="col-4">
@@ -96,8 +96,9 @@
                         <div style="border: 1px black solid;
                                 padding: 5px;
                                 border-radius:6px;"*ngIf="order.client">
-                                <a  *ngFor="let phone of order.client.phones ">
-                                    {{phone}}
+                                <a  *ngFor="let phone of order.client.phones "
+                                style="border-left: 2px black  solid ;padding-left: 5px;padding-right: 5px;">
+                                    {{phone.phone}} 
                                 </a>
                                 <a *ngIf="order.client.phones.length==0">-</a>
                         </div>
@@ -118,7 +119,7 @@
                         <div style="border: 1px black solid;
                                 padding: 5px;
                                 border-radius:6px;">
-                            {{order.recipientName}}
+                            {{order.recipientName?order.recipientName:'-'}}
                         </div>
                     </td>
                     <td style="width: 5px;">العنوان</td>
@@ -126,13 +127,13 @@
                         <div style="border: 1px black solid;
                                 padding: 5px;
                                 border-radius:6px;">
-                            {{order.address}}
+                            {{order.address?order.address:'-'}}
                         </div>
                     </td>
                 </tr>
 
                 <tr style="text-align: right;">
-                    <td style="width: 5px;">  هاتف 1 </td>
+                    <td style="width: 5px;">  هاتف  </td>
                     <td colspan="3">
                         <div style="border: 1px black solid;
                                 padding: 5px;
@@ -142,7 +143,7 @@
                     </td>
 
                 </tr>
-                <tr style="text-align: right;">
+                <!-- <tr style="text-align: right;">
                     <td style="width: 5px;">هاتف 2</td>
                     <td colspan="3">
                         <div style="border: 1px black solid;
@@ -152,7 +153,7 @@
                         </div>
                     </td>
 
-                </tr>
+                </tr> -->
                 <tr *ngFor="let orderitem of order.orderItems">
                     <td style="width: 5px;">نوع البضاعة</td>
                     <td>

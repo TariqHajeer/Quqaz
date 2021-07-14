@@ -46,7 +46,7 @@ const routes: Routes = [
     data: { roles: [UserPermission.AddOrder]}
   },
   {
-    path:'editorder',
+    path:'editorder/:id',
     component:EditOrdersComponent ,canActivate: [AuthGuard],
     data: { roles: [UserPermission.UpdateOrder]}
   },

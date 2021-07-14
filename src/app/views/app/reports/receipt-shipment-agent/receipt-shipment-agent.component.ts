@@ -13,6 +13,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { OrderState } from 'src/app/Models/order/order.model';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 @Component({
   selector: 'app-receipt-shipment-agent',
   templateUrl: './receipt-shipment-agent.component.html',
@@ -21,7 +22,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class ReceiptShipmentAgentComponent implements OnInit {
 
   displayedColumns: string[] = ['index', 'code', 'client', 'country'
-    , 'cost', 'isClientDiliverdMoney', 'orderplaced', 'monePlaced','deliveryCost','agentCost','note', 'edit'];
+    , 'cost', 'isClientDiliverdMoney', 'orderplaced', 'monePlaced', 'deliveryCost', 'agentCost', 'note', 'edit'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
   Code
@@ -98,9 +99,12 @@ export class ReceiptShipmentAgentComponent implements OnInit {
           else {
             o.order.monePlaced = this.MoenyPlaced.find(m => m.id == 3)
           }
+        
         }
 
-
+        if(o.order.orderplaced.id == OrderplacedEnum.PartialReturned&&o.order.isClientDiliverdMoney){
+          o.order.monePlaced =o.MoenyPlaced[0]
+        }
       })
 
     }
@@ -179,7 +183,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced)
     this.orderplacedstate.unacceptable(this.getorder, this.MoenyPlaced)
     this.orderplacedstate.isClientDiliverdMoney(this.getorder, this.MoenyPlaced)
-    this.orderplacedstate.EditDeliveryCost(this.getorder,this.getorder.order.deliveryCost,this.getorder.order.agentCost)
+    this.orderplacedstate.EditDeliveryCost(this.getorder, this.getorder.order.deliveryCost, this.getorder.order.agentCost)
 
     if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2) {
       this.getorder.order.orderplaced = this.getorder.OrderPlaced.find(o => o.id == 3)
@@ -229,21 +233,21 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.orderplacedstate.onWay(element, this.MoenyPlaced)
     this.orderplacedstate.unacceptable(element, this.MoenyPlaced)
     this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
-    this.orderplacedstate.EditDeliveryCost(element, this.tempdeliveryCost[index],this.tempagentCost[index])
+    this.orderplacedstate.EditDeliveryCost(element, this.tempdeliveryCost[index], this.tempagentCost[index])
 
   }
   ChangeOrderplacedId(element, index) {
     // this.GetMoenyPlaced()
-    this.OrderplacedId=null
-    this.MoenyPlacedId=null
-    this.getMoenyPlaced=[]
+    this.OrderplacedId = null
+    this.MoenyPlacedId = null
+    this.getMoenyPlaced = []
     this.getmony()
     this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
     this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced)
     this.orderplacedstate.onWay(element, this.MoenyPlaced)
     this.orderplacedstate.unacceptable(element, this.MoenyPlaced)
     this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
-    this.orderplacedstate.EditDeliveryCost(element, this.tempdeliveryCost[index],this.tempagentCost[index])
+    this.orderplacedstate.EditDeliveryCost(element, this.tempdeliveryCost[index], this.tempagentCost[index])
 
   }
 
@@ -281,12 +285,12 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   sumCost() {
     this.count = 0
     this.deliveryCostCount = 0
-    this.agentCost=0
+    this.agentCost = 0
     if (this.getorders)
       this.getorders.forEach(o => {
-        this.count += o.order.cost*1
-        this.deliveryCostCount += o.order.deliveryCost*1
-        this.agentCost+=o.order.agentCost*1
+        this.count += o.order.cost * 1
+        this.deliveryCostCount += o.order.deliveryCost * 1
+        this.agentCost += o.order.agentCost * 1
       })
     return this.count
   }
@@ -294,9 +298,9 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   saveEdit() {
     for (let i = 0; i < this.dataSource.data.length; i++) {
       this.orderstate.Id = this.dataSource.data[i].order.id
-      this.orderstate.Cost = this.dataSource.data[i].order.cost*1
-      this.orderstate.DeliveryCost = this.dataSource.data[i].order.deliveryCost*1
-      this.orderstate.AgentCost = this.dataSource.data[i].order.agentCost*1
+      this.orderstate.Cost = this.dataSource.data[i].order.cost * 1
+      this.orderstate.DeliveryCost = this.dataSource.data[i].order.deliveryCost * 1
+      this.orderstate.AgentCost = this.dataSource.data[i].order.agentCost * 1
       this.orderstate.Note = this.dataSource.data[i].order.note
       this.orderstate.MoenyPlacedId = this.dataSource.data[i].order.monePlaced.id
       this.orderstate.OrderplacedId = this.dataSource.data[i].order.orderplaced.id
@@ -313,19 +317,19 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       this.dataSource = new MatTableDataSource([])
       this.getorders = []
       this.sumCost()
-      this.OrderplacedId=null
-      this.MoenyPlacedId=null
-      this.getMoenyPlaced=[]
+      this.OrderplacedId = null
+      this.MoenyPlacedId = null
+      this.getMoenyPlaced = []
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
     }, err => {
       this.spinner.hide();
     })
   }
-  tempOrders:any[]=[]
+  tempOrders: any[] = []
   CancelOrder(order) {
     this.getorders = this.getorders.filter(o => o.order.id != order.order.id);
     var index = 0
-    this.tempOrders=[]
+    this.tempOrders = []
     this.getorders.forEach(o => {
       o.order.index = index + 1;
       index++;
@@ -344,4 +348,5 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.sumCost()
 
   }
+  
 }

@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { City } from 'src/app/Models/Cities/city.Model';
@@ -7,6 +7,7 @@ import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { CreateOrdersFromEmployee, OrderItem } from 'src/app/Models/order/create-orders-from-employee.model';
+import { Order } from 'src/app/Models/order/order.model';
 import { Resend } from 'src/app/Models/order/resend.model';
 import { OrderType } from 'src/app/Models/OrderTypes/order-type.model';
 import { Region } from 'src/app/Models/Regions/region.model';
@@ -31,7 +32,10 @@ export class EditOrdersComponent implements OnInit {
     public userService: UserService,
     private notifications: NotificationsService,
     private router: Router,
-    public spinner: NgxSpinnerService) { }
+    public spinner: NgxSpinnerService,
+    private orderService: OrderService,
+    private getroute: ActivatedRoute,
+    ) { }
 
   Order: CreateOrdersFromEmployee
   tempOrdercode
@@ -76,7 +80,7 @@ export class EditOrdersComponent implements OnInit {
     this.orderResend.DeliveryCost = city.deliveryCost
     this.orderResend.RegionId = null
     this.Regionsresend = this.tempRegions.filter(r => r.country.id == this.orderResend.CountryId)
-    this.Agentsresend = this.tempAgent.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.orderResend.CountryId).length>0 )
+    this.Agentsresend = this.tempAgent.filter(a => a.countries.map(c => c.id).filter(co => co == this.orderResend.CountryId).length > 0)
     if (this.Agentsresend.length == 1)
       this.orderResend.AgnetId = this.Agentsresend[0].id
     else
@@ -111,44 +115,54 @@ export class EditOrdersComponent implements OnInit {
 
   }
   canResned
+  id
+  order:Order=new Order
   getorder() {
-    var editorder = JSON.parse(localStorage.getItem('editorder'))
-    if (editorder.orderplaced.id == OrderplacedEnum.CompletelyReturned || editorder.orderplaced.id == OrderplacedEnum.Unacceptable || editorder.orderplaced.id == OrderplacedEnum.Delayed)
-      this.showRsendButton = true
-    else
-      this.showRsendButton = false
-    // if (editorder.canResned == null)
-    //   this.showRsendButton = true
-    // else {
-    //   this.showRsendButton = false
-    //   this.canResned = editorder.canResned
-    // }
-    this.orderResend.Id = editorder.id
-    this.orderResend.AgnetId = editorder.agent.id
-    this.orderResend.CountryId = editorder.country.id
-    this.orderResend.RegionId = editorder.region != null ? editorder.region.Id : null
-    this.Regionsresend = this.Regions.filter(r => r.country.id == this.orderResend.CountryId)
-    this.Agentsresend = this.Agents.filter(r => r.countryId == this.orderResend.CountryId)
-    this.Order.Id = editorder.id
-    this.Order.Address = editorder.address
-    this.Order.AgentId = editorder.agent.id
-    this.Order.ClientId = editorder.client.id
-    this.Order.Code = editorder.code
-    this.tempOrdercode = editorder.code
-    this.Order.Cost = editorder.cost
-    this.Order.CountryId = editorder.country.id
-    this.Order.Date = editorder.date
-    this.Order.DiliveryDate = editorder.diliveryDate
-    this.Order.DeliveryCost = editorder.deliveryCost
-    this.Order.MoenyPlacedId = editorder.monePlaced.id
-    this.Order.Note = editorder.note
-    this.Order.OrderTypeDtos = editorder.orderItems
-    this.Order.OrderplacedId = editorder.orderplaced.id
-    this.Order.RecipientName = editorder.recipientName
-    this.Order.RecipientPhones = editorder.recipientPhones.split(',')
-    this.Order.OldCost = editorder.oldCost
-    //this.Order.RecipientPhones.push(editorder.recipientPhones)
-    this.Order.RegionId = editorder.region != null ? editorder.region.Id : null
+    this.getroute.params.subscribe(par => {
+      this.id = par['id'] as string
+    });
+    this.orderService.GetById(this.id).subscribe(res => {
+      console.log(res)
+      this.order=res
+      var editorder = res
+      if (editorder.orderplaced.id == OrderplacedEnum.CompletelyReturned || editorder.orderplaced.id == OrderplacedEnum.Unacceptable || editorder.orderplaced.id == OrderplacedEnum.Delayed)
+        this.showRsendButton = true
+      else
+        this.showRsendButton = false
+      // if (editorder.canResned == null)
+      //   this.showRsendButton = true
+      // else {
+      //   this.showRsendButton = false
+      //   this.canResned = editorder.canResned
+      // }
+      this.orderResend.Id = editorder.id
+      this.orderResend.AgnetId = editorder.agent.id
+      this.orderResend.CountryId = editorder.country.id
+      this.orderResend.RegionId = editorder.region != null ? editorder.region.Id : null
+      this.Regionsresend = this.Regions.filter(r => r.country.id == this.orderResend.CountryId)
+      this.Agentsresend = this.Agents.filter(r => r.countryId == this.orderResend.CountryId)
+      this.Order.Id = editorder.id
+      this.Order.Address = editorder.address
+      this.Order.AgentId = editorder.agent.id
+      this.Order.ClientId = editorder.client.id
+      this.Order.Code = editorder.code
+      this.tempOrdercode = editorder.code
+      this.Order.Cost = editorder.cost
+      this.Order.CountryId = editorder.country.id
+      this.Order.Date = editorder.date
+      this.Order.DiliveryDate = editorder.diliveryDate
+      this.Order.DeliveryCost = editorder.deliveryCost
+      this.Order.MoenyPlacedId = editorder.monePlaced.id
+      this.Order.Note = editorder.note
+      this.Order.OrderTypeDtos = editorder.orderItems
+      this.Order.OrderplacedId = editorder.orderplaced.id
+      this.Order.RecipientName = editorder.recipientName
+      this.Order.RecipientPhones = editorder.recipientPhones.split(',')
+      this.Order.OldCost = editorder.oldCost
+      //this.Order.RecipientPhones.push(editorder.recipientPhones)
+      this.Order.RegionId = editorder.region != null ? editorder.region.Id : null
+    })
+   
 
 
   }
@@ -252,7 +266,7 @@ export class EditOrdersComponent implements OnInit {
     this.userService.ActiveAgent().subscribe(res => {
       this.Agentsresend = res
       this.tempAgent = res
-      this.Agents = this.tempAgent.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.Order.CountryId).length>0 )
+      this.Agents = this.tempAgent.filter(a => a.countries.map(c => c.id).filter(co => co == this.Order.CountryId).length > 0)
 
       // console.log(res)
     })
@@ -294,7 +308,7 @@ export class EditOrdersComponent implements OnInit {
     var city = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.DeliveryCost = city.deliveryCost
     this.Regions = this.tempRegions.filter(r => r.country.id == this.Order.CountryId)
-    this.Agents = this.tempAgent.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.Order.CountryId).length>0 )
+    this.Agents = this.tempAgent.filter(a => a.countries.map(c => c.id).filter(co => co == this.Order.CountryId).length > 0)
     if (this.Agents.length == 1)
       this.Order.AgentId = this.Agents[0].id
     else
@@ -354,9 +368,27 @@ export class EditOrdersComponent implements OnInit {
   }
   @HostListener('window:keydown', ['$event'])
   onKeyPress($event: KeyboardEvent) {
-    if ( $event.keyCode == 13) {
+    if ($event.keyCode == 13) {
       this.AddOrder()
       return false
     }
+  }
+  print() {
+    var divToPrint = document.getElementById('contentToConvert');
+    var css = '@page { size: A4 landscape }',
+      style = document.createElement('style');
+    style.type = 'text/css';
+    style.media = 'print';
+    style.appendChild(document.createTextNode(css));
+    divToPrint.appendChild(style);
+    var newWin = window.open('', 'Print-Window');
+    newWin?.document.open();
+    newWin?.document.write('<html dir="rtl"><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"><link rel="stylesheet/less" type="text/css" href="app/reports/printpreview/agent/agent.component.less" /></head><body onload="window.print()">' + divToPrint?.innerHTML + '</body></html>');
+    newWin?.document.close();
+    setTimeout(function () {
+      newWin?.close();
+      // location.reload();
+
+    }, 10);
   }
 }
