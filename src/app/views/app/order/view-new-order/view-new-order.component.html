@@ -58,7 +58,7 @@
                 <ng-container matColumnDef="Accept">
                     <th mat-header-cell *matHeaderCellDef> </th>
                     <td mat-cell *matCellDef="let element" >
-                        <span class="btn btn-xs badge-primary "(click)="Accept(element.id)" >تأكيد</span>
+                        <span class="btn btn-xs badge-primary "(click)="Accept(element)" >تأكيد</span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="DisAccept">
@@ -79,3 +79,4 @@
     </div>
 </div>
 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+<app-receipt-new-orders [order]="order" [hidden]="true" id="contentToConvert"></app-receipt-new-orders>

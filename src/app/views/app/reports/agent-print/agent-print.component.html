@@ -1,16 +1,12 @@
 <h3>عمليات الطباعة الخاصة بالمندوب</h3>
 <div class="row">
   <div class="col-md-3">
-    <label>رقم الطباعة</label>
     <input type="text" class="form-control"placeholder="بحث على حسب  رقم الطباعة"
      (keyup.enter)="printNmberFillter()"  [ngModelOptions]="{standalone: true}" [(ngModel)]="printNmber">
     </div>
     <div class="col-md-3">
-      <label>المندوب</label>
-      <ng-select [(ngModel)]="Agent" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Agent"
-        (change)="ChangeAgentId()">
-        <ng-option *ngFor="let Agent of Agents" [value]="Agent">{{Agent.name}}</ng-option>
-      </ng-select>
+      <input type="text" class="form-control"placeholder="بحث على حسب   اسم المندوب"
+      (keyup.enter)="printNmberFillter()"  [ngModelOptions]="{standalone: true}" [(ngModel)]="Agent">
     </div>
   <div class="col-md-1">
   <a class="btn" (click)="printNmberFillter()">

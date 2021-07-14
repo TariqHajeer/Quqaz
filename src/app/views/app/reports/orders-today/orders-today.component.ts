@@ -95,6 +95,8 @@ export class OrdersTodayComponent implements OnInit {
         //  element.orderplaced = this.orderPlace.find(o => o.id == 4)
         }
       });
+      this.orders=response.data
+      this.sumCost()
       this.dataSource = new MatTableDataSource(response.data)
       this.totalCount = response.total
       console.log(response)
@@ -105,8 +107,20 @@ export class OrdersTodayComponent implements OnInit {
    // }
     
   }
-
-  
+  count
+  deliveryCostCount
+  sumCost() {
+    this.count = 0
+    this.deliveryCostCount = 0
+    if (this.orders)
+      this.orders.forEach(o => {
+        this.count += o.cost
+        this.deliveryCostCount += o.deliveryCost
+       
+      })
+    
+    return this.count
+  }
   
   GetClient() {
     this.clientService.getClients().subscribe(res => {

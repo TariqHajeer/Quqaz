@@ -37,7 +37,7 @@ export class AgentPrintComponent implements OnInit {
   Agent
   AgentPrints:any[]=[]
   Get() {
-    this.orderService.GetAgentPrint(this.paging, this.printNmber).subscribe(res => {
+    this.orderService.GetAgentPrint(this.paging, this.printNmber,this.Agent).subscribe(res => {
       // this.orderFilter=res
       // this.orderFilter.forEach(o=>{
       //   o.printNmber=JSON.stringify(o.printNmber)

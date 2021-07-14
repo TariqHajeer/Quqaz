@@ -1,155 +1,166 @@
-<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff"
- type = "ball-pulse" [fullScreen] = "true">
-    <p style="color: white" > </p>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-pulse" [fullScreen]="true">
+  <p style="color: white"> </p>
 </ngx-spinner>
 <div class="card">
-    <div class="card-body">
-        <div class="d-flex justify-content-between">
-            <h3 >شحنات حسب تاريخ</h3>
-        </div>
-        <div class="row">
-          <div class="col-md-2">
-            <label> العميل</label>
-            <ng-select [(ngModel)]="filtering.ClientId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-            (ngModelChange)="allFilter()">
-              <ng-option *ngFor="let client of clients" [value]="client.id">{{client.name}}
-              </ng-option>
-            </ng-select>
-          </div> 
-           <div class="col-md-2">
-            <label>التاريخ</label>
-            <input type="date" 
-            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.CreatedDate"
-            (ngModelChange)="allFilter()">
-          </div>
-           <div class="col-md-2">
-            <label>الكود</label>
-            <input type="text" 
-            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Code"
-            (ngModelChange)="allFilter()">
-          </div>
-          <div class="col-md-2">
-            <label>رقم الهاتف</label>
-            <input type="text" 
-            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Phone"
-            (ngModelChange)="allFilter()">
-          </div>
-        </div>
-       
-</div>
-<br>
-<div class="example-container mat-elevation-z8" >
-  <table mat-table [dataSource]="dataSource" matSort >
-    <ng-container matColumnDef="number">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> ترقيم </th>
-      <td mat-cell *matCellDef="let element;index as i" style="padding-right: 10px;"> {{i+1}}</td>
-    </ng-container>
-  <ng-container matColumnDef="code">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> كود </th>
-    <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.code}}</td>
-  </ng-container>
-  <ng-container matColumnDef="deliveryCost">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> تكلفة التوصيل</th>
-    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.deliveryCost}}</td>
-  </ng-container>
-  <ng-container matColumnDef="cost">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> كلفة الطلب</th>
-    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.cost}}</td>
-  </ng-container>
-  <ng-container matColumnDef="oldCost">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>  الكلفة القديمة</th>
-    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.oldCost}}</td>
-  </ng-container>
-  <ng-container matColumnDef="recipientName">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> اسم المستلم</th>
-    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.recipientName}}</td>
-  </ng-container>
-  
-  
-  <ng-container matColumnDef="recipientPhones">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 30px;"> رقم المستلم</th>
-    <td mat-cell *matCellDef="let element"style="width: 100px;padding:10px;"> {{element.recipientPhones}}</td>
-  </ng-container>
- 
-  <ng-container matColumnDef="client">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> اسم العميل</th>
-    <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.client!=null?element.client.name:null}}</td>
-  </ng-container>
-  <ng-container matColumnDef="clientPrintNumber">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> اخر رقم طباعة للعميل</th>
-    <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.clientPrintNumber}}</td>
-  </ng-container>
-  <ng-container matColumnDef="country">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> المدينة</th>
-    <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.country!=null?element.country.name:null}}</td>
-  </ng-container>
-  <ng-container matColumnDef="region">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> المنطقة</th>
-    <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.region!=null?element.region.name:null}}</td>
-  </ng-container>
-  <ng-container matColumnDef="agent">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> المندوب</th>
-    <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.agent!=null?element.agent.name:null}}</td>
-  </ng-container>
-  <ng-container matColumnDef="agentPrintNumber">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> اخر رقم طباعة للمندوب</th>
-    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.agentPrintNumber}}</td>
-  </ng-container>
+  <div class="card-body">
+    <div class="d-flex justify-content-between">
+      <h3>شحنات حسب تاريخ</h3>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <label> العميل</label>
+        <ng-select [(ngModel)]="filtering.ClientId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+          (ngModelChange)="allFilter()">
+          <ng-option *ngFor="let client of clients" [value]="client.id">{{client.name}}
+          </ng-option>
+        </ng-select>
+      </div>
+      <div class="col-md-2">
+        <label>التاريخ</label>
+        <input type="date" class="form-control" [ngModelOptions]="{standalone: true}"
+          [(ngModel)]="filtering.CreatedDate" (ngModelChange)="allFilter()">
+      </div>
+      <div class="col-md-2">
+        <label>الكود</label>
+        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Code"
+          (ngModelChange)="allFilter()">
+      </div>
+      <div class="col-md-2">
+        <label>رقم الهاتف</label>
+        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Phone"
+          (ngModelChange)="allFilter()">
+      </div>
+    </div>
 
-  
-  <ng-container matColumnDef="monePlaced">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> موقع المبلغ</th>
-    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.monePlaced!=null?element.monePlaced.name:null}}</td>
-  </ng-container>
-  <ng-container matColumnDef="orderplaced">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> حالة الشحنة</th>
-    <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.orderplaced!=null?element.orderplaced.name:null}}</td>
-  </ng-container>
- 
-  <ng-container matColumnDef="address">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> العنوان</th>
-    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.address}}</td>
-  </ng-container>
-  <ng-container matColumnDef="createdBy">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> بواسطه</th>
-    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.createdBy}}</td>
-  </ng-container>
-  <ng-container matColumnDef="date">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> التاريخ</th>
-    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.date| date: 'yyyy/MM/dd'}}</td>
-  </ng-container>
-  
-  
-  <ng-container matColumnDef="diliveryDate" >
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> تاريخ التوصيل</th>
-    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.diliveryDate| date: 'yyyy/MM/dd'}}</td>
-  </ng-container> 
-  <ng-container matColumnDef="note" >
-    <th mat-header-cell *matHeaderCellDef  style="padding:10px "> ملاحظات</th>
-    <td mat-cell *matCellDef="let element"style="padding:10px"> {{element.note}}</td>
-  </ng-container>
- 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-  <simple-notifications></simple-notifications>
-
-  
-  <h5 style="padding-top: 20px; padding-right: 10px;"  *ngIf="noDataFound">  لايوجد بيانات للعرض</h5>
-  
   </div>
-  <!-- <br>
+  <br>
+  <div class="example-container mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="number">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> ترقيم </th>
+        <td mat-cell *matCellDef="let element;index as i" style="padding-right: 10px;"> {{i+1}}</td>
+      </ng-container>
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> كود </th>
+        <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.code}}</td>
+      </ng-container>
+      <ng-container matColumnDef="deliveryCost">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> تكلفة التوصيل</th>
+        <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.deliveryCost}}</td>
+      </ng-container>
+      <ng-container matColumnDef="cost">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> كلفة الطلب</th>
+        <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.cost}}</td>
+      </ng-container>
+      <ng-container matColumnDef="oldCost">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> الكلفة القديمة</th>
+        <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.oldCost}}</td>
+      </ng-container>
+      <ng-container matColumnDef="recipientName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> اسم المستلم</th>
+        <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.recipientName}}</td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="recipientPhones">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 30px;"> رقم المستلم</th>
+        <td mat-cell *matCellDef="let element" style="width: 100px;padding:10px;"> {{element.recipientPhones}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="client">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> اسم العميل</th>
+        <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.client!=null?element.client.name:null}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="clientPrintNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> اخر رقم طباعة للعميل</th>
+        <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.clientPrintNumber}}</td>
+      </ng-container>
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> المدينة</th>
+        <td mat-cell *matCellDef="let element" style="padding:10px;">
+          {{element.country!=null?element.country.name:null}}</td>
+      </ng-container>
+      <ng-container matColumnDef="region">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> المنطقة</th>
+        <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.region!=null?element.region.name:null}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="agent">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> المندوب</th>
+        <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.agent!=null?element.agent.name:null}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="agentPrintNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> اخر رقم طباعة للمندوب</th>
+        <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.agentPrintNumber}}</td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="monePlaced">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> موقع المبلغ</th>
+        <td mat-cell *matCellDef="let element" style="padding:10px;">
+          {{element.monePlaced!=null?element.monePlaced.name:null}}</td>
+      </ng-container>
+      <ng-container matColumnDef="orderplaced">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> حالة الشحنة</th>
+        <td mat-cell *matCellDef="let element" style="padding:10px;">
+          {{element.orderplaced!=null?element.orderplaced.name:null}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> العنوان</th>
+        <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.address}}</td>
+      </ng-container>
+      <ng-container matColumnDef="createdBy">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> بواسطه</th>
+        <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.createdBy}}</td>
+      </ng-container>
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> التاريخ</th>
+        <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.date| date: 'yyyy/MM/dd'}}</td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="diliveryDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> تاريخ التوصيل</th>
+        <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.diliveryDate| date: 'yyyy/MM/dd'}}</td>
+      </ng-container>
+      <ng-container matColumnDef="note">
+        <th mat-header-cell *matHeaderCellDef style="padding:10px "> ملاحظات</th>
+        <td mat-cell *matCellDef="let element" style="padding:10px"> {{element.note}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <simple-notifications></simple-notifications>
+
+
+    <h5 style="padding-top: 20px; padding-right: 10px;" *ngIf="noDataFound"> لايوجد بيانات للعرض</h5>
+
+  </div>
+  <br>
   <div class="row">
-    <div class="col-2">
-      {{totalCount}}
+    <div class="col-12" style="background-color: rgb(207, 207, 207);">
+      <br>
+      {{totalCount}} &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+      الاجماليات : &nbsp;&nbsp; &nbsp; &nbsp;
+      {{deliveryCostCount}} &nbsp;&nbsp; &nbsp; {{count}}
+
+      <br>
     </div>
-    <div class="col-2">
-      
-    </div>
-    <div class="col-2">
-      
+  </div>
+
+  <!-- <div class="row">
+    <div class="col-12" style="background-color: rgb(207, 207, 207);">
+      <a> {{totalCount}}</a> 
+      <a>الاجماليات :</a>
+      <a> {{deliveryCostCount}}</a>
+      <a> {{count}}</a>
+
+     
     </div>
   </div> -->
   <!-- <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
   [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator> -->
-  

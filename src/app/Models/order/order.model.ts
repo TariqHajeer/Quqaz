@@ -4,23 +4,23 @@ import { User } from '../user/user.model'
 import { NameAndIdDto } from '../name-and-id-dto.model'
 import { Client } from 'src/app/views/app/client/client.model'
 export class Order {
-      Id: number
-      Code: string
-      DeliveryCost: number
-      Cost: number
-      RecipientName: string
-      RecipientPhones: string
-      Address: string
-      CreatedBy: string
-      Date: Date
-      DiliveryDate: Date
-      Note: string
-      Client: Client
-      Country: City
-      Region: Region
-      MonePlaced: NameAndIdDto
-      Orderplaced: NameAndIdDto
-      Agent: User
+      id: number
+      code: string
+      deliveryCost: number
+      cost: number
+      recipientName: string
+      recipientPhones: string
+      address: string
+      createdBy: string
+      date: Date
+      diliveryDate: Date
+      note: string
+      client: Client
+      country: City
+      region: Region
+      monePlaced: NameAndIdDto
+      orderplaced: NameAndIdDto
+      agent: User
 }
 export class OrderState {
       Id: number

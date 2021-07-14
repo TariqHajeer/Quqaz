@@ -31,6 +31,7 @@ import { CreateMultiOrderAgentAndClientComponent } from './create-multi-order-ag
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import { CreatemultipulorderagentComponent } from './createmultipulorderagent/createmultipulorderagent.component';
+import { ReceiptNewOrdersComponent } from './receipt-new-orders/receipt-new-orders.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { CreatemultipulorderagentComponent } from './createmultipulorderagent/cr
     ProfitsOfOrdersComponent,
     CreateMultiOrderAgentAndClientComponent,
     CreatemultipulorderagentComponent,
+    ReceiptNewOrdersComponent,
   ],
   imports: [
     CommonModule,
