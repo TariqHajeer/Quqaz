@@ -170,13 +170,14 @@ direction:rtl;margin-top: 0%;">
 
     
        </div> -->
-       <table style="border: 1px black solid;padding: 5px;text-align: center;font-size: 14px; padding: 5px;text-align: center; width: 100%;">
+       <table style="border: 1px black solid;padding: 5px;text-align: center;font-size: 14px;
+        padding: 5px;text-align: center; width: 100%;size:  auto;">
         <thead style="border: 1px black solid;padding: 5px;text-align: center;font-size: 20px;">
             <th style="border: 1px black solid;padding: 5px;text-align: center" *ngFor="let head of heads">{{head}}</th>
         </thead>
-        <tbody >
+        <tbody style="margin-bottom:20%;" >
 
-            <tr style="border: 1px black solid;padding: 5px;text-align: center;"
+            <tr style="border: 1px black solid;padding: 5px;text-align: center;margin-bottom:20%;overflow: auto;"
              *ngFor="let order of orders;index as i">
                 <td style="width: 3%;border: 1px black solid;padding: 5px;text-align: center">
                     {{i+1}}
