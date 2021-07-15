@@ -28,7 +28,8 @@ export class OrderService {
       params = params.append("RegionId", filter.RegionId);
     if (filter.ClientId != undefined || filter.ClientId != null)
       params = params.append("ClientId", filter.ClientId);
-    
+      if (filter.Note != undefined || filter.Note != null)
+      params = params.append("Note", filter.Note);
     if (filter.RecipientName != undefined || filter.RecipientName != null)
       params = params.append("RecipientName", filter.RecipientName);
     if (filter.MonePlacedId != undefined || filter.MonePlacedId != null)
@@ -39,6 +40,7 @@ export class OrderService {
       params = params.append("IsClientDiliverdMoney", filter.IsClientDiliverdMoney);
     if (paging.RowCount != undefined || paging.RowCount != null)
       params = params.append("RowCount", paging.RowCount);
+      
     if (paging.Page != undefined || paging.Page != null)
       params = params.append("Page", paging.Page);
     return this.http.get<any>(this.controler, { params: params })
