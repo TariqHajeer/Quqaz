@@ -175,6 +175,7 @@ export class ClientComponent implements OnInit {
   reportstotal
 
   reciptClient() {
+    if(this.orderplaced.filter(o=>o.id==OrderplacedEnum.Unacceptable||o.id==OrderplacedEnum.CompletelyReturned).length>0)return
     this.recepitservce.UnPaidRecipt(this.client.id).subscribe(res => {
       this.reports = res
       this.  reportstotal=0
