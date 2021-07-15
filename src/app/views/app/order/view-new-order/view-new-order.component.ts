@@ -45,11 +45,10 @@ export class ViewNewOrderComponent implements OnInit {
   order: Order = new Order
   Accept(element) {
     this.OrderService.Accept(element.id).subscribe(res => {
-      this.get()
       this.order = element
-      setTimeout(function () {
+      // setTimeout(function () {
         this.print()
-      }, 1000);
+      // }, 1000);
      
     })
   }
@@ -74,6 +73,7 @@ export class ViewNewOrderComponent implements OnInit {
     setTimeout(function () {
       newWin?.close();
       // location.reload();
+      this.get()
 
     }, 10);
   }
