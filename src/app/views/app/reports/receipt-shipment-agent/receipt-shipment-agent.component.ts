@@ -99,11 +99,11 @@ export class ReceiptShipmentAgentComponent implements OnInit {
           else {
             o.order.monePlaced = this.MoenyPlaced.find(m => m.id == 3)
           }
-        
+
         }
 
-        if(o.order.orderplaced.id == OrderplacedEnum.PartialReturned&&o.order.isClientDiliverdMoney){
-          o.order.monePlaced =o.MoenyPlaced[0]
+        if (o.order.orderplaced.id == OrderplacedEnum.PartialReturned && o.order.isClientDiliverdMoney) {
+          o.order.monePlaced = o.MoenyPlaced[0]
         }
       })
 
@@ -252,8 +252,8 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   }
 
   changeCost(element, index) {
-    element.order.cost = element.order.cost * 1
-    this.sumCost()
+    // element.order.cost = element.order.cost * 1
+    // this.sumCost()
     // if (this.orderplacedstate.rangeCost(element, this.temporderscost[index])) {
     //   element.messageCost = ""
     // } else
@@ -348,5 +348,25 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.sumCost()
 
   }
-  
+  keyPressNumbers(event, cost) {
+    console.log(cost)
+    console.log("1")
+    var charCode = (event.which) ? event.which : event.keyCode;
+    console.log(charCode)
+
+    if (charCode == 45 && cost==0) { 
+      console.log("2")
+      return true
+     }
+    else
+      // Only Numbers 0-9
+      if ((charCode < 48 || charCode > 57)) {
+        console.log("3")
+        event.preventDefault();
+        return false;
+      } else {
+        console.log("4")
+        return true;
+      }
+  }
 }

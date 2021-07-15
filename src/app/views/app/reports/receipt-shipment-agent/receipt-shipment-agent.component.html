@@ -101,9 +101,8 @@
       <td mat-cell *matCellDef="let element;index as i">
         <h4 *ngIf="element.canEditCount">{{element.order.cost}}</h4>
         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" *ngIf="!element.canEditCount"
-          oninput="this.value = this.value.replace(/[0-9\+\-\ ]/g, '').replace(/(\..*)\./g, '$1');"
           [(ngModel)]="element.order.cost" style="width: 110px;" 
-                   (ngModelChange)=" changeCost(element,i)">
+              (blur)="sumCost()"     (ngModelChange)=" changeCost(element,i) "(keypress)="keyPressNumbers($event,element.order.cost)">
         <h5 style="color: red;"> {{element.messageCost}}</h5>
       </td>
     </ng-container>
