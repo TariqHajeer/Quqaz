@@ -1,4 +1,3 @@
-import { Agent } from "https"
 
 export class OrderLog {
     id
@@ -29,7 +28,7 @@ export class OrderLog {
     isDollar?
     updatedDate?
     systemNote
-    agent: Agent
+    agent
     client
     country
     region
