@@ -1,3 +1,4 @@
+import {OrderLog} from './order-log.model'
 export class CreateOrdersFromEmployee {
     /**
      *
@@ -28,6 +29,7 @@ export class CreateOrdersFromEmployee {
     OrderTypeDtos:OrderItem[]
     DeliveryCost
     OldCost
+    orderLogs:OrderLog[]
 }
 export class OrderItem{
     OrderTypeName:string

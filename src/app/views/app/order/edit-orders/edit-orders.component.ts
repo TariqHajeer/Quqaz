@@ -1,4 +1,7 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -112,11 +115,19 @@ export class EditOrdersComponent implements OnInit {
     this.getAgent()
     this.getOrderTypes()
     this.Getcities()
+    this.displayedColumns = ['code', 'deliveryCost', 'cost', 'oldCost', 'recipientName',
+    'recipientPhones', 'client','country','region'
+    , 'agent', 'monePlaced', 'orderplaced', 'address'
+    , 'isClientDiliverdMoney','isSync','updatedBy', 'updatedDate','date', 'diliveryDate', 'note','systemNote'];
 
   }
   canResned
   id
   order:Order=new Order
+  displayedColumns: string[];
+  dataSource
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   getorder() {
     this.getroute.params.subscribe(par => {
       this.id = par['id'] as string
@@ -159,6 +170,8 @@ export class EditOrdersComponent implements OnInit {
       this.Order.RecipientName = editorder.recipientName
       this.Order.RecipientPhones = editorder.recipientPhones.split(',')
       this.Order.OldCost = editorder.oldCost
+      this.Order.orderLogs=editorder.orderLogs
+      this.dataSource = new MatTableDataSource(this.Order.orderLogs)
       //this.Order.RecipientPhones.push(editorder.recipientPhones)
       this.Order.RegionId = editorder.region != null ? editorder.region.Id : null
     })
