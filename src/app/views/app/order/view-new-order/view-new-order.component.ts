@@ -46,6 +46,7 @@ export class ViewNewOrderComponent implements OnInit {
   Accept(element) {
     this.OrderService.Accept(element.id).subscribe(res => {
       this.order = element
+      this.get()
       // setTimeout(function () {
         this.print()
       // }, 1000);

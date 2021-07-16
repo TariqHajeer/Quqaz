@@ -6,7 +6,9 @@ import {
   HostListener,
   ElementRef,
 } from "@angular/core";
+import { Router } from "@angular/router";
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
+import { HomeService } from "src/app/client-pages/service/home.service";
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -14,7 +16,9 @@ import { environment } from 'src/environments/environment';
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  constructor(private renderer: Renderer2, private elRef: ElementRef,private scrollToService: ScrollToService) {}
+  constructor(private renderer: Renderer2,
+     private elRef: ElementRef,private scrollToService: ScrollToService,
+     private router:Router,private homeservice:HomeService) {}
 
   showMobileMenu = false;
 
@@ -36,7 +40,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   slideItems = [
     {
-      icon: "iconsminds-mouse-3",
+      icon: "iconsminds-three-arrow-fork",
       title: "Right Click Menu",
       detail:
         "Increases overall usability of the project by providing additional actions menu.",
@@ -172,6 +176,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.renderer.addClass(document.body, "no-footer");
+    this.getCountry()
   }
   ngOnDestroy() {
     this.renderer.removeClass(document.body, "no-footer");
@@ -218,5 +223,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     };
 
     this.scrollToService.scrollTo(config);
+  }
+  countries:any[]=[]
+  getCountry(){
+    this.homeservice.getCountry().subscribe(res=>{
+      this.countries=res
+      console.log(res)
+    })
   }
 }

@@ -4,11 +4,11 @@
             <span></span>
         </a>
         <ul class="navbar-nav">
-            <li class="nav-item"><a (click)="scrollTo('#features')" href="javascript:;">FEATURES</a></li>
-            <li class="nav-item"><a (click)="scrollTo('#layouts')" href="javascript:;">LAYOUTS</a></li>
-            <li class="nav-item"><a (click)="scrollTo('#components')" href="javascript:;">COMPONENTS</a></li>
-            <li class="nav-item"><a (click)="scrollTo('#apps')" href="javascript:;">APPS</a></li>
-            <li class="nav-item"><a (click)="scrollTo('#themes')" href="javascript:;">THEMES</a></li>
+            <li class="nav-item"><a (click)="scrollTo('#home')" href="javascript:;">الرئيسية</a></li>
+            <li class="nav-item"><a (click)="scrollTo('#layouts')" href="javascript:;">اسعار التوصيل</a></li>
+            <li class="nav-item"><a (click)="scrollTo('#components')" href="javascript:;">خدمتنا</a></li>
+            <li class="nav-item"><a (click)="scrollTo('#apps')" href="javascript:;">عملاء نتعامل معهم</a></li>
+            <li class="nav-item"><a (click)="scrollTo('#themes')" href="javascript:;">تسجيل الدخول</a></li>
             <li class="nav-item">
                 <div class="separator"></div>
             </li>
@@ -27,12 +27,13 @@
                         <span class="dark"></span>
                     </a>
                     <ul class="navbar-nav d-none d-lg-flex flex-row">
-                        <li class="nav-item"><a (click)="scrollTo('#features')" href="javascript:;">FEATURES</a></li>
-                        <li class="nav-item"><a (click)="scrollTo('#layouts')" href="javascript:;">LAYOUTS</a></li>
-                        <li class="nav-item"><a (click)="scrollTo('#components')" href="javascript:;">COMPONENTS</a>
+                        <li class="nav-item"><a (click)="scrollTo('#home')" href="javascript:;">الرئيسية</a></li>
+                        <!-- <li class="nav-item"><a (click)="scrollTo('#features')" href="javascript:;">الرئيسية</a></li> -->
+                        <li class="nav-item"><a (click)="scrollTo('#layouts')" href="javascript:;">اسعار التوصيل</a></li>
+                        <li class="nav-item"><a (click)="scrollTo('#components')" href="javascript:;">خدمتنا</a>
                         </li>
-                        <li class="nav-item"><a (click)="scrollTo('#apps')" href="javascript:;">APPS</a></li>
-                        <li class="nav-item"><a (click)="scrollTo('#themes')" href="javascript:;">THEMES</a></li>
+                        <li class="nav-item"><a (click)="scrollTo('#apps')" href="javascript:;">عملاء نتعامل معهم</a></li>
+                        <li class="nav-item"><a (click)="scrollTo('#themes')" href="javascript:;">تسجيل الدخول</a></li>
 
                     </ul>
                     <span class="mobile-menu-button" (click)="showMobileMenu=!showMobileMenu; $event.stopPropagation()">
@@ -74,7 +75,7 @@
                         </div>
                         <div class="col-12 col-xl-7 offset-xl-1 col-lg-7 col-md-6  d-none d-md-block">
                             <a [href]="adminRoot" target="_blank">
-                                <img alt="hero" src="/assets/img/landing-page/home-hero.png" />
+                                <img alt="hero" src="/assets/img/landing-page/vanQuqaz.png" />
                             </a>
                         </div>
                     </div>
@@ -183,7 +184,7 @@
                 <div class="container" id="components">
                     <div class="row mb-5">
                         <div class="col-12 offset-0 col-lg-8 offset-lg-2 text-center">
-                            <h1>Components</h1>
+                            <h1>خدمتنا</h1>
                             <p>
                                 We used most popular and well managed open source components with bootstrap components.
                                 Combined them into even more useful ones. Themed them with same design principles and
@@ -196,7 +197,7 @@
                         </div>
                     </div>
                 </div>
-                <img class="components-image mb-5 pb-5" src="/assets/img/landing-page/components.jpg">
+                <!-- <img class="components-image mb-5 pb-5" src="/assets/img/landing-page/components.jpg"> -->
             </div>
 
             <div class="section background">

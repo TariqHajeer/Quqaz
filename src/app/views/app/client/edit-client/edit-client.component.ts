@@ -68,19 +68,7 @@ export class EditClientComponent implements OnInit {
     }
   }
   init() {
-    this.client = {
-      id: null,
-      name: null,
-      password: null,
-      userName: null,
-      address: null,
-      canDelete: null,
-      firstDate: null,
-      note: null,
-      phones: [],
-      regionId: null,
-      Countryid:null
-    }
+    this.client = new Client
   }
   getClientById() {
     this.clientService.getClientById(this.id).subscribe(res => {

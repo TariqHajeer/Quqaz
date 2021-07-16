@@ -42,7 +42,10 @@
           <label>{{'client.address' | translate}}</label>
           <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.address">
         </div>
-
+        <div class="col-md-3" style="padding-bottom: 10px;">
+          <label>الايميل</label>
+          <input type="email" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.mail">
+        </div>
         <div class="col-md-3" style="padding-bottom: 10px;">
           <!-- Modal -->
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
