@@ -60,9 +60,12 @@
         <label>{{'client.address' | translate}}</label>
         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.address">
       </div>
-
-
       <div class="col-md-3">
+        <label>الايميل</label>
+        <input type="email" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.mail">
+      </div>
+
+      <div class="col-md-12">
         <label>{{'client.note' | translate}}</label>
         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="client.note">
       </div>
