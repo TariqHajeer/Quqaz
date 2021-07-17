@@ -72,7 +72,7 @@
         </ng-select>
       </div>
       <div class="col-1">
-
+        <button (click)="saveEdit()" class="btn btn-primary"> حفظ</button>
       </div>
     </div>
   </div>
@@ -179,7 +179,7 @@
     </ng-container>
     <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        <button (click)="saveEdit()" class="btn btn-primary"> حفظ</button>
+     
 
       </th>
       <td mat-cell *matCellDef="let element">
