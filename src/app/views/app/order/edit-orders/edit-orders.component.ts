@@ -74,7 +74,6 @@ export class EditOrdersComponent implements OnInit {
     this.submitted = false;
 
     this.int()
-    this.getorder()
   }
   orderResend: Resend = new Resend()
   showRsendButton: boolean = false
@@ -119,6 +118,7 @@ export class EditOrdersComponent implements OnInit {
     'recipientPhones', 'client','country','region'
     , 'agent', 'monePlaced', 'orderplaced', 'address'
     , 'isClientDiliverdMoney','isSync','updatedBy', 'updatedDate','date', 'diliveryDate', 'note','systemNote'];
+    this.getorder()
 
   }
   canResned
@@ -126,6 +126,7 @@ export class EditOrdersComponent implements OnInit {
   order:Order=new Order
   displayedColumns: string[];
   dataSource
+  editorder
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   getorder() {
@@ -133,47 +134,48 @@ export class EditOrdersComponent implements OnInit {
       this.id = par['id'] as string
     });
     this.orderService.GetById(this.id).subscribe(res => {
+      this.getAgent()
       console.log(res)
       this.order=res
-      var editorder = res
-      if (editorder.orderplaced.id == OrderplacedEnum.CompletelyReturned || editorder.orderplaced.id == OrderplacedEnum.Unacceptable || editorder.orderplaced.id == OrderplacedEnum.Delayed)
+      this. editorder = res
+      if (this.editorder.orderplaced.id == OrderplacedEnum.CompletelyReturned || this.editorder.orderplaced.id == OrderplacedEnum.Unacceptable || this.editorder.orderplaced.id == OrderplacedEnum.Delayed)
         this.showRsendButton = true
       else
         this.showRsendButton = false
-      // if (editorder.canResned == null)
+      // if (this.editorder.canResned == null)
       //   this.showRsendButton = true
       // else {
       //   this.showRsendButton = false
-      //   this.canResned = editorder.canResned
+      //   this.canResned = this.editorder.canResned
       // }
-      this.orderResend.Id = editorder.id
-      this.orderResend.AgnetId = editorder.agent.id
-      this.orderResend.CountryId = editorder.country.id
-      this.orderResend.RegionId = editorder.region != null ? editorder.region.Id : null
+      this.orderResend.Id = this.editorder.id
+      this.orderResend.AgnetId = this.editorder.agent.id
+      this.orderResend.CountryId = this.editorder.country.id
+      this.orderResend.RegionId = this.editorder.region != null ? this.editorder.region.Id : null
       this.Regionsresend = this.Regions.filter(r => r.country.id == this.orderResend.CountryId)
       this.Agentsresend = this.Agents.filter(r => r.countryId == this.orderResend.CountryId)
-      this.Order.Id = editorder.id
-      this.Order.Address = editorder.address
-      this.Order.AgentId = editorder.agent.id
-      this.Order.ClientId = editorder.client.id
-      this.Order.Code = editorder.code
-      this.tempOrdercode = editorder.code
-      this.Order.Cost = editorder.cost
-      this.Order.CountryId = editorder.country.id
-      this.Order.Date = editorder.date
-      this.Order.DiliveryDate = editorder.diliveryDate
-      this.Order.DeliveryCost = editorder.deliveryCost
-      this.Order.MoenyPlacedId = editorder.monePlaced.id
-      this.Order.Note = editorder.note
-      this.Order.OrderTypeDtos = editorder.orderItems
-      this.Order.OrderplacedId = editorder.orderplaced.id
-      this.Order.RecipientName = editorder.recipientName
-      this.Order.RecipientPhones = editorder.recipientPhones.split(',')
-      this.Order.OldCost = editorder.oldCost
-      this.Order.orderLogs=editorder.orderLogs
+      this.Order.Id = this.editorder.id
+      this.Order.Address = this.editorder.address
+      this.Order.ClientId = this.editorder.client.id
+      this.Order.AgentId= this.editorder.agent.id
+      this.Order.Code = this.editorder.code
+      this.tempOrdercode = this.editorder.code
+      this.Order.Cost = this.editorder.cost
+      this.Order.CountryId = this.editorder.country.id
+      this.Order.Date = this.editorder.date
+      this.Order.DiliveryDate = this.editorder.diliveryDate
+      this.Order.DeliveryCost = this.editorder.deliveryCost
+      this.Order.MoenyPlacedId = this.editorder.monePlaced.id
+      this.Order.Note = this.editorder.note
+      this.Order.OrderTypeDtos = this.editorder.orderItems
+      this.Order.OrderplacedId = this.editorder.orderplaced.id
+      this.Order.RecipientName = this.editorder.recipientName
+      this.Order.RecipientPhones = this.editorder.recipientPhones.split(',')
+      this.Order.OldCost = this.editorder.oldCost
+      this.Order.orderLogs=this.editorder.orderLogs
       this.dataSource = new MatTableDataSource(this.Order.orderLogs)
-      //this.Order.RecipientPhones.push(editorder.recipientPhones)
-      this.Order.RegionId = editorder.region != null ? editorder.region.Id : null
+      //this.Order.RecipientPhones.push(this.editorder.recipientPhones)
+      this.Order.RegionId = this.editorder.region != null ? this.editorder.region.Id : null
     })
    
 
@@ -281,7 +283,6 @@ export class EditOrdersComponent implements OnInit {
       this.tempAgent = res
       this.Agents = this.tempAgent.filter(a => a.countries.map(c => c.id).filter(co => co == this.Order.CountryId).length > 0)
 
-      // console.log(res)
     })
   }
   AllorderTypes: any[] = []
