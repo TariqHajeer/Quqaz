@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { OrderState } from 'src/app/Models/order/order.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
+import { MoneyPalcedEnum } from 'src/app/Models/Enums/MoneyPalcedEnum';
 @Component({
   selector: 'app-receipt-shipment-agent',
   templateUrl: './receipt-shipment-agent.component.html',
@@ -91,13 +92,19 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   changeMoenyPlaced() {
     if (this.getorders.length != 0) {
       this.getorders.forEach(o => {
-        o.order.monePlaced = this.MoenyPlaced.find(m => m.id == this.MoenyPlacedId.id)
-        if (this.OrderplacedId.id == 4 && this.MoenyPlacedId.id == 4) {
+        var find=  o.MoenyPlaced.find(m => m.id == this.MoenyPlacedId.id)
+        if(!find)
+        o.order.monePlaced=o.MoenyPlaced[0]
+        else
+        o.order.monePlaced=find
+        // o.order.monePlaced = this.MoenyPlaced.find(m => m.id == this.MoenyPlacedId.id)
+        //تم تسليمها/داخل الشركة
+        if (this.OrderplacedId.id ==  OrderplacedEnum.Delivered && this.MoenyPlacedId.id == 4) {
           if (o.order.isClientDiliverdMoney) {
-            o.order.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
+            o.order.monePlaced = this.MoenyPlaced.find(m => m.id == MoneyPalcedEnum.Delivered)
           }
           else {
-            o.order.monePlaced = this.MoenyPlaced.find(m => m.id == 3)
+            o.order.monePlaced = this.MoenyPlaced.find(m => m.id == MoneyPalcedEnum.InsideCompany)
           }
 
         }
@@ -123,9 +130,9 @@ export class ReceiptShipmentAgentComponent implements OnInit {
         this.ChangeAllOrderplacedId(o, this.getorders.indexOf(o))
       })
       this.MoenyPlacedId = null
-      this.getMoenyPlaced = [...this.getorders[0].MoenyPlaced]
-      if (this.OrderplacedId.id == 4)
-        this.getMoenyPlaced = [{ id: 2, name: "مندوب" }, { id: 4, name: "تم تسليمها/داخل الشركة" }]
+      this.getMoenyPlaced = this.orderplacedstate.ChangeOrderPlace(this.OrderplacedId.id,this.MoenyPlaced)
+      // if (this.OrderplacedId.id == 4)
+      //   this.getMoenyPlaced = [{ id: 2, name: "مندوب" }, { id: 4, name: "تم تسليمها/داخل الشركة" }]
 
     }
 

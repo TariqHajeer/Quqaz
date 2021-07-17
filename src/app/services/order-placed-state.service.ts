@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
-import{MoneyPalcedEnum} from '../Models/Enums/MoneyPalcedEnum';
-import{OrderplacedEnum} from '../Models/Enums/OrderplacedEnum';
-import{OrderStateEnum} from '../Models/Enums/OrderStateEnum';
+import { MoneyPalcedEnum } from '../Models/Enums/MoneyPalcedEnum';
+import { OrderplacedEnum } from '../Models/Enums/OrderplacedEnum';
+import { OrderStateEnum } from '../Models/Enums/OrderStateEnum';
 @Injectable({
   providedIn: 'root'
 })
@@ -11,7 +11,7 @@ export class OrderPlacedStateService {
   constructor() { }
   //على الطريق
   onWay(element, MoenyPlaced) {
-    
+
     if (element.order.orderplaced.id == OrderplacedEnum.Way) {
       element.messageCost = ""
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.OutSideCompany)]
@@ -22,7 +22,7 @@ export class OrderPlacedStateService {
   //تم التسليم و مرتجع جزئي
   canChangeCost(element, MoenyPlaced, temporderscostindex?) {
     if (element.order.orderplaced.id == OrderplacedEnum.PartialReturned
-       || element.order.orderplaced.id == OrderplacedEnum.Delivered) {
+      || element.order.orderplaced.id == OrderplacedEnum.Delivered) {
       element.canEditCount = false
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent || m.id == MoneyPalcedEnum.InsideCompany)]
       element.order.monePlaced = { ...element.MoenyPlaced[0] }
@@ -44,7 +44,7 @@ export class OrderPlacedStateService {
   }
   //مرفوض, مرتجع كلي 
   unacceptable(element, MoenyPlaced) {
-    
+
     if (element.order.orderplaced.id == OrderplacedEnum.Unacceptable || element.order.orderplaced.id == OrderplacedEnum.CompletelyReturned) {
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.InsideCompany)]
       element.order.monePlaced = { ...element.MoenyPlaced[0] }
@@ -54,7 +54,7 @@ export class OrderPlacedStateService {
     return element
   }
   isClientDiliverdMoney(element, MoenyPlaced) {
-    if (element.order.isClientDiliverdMoney == true && element.order.orderplaced.id == OrderplacedEnum.Delivered ){
+    if (element.order.isClientDiliverdMoney == true && element.order.orderplaced.id == OrderplacedEnum.Delivered) {
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent || m.id == MoneyPalcedEnum.Delivered)]
       element.order.monePlaced = { ...element.MoenyPlaced[0] }
       element.messageCost = ""
@@ -62,7 +62,7 @@ export class OrderPlacedStateService {
     }
     if (element.order.isClientDiliverdMoney == true && (element.order.orderplaced.id == OrderplacedEnum.PartialReturned
       || element.order.orderplaced.id == OrderplacedEnum.Unacceptable
-      || element.order.orderplaced.id == OrderplacedEnum.CompletelyReturned)){
+      || element.order.orderplaced.id == OrderplacedEnum.CompletelyReturned)) {
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.InsideCompany)]
       element.order.monePlaced = { ...element.MoenyPlaced[0] }
       element.messageCost = ""
@@ -104,6 +104,28 @@ export class OrderPlacedStateService {
       element.order.deliveryCost = Object.assign(tempdeliveryCost, tempdeliveryCost);
       element.order.agentCost = Object.assign(tempagentCost, tempagentCost);
     }
+  }
+  //monyPlaceArray
+  ChangeOrderPlace(OrderplacedId, MoneyPalcedArray) {
+    if (OrderplacedId == OrderplacedEnum.Way) {
+      MoneyPalcedArray = MoneyPalcedArray.filter(m => m.id == MoneyPalcedEnum.OutSideCompany)
+    }
+    else if (OrderplacedId == OrderplacedEnum.Delivered) {
+      MoneyPalcedArray =[{ id: 2, name: "مندوب" }, { id: 4, name: "تم تسليمها/داخل الشركة" }]
+    }
+    else if (OrderplacedId == OrderplacedEnum.CompletelyReturned) {
+      MoneyPalcedArray =MoneyPalcedArray.filter(m => m.id == MoneyPalcedEnum.InsideCompany)
+    }
+    else if (OrderplacedId == OrderplacedEnum.PartialReturned) {
+      MoneyPalcedArray =MoneyPalcedArray.filter(m => m.id == MoneyPalcedEnum.InsideCompany||m.id == MoneyPalcedEnum.WithAgent)
+    }
+    else if (OrderplacedId == OrderplacedEnum.Unacceptable) {
+      MoneyPalcedArray =MoneyPalcedArray.filter(m => m.id == MoneyPalcedEnum.InsideCompany)
+    }
+    else if (OrderplacedId == OrderplacedEnum.Delayed) {
+      MoneyPalcedArray =MoneyPalcedArray.filter(m => m.id == MoneyPalcedEnum.InsideCompany)
+    }
+    return MoneyPalcedArray
   }
 }
 export class GetOrder {
