@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   showMobileMenu = false;
 
 
-  adminRoot = 'app';
+  adminRoot = 'home';
 
   slideSettings = {
     type: "carousel",
@@ -238,8 +238,18 @@ export class HomeComponent implements OnInit, OnDestroy {
       //   this.slideItems.push(this.slideItem)
 
       // }
-      console.log(res)
+      this.countries=this.chunk(this.countries,4)
+      console.log(this.countries)
     })
+   
+
+  }
+  chunk(arr, chunkSize) {
+    if (chunkSize <= 0) throw "Invalid chunk size";
+    var R = [];
+    for (var i = 0, len = arr.length; i < len; i += chunkSize)
+      R.push(arr.slice(i, i + chunkSize));
+    return R;
   }
   clientURL = environment.clientApp
   logout() {

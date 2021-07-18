@@ -9613,6 +9613,7 @@ footer.page-footer {
 
           .white,
           .dark {
+            font-size: 25px;
             width: 100px;
             height: 30px;
           }
@@ -9637,15 +9638,15 @@ footer.page-footer {
         display: inline-block;
         width: 120px;
         height: 40px;
-        background: url($lp-logo-path);
-        background-repeat: no-repeat;
+        // background: url($lp-logo-path);
+        // background-repeat: no-repeat;
       }
 
       .dark {
         width: 120px;
         height: 40px;
-        background: url($lp-logo-path-pinned);
-        background-repeat: no-repeat;
+        // background: url($lp-logo-path-pinned);
+        // background-repeat: no-repeat;
         display: none;
       }
     }
