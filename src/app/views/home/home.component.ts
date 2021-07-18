@@ -13,7 +13,8 @@ import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html'
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
   constructor(private renderer: Renderer2,
@@ -229,15 +230,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   getCountry() {
     this.homeservice.getCountry().subscribe(res => {
       this.countries = res
-      this.slideItems = []
-      for (let i = 0; i < this.countries.length; i++) {
-        this.slideItem.icon = "iconsminds-three-arrow-fork"
-        this.slideItem.title = this.countries[i].name
-        this.slideItem.detail = this.countries[i].name
-        this.slideItems.push(this.slideItem)
+      // this.slideItems = []
+      // for (let i = 0; i < this.countries.length; i++) {
+      //   this.slideItem.icon = "iconsminds-three-arrow-fork"
+      //   this.slideItem.title = this.countries[i].name
+      //   this.slideItem.detail = this.countries[i].name
+      //   this.slideItems.push(this.slideItem)
 
-      }
-      console.log(res)
+      // }
+      // console.log(res)
     })
   }
 }
