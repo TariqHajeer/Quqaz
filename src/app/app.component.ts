@@ -22,35 +22,30 @@ export class AppComponent implements OnInit, AfterViewInit {
     private groupService: GroupService) {
 
   }
-  logoutUser() {
-    const authService = this.injector.get(AuthService);
-    localStorage.removeItem('token')
-    authService.signOut();
-    return observableThrowError("");
-  }
+  
   ngOnInit() {
    
     this.langService.init();
     //this.authService.
-    if (localStorage.getItem('kokazUser') == null || localStorage.getItem('kokazUser') == undefined || localStorage.getItem('kokazUser') == '')
-      return this._router.navigate(['/clienthome']);
+    // if (localStorage.getItem('kokazUser') == null || localStorage.getItem('kokazUser') == undefined || localStorage.getItem('kokazUser') == '')
+    //   return this._router.navigate(['/clienthome']);
     // this.authService.TestLogin();
-    var user = this.authService.authenticatedUser
-    if (user == null || (user.expiry && (new Date().getTime() - user.expiry > 7 * 60 * 60 * 1000))) {
-      localStorage.removeItem('kokazUser')
-      localStorage.removeItem('token')
-      return this.logoutUser();
-    }
+    // var user = this.authService.authenticatedUser
+    // if (user == null || (user.expiry && (new Date().getTime() - user.expiry > 7 * 60 * 60 * 1000))) {
+    //   localStorage.removeItem('kokazUser')
+    //   localStorage.removeItem('token')
+    //   return this.logoutUser();
+    // }
 
     let requestedUrl = this.location.path();
 
 
-    if (Object.keys(this.authService.authenticatedUser).length === 0 && this.authService.authenticatedUser.constructor === Object) {
-      this._router.navigate(['']);
-    }
-    else if (requestedUrl == '') {
-      this._router.navigate(['app/HomePage']);
-    }
+    // // if (Object.keys(this.authService.authenticatedUser).length === 0 && this.authService.authenticatedUser.constructor === Object) {
+    // //   this._router.navigate(['']);
+    // // }
+    // else if (requestedUrl == '') {
+    //   this._router.navigate(['app/HomePage']);
+    // }
   }
 
   ngAfterViewInit() {
