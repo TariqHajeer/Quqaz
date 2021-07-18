@@ -29,7 +29,7 @@ export class ClientAuthService {
     this.http.get(this.baseUrl+"api/Default/Check").subscribe(res=>{
       return true;
     },err=>{
-      this.rout.navigate(['/clienthome']);
+      this.rout.navigate(['/home']);
     })
   }
 

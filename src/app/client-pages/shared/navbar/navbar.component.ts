@@ -83,6 +83,6 @@ export class NavbarComponent implements OnInit {
     localStorage.removeItem('token')
     localStorage.removeItem('kokazUser')
     this.isLogin = false
-    this.router.navigate(['/clienthome'])
+    this.router.navigate(['/home'])
   }
 }

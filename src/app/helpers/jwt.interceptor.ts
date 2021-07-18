@@ -47,7 +47,7 @@ export class JwtInterceptor implements HttpInterceptor {
                 case 403:{
                   var user=localStorage.getItem('user')
                   if(user=='client')
-                  this.router.navigate(['/clienthome']);
+                  this.router.navigate(['/home']);
                   else if(user=='employee')
                   this.router.navigate(['/unauthorized']);
 

@@ -238,7 +238,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       //   this.slideItems.push(this.slideItem)
 
       // }
-      // console.log(res)
+      console.log(res)
     })
+  }
+  clientURL = environment.clientApp
+  logout() {
+    localStorage.removeItem('token')
+    localStorage.removeItem('kokazUser')
+    this.router.navigate(['/home'])
   }
 }

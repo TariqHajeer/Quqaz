@@ -28,7 +28,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.langService.init();
     //this.authService.
     // if (localStorage.getItem('kokazUser') == null || localStorage.getItem('kokazUser') == undefined || localStorage.getItem('kokazUser') == '')
-    //   return this._router.navigate(['/clienthome']);
+    //   return this._router.navigate(['/home']);
     // this.authService.TestLogin();
     // var user = this.authService.authenticatedUser
     // if (user == null || (user.expiry && (new Date().getTime() - user.expiry > 7 * 60 * 60 * 1000))) {

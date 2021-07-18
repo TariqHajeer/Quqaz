@@ -43,7 +43,7 @@ export class AuthService implements OnDestroy{
     this.http.get(this.baseUrl+"api/Default/Check").subscribe(res=>{
       return true;
     },err=>{
-      this.rout.navigate(['/clienthome']);
+      this.rout.navigate(['/home']);
     })
   }
 
@@ -52,7 +52,7 @@ export class AuthService implements OnDestroy{
     localStorage.removeItem('token')
     localStorage.removeItem("kokazUser");
     //localStorage.clear();
-    this.rout.navigate(['/clienthome']);  
+    this.rout.navigate(['/home']);  
   }
   Test(){
     this.http.get(this.baseUrl+"api/Default/De").subscribe(res=>{

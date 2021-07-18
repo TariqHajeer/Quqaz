@@ -52,7 +52,7 @@ export class ShowClientOrderComponent implements OnInit {
     
   }
   addorder() {
-    this.router.navigate(['/clienthome/orders/addorder'])
+    this.router.navigate(['/home/orders/addorder'])
   }
   allFilter() {
     this.orderservic.get(this.paging,this.filtering).subscribe(res => {

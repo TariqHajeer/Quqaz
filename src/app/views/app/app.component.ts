@@ -17,7 +17,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     if (localStorage.getItem('kokazUser') == null || localStorage.getItem('kokazUser') == undefined || localStorage.getItem('kokazUser') == '')
-      return this._router.navigate(['/clienthome']);
+      return this._router.navigate(['/home']);
     var user = this.authService.authenticatedUser
     if (user == null || (user.expiry && (new Date().getTime() - user.expiry > 7 * 60 * 60 * 1000))) {
       localStorage.removeItem('kokazUser')
