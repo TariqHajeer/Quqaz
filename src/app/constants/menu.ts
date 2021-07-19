@@ -230,6 +230,31 @@ const data: IMenuItem[] = [
     //permission:[UserPermission.ShowClient]
 
   },
+  //store
+  {
+    icon: 'iconsminds-box-close',
+    label: 'المتجر',
+    to: `${adminRoot}/store`,
+    subs: [
+      {
+        icon: 'iconsminds-box-close',
+        label: 'عرض المتاجر ',
+        to: `${adminRoot}/store/`,
+        //permission:[UserPermission.ShowOrder]
+
+      },
+
+      {
+        icon: 'iconsminds-box-close',
+        label: 'اضافة متجر ',
+        to: `${adminRoot}/store/addstore`,
+        //permission:[UserPermission.ShowOrder]
+
+      },
+     
+    ],
+
+  },
   //income tab
   {
     icon: 'iconsminds-inbox-into',
