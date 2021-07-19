@@ -21,7 +21,7 @@
                     <div *ngIf="!Store.ClientId && submitted" class="invalid-tooltip">العميل حقل مطلوب</div>
 
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <label>رابط المتجر  <span class="text-danger text-one align-bottom mx-1">*</span></label>
                     <input type="url" class="form-control" [ngModelOptions]="{standalone: true}"[(ngModel)]="Store.MarketUrl"  >
                     <div *ngIf="!Store.MarketUrl && submitted" class="invalid-tooltip">كود الشحنة حقل مطلوب</div>
@@ -34,6 +34,11 @@
                     [(ngModel)]="Store.Logo" (change)="stageFile()" >
                     <div *ngIf="!Store.Logo && submitted" class="invalid-tooltip">كود الشحنة حقل مطلوب</div>
 
+                </div>
+                <div class="col-md-3">
+                <section class="example-section">
+                    <mat-checkbox class="example-margin" [(ngModel)]="Store.IsActive" [ngModelOptions]="{standalone: true}" >&nbsp;فعال</mat-checkbox>
+                  </section>
                 </div>
                 <div class="col-md-12">
                     <label> وصف  <span class="text-danger text-one align-bottom mx-1">*</span></label>

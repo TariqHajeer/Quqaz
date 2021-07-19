@@ -4,5 +4,5 @@ export class AddStore {
     Logo
     Description
     ClientId
-    IsActive
+    IsActive:boolean
 }

@@ -31,7 +31,7 @@ export class AddStoreComponent implements OnInit {
   AddStore() {
     console.log(this.Store)
     this.storeService.Add(this.Store).subscribe(res => {
-
+      this.Store = new AddStore
     })
   }
 }
