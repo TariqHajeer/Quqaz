@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Client } from '../../client/client.model';
+import { ClientService } from '../../client/client.service';
+import {AddStore} from 'src/app/Models/store/add-store.model';
 
 @Component({
   selector: 'app-add-store',
@@ -7,9 +10,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddStoreComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private clientService: ClientService
+  ) { }
+  clients: Client[] = []
+  Store:AddStore=new AddStore()
+  submitted
   ngOnInit(): void {
+    this.GetClient()
   }
+  GetClient() {
+    this.clientService.getClients().subscribe(res => {
+      this.clients = res
+    })
+  }
+  AddStore() {
 
+  }
 }
