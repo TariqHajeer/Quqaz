@@ -49,7 +49,17 @@ public stTime: any;
   }
   actionComplete(args: SaveEventArgs) {
     if (args.requestType == 'delete') {
-      
+      let id = args.data[0].id;
+      if (args) {
+        this.storeService.delete(id).subscribe(
+          res => {
+            // this.notifications.create('success', 'تم حذف  العميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
+          }
+        )
+      }
+      else {
+        this.gridInstance.refresh();
+      }
     }
   }
 }
