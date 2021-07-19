@@ -1,1 +1,35 @@
-<p>show-stores works!</p>
+<div class="col-md-12 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <h3 class="card-title">المتاجر</h3>
+        <!-- <button class="btn  mb-3" (click)="addClientModal.show();addNewClicked()"><i class="iconsminds-add  text-primary" style="font-size: 38px;"></i></button> -->
+  </div>
+  
+    <ejs-grid #normalgrid   id='normalgrid'  (load)='load()'  [allowPaging]='true'
+    [gridLines]="lines" [pageSettings]='pageSettings' [toolbar]='toolbar'
+      [editSettings]='editSettings'[dataSource]='stores' rowHeight='38'
+        [allowSorting]='true' height='400'(actionComplete)="actionComplete($event)"
+         [enableHover]='true' [selectionSettings]='selectionSettings'
+          [filterSettings]='filterSettings' [allowSorting]='true'
+           [allowFiltering]='true'>
+     <e-columns>
+         <e-column   field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter' width='50' [isPrimaryKey]='true'></e-column>
+         <e-column   field='name' [allowEditing]='true' textAlign="Center" headerText="اسم المتجر" width='130'></e-column>
+         <e-column   field='marketUrl' [allowEditing]='false' textAlign="Center" headerText="الرابط" width='170'></e-column>
+         <e-column    [allowEditing]='false' textAlign="Center" headerText="" width='140'>
+            <ng-template  #template let-data>
+                <img src="{{data.logoPath}}" width="50px" height="50px">
+            </ng-template>
+            </e-column>
+         <e-column   field='isActive' [allowEditing]='false' textAlign="Center" headerText="فعال" width='130'></e-column>
+         <e-column   field='clientId' [allowEditing]='false' textAlign="Center" headerText="العميل" width='130'></e-column>
+         <e-column   field='description' [allowEditing]='false' textAlign="Center" headerText="الوصف" width='170'></e-column>
+    </e-columns>
+  </ejs-grid>
+  
+  </div>
+  </div>
+  </div>
+ 
+  
