@@ -24,15 +24,15 @@
                 <div class="col-md-6">
                     <label>رابط المتجر  <span class="text-danger text-one align-bottom mx-1">*</span></label>
                     <input type="url" class="form-control" [ngModelOptions]="{standalone: true}"[(ngModel)]="Store.MarketUrl"  >
-                    <div *ngIf="!Store.MarketUrl && submitted" class="invalid-tooltip">كود الشحنة حقل مطلوب</div>
+                    <div *ngIf="!Store.MarketUrl && submitted" class="invalid-tooltip">رابط المتجر  حقل مطلوب</div>
 
                 </div>
                 <div class="col-md-3">
-                    <label> صورة  <span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <label> الشعار  <span class="text-danger text-one align-bottom mx-1">*</span></label>
                     <input  #fileInput type="file" class="form-control" [ngModelOptions]="{standalone: true}"
-                    accept="image/*,csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                    accept="image/*"
                     [(ngModel)]="Store.Logo" (change)="stageFile()" >
-                    <div *ngIf="!Store.Logo && submitted" class="invalid-tooltip">كود الشحنة حقل مطلوب</div>
+                    <div *ngIf="!Store.Logo && submitted" class="invalid-tooltip"> الشعار حقل مطلوب</div>
 
                 </div>
                 <div class="col-md-3">
@@ -45,7 +45,7 @@
                     <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                    
                     [(ngModel)]="Store.Description"  >
-                    <div *ngIf="!Store.Description && submitted" class="invalid-tooltip">كود الشحنة حقل مطلوب</div>
+                    <div *ngIf="!Store.Description && submitted" class="invalid-tooltip">وصف  حقل مطلوب</div>
 
                 </div>
             </div>
