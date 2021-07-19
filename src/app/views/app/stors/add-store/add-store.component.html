@@ -7,7 +7,7 @@
                 <div class="col-md-3">
                     <label>اسم المتجر <span class="text-danger text-one align-bottom mx-1">*</span></label>
                     <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                    oninput="this.value = this.value.replace(/[^0-9.A-Za-z]/g, '').replace(/(\..*)\./g, '$1');"
+                    
                     [(ngModel)]="Store.Name"  >
                     <div *ngIf="!Store.Name && submitted" class="invalid-tooltip">اسم المتجر</div>
 
@@ -23,29 +23,33 @@
                 </div>
                 <div class="col-md-3">
                     <label>رابط المتجر  <span class="text-danger text-one align-bottom mx-1">*</span></label>
-                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                    oninput="this.value = this.value.replace(/[^0-9.A-Za-z]/g, '').replace(/(\..*)\./g, '$1');"
-                    [(ngModel)]="Store.MarketUrl"  >
+                    <input type="url" class="form-control" [ngModelOptions]="{standalone: true}"[(ngModel)]="Store.MarketUrl"  >
                     <div *ngIf="!Store.MarketUrl && submitted" class="invalid-tooltip">كود الشحنة حقل مطلوب</div>
 
                 </div>
                 <div class="col-md-3">
                     <label> صورة  <span class="text-danger text-one align-bottom mx-1">*</span></label>
-                    <input type="file" class="form-control" [ngModelOptions]="{standalone: true}"
-                    oninput="this.value = this.value.replace(/[^0-9.A-Za-z]/g, '').replace(/(\..*)\./g, '$1');"
-                    [(ngModel)]="Store.Logo"  >
+                    <input  #fileInput type="file" class="form-control" [ngModelOptions]="{standalone: true}"
+                    accept="image/*,csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                    [(ngModel)]="Store.Logo" (change)="stageFile()" >
                     <div *ngIf="!Store.Logo && submitted" class="invalid-tooltip">كود الشحنة حقل مطلوب</div>
 
                 </div>
                 <div class="col-md-12">
                     <label> وصف  <span class="text-danger text-one align-bottom mx-1">*</span></label>
                     <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                    oninput="this.value = this.value.replace(/[^0-9.A-Za-z]/g, '').replace(/(\..*)\./g, '$1');"
+                   
                     [(ngModel)]="Store.Description"  >
                     <div *ngIf="!Store.Description && submitted" class="invalid-tooltip">كود الشحنة حقل مطلوب</div>
 
                 </div>
             </div>
+            <div class="row w-100">
+                <div class="col-3">
+                  <button type="submit" class="btn btn-primary"> اضافة</button>
+                </div>
+              </div>
         </div>
     </div>
+    
 </form>
