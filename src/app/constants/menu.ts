@@ -237,6 +237,13 @@ const data: IMenuItem[] = [
     to: `${adminRoot}/store`,
     subs: [
       {
+        icon: 'iconsminds-add',
+        label: 'اضافة متجر ',
+        to: `${adminRoot}/store/addstore`,
+        //permission:[UserPermission.ShowOrder]
+
+      },
+      {
         icon: 'iconsminds-box-close',
         label: 'عرض المتاجر ',
         to: `${adminRoot}/store/`,
@@ -244,13 +251,7 @@ const data: IMenuItem[] = [
 
       },
 
-      {
-        icon: 'iconsminds-box-close',
-        label: 'اضافة متجر ',
-        to: `${adminRoot}/store/addstore`,
-        //permission:[UserPermission.ShowOrder]
-
-      },
+     
      
     ],
 
