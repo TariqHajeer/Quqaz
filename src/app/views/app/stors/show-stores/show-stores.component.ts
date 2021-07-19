@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { StoreService } from 'src/app/services/store.service';
 import {Store}from 'src/app/Models/store/store.model'
-import { EditSettingsModel, GridComponent } from '@syncfusion/ej2-angular-grids';
+import { EditSettingsModel, GridComponent, SaveEventArgs } from '@syncfusion/ej2-angular-grids';
 @Component({
   selector: 'app-show-stores',
   templateUrl: './show-stores.component.html',
@@ -46,5 +46,10 @@ public stTime: any;
       this.stores=res
       console.log(res)
     })
+  }
+  actionComplete(args: SaveEventArgs) {
+    if (args.requestType == 'delete') {
+      
+    }
   }
 }
