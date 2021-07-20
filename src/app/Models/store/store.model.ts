@@ -1,4 +1,5 @@
 export class Store {
+    id
     name
     marketUrl
     logoPath

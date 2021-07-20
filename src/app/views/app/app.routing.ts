@@ -16,6 +16,7 @@ const routes: Routes = [
             { path: 'reports', loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule) },
             { path: 'print', loadChildren: () => import('./print-tamplate/print-tamplate.module').then(m => m.PrintTamplateModule) },
             { path: 'store', loadChildren: () => import('./stors/stors.module').then(m => m.StorsModule) },
+            { path: '', redirectTo: 'HomePage', pathMatch: 'full'},
 
         ]
     }
