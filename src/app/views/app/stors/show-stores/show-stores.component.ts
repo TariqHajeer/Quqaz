@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { StoreService } from 'src/app/services/store.service';
-import {Store}from 'src/app/Models/store/store.model'
+import { Store } from 'src/app/Models/store/store.model'
 import { EditSettingsModel, GridComponent, SaveEventArgs } from '@syncfusion/ej2-angular-grids';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-show-stores',
   templateUrl: './show-stores.component.html',
@@ -9,9 +10,10 @@ import { EditSettingsModel, GridComponent, SaveEventArgs } from '@syncfusion/ej2
 })
 export class ShowStoresComponent implements OnInit {
 
-  constructor(private storeService: StoreService) { }
-stores:Store[]=[]
-public stTime: any;
+  constructor(private storeService: StoreService,
+    private router: Router) { }
+  stores: Store[] = []
+  public stTime: any;
   public filter: Object;
   public filterSettings: Object;
   public editSettings: EditSettingsModel;
@@ -31,7 +33,7 @@ public stTime: any;
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
     this.pageSettings = { pageSize: 10, pageSizes: true };
-    this.selectionSettings = {  type: "Multiple" };
+    this.selectionSettings = { type: "Multiple" };
     this.lines = 'Horizontal';
   }
   load() {
@@ -43,7 +45,7 @@ public stTime: any;
   }
   GetStores() {
     this.storeService.get().subscribe(res => {
-      this.stores=res
+      this.stores = res
       console.log(res)
     })
   }
@@ -61,5 +63,8 @@ public stTime: any;
         this.gridInstance.refresh();
       }
     }
+  }
+  onEditClicked(id) {
+    this.router.navigate(['/app/store/editstore'], id)
   }
 }

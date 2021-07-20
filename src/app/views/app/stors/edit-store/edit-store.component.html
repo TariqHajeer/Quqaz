@@ -1,1 +1,61 @@
-<p>edit-store works!</p>
+<form (ngSubmit)="AddStore()">
+
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title" style="color: rgb(0, 49, 112);"> تعديل متجر</h2>
+            <div class="row w-100 align-items-end mb-3">
+                <div class="col-md-3">
+                    <label>اسم المتجر <span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                    
+                    [(ngModel)]="Store.Name"  >
+                    <div *ngIf="!Store.Name && submitted" class="invalid-tooltip">اسم المتجر</div>
+
+                </div>
+                <div class="col-md-3">
+                    <label>العميل<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <ng-select  [(ngModel)]="Store.ClientId"  [ngModelOptions]="{standalone: true}"
+                        [closeOnSelect]="true" name="Client">
+                        <ng-option *ngFor="let Client of clients" [value]="Client.id">{{Client.name}}</ng-option>
+                    </ng-select>
+                    <div *ngIf="!Store.ClientId && submitted" class="invalid-tooltip">العميل حقل مطلوب</div>
+
+                </div>
+                <div class="col-md-6">
+                    <label>رابط المتجر  <span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <input type="url" class="form-control" [ngModelOptions]="{standalone: true}"[(ngModel)]="Store.MarketUrl"  >
+                    <div *ngIf="!Store.MarketUrl && submitted" class="invalid-tooltip">رابط المتجر  حقل مطلوب</div>
+
+                </div>
+                <div class="col-md-3">
+                    <label> الشعار  <span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <input  #fileInput type="file" class="form-control" [ngModelOptions]="{standalone: true}"
+                    accept="image/*"
+                    [(ngModel)]="Store.Logo" (change)="stageFile()" >
+                    <div *ngIf="!Store.Logo && submitted" class="invalid-tooltip"> الشعار حقل مطلوب</div>
+
+                </div>
+                <div class="col-md-3">
+                <section class="example-section">
+                    <mat-checkbox class="example-margin" [(ngModel)]="Store.IsActive" [ngModelOptions]="{standalone: true}" >&nbsp;فعال</mat-checkbox>
+                  </section>
+                </div>
+                <div class="col-md-12">
+                    <label> وصف  <span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                   
+                    [(ngModel)]="Store.Description"  >
+                    <div *ngIf="!Store.Description && submitted" class="invalid-tooltip">وصف  حقل مطلوب</div>
+
+                </div>
+            </div>
+            <div class="row w-100">
+                <div class="col-3">
+                  <button type="submit" class="btn btn-primary"> اضافة</button>
+                </div>
+              </div>
+        </div>
+    </div>
+    
+</form>
+<simple-notifications></simple-notifications>
