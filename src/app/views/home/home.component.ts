@@ -266,4 +266,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.Markets=this.chunk(this.Markets,3)
     })
   }
+  goToOrder(){
+    this.router.navigate(['/searchOrder'])
+  }
 }

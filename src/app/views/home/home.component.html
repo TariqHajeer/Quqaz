@@ -8,6 +8,7 @@
             <li class="nav-item"><a (click)="scrollTo('#layouts')" href="javascript:;">اسعار التوصيل</a></li>
             <li class="nav-item"><a (click)="scrollTo('#features')" href="javascript:;">خدمتنا</a></li>
             <li class="nav-item"><a (click)="scrollTo('#apps')" href="javascript:;">عملاء نتعامل معهم</a></li>
+            <li class="nav-item"><a (click)="goToOrder()" href="javascript:;">تتبع الشحنة </a></li>
             <li class="nav-item"><a href="{{clientURL}}">تسجيل الدخول</a></li>
             <li class="nav-item">
                 <div class="separator"></div>
@@ -35,6 +36,8 @@
                         </li>
                         <li class="nav-item"><a (click)="scrollTo('#apps')" href="javascript:;">عملاء نتعامل معهم</a>
                         </li>
+                        <li class="nav-item"><a (click)="goToOrder()" href="javascript:;">تتبع الشحنة </a></li>
+
                         <li class="nav-item"><a href="{{clientURL}}">تسجيل الدخول</a></li>
 
                     </ul>

@@ -15,4 +15,8 @@ export class HomeService {
   Market(){
     return this.http.get<any>(this.baseUrl+"Market")
   }
+  TrackOrder(code,phone){
+    return this.http.get<any>(this.baseUrl+"TrackOrder/"+code+"/"+phone)
+
+  }
 }

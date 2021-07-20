@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from '../shared/auth.guard';
 import { NoconnectionComponent } from './noconnection/noconnection.component';
+import { SearchOrderComponent } from './search-order/search-order.component';
 
 
 let routes = [
@@ -18,6 +19,11 @@ let routes = [
     {
       path: 'home',
       component: HomeComponent,
+      pathMatch: 'full',
+    },
+    {
+      path: 'searchOrder',
+      component: SearchOrderComponent,
       pathMatch: 'full',
     },
     {

@@ -13,8 +13,10 @@ import { HomeComponent } from './home/home.component';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { AuthGuard } from '../shared/auth.guard';
 import { NoconnectionComponent } from './noconnection/noconnection.component';
+import { SearchOrderComponent } from './search-order/search-order.component';
+import { FormsModule } from '@angular/forms';
 @NgModule({
-  declarations: [HomeComponent, NoconnectionComponent],
+  declarations: [HomeComponent, NoconnectionComponent, SearchOrderComponent],
   imports: [
     CommonModule,
     ViewRoutingModule,
@@ -26,6 +28,7 @@ import { NoconnectionComponent } from './noconnection/noconnection.component';
     BrowserAnimationsModule,
     HeadroomModule,
     ScrollToModule.forRoot(),
+    FormsModule,
   ],
   providers: [AuthGuard],
 })
