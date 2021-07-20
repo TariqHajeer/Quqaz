@@ -12,4 +12,7 @@ export class HomeService {
   getCountry(){
    return this.http.get<any>(this.baseUrl+"Country")
   }
+  Market(){
+    return this.http.get<any>(this.baseUrl+"Market")
+  }
 }

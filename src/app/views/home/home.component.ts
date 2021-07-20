@@ -9,6 +9,7 @@ import {
 import { Router } from "@angular/router";
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 import { HomeService } from "src/app/client-pages/service/home.service";
+import { Store } from "src/app/Models/store/store.model";
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -178,6 +179,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.renderer.addClass(document.body, "no-footer");
     this.getCountry()
+    this.getMarket()
   }
   ngOnDestroy() {
     this.renderer.removeClass(document.body, "no-footer");
@@ -256,5 +258,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     localStorage.removeItem('token')
     localStorage.removeItem('kokazUser')
     this.router.navigate(['/home'])
+  }
+  Markets:Store[]=[]
+  getMarket(){
+    this.homeservice.Market().subscribe(res => {
+      this.Markets = res
+    })
   }
 }
