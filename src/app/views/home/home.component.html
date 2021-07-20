@@ -485,7 +485,7 @@
                                             <div class="container">
                                                 <div class="row">
 
-                                                    <div class="col-6 "  *ngFor="let marke of market"  >
+                                                    <div class="col-md-4 col-12"  *ngFor="let marke of market"  >
                                                         <div class="card"
                                                             style="background-color:  #2b619b7a;padding-left: 10px;padding-bottom: 10px;">
                                                             <div class="card">
@@ -493,7 +493,8 @@
 
                                                                     <!-- <i class="fa fa-instagram fa-3x" aria-hidden="true"></i> -->
                                                                     <!-- <h1>LoGo</h1> -->
-                                                                    <img src="{{baseUrl+marke.logoPath}}" alt=" {{marke.name}}">
+                                                                    <img src="{{baseUrl+marke.logoPath}}" alt=" {{marke.name}}" width="50" height="50"
+                                                                    style="border-radius: 50%;">
                                                                     <div class="title">
                                                                         <h2>
                                                                             <a href="{{marke.marketUrl}}">

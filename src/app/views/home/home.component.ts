@@ -263,7 +263,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   getMarket(){
     this.homeservice.Market().subscribe(res => {
       this.Markets = res
-      this.Markets=this.chunk(this.Markets,2)
+      this.Markets=this.chunk(this.Markets,3)
     })
   }
 }
