@@ -46,7 +46,7 @@ export class EditStoreComponent implements OnInit {
   AddStore() {
     console.log(this.Store)
     if (!this.Store.Name || !this.Store.MarketUrl
-      || !this.Store.Logo || !this.Store.Description) {
+      || !this.Store.Logo || !this.Store.Description||!this.Store.ClientId) {
       this.submitted = true
       return
     }

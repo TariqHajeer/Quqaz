@@ -3,6 +3,7 @@ import { StoreService } from 'src/app/services/store.service';
 import { Store } from 'src/app/Models/store/store.model'
 import { EditSettingsModel, GridComponent, SaveEventArgs } from '@syncfusion/ej2-angular-grids';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-show-stores',
   templateUrl: './show-stores.component.html',
@@ -23,6 +24,7 @@ export class ShowStoresComponent implements OnInit {
   public gridInstance: GridComponent;
   public toolbar: Object[];
   public pageSettings: Object;
+  baseUrl=environment.baseUrl
   ngOnInit(): void {
     this.GetStores()
     this.editSettings = { showDeleteConfirmDialog: true, allowDeleting: true };

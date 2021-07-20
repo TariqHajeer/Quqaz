@@ -4,6 +4,6 @@ export class Store {
     logoPath
     description
     clientId
-    clientName
+    client
     isActive:boolean
 }

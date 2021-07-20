@@ -241,7 +241,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
       // }
       this.countries=this.chunk(this.countries,4)
-      console.log(this.countries)
     })
    
 
@@ -260,9 +259,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['/home'])
   }
   Markets:Store[]=[]
+  baseUrl=environment.baseUrl
   getMarket(){
     this.homeservice.Market().subscribe(res => {
       this.Markets = res
+      this.Markets=this.chunk(this.Markets,2)
     })
   }
 }
