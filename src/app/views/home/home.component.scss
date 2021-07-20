@@ -102,3 +102,21 @@ p{
     transition: all 0.4s ease-in-out
 }
 ////////////////@at-root
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background:  #4271a38f; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(95, 103, 148, 0.89)
+  }
