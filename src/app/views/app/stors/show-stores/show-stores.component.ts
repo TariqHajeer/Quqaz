@@ -21,6 +21,7 @@ export class ShowStoresComponent implements OnInit {
   totalCount
   displayedColumns: string[] = ['name', 'marketUrl', 'logoPath', 'isActive', 'client', 'description','edit','delete'];
 dataSource = new MatTableDataSource([]);
+noDataFound
   baseUrl=environment.baseUrl
   ngOnInit(): void {
     this.GetStores()
