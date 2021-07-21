@@ -52,8 +52,8 @@ export class SearchOrderComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  Code
-  ClientNumber
+  Code:string
+  ClientNumber:string
   orders:any[]=[]
   notFound=false
   getOrder() {
