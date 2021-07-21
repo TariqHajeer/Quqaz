@@ -65,7 +65,16 @@
                             </a>
                         </div>
                     </div>
+<div class="row">
+<div class="col-6"></div>
+<div class="col-6 "*ngIf="orders.length==0&&!notFound">
+    <a [href]="adminRoot" target="_blank">
+        <img alt="mobile hero" class="mobile-hero"
+            src="/assets/img/landing-page/vanQuqaz.png" />
+    </a>
+</div>
 
+</div>
                     <div class="row"  style="color: rgb(23, 78, 151);">
                         <div class="col-lg-4 " *ngIf="orders.length==1"></div>
                         <div class="card col-lg-4 col-12" *ngFor="let order of orders">
@@ -84,7 +93,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4 " *ngIf="orders.length==1"></div>
-
+                      
                     </div>
 
                     <div class="card" *ngIf="notFound">
