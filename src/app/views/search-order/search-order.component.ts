@@ -52,11 +52,12 @@ export class SearchOrderComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  Code:string
-  ClientNumber:string
+  Code:string=""
+  ClientNumber:string=""
   orders:any[]=[]
   notFound=false
   getOrder() {
+    console.log(this.Code, this.ClientNumber)
     this.homeService.TrackOrder(this.Code, this.ClientNumber).subscribe(res => {
       this.orders = res
       if(this.orders.length==0)
