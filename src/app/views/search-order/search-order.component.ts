@@ -57,9 +57,12 @@ export class SearchOrderComponent implements OnInit {
   orders:any[]=[]
   notFound=false
   getOrder() {
-    console.log(this.Code, this.ClientNumber)
+    console.log( this.ClientNumber)
     this.homeService.TrackOrder(this.Code, this.ClientNumber).subscribe(res => {
       this.orders = res
+      if(!this.ClientNumber&&this.orders.length>1)
+      this.orders=[]
+      else this.orders=res
       if(this.orders.length==0)
       this.notFound=true
       else

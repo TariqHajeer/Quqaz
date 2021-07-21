@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
@@ -16,7 +16,12 @@ export class HomeService {
     return this.http.get<any>(this.baseUrl+"Market")
   }
   TrackOrder(code,phone){
-    return this.http.get<any>(this.baseUrl+"TrackOrder/"+code+"/"+phone)
+    let params = new HttpParams();
+    if (code != undefined || code!= null)
+      params = params.append("code", code);
+      if (phone != undefined || phone!= null)
+      params = params.append("phone", phone);
+    return this.http.get<any>(this.baseUrl+"TrackOrder", { params: params })
 
   }
 }
