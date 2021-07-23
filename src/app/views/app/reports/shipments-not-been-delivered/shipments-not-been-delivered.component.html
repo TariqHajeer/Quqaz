@@ -83,7 +83,7 @@
       </ng-container>
       <ng-container matColumnDef="clientCost">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> يدفع للعميل</th>
-        <td mat-cell *matCellDef="let element" style="padding:10px;"> {{payForCleint(element)}}</td>
+        <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.payForClient}}</td>
       </ng-container>
      
       <ng-container matColumnDef="country">

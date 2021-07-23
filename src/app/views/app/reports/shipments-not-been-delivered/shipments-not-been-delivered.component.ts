@@ -172,28 +172,28 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       this.allFilter()
     })
   }
-  payForCleint(element): number {
+  // payForCleint(element): number {
     
-    if (!element.isClientDiliverdMoney) {
-      if (element.orderplaced.id == 5)
-        return 0;
-      return element.cost - element.deliveryCost;
+  //   if (!element.isClientDiliverdMoney) {
+  //     if (element.orderplaced.id == 5)
+  //       return 0;
+  //     return element.cost - element.deliveryCost;
 
-    }
-    else {
+  //   }
+  //   else {
 
-      //مرتجع كلي
-      if (element.orderplaced.id == 5)
-        return element.deliveryCost - element.oldCost;
-      //مرفوض
-      else if (element.orderplaced.id == 7)
-        return (-element.oldCost);
-      //مرتجع جزئي
-      else if (element.orderplaced.id == 6)
-        return element.cost - element.oldCost;
-    }
+  //     //مرتجع كلي
+  //     if (element.orderplaced.id == 5)
+  //       return element.deliveryCost - element.oldCost;
+  //     //مرفوض
+  //     else if (element.orderplaced.id == 7)
+  //       return (-element.oldCost);
+  //     //مرتجع جزئي
+  //     else if (element.orderplaced.id == 6)
+  //       return element.cost - element.oldCost;
+  //   }
 
-  }
+  // }
   code
   orderFilter
   codeFillter() {

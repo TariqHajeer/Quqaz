@@ -97,7 +97,7 @@ export class ClientComponent implements OnInit {
   changeDeleiverMoneyForClient() {
     this.spinner.show()
     this.dateWithIds = {
-      Ids: this.orders.map(c=>({id:c.id,cost:this.payForCleint(c)})),
+      Ids: this.orders.map(c=>({id:c.id,cost:c.payForCleint})),
       Date: new Date
     } 
     console.log(this.dateWithIds);
@@ -150,28 +150,28 @@ export class ClientComponent implements OnInit {
     }, 10);
   }
   clientCalc = 0
-  payForCleint(element): number {
+  // payForCleint(element): number {
 
-    if (!element.isClientDiliverdMoney) {
-      if (element.orderplaced.id == 5)
-        return 0;
-      return element.cost - element.deliveryCost;
+  //   if (!element.isClientDiliverdMoney) {
+  //     if (element.orderplaced.id == 5)
+  //       return 0;
+  //     return element.cost - element.deliveryCost;
 
-    }
-    else {
+  //   }
+  //   else {
 
-      //مرتجع كلي
-      if (element.orderplaced.id == 5)
-        return element.deliveryCost - element.oldCost;
-      //مرفوض
-      else if (element.orderplaced.id == 7)
-        return (-element.oldCost);
-      //مرتجع جزئي
-      else if (element.orderplaced.id == 6)
-        return element.cost - element.oldCost;
-    }
+  //     //مرتجع كلي
+  //     if (element.orderplaced.id == 5)
+  //       return element.deliveryCost - element.oldCost;
+  //     //مرفوض
+  //     else if (element.orderplaced.id == 7)
+  //       return (-element.oldCost);
+  //     //مرتجع جزئي
+  //     else if (element.orderplaced.id == 6)
+  //       return element.cost - element.oldCost;
+  //   }
 
-  }
+  // }
   reportstotal
 
   reciptClient() {
