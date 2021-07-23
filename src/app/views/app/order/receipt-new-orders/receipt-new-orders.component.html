@@ -1,8 +1,7 @@
-<div class="card-body" style="width:70%;margin-right: 15%;
-">
+<div class="card-body" style="width:100%;">
     <div class="row">
-        <div class="col-5" style="text-align: right;">
-            <p style="font-size: 14px;">
+        <div class="col-4" style="text-align: right;">
+            <p style="font-size: 18px;">
                 07700890880
                 
                 <svg  xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
@@ -49,26 +48,26 @@
                 التاريخ {{order.date|date: 'yyyy/MM/dd'}}
             </p>
            
-            <p style="text-align: center;font-size: 13px;border-radius: 4px;font-weight: bold;
+            <p style="text-align: center;font-size: 16px;border-radius: 4px;font-weight: bold;
             padding: 1px;margin-top: 0; background-color: rgb(204, 203, 203);">
                 رقم الوصل : {{order.code}}
             </p>
         </div>
-        <div class="col-3" style="align-items: right;">
+        <div class="col-4" style="align-items: center;">
             <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/kokaz.PNG')" width="175px" height="125px" />
            
         </div>
         <div class="col-4">
-            <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/icons.png')" width="250px" height="150px" />
+            <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/icons.png')" width="270px" height="150px" />
         </div>
     </div>
 
     <div class="row">
-        <table style="width: 100%;font-size: 16px;font-weight: bold;">
+        <table style="width: 100%;font-size: 19px;font-weight: bold;">
             <tbody>
                 <tr>
                     <td style="text-align: center;" colspan="4">
-                        <p style="text-align: center;font-size: 16px;border-radius: 4px;font-weight: bold;
+                        <p style="text-align: center;font-size: 20px;border-radius: 4px;font-weight: bold;
                         padding: 5px;margin-top:3px; background-color: rgb(204, 203, 203);">
                             معلومات المرسل 
                         </p>
@@ -77,31 +76,41 @@
                    
                 </tr>
                 <tr >
-                    <td style="width: 12%;text-align: center;font-size: 14px;">الاسم التجاري</td>
+                    <td style="width: 12%;text-align: center;font-size: 18px;">الاسم التجاري</td>
                     <td style="width: 40%;text-align: center;">
-                        <div style="border: 1px black solid;text-align: center;height: 30px;
+                        <div style="border: 1px black solid;text-align: center;height: 38px;
                                 padding: 5px;margin-left: 7px;
                                 border-radius:6px;">
                             {{order.client?order.client.name:''}}
                         </div>
                     </td>
                     <td style="text-align: center;" >
-                        المبلغ مع التوصيل
+                      العنــوان
                         </td>
                     <td  style="width: 40%;" >
-                        <div style="border: 1px black solid;height: 30px;
+                        <div style="border: 1px black solid;height: 38px;
                                 padding: 5px;
                                 border-radius:6px;text-align: center;">
-                            {{order.cost+order.deliveryCost|number}}
+                            {{order.client&&order.client.country?order.client.country.name+' - '+order.client.address:''}}
                         </div>
                     </td>
 
                 </tr>
                 <tr>
-                    <td style="text-align: center;width: 5%;">هـاتـــــــــف1</td>
+                    <td style="text-align: center;font-size: 18px;" >
+                        المبلغ مع التوصيل
+                        </td>
+                    <td  style="width: 40%;" >
+                        <div style="border: 1px black solid;height: 38px;
+                                padding: 5px;
+                                border-radius:6px;text-align: center;">
+                            {{order.cost+order.deliveryCost|number}}
+                        </div>
+                    </td>
+                    <td style="text-align: center;width: 5%;">هـاتـــــــــف</td>
                     <td style="width: 40%;">
                         <div style="border: 1px black solid;margin-top: 4px;
-                                padding: 5px;text-align: center;margin-left: 7px;height: 30px;
+                                padding: 5px;text-align: center;height: 38px;
                                 border-radius:6px;"*ngIf="order.client">
                                 <!-- <a  *ngFor="let phone of order.client.phones "
                                 style="border-left: 2px black  solid ;padding-left: 5px;padding-right: 5px;">
@@ -110,19 +119,19 @@
                                 {{order.client.phones.length==0?'':order.client.phones[0].phone}}
                         </div>
                     </td>
-                    <td style="text-align: center;width: 5%;">هـاتــــــف2</td>
+                    <!-- <td style="text-align: center;width: 5%;">هـاتــــــف2</td>
                     <td style="width: 40%;">
                         <div style="border: 1px black solid;margin-top: 4px;
-                                padding: 5px;text-align: center;height: 30px;
+                                padding: 5px;text-align: center;height: 38px;
                                 border-radius:6px;"*ngIf="order.client">
                         {{order.client.phones.length>1?order.client.phones[1].phone:''}}
                         </div>
-                    </td>
+                    </td> -->
 
                 </tr>
                 <tr>
                     <td colspan="4">
-                        <p style="text-align: center;font-size: 16px;border-radius: 4px;font-weight: bold;
+                        <p style="text-align: center;font-size: 20px;border-radius: 4px;font-weight: bold;
                         padding: 5px;margin-top: 3px; background-color: rgb(204, 203, 203);">
                           معلومات المستلم
                         </p>
@@ -132,7 +141,7 @@
                 <tr>
                     <td style="width: 5%;text-align: center;">الاســــــــــم</td>
                     <td style="width: 40%;">
-                        <div style="border: 1px black solid;height: 30px;
+                        <div style="border: 1px black solid;height: 38px;
                                 padding: 5px;
                                 border-radius:6px;text-align: center;">
                             {{order.recipientName?order.recipientName:'-'}}
@@ -140,10 +149,10 @@
                     </td>
                     <td style="width: 5%;text-align: center;">العنــوان</td>
                     <td style="width: 40%;">
-                        <div style="border: 1px black solid;height: 30px;
+                        <div style="border: 1px black solid;height: 38px;
                                 padding: 5px;
                                 border-radius:6px;text-align: center;">
-                            {{order.address?order.address:''}}
+                            {{order.country.name+' - '+order.address}}
                         </div>
                     </td>
                 </tr>
@@ -153,7 +162,7 @@
                         <td style="width: 5%;text-align: center;"> هـاتـــــــــف1  </td>
                         <td style="width: 40%;">
                             <div style="border: 1px black solid;margin-top: 4px;
-                                    padding: 5px;height: 30px;
+                                    padding: 5px;height: 38px;
                                     border-radius:6px;text-align: center;">
                              {{order.recipientPhones[0]}}
                             </div>
@@ -163,7 +172,7 @@
                     <td style="width: 5%;text-align: center;"> هـاتــــــف2  </td>
                     <td style="width: 40%;">
                         <div style="border: 1px black solid;margin-top: 4px;
-                                padding: 5px;text-align: center;height: 30px;
+                                padding: 5px;text-align: center;height: 38px;
                                 border-radius:6px;">
                             {{order.recipientPhones.length>1?order.recipientPhones[1]:''}}
                         </div>
@@ -185,14 +194,14 @@
                     <td style="width: 5%;text-align: center;">نوع البضاعة</td>
                     <td  style="width: 40%;">
                         <div style="border: 1px black solid;
-                                padding: 5px;height: 30px;
+                                padding: 5px;height: 38px;
                                 border-radius:6px;text-align: center;">
                             {{orderitem.orderTpye.name}}
                         </div>
                     </td>
                     <td style="width: 5%;text-align: center;">العــــدد</td>
                     <td  style="width: 40%;">
-                        <div style="border: 1px black solid;height: 30px;
+                        <div style="border: 1px black solid;height: 38px;
                                 padding: 5px;
                                 border-radius:6px;text-align: center; margin-bottom: 5px;">
                             {{orderitem.count}}
@@ -217,7 +226,7 @@
                     <td colspan="4">
                         <div style="padding: 5px;  background-color: rgb(204, 203, 203);
                         margin-top: 5px;border-radius: 6px;">
-                            <p style="font-size: 14px;">
+                            <p style="font-size: 18px;">
                                 تنويه : شركة القوقز غير مسؤولة عن محتوى الطلب ونوعه
                                 <br>
                                 ملاحظة : المبلغ المكتوب في الوصل كامل مع التوصيل ونحن غير مسؤولين عن أي مبلغ اضافي

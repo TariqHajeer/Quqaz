@@ -45,11 +45,11 @@ export class ViewNewOrderComponent implements OnInit {
   }
   order: Order = new Order
   Accept(element) {
-    // this.OrderService.Accept(element.id).subscribe(res => {
-    //   this.order = element
-    //   this.get()
+    this.OrderService.Accept(element.id).subscribe(res => {
+      this.order = element
+      this.get()
       this.print()
-    // })
+    })
   }
   DisAccept(elementid) {
     this.OrderService.DisAccept(elementid).subscribe(res => {
