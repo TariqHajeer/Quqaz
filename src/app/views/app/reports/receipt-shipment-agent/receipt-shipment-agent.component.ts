@@ -259,6 +259,8 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   }
 
   changeCost(element, index) {
+    this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
+
     // element.order.cost = element.order.cost * 1
     // this.sumCost()
     // if (this.orderplacedstate.rangeCost(element, this.temporderscost[index])) {

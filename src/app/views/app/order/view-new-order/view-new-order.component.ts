@@ -29,6 +29,7 @@ export class ViewNewOrderComponent implements OnInit {
   // }
   get() {
     this.OrderService.GetNewOrder().subscribe(res => {
+      console.log(res)
       this.orders = res
       if (this.orders.length == 0)
         this.noDataFound = true
