@@ -12,6 +12,8 @@ export class ReceiptNewOrdersComponent implements OnInit, OnChanges {
   constructor(public sanitizer: DomSanitizer,) { }
   @Input() order
   ngOnInit(): void {
+    this.order.recipientPhones = this.order.recipientPhones.split(',')
+
   }
   ngOnChanges() {
   }
