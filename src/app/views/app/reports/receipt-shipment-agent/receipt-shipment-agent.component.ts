@@ -92,14 +92,14 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   changeMoenyPlaced() {
     if (this.getorders.length != 0) {
       this.getorders.forEach(o => {
-        var find=  o.MoenyPlaced.find(m => m.id == this.MoenyPlacedId.id)
-        if(!find)
-        o.order.monePlaced=o.MoenyPlaced[0]
+        var find = o.MoenyPlaced.find(m => m.id == this.MoenyPlacedId.id)
+        if (!find)
+          o.order.monePlaced = o.MoenyPlaced[0]
         else
-        o.order.monePlaced=find
+          o.order.monePlaced = find
         // o.order.monePlaced = this.MoenyPlaced.find(m => m.id == this.MoenyPlacedId.id)
         //تم تسليمها/داخل الشركة
-        if (this.OrderplacedId.id ==  OrderplacedEnum.Delivered && this.MoenyPlacedId.id == 4) {
+        if (this.OrderplacedId.id == OrderplacedEnum.Delivered && this.MoenyPlacedId.id == 4) {
           if (o.order.isClientDiliverdMoney) {
             o.order.monePlaced = this.MoenyPlaced.find(m => m.id == MoneyPalcedEnum.Delivered)
           }
@@ -130,7 +130,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
         this.ChangeAllOrderplacedId(o, this.getorders.indexOf(o))
       })
       this.MoenyPlacedId = null
-      this.getMoenyPlaced = this.orderplacedstate.ChangeOrderPlace(this.OrderplacedId.id,this.MoenyPlaced)
+      this.getMoenyPlaced = this.orderplacedstate.ChangeOrderPlace(this.OrderplacedId.id, this.MoenyPlaced)
       // if (this.OrderplacedId.id == 4)
       //   this.getMoenyPlaced = [{ id: 2, name: "مندوب" }, { id: 4, name: "تم تسليمها/داخل الشركة" }]
 
@@ -190,7 +190,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced)
     this.orderplacedstate.unacceptable(this.getorder, this.MoenyPlaced)
     this.orderplacedstate.isClientDiliverdMoney(this.getorder, this.MoenyPlaced)
-    this.orderplacedstate.EditDeliveryCost(this.getorder, this.getorder.order.deliveryCost, this.getorder.order.agentCost)
+    this.orderplacedstate.EditDeliveryCostAndAgentCost(this.getorder, this.getorder.order.deliveryCost, this.getorder.order.agentCost)
 
     if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2) {
       this.getorder.order.orderplaced = this.getorder.OrderPlaced.find(o => o.id == 3)
@@ -240,8 +240,8 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.orderplacedstate.onWay(element, this.MoenyPlaced)
     this.orderplacedstate.unacceptable(element, this.MoenyPlaced)
     this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
-    this.orderplacedstate.EditDeliveryCost(element, this.tempdeliveryCost[index], this.tempagentCost[index])
-
+    this.orderplacedstate.EditDeliveryCostAndAgentCost(element, this.tempdeliveryCost[index], this.tempagentCost[index])
+    this.sumCost()
   }
   ChangeOrderplacedId(element, index) {
     // this.GetMoenyPlaced()
@@ -254,8 +254,8 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.orderplacedstate.onWay(element, this.MoenyPlaced)
     this.orderplacedstate.unacceptable(element, this.MoenyPlaced)
     this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
-    this.orderplacedstate.EditDeliveryCost(element, this.tempdeliveryCost[index], this.tempagentCost[index])
-
+    this.orderplacedstate.EditDeliveryCostAndAgentCost(element, this.tempdeliveryCost[index], this.tempagentCost[index])
+    this.sumCost()
   }
 
   changeCost(element, index) {
@@ -267,6 +267,10 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     //   element.messageCost = ""
     // } else
     //   element.messageCost = " الكلفة لايمكن أن تتجاوز " + this.temporderscost[index]
+  }
+  changeDeliveryCost(element, index){
+    this.orderplacedstate.changeDeliveryCost(element, this.tempdeliveryCost[index], this.MoenyPlaced)
+
   }
   switchPage(event: PageEvent) {
     this.paging.allItemsLength = event.length
@@ -363,10 +367,10 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     var charCode = (event.which) ? event.which : event.keyCode;
     console.log(charCode)
 
-    if (charCode == 45 && cost==0) { 
+    if (charCode == 45 && cost == 0) {
       console.log("2")
       return true
-     }
+    }
     else
       // Only Numbers 0-9
       if ((charCode < 48 || charCode > 57)) {

@@ -32,8 +32,9 @@ export class OrderPlacedStateService {
 
       }
       element.canEditCount = true
-
-
+    }
+    if (temporderscostindex == element.order.cost) {
+      this.isClientDiliverdMoney(element, MoenyPlaced)
     }
   }
   rangeCost(element, temporderscostindex): boolean {
@@ -85,7 +86,18 @@ export class OrderPlacedStateService {
       //   }
     }
   }
-  EditDeliveryCost(element, tempdeliveryCost?, tempagentCost?) {
+  changeDeliveryCost(element, tempdeliveryCost?,MoenyPlaced?) {
+    if(tempdeliveryCost== element.order.deliveryCost){
+      this.isClientDiliverdMoney(element, MoenyPlaced)
+    }else{
+      if( element.order.orderplaced.id == OrderplacedEnum.Delivered){
+        element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent || m.id == MoneyPalcedEnum.InsideCompany)]
+        element.order.monePlaced = { ...element.MoenyPlaced[0] }
+      }
+    }
+  }
+  EditDeliveryCostAndAgentCost(element, tempdeliveryCost?, tempagentCost?) {
+   
     if (element.order.orderplaced.id == OrderplacedEnum.Unacceptable || element.order.orderplaced.id == OrderplacedEnum.CompletelyReturned || element.order.orderplaced.id == OrderplacedEnum.Delayed) {
       // if (element.order.orderplaced.id == 5) {
       //   element.order.deliveryCost = 0
@@ -101,8 +113,10 @@ export class OrderPlacedStateService {
       element.canEditDeliveryCost = false
     } else {
       element.canEditDeliveryCost = true
+      
       element.order.deliveryCost = Object.assign(tempdeliveryCost, tempdeliveryCost);
       element.order.agentCost = Object.assign(tempagentCost, tempagentCost);
+      
     }
   }
   //monyPlaceArray
@@ -111,19 +125,19 @@ export class OrderPlacedStateService {
       MoneyPalcedArray = MoneyPalcedArray.filter(m => m.id == MoneyPalcedEnum.OutSideCompany)
     }
     else if (OrderplacedId == OrderplacedEnum.Delivered) {
-      MoneyPalcedArray =[{ id: 2, name: "مندوب" }, { id: 4, name: "تم تسليمها/داخل الشركة" }]
+      MoneyPalcedArray = [{ id: 2, name: "مندوب" }, { id: 4, name: "تم تسليمها/داخل الشركة" }]
     }
     else if (OrderplacedId == OrderplacedEnum.CompletelyReturned) {
-      MoneyPalcedArray =MoneyPalcedArray.filter(m => m.id == MoneyPalcedEnum.InsideCompany)
+      MoneyPalcedArray = MoneyPalcedArray.filter(m => m.id == MoneyPalcedEnum.InsideCompany)
     }
     else if (OrderplacedId == OrderplacedEnum.PartialReturned) {
-      MoneyPalcedArray =MoneyPalcedArray.filter(m => m.id == MoneyPalcedEnum.InsideCompany||m.id == MoneyPalcedEnum.WithAgent)
+      MoneyPalcedArray = MoneyPalcedArray.filter(m => m.id == MoneyPalcedEnum.InsideCompany || m.id == MoneyPalcedEnum.WithAgent)
     }
     else if (OrderplacedId == OrderplacedEnum.Unacceptable) {
-      MoneyPalcedArray =MoneyPalcedArray.filter(m => m.id == MoneyPalcedEnum.InsideCompany)
+      MoneyPalcedArray = MoneyPalcedArray.filter(m => m.id == MoneyPalcedEnum.InsideCompany)
     }
     else if (OrderplacedId == OrderplacedEnum.Delayed) {
-      MoneyPalcedArray =MoneyPalcedArray.filter(m => m.id == MoneyPalcedEnum.InsideCompany)
+      MoneyPalcedArray = MoneyPalcedArray.filter(m => m.id == MoneyPalcedEnum.InsideCompany)
     }
     return MoneyPalcedArray
   }

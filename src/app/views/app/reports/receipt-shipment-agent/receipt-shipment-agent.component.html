@@ -154,7 +154,7 @@
         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
           *ngIf="element.canEditDeliveryCost" (keyup)="sumCost()" [(ngModel)]="element.order.deliveryCost"
-          style="width: 110px;">
+         (ngModelChange)="changeDeliveryCost(element,i)" style="width: 110px;">
 
       </td>
       
