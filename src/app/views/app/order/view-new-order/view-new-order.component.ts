@@ -44,21 +44,21 @@ export class ViewNewOrderComponent implements OnInit {
 
   }
   order: Order = new Order
-  Accept(element) {
-    this.OrderService.Accept(element.id).subscribe(res => {
-      this.order = element
-      this.get()
-      this.print()
-    })
+  Accept(element,i) {
+    // this.OrderService.Accept(element.id).subscribe(res => {
+    //   this.order = element
+    //   this.get()
+      this.print(i)
+    // })
   }
   DisAccept(elementid) {
     this.OrderService.DisAccept(elementid).subscribe(res => {
       this.get()
     })
   }
-  print() {
+  print(i) {
     console.log(this.order)
-    var divToPrint = document.getElementById('contentToConvert');
+    var divToPrint = document.getElementById('contentToConvert-'+i);
     var css = '@page { size: A5 landscape }',
       style = document.createElement('style');
     style.type = 'text/css';
