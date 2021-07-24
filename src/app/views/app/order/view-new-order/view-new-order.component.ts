@@ -45,15 +45,18 @@ export class ViewNewOrderComponent implements OnInit {
   }
   order: Order = new Order
   Accept(element,i) {
-    // this.OrderService.Accept(element.id).subscribe(res => {
-    //   this.order = element
-    //   this.get()
+    this.OrderService.Accept(element.id).subscribe(res => {
+      this.order = element
+      this.get()
       this.print(i)
-    // })
+    })
   }
   DisAccept(elementid) {
     this.OrderService.DisAccept(elementid).subscribe(res => {
-      this.get()
+      this.orders=this.orders.filter(o=>o.id!=elementid)
+      this.dataSource = new MatTableDataSource(this.orders);
+
+      // this.get()
     })
   }
   print(i) {
