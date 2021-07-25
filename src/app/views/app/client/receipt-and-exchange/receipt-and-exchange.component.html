@@ -61,8 +61,7 @@
 
             </div>
             <div class="col-1">
-                <button printSectionId="contentToConvert" class="btn btn-primary"
-                styleSheetFile="/assets/css/vendor/bootstrap.min.css" [useExistingCss]="true" ngxPrint>
+                <button  class="btn btn-primary" (click)="print()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
                     class="bi bi-printer" viewBox="0 0 16 16">
                     <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
@@ -77,7 +76,7 @@
 </div>
 <br>
 <div id="contentToConvert">
-    <div class="card"  style=" width: 18cm;margin-right: 18%;
+    <div class="card"  style=" width: 100%;
     font-size: 18px;direction: rtl;text-align: right;"*ngIf="!showButton">
         <div class="card-body">
             <div class="row">
@@ -106,19 +105,19 @@
             <div class="row">
                 <div class="col-12">
                     {{!client.IsPay?'قبضنا من السيد/ة ':'صرفنا للسيد/ة'}} :&nbsp;{{client.client.name}}
-                    <hr style="border-bottom: black 2px dotted;width: 80%;">
+                    <hr style="border-bottom: black 1px dotted;width: 80%;">
                 </div>
                 <div class="col-12">
                     مبلغ قدره : &nbsp;{{client.IsPay?client.Amount*-1:client.Amount}}
-                    <hr style="border-bottom: black 2px dotted;width: 80%;">
+                    <hr style="border-bottom: black 1px dotted;width: 80%;">
                 </div>
                 <div class="col-12">
                     وذلك عن :&nbsp;{{client.About}}
-                    <hr style="border-bottom: black 2px dotted;width: 80%;">
+                    <hr style="border-bottom: black 1px dotted;width: 80%;">
                 </div>
                 <div class="col-12">
                      ملاحظات :&nbsp;{{client.Note}}
-                    <hr style="border-bottom: black 2px dotted;width: 80%;">
+                    <hr style="border-bottom: black 1px dotted;width: 80%;">
                 </div>
             </div>
             <div class="row">
@@ -133,7 +132,7 @@
                 <div class="col-4">
                     المدير : {{client.Manager}}
                   <!--
-                      <hr style="border-bottom: black 2px dotted;width: 80%;">
+                      <hr style="border-bottom: black 1px dotted;width: 80%;">
                   -->  
                 </div>
             </div>
