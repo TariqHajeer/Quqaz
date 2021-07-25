@@ -67,6 +67,8 @@ export class ViewNewOrderComponent implements OnInit {
     // console.log(element)
     this.IdsDto.OrderId=element.id
     this.IdsDto.AgentId=this.AgentId
+    if(!this.AgentId)return
+    else
     this.OrderService.Accept(this.IdsDto).subscribe(res => {
       this.order = element
       this.IdsDto=new IdsDto
