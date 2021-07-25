@@ -4,14 +4,17 @@
       <h3>طلبات مرفوضة</h3>
     <div class="row">
         <div class="col-md-3">
-         
-            <input type="text" class="form-control" (keyup.enter)="Get()" [ngModelOptions]="{standalone: true}"
-              [(ngModel)]="Code" placeholder="بحث على حسب كود الشحنة">
+          <label>الكود</label>
+            <input type="text" class="form-control" (keyup)="Get()" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="filtering.Code" placeholder="بحث على حسب كود الشحنة">
         </div>
         <div class="col-md-3">
         
-        <input type="text" class="form-control" (keyup.enter)="Get()" [ngModelOptions]="{standalone: true}"
-          [(ngModel)]="ClientName" placeholder="بحث على حسب اسم العميل">
+          <label>العميل</label>
+          <ng-select [(ngModel)]="filtering.ClientId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Client"
+            (change)="Get()">
+            <ng-option *ngFor="let Client of Clients" [value]="Client.id">{{Client.name}}</ng-option>
+          </ng-select>
       </div>
     
    

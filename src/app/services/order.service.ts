@@ -28,7 +28,7 @@ export class OrderService {
       params = params.append("RegionId", filter.RegionId);
     if (filter.ClientId != undefined || filter.ClientId != null)
       params = params.append("ClientId", filter.ClientId);
-      if (filter.Note != undefined || filter.Note != null)
+    if (filter.Note != undefined || filter.Note != null)
       params = params.append("Note", filter.Note);
     if (filter.RecipientName != undefined || filter.RecipientName != null)
       params = params.append("RecipientName", filter.RecipientName);
@@ -40,12 +40,12 @@ export class OrderService {
       params = params.append("IsClientDiliverdMoney", filter.IsClientDiliverdMoney);
     if (paging.RowCount != undefined || paging.RowCount != null)
       params = params.append("RowCount", paging.RowCount);
-      
+
     if (paging.Page != undefined || paging.Page != null)
       params = params.append("Page", paging.Page);
     return this.http.get<any>(this.controler, { params: params })
   }
-  WithoutPaging(filter: OrderFilter){
+  WithoutPaging(filter: OrderFilter) {
     let params = new HttpParams();
     if (filter.Code != undefined || filter.Code != null)
       params = params.append("Code", filter.Code);
@@ -55,7 +55,7 @@ export class OrderService {
       params = params.append("Phone", filter.Phone);
     if (filter.CountryId != undefined || filter.CountryId != null)
       params = params.append("CountryId", filter.CountryId);
-      if (filter.CreatedDate != undefined || filter.CreatedDate != null)
+    if (filter.CreatedDate != undefined || filter.CreatedDate != null)
       params = params.append("CreatedDate", filter.CreatedDate);
     if (filter.RegionId != undefined || filter.RegionId != null)
       params = params.append("RegionId", filter.RegionId);
@@ -69,7 +69,7 @@ export class OrderService {
       params = params.append("OrderplacedId", filter.OrderplacedId);
     if (filter.IsClientDiliverdMoney != undefined || filter.IsClientDiliverdMoney != null)
       params = params.append("IsClientDiliverdMoney", filter.IsClientDiliverdMoney);
-      return this.http.get<any>(this.controler+"WithoutPaging", { params: params })
+    return this.http.get<any>(this.controler + "WithoutPaging", { params: params })
 
   }
   GetById(id) {
@@ -107,7 +107,7 @@ export class OrderService {
     return this.http.get<any>(this.controler + "chekcCode", { params: params })
   }
   CheckMulieCode(code, ClientId) {
-    return this.http.post<any>(this.controler+"CheckMulieCode/"+ClientId,code)
+    return this.http.post<any>(this.controler + "CheckMulieCode/" + ClientId, code)
   }
   GetNewOrder() {
     return this.http.get<any>(this.controler + "NewOrders")
@@ -135,8 +135,17 @@ export class OrderService {
     return this.http.put<any>(this.controler + "DeleiverMoneyForClient", ids)
 
   }
-  OrdersUnacceptable(){
-    return this.http.get<any>(this.controler +"OrdersUnacceptable")
+  OrdersUnacceptable(filter, paging) {
+    let params = new HttpParams();
+    if (filter.Code != undefined || filter.Code != null)
+      params = params.append("Code", filter.Code);
+    if (filter.ClientId != undefined || filter.ClientId != null)
+      params = params.append("ClientId", filter.ClientId);
+    if (paging.RowCount != undefined || paging.RowCount != null)
+      params = params.append("RowCount", paging.RowCount);
+    if (paging.Page != undefined || paging.Page != null)
+      params = params.append("Page", paging.Page);
+    return this.http.get<any>(this.controler + "DisAccept", { params: params })
 
   }
   SetPrintNumber(number) {
@@ -178,29 +187,29 @@ export class OrderService {
     params = params.append("printNumber", printnumber);
     return this.http.get<any>(this.controler + "GetOrderByClientPrintNumber", { params: params })
   }
- 
-  GetClientprint(paging,number,client) {
+
+  GetClientprint(paging, number, client) {
     let params = new HttpParams();
     if (paging.RowCount != undefined || paging.RowCount != null)
       params = params.append("RowCount", paging.RowCount);
     if (paging.Page != undefined || paging.Page != null)
       params = params.append("Page", paging.Page);
-      if (number)
+    if (number)
       params = params.append("number", number);
-      if (client)
+    if (client)
       params = params.append("clientName", client);
     return this.http.get<any>(this.controler + "GetClientprint", { params: params })
 
   }
-  GetAgentPrint(paging,number,agent) {
+  GetAgentPrint(paging, number, agent) {
     let params = new HttpParams();
     if (paging.RowCount != undefined || paging.RowCount != null)
       params = params.append("RowCount", paging.RowCount);
     if (paging.Page != undefined || paging.Page != null)
       params = params.append("Page", paging.Page);
-      if (number)
+    if (number)
       params = params.append("number", number);
-      if (agent)
+    if (agent)
       params = params.append("agnetName", agent);
     return this.http.get<any>(this.controler + "GetAgentPrint", { params: params })
 
