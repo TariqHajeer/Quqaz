@@ -118,9 +118,9 @@ export class OrderService {
     return this.http.put<any>(this.controler + "Accept/" + id, { params: params })
   }
   DisAccept(id) {
-    let params = new HttpParams();
-    params = params.append("id", id);
-    return this.http.put<any>(this.controler + "DisAccept/" + id, { params: params })
+    // let params = new HttpParams();
+    // params = params.append("id", id);
+    return this.http.put<any>(this.controler + "DisAccept" , id )
   }
   MakeOrderInWay(ids) {
     let params = new FormData();

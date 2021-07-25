@@ -2,6 +2,7 @@ import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { DateWithIds } from 'src/app/Models/date-with-ids.model';
 import { Order } from 'src/app/Models/order/order.model';
 import { OrderService } from 'src/app/services/order.service';
 
@@ -54,8 +55,11 @@ export class ViewNewOrderComponent implements OnInit {
       this.print(i)
     })
   }
+  dateWithId:DateWithIds<number>
   DisAccept(elementid) {
-    this.OrderService.DisAccept(elementid).subscribe(res => {
+    this.dateWithId.Date=new Date
+    this.dateWithId.Ids.push(elementid)
+    this.OrderService.DisAccept(this.dateWithId).subscribe(res => {
       this.orders=this.orders.filter(o=>o.id!=elementid)
       this.dataSource = new MatTableDataSource(this.orders);
 
