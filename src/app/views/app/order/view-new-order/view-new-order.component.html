@@ -90,13 +90,13 @@ aria-hidden="true">
 <div class="modal-dialog modal-info" role="document">
   <div class="modal-content">
     <div class="modal-header">
-      <h4 class="modal-title"> تأكيد </h4>
+      <h4 class="modal-title"> اختر مندوب </h4>
       <button type="button" class="close" (click)="infoModal.hide()" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-        <div class="col-md-3">
+        <div class="col-md-12">
             <label>المندوب</label>
             <ng-select [(ngModel)]="AgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
                 name="Agent" >

@@ -64,10 +64,13 @@ export class ViewNewOrderComponent implements OnInit {
     }
   }
   Accept(element) {
+    console.log(element)
     this.IdsDto.OrderId=element.id
     this.IdsDto.AgentId=this.AgentId
-    this.OrderService.Accept(element.id).subscribe(res => {
+    this.OrderService.Accept(this.IdsDto).subscribe(res => {
       this.order = element
+      this.IdsDto=new IdsDto
+      this.AgentId=null
       this.get()
       this.infoModal.hide()
     })

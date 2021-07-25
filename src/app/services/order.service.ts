@@ -113,9 +113,9 @@ export class OrderService {
     return this.http.get<any>(this.controler + "NewOrders")
   }
   Accept(id) {
-    let params = new HttpParams();
-    params = params.append("id", id);
-    return this.http.put<any>(this.controler + "Accept/" + id, { params: params })
+    // let params = new HttpParams();
+    // params = params.append("id", id);
+    return this.http.put<any>(this.controler + "Accept" , id)
   }
   DisAccept(id) {
     // let params = new HttpParams();
