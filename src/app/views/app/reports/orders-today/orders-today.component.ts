@@ -57,10 +57,10 @@ export class OrdersTodayComponent implements OnInit {
   ngOnInit(): void {
     this.paging = new Paging
     this.filtering = new OrderFilter
-    // this.filtering.CreatedDate=new Date
     this.get()
     this.GetClient()
-    // this.allFilter()
+    localStorage.removeItem('printordersagent')
+    localStorage.removeItem('printagent')
 
   }
   selection = new SelectionModel<any>(true, []);
