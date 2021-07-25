@@ -43,22 +43,25 @@ export class ViewNewOrderComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.displayedColumns = ['code', 'cost', 'recipientName',
         'recipientPhones', 'address', 'note', 'client', 'country'
-        , 'region', 'agent', 'Accept', 'DisAccept'];
+        , 'region', 'agent','print', 'Accept', 'DisAccept'];
     })
 
   }
   order: Order = new Order
-  Accept(element,i) {
+  Accept(element) {
     this.OrderService.Accept(element.id).subscribe(res => {
       this.order = element
       this.get()
-      this.print(i)
+      // this.print(i)
     })
   }
   dateWithId:DateWithIds<number>
   DisAccept(elementid) {
+    this.dateWithId=new DateWithIds
+    this.dateWithId.Ids=elementid
     this.dateWithId.Date=new Date
-    this.dateWithId.Ids.push(elementid)
+    // this.dateWithId.Ids.push(elementid)
+    console.log(this.dateWithId)
     this.OrderService.DisAccept(this.dateWithId).subscribe(res => {
       this.orders=this.orders.filter(o=>o.id!=elementid)
       this.dataSource = new MatTableDataSource(this.orders);
@@ -69,7 +72,7 @@ export class ViewNewOrderComponent implements OnInit {
   print(i) {
     console.log(this.order)
     var divToPrint = document.getElementById('contentToConvert-'+i);
-    var css = '@page { size: A5 landscape }',
+    var css = '@page { size: A5 landscape ;margin: 0;}',
       style = document.createElement('style');
     style.type = 'text/css';
     style.media = 'print';
