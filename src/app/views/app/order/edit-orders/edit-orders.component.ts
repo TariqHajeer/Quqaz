@@ -133,8 +133,10 @@ export class EditOrdersComponent implements OnInit {
     this.getroute.params.subscribe(par => {
       this.id = par['id'] as string
     });
+    this.spinner.show()
     this.orderService.GetById(this.id).subscribe(res => {
       this.getAgent()
+      this.spinner.hide()
       this.order=res
       this. editorder = res
       this.editorder.recipientPhones=this.editorder.recipientPhones.split(',')
@@ -176,6 +178,9 @@ export class EditOrdersComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.Order.orderLogs)
       //this.Order.RecipientPhones.push(this.editorder.recipientPhones)
       this.Order.RegionId = this.editorder.region != null ? this.editorder.region.Id : null
+    },err=>{
+      this.spinner.hide()
+
     })
    
 
@@ -389,7 +394,7 @@ export class EditOrdersComponent implements OnInit {
   }
   print() {
     var divToPrint = document.getElementById('contentToConvert');
-    var css = '@page { size: A5 landscape }',
+    var css = '@page { size: A5 landscape ;margin:0;}',
       style = document.createElement('style');
     style.type = 'text/css';
     style.media = 'print';

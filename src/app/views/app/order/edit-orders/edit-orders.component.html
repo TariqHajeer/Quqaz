@@ -2,6 +2,10 @@
  <button printSectionId="demo"
  styleSheetFile="/assets/css/vendor/bootstrap.min.css"[useExistingCss]="true"                                 
  ngxPrint>print page</button>-->
+ <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff"
+ type = "ball-pulse" [fullScreen] = "true">
+    <p style="color: white" > </p>
+</ngx-spinner>
 <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4">
     <mat-tab label="تعديل الطلب">
         <form (ngSubmit)="AddOrder()">
