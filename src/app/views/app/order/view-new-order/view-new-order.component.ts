@@ -33,7 +33,7 @@ export class ViewNewOrderComponent implements OnInit {
   // }
   get() {
     this.OrderService.GetNewOrder().subscribe(res => {
-      console.log(res)
+      // console.log(res)
       this.orders = res
       this.orders.forEach(res => {
         res.recipientPhones = res.recipientPhones.split(',')
@@ -64,7 +64,7 @@ export class ViewNewOrderComponent implements OnInit {
     }
   }
   Accept(element) {
-    console.log(element)
+    // console.log(element)
     this.IdsDto.OrderId=element.id
     this.IdsDto.AgentId=this.AgentId
     this.OrderService.Accept(this.IdsDto).subscribe(res => {
