@@ -135,7 +135,10 @@ export class OrderService {
     return this.http.put<any>(this.controler + "DeleiverMoneyForClient", ids)
 
   }
+  OrdersUnacceptable(){
+    return this.http.get<any>(this.controler +"OrdersUnacceptable")
 
+  }
   SetPrintNumber(number) {
     return this.http.post<any>(this.controler + "SetPrintNumber", number)
   }

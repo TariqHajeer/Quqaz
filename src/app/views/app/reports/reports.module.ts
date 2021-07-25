@@ -39,6 +39,7 @@ import { PrintOrderInCompanyComponent } from './printpreview/print-order-in-comp
 import { ReceiptOrderInCompanyComponent } from './print/receipt-order-in-company/receipt-order-in-company.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { OrdersTodayComponent } from './orders-today/orders-today.component';
+import { OrdersUnacceptableComponent } from './orders-unacceptable/orders-unacceptable.component';
 @NgModule({
   declarations: [ShipmentInStockComponent,
     ClientOrderComponent,
@@ -63,7 +64,8 @@ import { OrdersTodayComponent } from './orders-today/orders-today.component';
     OrderInCompanyComponent,
     PrintOrderInCompanyComponent,
     ReceiptOrderInCompanyComponent,
-    OrdersTodayComponent,],
+    OrdersTodayComponent,
+    OrdersUnacceptableComponent,],
   imports: [
     CommonModule,
     ReportsRoutingModule,

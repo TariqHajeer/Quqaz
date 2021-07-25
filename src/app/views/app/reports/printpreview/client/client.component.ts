@@ -100,9 +100,9 @@ export class ClientComponent implements OnInit {
       Ids: this.orders.map(c=>({id:c.id,cost:c.payForCleint})),
       Date: new Date
     } 
-    console.log(this.dateWithIds);
+    // console.log(this.dateWithIds);
     this.orderservice.DeleiverMoneyForClient(this.dateWithIds).subscribe(res => {
-      console.log(res)
+      // console.log(res)
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.showPrintbtn = true
       this.spinner.hide()

@@ -220,6 +220,12 @@ const data: IMenuItem[] = [
         to: `${adminRoot}/reports/orderstoday`,
         //permission:[UserPermission.ShowOrder]
       },
+      {
+        icon: 'simple-icon-layers',
+        label: ' شحنات مرفوضة  ',
+        to: `${adminRoot}/reports/ordersUnacceptable`,
+        //permission:[UserPermission.ShowOrder]
+      },
     ]
   },
   //clients  

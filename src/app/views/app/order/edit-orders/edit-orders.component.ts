@@ -135,9 +135,9 @@ export class EditOrdersComponent implements OnInit {
     });
     this.orderService.GetById(this.id).subscribe(res => {
       this.getAgent()
-      console.log(res)
       this.order=res
       this. editorder = res
+      this.editorder.recipientPhones=this.editorder.recipientPhones.split(',')
       if (this.editorder.orderplaced.id == OrderplacedEnum.CompletelyReturned || this.editorder.orderplaced.id == OrderplacedEnum.Unacceptable || this.editorder.orderplaced.id == OrderplacedEnum.Delayed)
         this.showRsendButton = true
       else
@@ -170,7 +170,7 @@ export class EditOrdersComponent implements OnInit {
       this.Order.OrderTypeDtos = this.editorder.orderItems
       this.Order.OrderplacedId = this.editorder.orderplaced.id
       this.Order.RecipientName = this.editorder.recipientName
-      this.Order.RecipientPhones = this.editorder.recipientPhones.split(',')
+       this.Order.RecipientPhones = this.editorder.recipientPhones
       this.Order.OldCost = this.editorder.oldCost
       this.Order.orderLogs=this.editorder.orderLogs
       this.dataSource = new MatTableDataSource(this.Order.orderLogs)

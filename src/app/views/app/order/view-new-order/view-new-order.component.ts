@@ -29,8 +29,11 @@ export class ViewNewOrderComponent implements OnInit {
   // }
   get() {
     this.OrderService.GetNewOrder().subscribe(res => {
-      console.log(res)
+      // console.log(res)
       this.orders = res
+      this.orders.forEach(res=>{
+        res.recipientPhones = res.recipientPhones.split(',')
+      })
       if (this.orders.length == 0)
         this.noDataFound = true
       else this.noDataFound = false
@@ -75,8 +78,15 @@ export class ViewNewOrderComponent implements OnInit {
     setTimeout(function () {
       newWin?.close();
       // location.reload();
-      this.get()
+      // this.get()
 
     }, 10);
+  }
+  code
+  codeFillter() {
+    this.dataSource.data=this.orders
+    if(this.code)
+    if(this.dataSource.data.length!=0)
+   this.dataSource.data= this.dataSource.data.filter(d=>d.code.includes(this.code))
   }
 }

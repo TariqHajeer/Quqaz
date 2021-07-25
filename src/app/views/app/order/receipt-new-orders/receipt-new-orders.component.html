@@ -92,7 +92,7 @@
                         <div style="border: 1px black solid;height: 30px;
                                 padding: 5px;
                                 border-radius:6px;text-align: center;">
-                            {{order.client&&order.client.country?order.client.country.name+' - '+order.client.address:''}}
+                            {{order.client&&order.client.country?order.client.country.name:''}}{{order.client&&order.client.address?' - '+order.client.address:''}}
                         </div>
                     </td>
 
@@ -145,7 +145,7 @@
                         <div style="border: 1px black solid;height: 30px;
                                 padding: 5px;
                                 border-radius:6px;text-align: center;">
-                            {{order.recipientName?order.recipientName:'-'}}
+                            {{order.recipientName?order.recipientName:' '}}
                         </div>
                     </td>
                     <td style="width: 5%;text-align: center;">العنــوان</td>
@@ -153,7 +153,7 @@
                         <div style="border: 1px black solid;height: 30px;
                                 padding: 5px;
                                 border-radius:6px;text-align: center;">
-                            {{order.country.name+' - '+order.address}}
+                            {{order.country?order.country.name:''}}{{order.address?' - '+order.address:''}}
                         </div>
                     </td>
                 </tr>
@@ -165,7 +165,7 @@
                             <div style="border: 1px black solid;margin-top: 5px;
                                     padding: 5px;height: 30px; margin-bottom: 5px;
                                     border-radius:6px;text-align: center;">
-                             {{order.recipientPhones[0]}}
+                             {{order.recipientPhones&&order.recipientPhones.length!=0?order.recipientPhones[0]:''}}
                             </div>
                         </td>
                   
@@ -175,7 +175,7 @@
                         <div style="border: 1px black solid;margin-top: 5px; margin-bottom: 5px;
                                 padding: 5px;text-align: center;height: 30px;
                                 border-radius:6px;">
-                            {{order.recipientPhones.length>1?order.recipientPhones[1]:''}}
+                            {{order.recipientPhones&&order.recipientPhones.length>1?order.recipientPhones[1]:''}}
                         </div>
                     </td>
 

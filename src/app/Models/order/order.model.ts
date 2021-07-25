@@ -9,7 +9,7 @@ export class Order {
       deliveryCost: number
       cost: number
       recipientName: string
-      recipientPhones: string
+      recipientPhones
       address: string
       createdBy: string
       date: Date
