@@ -3,6 +3,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { SelectionModel } from '@angular/cdk/collections';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { City } from 'src/app/Models/Cities/city.Model';
@@ -62,11 +63,55 @@ export class OrdersTodayComponent implements OnInit {
     // this.allFilter()
 
   }
+  selection = new SelectionModel<any>(true, []);
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.orders=[]
+    this.ids=[]
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => { this.selection.select(row) });
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: any): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    this.checkboxId(row)
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+  }
+  ids: any[] = []
+  checkboxId(row) {  
+    if (this.selection.isSelected(row))
+      if (this.ids.filter(d => d == row.id).length > 0)
+        return
+      else {
+        this.ids.push(row.id)
+        this.orders.push(row)
+        // this.agent=this.orders.map(o=>o.agent)[0]
+        // this.orderplaced=this.orders.map(o=>o.orderplaced)[0]
+      
+      }
+    if (!this.selection.isSelected(row)) {
+      this.ids = this.ids.filter(i => i != row.id)
+      this.orders = this.orders.filter(o => o != row)
+      
+    }
+  }
   get() {
     this.dataSource = new MatTableDataSource(this.orders);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.displayedColumns = ['number','code', 'deliveryCost', 'cost', 'oldCost', 'recipientName',
+    this.displayedColumns = ['select','number','code', 'deliveryCost', 'cost', 'oldCost', 'recipientName',
       'recipientPhones', 'client', 'clientPrintNumber', 'country'
       , 'region', 'agent', 'agentPrintNumber', 'monePlaced', 'orderplaced', 'address'
       , 'createdBy', 'date', 'diliveryDate', 'note'];
@@ -129,6 +174,15 @@ export class OrdersTodayComponent implements OnInit {
   }
  
 
-  
+  print() {
+    if ( this.noDataFound == true || this.orders.length==0) {
+      this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      return
+    }
+    // localStorage.setItem('printagent',JSON.stringify(this.Agents.find(c=>c.id==this.AgentId)))
+    localStorage.setItem('printordersagent',JSON.stringify(this.orders))
+    this.router.navigate(['app/reports/printagentpreview'])
+   
+  }
 
 }
