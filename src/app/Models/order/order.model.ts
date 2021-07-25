@@ -41,3 +41,7 @@ export class DateIdCost{
       Date
       IdCosts:IdCost[]
 }
+export class IdsDto{
+      OrderId
+      AgentId
+}

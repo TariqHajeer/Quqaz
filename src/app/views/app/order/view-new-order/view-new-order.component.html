@@ -82,7 +82,35 @@
                 <ng-container matColumnDef="Accept">
                     <th mat-header-cell *matHeaderCellDef> </th>
                     <td mat-cell *matCellDef="let element" >
-                        <span class="btn btn-xs badge-primary "(click)="Accept(element)" >تأكيد</span>
+                        <span class="btn btn-xs badge-primary "(click)="MultiAgent(element)" >تأكيد</span>
+                       
+               
+<div bsModal #infoModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-info" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title"> تأكيد </h4>
+      <button type="button" class="close" (click)="infoModal.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="col-md-3">
+            <label>المندوب</label>
+            <ng-select [(ngModel)]="AgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+                name="Agent" >
+                <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
+            </ng-select>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="Accept(element)">تأكيد</button>
+      <button type="button" class="btn btn-info" (click)="infoModal.hide()"> الغاء</button>
+    </div>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="DisAccept">
