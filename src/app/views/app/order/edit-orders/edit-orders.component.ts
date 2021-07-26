@@ -129,16 +129,19 @@ export class EditOrdersComponent implements OnInit {
   editorder
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  show=false
   getorder() {
     this.getroute.params.subscribe(par => {
       this.id = par['id'] as string
     });
     this.spinner.show()
     this.orderService.GetById(this.id).subscribe(res => {
+      console.log(res)
       this.getAgent()
       this.spinner.hide()
       this.order=res
       this. editorder = res
+      this.show=true
       this.editorder.recipientPhones=this.editorder.recipientPhones.split(',')
       if (this.editorder.orderplaced.id == OrderplacedEnum.CompletelyReturned || this.editorder.orderplaced.id == OrderplacedEnum.Unacceptable || this.editorder.orderplaced.id == OrderplacedEnum.Delayed)
         this.showRsendButton = true

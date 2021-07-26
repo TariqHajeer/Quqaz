@@ -8,7 +8,7 @@
 </ngx-spinner>
 <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4">
     <mat-tab label="تعديل الطلب">
-        <form (ngSubmit)="AddOrder()">
+        <form (ngSubmit)="AddOrder()"*ngIf="show">
 
             <div class="card">
                 <div class="card-body">
@@ -585,7 +585,7 @@
                     <button class="btn btn-primary" (click)="print()">طباعة</button>
                 </div>
             </div>
-            <app-receipt-new-orders [order]="order" id="contentToConvert"></app-receipt-new-orders>
+            <app-receipt-new-orders [order]="order" id="contentToConvert" *ngIf="show"></app-receipt-new-orders>
         </div>
     </mat-tab>
     <!-- <mat-tab label="Third">

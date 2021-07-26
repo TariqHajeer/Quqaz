@@ -15,8 +15,10 @@ export class ReceiptNewOrdersComponent implements OnInit, OnChanges {
   counts: number[] = []
   ngOnInit(): void {
     // this.order.recipientPhones = this.order.recipientPhones.split(',')
-    this.orderTypes = this.order.orderItems.map(o => o.orderTpye.name)
-    this.counts = this.order.orderItems.map(o => o.count)
+    if( this.order.orderItems&&this.order.orderItems.length!=0){
+      this.orderTypes = this.order.orderItems.map(o => o.orderTpye.name)
+      this.counts = this.order.orderItems.map(o => o.count)
+    }
   }
   ngOnChanges() {
   }
