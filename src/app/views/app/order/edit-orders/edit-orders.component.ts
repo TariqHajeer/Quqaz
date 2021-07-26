@@ -136,7 +136,7 @@ export class EditOrdersComponent implements OnInit {
     });
     this.spinner.show()
     this.orderService.GetById(this.id).subscribe(res => {
-      console.log(res)
+      // console.log(res)
       this.getAgent()
       this.spinner.hide()
       this.order=res
@@ -269,9 +269,13 @@ export class EditOrdersComponent implements OnInit {
       this.cities = res
       var country = this.cities.find(c => c.id == this.Order.CountryId)
       this.orderResend.DeliveryCost = country.deliveryCost
+      if(this.tempRegions)
       this.Regionsresend = this.tempRegions.filter(r => r.country.id == this.orderResend.CountryId)
+      if(this.tempAgent)
       this.Agentsresend = this.tempAgent.filter(r => r.countryId == this.orderResend.CountryId)
+      if(this.tempRegions)
       this.Regions = this.tempRegions.filter(r => r.country.id == this.Order.CountryId)
+      if(this.tempAgent)
       this.Agents = this.tempAgent.filter(r => r.countryId == this.Order.CountryId)
 
 
