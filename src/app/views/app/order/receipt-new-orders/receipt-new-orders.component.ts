@@ -11,9 +11,12 @@ export class ReceiptNewOrdersComponent implements OnInit, OnChanges {
 
   constructor(public sanitizer: DomSanitizer,) { }
   @Input() order
+  orderTypes: string[] = []
+  counts: number[] = []
   ngOnInit(): void {
     // this.order.recipientPhones = this.order.recipientPhones.split(',')
-
+    this.orderTypes = this.order.orderItems.map(o => o.orderTpye.name)
+    this.counts = this.order.orderItems.map(o => o.count)
   }
   ngOnChanges() {
   }

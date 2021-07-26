@@ -33,7 +33,7 @@ export class ViewNewOrderComponent implements OnInit {
   // }
   get() {
     this.OrderService.GetNewOrder().subscribe(res => {
-      // console.log(res)
+      console.log(res)
       this.orders = res
       this.orders.forEach(res => {
         res.recipientPhones = res.recipientPhones.split(',')
@@ -54,22 +54,23 @@ export class ViewNewOrderComponent implements OnInit {
   AgentId
   Agents: User[] = []
   IdsDto:IdsDto= new IdsDto
-  MultiAgent(order) {
+  MultiAgent(order,i) {
     if (order.country.agnets.length == 1) {
       this.AgentId=order.country.agnets[0].id
-      this.Accept(order)
+      this.Accept(order,i)
     }else{
       this.Agents=order.country.agnets
       this.infoModal.show()
     }
   }
-  Accept(element) {
+  Accept(element,i) {
     // console.log(element)
     this.IdsDto.OrderId=element.id
     this.IdsDto.AgentId=this.AgentId
     if(!this.AgentId)return
     else
     this.OrderService.Accept(this.IdsDto).subscribe(res => {
+      this.print(i)
       this.order = element
       this.IdsDto=new IdsDto
       this.AgentId=null
