@@ -7,6 +7,7 @@ import { CreateMulitpleOrderComponent } from './create-mulitple-order/create-mul
 import { CreateMultiOrderAgentAndClientComponent } from './create-multi-order-agent-and-client/create-multi-order-agent-and-client.component';
 import { CreatemultipleOrderFromClientComponent } from './createmultiple-order-from-client/createmultiple-order-from-client.component';
 import { CreatemultipulorderagentComponent } from './createmultipulorderagent/createmultipulorderagent.component';
+import { EditClientOrdersComponent } from './edit-client-orders/edit-client-orders.component';
 import { EditOrdersComponent } from './edit-orders/edit-orders.component';
 import { ProfitsOfOrdersComponent } from './profits-of-orders/profits-of-orders.component';
 import { ReceiptNewOrdersComponent } from './receipt-new-orders/receipt-new-orders.component';
@@ -63,6 +64,11 @@ const routes: Routes = [
   {
     path:'ProfitsOfOrders',
     component:ProfitsOfOrdersComponent ,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder]}
+  },
+  {
+    path:'editclientorders',
+    component:EditClientOrdersComponent ,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowOrder]}
   },
 ];

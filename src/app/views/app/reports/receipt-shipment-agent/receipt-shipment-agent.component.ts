@@ -131,6 +131,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       })
       this.MoenyPlacedId = null
       this.getMoenyPlaced = this.orderplacedstate.ChangeOrderPlace(this.OrderplacedId.id, this.MoenyPlaced)
+     console.log( this.getMoenyPlaced )
       // if (this.OrderplacedId.id == 4)
       //   this.getMoenyPlaced = [{ id: 2, name: "مندوب" }, { id: 4, name: "تم تسليمها/داخل الشركة" }]
 
@@ -156,7 +157,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.showTable = false
     if (this.Code) {
       this.orderservice.GetOrderByAgent(this.Code).subscribe(res => {
-        console.log(res)
+        // console.log(res)
         this.findorder = res
         if (this.findorder) {
           if (this.findorder.length == 1) {

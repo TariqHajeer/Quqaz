@@ -34,6 +34,7 @@ import { CreatemultipulorderagentComponent } from './createmultipulorderagent/cr
 import { ReceiptNewOrdersComponent } from './receipt-new-orders/receipt-new-orders.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { EditClientOrdersComponent } from './edit-client-orders/edit-client-orders.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     CreateMultiOrderAgentAndClientComponent,
     CreatemultipulorderagentComponent,
     ReceiptNewOrdersComponent,
+    EditClientOrdersComponent,
   ],
   imports: [
     CommonModule,
