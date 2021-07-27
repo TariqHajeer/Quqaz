@@ -149,4 +149,13 @@ export class EditClientComponent implements OnInit {
       }
     )
   }
+  keyPressNumbers(event) {
+    var charCode = (event.which) ? event.which : event.keyCode;
+    // console.log(charCode)
+    if (charCode == 32) {
+      return false
+    }
+    else
+      return true
+  }
 }
