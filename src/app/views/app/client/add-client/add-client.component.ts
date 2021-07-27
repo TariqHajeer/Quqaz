@@ -90,14 +90,14 @@ export class AddClientComponent implements OnInit, OnChanges {
       this.client.phones.push(this.tempPhone)
       this.tempPhone = ''
     }
-    if (this.client.phones.length == 0 || !this.client.name ||! this.client.userName
+    if (this.client.phones.length == 0 || !this.client.name || !this.client.userName
       || !this.client.password || !this.client.firstDate) {
       this.submitted = true;
       return
     }
     else {
       this.submitted = false;
-    } 
+    }
     this.spinner.show()
     this.clientService.addClient(this.client).subscribe(
       res => {
@@ -166,5 +166,14 @@ export class AddClientComponent implements OnInit, OnChanges {
         this.cities = res;
       }
     )
+  }
+  keyPressNumbers(event) {
+    var charCode = (event.which) ? event.which : event.keyCode;
+    // console.log(charCode)
+    if (charCode == 32) {
+      return false
+    }
+    else
+      return true
   }
 }

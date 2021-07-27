@@ -363,23 +363,23 @@ export class ReceiptShipmentAgentComponent implements OnInit {
 
   }
   keyPressNumbers(event, cost) {
-    console.log(cost)
-    console.log("1")
+    // console.log(cost)
+    // console.log("1")
     var charCode = (event.which) ? event.which : event.keyCode;
-    console.log(charCode)
+    // console.log(charCode)
 
     if (charCode == 45 && cost == 0) {
-      console.log("2")
+      // console.log("2")
       return true
     }
     else
       // Only Numbers 0-9
       if ((charCode < 48 || charCode > 57)) {
-        console.log("3")
+        // console.log("3")
         event.preventDefault();
         return false;
       } else {
-        console.log("4")
+        // console.log("4")
         return true;
       }
   }
