@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import{EditRequestService}from 'src/app/services/edit-request.service'
 @Component({
   selector: 'app-edit-client-orders',
   templateUrl: './edit-client-orders.component.html',
@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditClientOrdersComponent implements OnInit {
 
-  constructor() { }
+  constructor(private editrequestService:EditRequestService) { }
 
   ngOnInit(): void {
+    this.Get()
   }
-
+Get(){
+  this.editrequestService.NewEditReuqet().subscribe(res=>{
+    console.log(res)
+  })
+}
 }
