@@ -44,7 +44,7 @@ export class ViewClientsComponent implements OnInit {
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
     this.pageSettings = { pageSize: 10, pageSizes: true };
-    this.selectionSettings = {  type: "Multiple" };
+    this.selectionSettings = { type: "Multiple" };
     this.lines = 'Horizontal';
     this.formatOptions = { type: 'date', format: 'dd/MM/yyyy' };
     localStorage.removeItem('client')
@@ -103,7 +103,7 @@ export class ViewClientsComponent implements OnInit {
     pay: boolean
   }
   cost = 0
-  Account:Account
+  Account: Account
   getClient(data) {
     // this.client = {
     //   client: null,
@@ -111,35 +111,38 @@ export class ViewClientsComponent implements OnInit {
     //   pay: true
     // }
     // this.client.client = data
-    localStorage.setItem('client', JSON.stringify(data ))
+    localStorage.setItem('client', JSON.stringify(data))
     this.route.navigate(['/app/client/ReceiptAndExchange'])
   }
   printpay() {
     //صرف
-    this.Account=new Account()
-    this.Account.ClinetId=  this.client.client.id
-    this.Account.Amount=-(this.cost)
-   
-    this.clientService.Account(this.Account).subscribe(res=>{
+    this.Account = new Account()
+    this.Account.ClinetId = this.client.client.id
+    this.Account.Amount = -(this.cost)
+
+    this.clientService.Account(this.Account).subscribe(res => {
 
     })
     this.client.pay = true
     this.client.cost = this.cost
-    localStorage.setItem('client', JSON.stringify(this.client ))
+    localStorage.setItem('client', JSON.stringify(this.client))
     this.route.navigate(['/app/reports/pay'])
 
   }
   printcatch() {
     //قبض
-    this.Account=new Account()
-    this.Account.ClinetId=  this.client.client.id
-    this.Account.Amount=this.cost
-    this.clientService.Account(this.Account).subscribe(res=>{
+    this.Account = new Account()
+    this.Account.ClinetId = this.client.client.id
+    this.Account.Amount = this.cost
+    this.clientService.Account(this.Account).subscribe(res => {
 
     })
     this.client.pay = false
     this.client.cost = this.cost
-    localStorage.setItem('client',JSON.stringify(this.client ))
+    localStorage.setItem('client', JSON.stringify(this.client))
     this.route.navigate(['/app/reports/pay'])
+  }
+  editClientProfile() {
+    this.route.navigate(['/app/order/editclientorders'])
   }
 }

@@ -4,8 +4,9 @@
       <div class="d-flex justify-content-between">
         <h3 class="card-title">{{'menu.clients' | translate}}</h3>
       <button class="btn  mb-3" (click)="addClientModal.show();addNewClicked()"><i class="iconsminds-add  text-primary" style="font-size: 38px;"></i></button>
-</div>
-
+    </div>
+    <button class="btn btn-primary" (click)="editClientProfile()">طلبات تعديل العملاء</button>
+<br>
   <ejs-grid #normalgrid   id='normalgrid'  (load)='load()'  [allowPaging]='true'
   [gridLines]="lines" [pageSettings]='pageSettings' [toolbar]='toolbar'
     [editSettings]='editSettings'[dataSource]='clients' rowHeight='38'
