@@ -89,6 +89,10 @@ export class ViewClientsComponent implements OnInit {
         this.clientService.Delete(id).subscribe(
           res => {
             this.notifications.create('success', 'تم حذف  العميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
+          },err=>{
+            this.notifications.create('error', 'لايمكن حذف هذا العميل', NotificationType.Error, { theClass: 'error', timeOut: 4000, showProgressBar: false });
+            this.gridInstance.refresh();
+
           }
         )
       }
