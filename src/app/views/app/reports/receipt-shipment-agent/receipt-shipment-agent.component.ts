@@ -235,14 +235,20 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     }
   }
   ChangeAllOrderplacedId(element, index) {
-    this.getmony()
-    this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
-    this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced)
-    this.orderplacedstate.onWay(element, this.MoenyPlaced)
-    this.orderplacedstate.unacceptable(element, this.MoenyPlaced)
-    this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
-    this.orderplacedstate.EditDeliveryCostAndAgentCost(element, this.tempdeliveryCost[index], this.tempagentCost[index])
-    this.sumCost()
+    try{
+      this.getmony()
+      this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
+      this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced)
+      this.orderplacedstate.onWay(element, this.MoenyPlaced)
+      this.orderplacedstate.unacceptable(element, this.MoenyPlaced)
+      this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
+      this.orderplacedstate.EditDeliveryCostAndAgentCost(element, this.tempdeliveryCost[index], this.tempagentCost[index])
+      this.sumCost()
+    }catch{
+      this.notifications.create("error", "يوجد خطأ في 237", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
+
+    }
+   
   }
   ChangeOrderplacedId(element, index) {
     // this.GetMoenyPlaced()

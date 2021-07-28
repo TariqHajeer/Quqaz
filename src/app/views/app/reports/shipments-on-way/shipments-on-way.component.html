@@ -7,24 +7,24 @@
     <div class="row">
       <div class="col-md-3">
         <label>المندوب</label>
-        <ng-select [(ngModel)]="AgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Agent"
+        <ng-select [(ngModel)]="filtering.AgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Agent"
           (change)="ChangeAgentId()">
           <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
         </ng-select>
       </div>
       <div class="col-md-3">
         <label> رقم طباعة  شحنات المندوب </label>
-        <input type="text" class="form-control" (keyup)="filterprintNumber()"  [ngModelOptions]="{standalone: true}" [(ngModel)]="printNumber">
+        <input type="text" class="form-control" (keyup)="ChangeAgentId()"  [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.AgentPrintNumber">
       </div>
       <div class="col-md-3">
         <label> من تاريخ</label>
-        <ejs-datepicker name="FromDate" [(ngModel)]='todate' (ngModelChange)="filterOfDate()" id="fromdate"
+        <ejs-datepicker name="FromDate" [(ngModel)]='filtering.AgentPrintStartDate' (ngModelChange)="ChangeAgentId()" id="fromdate"
           placeholder='اختر تاريخ'>
         </ejs-datepicker>
       </div>
       <div class="col-md-3">
         <label> الى تاريخ</label>
-        <ejs-datepicker name="FromDate" [(ngModel)]='fordate' (ngModelChange)="filterOfDate()" id="fromdate"
+        <ejs-datepicker name="FromDate" [(ngModel)]='filtering.AgentPrintEndDate' (ngModelChange)="ChangeAgentId()" id="fromdate"
           placeholder='اختر تاريخ'>
         </ejs-datepicker>
       </div>

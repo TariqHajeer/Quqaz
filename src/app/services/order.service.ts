@@ -38,6 +38,12 @@ export class OrderService {
       params = params.append("OrderplacedId", filter.OrderplacedId);
     if (filter.IsClientDiliverdMoney != undefined || filter.IsClientDiliverdMoney != null)
       params = params.append("IsClientDiliverdMoney", filter.IsClientDiliverdMoney);
+      if (filter.AgentPrintStartDate != undefined || filter.AgentPrintStartDate != null)
+      params = params.append("AgentPrintStartDate", filter.AgentPrintStartDate);
+      if (filter.AgentPrintEndDate != undefined || filter.AgentPrintEndDate != null)
+      params = params.append("AgentPrintEndDate", filter.AgentPrintEndDate);
+      if (filter.AgentPrintNumber != undefined || filter.AgentPrintNumber != null)
+      params = params.append("AgentPrintNumber", filter.AgentPrintNumber);
     if (paging.RowCount != undefined || paging.RowCount != null)
       params = params.append("RowCount", paging.RowCount);
 

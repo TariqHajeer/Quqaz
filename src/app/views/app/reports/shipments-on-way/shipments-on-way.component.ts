@@ -178,9 +178,12 @@ export class ShipmentsOnWayComponent implements OnInit {
     })
   }
   ChangeAgentId() {
-    if (this.AgentId != null) {
+    if (this.filtering.AgentId) {
       this.filtering.OrderplacedId = 3
-      this.filtering.AgentId = this.AgentId
+      if( this.filtering.AgentPrintStartDate )
+      this.filtering.AgentPrintStartDate = formatDate(this.filtering.AgentPrintStartDate, 'yyyy-MM-dd', 'en-US');
+      if( this.filtering.AgentPrintEndDate )
+      this.filtering.AgentPrintEndDate = formatDate(this.filtering.AgentPrintEndDate, 'yyyy-MM-dd', 'en-US');
       this.allFilter();
     }
   }
