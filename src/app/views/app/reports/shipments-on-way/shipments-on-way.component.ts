@@ -181,9 +181,9 @@ export class ShipmentsOnWayComponent implements OnInit {
     if (this.filtering.AgentId) {
       this.filtering.OrderplacedId = 3
       if( this.filtering.AgentPrintStartDate )
-      this.filtering.AgentPrintStartDate = formatDate(this.filtering.AgentPrintStartDate, 'yyyy-MM-dd', 'en-US');
+      this.filtering.AgentPrintStartDate =  formatDate(this.filtering.AgentPrintStartDate , 'MM/dd/yyyy', 'en');
       if( this.filtering.AgentPrintEndDate )
-      this.filtering.AgentPrintEndDate = formatDate(this.filtering.AgentPrintEndDate, 'yyyy-MM-dd', 'en-US');
+      this.filtering.AgentPrintEndDate =  formatDate(this.filtering.AgentPrintEndDate , 'MM/dd/yyyy', 'en');
       this.allFilter();
     }
   }
@@ -238,6 +238,7 @@ export class ShipmentsOnWayComponent implements OnInit {
   }
 
   allFilter() {
+    console.log(this.filtering)
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
       this.getorders = []
       if (response)
