@@ -374,6 +374,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
       o.DeliveryCost = o.DeliveryCost * 1
     })
     this.spinner.show()
+    console.log(this.Orders)
     this.orderservice.createMultiple(this.Orders).subscribe(res => {
       this.spinner.hide()
       this.notifications.create('success', 'تم اضافة الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });

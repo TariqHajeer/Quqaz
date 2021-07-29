@@ -238,7 +238,7 @@ export class ShipmentsOnWayComponent implements OnInit {
   }
 
   allFilter() {
-    console.log(this.filtering)
+    // console.log(this.filtering)
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
       this.getorders = []
       if (response)
