@@ -228,11 +228,18 @@ const data: IMenuItem[] = [
       },
     ]
   },
-  //clients  
+  //clients 
   {
     icon: 'simple-icon-people',
     label: 'menu.clients',
     to: `${adminRoot}/client`,
+    //permission:[UserPermission.ShowClient]
+
+  },
+  {
+    icon: 'simple-icon-people',
+    label: 'طلبات تعديل العملاء',
+    to: `${adminRoot}/order/editclientorders`,
     //permission:[UserPermission.ShowClient]
 
   },
