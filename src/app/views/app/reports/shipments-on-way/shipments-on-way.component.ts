@@ -297,7 +297,9 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    localStorage.setItem('printagent', JSON.stringify(this.Agents.find(c => c.id == this.AgentId)))
+    var agent=this.Agents.find(c => c.id == this.filtering.AgentId)
+    console.log(agent)
+    localStorage.setItem('printagent', JSON.stringify(agent))
     localStorage.setItem('printordersagent', JSON.stringify(this.orders))
     this.route.navigate(['app/reports/printagentpreview'])
 

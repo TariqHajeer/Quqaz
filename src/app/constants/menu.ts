@@ -233,16 +233,30 @@ const data: IMenuItem[] = [
     icon: 'simple-icon-people',
     label: 'menu.clients',
     to: `${adminRoot}/client`,
+    subs: [
+     
+
+      {
+        icon: 'iconsminds-box-close',
+        label: 'عرض العملاء',
+        to: `${adminRoot}/client/`,
+        //permission:[UserPermission.ShowOrder]
+
+      },
+      {
+        icon: 'simple-icon-people',
+        label: 'طلبات تعديل العملاء',
+        to: `${adminRoot}/order/editclientorders`,
+        //permission:[UserPermission.ShowClient]
+    
+      },
+     
+      
+    ],
     //permission:[UserPermission.ShowClient]
 
   },
-  {
-    icon: 'simple-icon-people',
-    label: 'طلبات تعديل العملاء',
-    to: `${adminRoot}/order/editclientorders`,
-    //permission:[UserPermission.ShowClient]
-
-  },
+  
   //store
   {
     icon: 'iconsminds-box-close',
