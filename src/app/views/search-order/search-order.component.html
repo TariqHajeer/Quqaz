@@ -65,19 +65,16 @@
                             </a>
                         </div>
                     </div>
-<div class="row">
-<div class="col-6"></div>
-<div class="col-6 "*ngIf="orders.length==0&&!notFound">
-    <a [href]="adminRoot" target="_blank">
-        <img alt="mobile hero" class="mobile-hero"
-            src="/assets/img/landing-page/vanQuqaz.png" />
-    </a>
-</div>
+                    <div class="row">
+                        <div class="col-4"></div>
+                        <div class="col-8 car" *ngIf="orders.length==0&&!notFound">
+                            <img src="/assets/img/landing-page/vanq.png">
+                        </div>
 
-</div>
-                    <div class="row"  style="color: rgb(23, 78, 151);">
+                    </div>
+                    <div class="row" style="color: rgb(23, 78, 151);">
                         <div class="col-lg-4 " *ngIf="orders.length==1"></div>
-                        <div class="card col-lg-4 col-12" *ngFor="let order of orders">
+                        <div class="card col-lg-4 col-12" *ngFor="let order of orders" style="margin: 1%;">
                             <div class="card-body text-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
                                     class="bi bi-box" viewBox="0 0 16 16">
@@ -93,7 +90,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4 " *ngIf="orders.length==1"></div>
-                      
+
                     </div>
 
                     <div class="card" *ngIf="notFound">
