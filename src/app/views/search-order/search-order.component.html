@@ -65,13 +65,6 @@
                             </a>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-4"></div>
-                        <div class="col-8 car" *ngIf="orders.length==0&&!notFound">
-                            <img src="/assets/img/landing-page/vanq.png">
-                        </div>
-
-                    </div>
                     <div class="row" style="color: rgb(23, 78, 151);">
                         <div class="col-lg-4 " *ngIf="orders.length==1"></div>
                         <div class="card col-lg-4 col-12" *ngFor="let order of orders" style="margin: 1%;">
@@ -92,6 +85,14 @@
                         <div class="col-lg-4 " *ngIf="orders.length==1"></div>
 
                     </div>
+                    <div class="row">
+                        <div class="col-4"></div>
+                        <div class="col-8 car" >
+                            <img src="/assets/img/landing-page/vanq.png">
+                        </div>
+
+                    </div>
+             
 
                     <div class="card" *ngIf="notFound">
                         <div class="card-body text-center" style="color: rgb(23, 78, 151);">
