@@ -3,11 +3,18 @@
     height: 50px;
     position: relative;
     animation-name: example;
-    animation-duration: 4s;
+    animation-duration: 2s;
+    animation-direction: alternate-reverse;
   }
   
   @keyframes example {
-    0%   { left:0%; top:0px;}
-    25%  { left:100%; top:0px;}
+    from {
+   
+      left:0%; top:0px;
+    }
+  
+    to {
     
+      left:75%; top:0px;
+    }
   }
