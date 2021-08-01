@@ -43,11 +43,14 @@ export class JwtInterceptor implements HttpInterceptor {
                     return this.logoutUser();
                   }
                 case 0:
-                  this.router.navigate(['/noconnection']);
-                case 403:{
-              
+                  {
+                    this.router.navigate(['/noconnection']);
+                  }
+                case 403: {
                   this.router.navigate(['/unauthorized']);
-
+                }
+                case 404: {
+                  this.router.navigate(['/error']);
                 }
                 case 400:
                   this.notifications.error('error', 'يجب التأكد من ادخال البيانات', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
