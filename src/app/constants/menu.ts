@@ -283,6 +283,14 @@ const data: IMenuItem[] = [
     ],
 
   },
+   //payment tab
+   {
+    icon: 'iconsminds-basket-coins',
+    label: 'طرق الدفع',
+    to: `${adminRoot}/payment`,
+    //permission:[UserPermission.ShowOutCome]
+
+  },
   //income tab
   {
     icon: 'iconsminds-inbox-into',

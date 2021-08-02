@@ -136,7 +136,7 @@ export class EditOrdersComponent implements OnInit {
     });
     this.spinner.show()
     this.orderService.GetById(this.id).subscribe(res => {
-      // console.log(res)
+      console.log(res)
       this.getAgent()
       this.spinner.hide()
       this.order=res
