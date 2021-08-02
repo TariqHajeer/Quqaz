@@ -105,7 +105,7 @@ export class AddOrdersComponent implements OnInit {
     this.Order.Cost = Number(this.Order.Cost)
     this.Order.Date = new Date
     this.orderservice.Creat(this.Order).subscribe(res => {
-      this.notifications.create('success', 'تم اضافة عميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.notifications.create('success', 'تم اضافة طلب بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.int()
       this.spinner.hide()
     }, err => {
