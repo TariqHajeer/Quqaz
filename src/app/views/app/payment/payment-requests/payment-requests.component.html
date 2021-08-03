@@ -23,7 +23,7 @@
                 <ng-container matColumnDef="date">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> التاريخ</th>
                     <td mat-cell *matCellDef="let element" >
-                        {{element.createDate}}
+                        {{element.createDate| date: 'yyyy/MM/dd'}}
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="Accept">
