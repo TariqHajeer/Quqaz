@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { PaymentService } from 'src/app/services/payment.service'
@@ -14,6 +17,10 @@ export class PaymentComponent implements OnInit {
   payment: NameAndIdDto = new NameAndIdDto
   payments: NameAndIdDto[] = []
   PaymentWay
+  displayedColumns: string[];
+  dataSource
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   ngOnInit(): void {
     this.GetPayment()
   }
@@ -31,14 +38,18 @@ export class PaymentComponent implements OnInit {
   GetPayment() {
     this.paymentService.Get().subscribe(res => {
       this.payments = res
+      this.dataSource = new MatTableDataSource(this.payments);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.displayedColumns = ['name', 'delete'];
       // console.log(res)
     })
   }
   Delete(payment) {
     this.paymentService.delete(payment.id).subscribe(res => {
       this.payments = this.payments.filter(p => p != payment)
+      this.dataSource = new MatTableDataSource(this.payments);
       this.notifications.create('success', 'تم الحذف  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-
     })
   }
 }

@@ -18,31 +18,45 @@
       </div>
     </div>
   </div>
-  <div class="card table-responsive-lg">
-    <table class="table table-striped text-center">
-  <thead>
-    <th>طريقة الدفع</th>
-    <th></th>
-  </thead>
-  <tbody>
-    <tr *ngFor="let payment of payments">
-      <td>{{payment.name}}</td>
-      <td>
-        <button class="btn btn-primary" (click)="Delete(payment)" >
-          <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
-          viewBox="0 0 16 16" style="cursor: pointer;">
-          <path
-            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-          <path fill-rule="evenodd"
-            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-        </svg>
-        </button>
-      </td>
-    </tr>
-    <tr *ngIf="payments.length==0">
-      <td colspan="2">لا يوجد عناصر </td>
-    </tr>
-  </tbody>
-    </table>
+ 
+  
+<div class="card">
+  <div class="card-body">
+      <div class="example-container mat-elevation-z8">
+          
+          <table mat-table [dataSource]="dataSource" matSort>
+
+              <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> الاسم  </th>
+                  <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.name}}</td>
+              </ng-container>
+             
+            
+              <ng-container matColumnDef="delete">
+                  <th mat-header-cell *matHeaderCellDef > </th>
+                  <td mat-cell *matCellDef="let element" >
+                    <button class="btn btn-primary" (click)="Delete(element)" >
+                      <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
+                      viewBox="0 0 16 16" style="cursor: pointer;">
+                      <path
+                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                      <path fill-rule="evenodd"
+                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                    </svg>
+                    </button>
+                  </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+
+          <h5 style="padding-top: 20px; padding-right: 10px;" *ngIf="payments.length==0">  لايوجد بيانات للعرض</h5>
+
+      </div>
   </div>
+</div>
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
   <simple-notifications></simple-notifications>
