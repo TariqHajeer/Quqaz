@@ -18,9 +18,9 @@ export class PaymentComponent implements OnInit {
     this.GetPayment()
   }
   AddPayment() {
-    if (!this.payment.name) { 
+    if (!this.payment.name) {
       this.notifications.create('error', 'يجب ادخال الاسم', NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
-      return 
+      return
     }
     this.paymentService.Add(this.payment).subscribe(res => {
       this.payment = new NameAndIdDto
@@ -32,6 +32,13 @@ export class PaymentComponent implements OnInit {
     this.paymentService.Get().subscribe(res => {
       this.payments = res
       // console.log(res)
+    })
+  }
+  Delete(payment) {
+    this.paymentService.delete(payment.id).subscribe(res => {
+      this.payments = this.payments.filter(p => p != payment)
+      this.notifications.create('success', 'تم الحذف  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+
     })
   }
 }
