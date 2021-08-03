@@ -27,7 +27,7 @@ export class PaymentRequestsComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.displayedColumns = ['client','name', 'note','date', 'Accept'];
-      console.log(res)
+      // console.log(res)
     })
   }
   Accept(id) {
