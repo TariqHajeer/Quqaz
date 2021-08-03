@@ -14,7 +14,7 @@ export class PaymentRequestService {
     return this.http.get<any>(this.controler+"New")
   }
   Accept(id) {
-    return this.http.put<any>(this.controler  , id)
+    return this.http.put<any>(this.controler+id  , id)
   }
   DisAccept(id) {
     return this.http.put<any>(this.controler + "DisAccept" , id )

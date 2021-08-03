@@ -12,9 +12,9 @@ import { PaymentRequestService } from 'src/app/services/payment-request.service'
 export class PaymentRequestsComponent implements OnInit {
 
   constructor(private paymentService: PaymentRequestService) { }
-  displayedColumns: string[];
+  displayedColumns: string[]= ['client', 'name', 'note', 'date', 'Accept'];;
   dataSource
-  payments:[]=[]
+  payments: [] = []
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   ngOnInit(): void {
@@ -26,13 +26,13 @@ export class PaymentRequestsComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.payments);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
-      this.displayedColumns = ['client','name', 'note','date', 'Accept'];
+      this.displayedColumns = ['client', 'name', 'note', 'date', 'Accept'];
       // console.log(res)
     })
   }
   Accept(id) {
     this.paymentService.Accept(id).subscribe(res => {
-
+      this.GetPayment()
     })
   }
   // DisAccept(id) {
