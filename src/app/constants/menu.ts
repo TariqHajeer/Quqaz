@@ -250,7 +250,14 @@ const data: IMenuItem[] = [
         //permission:[UserPermission.ShowClient]
     
       },
-     
+      {
+        icon: 'iconsminds-box-close',
+        label: 'طلبات دفع العملاء ',
+        to: `${adminRoot}/payment/paymentrequest/`,
+        //permission:[UserPermission.ShowOrder]
+
+      },
+
       
     ],
     //permission:[UserPermission.ShowClient]
@@ -288,25 +295,18 @@ const data: IMenuItem[] = [
     icon: 'iconsminds-basket-coins',
     label: 'طرق الدفع',
     to: `${adminRoot}/payment`,
-    subs: [
-      {
-        icon: 'iconsminds-add',
-        label: ' طرق الدفع ',
-        to: `${adminRoot}/payment`,
-        //permission:[UserPermission.ShowOrder]
+    // subs: [
+    //   {
+    //     icon: 'iconsminds-add',
+    //     label: ' طرق الدفع ',
+    //     to: `${adminRoot}/payment`,
+    //     //permission:[UserPermission.ShowOrder]
 
-      },
-      {
-        icon: 'iconsminds-box-close',
-        label: 'طلبات دفع العملاء ',
-        to: `${adminRoot}/payment/paymentrequest/`,
-        //permission:[UserPermission.ShowOrder]
-
-      },
-
+    //   },
      
      
-    ],
+     
+    // ],
     //permission:[UserPermission.ShowOutCome]
 
   },
