@@ -291,14 +291,14 @@ const data: IMenuItem[] = [
     subs: [
       {
         icon: 'iconsminds-add',
-        label: 'عرض طرق الدفع ',
+        label: ' طرق الدفع ',
         to: `${adminRoot}/payment`,
         //permission:[UserPermission.ShowOrder]
 
       },
       {
         icon: 'iconsminds-box-close',
-        label: 'طلبات الدفع ',
+        label: 'طلبات دفع العملاء ',
         to: `${adminRoot}/payment/paymentrequest/`,
         //permission:[UserPermission.ShowOrder]
 
