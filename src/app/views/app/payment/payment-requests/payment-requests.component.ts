@@ -26,8 +26,8 @@ export class PaymentRequestsComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.payments);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
-      this.displayedColumns = ['name', 'note', 'Accept', 'DisAccept'];
-      // console.log(res)
+      this.displayedColumns = ['client','name', 'note','date', 'Accept'];
+      console.log(res)
     })
   }
   Accept(id) {
@@ -35,9 +35,9 @@ export class PaymentRequestsComponent implements OnInit {
 
     })
   }
-  DisAccept(id) {
-    this.paymentService.DisAccept(id).subscribe(res => {
+  // DisAccept(id) {
+  //   this.paymentService.DisAccept(id).subscribe(res => {
 
-    })
-  }
+  //   })
+  // }
 }
