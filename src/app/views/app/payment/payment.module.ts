@@ -19,10 +19,11 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgxPrintModule } from 'ngx-print';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { PaymentRequestsComponent } from './payment-requests/payment-requests.component';
 
 
 @NgModule({
-  declarations: [PaymentComponent],
+  declarations: [PaymentComponent, PaymentRequestsComponent],
   imports: [
     CommonModule,
     PaymentRoutingModule,
