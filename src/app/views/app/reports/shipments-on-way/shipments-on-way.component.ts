@@ -172,13 +172,19 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.getMoenyPlaced = [{ id: 2, name: "مندوب" }, { id: 4, name: "تم تسليمها/داخل الشركة" }]
     this.total()
   }
+  Agent
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
       this.Agents = res
+      console.log(res)
     })
   }
+  countriesAgent:[]=[]
   ChangeAgentId() {
-    if (this.filtering.AgentId) {
+    if (this.Agent) {
+      this.countriesAgent=[]
+      this.filtering.AgentId=this.Agent.id
+      this.countriesAgent=this.Agent.countries
       this.filtering.OrderplacedId = 3
       if( this.filtering.AgentPrintStartDate )
       this.filtering.AgentPrintStartDate =  formatDate(this.filtering.AgentPrintStartDate , 'MM/dd/yyyy', 'en');

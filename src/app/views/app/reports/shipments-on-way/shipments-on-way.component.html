@@ -5,29 +5,37 @@
   <div class="card-body">
     <h3>كشف شحنات المندوب التي في الطريق </h3>
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-2">
         <label>المندوب</label>
-        <ng-select [(ngModel)]="filtering.AgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Agent"
+        <ng-select [(ngModel)]="Agent" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Agent"
           (change)="ChangeAgentId()">
-          <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
+          <ng-option *ngFor="let Agent of Agents" [value]="Agent">{{Agent.name}}</ng-option>
         </ng-select>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-2">
+        <label>المحافظة</label>
+        <ng-select [(ngModel)]="filtering.CountryId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Country"
+          (change)="ChangeAgentId()">
+          <ng-option *ngFor="let Country of countriesAgent" [value]="Country.id">{{Country.name}}</ng-option>
+        </ng-select>
+      </div>
+      <div class="col-md-2">
         <label> رقم طباعة  شحنات المندوب </label>
         <input type="text" class="form-control" (keyup)="ChangeAgentId()"  [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.AgentPrintNumber">
       </div>
-      <div class="col-md-3">
+      <div class="col-md-2">
         <label> من تاريخ</label>
         <ejs-datepicker name="FromDate" [(ngModel)]='filtering.AgentPrintStartDate' (ngModelChange)="ChangeAgentId()" id="fromdate"
           placeholder='اختر تاريخ'>
         </ejs-datepicker>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-2">
         <label> الى تاريخ</label>
         <ejs-datepicker name="FromDate" [(ngModel)]='filtering.AgentPrintEndDate' (ngModelChange)="ChangeAgentId()" id="fromdate"
           placeholder='اختر تاريخ'>
         </ejs-datepicker>
       </div>
+      
       <div class="col-md-3">
         <button (click)="saveEdit()" class="btn btn-primary"> حفظ</button>&nbsp;
         <button (click)="print()" class="btn btn-primary"> <svg xmlns="http://www.w3.org/2000/svg" width="17"
