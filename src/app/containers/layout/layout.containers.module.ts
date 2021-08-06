@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     FormsModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
+    SimpleNotificationsModule.forRoot(),
+
   ],
   exports: [
     TopnavComponent,

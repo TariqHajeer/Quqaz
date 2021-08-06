@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { UserPermission } from 'src/app/shared/auth.roles';
 import { OrderService } from 'src/app/services/order.service';
+import { NotificationsService, NotificationType } from 'angular2-notifications';
 
 @Component({
   selector: 'app-sidebar',
@@ -33,7 +34,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private localStorageService:LocalStorageService,
-    private orderService:OrderService
+    private orderService:OrderService,
+    private notifications: NotificationsService,
+
   ) {
 
     this.subscription = this.sidebarService.getSidebar().subscribe(
@@ -78,16 +81,24 @@ export class SidebarComponent implements OnInit, OnDestroy {
         window.scrollTo(0, 0);
       });
   }
-countNewOrders
+countNewOrders=0
+newNotfecation=0
 getNewOrders(){
   this.orderService.NewOrderCount().subscribe(res=>{
+    if(this.countNewOrders<res){
+      this.newNotfecation=this.countNewOrders-this.newNotfecation
+      let message=' لديك '+this.newNotfecation+' طلبات جديدة'
+      this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+
+    }
     this.countNewOrders=res
   })
 }
   async ngOnInit() {
+    this.getNewOrders()
     setInterval(() => {
       this.getNewOrders()
-    }, 10000);
+    }, 5000);
     setTimeout(() => {
       this.selectMenu();
       const { containerClassnames } = this.sidebar;
