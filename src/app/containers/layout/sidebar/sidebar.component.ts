@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { UserPermission } from 'src/app/shared/auth.roles';
+import { OrderService } from 'src/app/services/order.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -31,7 +32,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private sidebarService: SidebarService,
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
-    private localStorageService:LocalStorageService
+    private localStorageService:LocalStorageService,
+    private orderService:OrderService
   ) {
 
     this.subscription = this.sidebarService.getSidebar().subscribe(
@@ -76,9 +78,16 @@ export class SidebarComponent implements OnInit, OnDestroy {
         window.scrollTo(0, 0);
       });
   }
-
+countNewOrders
+getNewOrders(){
+  this.orderService.NewOrderCount().subscribe(res=>{
+    this.countNewOrders=res
+  })
+}
   async ngOnInit() {
-
+    setInterval(() => {
+      this.getNewOrders()
+    }, 10000);
     setTimeout(() => {
       this.selectMenu();
       const { containerClassnames } = this.sidebar;

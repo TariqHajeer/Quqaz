@@ -10,6 +10,7 @@ export interface IMenuItem {
   newWindow?: boolean;
   subs?: IMenuItem[];
   permission?: UserPermission[];
+  badge?:boolean
 }
 
 const data: IMenuItem[] = [
@@ -20,6 +21,7 @@ const data: IMenuItem[] = [
     icon: 'iconsminds-box-close',
     label: 'الطلبات',
     to: `${adminRoot}/order`,
+    badge:true,
     subs: [
       {
         icon: 'iconsminds-box-close',

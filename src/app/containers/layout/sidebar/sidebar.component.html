@@ -1,4 +1,4 @@
-<div class="menu" (click)="menuClicked($event)">
+<div class="menu" (click)="menuClicked($event)"> 
     <div class="main-menu">
         <perfect-scrollbar class="scroll" [config]="{suppressScrollX: true}">
             <ul class="list-unstyled">
@@ -7,16 +7,30 @@
 
                             <!-- if the item go to new page -->
                     <a *ngIf="item.newWindow" [href]="item.to" rel="noopener noreferrer" target="_blank">
-                        <i [ngClass]="item.icon" class="text-center"></i>{{item.label | translate}}</a>
+                        <i [ngClass]="item.icon" class="text-center"></i>
+
+                        {{item.label | translate}}
+                        <span class="badge badge-danger"*ngIf="item.badge&&countNewOrders">{{countNewOrders}}</span>
+
+                    </a>
                             <!-- if the item has sub itemes -->
                     <a *ngIf="!item.newWindow && item.subs &&  item.subs.length>0"
                         (click)="openSubMenu($event,item); false" [href]="item.to">
-                        <i [ngClass]="item.icon" class="text-center"></i> {{item.label | translate}}</a>
+                        <i [ngClass]="item.icon" class="text-center"></i>
+                        {{item.label | translate}}
+                        <span class="badge badge-danger"*ngIf="item.badge&&countNewOrders">{{countNewOrders}}</span>
+
+                    </a>
                            
                         <!-- if the item dosnot has sub itemes -->
                     <a *ngIf="!item.newWindow && (!item.subs || (item.subs &&  item.subs.length===0))"
                         (click)="changeSelectedParentHasNoSubmenu(item.to); false" [routerLink]="item.to">
-                        <i [ngClass]="item.icon" class="text-center"></i> {{item.label | translate}}</a>
+                        <i [ngClass]="item.icon" class="text-center"></i> 
+                        {{item.label | translate}}
+                        <span class="badge badge-danger"*ngIf="item.badge&&countNewOrders">{{countNewOrders}}</span>
+
+                    </a>
+                      
                 </li>
             </ul>
         </perfect-scrollbar>
