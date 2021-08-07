@@ -26,15 +26,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   closedCollapseList = [];
 
-  currentUserPermissions :any=JSON.parse(localStorage.getItem(this.permissionlocalStorageKey));
+  currentUserPermissions: any = JSON.parse(localStorage.getItem(this.permissionlocalStorageKey));
 
   constructor(
     private router: Router,
     private sidebarService: SidebarService,
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
-    private localStorageService:LocalStorageService,
-    private orderService:OrderService,
+    private localStorageService: LocalStorageService,
+    private orderService: OrderService,
     private notifications: NotificationsService,
 
   ) {
@@ -81,19 +81,20 @@ export class SidebarComponent implements OnInit, OnDestroy {
         window.scrollTo(0, 0);
       });
   }
-countNewOrders=0
-newNotfecation=0
-getNewOrders(){
-  this.orderService.NewOrderCount().subscribe(res=>{
-    if(this.countNewOrders<res){
-      this.newNotfecation=this.countNewOrders-this.newNotfecation
-      let message=' لديك '+this.newNotfecation+' طلبات جديدة'
-      this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+  countNewOrders = 0
+  newNotfecation = 0
+  getNewOrders() {
+    this.orderService.NewOrderCount().subscribe(res => {
+      if (this.countNewOrders != res) {
+        this.newNotfecation = res - this.countNewOrders
+        let message = ' لديك ' + this.newNotfecation + ' من الطلبات جديدة'
+        if (this.newNotfecation>0)
+          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
 
-    }
-    this.countNewOrders=res
-  })
-}
+      }
+      this.countNewOrders = res
+    })
+  }
   async ngOnInit() {
     this.getNewOrders()
     setInterval(() => {
@@ -320,14 +321,14 @@ getNewOrders(){
     // filter the menu by role
     return menuItems
       ? menuItems.filter(
-          (x) =>
-            !x.permission || (x.permission && this.currentUserPermissions.some(per=>x.permission.includes(per.name))) || this.currentUserPermissions.some(per=>per.name.includes(UserPermission.AllPermissions))
-        )
+        (x) =>
+          !x.permission || (x.permission && this.currentUserPermissions.some(per => x.permission.includes(per.name))) || this.currentUserPermissions.some(per => per.name.includes(UserPermission.AllPermissions))
+      )
       : [];
   }
 
 
-  isMyPermission(pername,pers){
-    return  pers.includes(pername);
-}
+  isMyPermission(pername, pers) {
+    return pers.includes(pername);
+  }
 }
