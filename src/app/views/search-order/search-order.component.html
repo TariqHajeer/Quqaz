@@ -69,10 +69,10 @@
 </div>
 </div>
             
-                    <div class="row" style="color: rgb(23, 78, 151);">
+                    <div class="row car bgimg" *ngIf="orders.length!=0" style="color: rgb(23, 78, 151);">
                         <div class="col-lg-4 " *ngIf="orders.length==1"></div>
-                        <div class="card col-lg-4 col-12" *ngFor="let order of orders" style="margin: 1%;">
-                            <div class="card-body text-center">
+                        <div class=" col-lg-4 col-12" *ngFor="let order of orders" style="margin: 1%;margin-top: 40%;">
+                            <div class=" text-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
                                     class="bi bi-box" viewBox="0 0 16 16">
                                     <path
@@ -89,20 +89,18 @@
                         <div class="col-lg-4 " *ngIf="orders.length==1"></div>
 
                     </div>
-                    <div class="row">
-                      
-                        <div class="col-12 car " >
-                           
-                            <img src="/assets/img/landing-page/vanq.png" width="500px" height="400px">
-                        </div>
-
+                    <div class="row car bgimg"*ngIf="notFound">
+                      <h3 class="flowtext">
+                        لايوجد شحنة لهذا الرقم
+                      </h3>           
+                            <!-- <img src="/assets/img/landing-page/vanq.png" width="500px" height="400px"> -->
                     </div>
                    
-                    <div class="card" *ngIf="notFound">
+                    <!-- <div class="card" *ngIf="notFound">
                         <div class="card-body text-center" style="color: rgb(23, 78, 151);">
                             لايوجد شحنة لهذا الرقم
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
