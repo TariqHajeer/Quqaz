@@ -38,33 +38,37 @@
 
 
             <div class="section home">
-                <div class="container">
+                <div class="container home-row">
+<div class="card justify-content-center">
+<div class="card-body">
+    <div class="row ">
 
-                    <div class="row home-row">
+        <div class="col-md-3 col-5">
+            <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                placeholder="رقم الشحنة" [(ngModel)]="Code" (keyup.enter)="getOrder()">
 
+        </div>
+        <div class="col-md-3 col-5">
+            <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                placeholder="رقم هاتف"
+                oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
+                [(ngModel)]="ClientNumber" (keyup.enter)="getOrder()">
 
-                        <div class="col-md-3 col-5">
-                            <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                                placeholder="رقم الشحنة" [(ngModel)]="Code" (keyup.enter)="getOrder()">
-
-                        </div>
-                        <div class="col-md-3 col-5">
-                            <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                                placeholder="رقم هاتف"
-                                oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
-                                [(ngModel)]="ClientNumber" (keyup.enter)="getOrder()">
-
-                        </div>
-                        <div class="col-1">
-                            <a class="btn" (click)="getOrder()">
-                                <svg style="color: white;" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                    <path
-                                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
+        </div>
+        <div class="col-1">
+            <a class="btn" (click)="getOrder()">
+                <svg style="color: rgb(25, 77, 155);" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                    fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                </svg>
+            </a>
+        </div>
+    
+    </div>
+</div>
+</div>
+            
                     <div class="row" style="color: rgb(23, 78, 151);">
                         <div class="col-lg-4 " *ngIf="orders.length==1"></div>
                         <div class="card col-lg-4 col-12" *ngFor="let order of orders" style="margin: 1%;">
@@ -86,14 +90,14 @@
 
                     </div>
                     <div class="row">
-                        <div class="col-4"></div>
-                        <div class="col-8 car" >
-                            <img src="/assets/img/landing-page/vanq.png">
+                      
+                        <div class="col-12 car " >
+                           
+                            <img src="/assets/img/landing-page/vanq.png" width="500px" height="400px">
                         </div>
 
                     </div>
-             
-
+                   
                     <div class="card" *ngIf="notFound">
                         <div class="card-body text-center" style="color: rgb(23, 78, 151);">
                             لايوجد شحنة لهذا الرقم
