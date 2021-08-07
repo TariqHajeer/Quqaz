@@ -52,6 +52,10 @@ export class SearchOrderComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  open=false
+  isopen(){
+    this.open=!(this.open)
+  }
   Code:string=""
   ClientNumber:string=""
   orders:any[]=[]
