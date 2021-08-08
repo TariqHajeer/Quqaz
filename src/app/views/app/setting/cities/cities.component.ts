@@ -32,12 +32,9 @@ export class CitiesComponent implements OnInit {
   public numericParams: IEditCell;
   ngOnInit(): void {
     this.getCities();
-    this.editSettings = { showDeleteConfirmDialog: false, allowAdding: false, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
+    this.editSettings = { showDeleteConfirmDialog: false, allowAdding: false };
     this.toolbar = [
       { text: 'حذف', tooltipText: 'حذف', prefixIcon: 'e-delete', id: 'normalgrid_delete' },
-      { text: 'تعديل', tooltipText: 'تعديل', prefixIcon: 'e-edit', id: 'normalgrid_edit' },
-      { text: 'حفظ', tooltipText: 'حفظ', prefixIcon: 'e-update', id: 'normalgrid_update' },
-      { text: 'تراجع', tooltipText: 'تراجع', prefixIcon: 'e-cancel', id: 'normalgrid_cancel' },
       'Search'
     ]
     this.filterSettings = { type: "CheckBox" };
@@ -53,10 +50,10 @@ export class CitiesComponent implements OnInit {
 
       }
     };
-    this.selectionSettings = {  type: "Multiple" };
+    this.selectionSettings = { type: "Multiple" };
     this.lines = 'Horizontal';
   }
-  onTrackBy (index) {
+  onTrackBy(index) {
     return index;
   }
   addRegionToCity() {
@@ -68,7 +65,7 @@ export class CitiesComponent implements OnInit {
   }
   setCueerntCity(data) {
     this.currentMode = 'edit'
-    this.city = { name: '', deliveryCost: 0, regions: [] };
+    this.city = new CreateCity
     this.currentId = data.id
     this.city.name = data.name;
     this.city.deliveryCost = Number(data.deliveryCost);
@@ -88,7 +85,7 @@ export class CitiesComponent implements OnInit {
       this.customService.addOrUpdate(this.apiName, this.city, 'add').subscribe(
         res => {
           this.notifications.create('success', 'تم اضافة مدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-          this.city = { name: '', deliveryCost: 0, regions: [] };
+          this.city = new CreateCity
           this.currentMode = '';
           this.cities.push(res);
           this.gridInstance.refresh();
@@ -108,44 +105,44 @@ export class CitiesComponent implements OnInit {
     }
   }
   onActionBegin(args: ActionEventArgs) {
-    if (args.action == "edit") {
-      let name = args.data["name"].trim();
-      if (name == "") {
-        this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
-        args.cancel = true;
-      }
+    // if (args.action == "edit") {
+    //   let name = args.data["name"].trim();
+    //   if (name == "") {
+    //     this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+    //     args.cancel = true;
+    //   }
 
-      if (this.cities.filter(c => c.name == name).length > 1) {
-        this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
-        args.cancel = true;
-      }
-    }
-    if (args.action == "edit") {
-      let name = args.data["name"].trim();
-      let id = args.data["id"];
-      let deliveryCost = args.data["deliveryCost"];
+    //   if (this.cities.filter(c => c.name == name).length > 1) {
+    //     this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+    //     args.cancel = true;
+    //   }
+    // }
+    // if (args.action == "edit") {
+    //   let name = args.data["name"].trim();
+    //   let id = args.data["id"];
+    //   let deliveryCost = args.data["deliveryCost"];
 
-      if (this.cities.filter(c => c.name == name && c.id != id).length > 0) {
-        this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
-        args.cancel = true;
-      }
-      else if (deliveryCost == "" || deliveryCost <= 0) {
+    //   if (this.cities.filter(c => c.name == name && c.id != id).length > 0) {
+    //     this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+    //     args.cancel = true;
+    //   }
+    //   else if (deliveryCost == "" || deliveryCost <= 0) {
 
-        this.notifications.create('', 'خطأ في المبلغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
-        args.cancel = true;
-      }
-      else {
-        var updatedCity= this.cities.filter(c => c.id == id)[0];
-        updatedCity.name =name;
-        updatedCity.deliveryCost =deliveryCost;
-        this.customService.addOrUpdate(this.apiName, { name: name, deliveryCost: deliveryCost, id: id }, "update").subscribe();
-        this.notifications.create('', 'تم تعديل المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-        args.cancel = true;
-         this.gridInstance.refresh();
-      }
-    }
+    //     this.notifications.create('', 'خطأ في المبلغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+    //     args.cancel = true;
+    //   }
+    //   else {
+    //     var updatedCity= this.cities.filter(c => c.id == id)[0];
+    //     updatedCity.name =name;
+    //     updatedCity.deliveryCost =deliveryCost;
+    //     this.customService.addOrUpdate(this.apiName, { name: name, deliveryCost: deliveryCost, id: id }, "update").subscribe();
+    //     this.notifications.create('', 'تم تعديل المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    //     args.cancel = true;
+    //      this.gridInstance.refresh();
+    //   }
+    // }
     if (args.requestType == "delete") {
-      let city = args.data[0] as City;   
+      let city = args.data[0] as City;
 
       if (city.canDeleteWithRegion) {
         if (confirm("سوف يتم حذف المناطق الموجودة ضمن هذه المدينة")) {
@@ -156,6 +153,37 @@ export class CitiesComponent implements OnInit {
         this.notifications.create('', 'لا يمكن الحذف', NotificationType.Error, { timeOut: 6000, showProgressBar: false });
         args.cancel = true;
       }
+    }
+  }
+  editCity: CreateCity = new CreateCity
+  edit(data) {
+  var  city = this.cities.find(c=>c.id==data.id)
+  this.editCity.id=city.id
+  this.editCity.name=city.name
+  this.editCity.mediatorId=city.mediator?city.mediator.id:''
+  this.editCity.deliveryCost=city.deliveryCost
+  this.editCity.regions=city.regions
+
+    // this.editCity.mediatorId=data.mediator.id
+    console.log(data)
+  }
+  save() {
+
+    if (this.cities.filter(c => c.name == this.editCity.name && c.id != this.editCity.id).length > 0) {
+      this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+      return
+    }
+    else if (!this.editCity.deliveryCost || this.editCity.deliveryCost <= 0) {
+
+      this.notifications.create('', 'خطأ في المبلغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+      return
+    }
+    else {
+      this.customService.addOrUpdate(this.apiName, this.editCity, "update").subscribe();
+      this.notifications.create('', 'تم تعديل المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.editCity=new CreateCity
+      this.gridInstance.refresh();
+
     }
   }
   deldetRegionFromCity(i) {
@@ -172,6 +200,7 @@ export class CitiesComponent implements OnInit {
     this.customService.getAll(this.apiName).subscribe(
       res => {
         this.cities = res;
+        console.log(res)
       }
     )
   }
