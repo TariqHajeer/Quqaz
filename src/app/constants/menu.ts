@@ -254,14 +254,14 @@ const data: IMenuItem[] = [
       },
       {
         icon: 'iconsminds-box-close',
-        label: 'طلبات دفع العملاء ',
+        label: 'طلبات دفع العملاءالجديدة ',
         to: `${adminRoot}/payment/paymentrequest/`,
         //permission:[UserPermission.ShowOrder]
 
       },
       {
         icon: 'iconsminds-box-close',
-        label: 'طلبات دفع العملاءالقديمة ',
+        label: 'طلبات دفع العملاء ',
         to: `${adminRoot}/payment/oldpaymentrequest/`,
         //permission:[UserPermission.ShowOrder]
 
