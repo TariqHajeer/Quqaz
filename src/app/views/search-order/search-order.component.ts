@@ -86,7 +86,7 @@ export class SearchOrderComponent implements OnInit {
           this.multiordercar = true
         else
           this.multiordercar = false
-      }, 1500);
+      }, 1200);
       // if(!this.ClientNumber&&this.orders.length>1)
       // this.orders=[]
       // else this.orders=res
@@ -112,7 +112,7 @@ export class SearchOrderComponent implements OnInit {
       this.orders = []
       this.Code = ""
       this.ClientNumber = ""
-    }, 1500);
+    }, 1200);
   }
   home() {
     this.router.navigate(['/home'])
