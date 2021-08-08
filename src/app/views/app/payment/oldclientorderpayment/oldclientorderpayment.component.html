@@ -7,12 +7,12 @@
             <label> الرقم</label>
             <input type="text" 
             class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Id"
-            (ngModelChange)="GetPayment()">
+            (ngModelChange)="GetOldPayment()">
           </div>
         <div class="col-md-2">
             <label> العميل</label>
             <ng-select [(ngModel)]="filtering.ClientId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-            (ngModelChange)="GetPayment()">
+            (ngModelChange)="GetOldPayment()">
               <ng-option *ngFor="let client of clients" [value]="client.id">{{client.name}}
               </ng-option>
             </ng-select>
@@ -20,7 +20,7 @@
           <div class="col-md-2">
             <label> طريقة الدفع</label>
             <ng-select [(ngModel)]="filtering.PaymentWayId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-            (ngModelChange)="GetPayment()">
+            (ngModelChange)="GetOldPayment()">
               <ng-option *ngFor="let payment of payments" [value]="payment.id">{{payment.name}}
               </ng-option>
             </ng-select>
@@ -29,12 +29,12 @@
           <div class="col-md-2">
             <label> التاريخ</label>
             <input type="date" class="form-control" [ngModelOptions]="{standalone: true}"
-            [(ngModel)]="filtering.CreateDate" (ngModelChange)="GetPayment()">
+            [(ngModel)]="filtering.CreateDate" (ngModelChange)="GetOldPayment()">
           </div>
           <div class="col-md-2">
             <label> الحالة</label>
             <ng-select [(ngModel)]="filtering.Accept" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-            (ngModelChange)="GetPayment()">
+            (ngModelChange)="GetOldPayment()">
               <ng-option  [value]="true">
                   مقبول
               </ng-option>
