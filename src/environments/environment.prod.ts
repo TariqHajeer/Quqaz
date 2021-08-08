@@ -6,7 +6,7 @@ import { UserPermission } from '../app/shared/auth.roles';
 export const environment = {
   production: true,
   baseUrl: "https://backend.quqaz.com/",
-  clientApp:"http://client.quqaz.com",
+  clientApp:"https://client.quqaz.com",
   SCARF_ANALYTICS: false,
   adminRoot: '/',
   apiUrl: 'https://api.coloredstrategies.com',
