@@ -44,7 +44,8 @@ export class OldclientorderpaymentComponent implements OnInit {
   }
   GetOldPayment() {
     this.PaymentRequestService.GetOldPayment(this.filtering,this.paging).subscribe(res => {
-      this.oldpayments = res
+      this.oldpayments = res.data
+      this.totalCount=res.total
       this.dataSource = new MatTableDataSource(this.oldpayments);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
