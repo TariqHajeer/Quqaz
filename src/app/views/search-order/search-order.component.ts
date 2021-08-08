@@ -60,9 +60,11 @@ export class SearchOrderComponent implements OnInit {
   ClientNumber:string=""
   orders:any[]=[]
   notFound=false
+  formVisble=true
   getOrder() {
     console.log( this.ClientNumber)
     this.homeService.TrackOrder(this.Code, this.ClientNumber).subscribe(res => {
+      this.formVisble=false
       this.orders = res
       if(!this.ClientNumber&&this.orders.length>1)
       this.orders=[]
@@ -72,7 +74,18 @@ export class SearchOrderComponent implements OnInit {
       else
       this.notFound=false
       console.log(res)
+    },
+    err=>{
+      this.formVisble=true
+      this.notFound=false
     })
+  }
+  more(){
+    this.formVisble=true
+    this.notFound=false
+    this.orders=[]
+    this.Code=""
+    this.ClientNumber=""
   }
   home() {
     this.router.navigate(['/home'])
