@@ -1,0 +1,92 @@
+
+<div class="card">
+    <div class="card-body">
+        <h2>طلبات دفع العملاء القديمة</h2>
+    <div class="row">
+        <div class="col-md-2">
+            <label> الرقم</label>
+            <input type="text" 
+            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Id"
+            (ngModelChange)="GetPayment()">
+          </div>
+        <div class="col-md-2">
+            <label> العميل</label>
+            <ng-select [(ngModel)]="filtering.ClientId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+            (ngModelChange)="GetPayment()">
+              <ng-option *ngFor="let client of clients" [value]="client.id">{{client.name}}
+              </ng-option>
+            </ng-select>
+          </div>
+          <div class="col-md-2">
+            <label> طريقة الدفع</label>
+            <ng-select [(ngModel)]="filtering.PaymentWayId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+            (ngModelChange)="GetPayment()">
+              <ng-option *ngFor="let payment of payments" [value]="payment.id">{{payment.name}}
+              </ng-option>
+            </ng-select>
+          </div>
+       
+          <div class="col-md-2">
+            <label> التاريخ</label>
+            <input type="date" class="form-control" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="filtering.CreateDate" (ngModelChange)="GetPayment()">
+          </div>
+          <div class="col-md-2">
+            <label> الحالة</label>
+            <ng-select [(ngModel)]="filtering.Accept" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+            (ngModelChange)="GetPayment()">
+              <ng-option  [value]="true">
+                  مقبول
+              </ng-option>
+              <ng-option  [value]="false">
+                  مرفوض
+            </ng-option>
+            </ng-select>
+          </div>
+    </div>
+        <div class="example-container mat-elevation-z8">
+            
+            <table mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> # </th>
+                    <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.id}}</td>
+                </ng-container>
+                <ng-container matColumnDef="client">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> العميل</th>
+                    <td mat-cell *matCellDef="let element" >
+                        {{element.client.name}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> طريقة الدفع </th>
+                    <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.paymentWay.name}}</td>
+                </ng-container>
+                <ng-container matColumnDef="state">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> الحالة </th>
+                    <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.accept?'مقبول': 'مرفوض'}}</td>
+                </ng-container>
+                <ng-container matColumnDef="note">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ملاحظات </th>
+                    <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.note}}</td>
+                </ng-container>
+                <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> التاريخ</th>
+                    <td mat-cell *matCellDef="let element" >
+                        {{element.createDate| date: 'yyyy/MM/dd'}}
+                    </td>
+                </ng-container>
+           
+              
+  
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+  
+  
+            <h5 style="padding-top: 20px; padding-right: 10px;" *ngIf="payments.length==0">  لايوجد بيانات للعرض</h5>
+  
+        </div>
+    </div>
+  </div>
+  <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
+  [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>

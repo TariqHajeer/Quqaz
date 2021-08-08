@@ -259,6 +259,13 @@ const data: IMenuItem[] = [
         //permission:[UserPermission.ShowOrder]
 
       },
+      {
+        icon: 'iconsminds-box-close',
+        label: 'طلبات دفع العملاءالقديمة ',
+        to: `${adminRoot}/payment/oldpaymentrequest/`,
+        //permission:[UserPermission.ShowOrder]
+
+      },
 
       
     ],

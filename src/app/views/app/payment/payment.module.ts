@@ -20,10 +20,11 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgxPrintModule } from 'ngx-print';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { PaymentRequestsComponent } from './payment-requests/payment-requests.component';
+import { OldclientorderpaymentComponent } from './oldclientorderpayment/oldclientorderpayment.component';
 
 
 @NgModule({
-  declarations: [PaymentComponent, PaymentRequestsComponent],
+  declarations: [PaymentComponent, PaymentRequestsComponent, OldclientorderpaymentComponent],
   imports: [
     CommonModule,
     PaymentRoutingModule,

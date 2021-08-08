@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/auth.guard';
 import { UserPermission } from 'src/app/shared/auth.roles';
+import { OldclientorderpaymentComponent } from './oldclientorderpayment/oldclientorderpayment.component';
 import { PaymentRequestsComponent } from './payment-requests/payment-requests.component';
 import { PaymentComponent } from './payment.component';
 
@@ -15,6 +16,11 @@ const routes: Routes = [
   {
     path:'paymentrequest',
     component:PaymentRequestsComponent ,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder,UserPermission.AddOrder]}
+  },
+  {
+    path:'oldpaymentrequest',
+    component:OldclientorderpaymentComponent ,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowOrder,UserPermission.AddOrder]}
   },
 ];
