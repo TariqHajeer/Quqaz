@@ -20,7 +20,7 @@ export class OldclientorderpaymentComponent implements OnInit {
     private PaymentRequestService:PaymentRequestService,
     private clientService: ClientService
     ) { }
-  displayedColumns: string[]=  ['id','client', 'name','state', 'note', 'date'];
+  displayedColumns: string[]=  ['id','client', 'name','state', 'date', 'note'];
   dataSource
   payments: [] = []
   oldpayments: [] = []
