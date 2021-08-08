@@ -102,12 +102,13 @@ export class SearchOrderComponent implements OnInit {
   }
   more() {
     this.carback = true
+    this.formVisble = false
+    this.notFound = false
+    this.multiordercar = false
+    this.showordercar = false
     setTimeout(() => {
       this.formVisble = true
-      this.notFound = false
       this.carback = false
-      this.multiordercar = false
-      this.showordercar = false
       this.orders = []
       this.Code = ""
       this.ClientNumber = ""
