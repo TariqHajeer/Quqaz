@@ -65,11 +65,15 @@ export class SearchOrderComponent implements OnInit {
   showordercar=false
   multiordercar=false
   getOrder() {
+    this.formVisble=false
+    this.notFound=false
+    this.carback=true
+    this.multiordercar=false
+    this.showordercar=false
     this.homeService.TrackOrder(this.Code, this.ClientNumber).subscribe(res => {
-      this.formVisble=false
       this.orders = res
-      this.carback=true
       setTimeout(() => {
+        this.carback=false
         if(this.orders.length==0)
         this.notFound=true
         else
@@ -82,7 +86,6 @@ export class SearchOrderComponent implements OnInit {
         this.multiordercar=true
         else
         this.multiordercar=false
-        this.carback=false
       }, 1500);
       // if(!this.ClientNumber&&this.orders.length>1)
       // this.orders=[]
