@@ -66,9 +66,9 @@ export class SearchOrderComponent implements OnInit {
     this.homeService.TrackOrder(this.Code, this.ClientNumber).subscribe(res => {
       this.formVisble=false
       this.orders = res
-      if(!this.ClientNumber&&this.orders.length>1)
-      this.orders=[]
-      else this.orders=res
+      // if(!this.ClientNumber&&this.orders.length>1)
+      // this.orders=[]
+      // else this.orders=res
       if(this.orders.length==0)
       this.notFound=true
       else
