@@ -52,65 +52,65 @@ export class SearchOrderComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  open=false
-  isopen(){
-    this.open=!(this.open)
+  open = false
+  isopen() {
+    this.open = !(this.open)
   }
-  Code:string=""
-  ClientNumber:string=""
-  orders:any[]=[]
-  notFound=false
-  formVisble=true
-  carback=false
-  showordercar=false
-  multiordercar=false
+  Code: string = ""
+  ClientNumber: string = ""
+  orders: any[] = []
+  notFound = false
+  formVisble = true
+  carback = false
+  showordercar = false
+  multiordercar = false
   getOrder() {
-    this.formVisble=false
-    this.notFound=false
-    this.carback=true
-    this.multiordercar=false
-    this.showordercar=false
+    this.formVisble = false
+    this.notFound = false
+    this.carback = true
+    this.multiordercar = false
+    this.showordercar = false
     this.homeService.TrackOrder(this.Code, this.ClientNumber).subscribe(res => {
       this.orders = res
       setTimeout(() => {
-        this.carback=false
-        if(this.orders.length==0)
-        this.notFound=true
+        this.carback = false
+        if (this.orders.length == 0)
+          this.notFound = true
         else
-        this.notFound=false
-        if(this.orders.length==1)
-        this.showordercar=true
+          this.notFound = false
+        if (this.orders.length == 1)
+          this.showordercar = true
         else
-        this.showordercar=false
-        if(this.orders.length>1)
-        this.multiordercar=true
+          this.showordercar = false
+        if (this.orders.length > 1)
+          this.multiordercar = true
         else
-        this.multiordercar=false
+          this.multiordercar = false
       }, 1500);
       // if(!this.ClientNumber&&this.orders.length>1)
       // this.orders=[]
       // else this.orders=res
     },
-    err=>{
-      this.formVisble=true
-      this.notFound=false
-      this.carback=false
-      this.multiordercar=false
-      this.showordercar=false
+      err => {
+        this.formVisble = true
+        this.notFound = false
+        this.carback = false
+        this.multiordercar = false
+        this.showordercar = false
 
-    })
+      })
   }
-  more(){
-   
-    this.carback=true
+  more() {
+    this.carback = true
     setTimeout(() => {
-      this.formVisble=true
-    this.notFound=false
-    this.orders=[]
-    this.Code=""
-    this.ClientNumber=""
-    this.carback=false
-
+      this.formVisble = true
+      this.notFound = false
+      this.carback = false
+      this.multiordercar = false
+      this.showordercar = false
+      this.orders = []
+      this.Code = ""
+      this.ClientNumber = ""
     }, 1500);
   }
   home() {
