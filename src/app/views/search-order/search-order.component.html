@@ -42,7 +42,7 @@
 
                     <div class="car bgimg" *ngIf="formVisble">
                         <div class=" row">
-                            <div class="col-2" style="margin-right: 30%;margin-top: 40%;">
+                            <div class="col-2" style="margin-right:40%;margin-top: 40%;">
                                 <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                                     placeholder="رقم الشحنة" [(ngModel)]="Code" (keyup.enter)="getOrder()">
 
@@ -95,7 +95,7 @@
 
                     <div class="row car bgimg" *ngIf="orders.length==1" style="color: rgb(23, 78, 151);">
                         <div class="col-lg-4 " ></div>
-                        <div class=" col-lg-4 col-12" *ngFor="let order of orders" style="margin: 1%;margin-top: 40%;">
+                        <div class=" col-lg-4 col-12" *ngFor="let order of orders" style="margin: 1%;margin-top: 35%;">
                             <div class=" text-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
                                     class="bi bi-box" viewBox="0 0 16 16">
@@ -108,7 +108,7 @@
                                 {{order.cost|number}}
                                 <br>
                                 {{order.orderplaced.name}}
-                                <br>
+                                <br><br>
                                 <button class="btn btn-primary" (click)="more()">البحث عن المزيد</button>
                             </div>
                         </div>
@@ -116,9 +116,9 @@
 
                     </div>
                     <div class="row car bgimg" *ngIf="notFound">
-                        <h3 class="flowtext">
+                        <h3 class="flowtext text-center">
                             لايوجد شحنة لهذا الرقم
-                            <br>
+                            <br><br>
                             <button class="btn btn-primary" (click)="more()">البحث عن المزيد</button>
                         </h3>
                         <!-- <img src="/assets/img/landing-page/vanq.png" width="500px" height="400px"> -->
