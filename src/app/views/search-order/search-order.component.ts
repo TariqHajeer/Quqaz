@@ -61,31 +61,54 @@ export class SearchOrderComponent implements OnInit {
   orders:any[]=[]
   notFound=false
   formVisble=true
+  carback=false
+  showordercar=false
+  multiordercar=false
   getOrder() {
-    console.log( this.ClientNumber)
     this.homeService.TrackOrder(this.Code, this.ClientNumber).subscribe(res => {
       this.formVisble=false
       this.orders = res
+      this.carback=true
+      setTimeout(() => {
+        if(this.orders.length==0)
+        this.notFound=true
+        else
+        this.notFound=false
+        if(this.orders.length==1)
+        this.showordercar=true
+        else
+        this.showordercar=false
+        if(this.orders.length>1)
+        this.multiordercar=true
+        else
+        this.multiordercar=false
+        this.carback=false
+      }, 1500);
       // if(!this.ClientNumber&&this.orders.length>1)
       // this.orders=[]
       // else this.orders=res
-      if(this.orders.length==0)
-      this.notFound=true
-      else
-      this.notFound=false
-      console.log(res)
     },
     err=>{
       this.formVisble=true
       this.notFound=false
+      this.carback=false
+      this.multiordercar=false
+      this.showordercar=false
+
     })
   }
   more(){
-    this.formVisble=true
+   
+    this.carback=true
+    setTimeout(() => {
+      this.formVisble=true
     this.notFound=false
     this.orders=[]
     this.Code=""
     this.ClientNumber=""
+    this.carback=false
+
+    }, 1500);
   }
   home() {
     this.router.navigate(['/home'])

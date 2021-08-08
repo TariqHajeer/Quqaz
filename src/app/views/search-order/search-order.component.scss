@@ -31,3 +31,24 @@
 input{
   border-radius: 20px;
 }
+.carback {
+  width: 1000px;
+  height: 700px;
+  position: relative;
+  animation-name: back;
+  animation-duration: 2s;
+  animation-direction: alternate-reverse;
+  text-align: center;
+  margin-top: 0;
+}
+@keyframes back {
+  from {
+    left:80%;
+    top: 0%;
+  }
+
+  to {
+    left:0%;
+    top: 0%;
+  }
+}

@@ -66,7 +66,7 @@
 
                         </div>
                     </div>
-                    <div class="car bgimg" *ngIf="orders.length>1" >
+                    <div class="car bgimg" *ngIf="multiordercar" >
                         <div class=" row">
                             <div class="col-2" style="margin-right: 30%;margin-top: 40%;">
                                 <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
@@ -93,7 +93,9 @@
                         </div>
                     </div>
 
-                    <div class="row car bgimg" *ngIf="orders.length==1" style="color: rgb(23, 78, 151);">
+                    <div class="carback bgimg" *ngIf="carback">
+                    </div>
+                    <div class="row car bgimg" *ngIf="showordercar" style="color: rgb(23, 78, 151);">
                         <div class="col-lg-4 " ></div>
                         <div class=" col-lg-4 col-12" *ngFor="let order of orders" style="margin: 1%;margin-top: 35%;">
                             <div class=" text-center">
@@ -124,11 +126,6 @@
                         <!-- <img src="/assets/img/landing-page/vanq.png" width="500px" height="400px"> -->
                     </div>
 
-                    <!-- <div class="card" *ngIf="notFound">
-                        <div class="card-body text-center" style="color: rgb(23, 78, 151);">
-                            لايوجد شحنة لهذا الرقم
-                        </div>
-                    </div> -->
                 </div>
             </div>
 
