@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuard } from '../shared/auth.guard';
 import { NoconnectionComponent } from './noconnection/noconnection.component';
 import { SearchOrderComponent } from './search-order/search-order.component';
+import { ClientHomeComponent } from './client-home/client-home.component';
 
 
 let routes = [
@@ -24,6 +25,11 @@ let routes = [
     {
       path: 'searchOrder',
       component: SearchOrderComponent,
+      pathMatch: 'full',
+    },
+    {
+      path: 'clientHome',
+      component: ClientHomeComponent,
       pathMatch: 'full',
     },
     {

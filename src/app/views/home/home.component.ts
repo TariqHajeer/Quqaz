@@ -269,4 +269,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   goToOrder(){
     this.router.navigate(['/searchOrder'])
   }
+  clientHome(){
+    this.router.navigate(['/clientHome'])
+  }
 }

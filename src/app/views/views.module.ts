@@ -15,8 +15,9 @@ import { AuthGuard } from '../shared/auth.guard';
 import { NoconnectionComponent } from './noconnection/noconnection.component';
 import { SearchOrderComponent } from './search-order/search-order.component';
 import { FormsModule } from '@angular/forms';
+import { ClientHomeComponent } from './client-home/client-home.component';
 @NgModule({
-  declarations: [HomeComponent, NoconnectionComponent, SearchOrderComponent],
+  declarations: [HomeComponent, NoconnectionComponent, SearchOrderComponent, ClientHomeComponent],
   imports: [
     CommonModule,
     ViewRoutingModule,
