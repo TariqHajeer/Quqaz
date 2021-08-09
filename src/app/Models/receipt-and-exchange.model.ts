@@ -9,6 +9,7 @@ export class ReceiptAndExchange {
     Manager: string
     client: Client
     ClinetId:number
+    clientName
     date:Date
     Note:string
     //يعني اذا صرف او قبض
