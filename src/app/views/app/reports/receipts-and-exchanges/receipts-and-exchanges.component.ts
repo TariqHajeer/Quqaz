@@ -21,7 +21,7 @@ export class ReceiptsAndExchangesComponent implements OnInit {
     public receptservice: ReciptService,
     public sanitizer: DomSanitizer,) { }
   dataSource
-  displayedColumns: string[] = ['printId','clientName', 'amount', 'isPay', 'about'
+  displayedColumns: string[] = ['printId','id','clientName', 'amount', 'isPay', 'about'
     , 'date',  'manager', 'createdBy', 'note', 'delete'];
   noDataFound: boolean = false
   @Input() totalCount: number;
