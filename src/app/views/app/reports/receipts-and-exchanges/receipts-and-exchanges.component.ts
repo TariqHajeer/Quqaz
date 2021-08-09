@@ -44,6 +44,7 @@ export class ReceiptsAndExchangesComponent implements OnInit {
     else if (this.exchange == true)
       this.filter.IsPay = true
     this.receptservice.GetAccount(this.paging, this.filter).subscribe(res => {
+      console.log(res)
       res.data.forEach(e => {
         e.date = e.date.split('T')[0];
       });
