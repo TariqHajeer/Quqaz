@@ -27,11 +27,11 @@
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" (onPageSwitch)="switchPage($event)">
     <ng-container matColumnDef="printId">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> رقم الطباعة </th>
-      <td mat-cell *matCellDef="let element" style="padding-right: 10px;">
-        <a class="btn" style="color: rgb(2, 52, 128);" (click)="print()">
+      <td mat-cell *matCellDef="let element;index as i" style="padding-right: 10px;">
+        <a class="btn" style="color: rgb(2, 52, 128);" (click)="print(i)">
           {{element.printNumber}}
         </a>
-        <div id="contentToConvert" [hidden]="true">
+        <div id="contentToConvert-{{i}}"[hidden]="true">
           <div class="card" style=" width: 100%;
               font-size: 18px;direction: rtl;text-align: right;" >
             <div class="card-body">
