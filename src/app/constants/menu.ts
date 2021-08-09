@@ -11,6 +11,7 @@ export interface IMenuItem {
   subs?: IMenuItem[];
   permission?: UserPermission[];
   badge?:boolean
+  badgeLable?
 }
 
 const data: IMenuItem[] = [
@@ -235,6 +236,7 @@ const data: IMenuItem[] = [
     icon: 'simple-icon-people',
     label: 'menu.clients',
     to: `${adminRoot}/client`,
+    badge:true,
     subs: [
      
 
