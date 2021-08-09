@@ -159,6 +159,8 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
+    // console.log(this.orderplace)
+    this.orderplace=this.orderplace.filter(op => this.orders.filter(o=>o.orderplaced.id==op.id).length>0)
     localStorage.setItem('printclientorderplaced', JSON.stringify(this.orderplace))
     localStorage.setItem('printordersclient', JSON.stringify(this.orders))
     localStorage.setItem('printclient', JSON.stringify(this.Clients.find(c => c.id == this.ClientId)))
