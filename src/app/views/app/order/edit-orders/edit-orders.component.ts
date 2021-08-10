@@ -417,4 +417,10 @@ export class EditOrdersComponent implements OnInit {
 
     }, 10);
   }
+  printagent(number){
+    this.router.navigate(['/app/reports/agentprintnumber/', number])
+  }
+  printclient(number){
+    this.router.navigate(['/app/reports/clientprintnumber/', number])
+  }
 }
