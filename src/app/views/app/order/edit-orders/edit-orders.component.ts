@@ -401,7 +401,7 @@ export class EditOrdersComponent implements OnInit {
   }
   print() {
     var divToPrint = document.getElementById('contentToConvert');
-    var css = '@page { size: A5 landscape ;margin:0;}',
+    var css = '@page { size: A5 landscape ;margin:0;color-adjust: exact;-webkit-print-color-adjust: exact;}',
       style = document.createElement('style');
     style.type = 'text/css';
     style.media = 'print';

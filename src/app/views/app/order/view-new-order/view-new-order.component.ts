@@ -94,7 +94,7 @@ export class ViewNewOrderComponent implements OnInit {
   print(i) {
     console.log(this.order)
     var divToPrint = document.getElementById('contentToConvert-' + i);
-    var css = '@page { size: A5 landscape ;margin: 0;}',
+    var css = '@page { size: A5 landscape ;margin: 0;color-adjust: exact;-webkit-print-color-adjust: exact;}',
       style = document.createElement('style');
     style.type = 'text/css';
     style.media = 'print';

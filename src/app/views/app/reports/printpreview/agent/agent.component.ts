@@ -105,7 +105,7 @@ export class AgentComponent implements OnInit {
   }
   print() {
     var divToPrint = document.getElementById('contentToConvert');
-    var css = '@page { size: A4 landscape;} @media print {table{margin-bottom:10%;}}',
+    var css = '@page { size: A4 landscape;color-adjust: exact;-webkit-print-color-adjust: exact;} @media print {table{margin-bottom:10%;}}',
       style = document.createElement('style');
     style.type = 'text/css';
     style.media = 'print';
