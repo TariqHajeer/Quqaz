@@ -1,6 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { HomeService } from 'src/app/client-pages/service/home.service';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -72,6 +73,7 @@ export class SearchOrderComponent implements OnInit {
     this.showordercar = false
     this.homeService.TrackOrder(this.Code, this.ClientNumber).subscribe(res => {
       this.orders = res
+      console.log(res)
       setTimeout(() => {
         this.carback = false
         if (this.orders.length == 0)
@@ -117,4 +119,5 @@ export class SearchOrderComponent implements OnInit {
   home() {
     this.router.navigate(['/home'])
   }
+ 
 }

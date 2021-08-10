@@ -2,13 +2,12 @@
  <button printSectionId="demo"
  styleSheetFile="/assets/css/vendor/bootstrap.min.css"[useExistingCss]="true"                                 
  ngxPrint>print page</button>-->
- <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff"
- type = "ball-pulse" [fullScreen] = "true">
-    <p style="color: white" > </p>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-pulse" [fullScreen]="true">
+    <p style="color: white"> </p>
 </ngx-spinner>
 <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4">
     <mat-tab label="تعديل الطلب">
-        <form (ngSubmit)="AddOrder()"*ngIf="show">
+        <form (ngSubmit)="AddOrder()" *ngIf="show">
 
             <div class="card">
                 <div class="card-body">
@@ -431,9 +430,9 @@
             </div>
             <simple-notifications></simple-notifications>
         </form>
-      
+
         <div class="example-container mat-elevation-z8">
-            <div class="col-12" >
+            <div class="col-12">
                 <h3 style="text-align: center;color: rgb(24, 51, 109);">عمليات التعديل</h3>
             </div>
             <table mat-table [dataSource]="dataSource" matSort>
@@ -588,9 +587,74 @@
             <app-receipt-new-orders [order]="order" id="contentToConvert" *ngIf="show"></app-receipt-new-orders>
         </div>
     </mat-tab>
-    <!-- <mat-tab label="Third">
-        الوصل
-    </mat-tab> -->
+    <mat-tab label="عمليات طباعة المندوب  ">
+        <div class="row card">
+            <div class="col-12">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <th>رقم الطباعة</th>
+                            <th>المندوب</th>
+                            <th>المسؤول عن الطباعة</th>
+                            <th>تاريخ الطباعة</th>
+                            <th>الهاتف</th>
+
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let print of editorder.agentPrint">
+                                <td>
+                                    <a class="btn" style="color: rgb(2, 52, 128);" (click)="printagent(print.printNmber)">
+                                        {{print.printNmber}}
+                                    </a>   
+                                </td>
+                                <td>{{print.destinationName}}</td>
+                                <td>{{print.printerName}}</td>
+                                <td>{{print.date}}</td>
+                                <td>{{print.destinationPhone}}</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </mat-tab>
+    <mat-tab label="عمليات طباعة العميل  ">
+        <div class="row card">
+            <div class="col-12">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <th>رقم الطباعة</th>
+                            <th>العميل</th>
+                            <th>المسؤول عن الطباعة</th>
+                            <th>تاريخ الطباعة</th>
+                            <th>الهاتف</th>
+
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let print of editorder.clientPrint">
+                                <td>
+                                    <a class="btn" style="color: rgb(2, 52, 128);" (click)="printclient(print.printNmber)">
+                                        {{print.printNmber}}
+                                    </a>   
+                                </td>
+                                <td>{{print.destinationName}}</td>
+                                <td>{{print.printerName}}</td>
+                                <td>{{print.date}}</td>
+                                <td>{{print.destinationPhone}}</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </mat-tab>
 </mat-tab-group>
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-pulse" [fullScreen]="true">
     <p style="color: white"> </p>
