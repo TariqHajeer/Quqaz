@@ -10,7 +10,7 @@
                         <i [ngClass]="item.icon" class="text-center"></i>
 
                         {{item.label | translate}}
-                        <span class="badge badge-danger"*ngIf="item.badge&&countNewOrders">{{countNewOrders}}</span>
+                        <span class="badge badge-danger"*ngIf="item.badge">{{item.badgeLable}}</span>
 
                     </a>
                             <!-- if the item has sub itemes -->
@@ -18,7 +18,7 @@
                         (click)="openSubMenu($event,item); false" [href]="item.to">
                         <i [ngClass]="item.icon" class="text-center"></i>
                         {{item.label | translate}}
-                        <span class="badge badge-danger"*ngIf="item.badge&&countNewOrders">{{countNewOrders}}</span>
+                        <span class="badge badge-danger"*ngIf="item.badge">{{item.badgeLable}}</span>
 
                     </a>
                            
@@ -27,7 +27,7 @@
                         (click)="changeSelectedParentHasNoSubmenu(item.to); false" [routerLink]="item.to">
                         <i [ngClass]="item.icon" class="text-center"></i> 
                         {{item.label | translate}}
-                        <span class="badge badge-danger"*ngIf="item.badge&&countNewOrders">{{countNewOrders}}</span>
+                        <span class="badge badge-danger"*ngIf="item.badge">{{item.badgeLable}}</span>
 
                     </a>
                       

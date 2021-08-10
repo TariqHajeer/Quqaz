@@ -9,6 +9,7 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { UserPermission } from 'src/app/shared/auth.roles';
 import { OrderService } from 'src/app/services/order.service';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
+import { PaymentRequestService } from 'src/app/services/payment-request.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -36,6 +37,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private localStorageService: LocalStorageService,
     private orderService: OrderService,
     private notifications: NotificationsService,
+    private paymentService: PaymentRequestService
 
   ) {
 
@@ -88,17 +90,33 @@ export class SidebarComponent implements OnInit, OnDestroy {
       if (this.countNewOrders != res) {
         this.newNotfecation = res - this.countNewOrders
         let message = ' لديك ' + this.newNotfecation + ' من الطلبات جديدة'
-        if (this.newNotfecation>0)
+        if (this.newNotfecation > 0)
           this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
 
       }
       this.countNewOrders = res
     })
   }
+  countPayment = 0
+  newpayment = 0
+  newPaymentOrders() {
+    this.paymentService.Get().subscribe(res => {
+      if (this.countPayment != res.length) {
+        this.newpayment = res.length - this.countPayment
+        let message = ' لديك ' + this.newpayment + ' من طلبات دفع العملاء الجديدة'
+        if (this.newpayment > 0)
+          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+
+      }
+      this.countPayment = res.length
+    })
+  }
   async ngOnInit() {
     this.getNewOrders()
+    this.newPaymentOrders()
     setInterval(() => {
       this.getNewOrders()
+      this.newPaymentOrders()
     }, 5000);
     setTimeout(() => {
       this.selectMenu();
@@ -318,6 +336,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   filteredMenuItems(menuItems: IMenuItem[]) {
+    if(menuItems)
+    menuItems.forEach(item => {
+      if (item.to == "/app/client" && item.badge) {
+        item.badgeLable=this.countPayment
+      }
+      if (item.to == "/app/order" && item.badge) {
+        item.badgeLable=this.countNewOrders
+      }
+    })
     // filter the menu by role
     return menuItems
       ? menuItems.filter(
