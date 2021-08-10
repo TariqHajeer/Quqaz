@@ -82,8 +82,6 @@ noDataFound: boolean = false
 @Input() totalCount: number;
 
 ngOnInit(): void {
-  localStorage.removeItem('printordersagent')
-  localStorage.removeItem('printagent')
   this.getAgent()
   //this.GetorderPlace()
   this.paging = new Paging
@@ -137,23 +135,13 @@ allFilter() {
 }
 agent=this.orders.map(o=>o.agent)[0]
 orderplaced=this.orders.map(o=>o.orderplaced)[0]
-print() {
+move() {
   if ( this.noDataFound == true || this.orders.length==0) {
     this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
     return
   }
-  localStorage.setItem('printagent',JSON.stringify(this.Agents.find(c=>c.id==this.AgentId)))
-
-  localStorage.setItem('printordersagent',JSON.stringify(this.orders))
-  this.route.navigate(['app/reports/printagentpreview'])
  
 }
-afterPrint() {
-  this.orderservice.MakeOrderInWay(this.orders.map(o=>o.id)).subscribe(res=>{
-    this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-    this.orders=[]
-    this.allFilter()
-  })
-}     
+    
 
 }
