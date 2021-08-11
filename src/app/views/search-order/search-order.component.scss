@@ -1,4 +1,5 @@
 .car {
+  
   width: 1000px;
   height: 700px;
   position: relative;
@@ -32,6 +33,7 @@ input{
   border-radius: 20px;
 }
 .carback {
+  
   width: 1000px;
   height: 700px;
   position: relative;
@@ -57,4 +59,24 @@ color: rgb(216, 3, 3);
 }
 .defult{
   color: rgb(23, 78, 151);
+}
+.bghome{
+  background-image: url(/assets/img/landing-page/city.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+}
+.sizeCar{
+  .col-md-12{
+    width: 700px;
+    height: 600px;
+  }
+  .col-lg-12{
+    width: 1000px;
+    height: 700px;
+  }
+  .col-12{
+    width: 500px;
+    height: 500px;
+  }
 }
