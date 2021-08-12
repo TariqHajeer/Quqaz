@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -53,30 +53,30 @@ export class ViewNewOrderComponent implements OnInit {
   order: Order = new Order
   AgentId
   Agents: User[] = []
-  IdsDto:IdsDto= new IdsDto
-  MultiAgent(order,i) {
+  IdsDto: IdsDto = new IdsDto
+  MultiAgent(order) {
     if (order.country.agnets.length == 1) {
-      this.AgentId=order.country.agnets[0].id
-      this.Accept(order,i)
-    }else{
-      this.Agents=order.country.agnets
+      this.AgentId = order.country.agnets[0].id
+      this.Accept(order)
+    } else {
+      this.Agents = order.country.agnets
       this.infoModal.show()
     }
   }
-  Accept(element,i) {
+  Accept(element) {
     // console.log(element)
-    this.IdsDto.OrderId=element.id
-    this.IdsDto.AgentId=this.AgentId
-    if(!this.AgentId)return
+    this.IdsDto.OrderId = element.id
+    this.IdsDto.AgentId = this.AgentId
+    if (!this.AgentId) return
     else
-    this.OrderService.Accept(this.IdsDto).subscribe(res => {
-      this.print(i)
-      this.order = element
-      this.IdsDto=new IdsDto
-      this.AgentId=null
-      this.get()
-      this.infoModal.hide()
-    })
+      this.OrderService.Accept(this.IdsDto).subscribe(res => {
+        // this.print(i)
+        this.order = element
+        this.IdsDto = new IdsDto
+        this.AgentId = null
+        this.get()
+        this.infoModal.hide()
+      })
   }
   dateWithId: DateWithIds<number>
   DisAccept(elementid) {
@@ -91,8 +91,9 @@ export class ViewNewOrderComponent implements OnInit {
       // this.get()
     })
   }
-  print(i) {
+  print(i,element) {
     console.log(this.order)
+    element.show=true
     var divToPrint = document.getElementById('contentToConvert-' + i);
     var css = '@page { size: A5 landscape ;margin: 0;color-adjust: exact;-webkit-print-color-adjust: exact;}',
       style = document.createElement('style');
@@ -118,4 +119,8 @@ export class ViewNewOrderComponent implements OnInit {
       if (this.dataSource.data.length != 0)
         this.dataSource.data = this.dataSource.data.filter(d => d.code.includes(this.code))
   }
+  // @HostListener("window:afterprint", ["$event"])
+  // onafterPrint(event) {
+  //   console.log(event)
+  // }
 }

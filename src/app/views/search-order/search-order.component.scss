@@ -12,7 +12,7 @@
 .bgimg {
   background-image: url(/assets/img/landing-page/truck.png);
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
 }
 @keyframes example {
   from {
@@ -26,8 +26,8 @@
   }
 }
 .flowtext {
-  margin-top: 40%;
-  margin-right: 45%;
+  margin-top: 30%;
+  margin-right:55%;
 }
 input{
   border-radius: 20px;
@@ -63,8 +63,7 @@ color: rgb(216, 3, 3);
 .bghome{
   background-image: url(/assets/img/landing-page/city.png);
   background-repeat: no-repeat;
-  background-size: cover;
-  width: 100%;
+  background-size: contain;
 }
 .sizeCar{
   .col-md-12{
@@ -79,4 +78,17 @@ color: rgb(216, 3, 3);
     width: 500px;
     height: 500px;
   }
+}
+.mg{
+  .col-6{
+    margin-right: 20%;
+  }
+  .col-md-2{
+    margin-right: 40%;
+  }
+}
+.arrow{
+  background-image: url(/assets/img/landing-page/arrow.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }

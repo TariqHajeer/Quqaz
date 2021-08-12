@@ -37,24 +37,18 @@
         <div class="content-container" id="home">
 
 
-            <div class="section home home-row">
+            <div class="section home home-row" >
                 <div class="container bghome">
 
-                    <div class="car bgimg" *ngIf="formVisble">
+                    <div class="car bgimg col-12" *ngIf="formVisble">
                         <div class=" row">
-                            <div class="col-2" style="margin-right:40%;margin-top: 40%;">
+                            <div class="col-3"></div>
+                            <div class="col-5 col-md-2" style="margin-top:34%;margin-right: 30%;">
                                 <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                                     placeholder="رقم الشحنة" [(ngModel)]="Code" (keyup.enter)="getOrder()">
-
+                                   
                             </div>
-                            <!-- <div class="col-2" style="margin-top: 40%;">
-                                <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                                    placeholder="رقم هاتف"
-                                    oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
-                                    [(ngModel)]="ClientNumber" (keyup.enter)="getOrder()">
-
-                            </div> -->
-                            <div class="col-1" style="margin-top: 40%;">
+                            <div class="col-1" style="margin-top: 34%;">
                                 <a class="btn" (click)="getOrder()">
                                     <svg style="color: rgb(25, 77, 155);" xmlns="http://www.w3.org/2000/svg" width="16"
                                         height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -65,26 +59,26 @@
                             </div>
 
                         </div>
-                        <div style="margin-top:8%; margin-right: 40%;">
+                        <!-- <div style="margin-top:3%; margin-right: 20%;">
                             <small>في حالة واجهتك مشاكل يمكنك التواصل مع الرقم 07714400880</small>
 
-                        </div>
+                        </div> -->
                     </div>
-                    <div class="car bgimg" *ngIf="multiordercar">
+                    <div class="car bgimg col-12" *ngIf="multiordercar">
                         <div class=" row">
-                            <div class="col-2" style="margin-right: 30%;margin-top: 40%;">
+                            <div class="col-2" style="margin-right: 40%;margin-top: 34%;">
                                 <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                                     placeholder="رقم الشحنة" [(ngModel)]="Code" (keyup.enter)="getOrder()">
 
                             </div>
-                            <div class="col-2" style="margin-top: 40%;">
+                            <div class="col-2" style="margin-top: 34%;">
                                 <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                                     placeholder="رقم هاتف"
                                     oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
                                     [(ngModel)]="ClientNumber" (keyup.enter)="getOrder()">
 
                             </div>
-                            <div class="col-1" style="margin-top: 40%;">
+                            <div class="col-1" style="margin-top: 34%;">
                                 <a class="btn" (click)="getOrder()">
                                     <svg style="color: rgb(25, 77, 155);" xmlns="http://www.w3.org/2000/svg" width="16"
                                         height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -95,16 +89,16 @@
                             </div>
 
                         </div>
-                        <div style="margin-top:8%; margin-right: 40%;">
+                        <!-- <div style="margin-top:8%; margin-right: 40%;">
                             <small>في حالة واجهتك مشاكل يمكنك التواصل مع الرقم 07714400880</small>
 
-                        </div>
+                        </div> -->
                     </div>
 
-                    <div class="carback bgimg" *ngIf="carback">
+                    <div class="carback bgimg col-12" *ngIf="carback">
                     </div>
-                    <div class="row car bgimg" *ngIf="showordercar" style="color: rgb(23, 78, 151);">
-                        <div class=" col-12" *ngFor="let order of orders" style="margin-top: 35%;">
+                    <div class="row car bgimg col-12" *ngIf="showordercar" style="color: rgb(23, 78, 151);">
+                        <div class=" col-12" *ngFor="let order of orders" style="margin-top: 25%;margin-right: 17%;">
                             <div class=" text-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor"
                                     class="bi bi-box" viewBox="0 0 16 16">
@@ -161,10 +155,14 @@
                                 <button class="btn btn-primary" (click)="more()">البحث عن المزيد</button>
                             </div>
                         </div>
-
                     </div>
+                    <!-- <div>
+                        <a class="arrow" >
+
+                        </a>
+                    </div> -->
                     <div class="row car bgimg" *ngIf="notFound">
-                        <h3 class="flowtext text-center">
+                        <h3 class="flowtext text-center" >
                             لايوجد شحنة لهذا الرقم
                             <br><br>
                             <button class="btn btn-primary" (click)="more()">البحث عن المزيد</button>
