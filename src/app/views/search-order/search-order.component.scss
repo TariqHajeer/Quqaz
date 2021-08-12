@@ -1,4 +1,5 @@
 .car {
+  
   width: 1000px;
   height: 700px;
   position: relative;
@@ -11,7 +12,7 @@
 .bgimg {
   background-image: url(/assets/img/landing-page/truck.png);
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
 }
 @keyframes example {
   from {
@@ -25,13 +26,14 @@
   }
 }
 .flowtext {
-  margin-top: 40%;
-  margin-right: 45%;
+  margin-top: 30%;
+  margin-right:55%;
 }
 input{
   border-radius: 20px;
 }
 .carback {
+  
   width: 1000px;
   height: 700px;
   position: relative;
@@ -52,9 +54,41 @@ input{
     top: 0%;
   }
 }
-.red{
+.redc{
 color: rgb(216, 3, 3);
 }
 .defult{
   color: rgb(23, 78, 151);
+}
+.bghome{
+  background-image: url(/assets/img/landing-page/city.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.sizeCar{
+  .col-md-12{
+    width: 700px;
+    height: 600px;
+  }
+  .col-lg-12{
+    width: 1000px;
+    height: 700px;
+  }
+  .col-12{
+    width: 500px;
+    height: 500px;
+  }
+}
+.mg{
+  .col-6{
+    margin-right: 20%;
+  }
+  .col-md-2{
+    margin-right: 40%;
+  }
+}
+.arrow{
+  background-image: url(/assets/img/landing-page/arrow.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }

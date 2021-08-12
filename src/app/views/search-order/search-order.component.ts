@@ -119,5 +119,14 @@ export class SearchOrderComponent implements OnInit {
   home() {
     this.router.navigate(['/home'])
   }
- 
+  style(order) {
+    if ((order.orderplaced.id == OrderplacedEnum.Store||order.orderplaced.id == OrderplacedEnum.Way)&&!order.currentCountry)
+      return "rgb(216, 3, 3)"
+      else return "rgb(23, 78, 151)"
+  }
+  stylePath(order,path){
+    if (order.currentCountry&&order.currentCountry==path.id)
+      return "rgb(216, 3, 3)"
+      else return "rgb(23, 78, 151)"
+  }
 }

@@ -21,6 +21,7 @@ export class Order {
       monePlaced: NameAndIdDto
       orderplaced: NameAndIdDto
       agent: User
+      show:boolean=false
 }
 export class OrderState {
       Id: number

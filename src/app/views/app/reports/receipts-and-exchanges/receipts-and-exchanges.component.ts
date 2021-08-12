@@ -77,7 +77,7 @@ export class ReceiptsAndExchangesComponent implements OnInit {
   }
   print(i) {
     var divToPrint = document.getElementById('contentToConvert-' + i);
-    var css = '@page { size: A5 landscape ;margin: 0;}',
+    var css = '@page { size: A5 landscape ;margin: 0;color-adjust: exact;-webkit-print-color-adjust: exact;}',
       style = document.createElement('style');
     style.type = 'text/css';
     style.media = 'print';
