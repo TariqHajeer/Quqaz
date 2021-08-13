@@ -40,7 +40,7 @@ export class ClientComponent implements OnInit {
     this.PrintNumberOrder = new PrintNumberOrder
     this.orders = JSON.parse(localStorage.getItem('printordersclient'))
     this.orders = this.orders.sort((a, b) => a.code - b.code)
-    console.log(this.orders)
+    // console.log(this.orders)
     this.client = JSON.parse(localStorage.getItem('printclient'))
     this.orderplaced = JSON.parse(localStorage.getItem('printclientorderplaced'))
     this.reciptClient()
