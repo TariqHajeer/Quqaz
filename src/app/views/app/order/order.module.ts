@@ -36,6 +36,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { EditClientOrdersComponent } from './edit-client-orders/edit-client-orders.component';
 import { MoveOrdersComponent } from './move-orders/move-orders.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,8 @@ import { MoveOrdersComponent } from './move-orders/move-orders.component';
     MatButtonModule,
     MatTabsModule,
     ModalModule.forRoot(),
+    MatCheckboxModule,
+
 
 
   ], providers: [CategoryService, DateTimeService, ScrollBarService, LineSeriesService, ColumnSeriesService,
