@@ -59,6 +59,20 @@ this.changeDeleiverMoneyForClient()
       this.showPrintbtn = true
       this.orders = res.orders
       this.orders=this.orders.sort((a,b)=>a.code-b.code)
+      var address=""
+    for(let i=0;i<this.orders.length;i++){
+      var space=0
+      for(let j=0;j<this.orders[i].address.length;j++){
+        address+= this.orders[i].address[j]
+      if(this.orders[i].address[j]==" ")
+      space++
+      if(space==2){
+        this.orders[i].address=address
+        address=""
+        break
+      }
+      } 
+    }
       this.agent = res.destinationName
       this.phones = res.destinationPhone
       this.printnumber = res.printNmber
