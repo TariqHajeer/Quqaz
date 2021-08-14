@@ -15,6 +15,7 @@ export class MainCityComponent implements OnInit {
   cities: City[] = []
   CountryId
   ngOnInit(): void {
+    this.Getcities()
   }
   Getcities() {
     this.customerService.getAll(this.cityapi).subscribe(res => {
