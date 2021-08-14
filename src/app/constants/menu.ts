@@ -369,6 +369,13 @@ const data: IMenuItem[] = [
       },
       {
         icon: 'iconsminds-map2',
+        label: 'المدينة الرئيسية',
+        to: `${adminRoot}/setting/maincity`,
+        //permission:[UserPermission.ShowCountry]
+
+      },
+      {
+        icon: 'iconsminds-map2',
         label: 'menu.setting.regions',
         to: `${adminRoot}/setting/regions`,
         //permission:[UserPermission.ShowRegion]
