@@ -257,5 +257,13 @@ export class OrderService {
   MakeStoreOrderCompletelyReturned(id) {
     return this.http.put<any>(this.controler + "MakeStoreOrderCompletelyReturned", id)
   }
+  TrakingOrder(agentid,cityid){
+    let params = new HttpParams();
+    if (agentid)
+      params = params.append("agentId", agentid);
+      if (cityid)
+      params = params.append("nextCountry", cityid);
+      return this.http.get<any>(this.controler + "TrakingOrder", { params: params })
+  }
 }
 

@@ -10,6 +10,7 @@ import { Paging } from 'src/app/Models/paging';
 import { User } from 'src/app/Models/user/user.model';
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
+import { CustomService } from 'src/app/services/custom.service';
 
 @Component({
   selector: 'app-move-orders',
@@ -55,9 +56,6 @@ checkboxId(row) {
     else {
       this.ids.push(row.id)
       this.orders.push(row)
-      this.agent=this.orders.map(o=>o.agent)[0]
-      this.orderplaced=this.orders.map(o=>o.orderplaced)[0]
-    
     }
   if (!this.selection.isSelected(row)) {
     this.ids = this.ids.filter(i => i != row.id)
@@ -69,23 +67,31 @@ constructor(
   private orderservice: OrderService,
   public userService: UserService,
   private notifications: NotificationsService,
-  public route: Router
+  public route: Router,
+  private customerService: CustomService,
 ) { }
 AgentId
-OrderplacedId
-orderPlace: NameAndIdDto[] = []
+CountryId
 Agents: User[] = []
+cities=[]
+cityapi = "Country"
+Getcities() {
+  this.customerService.getAll(this.cityapi).subscribe(res => {
+    this.cities = res
+  })
+}
 paging: Paging
-filtering: OrderFilter
+// filtering: OrderFilter
 noDataFound: boolean = false
 
 @Input() totalCount: number;
 
 ngOnInit(): void {
   this.getAgent()
-  //this.GetorderPlace()
+  this.Getcities()
+  // //this.GetorderPlace()
   this.paging = new Paging
-  this.filtering = new OrderFilter
+  // this.filtering = new OrderFilter
 }
 
 // GetorderPlace() {
@@ -100,41 +106,28 @@ getAgent() {
     this.Agents = res
   })
 }
-cities=[]
-ChangeAgentIdOrOrderplacedId() {
-  if (this.AgentId) {
-    this.filtering.AgentId=this.AgentId
-    this.cities=[]
-    this.filtering.CountryId=null
-    var agent=this.Agents.find(a=>a.id==this.filtering.AgentId)
-    this.cities=agent.countries
-    this.allFilter();
-  }
 
-}
 switchPage(event: PageEvent) {
   this.paging.allItemsLength = event.length
   this.paging.RowCount = event.pageSize
   this.paging.Page = event.pageIndex + 1
   //this.allFilter();
 }
-allFilter() {
-  this.filtering.OrderplacedId = 2
-  this.orderservice.WithoutPaging(this.filtering).subscribe(response => {
+get() {
+  this.orderservice.TrakingOrder(this.AgentId,this.CountryId).subscribe(response => {
+console.log(response)
     if (response)
-      if (response.data.length == 0)
+      if (response.length == 0)
         this.noDataFound = true
       else this.noDataFound = false
-    this.dataSource = new MatTableDataSource(response.data)
+    this.dataSource = new MatTableDataSource(response)
     //this.dataSource.data = this.dataSource.data.filter(d => d.agent.id == this.AgentId)
-    this.totalCount = response.total
+    this.totalCount = response.length
   },
     err => {
 
     });
 }
-agent=this.orders.map(o=>o.agent)[0]
-orderplaced=this.orders.map(o=>o.orderplaced)[0]
 move() {
   if ( this.noDataFound == true || this.orders.length==0) {
     this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });

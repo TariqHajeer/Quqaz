@@ -40,7 +40,7 @@ export class ClientComponent implements OnInit {
     this.PrintNumberOrder = new PrintNumberOrder
     this.orders = JSON.parse(localStorage.getItem('printordersclient'))
     this.orders = this.orders.sort((a, b) => a.code - b.code)
-    console.log(this.orders)
+    // console.log(this.orders)
     this.client = JSON.parse(localStorage.getItem('printclient'))
     this.orderplaced = JSON.parse(localStorage.getItem('printclientorderplaced'))
     this.reciptClient()
@@ -57,7 +57,7 @@ export class ClientComponent implements OnInit {
       this.orders.forEach(o => {
         this.count += o.cost
         this.deliveryCostCount += o.deliveryCost
-        console.log(o);
+        // console.log(o);
         this.clientCalc +=o.payForClient;
         // if (!o.isClientDiliverdMoney) {
         //   if (o.orderplaced.id == OrderplacedEnum.CompletelyReturned) {

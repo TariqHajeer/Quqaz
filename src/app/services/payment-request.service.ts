@@ -33,9 +33,9 @@ export class PaymentRequestService {
     return this.http.get<any>(this.controler, { params: params })
   }
   Accept(id) {
-    return this.http.put<any>(this.controler +'/'+ id, id)
+    return this.http.put<any>(this.controler +'/Accept/'+ id, id)
   }
   DisAccept(id) {
-    return this.http.put<any>(this.controler + "/DisAccept", id)
+    return this.http.put<any>(this.controler + "/DisAccept/"+ id, id)
   }
 }

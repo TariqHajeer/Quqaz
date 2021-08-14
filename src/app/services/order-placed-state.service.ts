@@ -25,7 +25,7 @@ export class OrderPlacedStateService {
       || element.order.orderplaced.id == OrderplacedEnum.Delivered) {
       element.canEditCount = false
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent || m.id == MoneyPalcedEnum.InsideCompany)]
-      element.order.monePlaced = { ...element.MoenyPlaced[0] }
+      element.order.monePlaced = { ...element.MoenyPlaced[1] }
     } else {
       if (temporderscostindex) {
         element.order.cost = Object.assign(temporderscostindex, temporderscostindex);

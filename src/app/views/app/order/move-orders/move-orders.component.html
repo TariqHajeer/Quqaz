@@ -6,13 +6,13 @@
         <div class="col-md-3">
             <label>المندوب</label>
             <ng-select [(ngModel)]="AgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-                name="Agent" (change)="ChangeAgentIdOrOrderplacedId()">
+                name="Agent" (change)="get()">
                 <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
             </ng-select>
         </div>
         <div class="col-md-3">
-          <label>المحافظة</label>
-          <ng-select appOnReturn (change)="allFilter()" [(ngModel)]="filtering.CountryId" 
+          <label>الشحنات المتجهة الى</label>
+          <ng-select appOnReturn (change)="get()" [(ngModel)]="CountryId" 
               [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Country">
               <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
           </ng-select>
@@ -93,8 +93,8 @@
      <h5 style="padding-top: 20px; padding-right: 10px;"  *ngIf="noDataFound">لايوجد بيانات للعرض</h5>
       
       </div>
-    <!-- <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
-    [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator> -->
+    <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
+    [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
     
     
       <simple-notifications></simple-notifications>
