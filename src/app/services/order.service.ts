@@ -38,11 +38,11 @@ export class OrderService {
       params = params.append("OrderplacedId", filter.OrderplacedId);
     if (filter.IsClientDiliverdMoney != undefined || filter.IsClientDiliverdMoney != null)
       params = params.append("IsClientDiliverdMoney", filter.IsClientDiliverdMoney);
-      if (filter.AgentPrintStartDate != undefined || filter.AgentPrintStartDate != null)
+    if (filter.AgentPrintStartDate != undefined || filter.AgentPrintStartDate != null)
       params = params.append("AgentPrintStartDate", filter.AgentPrintStartDate);
-      if (filter.AgentPrintEndDate != undefined || filter.AgentPrintEndDate != null)
+    if (filter.AgentPrintEndDate != undefined || filter.AgentPrintEndDate != null)
       params = params.append("AgentPrintEndDate", filter.AgentPrintEndDate);
-      if (filter.AgentPrintNumber != undefined || filter.AgentPrintNumber != null)
+    if (filter.AgentPrintNumber != undefined || filter.AgentPrintNumber != null)
       params = params.append("AgentPrintNumber", filter.AgentPrintNumber);
     if (paging.RowCount != undefined || paging.RowCount != null)
       params = params.append("RowCount", paging.RowCount);
@@ -118,18 +118,18 @@ export class OrderService {
   GetNewOrder() {
     return this.http.get<any>(this.controler + "NewOrders")
   }
-  NewOrderCount(){
+  NewOrderCount() {
     return this.http.get<any>(this.controler + "NewOrderCount")
   }
   Accept(id) {
     // let params = new HttpParams();
     // params = params.append("id", id);
-    return this.http.put<any>(this.controler + "Accept" , id)
+    return this.http.put<any>(this.controler + "Accept", id)
   }
   DisAccept(id) {
     // let params = new HttpParams();
     // params = params.append("id", id);
-    return this.http.put<any>(this.controler + "DisAccept" , id )
+    return this.http.put<any>(this.controler + "DisAccept", id)
   }
   MakeOrderInWay(ids) {
     let params = new FormData();
@@ -257,13 +257,16 @@ export class OrderService {
   MakeStoreOrderCompletelyReturned(id) {
     return this.http.put<any>(this.controler + "MakeStoreOrderCompletelyReturned", id)
   }
-  TrakingOrder(agentid,cityid){
+  TrakingOrder(agentid, cityid) {
     let params = new HttpParams();
     if (agentid)
       params = params.append("agentId", agentid);
-      if (cityid)
+    if (cityid)
       params = params.append("nextCountry", cityid);
-      return this.http.get<any>(this.controler + "TrakingOrder", { params: params })
+    return this.http.get<any>(this.controler + "TrakingOrder", { params: params })
+  }
+  MoveToNextStep(ids) {
+    return this.http.put(this.controler + "MoveToNextStep", ids)
   }
 }
 
