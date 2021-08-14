@@ -23,6 +23,8 @@ export class MainCityComponent implements OnInit {
     })
   }
   save(){
-
+    this.customerService.SetMain(this.cityapi,this.CountryId).subscribe(res => {
+     this.CountryId=null
+    })
   }
 }

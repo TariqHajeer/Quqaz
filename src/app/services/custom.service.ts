@@ -32,8 +32,8 @@ export class CustomService {
   getAll(apiName): Observable<any> {
     return this.http.get(this.baseUrl + 'api/' + apiName);
   }
-  getAllWithPagging(apiName,pageSettings): Observable<any>{
-    return this.http.get(this.baseUrl + 'api/' + apiName,{params:pageSettings});
+  getAllWithPagging(apiName, pageSettings): Observable<any> {
+    return this.http.get(this.baseUrl + 'api/' + apiName, { params: pageSettings });
   }
   getAllsy(apiName): Observable<[]> {
     return this.http.get(this.baseUrl + 'api/' + apiName).pipe(
@@ -159,5 +159,7 @@ export class CustomService {
   deletemessage(id): Observable<any> {
     return this.http.post(this.baseUrl + 'api' + '/deleteMessageFromMe/' + id, {});
   }
-
+  SetMain(api, id) {
+   return this.http.put('api/'+api+"/"+id,id)
+  }
 }
