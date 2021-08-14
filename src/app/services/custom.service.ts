@@ -160,6 +160,6 @@ export class CustomService {
     return this.http.post(this.baseUrl + 'api' + '/deleteMessageFromMe/' + id, {});
   }
   SetMain(api, id) {
-   return this.http.put('api/'+api+"/"+id,id)
+   return this.http.put(this.baseUrl+'api/'+api+"/"+id,id)
   }
 }
