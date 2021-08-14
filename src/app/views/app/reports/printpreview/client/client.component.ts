@@ -57,7 +57,7 @@ export class ClientComponent implements OnInit {
       this.orders.forEach(o => {
         this.count += o.cost
         this.deliveryCostCount += o.deliveryCost
-        console.log(o);
+        // console.log(o);
         this.clientCalc +=o.payForClient;
         // if (!o.isClientDiliverdMoney) {
         //   if (o.orderplaced.id == OrderplacedEnum.CompletelyReturned) {
