@@ -119,7 +119,26 @@ aria-hidden="true">
                 <ng-container matColumnDef="DisAccept">
                     <th mat-header-cell *matHeaderCellDef > </th>
                     <td mat-cell *matCellDef="let element" >
-                        <span class="btn btn-xs badge-primary " (click)="DisAccept(element.id)">رفض</span>
+                        <span class="btn btn-xs badge-primary " data-toggle="modal" data-target="#DisAccept">رفض</span>
+                    
+  <div class="modal fade" id="DisAccept"  role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <h2 style="text-align: center;">التأكيد قبل الرفض </h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body" style="text-align: center;">
+            <button type="button" class="btn btn-primary"  (click)="DisAccept(element.id)" data-dismiss="modal">رفض</button>&nbsp;
+            <button type="button" class="btn btn-primary"   data-dismiss="modal">الغاء</button>
+          </div>
+          
+      </div>
+  </div>
+</div>
                     </td>
                 </ng-container>
 
