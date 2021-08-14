@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { CustomService } from 'src/app/services/custom.service';
 
@@ -10,6 +11,7 @@ import { CustomService } from 'src/app/services/custom.service';
 export class MainCityComponent implements OnInit {
 
   constructor(private customerService: CustomService,
+  private notifications: NotificationsService
   ) { }
   cityapi = "Country"
   cities: City[] = []
@@ -25,6 +27,8 @@ export class MainCityComponent implements OnInit {
   save(){
     this.customerService.SetMain(this.cityapi,this.CountryId).subscribe(res => {
      this.CountryId=null
+     this.notifications.create('success', 'تم الحفظ بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+
     })
   }
 }
