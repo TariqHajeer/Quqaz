@@ -11,7 +11,7 @@
             </ng-select>
         </div>
         <div class="col-md-3">
-          <label>المحافظة</label>
+          <label>الشحنات المتجهة الى</label>
           <ng-select appOnReturn (change)="allFilter()" [(ngModel)]="filtering.CountryId" 
               [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Country">
               <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
