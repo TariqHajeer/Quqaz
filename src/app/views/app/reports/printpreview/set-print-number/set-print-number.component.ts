@@ -62,6 +62,7 @@ this.changeDeleiverMoneyForClient()
       var address=""
     for(let i=0;i<this.orders.length;i++){
       var space=0
+      if(this.orders[i].address)
       for(let j=0;j<this.orders[i].address.length;j++){
         address+= this.orders[i].address[j]
       if(this.orders[i].address[j]==" ")
