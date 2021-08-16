@@ -37,6 +37,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { EditClientOrdersComponent } from './edit-client-orders/edit-client-orders.component';
 import { MoveOrdersComponent } from './move-orders/move-orders.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { OrdersWithClientComponent } from './orders-with-client/orders-with-client.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     ReceiptNewOrdersComponent,
     EditClientOrdersComponent,
     MoveOrdersComponent,
+    OrdersWithClientComponent,
   ],
   imports: [
     CommonModule,

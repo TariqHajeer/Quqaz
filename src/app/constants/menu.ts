@@ -54,6 +54,13 @@ const data: IMenuItem[] = [
 
       },
       {
+        icon: 'iconsminds-box-close',
+        label: ' طلبات عند العميل ',
+        to: `${adminRoot}/order/orderswithclient`,
+        //permission:[UserPermission.AddOrder]
+
+      },
+      {
         icon: 'iconsminds-add',
         label: 'إضافة طلب',
         to: `${adminRoot}/order/addorder`,

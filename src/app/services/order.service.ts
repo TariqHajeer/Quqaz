@@ -268,5 +268,13 @@ export class OrderService {
   MoveToNextStep(ids) {
     return this.http.put(this.controler + "MoveToNextStep", ids)
   }
+  OrderAtClient(filter) {
+    let params = new HttpParams();
+    if (filter.Code != undefined || filter.Code != null)
+      params = params.append("Code", filter.Code);
+    if (filter.ClientId != undefined || filter.ClientId != null)
+      params = params.append("ClientId", filter.ClientId);
+    return this.http.get<any>(this.controler + "OrderAtClient", { params: params })
+  }
 }
 

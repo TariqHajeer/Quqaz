@@ -10,6 +10,7 @@ import { CreatemultipulorderagentComponent } from './createmultipulorderagent/cr
 import { EditClientOrdersComponent } from './edit-client-orders/edit-client-orders.component';
 import { EditOrdersComponent } from './edit-orders/edit-orders.component';
 import { MoveOrdersComponent } from './move-orders/move-orders.component';
+import { OrdersWithClientComponent } from './orders-with-client/orders-with-client.component';
 import { ProfitsOfOrdersComponent } from './profits-of-orders/profits-of-orders.component';
 import { ReceiptNewOrdersComponent } from './receipt-new-orders/receipt-new-orders.component';
 import { ViewNewOrderComponent } from './view-new-order/view-new-order.component';
@@ -75,6 +76,11 @@ const routes: Routes = [
   {
     path:'moveorder',
     component:MoveOrdersComponent ,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder]}
+  },
+  {
+    path:'orderswithclient',
+    component:OrdersWithClientComponent ,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowOrder]}
   },
 ];
