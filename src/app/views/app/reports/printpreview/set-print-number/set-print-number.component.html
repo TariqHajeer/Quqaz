@@ -187,6 +187,9 @@
                         {{order.clientName?order.clientName:'-'}}
 
                     </td>
+                    <td style="width: 15%;border: 1px black solid;padding: 5px;text-align: center;">
+                        {{order.clientNote}}
+                    </td>
                     <td style="width: 50%;border: 1px black solid;padding: 5px;text-align: center;">
                         {{order.note}}
                     </td>
@@ -201,7 +204,7 @@
                     <td style="border: 1px black solid;padding: 5px;text-align: center;">
                         <!----> {{ count| number}}
                     </td>
-                    <td colspan="5" style="border: 1px black solid;padding: 5px;text-align: center;"></td>
+                    <td colspan="6" style="border: 1px black solid;padding: 5px;text-align: center;"></td>
                 </tr>
             </tbody>
 

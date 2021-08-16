@@ -365,6 +365,12 @@
                 </th>
                 <th>
                     <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                        ملاحظات العميل
+                    </div>
+
+                </th>
+                <th>
+                    <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
                         ملاحظات
                     </div>
                 </th>
@@ -402,6 +408,14 @@
                     <td>
                         <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
                             {{report.about?report.about:'-'}}
+                        </div>
+                    </td>
+                    <td style="width:15%;">
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+
+                            {{order.clientNote?order.clientNote:"-"}}
+
+
                         </div>
                     </td>
                     <td style="width:25%;">
