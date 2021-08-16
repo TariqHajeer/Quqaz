@@ -27,7 +27,7 @@ export class MainCityComponent implements OnInit {
           this.CountryId=item.id
         }
       })
-      console.log(res)
+      // console.log(res)
     })
   }
   save(){
