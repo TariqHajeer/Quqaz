@@ -8,4 +8,5 @@ export class City {
     canDelete:boolean;
     canDeleteWithRegion:boolean
     regions:Region[] =[];
+    isMain:boolean
 }
