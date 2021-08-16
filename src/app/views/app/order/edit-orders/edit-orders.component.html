@@ -419,6 +419,12 @@
                             <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                                 [(ngModel)]="Order.Note">
                         </div>
+                        <div class="col-md-12" >
+                            <label>ملاحظات العميل</label>
+                            <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="Order.clientNote" [disabled]="true">
+                           
+                        </div>
                     </div>
 
                     <div class="row w-100">
