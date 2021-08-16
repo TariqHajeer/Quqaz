@@ -73,6 +73,10 @@ export class EditClientComponent implements OnInit {
   getClientById() {
     this.clientService.getClientById(this.id).subscribe(res => {
       this.client = res
+      console.log(res)
+      if(res.country)
+      this.client.Countryid=res.country.id
+
       if(this.client.region!=null)
     this.client.regionId= this.client.region.id
       this.phones = this.client.phones

@@ -39,10 +39,27 @@ export class AgentComponent implements OnInit {
     this.PrintNumberOrder = new PrintNumberOrder
     this.orders = JSON.parse(localStorage.getItem('printordersagent'))
     this.orders=this.orders.sort((a,b)=>a.code-b.code)
+    // console.log(  this.orders )
     this.agent = JSON.parse(localStorage.getItem('printagent'))
     this.orderplaced = this.orders.map(o => o.orderplaced)[0]
     this.sumCost()
     this.onAWay()
+   var address=""
+    for(let i=0;i<this.orders.length;i++){
+      var space=0
+      if(this.orders[i].address)
+      for(let j=0;j<this.orders[i].address.length;j++){
+        address+= this.orders[i].address[j]
+      if(this.orders[i].address[j]==" ")
+      space++
+      if(space==2){
+        this.orders[i].address=address
+        address=""
+        break
+      }
+      } 
+    }
+  
     // this.getPrintnumber()
   }
 
