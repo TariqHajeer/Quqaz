@@ -5,8 +5,10 @@ import { UserPermission } from '../app/shared/auth.roles';
 
 export const environment = {
   production: true,
-  baseUrl: "https://backend.quqaz.com/",
-  clientApp:"https://client.quqaz.com",
+  // baseUrl: "https://backend.quqaz.com/",
+  // clientApp:"https://client.quqaz.com",
+  baseUrl: "http://mohammedhatem-001-site4.itempurl.com/",
+  clientApp:"http://mohammedhatem-001-site6.itempurl.com",
   SCARF_ANALYTICS: false,
   adminRoot: '/',
   apiUrl: 'https://api.coloredstrategies.com',
