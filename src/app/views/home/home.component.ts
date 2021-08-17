@@ -25,6 +25,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   showMobileMenu = false;
 
 
+  titleAR=environment.appNameAR
+  titleEN=environment.appNameEN
   adminRoot = 'home';
 
   slideSettings = {

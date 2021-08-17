@@ -12,6 +12,10 @@ export const environment = {
   defaultColor: 'light.blueyale',
   baseUrl: "https://localhost:44333/",
   clientApp: "http://localhost:4201",
+  // appNameAR:"شركة القوقز للتوصيل السريع",
+  // appNameEN:"Quqaz"
+  appNameAR:"شركة الأجنحة الذهبية",
+  appNameEN:"Golden Wings"
 };
 
 
