@@ -9608,8 +9608,8 @@ footer.page-footer {
       @include respond-below(lg) {
         height: $navbar-height-md;
         .navbar-logo {
-          width: 75px;
-          height: 25px;
+          width: 100px;
+          height: 30px;
 
           .white,
           .dark {
