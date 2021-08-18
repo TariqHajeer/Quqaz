@@ -184,6 +184,7 @@ export class CitiesComponent implements OnInit {
         this.notifications.create('', 'تم تعديل المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         this.editCity = new CreateCity
         this.gridInstance.refresh();
+        this.getCities()
       });
 
     }
@@ -202,7 +203,7 @@ export class CitiesComponent implements OnInit {
     this.customService.getAll(this.apiName).subscribe(
       res => {
         this.cities = res;
-        console.log(res)
+        // console.log(res)
       }
     )
   }
