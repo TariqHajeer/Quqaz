@@ -157,18 +157,18 @@ export class CitiesComponent implements OnInit {
   }
   editCity: CreateCity = new CreateCity
   edit(data) {
-  var  city = this.cities.find(c=>c.id==data.id)
-  this.editCity.id=city.id
-  this.editCity.name=city.name
-  this.editCity.mediatorId=city.mediator?city.mediator.id:''
-  this.editCity.deliveryCost=city.deliveryCost
-  this.editCity.regions=city.regions
+    var city = this.cities.find(c => c.id == data.id)
+    this.editCity.id = city.id
+    this.editCity.name = city.name
+    this.editCity.mediatorId = city.mediator ? city.mediator.id : ''
+    this.editCity.deliveryCost = city.deliveryCost
+    this.editCity.regions = city.regions
 
     // this.editCity.mediatorId=data.mediator.id
-    console.log(data)
+    // console.log(data)
   }
   save() {
-
+    // console.log(this.editCity)
     if (this.cities.filter(c => c.name == this.editCity.name && c.id != this.editCity.id).length > 0) {
       this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
       return
@@ -179,10 +179,12 @@ export class CitiesComponent implements OnInit {
       return
     }
     else {
-      this.customService.addOrUpdate(this.apiName, this.editCity, "update").subscribe();
-      this.notifications.create('', 'تم تعديل المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      this.editCity=new CreateCity
-      this.gridInstance.refresh();
+      this.editCity.deliveryCost=this.editCity.deliveryCost*1
+      this.customService.addOrUpdate(this.apiName, this.editCity, "update").subscribe(res=>{
+        this.notifications.create('', 'تم تعديل المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+        this.editCity = new CreateCity
+        this.gridInstance.refresh();
+      });
 
     }
   }
