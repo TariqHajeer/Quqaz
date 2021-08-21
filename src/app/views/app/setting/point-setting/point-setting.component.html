@@ -1,0 +1,78 @@
+
+<div class="card">
+    <div class="card-body">
+      <h3>ادارة النقاط</h3>
+    <div class="row">
+        <div class="col-md-3">
+            <label>النقاط</label>
+            <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="PointSetting.Points"
+            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '');">
+        </div>
+        <div class="col-md-3">
+          <label>المبلغ</label>
+          <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="PointSetting.Money"
+            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '');">
+      </div>
+    
+    
+        <div class="col-md-6" style="padding-top: 25px;">
+          <button (click)="Add()" class="btn btn-primary">  اضافة</button>
+        </div>
+     
+    </div>
+    </div>
+    </div>
+    
+    <div class="example-container mat-elevation-z8" >
+    
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    
+     
+        <ng-container matColumnDef="index">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> ترقيم </th>
+          <td mat-cell *matCellDef="let element;index as i" style="padding-right: 10px;"> {{i+1}}</td>
+        </ng-container>
+        <ng-container matColumnDef="points">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> النقاط </th>
+            <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.points}}</td>
+          </ng-container>
+         
+        <ng-container matColumnDef="money">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> المبلغ </th>
+          <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.money}}</td>
+        </ng-container>
+        <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> حذف </th>
+            <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> 
+                <svg (click)="Delete(element.id)" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                style="cursor: pointer;" fill="currentColor" class="bi bi-trash"
+                viewBox="0 0 16 16" style="cursor: pointer;">
+                <path
+                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                <path fill-rule="evenodd"
+                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+            </svg>
+
+            </td>
+          </ng-container>
+       
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+            (click)="selection.toggle(row)">
+        </tr>
+      </table>
+     <!--
+       <mat-paginator [length]="100"
+      [pageSize]="10"
+      [pageSizeOptions]="[ 10, 25,50, 100]">
+    </mat-paginator>
+     --> 
+     <h5 style="padding-top: 20px; padding-right: 10px;"  *ngIf="noDataFound">لايوجد بيانات للعرض</h5>
+      
+      </div>
+    <!-- <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
+    [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator> -->
+    
+    
+      <simple-notifications></simple-notifications>
+    

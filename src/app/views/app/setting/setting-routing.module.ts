@@ -9,6 +9,7 @@ import { ExportsTypesComponent } from './exports-types/exports-types.component';
 import { GroupsComponent } from './groups/groups.component';
 import { ImportsTypesComponent } from './imports-types/imports-types.component';
 import { MainCityComponent } from './main-city/main-city.component';
+import { PointSettingComponent } from './point-setting/point-setting.component';
 import { RegionComponent } from './region/region.component';
 import { ShipmentsTypesComponent } from './shipments-types/shipments-types.component';
 const routes: Routes = [
@@ -63,6 +64,12 @@ const routes: Routes = [
   {
     path:'maincity',
     component:MainCityComponent ,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.AddGroup,UserPermission.ShowGroup]}
+  },
+  {
+    path:'pointsetting',
+    component:PointSettingComponent ,
     canActivate: [AuthGuard],
     data: { roles: [UserPermission.AddGroup,UserPermission.ShowGroup]}
   }

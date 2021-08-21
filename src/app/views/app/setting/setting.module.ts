@@ -19,10 +19,17 @@ import { CoinsComponent } from './coins/coins.component';
 import { RegionComponent } from './region/region.component';
 import { GroupsComponent } from './groups/groups.component';
 import { MainCityComponent } from './main-city/main-city.component';
+import { PointSettingComponent } from './point-setting/point-setting.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { DatePickerModule, DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
+import { NgxPrintModule } from 'ngx-print';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
-  declarations: [ CitiesComponent, DepartmentsComponent, ImportsTypesComponent, ExportsTypesComponent, ShipmentsTypesComponent, CoinsComponent, RegionComponent, GroupsComponent, MainCityComponent],
+  declarations: [ CitiesComponent, DepartmentsComponent, ImportsTypesComponent, ExportsTypesComponent, ShipmentsTypesComponent, CoinsComponent, RegionComponent, GroupsComponent, MainCityComponent, PointSettingComponent],
   imports: [
     CommonModule,
     SettingRoutingModule,
@@ -35,6 +42,13 @@ import { MainCityComponent } from './main-city/main-city.component';
     ReactiveFormsModule,
     NgSelectModule,
     ModalModule.forRoot(),
+    MatTableModule,
+    MatCheckboxModule,
+    MatPaginatorModule,
+    NgxPrintModule,
+    DatePickerModule,
+    DateRangePickerModule,
+    NgxSpinnerModule,
 
   ],
   providers: [ToolbarService]

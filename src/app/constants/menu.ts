@@ -383,6 +383,13 @@ const data: IMenuItem[] = [
       },
       {
         icon: 'iconsminds-map2',
+        label: 'ادارة النقاط',
+        to: `${adminRoot}/setting/pointsetting`,
+        //permission:[UserPermission.ShowCountry]
+
+      },
+      {
+        icon: 'iconsminds-map2',
         label: 'menu.setting.regions',
         to: `${adminRoot}/setting/regions`,
         //permission:[UserPermission.ShowRegion]
