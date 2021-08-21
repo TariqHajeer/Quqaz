@@ -3,6 +3,8 @@ import { ActionEventArgs, EditSettingsModel, GridComponent, IEditCell, SaveEvent
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { CreateCity } from 'src/app/Models/Cities/create-city.Model';
+import { PointSetting } from 'src/app/Models/pointSettings/point-setting.model';
+import { PointSettingsService } from 'src/app/services/point-settings.service';
 import { CustomService } from '../../../../services/custom.service'
 
 @Component({
@@ -13,7 +15,8 @@ import { CustomService } from '../../../../services/custom.service'
 export class CitiesComponent implements OnInit {
   //city={name:'',deliveryCost:0,regions:[]};
   city = new CreateCity();
-  constructor(private customService: CustomService, private notifications: NotificationsService) { }
+  constructor(private customService: CustomService, private notifications: NotificationsService,
+    private pointService: PointSettingsService,) { }
   cities: City[] = [];
   tempRegion: any;
   public stTime: any;
@@ -32,6 +35,7 @@ export class CitiesComponent implements OnInit {
   public numericParams: IEditCell;
   ngOnInit(): void {
     this.getCities();
+    this.Getpoints()
     this.editSettings = { showDeleteConfirmDialog: false, allowAdding: false };
     this.toolbar = [
       { text: 'حذف', tooltipText: 'حذف', prefixIcon: 'e-delete', id: 'normalgrid_delete' },
@@ -203,9 +207,17 @@ export class CitiesComponent implements OnInit {
     this.customService.getAll(this.apiName).subscribe(
       res => {
         this.cities = res;
-        // console.log(res)
+        console.log(res)
       }
     )
   }
+  PointSettings: PointSetting[] = []
+  Getpoints() {
+    this.pointService.Get().subscribe(response => {
+      this.PointSettings = response
+    },
+      err => {
 
+      });
+  }
 }

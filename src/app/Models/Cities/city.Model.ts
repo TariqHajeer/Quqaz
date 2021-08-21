@@ -9,4 +9,5 @@ export class City {
     canDeleteWithRegion:boolean
     regions:Region[] =[];
     isMain:boolean
+    points
 }
