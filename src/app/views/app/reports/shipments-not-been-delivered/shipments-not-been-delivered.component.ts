@@ -136,14 +136,13 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
           if (response.length == 0)
             this.noDataFound = true
           else this.noDataFound = false
-          console.log(response);
-          var  x= response.sort((a,b)=>(a.code>b.code)?1:-1);
-          
-          console.log(response);
-          console.log(x);
+          // console.log(response);
+          var  x= response.sort((a,b)=>a.code-b.code*1);
+          // console.log(response);
+          // console.log(x);
           this.orderFilter=response
           
-        this.dataSource = new MatTableDataSource(response)
+        this.dataSource = new MatTableDataSource(x)
         //this.dataSource.data = this.dataSource.data.filter(d => d.agent.id == this.ClientId)
         this.totalCount = response.length
       },
