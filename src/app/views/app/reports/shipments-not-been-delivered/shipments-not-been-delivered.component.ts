@@ -32,11 +32,11 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.orders=[]
-    this.ids=[]
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => { this.selection.select(row) });
+    this.orders=[]
+    this.ids=[]
   }
 
   /** The label for the checkbox on the passed row */
@@ -159,7 +159,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    // console.log(this.orderplace)
+    // console.log(this.orders)
     this.orderplace=this.orderplace.filter(op => this.orders.filter(o=>o.orderplaced.id==op.id).length>0)
     localStorage.setItem('printclientorderplaced', JSON.stringify(this.orderplace))
     localStorage.setItem('printordersclient', JSON.stringify(this.orders))
