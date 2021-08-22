@@ -118,10 +118,10 @@ aria-hidden="true">
                 </ng-container>
                 <ng-container matColumnDef="DisAccept">
                     <th mat-header-cell *matHeaderCellDef > </th>
-                    <td mat-cell *matCellDef="let element" >
-                        <span class="btn btn-xs badge-primary " data-toggle="modal" data-target="#DisAccept">رفض</span>
+                    <td mat-cell *matCellDef="let element;index as i" >
+                        <span class="btn btn-xs badge-primary " data-toggle="modal" [attr.data-target]="'#item'+i">رفض</span>
                     
-  <div class="modal fade" id="DisAccept"  role="dialog"
+  <div class="modal fade" [attr.id]="'item'+i"   role="dialog"
   aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
       <div class="modal-content">

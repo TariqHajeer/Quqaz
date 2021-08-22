@@ -25,8 +25,7 @@ export class OrdersUnacceptableComponent implements OnInit {
     public clientService: ClientService,
 
   ) { } 
-  displayedColumns: string[] = ['index', 'code', 'client', 'cost', 'country', 'region'
-    , 'orderplaced'];
+  displayedColumns: string[] = ['index', 'code', 'client', 'cost', 'country', 'region'];
   dataSource = new MatTableDataSource([]);
   paging: Paging
   filtering: OrderFilter
