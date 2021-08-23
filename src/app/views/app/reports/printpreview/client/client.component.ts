@@ -106,15 +106,13 @@ export class ClientComponent implements OnInit {
   showPrintbtn = false
   dateWithIds: DateWithId<number[]>
   DeleiverMoneyForClientDto: DeleiverMoneyForClientDto = new DeleiverMoneyForClientDto()
-  pointid
+  pointid=null
   changeDeleiverMoneyForClient() {
     this.spinner.show()
     this.dateWithIds = {
       Ids: this.orders.map(c => c.id),
       Date: new Date
     }
-    if (this.pointid == 0)
-      this.pointid = null
     this.DeleiverMoneyForClientDto = {
       DateWithId: this.dateWithIds,
       PointsSettingId: this.pointid
