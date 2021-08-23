@@ -23,7 +23,7 @@
         </div>
         <div class="col-md-3">
           <label>خصم النقاط</label>
-          <ng-select [(ngModel)]="noPoint" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="point">
+          <ng-select [(ngModel)]="PointId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="point">
             <ng-option [value]="0">عدم الخصم</ng-option>
             <ng-option *ngFor="let point of points" [value]="point.id">{{point.points}} نقطة = {{point.money}} دينار</ng-option>
           </ng-select>

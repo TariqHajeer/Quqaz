@@ -9,6 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ReciptService } from 'src/app/services/recipt.service';
 import { DateWithIds, IdWithCost } from 'src/app/Models/date-with-ids.model';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
+import { DateWithId, DeleiverMoneyForClientDto } from 'src/app/Models/order/order.model';
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
@@ -43,6 +44,7 @@ export class ClientComponent implements OnInit {
     // console.log(this.orders)
     this.client = JSON.parse(localStorage.getItem('printclient'))
     this.orderplaced = JSON.parse(localStorage.getItem('printclientorderplaced'))
+    this.pointid=JSON.parse(localStorage.getItem('pointid'))
     this.reciptClient()
     this.sumCost()
 
@@ -95,8 +97,8 @@ export class ClientComponent implements OnInit {
   }
 
   showPrintbtn = false
-  dateWithIds: any
-  DeleiverMoneyForClientDto:any
+  dateWithIds: DateWithId<number[]>
+  DeleiverMoneyForClientDto:DeleiverMoneyForClientDto=new DeleiverMoneyForClientDto()
   pointid
   changeDeleiverMoneyForClient() {
     this.spinner.show()
@@ -104,11 +106,13 @@ export class ClientComponent implements OnInit {
       Ids: this.orders.map(c=>({id:c.id})),
       Date: new Date
     } 
+    if(this.pointid==0)
+    this.pointid=null
     this.DeleiverMoneyForClientDto={
       DateWithId:  this.dateWithIds,
       PointsSettingId:this.pointid
     }
-    // console.log(this.dateWithIds);
+    console.log(this.DeleiverMoneyForClientDto);
     this.orderservice.DeleiverMoneyForClient(this.DeleiverMoneyForClientDto).subscribe(res => {
       // console.log(res)
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });

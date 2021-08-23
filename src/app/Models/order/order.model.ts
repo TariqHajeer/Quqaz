@@ -46,3 +46,11 @@ export class IdsDto{
       OrderId
       AgentId
 }
+export class DateWithId<T>{
+      Ids
+      Date
+}
+export class DeleiverMoneyForClientDto{
+      DateWithId:DateWithId<number[]>
+      PointsSettingId:number
+}

@@ -166,6 +166,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     localStorage.setItem('printclientorderplaced', JSON.stringify(this.orderplace))
     localStorage.setItem('printordersclient', JSON.stringify(this.orders))
     localStorage.setItem('printclient', JSON.stringify(this.Clients.find(c => c.id == this.ClientId)))
+    localStorage.setItem('pointid',JSON.stringify(this.PointId))
     this.route.navigate(['app/reports/printclientpreview'])
 
   }
@@ -207,7 +208,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
         this.dataSource.data = this.dataSource.data.filter(d => d.code.includes(this.code))
   }
   points:any[]=[]
-  noPoint=0
+  PointId=0
   GetSettingLessThanPoint() {
     if(this.ClientId){
       var client = this.Clients.find(c => c.id == this.ClientId)
