@@ -17,4 +17,7 @@ export class PointSettingsService {
   delete(id){
     return this.http.delete(this.controler+id)
   }
+  GetSettingLessThanPoint(points){
+    return this.http.get<any>(this.controler+"GetSettingLessThanPoint/"+points)
+  }
 }

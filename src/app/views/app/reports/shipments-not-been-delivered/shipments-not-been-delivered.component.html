@@ -21,7 +21,15 @@
           <input type="text" class="form-control"placeholder="بحث على حسب كود الشحنة"
            (keyup)="codeFillter()"  [ngModelOptions]="{standalone: true}" [(ngModel)]="code">
         </div>
-        <div class="col-md-5" style="padding-top: 25px;">
+        <div class="col-md-3">
+          <label>خصم النقاط</label>
+          <ng-select [(ngModel)]="noPoint" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="point">
+            <ng-option [value]="0">عدم الخصم</ng-option>
+            <ng-option *ngFor="let point of points" [value]="point.id"><a style="color: rgb(19, 67, 156);">{{point.points}}</a> = {{point.money}}</ng-option>
+          </ng-select>
+          <br>
+        </div>
+        <div class="col-md-3" style="padding-top:15px;">
           <button (click)="print()" class="btn  btn-primary"> 
             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-printer"
           viewBox="0 0 16 16">

@@ -2,3 +2,12 @@
     border-radius:3px ;
     border: 1bx black solid;
 }
+@font-face {
+    font-family: 'a-jannat-lt';
+    src: url('/src/assets/fonts/a-jannat-lt.ttf'), url('/src/assets/fonts/a-jannat-lt.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+ .fontp{
+    font-family:'a-jannat-lt';
+ }

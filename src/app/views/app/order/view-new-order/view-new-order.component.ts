@@ -33,7 +33,7 @@ export class ViewNewOrderComponent implements OnInit {
   // }
   get() {
     this.OrderService.GetNewOrder().subscribe(res => {
-      console.log(res)
+      // console.log(res)
       this.orders = res
       this.orders.forEach(res => {
         res.recipientPhones = res.recipientPhones.split(',')
@@ -55,23 +55,24 @@ export class ViewNewOrderComponent implements OnInit {
   Agents: User[] = []
   IdsDto: IdsDto = new IdsDto
   MultiAgent(order) {
+    this.order=order
+    // console.log(order)
     if (order.country.agnets.length == 1) {
       this.AgentId = order.country.agnets[0].id
-      this.Accept(order)
+      this.Accept()
     } else {
       this.Agents = order.country.agnets
       this.infoModal.show()
     }
   }
-  Accept(element) {
-    // console.log(element)
-    this.IdsDto.OrderId = element.id
+  Accept() {
+    // console.log( this.order)
+    this.IdsDto.OrderId =  this.order.id
     this.IdsDto.AgentId = this.AgentId
     if (!this.AgentId) return
     else
       this.OrderService.Accept(this.IdsDto).subscribe(res => {
         // this.print(i)
-        this.order = element
         this.IdsDto = new IdsDto
         this.AgentId = null
         this.get()
@@ -92,7 +93,7 @@ export class ViewNewOrderComponent implements OnInit {
     })
   }
   print(i,element) {
-    console.log(this.order)
+    // this.order=element
     element.show=true
     var divToPrint = document.getElementById('contentToConvert-' + i);
     var css = '@page { size: A5 landscape ;margin: 0;color-adjust: exact;-webkit-print-color-adjust: exact;}',

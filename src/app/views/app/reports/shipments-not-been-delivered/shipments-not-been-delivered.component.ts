@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { ClientService } from '../../client/client.service';
 import { Client } from '../../client/client.model';
 import { OrderClientDontDiliverdMoney } from 'src/app/Models/order/order-client-dont-diliverd-money.model';
+import { PointSettingsService } from 'src/app/services/point-settings.service';
 @Component({
   selector: 'app-shipments-not-been-delivered',
   templateUrl: './shipments-not-been-delivered.component.html',
@@ -19,7 +20,7 @@ import { OrderClientDontDiliverdMoney } from 'src/app/Models/order/order-client-
 export class ShipmentsNotBeenDeliveredComponent implements OnInit {
 
   displayedColumns: string[] = ['select', 'index', 'code', 'agent', 'oldCost', 'cost', 'deliveryCost', 'clientCost', 'country', 'region'
-    , 'monePlaced', 'orderplaced', 'date', 'agentPrintNumber', 'clientPrintNumber','note', 'isClientDiliverdMoney'];
+    , 'monePlaced', 'orderplaced', 'date', 'agentPrintNumber', 'clientPrintNumber', 'note', 'isClientDiliverdMoney'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
 
@@ -35,8 +36,8 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => { this.selection.select(row) });
-    this.orders=[]
-    this.ids=[]
+    this.orders = []
+    this.ids = []
   }
 
   /** The label for the checkbox on the passed row */
@@ -72,11 +73,12 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     private orderservice: OrderService,
     public clientService: ClientService,
     private notifications: NotificationsService,
-    public route: Router
+    public route: Router,
+    private pointSettingService: PointSettingsService
   ) { }
   ClientId
   OrderplacedId
-  orderPlace: any[]  = [
+  orderPlace: any[] = [
     { id: 3, name: "في الطريق" },
     { id: 4, name: "تم التسليم" },
     { id: 5, name: "مرتجع كلي" },
@@ -105,6 +107,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   getClients() {
     this.clientService.getClients().subscribe(res => {
       this.Clients = res
+      console.log(res)
     })
   }
   // ChangeClientId() {
@@ -124,6 +127,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   order: OrderClientDontDiliverdMoney
   orderplace
   allFilter() {
+    this.GetSettingLessThanPoint()
     this.order.ClientId = this.ClientId
     this.order.IsClientDeleviredMoney = this.IsClientDeleviredMoney
     this.order.ClientDoNotDeleviredMoney = this.ClientDoNotDeleviredMoney
@@ -136,12 +140,12 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
           if (response.length == 0)
             this.noDataFound = true
           else this.noDataFound = false
-          // console.log(response);
-          var  x= response.sort((a,b)=>a.code-b.code*1);
-          // console.log(response);
-          // console.log(x);
-          this.orderFilter=response
-          
+        // console.log(response);
+        var x = response.sort((a, b) => a.code - b.code * 1);
+        // console.log(response);
+        // console.log(x);
+        this.orderFilter = response
+
         this.dataSource = new MatTableDataSource(x)
         //this.dataSource.data = this.dataSource.data.filter(d => d.agent.id == this.ClientId)
         this.totalCount = response.length
@@ -159,7 +163,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       return
     }
     // console.log(this.orders)
-    this.orderplace=this.orderplace.filter(op => this.orders.filter(o=>o.orderplaced.id==op.id).length>0)
+    this.orderplace = this.orderplace.filter(op => this.orders.filter(o => o.orderplaced.id == op.id).length > 0)
     localStorage.setItem('printclientorderplaced', JSON.stringify(this.orderplace))
     localStorage.setItem('printordersclient', JSON.stringify(this.orders))
     localStorage.setItem('printclient', JSON.stringify(this.Clients.find(c => c.id == this.ClientId)))
@@ -174,7 +178,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     })
   }
   // payForCleint(element): number {
-    
+
   //   if (!element.isClientDiliverdMoney) {
   //     if (element.orderplaced.id == 5)
   //       return 0;
@@ -198,9 +202,18 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   code
   orderFilter
   codeFillter() {
-    this.dataSource.data=this.orderFilter
-    if(this.code)
-    if(this.dataSource.data.length!=0)
-   this.dataSource.data= this.dataSource.data.filter(d=>d.code.includes(this.code))
+    this.dataSource.data = this.orderFilter
+    if (this.code)
+      if (this.dataSource.data.length != 0)
+        this.dataSource.data = this.dataSource.data.filter(d => d.code.includes(this.code))
+  }
+  points:any[]=[]
+  noPoint=0
+  GetSettingLessThanPoint() {
+    var client = this.Clients.find(c => c.id == this.ClientId)
+    this.pointSettingService.GetSettingLessThanPoint(client.points).subscribe(res => {
+      this.points=res
+      console.log(res)
+    })
   }
 }

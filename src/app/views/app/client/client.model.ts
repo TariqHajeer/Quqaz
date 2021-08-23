@@ -17,6 +17,7 @@ export class Client {
   canDelete?:any;
   phones?:any[]
   mail
+  points
 }
 export class Account
     {
