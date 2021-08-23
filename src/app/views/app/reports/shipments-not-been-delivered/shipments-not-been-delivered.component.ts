@@ -110,14 +110,14 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       console.log(res)
     })
   }
-  // ChangeClientId() {
-  //   if (this.ClientId != null) {
-  //     this.filtering.IsClientDiliverdMoney =false
-  //     this.filtering.ClientId=this.ClientId
-  //     this.allFilter();
-  //   }
+  ChangeClientId() {
+    if (this.ClientId) {
+      this.GetSettingLessThanPoint()
+    }
+    else
+    this.points=[]
 
-  // }
+  }
   switchPage(event: PageEvent) {
     this.paging.allItemsLength = event.length
     this.paging.RowCount = event.pageSize
@@ -127,7 +127,6 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   order: OrderClientDontDiliverdMoney
   orderplace
   allFilter() {
-    this.GetSettingLessThanPoint()
     this.order.ClientId = this.ClientId
     this.order.IsClientDeleviredMoney = this.IsClientDeleviredMoney
     this.order.ClientDoNotDeleviredMoney = this.ClientDoNotDeleviredMoney
@@ -210,10 +209,15 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   points:any[]=[]
   noPoint=0
   GetSettingLessThanPoint() {
-    var client = this.Clients.find(c => c.id == this.ClientId)
-    this.pointSettingService.GetSettingLessThanPoint(client.points).subscribe(res => {
-      this.points=res
-      console.log(res)
-    })
+    if(this.ClientId){
+      var client = this.Clients.find(c => c.id == this.ClientId)
+      this.pointSettingService.GetSettingLessThanPoint(client.points).subscribe(res => {
+        this.points=res
+        // console.log(res)
+      })
+    }else{
+      this.points=[]
+    }
+   
   }
 }

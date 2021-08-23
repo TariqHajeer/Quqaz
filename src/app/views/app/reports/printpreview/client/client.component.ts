@@ -96,14 +96,20 @@ export class ClientComponent implements OnInit {
 
   showPrintbtn = false
   dateWithIds: any
+  DeleiverMoneyForClientDto:any
+  pointid
   changeDeleiverMoneyForClient() {
     this.spinner.show()
     this.dateWithIds = {
-      Ids: this.orders.map(c=>({id:c.id,cost:c.payForCleint})),
+      Ids: this.orders.map(c=>({id:c.id})),
       Date: new Date
     } 
+    this.DeleiverMoneyForClientDto={
+      DateWithId:  this.dateWithIds,
+      PointsSettingId:this.pointid
+    }
     // console.log(this.dateWithIds);
-    this.orderservice.DeleiverMoneyForClient(this.dateWithIds).subscribe(res => {
+    this.orderservice.DeleiverMoneyForClient(this.DeleiverMoneyForClientDto).subscribe(res => {
       // console.log(res)
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.showPrintbtn = true

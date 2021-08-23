@@ -5,7 +5,7 @@
         <div class="col-md-4">
           <label>العميل</label>
           <ng-select [(ngModel)]="ClientId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Client"
-            (change)="allFilter()">
+            (change)="allFilter();ChangeClientId()">
             <ng-option *ngFor="let Client of Clients" [value]="Client.id">{{Client.name}}</ng-option>
           </ng-select>
           <br>
@@ -25,7 +25,7 @@
           <label>خصم النقاط</label>
           <ng-select [(ngModel)]="noPoint" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="point">
             <ng-option [value]="0">عدم الخصم</ng-option>
-            <ng-option *ngFor="let point of points" [value]="point.id"><a style="color: rgb(19, 67, 156);">{{point.points}}</a> = {{point.money}}</ng-option>
+            <ng-option *ngFor="let point of points" [value]="point.id">{{point.points}} نقطة = {{point.money}} دينار</ng-option>
           </ng-select>
           <br>
         </div>
