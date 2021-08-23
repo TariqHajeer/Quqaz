@@ -89,6 +89,7 @@ export class SetPrintNumberClientComponent implements OnInit {
   showPrintbtn = false
   destinationPhone
   reportstotal
+  points
   changeDeleiverMoneyForClient() {
     this.getroute.params.subscribe(par => {
       this.printnumber = par['printnumber'] as any
@@ -97,6 +98,7 @@ export class SetPrintNumberClientComponent implements OnInit {
     this.orderservice.GetOrderByClientPrintNumber(this.printnumber).subscribe(res => {
       console.log(res)
       // this.reciptClient()
+      this.points=res.discount
       this.showPrintbtn = true
       this.spinner.hide()
       this.orders = res.orders

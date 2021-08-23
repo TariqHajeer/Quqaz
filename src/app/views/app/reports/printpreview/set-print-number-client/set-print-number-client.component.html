@@ -336,6 +336,43 @@
                     </td>
                     <td colspan="4"></td>
                 </tr>
+                <tr style="font-size: 16px;  background-color: rgb(205, 205, 255);" *ngIf="points">
+                    <td></td>
+
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            النقاط
+                        </div>
+                    </td>
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{points.points}}
+                        </div>
+                    </td>
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            المبلغ
+                        </div>
+                    </td>
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{points.money| number}}
+
+                        </div>
+                    </td>
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            يدفع للعميل
+                        </div>
+                    </td>
+                    <td>
+                        <div style="margin: 1px;border: 1px black solid;padding: 5px;text-align: center;">
+                            {{points.money+clientCalc| number}}
+
+                        </div>
+                    </td>
+                    <td colspan="3"></td>
+                </tr>
                 <tr *ngIf="reports.length!=0" style="text-align: center;background-color: rgba(144, 177, 240, 0.877);">
                     <td colspan="9" style="text-align: center;font-size: 18px;">
                      السندات
