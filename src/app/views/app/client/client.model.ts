@@ -1,3 +1,4 @@
+import { PointSetting } from 'src/app/Models/pointSettings/point-setting.model';
 import { Region } from 'src/app/Models/Regions/region.model';
 
 export class Client {
@@ -17,7 +18,7 @@ export class Client {
   canDelete?:any;
   phones?:any[]
   mail
-  points
+  points:PointSetting[]
 }
 export class Account
     {

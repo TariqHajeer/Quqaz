@@ -115,7 +115,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       this.GetSettingLessThanPoint()
     }
     else
-    this.points=[]
+      this.points = []
 
   }
   switchPage(event: PageEvent) {
@@ -166,7 +166,10 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     localStorage.setItem('printclientorderplaced', JSON.stringify(this.orderplace))
     localStorage.setItem('printordersclient', JSON.stringify(this.orders))
     localStorage.setItem('printclient', JSON.stringify(this.Clients.find(c => c.id == this.ClientId)))
-    localStorage.setItem('pointid',JSON.stringify(this.PointId))
+    if (this.PointId == 0) {
+      localStorage.setItem('point', JSON.stringify(null))
+    } else
+      localStorage.setItem('point', JSON.stringify(this.points.find(p => p.id == this.PointId)))
     this.route.navigate(['app/reports/printclientpreview'])
 
   }
@@ -207,18 +210,18 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       if (this.dataSource.data.length != 0)
         this.dataSource.data = this.dataSource.data.filter(d => d.code.includes(this.code))
   }
-  points:any[]=[]
-  PointId=0
+  points: any[] = []
+  PointId = 0
   GetSettingLessThanPoint() {
-    if(this.ClientId){
+    if (this.ClientId) {
       var client = this.Clients.find(c => c.id == this.ClientId)
       this.pointSettingService.GetSettingLessThanPoint(client.points).subscribe(res => {
-        this.points=res
+        this.points = res
         // console.log(res)
       })
-    }else{
-      this.points=[]
+    } else {
+      this.points = []
     }
-   
+
   }
 }

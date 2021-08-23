@@ -47,7 +47,7 @@ export class IdsDto{
       AgentId
 }
 export class DateWithId<T>{
-      Ids
+      Ids:number[]
       Date
 }
 export class DeleiverMoneyForClientDto{

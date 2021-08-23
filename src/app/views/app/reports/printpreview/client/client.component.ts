@@ -10,6 +10,8 @@ import { ReciptService } from 'src/app/services/recipt.service';
 import { DateWithIds, IdWithCost } from 'src/app/Models/date-with-ids.model';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { DateWithId, DeleiverMoneyForClientDto } from 'src/app/Models/order/order.model';
+import { PointSetting } from 'src/app/Models/pointSettings/point-setting.model';
+import { Client } from '../../../client/client.model';
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
@@ -28,7 +30,7 @@ export class ClientComponent implements OnInit {
   heads = ['ترقيم', 'كود', 'الإجمالي', 'الرسوم', ' يدفع للعميل', 'المحافظة ', 'الهاتف', 'ملاحظات']
   orders: any[] = []
   count = 0
-  client
+  client: Client = new Client()
   dateOfPrint = new Date()
   userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
   printnumber
@@ -37,17 +39,22 @@ export class ClientComponent implements OnInit {
   address = "أربيل - شارع 40 - قرب تقاطع كوك"
   companyPhone = "07514550880 - 07700890880"
   reports: any[] = []
+  points: PointSetting = new PointSetting
   ngOnInit(): void {
     this.PrintNumberOrder = new PrintNumberOrder
+    this.client.points = []
     this.orders = JSON.parse(localStorage.getItem('printordersclient'))
     this.orders = this.orders.sort((a, b) => a.code - b.code)
     // console.log(this.orders)
     this.client = JSON.parse(localStorage.getItem('printclient'))
     this.orderplaced = JSON.parse(localStorage.getItem('printclientorderplaced'))
-    this.pointid=JSON.parse(localStorage.getItem('pointid'))
+
     this.reciptClient()
     this.sumCost()
-
+    this.points = JSON.parse(localStorage.getItem('point'))
+    console.log(this.points)
+    if (this.points)
+      this.pointid = this.points.id
     //  this.getPrintnumber()
   }
   deliveryCostCount
@@ -60,7 +67,7 @@ export class ClientComponent implements OnInit {
         this.count += o.cost
         this.deliveryCostCount += o.deliveryCost
         // console.log(o);
-        this.clientCalc +=o.payForClient;
+        this.clientCalc += o.payForClient;
         // if (!o.isClientDiliverdMoney) {
         //   if (o.orderplaced.id == OrderplacedEnum.CompletelyReturned) {
         //     this.clientCalc += 0
@@ -92,25 +99,25 @@ export class ClientComponent implements OnInit {
         //   }
         // }
       })
-    
+
     return this.count
   }
 
   showPrintbtn = false
   dateWithIds: DateWithId<number[]>
-  DeleiverMoneyForClientDto:DeleiverMoneyForClientDto=new DeleiverMoneyForClientDto()
+  DeleiverMoneyForClientDto: DeleiverMoneyForClientDto = new DeleiverMoneyForClientDto()
   pointid
   changeDeleiverMoneyForClient() {
     this.spinner.show()
     this.dateWithIds = {
-      Ids: this.orders.map(c=>({id:c.id})),
+      Ids: this.orders.map(c => c.id),
       Date: new Date
-    } 
-    if(this.pointid==0)
-    this.pointid=null
-    this.DeleiverMoneyForClientDto={
-      DateWithId:  this.dateWithIds,
-      PointsSettingId:this.pointid
+    }
+    if (this.pointid == 0)
+      this.pointid = null
+    this.DeleiverMoneyForClientDto = {
+      DateWithId: this.dateWithIds,
+      PointsSettingId: this.pointid
     }
     console.log(this.DeleiverMoneyForClientDto);
     this.orderservice.DeleiverMoneyForClient(this.DeleiverMoneyForClientDto).subscribe(res => {
@@ -187,10 +194,10 @@ export class ClientComponent implements OnInit {
   reportstotal
 
   reciptClient() {
-    if(this.orderplaced.filter(o=>o.id==OrderplacedEnum.Unacceptable||o.id==OrderplacedEnum.CompletelyReturned).length>0)return
+    if (this.orderplaced.filter(o => o.id == OrderplacedEnum.Unacceptable || o.id == OrderplacedEnum.CompletelyReturned).length > 0) return
     this.recepitservce.UnPaidRecipt(this.client.id).subscribe(res => {
       this.reports = res
-      this.  reportstotal=0
+      this.reportstotal = 0
       this.reports.forEach(r => {
         this.reportstotal += r.amount
       })
