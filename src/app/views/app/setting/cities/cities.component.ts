@@ -86,6 +86,7 @@ export class CitiesComponent implements OnInit {
         this.notifications.create("error", "الأسم موجود سابقاً", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       }
       this.city.deliveryCost = Number(this.city.deliveryCost);
+      this.city.points = Number(this.city.points);
       this.customService.addOrUpdate(this.apiName, this.city, 'add').subscribe(
         res => {
           this.notifications.create('success', 'تم اضافة مدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
@@ -167,6 +168,7 @@ export class CitiesComponent implements OnInit {
     this.editCity.mediatorId = city.mediator ? city.mediator.id : ''
     this.editCity.deliveryCost = city.deliveryCost
     this.editCity.regions = city.regions
+    this.editCity.points=city.points
 
     // this.editCity.mediatorId=data.mediator.id
     // console.log(data)
@@ -184,6 +186,7 @@ export class CitiesComponent implements OnInit {
     }
     else {
       this.editCity.deliveryCost=this.editCity.deliveryCost*1
+      this.editCity.points =this.editCity.points*1
       this.customService.addOrUpdate(this.apiName, this.editCity, "update").subscribe(res=>{
         this.notifications.create('', 'تم تعديل المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         this.editCity = new CreateCity

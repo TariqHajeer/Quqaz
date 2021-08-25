@@ -4,7 +4,7 @@
 }
 @font-face {
     font-family: 'a-jannat-lt';
-    src: url('/src/assets/fonts/a-jannat-lt.ttf'), url('/src/assets/fonts/a-jannat-lt.ttf') format('truetype');
+    src: local("a-jannat-lt"), url(/src/assets/fonts/a-jannat-lt.ttf) format("truetype");
     font-weight: normal;
     font-style: normal;
 }

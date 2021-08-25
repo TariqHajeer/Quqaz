@@ -108,3 +108,10 @@ h3{
 ng-select{
   overflow: visible;
 }
+@font-face {
+  font-family: 'a-jannat-lt';
+  src: local("a-jannat-lt"), url(/src/assets/fonts/a-jannat-lt.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@import url(https://fonts.google.com/specimen/Tajawal?subset=arabic);

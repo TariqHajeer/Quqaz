@@ -6,5 +6,5 @@ export class CreateCity {
     deliveryCost:number;
     regions:Region[]=[];
     mediatorId
-    points
+    points:number
 }
