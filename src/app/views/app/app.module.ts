@@ -10,7 +10,6 @@ import { GridModule, ToolbarService, PdfExportService } from '@syncfusion/ej2-an
 import { UsersModule } from '../app/users/users.module';
 import { OrderModule } from '../app/order/order.module';
 import { ReportsModule } from '../app/reports/reports.module';
-import { PrintTamplateModule } from '../app/print-tamplate/print-tamplate.module';
 import { SpinnerComponent } from './spinner/spinner.component';
 //////////
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -25,7 +24,6 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     UsersModule,
     OrderModule,
     ReportsModule,
-    PrintTamplateModule,
     NgxSpinnerModule
     
   ],

@@ -18,6 +18,7 @@ import {EffectsModule } from '@ngrx/effects'
 import { NotificationsService, SimpleNotificationsModule } from 'angular2-notifications';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { OnReturnDirective } from './helpers/on-return.directive';
+import { TestComponent } from './test/test.component';
 //import { allIcons, NgxBootstrapIconsModule } from 'ngx-bootstrap-icons';
 
 @NgModule({
@@ -41,6 +42,7 @@ import { OnReturnDirective } from './helpers/on-return.directive';
   declarations: [
     AppComponent,
     OnReturnDirective,
+    TestComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

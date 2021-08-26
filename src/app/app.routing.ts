@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { TestComponent } from './test/test.component';
 
 const routes: Routes = [
   // { path: 'clienthome', loadChildren: () => 
@@ -11,7 +12,10 @@ const routes: Routes = [
   //   redirectTo: 'clienthome',
   //   pathMatch: 'full'
   // }
-  
+  {
+    path:'test1',
+    component:TestComponent
+  },
 ];
 
 @NgModule({
