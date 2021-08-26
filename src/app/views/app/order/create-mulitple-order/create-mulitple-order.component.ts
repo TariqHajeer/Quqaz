@@ -283,6 +283,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
       return
     }
     this.Orders.forEach(o => {
+      o.Date=new Date
       o.Cost = o.Cost * 1
       o.DeliveryCost = o.DeliveryCost * 1
     })

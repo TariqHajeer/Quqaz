@@ -261,6 +261,8 @@ export class CreatemultipulorderagentComponent implements OnInit {
     this.Orders.forEach(o => {
       o.Cost = o.Cost * 1
       o.DeliveryCost = o.DeliveryCost * 1
+      o.Date=new Date
+
     })
     this.spinner.show()
     this.orderservice.createMultiple(this.Orders).subscribe(res => {

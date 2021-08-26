@@ -372,6 +372,8 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     this.Orders.forEach(o => {
       o.Cost = o.Cost * 1
       o.DeliveryCost = o.DeliveryCost * 1
+      o.Date=new Date
+
     })
     this.spinner.show()
     console.log(this.Orders)

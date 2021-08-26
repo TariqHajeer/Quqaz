@@ -369,6 +369,8 @@ deleteCodeAfterChecked(order){
       o.ClientId = this.ClientId
       o.CountryId = this.CountryId
       o.AgentId = this.AgentId
+      o.Date=new Date
+
 
     })
     
