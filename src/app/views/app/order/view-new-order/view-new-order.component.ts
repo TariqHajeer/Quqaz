@@ -46,7 +46,7 @@ export class ViewNewOrderComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.displayedColumns = ['code', 'cost', 'recipientName',
         'recipientPhones', 'address', 'note', 'client', 'country'
-        , 'region', 'agent', 'print', 'Accept', 'DisAccept'];
+        , 'region', 'agent','date', 'print', 'Accept', 'DisAccept'];
     })
 
   }
