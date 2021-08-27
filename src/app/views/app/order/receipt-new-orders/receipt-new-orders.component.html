@@ -12,8 +12,10 @@
             <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/icons.png')" width="275px" height="100px"
                 style="margin-left: 35%;" />
             <p style="text-align: center;font-size: 16px;font-weight: bold;
-            padding: 1px;margin-top:25px; background-color: rgb(204, 203, 203); border-radius: 4px;width: 180px;">
-                التاريخ {{order.date| date:'short'}}
+            padding: 1px;margin-top:25px; background-color: rgb(204, 203, 203); border-radius: 4px;width: 220px;">
+                التاريخ
+                {{order.date  | date:"dd/MM/yyyy"}}   {{order.date  | date:'shortTime'}}
+
             </p>
         </div>
         <div class="col-3">
@@ -249,9 +251,10 @@
                 </tr>
             </tfoot>
         </table> -->
+        <!-- font-family:'Tajawal',sans-serif; -->
         <div class="col-6" style="text-align: center;">
             <div class="fontp" style="padding: 5px;  background-color: rgb(204, 203, 203);
-                           border-radius: 6px;font-weight: bold; font-family:'Tajawal',sans-serif;">
+                           border-radius: 6px;font-weight: bold;">
                 معلومات المرسل
             </div>
         </div>
