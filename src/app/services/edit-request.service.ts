@@ -16,6 +16,6 @@ export class EditRequestService {
     return this.http.put(this.controler + "DisAccpet", id)
   }
   Accpet(id) {
-    return this.http.put(this.controler + "Accpet", id)
+    return this.http.put(this.controler + "Accept", id)
   }
 }

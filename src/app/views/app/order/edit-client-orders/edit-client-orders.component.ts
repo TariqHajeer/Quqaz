@@ -34,7 +34,7 @@ export class EditClientOrdersComponent implements OnInit {
   usernameIsRepeated: boolean = false;
   Get() {
     this.editrequestService.NewEditReuqet().subscribe(res => {
-      console.log(res)
+      // console.log(res)
       this.editRequest = res
       if (this.editRequest.length == 0)
         this.noDataFound = true
