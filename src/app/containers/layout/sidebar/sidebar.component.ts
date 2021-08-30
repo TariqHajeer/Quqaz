@@ -10,6 +10,8 @@ import { UserPermission } from 'src/app/shared/auth.roles';
 import { OrderService } from 'src/app/services/order.service';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { PaymentRequestService } from 'src/app/services/payment-request.service';
+import { EditRequestService } from 'src/app/services/edit-request.service';
+import { EditRequest } from 'src/app/Models/edit-request.model';
 
 @Component({
   selector: 'app-sidebar',
@@ -37,7 +39,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private localStorageService: LocalStorageService,
     private orderService: OrderService,
     private notifications: NotificationsService,
-    private paymentService: PaymentRequestService
+    private paymentService: PaymentRequestService,
+    private editrequestService: EditRequestService,
 
   ) {
 
@@ -111,12 +114,29 @@ export class SidebarComponent implements OnInit, OnDestroy {
       this.countPayment = res.length
     })
   }
+
+  editRequest: EditRequest[] = []
+  countEditClient=0
+  newEditClient=0
+  NewEditClientRequest() {
+    this.editrequestService.NewEditReuqet().subscribe(res => {
+      if (this.countEditClient != res.length) {
+        this.newEditClient = res.length - this.countEditClient
+        let message = ' لديك ' + this.newEditClient + ' من طلبات تعديل العملاء الجديدة'
+        if (this.newEditClient > 0)
+          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+
+      }
+      this.countEditClient = res.length
+    })
+  }
   async ngOnInit() {
     this.getNewOrders()
     this.newPaymentOrders()
     setInterval(() => {
       this.getNewOrders()
       this.newPaymentOrders()
+      this.NewEditClientRequest()
     }, 5000);
     setTimeout(() => {
       this.selectMenu();
@@ -336,15 +356,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   filteredMenuItems(menuItems: IMenuItem[]) {
-    if(menuItems)
-    menuItems.forEach(item => {
-      if (item.to == "/app/client" && item.badge) {
-        item.badgeLable=this.countPayment
-      }
-      if (item.to == "/app/order" && item.badge) {
-        item.badgeLable=this.countNewOrders
-      }
-    })
+    if (menuItems)
+      menuItems.forEach(item => {
+        if (item.to == "/app/client" && item.badge) {
+          item.badgeLable = this.countPayment
+        }
+        if (item.to == "/app/order" && item.badge) {
+          item.badgeLable = this.countNewOrders
+        }
+      })
     // filter the menu by role
     return menuItems
       ? menuItems.filter(
