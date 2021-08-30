@@ -27,6 +27,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   titleAR=environment.appNameAR
   titleEN=environment.appNameEN
+  phone=environment.companyPhones[1]
+  whatsapp=environment.whatsapp
+  address=environment.Address
+  facebook=environment.Facebook
+  instgram=environment.instgram
+  email=environment.email
+  
   adminRoot = 'home';
 
   slideSettings = {

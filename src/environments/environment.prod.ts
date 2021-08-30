@@ -16,7 +16,7 @@ export const environment = {
   Facebook:" القوقز للتوصيل السريع",
   instgram:" quqaz.fast",
   whatsapp:"07714400880",
-  email:"",
+  email:" Support@quqaz.com",
 
 
   // Golden Wings
@@ -30,7 +30,7 @@ export const environment = {
   // Facebook:" الأجنحة الذهبية",
   // instgram:"Golden.Wings",
   // whatsapp:"07714400880",
-  // email:"",
+  // email:" Support@GoldenWings.com",
 
   // template
   SCARF_ANALYTICS: false,

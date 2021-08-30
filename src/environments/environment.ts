@@ -18,11 +18,23 @@ export const environment = {
 
   appNameAR: "شركة القوقز للتوصيل السريع",
   appNameEN: "Quqaz",
+   Address: "اربيل - قرب تقاطع كوك ايه",
+  companyPhones:["07514550880 "," 07700890880"],
+  Facebook:" القوقز للتوصيل السريع",
+  instgram:" quqaz.fast",
+  whatsapp:"07714400880",
+  email:" Support@quqaz.com",
 
   // Golden Wings
 
   // appNameAR:"شركة الأجنحة الذهبية",
   // appNameEN:"Golden Wings",
+  // Address: "اربيل",
+  // companyPhones:["07514550880 "," 07700890880"],
+  // Facebook:" الأجنحة الذهبية",
+  // instgram:"Golden.Wings",
+  // whatsapp:"07714400880",
+  // email:" Support@GoldenWings.com",
 
 };
 
