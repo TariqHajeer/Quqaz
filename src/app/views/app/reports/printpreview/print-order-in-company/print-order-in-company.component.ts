@@ -7,6 +7,7 @@ import { OrderService } from 'src/app/services/order.service';
 import * as jspdf from 'jspdf';
 import { DateIdCost, IdCost } from 'src/app/Models/order/order.model';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-print-order-in-company',
@@ -30,8 +31,8 @@ export class PrintOrderInCompanyComponent implements OnInit {
   userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
   printnumber
   PrintNumberOrder: PrintNumberOrder
-  address = "أربيل - شارع 40 - قرب تقاطع كوك"
-  companyPhone = "07514550880 - 07700890880"
+  address = environment.Address
+  companyPhone = environment.companyPhones[0]+" - "+ environment.companyPhones[1]
   i = 0
   ngOnInit(): void {
     this.PrintNumberOrder = new PrintNumberOrder

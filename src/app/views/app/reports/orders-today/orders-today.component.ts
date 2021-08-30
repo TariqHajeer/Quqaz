@@ -124,6 +124,7 @@ export class OrdersTodayComponent implements OnInit {
   allFilter() {
     // if(!this.filtering.ClientId||!this.filtering.CreatedDate)return
    // else{
+    //  console.log(this.filtering)
       this.spinner.show()
     this.orderservice.WithoutPaging(this.filtering).subscribe(response => {
       this.spinner.hide()
@@ -144,7 +145,7 @@ export class OrdersTodayComponent implements OnInit {
       this.sumCost()
       this.dataSource = new MatTableDataSource(response.data)
       this.totalCount = response.total
-      console.log(response)
+      // console.log(response)
     },
       err => {
         this.spinner.hide()

@@ -8,6 +8,7 @@ import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment.prod';
 @Component({
   selector: 'app-set-print-number',
   templateUrl: './set-print-number.component.html',
@@ -33,8 +34,8 @@ export class SetPrintNumberComponent implements OnInit {
   userName
   printnumber
   PrintNumberOrder: PrintNumberOrder
-  address="أربيل - شارع 40 - قرب تقاطع كوك"
-  companyPhone="07514550880 - 07700890880"
+  address = environment.Address
+  companyPhone = environment.companyPhones[0]+" - "+ environment.companyPhones[1]
   ngOnInit(): void {
 this.changeDeleiverMoneyForClient()
   }

@@ -5,14 +5,34 @@ import { UserPermission } from '../app/shared/auth.roles';
 
 export const environment = {
   production: true,
-  // baseUrl: "https://backend.quqaz.com/",
-  // clientApp:"https://client.quqaz.com",
-  baseUrl: "http://mohammedhatem-001-site4.itempurl.com/",
-  clientApp:"http://mohammedhatem-001-site6.itempurl.com",
-  appNameAR:"شركة القوقز للتوصيل السريع",
-  appNameEN:"Quqaz",
+  // Quqaz
+
+  appNameAR: "شركة القوقز للتوصيل السريع",
+  appNameEN: "Quqaz",
+  baseUrl: "https://backend.quqaz.com/",
+  clientApp: "https://client.quqaz.com",
+  Address: "اربيل - قرب تقاطع كوك ايه",
+  companyPhones:["07514550880 "," 07700890880"],
+  Facebook:" القوقز للتوصيل السريع",
+  instgram:" quqaz.fast",
+  whatsapp:"07714400880",
+  email:"",
+
+
+  // Golden Wings
+
   // appNameAR:"شركة الأجنحة الذهبية",
   // appNameEN:"Golden Wings",
+  // baseUrl: "http://mohammedhatem-001-site4.itempurl.com/",
+  // clientApp:"http://mohammedhatem-001-site6.itempurl.com",
+  //  Address: "اربيل",
+  // companyPhones:["07514550880 "," 07700890880"],
+  // Facebook:" الأجنحة الذهبية",
+  // instgram:"Golden.Wings",
+  // whatsapp:"07714400880",
+  // email:"",
+
+  // template
   SCARF_ANALYTICS: false,
   adminRoot: '/',
   apiUrl: 'https://api.coloredstrategies.com',
@@ -31,5 +51,5 @@ export const environment = {
   defaultDirection: 'rtl',
   themeRadiusStorageKey: 'vien-themeradius',
   isAuthGuardActive: false,
-  
+
 };

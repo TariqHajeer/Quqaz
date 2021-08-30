@@ -10,12 +10,20 @@ export const environment = {
   isMultiColorActive: true,
   isDarkSwitchActive: true,
   defaultColor: 'light.blueyale',
+
   baseUrl: "https://localhost:44333/",
   clientApp: "http://localhost:4201",
-  appNameAR:"شركة القوقز للتوصيل السريع",
-  appNameEN:"Quqaz"
-  // // appNameAR:"شركة الأجنحة الذهبية",
-  // // appNameEN:"Golden Wings"
+
+  // Quqaz
+
+  appNameAR: "شركة القوقز للتوصيل السريع",
+  appNameEN: "Quqaz",
+
+  // Golden Wings
+
+  // appNameAR:"شركة الأجنحة الذهبية",
+  // appNameEN:"Golden Wings",
+
 };
 
 

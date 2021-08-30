@@ -12,6 +12,7 @@ import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { DateWithId, DeleiverMoneyForClientDto } from 'src/app/Models/order/order.model';
 import { PointSetting } from 'src/app/Models/pointSettings/point-setting.model';
 import { Client } from '../../../client/client.model';
+import { environment } from 'src/environments/environment.prod';
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
@@ -36,8 +37,8 @@ export class ClientComponent implements OnInit {
   printnumber
   PrintNumberOrder: PrintNumberOrder
   orderplaced
-  address = "أربيل - شارع 40 - قرب تقاطع كوك"
-  companyPhone = "07514550880 - 07700890880"
+  address = environment.Address
+  companyPhone = environment.companyPhones[0]+" - "+ environment.companyPhones[1]
   reports: any[] = []
   points: PointSetting = new PointSetting
   ngOnInit(): void {

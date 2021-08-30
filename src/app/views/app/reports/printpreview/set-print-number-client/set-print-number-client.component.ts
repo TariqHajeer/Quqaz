@@ -9,6 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ReciptService } from 'src/app/services/recipt.service';
 import { ActivatedRoute } from '@angular/router';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-set-print-number-client',
@@ -36,8 +37,8 @@ export class SetPrintNumberClientComponent implements OnInit {
   PrintNumberOrder: PrintNumberOrder
   reports: any[] = []
   clientCalc = 0
-  address = "أربيل - شارع 40 - قرب تقاطع كوك"
-  companyPhone = "07514550880 - 07700890880"
+  address = environment.Address
+  companyPhone = environment.companyPhones[0]+" - "+ environment.companyPhones[1]
   ngOnInit(): void {
 
     this.changeDeleiverMoneyForClient()

@@ -10,6 +10,7 @@ import html2canvas from 'html2canvas';
 import * as jsPDF from 'jspdf';
 import { DateWithIds } from 'src/app/Models/date-with-ids.model';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-agent',
@@ -33,8 +34,8 @@ export class AgentComponent implements OnInit {
   userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
   printnumber
   PrintNumberOrder: PrintNumberOrder
-  address = "أربيل - شارع 40 - قرب تقاطع كوك"
-  companyPhone = "07514550880 - 07700890880"
+  address = environment.Address
+  companyPhone = environment.companyPhones[0]+" - "+ environment.companyPhones[1]
   ngOnInit(): void {
     this.PrintNumberOrder = new PrintNumberOrder
     this.orders = JSON.parse(localStorage.getItem('printordersagent'))
