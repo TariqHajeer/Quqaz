@@ -65,6 +65,8 @@ export class SearchOrderComponent implements OnInit {
   carback = false
   showordercar = false
   multiordercar = false
+  titleAR=environment.appNameAR
+  titleEN=environment.appNameEN
   getOrder() {
     this.formVisble = false
     this.notFound = false

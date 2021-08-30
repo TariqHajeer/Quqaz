@@ -18,6 +18,8 @@ export class ClientHomeComponent implements OnInit {
 
   clientURL = environment.clientApp
   showMobileMenu = false;
+  titleAR=environment.appNameAR
+  titleEN=environment.appNameEN
   @HostListener("window:resize", ["$event"])
   onResize(event) {
     const homeRect = this.elRef.nativeElement

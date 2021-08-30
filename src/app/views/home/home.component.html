@@ -1,7 +1,7 @@
 <div [ngClass]="{'landing-page': true,'show-mobile-menu': showMobileMenu}">
     <div class="mobile-menu" (click)="$event.stopPropagation()">
         <a (click)="scrollTo('#home')" href="javascript:;">
-            <span>Quqaz</span>
+            <span>{{titleEN}}</span>
         </a>
         <ul class="navbar-nav">
             <li class="nav-item"><a (click)="scrollTo('#home')" href="javascript:;">الرئيسية</a></li>
@@ -62,7 +62,7 @@
                         <div class="col-6 col-xl-4 col-lg-5 col-md-6">
                             <div class="home-text">
                                 <!-- {{titleAR}}  -->
-                                <div class="display-1">شركة القوقز<br /></div>
+                                <div class="display-1">  شركة القوقز  <br /></div>
                                 <p class="white mb-5">
                                     للتوصيل السريع
                                     <!-- <br />

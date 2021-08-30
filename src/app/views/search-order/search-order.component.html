@@ -1,7 +1,7 @@
 <div [ngClass]="{'landing-page': true,'show-mobile-menu': showMobileMenu}">
     <div class="mobile-menu" (click)="$event.stopPropagation()">
         <a (click)="home()" href="javascript:;">
-            <span>Quqaz</span>
+            <span>{{titleEN}}</span>
         </a>
         <ul class="navbar-nav">
             <li class="nav-item"><a (click)="home()" href="javascript:;">الرئيسية</a></li>
@@ -18,8 +18,8 @@
             <nav>
                 <div class="container d-flex align-items-center justify-content-between">
                     <a class="navbar-logo pull-left" (click)="home()" href="javascript:;">
-                        <span class="white h1">Quqaz</span>
-                        <span class="dark h1">Quqaz</span>
+                        <span class="white">{{titleEN}}</span>
+                        <span class="dark ">{{titleEN}}</span>
                     </a>
                     <ul class="navbar-nav d-none d-lg-flex flex-row">
                         <li class="nav-item"><a (click)="home()" href="javascript:;">الرئيسية</a></li>
@@ -183,7 +183,7 @@
                         </div>
                         <div class="col-12 text-center footer-content">
                             <a (click)="home()" href="javascript:;">
-                                Quqaz
+                                {{titleEN}}
                                 <!-- <img class="footer-logo" alt="footer logo" src="/assets/logos/white-full.svg" /> -->
                             </a>
                         </div>
@@ -193,7 +193,7 @@
                     <div class="row">
                         <div class="col-12"></div>
                         <div class="col-12 text-center">
-                            <p class="mb-0">2021 © Quqaz</p>
+                            <p class="mb-0">2021 © {{titleEN}}</p>
                         </div>
                     </div>
                 </div>
