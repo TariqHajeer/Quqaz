@@ -13,6 +13,7 @@ import { DateWithId, DeleiverMoneyForClientDto } from 'src/app/Models/order/orde
 import { PointSetting } from 'src/app/Models/pointSettings/point-setting.model';
 import { Client } from '../../../client/client.model';
 import { environment } from 'src/environments/environment.prod';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
@@ -25,7 +26,8 @@ export class ClientComponent implements OnInit {
     public sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef,
     private spinner: NgxSpinnerService,
-    private recepitservce: ReciptService
+    private recepitservce: ReciptService,
+    private router:Router
   ) { }
   // 'موقع المبلغ', 'حالة الشحنة '
   heads = ['ترقيم', 'كود', 'الإجمالي', 'الرسوم', ' يدفع للعميل', 'المحافظة ', 'الهاتف', 'ملاحظات']
@@ -41,22 +43,34 @@ export class ClientComponent implements OnInit {
   companyPhone = environment.companyPhones[0]+" - "+ environment.companyPhones[1]
   reports: any[] = []
   points: PointSetting = new PointSetting
+  reloadPage
+  reloadPrintNumber
   ngOnInit(): void {
     this.PrintNumberOrder = new PrintNumberOrder
     this.client.points = []
-    this.orders = JSON.parse(localStorage.getItem('printordersclient'))
-    this.orders = this.orders.sort((a, b) => a.code - b.code)
-    // console.log(this.orders)
-    this.client = JSON.parse(localStorage.getItem('printclient'))
-    this.orderplaced = JSON.parse(localStorage.getItem('printclientorderplaced'))
-
-    this.reciptClient()
-    this.sumCost()
-    this.points = JSON.parse(localStorage.getItem('point'))
-    console.log(this.points)
-    if (this.points)
-      this.pointid = this.points.id
-    //  this.getPrintnumber()
+    this.reloadPage= JSON.parse(localStorage.getItem('reloadPage'))
+    console.log(this.reloadPage)
+    if(this.reloadPage)
+    {
+      this.showPrintbtn=true
+      this.printnumber=JSON.parse(localStorage.getItem('reloadPrintNumber'))
+    }
+      this.orders = JSON.parse(localStorage.getItem('printordersclient'))
+      this.orders = this.orders.sort((a, b) => a.code - b.code)
+      // console.log(this.orders)
+      this.client = JSON.parse(localStorage.getItem('printclient'))
+      this.orderplaced = JSON.parse(localStorage.getItem('printclientorderplaced'))
+      this.reciptClient()
+      this.sumCost()
+      this.points = JSON.parse(localStorage.getItem('point'))
+      // console.log(this.points)
+      if (this.points)
+        this.pointid = this.points.id
+      //  this.getPrintnumber()
+   
+    // else
+    // this.router.navigate(['/app/reports/Shipmentsnotbeendelivered'])
+   
   }
   deliveryCostCount
   sumCost() {
@@ -121,7 +135,11 @@ export class ClientComponent implements OnInit {
     console.log(this.DeleiverMoneyForClientDto);
     this.orderservice.DeleiverMoneyForClient(this.DeleiverMoneyForClientDto).subscribe(res => {
       // console.log(res)
-      this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.reloadPage=true
+      localStorage.setItem('reloadPage',this.reloadPage)
+      this.reloadPrintNumber=res.printNumber
+      localStorage.setItem('reloadPrintNumber',this.reloadPrintNumber)
+      this.notifications.create('success', 'تم تسليم  المبلغ  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.showPrintbtn = true
       this.spinner.hide()
       this.printnumber = res.printNumber

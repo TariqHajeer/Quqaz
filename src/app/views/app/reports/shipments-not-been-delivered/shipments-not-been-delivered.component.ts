@@ -94,6 +94,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   @Input() totalCount: number;
 
   ngOnInit(): void {
+    localStorage.removeItem('reloadPage')
     localStorage.removeItem('printordersclient')
     localStorage.removeItem('printclient')
     localStorage.removeItem('printclientorderplaced')
