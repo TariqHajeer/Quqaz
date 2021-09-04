@@ -37,7 +37,7 @@ export class ReceiptAndExchangeComponent implements OnInit {
     this.client.date=this.dateOfPrint
     this.client.ClinetId=  this.client.client.id
     this.client.IsPay = true
-    this.client.Amount =-1*( this.client.Amount)
+    this.client.Amount =-1*Number( this.client.Amount)
     if(!this.client.Manager||!this.client.About||!this.client.Amount){
       return
     }
@@ -57,7 +57,7 @@ export class ReceiptAndExchangeComponent implements OnInit {
     //قبض
     this.client.ClinetId=  this.client.client.id
     this.client.IsPay = false
-    this.client.Amount =1*( this.client.Amount)
+    this.client.Amount =1*Number( this.client.Amount)
     this.client.date=this.dateOfPrint
     if(!this.client.Manager||!this.client.About||!this.client.Amount){
       return

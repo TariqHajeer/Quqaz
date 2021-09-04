@@ -92,6 +92,6 @@ export class ReceiptsAndExchangesComponent implements OnInit {
       // location.reload();
       // this.get()
 
-    }, 10);
+    }, 1000);
   }
 }
