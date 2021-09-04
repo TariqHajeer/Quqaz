@@ -165,7 +165,7 @@ export class ClientComponent implements OnInit {
       newWin?.close();
       // location.reload();
 
-    }, 10);
+    }, 1000);
   }
   clientCalc = 0
   // payForCleint(element): number {

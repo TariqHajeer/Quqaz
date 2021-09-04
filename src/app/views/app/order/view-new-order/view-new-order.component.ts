@@ -111,7 +111,7 @@ export class ViewNewOrderComponent implements OnInit {
       // location.reload();
       // this.get()
 
-    }, 10);
+    }, 1000);
   }
   code
   codeFillter() {

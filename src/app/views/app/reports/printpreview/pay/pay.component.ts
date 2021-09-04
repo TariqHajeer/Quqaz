@@ -79,6 +79,6 @@ export class PayComponent implements OnInit {
       newWin?.close();
       // location.reload();
 
-    }, 10);
+    }, 1000);
   }
 }

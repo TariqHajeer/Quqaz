@@ -188,6 +188,6 @@ export class PrintOrderInCompanyComponent implements OnInit {
       newWin?.close();
       // location.reload();
 
-    }, 10);
+    }, 1000);
   }
 }

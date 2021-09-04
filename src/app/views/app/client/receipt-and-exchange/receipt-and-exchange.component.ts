@@ -102,7 +102,7 @@ export class ReceiptAndExchangeComponent implements OnInit {
       newWin?.close();
       // location.reload();
 
-    }, 10);
+    }, 1000);
   }
   // validation():boolean{
   //   if(!this.client.Manager||!this.client.About||!this.client.Amount)return true
