@@ -211,13 +211,17 @@ export class ClientComponent implements OnInit {
   reportstotal
 
   reciptClient() {
-    if (this.orderplaced.filter(o => o.id == OrderplacedEnum.Unacceptable || o.id == OrderplacedEnum.CompletelyReturned).length > 0) return
-    this.recepitservce.UnPaidRecipt(this.client.id).subscribe(res => {
-      this.reports = res
-      this.reportstotal = 0
-      this.reports.forEach(r => {
-        this.reportstotal += r.amount
+    if (this.orderplaced.filter(o => o.id == OrderplacedEnum.Way || o.id == OrderplacedEnum.PartialReturned
+      || o.id == OrderplacedEnum.Delivered).length > 0) {
+      this.recepitservce.UnPaidRecipt(this.client.id).subscribe(res => {
+        this.reports = res
+        this.reportstotal = 0
+        this.reports.forEach(r => {
+          this.reportstotal += r.amount
+        })
       })
-    })
+    }
+    else return
+ 
   }
 }
