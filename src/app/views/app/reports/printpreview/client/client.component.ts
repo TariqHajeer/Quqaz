@@ -215,6 +215,7 @@ export class ClientComponent implements OnInit {
       || o.id == OrderplacedEnum.Delivered).length > 0) {
       this.recepitservce.UnPaidRecipt(this.client.id).subscribe(res => {
         this.reports = res
+        console.log(res)
         this.reportstotal = 0
         this.reports.forEach(r => {
           this.reportstotal += r.amount

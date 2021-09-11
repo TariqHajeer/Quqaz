@@ -4,6 +4,7 @@ import { AuthGuard } from 'src/app/shared/auth.guard';
 import { UserPermission } from 'src/app/shared/auth.roles';
 import { AgentPrintComponent } from './agent-print/agent-print.component';
 import { AgentStatisticsComponent } from './agent-statistics/agent-statistics.component';
+import { ChangeAgentByOrdersComponent } from './change-agent-by-orders/change-agent-by-orders.component';
 import { ClientOrderComponent } from './client-order/client-order.component';
 import { ClientPrintComponent } from './client-print/client-print.component';
 import { OrderInCompanyComponent } from './order-in-company/order-in-company.component';
@@ -131,6 +132,11 @@ const routes: Routes = [
   {
     path:'ordersUnacceptable',
     component: OrdersUnacceptableComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
+  },
+  {
+    path:'changeagentbyorders',
+    component: ChangeAgentByOrdersComponent,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowReports]}
   },
 ];

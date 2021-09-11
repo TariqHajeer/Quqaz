@@ -40,6 +40,7 @@ import { ReceiptOrderInCompanyComponent } from './print/receipt-order-in-company
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { OrdersTodayComponent } from './orders-today/orders-today.component';
 import { OrdersUnacceptableComponent } from './orders-unacceptable/orders-unacceptable.component';
+import { ChangeAgentByOrdersComponent } from './change-agent-by-orders/change-agent-by-orders.component';
 @NgModule({
   declarations: [ShipmentInStockComponent,
     ClientOrderComponent,
@@ -65,7 +66,8 @@ import { OrdersUnacceptableComponent } from './orders-unacceptable/orders-unacce
     PrintOrderInCompanyComponent,
     ReceiptOrderInCompanyComponent,
     OrdersTodayComponent,
-    OrdersUnacceptableComponent,],
+    OrdersUnacceptableComponent,
+    ChangeAgentByOrdersComponent,],
   imports: [
     CommonModule,
     ReportsRoutingModule,

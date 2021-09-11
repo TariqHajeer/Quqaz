@@ -132,6 +132,13 @@ const data: IMenuItem[] = [
           },
           {
             icon: 'simple-icon-layers',
+            label: 'نقل الطلبات الى مندوب آخر',
+            to: `${adminRoot}/reports/changeagentbyorders`,
+            //permission:[UserPermission.ShowOrder]
+
+          },
+          {
+            icon: 'simple-icon-layers',
             label: 'تفاصيل المندوبين ',
             to: `${adminRoot}/reports/AgentStatistics`,
             //permission:[UserPermission.ShowOrder]
