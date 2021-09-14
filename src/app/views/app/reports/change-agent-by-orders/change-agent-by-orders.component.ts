@@ -136,7 +136,10 @@ moveOrders() {
     return
   }
   // this.orderservice.changeAgentOrders(this.orders,this.newAgentId)
- 
+  if ( this.filtering.AgentId==this.newAgentId) {
+    this.notifications.create('error', '   يجب اختيار مندوب مختلف ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    return
+  }
 }
 
 
