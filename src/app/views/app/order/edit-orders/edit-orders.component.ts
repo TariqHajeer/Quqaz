@@ -415,7 +415,7 @@ export class EditOrdersComponent implements OnInit {
       newWin?.close();
       // location.reload();
 
-    }, 10);
+    }, 1000);
   }
   printagent(number){
     this.router.navigate(['/app/reports/agentprintnumber/', number])
