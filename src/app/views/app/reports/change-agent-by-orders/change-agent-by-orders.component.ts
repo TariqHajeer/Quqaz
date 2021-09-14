@@ -113,6 +113,7 @@ switchPage(event: PageEvent) {
   //this.allFilter();
 }
 allFilter() {
+  if(!this.filtering.AgentId||!this.filtering.CountryId)return
   this.filtering.OrderplacedId = 2
   this.orderservice.WithoutPaging(this.filtering).subscribe(response => {
     if (response)
