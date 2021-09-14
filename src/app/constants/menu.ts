@@ -55,6 +55,13 @@ const data: IMenuItem[] = [
       },
       {
         icon: 'iconsminds-box-close',
+        label: 'نقل الطلبات الى مندوب آخر',
+        to: `${adminRoot}/reports/changeagentbyorders`,
+        //permission:[UserPermission.ShowOrder]
+
+      },
+      {
+        icon: 'iconsminds-box-close',
         label: ' طلبات عند العميل ',
         to: `${adminRoot}/order/orderswithclient`,
         //permission:[UserPermission.AddOrder]
@@ -130,13 +137,7 @@ const data: IMenuItem[] = [
             //permission:[UserPermission.ShowOrder]
 
           },
-          {
-            icon: 'simple-icon-layers',
-            label: 'نقل الطلبات الى مندوب آخر',
-            to: `${adminRoot}/reports/changeagentbyorders`,
-            //permission:[UserPermission.ShowOrder]
-
-          },
+          
           {
             icon: 'simple-icon-layers',
             label: 'تفاصيل المندوبين ',

@@ -276,8 +276,8 @@ export class OrderService {
       params = params.append("ClientId", filter.ClientId);
     return this.http.get<any>(this.controler + "OrderAtClient", { params: params })
   }
-  changeAgentOrders(Orders,agent){
-
+  changeAgentOrders(moveOrder) {
+    return this.http.put(this.controler+"TransferOrderToAnotherAgnet",moveOrder)
   }
 }
 

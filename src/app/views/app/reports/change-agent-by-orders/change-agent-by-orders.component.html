@@ -12,7 +12,7 @@
         </div>
         <div class="col-md-3">
           <label>المحافظة</label>
-          <ng-select appOnReturn (change)="allFilter()" [(ngModel)]="filtering.CountryId" 
+          <ng-select appOnReturn (change)="ChangeCountry()" [(ngModel)]="filtering.CountryId" 
               [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Country">
               <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
           </ng-select>
@@ -22,7 +22,7 @@
         <label>المندوب الجديد</label>
         <ng-select [(ngModel)]="newAgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
             name="Agent" >
-            <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
+            <ng-option *ngFor="let Agent of newAgents" [value]="Agent.id">{{Agent.name}}</ng-option>
         </ng-select>
     </div>
     <!-- <div class="col-md-3">
