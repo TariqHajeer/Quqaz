@@ -25,7 +25,10 @@ export class ClientPointComponent implements OnInit {
     )
   }
   GiveOrDiscountPoints() {
-    console.log(this.GiveOrDiscountPointsDto)
+    if(!this.GiveOrDiscountPointsDto.Points||!this.GiveOrDiscountPointsDto.IsGive||!this.GiveOrDiscountPointsDto.ClientId){
+      this.notifications.create('Error', 'يجب اختيار جميع الحقول', NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
+      return
+    }
     this.GiveOrDiscountPointsDto.Points = Number(this.GiveOrDiscountPointsDto.Points)
     this.clientService.GiveOrDiscountPoints(this.GiveOrDiscountPointsDto).subscribe(res => {
       if (!this.GiveOrDiscountPointsDto.IsGive)
