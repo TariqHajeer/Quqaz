@@ -207,6 +207,7 @@ const data: IMenuItem[] = [
 
     
           // },
+         
           {
             icon: 'simple-icon-layers',
             label: 'عمليات الطباعة ',
@@ -290,7 +291,14 @@ const data: IMenuItem[] = [
         //permission:[UserPermission.ShowOrder]
 
       },
+      {
+        icon: 'simple-icon-layers',
+        label: 'خصم و إعطاء النقاط ',
+        to: `${adminRoot}/client/clientPoint`,
+        //permission:[UserPermission.ShowOrder]
 
+
+      },
       
     ],
     //permission:[UserPermission.ShowClient]

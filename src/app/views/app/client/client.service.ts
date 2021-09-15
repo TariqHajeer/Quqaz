@@ -53,5 +53,7 @@ export class ClientService {
   Account(item){
     return this.http.post(this.controler+"Account",item)
   }
- 
+  GiveOrDiscountPoints(item){
+    return this.http.post(this.controler+"GiveOrDiscountPoints",item)
+  }
 }

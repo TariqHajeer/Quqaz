@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/auth.guard';
 import { UserPermission } from 'src/app/shared/auth.roles';
 import { AddClientComponent } from './add-client/add-client.component';
+import { ClientPointComponent } from './client-point/client-point.component';
 import { EditClientComponent } from './edit-client/edit-client.component';
 import { ReceiptAndExchangeComponent } from './receipt-and-exchange/receipt-and-exchange.component';
 import { ViewClientsComponent } from './view-clients/view-clients.component';
@@ -27,6 +28,10 @@ const routes: Routes = [
     {
       path:'ReceiptAndExchange',
       component:ReceiptAndExchangeComponent ,canActivate: [AuthGuard],
+    },
+    {
+      path:'clientPoint',
+      component:ClientPointComponent ,canActivate: [AuthGuard],
     }
 ];
 

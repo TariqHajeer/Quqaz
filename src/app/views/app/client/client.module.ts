@@ -16,10 +16,12 @@ import { EditClientComponent } from './edit-client/edit-client.component';
 import { ReceiptAndExchangeComponent } from './receipt-and-exchange/receipt-and-exchange.component';
 import { NgxPrintModule } from 'ngx-print';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { ClientPointComponent } from './client-point/client-point.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 @NgModule({
-  declarations: [AddClientComponent, ViewClientsComponent, EditClientComponent, ReceiptAndExchangeComponent],
+  declarations: [AddClientComponent, ViewClientsComponent, EditClientComponent, ReceiptAndExchangeComponent, ClientPointComponent],
   imports: [
     CommonModule,
     ClientRoutingModule,
@@ -34,7 +36,9 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     BsDatepickerModule.forRoot(),
     NgSelectModule,
     NgxPrintModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    MatCheckboxModule,
+
 
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
