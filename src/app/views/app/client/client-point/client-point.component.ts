@@ -26,7 +26,7 @@ export class ClientPointComponent implements OnInit {
   }
   GiveOrDiscountPoints() {
     if(!this.GiveOrDiscountPointsDto.Points||!this.GiveOrDiscountPointsDto.IsGive||!this.GiveOrDiscountPointsDto.ClientId){
-      this.notifications.create('Error', 'يجب اختيار جميع الحقول', NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
+      this.notifications.create('error', 'يجب اختيار جميع الحقول', NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       return
     }
     this.GiveOrDiscountPointsDto.Points = Number(this.GiveOrDiscountPointsDto.Points)
