@@ -3,10 +3,14 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { City } from 'src/app/Models/Cities/city.Model';
 import { DateWithIds } from 'src/app/Models/date-with-ids.model';
 import { IdsDto, Order } from 'src/app/Models/order/order.model';
 import { User } from 'src/app/Models/user/user.model';
+import { CustomService } from 'src/app/services/custom.service';
 import { OrderService } from 'src/app/services/order.service';
+import { Client } from '../../client/client.model';
+import { ClientService } from '../../client/client.service';
 
 @Component({
   selector: 'app-view-new-order',
@@ -21,16 +25,21 @@ export class ViewNewOrderComponent implements OnInit {
   orders: Order[] = []
   noDataFound: boolean = false
 
-  constructor(private OrderService: OrderService) { }
+  constructor(private OrderService: OrderService,
+    private clientService: ClientService
+    , private customerService: CustomService,) { }
   @ViewChild('infoModal') public infoModal: ModalDirective;
 
   ngOnInit(): void {
     this.get()
+    this.GetClient()
+    this.Getcities()
     // this.order = new Order()
   }
   // ngOnChanges() {
   //   this.print()
   // }
+
   get() {
     this.OrderService.GetNewOrder().subscribe(res => {
       // console.log(res)
@@ -46,7 +55,7 @@ export class ViewNewOrderComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.displayedColumns = ['code', 'cost', 'recipientName',
         'recipientPhones', 'address', 'note', 'client', 'country'
-        , 'region', 'agent','date', 'print', 'Accept', 'DisAccept'];
+        , 'region', 'agent', 'date', 'print', 'Accept', 'DisAccept'];
     })
 
   }
@@ -55,7 +64,7 @@ export class ViewNewOrderComponent implements OnInit {
   Agents: User[] = []
   IdsDto: IdsDto = new IdsDto
   MultiAgent(order) {
-    this.order=order
+    this.order = order
     // console.log(order)
     if (order.country.agnets.length == 1) {
       this.AgentId = order.country.agnets[0].id
@@ -67,7 +76,7 @@ export class ViewNewOrderComponent implements OnInit {
   }
   Accept() {
     // console.log( this.order)
-    this.IdsDto.OrderId =  this.order.id
+    this.IdsDto.OrderId = this.order.id
     this.IdsDto.AgentId = this.AgentId
     if (!this.AgentId) return
     else
@@ -92,9 +101,9 @@ export class ViewNewOrderComponent implements OnInit {
       // this.get()
     })
   }
-  print(i,element) {
+  print(i, element) {
     // this.order=element
-    element.show=true
+    element.show = true
     var divToPrint = document.getElementById('contentToConvert-' + i);
     var css = '@page { size: A5 landscape ;margin: 0;color-adjust: exact;-webkit-print-color-adjust: exact;}',
       style = document.createElement('style');
@@ -113,12 +122,36 @@ export class ViewNewOrderComponent implements OnInit {
 
     }, 1000);
   }
+  cityapi = "Country"
+  clients: Client[] = []
+  cities: City[] = []
+  GetClient() {
+    this.clientService.getClients().subscribe(res => {
+      this.clients = res
+    })
+  }
+  Getcities() {
+    this.customerService.getAll(this.cityapi).subscribe(res => {
+      this.cities = res
+    })
+  }
   code
+  CountryId
+  ClientId
   codeFillter() {
     this.dataSource.data = this.orders
-    if (this.code)
-      if (this.dataSource.data.length != 0)
+    if (this.dataSource.data.length != 0) {
+      if (this.code) {
         this.dataSource.data = this.dataSource.data.filter(d => d.code.includes(this.code))
+      }
+      if (this.ClientId) {
+        this.dataSource.data = this.dataSource.data.filter(d => d.client.id == this.ClientId)
+      }
+      if (this.CountryId) {
+        this.dataSource.data = this.dataSource.data.filter(d => d.country.id == this.CountryId)
+      }
+    }
+  
   }
   // @HostListener("window:afterprint", ["$event"])
   // onafterPrint(event) {

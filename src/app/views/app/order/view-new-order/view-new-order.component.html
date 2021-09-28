@@ -8,12 +8,28 @@
                 <h3>الطلبات الجديدة :{{orders.length}}</h3>
                 <div class="row">
                     <div class="col-md-3">
-
+                        <label>الكود</label>
                         <input type="text" class="form-control" (keyup)="codeFillter()"
                             [ngModelOptions]="{standalone: true}" [(ngModel)]="code"
                             placeholder="بحث على حسب كود الشحنة">
                     </div>
-
+                        <div class="col-md-3">
+                            <label>العميل</label>
+                            <ng-select appendTo="body" [(ngModel)]="ClientId" (change)="codeFillter()"
+                                [ngModelOptions]="{standalone: true}" [clearable]="false" name="Client">
+                                <ng-option *ngFor="let Client of clients" [value]="Client.id">{{Client.name}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                        <div class="col-md-3">
+                            <label>المحافظة</label>
+                
+                            <ng-select appendTo="body" [(ngModel)]="CountryId" [ngModelOptions]="{standalone: true}"
+                                (ngModelChange)="codeFillter()" [clearable]="false" name="Country">
+                                <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
+                            </ng-select>
+                
+                        </div>
                 </div>
             </div>
         </div>
