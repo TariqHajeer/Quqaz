@@ -76,10 +76,7 @@ export class CreatemultipulorderagentComponent implements OnInit {
     if (order && order.length != 0) {
       this.Orders = order
     }
-    var agent = JSON.parse(localStorage.getItem('agentid'))
-    if (agent ) {
-      this.AgentId = agent
-    }
+  
   }
 
   int() {
@@ -89,7 +86,14 @@ export class CreatemultipulorderagentComponent implements OnInit {
   }
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
-      this.Agents = res     
+      this.Agents = res  
+      var agent = JSON.parse(localStorage.getItem('agentid'))
+      if (agent ) {
+        this.AgentId = agent
+        var find=this.Agents.find(a=>a.id==this.AgentId)
+        this.cities=find.countries
+        this.Order.CountryId=this.cities[0].id
+      }   
     })
   }
   // disabldAgentId=false
@@ -108,9 +112,18 @@ export class CreatemultipulorderagentComponent implements OnInit {
     })
   }
   Getcities() {
-    this.customerService.getAll(this.cityapi).subscribe(res => {
-      this.cities = res
-    })
+    // this.customerService.getAll(this.cityapi).subscribe(res => {
+    //   if(this.AgentId){
+    //     this.cities = res
+    //     this.cities=this.cities.filter(c=>c.agnets.filter(a=>a.id==this.AgentId))
+    //   }
+    
+    // //  console.log (this.cities)
+    // })
+    if(this.AgentId){
+    var find=this.Agents.find(a=>a.id==this.AgentId)
+    this.cities=find.countries
+    }
   }
 
   changeCountry() {

@@ -203,6 +203,9 @@ direction:rtl;margin-top: 0%;">
                     <td style="width: 15%;border: 1px black solid;padding: 5px;text-align: center">
                         {{order.cost| number}}
                     </td>
+                    <td style="width: 15%;border: 1px black solid;padding: 5px;text-align: center">
+                        {{order.date|  date:"dd/MM/yyyy"}}
+                    </td>
                     <td style="width: 10%;border: 1px black solid;padding: 5px;text-align: center">
                         {{order.country.name}}
                     </td>
@@ -232,7 +235,7 @@ direction:rtl;margin-top: 0%;">
                     <td style="border: 1px black solid;padding: 5px;text-align: center;">
                         <!----> {{ count| number}}
                     </td>
-                    <td style="border: 1px black solid;padding: 5px;text-align: center;" colspan="6"></td>
+                    <td style="border: 1px black solid;padding: 5px;text-align: center;" colspan="7"></td>
 
                 </tr>
             </tbody>

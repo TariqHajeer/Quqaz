@@ -6,6 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { ReceiptAndExchange } from 'src/app/Models/receipt-and-exchange.model';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-receipt-and-exchange',
@@ -27,11 +28,15 @@ export class ReceiptAndExchangeComponent implements OnInit {
   }
   Account:Account
   client: ReceiptAndExchange 
-  address = "اربيل - برايتي - قرب ماركيت آيه "
+  // address = "اربيل - برايتي - قرب ماركيت آيه "
   companyPhone = "07714400880"
   showButton=true
   dateOfPrint = new Date()
-
+  agentPhone=environment.companyPhones[1]
+  address=environment.Address
+  whatsapp=environment.whatsapp
+  instgram=environment.instgram
+  facebook=environment.Facebook
   printpay() {
     //صرف
     this.client.date=this.dateOfPrint

@@ -36,6 +36,7 @@ export class ClientPrintComponent implements OnInit {
   Clients: Client[] = []
   Client
   ClientPrints
+  Code
   Get() {
     this.orderService.GetClientprint(this.paging, this.printNmber,this.Client).subscribe(res => {
       // this.orderFilter=res

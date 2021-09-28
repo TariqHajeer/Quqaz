@@ -10,4 +10,5 @@ export class City {
     regions:Region[] =[];
     isMain:boolean
     points
+    agnets
 }

@@ -11,6 +11,10 @@
   
       <br>
     </div>
+    <div class="col-md-3">
+      <input type="text" class="form-control"placeholder="بحث على حسب    الكود"
+      (keyup.enter)="printNmberFillter()"  [ngModelOptions]="{standalone: true}" [(ngModel)]="Code">
+    </div>
   <div class="col-md-1">
   <a class="btn" (click)="printNmberFillter()">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
