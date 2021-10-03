@@ -104,7 +104,7 @@ export class ViewNewOrderComponent implements OnInit {
   print(i, element) {
     // this.order=element
     this.OrderService.AddPrintNumber(element.id).subscribe(res=>{
-      
+      console.log(res)
     })
     element.show = true
     var divToPrint = document.getElementById('contentToConvert-' + i);
