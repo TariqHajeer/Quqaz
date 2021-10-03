@@ -197,7 +197,7 @@ export class OrderService {
     return this.http.get<any>(this.controler + "GetOrderByClientPrintNumber", { params: params })
   }
 
-  GetClientprint(paging, number, client) {
+  GetClientprint(paging, number, client,code) {
     let params = new HttpParams();
     if (paging.RowCount != undefined || paging.RowCount != null)
       params = params.append("RowCount", paging.RowCount);
@@ -205,6 +205,8 @@ export class OrderService {
       params = params.append("Page", paging.Page);
     if (number)
       params = params.append("number", number);
+      if (code)
+      params = params.append("code", code);
     if (client)
       params = params.append("clientName", client);
     return this.http.get<any>(this.controler + "GetClientprint", { params: params })
