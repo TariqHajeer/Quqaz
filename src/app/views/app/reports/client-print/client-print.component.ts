@@ -38,12 +38,12 @@ export class ClientPrintComponent implements OnInit {
   ClientPrints
   Code
   Get() {
-    this.orderService.GetClientprint(this.paging, this.printNmber,this.Client).subscribe(res => {
+    this.orderService.GetClientprint(this.paging, this.printNmber, this.Client).subscribe(res => {
       // this.orderFilter=res
       // this.orderFilter.forEach(o=>{
       //   o.printNmber=JSON.stringify(o.printNmber)
       // })
-
+      console.log(res)
       this.dataSource = new MatTableDataSource(res.data)
       this.totalCount = res.total
       this.ClientPrints = res.data
