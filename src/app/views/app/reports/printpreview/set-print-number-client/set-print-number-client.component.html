@@ -148,6 +148,13 @@
 
                     <br>
                 </div>
+                <br>
+                <div style="border: 1px black solid;text-align: center;padding: 5px;">
+                    <a *ngFor="let order of orderplaced">
+                        {{order.name}}{{orderplaced.length==1?'':' |'}}
+                    </a>
+
+                </div>
                 <div>
                    
 

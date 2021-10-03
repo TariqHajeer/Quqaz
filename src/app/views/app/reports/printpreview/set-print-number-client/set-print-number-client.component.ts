@@ -39,6 +39,13 @@ export class SetPrintNumberClientComponent implements OnInit {
   clientCalc = 0
   address = environment.Address
   companyPhone = environment.companyPhones[0]+" - "+ environment.companyPhones[1]
+  orderplaced: any[] = [
+    { id: 3, name: "في الطريق" },
+    { id: 4, name: "تم التسليم" },
+    { id: 5, name: "مرتجع كلي" },
+    { id: 6, name: "مرتجع جزئي" },
+    { id: 7, name: "مرفوض" },
+  ]
   ngOnInit(): void {
 
     this.changeDeleiverMoneyForClient()
@@ -104,6 +111,7 @@ export class SetPrintNumberClientComponent implements OnInit {
       this.spinner.hide()
       this.orders = res.orders
       this.orders = this.orders.sort((a, b) => a.code - b.code)
+      this.orderplaced = this.orderplaced.filter(op => this.orders.filter(o => o.orderplaced.id == op.id).length > 0)
       this.client = res.destinationName
       this.destinationPhone = res.destinationPhone
       this.userName = res.printerName
