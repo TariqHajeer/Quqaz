@@ -13,23 +13,23 @@
                             [ngModelOptions]="{standalone: true}" [(ngModel)]="code"
                             placeholder="بحث على حسب كود الشحنة">
                     </div>
-                        <div class="col-md-3">
-                            <label>العميل</label>
-                            <ng-select appendTo="body" [(ngModel)]="ClientId" (change)="codeFillter()"
-                                [ngModelOptions]="{standalone: true}" [clearable]="false" name="Client">
-                                <ng-option *ngFor="let Client of clients" [value]="Client.id">{{Client.name}}
-                                </ng-option>
-                            </ng-select>
-                        </div>
-                        <div class="col-md-3">
-                            <label>المحافظة</label>
-                
-                            <ng-select appendTo="body" [(ngModel)]="CountryId" [ngModelOptions]="{standalone: true}"
-                                (ngModelChange)="codeFillter()" [clearable]="false" name="Country">
-                                <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
-                            </ng-select>
-                
-                        </div>
+                    <div class="col-md-3">
+                        <label>العميل</label>
+                        <ng-select appendTo="body" [(ngModel)]="ClientId" (change)="codeFillter()"
+                            [ngModelOptions]="{standalone: true}" [clearable]="false" name="Client">
+                            <ng-option *ngFor="let Client of clients" [value]="Client.id">{{Client.name}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>المحافظة</label>
+
+                        <ng-select appendTo="body" [(ngModel)]="CountryId" [ngModelOptions]="{standalone: true}"
+                            (ngModelChange)="codeFillter()" [clearable]="false" name="Country">
+                            <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
+                        </ng-select>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -89,7 +89,14 @@
                 <ng-container matColumnDef="date">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> التاريخ</th>
                     <td mat-cell *matCellDef="let element" style="padding:10px;">
-                        {{element.date  | date:"dd/MM/yyyy"}} <br>  {{element.date  | date:'shortTime'}}
+                        {{element.date | date:"dd/MM/yyyy"}} <br> {{element.date | date:'shortTime'}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="printedTimes">
+                    <th mat-header-cell *matHeaderCellDef> عدد مرات الطباعة</th>
+                    <td mat-cell *matCellDef="let element;index as i">
+                        {{element.printedTimes}}
+
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="print">

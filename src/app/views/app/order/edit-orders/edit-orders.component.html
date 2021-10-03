@@ -589,6 +589,9 @@
                 <div class="col-3">
                     <button class="btn btn-primary" (click)="print()">طباعة</button>
                 </div>
+                <div>
+                    عدد مرات الطباعة:  {{Order.printedTimes}}
+                </div>
             </div>
             <app-receipt-new-orders [order]="order" id="contentToConvert" *ngIf="show"></app-receipt-new-orders>
         </div>

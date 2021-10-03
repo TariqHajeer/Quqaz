@@ -22,7 +22,7 @@ export class Order {
       orderplaced: NameAndIdDto
       agent: User
       show:boolean=false
-      countPrint
+      printedTimes
 }
 export class OrderState {
       Id: number

@@ -30,6 +30,7 @@ export class CreateOrdersFromEmployee {
     DeliveryCost
     OldCost
     orderLogs:OrderLog[]
+    printedTimes
 }
 export class OrderItem{
     OrderTypeName:string

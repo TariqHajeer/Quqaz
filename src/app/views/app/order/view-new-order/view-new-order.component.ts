@@ -55,7 +55,7 @@ export class ViewNewOrderComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.displayedColumns = ['code', 'cost', 'recipientName',
         'recipientPhones', 'address', 'note', 'client', 'country'
-        , 'region', 'agent', 'date', 'print', 'Accept', 'DisAccept'];
+        , 'region', 'agent', 'date', 'printedTimes','print', 'Accept', 'DisAccept'];
     })
 
   }
@@ -104,7 +104,9 @@ export class ViewNewOrderComponent implements OnInit {
   print(i, element) {
     // this.order=element
     this.OrderService.AddPrintNumber(element.id).subscribe(res=>{
-      console.log(res)
+      // console.log(res)
+      element.printedTimes+=1
+
     })
     element.show = true
     var divToPrint = document.getElementById('contentToConvert-' + i);

@@ -178,6 +178,7 @@ export class EditOrdersComponent implements OnInit {
        this.Order.RecipientPhones = this.editorder.recipientPhones
       this.Order.OldCost = this.editorder.oldCost
       this.Order.orderLogs=this.editorder.orderLogs
+      this.Order.printedTimes=this.editorder.printedTimes
       this.dataSource = new MatTableDataSource(this.Order.orderLogs)
       //this.Order.RecipientPhones.push(this.editorder.recipientPhones)
       this.Order.RegionId = this.editorder.region != null ? this.editorder.region.Id : null
@@ -401,7 +402,7 @@ export class EditOrdersComponent implements OnInit {
   }
   print() {
     this.orderService.AddPrintNumber(this.id).subscribe(res=>{
-      
+      this.Order.printedTimes+=1
     })
     var divToPrint = document.getElementById('contentToConvert');
     var css = '@page { size: A5 landscape ;margin:0;color-adjust: exact;-webkit-print-color-adjust: exact;}',
