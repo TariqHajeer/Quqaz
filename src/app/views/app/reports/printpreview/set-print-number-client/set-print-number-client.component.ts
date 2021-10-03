@@ -104,7 +104,7 @@ export class SetPrintNumberClientComponent implements OnInit {
     });
     this.spinner.show()
     this.orderservice.GetOrderByClientPrintNumber(this.printnumber).subscribe(res => {
-      console.log(res)
+      // console.log(res)
       // this.reciptClient()
       this.points=res.discount
       this.showPrintbtn = true

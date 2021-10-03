@@ -24,7 +24,7 @@ export class ClientPrintComponent implements OnInit {
     this.getClients()
   }
   displayedColumns: string[] = ['printNmber', 'printerName', 'date', 'destinationName', 'destinationPhone'
-  ];
+  ,'orderplaced'];
   ;
   dataSource
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -35,7 +35,7 @@ export class ClientPrintComponent implements OnInit {
   noDataFound: boolean = false
   Clients: Client[] = []
   Client
-  ClientPrints
+  ClientPrints:any[]=[]
   Code
   Get() {
     this.orderService.GetClientprint(this.paging, this.printNmber, this.Client).subscribe(res => {
@@ -43,8 +43,20 @@ export class ClientPrintComponent implements OnInit {
       // this.orderFilter.forEach(o=>{
       //   o.printNmber=JSON.stringify(o.printNmber)
       // })
-      console.log(res)
-      this.dataSource = new MatTableDataSource(res.data)
+      this.ClientPrints = res.data
+      this.ClientPrints.forEach(element => {
+       element.orderplaced= [
+        { id: 3, name: "في الطريق" },
+        { id: 4, name: "تم التسليم" },
+        { id: 5, name: "مرتجع كلي" },
+        { id: 6, name: "مرتجع جزئي" },
+        { id: 7, name: "مرفوض" },
+      ]
+      element.orderplaced= element.orderplaced.filter(op => element.orders.filter(o => o.orderplaced.id == op.id).length > 0)
+     })
+     console.log(  this.ClientPrints)
+
+      this.dataSource = new MatTableDataSource(this.ClientPrints)
       this.totalCount = res.total
       this.ClientPrints = res.data
     })
