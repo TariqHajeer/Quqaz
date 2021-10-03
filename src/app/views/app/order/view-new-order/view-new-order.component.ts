@@ -103,6 +103,9 @@ export class ViewNewOrderComponent implements OnInit {
   }
   print(i, element) {
     // this.order=element
+    this.OrderService.AddPrintNumber(element.id).subscribe(res=>{
+      
+    })
     element.show = true
     var divToPrint = document.getElementById('contentToConvert-' + i);
     var css = '@page { size: A5 landscape ;margin: 0;color-adjust: exact;-webkit-print-color-adjust: exact;}',

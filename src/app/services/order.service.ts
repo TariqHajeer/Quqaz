@@ -281,5 +281,8 @@ export class OrderService {
   changeAgentOrders(moveOrder) {
     return this.http.put(this.controler+"TransferOrderToAnotherAgnet",moveOrder)
   }
+  AddPrintNumber(id){
+    return this.http.patch(this.controler+"AddPrintNumber/"+id,id)
+  }
 }
 

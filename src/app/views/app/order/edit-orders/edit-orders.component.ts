@@ -400,6 +400,9 @@ export class EditOrdersComponent implements OnInit {
     }
   }
   print() {
+    this.orderService.AddPrintNumber(this.id).subscribe(res=>{
+      
+    })
     var divToPrint = document.getElementById('contentToConvert');
     var css = '@page { size: A5 landscape ;margin:0;color-adjust: exact;-webkit-print-color-adjust: exact;}',
       style = document.createElement('style');
