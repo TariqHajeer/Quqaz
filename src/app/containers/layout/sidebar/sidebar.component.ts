@@ -100,6 +100,20 @@ export class SidebarComponent implements OnInit, OnDestroy {
       this.countNewOrders = res
     })
   }
+  countNewOrdersDontSend = 0
+  newNotfecationDontSend = 0
+  getNewOrdersDontSend(){
+    this.orderService.NewOrdersDontSendCount().subscribe(res => {
+      if (this.countNewOrdersDontSend != res) {
+        this.newNotfecationDontSend = res - this.countNewOrdersDontSend
+        let message = ' لديك ' + this.newNotfecationDontSend + ' من الطلبات جديدة التي لم يتم ارسالها'
+        if (this.newNotfecationDontSend > 0)
+          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+
+      }
+      this.countNewOrdersDontSend = res
+    })
+  }
   countPayment = 0
   newpayment = 0
   newPaymentOrders() {
@@ -132,6 +146,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
   async ngOnInit() {
     this.getNewOrders()
+    this.getNewOrdersDontSend()
     this.newPaymentOrders()
     setInterval(() => {
       this.getNewOrders()
@@ -362,10 +377,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
           item.badgeLable = this.countPayment
         }
         if (item.to == "/app/order" && item.badge) {
-          item.badgeLable = this.countNewOrders
+          item.badgeLable = this.countNewOrders+ this.countNewOrdersDontSend
         }
         if (item.to == "/app/order/neworders" && item.badge) {
           item.badgeLable = this.countNewOrders
+        }
+        if (item.to == "/app/order/newordersdonotsend" && item.badge) {
+          item.badgeLable = this.countNewOrdersDontSend
         }
       })
     // filter the menu by role

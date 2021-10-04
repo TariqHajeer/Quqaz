@@ -119,7 +119,13 @@ export class OrderService {
     return this.http.get<any>(this.controler + "NewOrders")
   }
   NewOrderCount() {
-    return this.http.get<any>(this.controler + "NewOrderCount")
+    return this.http.get<any>(this.controler + "NewOrdersCount")
+  }
+  NewOrdersDontSendCount() {
+    return this.http.get<any>(this.controler + "NewOrdersDontSendCount")
+  }
+  NewOrderDontSned() {
+    return this.http.get<any>(this.controler + "NewOrderDontSned")
   }
   Accept(id) {
     // let params = new HttpParams();
