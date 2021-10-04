@@ -31,13 +31,13 @@ const data: IMenuItem[] = [
         //permission:[UserPermission.ShowOrder]
         badge:true,
       },
-      {
-        icon: 'iconsminds-box-close',
-        label: 'الطلبات الجديدة لم يتم ارسالها',
-        to: `${adminRoot}/order/newordersdonotsend`,
-        //permission:[UserPermission.ShowOrder]
-        badge:true,
-      },
+      // {
+      //   icon: 'iconsminds-box-close',
+      //   label: 'الطلبات الجديدة لم يتم ارسالها',
+      //   to: `${adminRoot}/order/newordersdonotsend`,
+      //   //permission:[UserPermission.ShowOrder]
+      //   badge:true,
+      // },
       {
         icon: 'iconsminds-box-close',
         label: 'عرض الطلبات',
@@ -71,6 +71,7 @@ const data: IMenuItem[] = [
         label: ' طلبات عند العميل ',
         to: `${adminRoot}/order/orderswithclient`,
         //permission:[UserPermission.AddOrder]
+        badge:true,
 
       },
       {

@@ -383,7 +383,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
         if (item.to == "/app/order/neworders" && item.badge) {
           item.badgeLable = this.countNewOrders
         }
-        if (item.to == "/app/order/newordersdonotsend" && item.badge) {
+        if (item.to == "/app/order/orderswithclient" && item.badge) {
           item.badgeLable = this.countNewOrdersDontSend
         }
       })

@@ -3,8 +3,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { DateWithIds } from 'src/app/Models/date-with-ids.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
-import { Order } from 'src/app/Models/order/order.model';
+import { IdsDto, Order } from 'src/app/Models/order/order.model';
+import { User } from 'src/app/Models/user/user.model';
 import { OrderService } from 'src/app/services/order.service';
 import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
@@ -39,7 +41,7 @@ export class OrdersWithClientComponent implements OnInit {
   }
   get() {
     this.OrderService.OrderAtClient(this.filtering).subscribe(res => {
-      console.log(res)
+      // console.log(res)
       this.orders = res
       this.orders.forEach(res => {
         res.recipientPhones = res.recipientPhones.split(',')
@@ -52,14 +54,61 @@ export class OrdersWithClientComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.displayedColumns = ['code', 'cost', 'recipientName',
         'recipientPhones', 'address', 'note', 'client', 'country'
-        , 'region', 'agent', 'print'];
+        , 'region', 'agent', 'printedTimes','print', 'Accept', 'DisAccept'];
     })
 
   }
  
- 
-  print(i) {
-   
+  order: Order = new Order
+  AgentId
+  Agents: User[] = []
+  IdsDto: IdsDto = new IdsDto
+  MultiAgent(order) {
+    this.order = order
+    // console.log(order)
+    if (order.country.agnets.length == 1) {
+      this.AgentId = order.country.agnets[0].id
+      this.Accept()
+    } else {
+      this.Agents = order.country.agnets
+      this.infoModal.show()
+    }
+  }
+  Accept() {
+    // console.log( this.order)
+    this.IdsDto.OrderId = this.order.id
+    this.IdsDto.AgentId = this.AgentId
+    if (!this.AgentId) return
+    else
+      this.OrderService.Accept(this.IdsDto).subscribe(res => {
+        // this.print(i)
+        this.IdsDto = new IdsDto
+        this.AgentId = null
+        this.get()
+        this.infoModal.hide()
+      })
+  }
+  dateWithId: DateWithIds<number>
+  DisAccept(elementid) {
+    this.dateWithId = new DateWithIds
+    this.dateWithId.Ids = elementid
+    this.dateWithId.Date = new Date
+    // this.dateWithId.Ids.push(elementid)
+    this.OrderService.DisAccept(this.dateWithId).subscribe(res => {
+      this.orders = this.orders.filter(o => o.id != elementid)
+      this.dataSource = new MatTableDataSource(this.orders);
+
+      // this.get()
+    })
+  }
+  print(i, element) {
+    // this.order=element
+    this.OrderService.AddPrintNumber(element.id).subscribe(res=>{
+      // console.log(res)
+      element.printedTimes+=1
+
+    })
+    element.show = true
     var divToPrint = document.getElementById('contentToConvert-' + i);
     var css = '@page { size: A5 landscape ;margin: 0;color-adjust: exact;-webkit-print-color-adjust: exact;}',
       style = document.createElement('style');
@@ -73,10 +122,10 @@ export class OrdersWithClientComponent implements OnInit {
     newWin?.document.close();
     setTimeout(function () {
       newWin?.close();
-      
+      // location.reload();
+      // this.get()
 
-    }, 10);
+    }, 1000);
   }
-
 
 }
