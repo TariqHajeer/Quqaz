@@ -150,6 +150,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.newPaymentOrders()
     setInterval(() => {
       this.getNewOrders()
+      this.getNewOrdersDontSend()
       this.newPaymentOrders()
       this.NewEditClientRequest()
     }, 5000);
