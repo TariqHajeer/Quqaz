@@ -364,6 +364,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
         if (item.to == "/app/order" && item.badge) {
           item.badgeLable = this.countNewOrders
         }
+        if (item.to == "/app/order/neworders" && item.badge) {
+          item.badgeLable = this.countNewOrders
+        }
       })
     // filter the menu by role
     return menuItems

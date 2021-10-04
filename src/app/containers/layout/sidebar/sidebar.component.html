@@ -44,16 +44,20 @@
                     <a *ngIf="sub.newWindow" [href]="sub.to" rel="noopener noreferrer" target="_blank">
                         <i [ngClass]="sub.icon"></i>
                         <span class="d-inline-block">{{sub.label | translate}}</span>
+                        &nbsp;
+                        <span class="badge badge-danger"*ngIf="sub.badge">{{sub.badgeLable}}</span>
                     </a>
                     <a *ngIf="!sub.newWindow && (!sub.subs || sub.subs.length<=0)" [routerLink]="[sub.to]"
                         routerLinkActive="active">
                         <i [ngClass]="sub.icon"></i>
-                        <span class="d-inline-block">{{sub.label | translate}}</span>
+                        <span class="d-inline-block">{{sub.label | translate}}</span>  &nbsp;
+                        <span class="badge badge-danger"*ngIf="sub.badge">{{sub.badgeLable}}</span>
                     </a>
                     <a (click)="toggleCollapse(sub.to)" *ngIf="sub.subs && sub.subs.length > 0"
                         [ngClass]="{'rotate-arrow-icon opacity-50 c-pointer': true, 'collapsed': closedCollapseList.includes(sub.to)}">
                         <i class="simple-icon-arrow-down"></i>
-                        <span class="d-inline-block">{{sub.label | translate}}</span>
+                        <span class="d-inline-block">{{sub.label | translate}}</span>  &nbsp;
+                        <span class="badge badge-danger"*ngIf="sub.badge">{{sub.badgeLable}}</span>
                     </a>
                     <div [collapse]="closedCollapseList.includes(sub.to)" [isAnimated]="true">
                         <div *ngIf="sub.subs && sub.subs.length > 0">

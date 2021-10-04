@@ -29,7 +29,7 @@ const data: IMenuItem[] = [
         label: 'الطلبات الجديدة',
         to: `${adminRoot}/order/neworders`,
         //permission:[UserPermission.ShowOrder]
-
+        badge:true,
       },
 
       {
