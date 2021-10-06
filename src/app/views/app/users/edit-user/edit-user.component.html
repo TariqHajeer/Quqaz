@@ -31,7 +31,7 @@
               </ng-select>
               <div *ngIf="!User.department && submitted" class="invalid-tooltip">القسم حقل مطلوب</div>
             </div> -->
-            <div class="col-md-3" *ngIf="!User.canWorkAsAgent">
+            <div class="col-md-3">
               <label>اسم المستخدم<span class="text-danger text-one align-bottom mx-1">*</span></label>
               <input type="text"
                 oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
@@ -229,7 +229,7 @@
 
           <h4 class="card-title"*ngIf="!User.canWorkAsAgent">تغيير كلمة السر</h4>
 
-          <div class="row"*ngIf="!User.canWorkAsAgent">
+          <div class="row">
             <div class="col-md-3" >
               <label>كلمة السر <span class="text-danger text-one align-bottom mx-1">*</span></label>
               <input type="password"  class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="User.password">
