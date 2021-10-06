@@ -77,6 +77,7 @@ export class EditUserComponent implements OnInit {
     this.User.phones = []
     this.spinner.show()
     this.User.salary = Number(this.User.salary);
+    console.log(this.User)
     this.UserService.Update(this.User).subscribe(
       res => {
         this.spinner.hide()
