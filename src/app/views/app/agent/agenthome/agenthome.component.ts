@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-agenthome',
@@ -7,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AgenthomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router,) { }
 
   ngOnInit(): void {
   }
   totlaOrder
-  Orders(){}
+  AgentOrders() {
+    this.router.navigate(['/app/agent/orders'])
+  }
 }
