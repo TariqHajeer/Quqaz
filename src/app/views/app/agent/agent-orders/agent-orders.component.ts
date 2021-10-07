@@ -50,11 +50,6 @@ export class AgentOrdersComponent implements OnInit {
 
   }
   order: Order = new Order
-  AgentId
-  IdsDto: IdsDto = new IdsDto
- 
- 
- 
   code
   CountryId
   ClientId
