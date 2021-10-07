@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { SidebarService, ISidebar } from './sidebar.service';
-import menuItems, { IMenuItem } from 'src/app/constants/menu';
+import menuItems, { agentmenu, IMenuItem } from 'src/app/constants/menu';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
@@ -12,13 +12,14 @@ import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { PaymentRequestService } from 'src/app/services/payment-request.service';
 import { EditRequestService } from 'src/app/services/edit-request.service';
 import { EditRequest } from 'src/app/Models/edit-request.model';
+import { UserLogin } from 'src/app/Models/userlogin.model';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
 })
 export class SidebarComponent implements OnInit, OnDestroy {
-  menuItems: IMenuItem[] = menuItems;
+  menuItems: IMenuItem[] = [];
   selectedParentMenu = '';
   viewingParentMenu = '';
   currentUrl: string;
@@ -30,6 +31,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   closedCollapseList = [];
 
   currentUserPermissions: any = JSON.parse(localStorage.getItem(this.permissionlocalStorageKey));
+  userlogin: UserLogin = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
 
   constructor(
     private router: Router,
@@ -43,7 +45,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private editrequestService: EditRequestService,
 
   ) {
-
+    if (this.userlogin.policy == "Employee")
+      this.menuItems = menuItems
+    else
+      this.menuItems = agentmenu
     this.subscription = this.sidebarService.getSidebar().subscribe(
       (res) => {
         this.sidebar = res;
@@ -102,7 +107,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
   countNewOrdersDontSend = 0
   newNotfecationDontSend = 0
-  getNewOrdersDontSend(){
+  getNewOrdersDontSend() {
     this.orderService.NewOrdersDontSendCount().subscribe(res => {
       if (this.countNewOrdersDontSend != res) {
         this.newNotfecationDontSend = res - this.countNewOrdersDontSend
@@ -130,8 +135,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   editRequest: EditRequest[] = []
-  countEditClient=0
-  newEditClient=0
+  countEditClient = 0
+  newEditClient = 0
   NewEditClientRequest() {
     this.editrequestService.NewEditReuqet().subscribe(res => {
       if (this.countEditClient != res.length) {
@@ -145,15 +150,18 @@ export class SidebarComponent implements OnInit, OnDestroy {
     })
   }
   async ngOnInit() {
-    this.getNewOrders()
-    this.getNewOrdersDontSend()
-    this.newPaymentOrders()
-    setInterval(() => {
+    if (this.userlogin.policy == "Employee") { 
       this.getNewOrders()
       this.getNewOrdersDontSend()
       this.newPaymentOrders()
-      this.NewEditClientRequest()
-    }, 5000);
+      setInterval(() => {
+        this.getNewOrders()
+        this.getNewOrdersDontSend()
+        this.newPaymentOrders()
+        this.NewEditClientRequest()
+      }, 5000);
+    }
+
     setTimeout(() => {
       this.selectMenu();
       const { containerClassnames } = this.sidebar;
@@ -378,7 +386,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
           item.badgeLable = this.countPayment
         }
         if (item.to == "/app/order" && item.badge) {
-          item.badgeLable = this.countNewOrders+ this.countNewOrdersDontSend
+          item.badgeLable = this.countNewOrders + this.countNewOrdersDontSend
         }
         if (item.to == "/app/order/neworders" && item.badge) {
           item.badgeLable = this.countNewOrders

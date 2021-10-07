@@ -40,15 +40,19 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.value)
       this.authService.signIn(this.loginForm.value).subscribe(
         response => {
+          // console.log(response)
           localStorage.setItem('user','employee')
           this.user = response as UserLogin
           this.user.expiry = new Date().getTime()
-          //this.user.expiry.setMinutes(this.myDate.getMinutes()+1);
-          // this.notifications.create('success', 'تم تسجيل الدخول بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-          //  this.authService.setAuthenticatedUser(response.data[0].user);
+         if(this.user.policy=="Employee")
           this.router.navigate(['/app/HomePage']);
+          else
+          this.router.navigate(['/app/agent']);
           localStorage.setItem('token', this.user.token)
           this.authService.setAuthenticatedUser(this.user);
+           //this.user.expiry.setMinutes(this.myDate.getMinutes()+1);
+          // this.notifications.create('success', 'تم تسجيل الدخول بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+          //  this.authService.setAuthenticatedUser(response.data[0].user);
           // this.authService.setAuthenticatedUser(response);
           //  this.authService.setPermission(response.privileges);
 

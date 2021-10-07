@@ -1,6 +1,7 @@
 import { environment } from 'src/environments/environment';
 import { UserPermission } from '../shared/auth.roles';
 const adminRoot = '/app';
+const agentRoot = '/app/agent';
 
 export interface IMenuItem {
   id?: string;
@@ -459,4 +460,24 @@ const data: IMenuItem[] = [
 
 
 ];
-export default data;
+export const agentmenu: IMenuItem[] = [
+  //order
+  {
+    icon: 'simple-icon-people',
+    label: 'المندوبين',
+    to: `${agentRoot}`,
+    badge:true,
+    // subs: [
+    //   {
+    //     icon: 'iconsminds-box-close',
+    //     label: 'الطلبات الجديدة',
+    //     to: `${adminRoot}/order/neworders`,
+    //     //permission:[UserPermission.ShowOrder]
+    //     badge:true,
+    //   },
+    // ],
+    //permission:[UserPermission.ShowOrder]
+
+  },
+];
+export default data ;

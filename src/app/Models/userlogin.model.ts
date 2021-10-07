@@ -3,4 +3,5 @@ export class UserLogin {
     token:any
     privileges:any[]
     expiry:any
+    policy:any
 }
