@@ -463,9 +463,9 @@ const data: IMenuItem[] = [
 export const agentmenu: IMenuItem[] = [
   //order
   {
-    icon: 'simple-icon-people',
-    label: 'المندوبين',
-    to: `${agentRoot}`,
+    icon: 'iconsminds-box-close',
+    label: 'الطلبات',
+    to: `${agentRoot}/orders`,
     badge:true,
     // subs: [
     //   {
