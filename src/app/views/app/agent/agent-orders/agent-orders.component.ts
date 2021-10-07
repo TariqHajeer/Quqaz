@@ -24,12 +24,7 @@ export class AgentOrdersComponent implements OnInit {
 
   ngOnInit(): void {
     this.get()
-    // this.order = new Order()
   }
-  // ngOnChanges() {
-  //   this.print()
-  // }
-
   get() {
     this.OrderService.Get().subscribe(res => {
       // console.log(res)
@@ -49,24 +44,24 @@ export class AgentOrdersComponent implements OnInit {
     })
 
   }
-  order: Order = new Order
-  code
-  CountryId
-  ClientId
-  codeFillter() {
-    this.dataSource.data = this.orders
-    if (this.dataSource.data.length != 0) {
-      if (this.code) {
-        this.dataSource.data = this.dataSource.data.filter(d => d.code.includes(this.code))
-      }
-      if (this.ClientId) {
-        this.dataSource.data = this.dataSource.data.filter(d => d.client.id == this.ClientId)
-      }
-      if (this.CountryId) {
-        this.dataSource.data = this.dataSource.data.filter(d => d.country.id == this.CountryId)
-      }
-    }
+  // order: Order = new Order
+  // code
+  // CountryId
+  // ClientId
+  // codeFillter() {
+  //   this.dataSource.data = this.orders
+  //   if (this.dataSource.data.length != 0) {
+  //     if (this.code) {
+  //       this.dataSource.data = this.dataSource.data.filter(d => d.code.includes(this.code))
+  //     }
+  //     if (this.ClientId) {
+  //       this.dataSource.data = this.dataSource.data.filter(d => d.client.id == this.ClientId)
+  //     }
+  //     if (this.CountryId) {
+  //       this.dataSource.data = this.dataSource.data.filter(d => d.country.id == this.CountryId)
+  //     }
+  //   }
   
-  }
+  // }
 
 }
