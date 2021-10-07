@@ -464,7 +464,7 @@ export const agentmenu: IMenuItem[] = [
   //order
   {
     icon: 'iconsminds-box-close',
-    label: 'الطلبات',
+    label: 'الطلبات التي لدي',
     to: `${agentRoot}/orders`,
     badge:true,
     // subs: [
