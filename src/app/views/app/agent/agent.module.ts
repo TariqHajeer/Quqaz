@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AgentRoutingModule } from './agent-routing.module';
@@ -14,17 +14,19 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DatePickerModule, DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
-import { ChartModule } from '@syncfusion/ej2-angular-charts';
+import { CategoryService, ChartAnnotationService, ChartModule, ColumnSeriesService, DateTimeService, LegendService, LineSeriesService, RangeColumnSeriesService, ScrollBarService, StackingColumnSeriesService, TooltipService } from '@syncfusion/ej2-angular-charts';
 import { GridModule, GridAllModule } from '@syncfusion/ej2-angular-grids';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgxPrintModule } from 'ngx-print';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { OrderInStockComponent } from './order-in-stock/order-in-stock.component';
+import { OrdersOnWayComponent } from './orders-on-way/orders-on-way.component';
 
 
 @NgModule({
-  declarations: [AgenthomeComponent, AgentOrdersComponent],
+  declarations: [AgenthomeComponent, AgentOrdersComponent, OrderInStockComponent, OrdersOnWayComponent],
   imports: [
     CommonModule,
     AgentRoutingModule,
@@ -48,6 +50,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     MatTabsModule,
     ModalModule.forRoot(),
     MatCheckboxModule,
-  ]
+  ], providers: [CategoryService, DateTimeService, ScrollBarService, LineSeriesService, ColumnSeriesService,
+    ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService, LegendService, TooltipService,], schemas: [CUSTOM_ELEMENTS_SCHEMA]
+
 })
 export class AgentModule { }

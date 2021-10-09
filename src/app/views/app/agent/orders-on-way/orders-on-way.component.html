@@ -1,0 +1,208 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="line-scale-party" [fullScreen]="true">
+    <p style="color: white"> </p>
+  </ngx-spinner>
+  <div class="card">
+    <div class="card-body">
+      <h3>  طلبات التي في الطريق </h3>
+      <div class="row">
+        
+        <!-- <div class="col-md-2">
+          <label>المحافظة</label>
+          <ng-select [(ngModel)]="filtering.CountryId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Country"
+            >
+            <ng-option *ngFor="let Country of countriesAgent" [value]="Country.id">{{Country.name}}</ng-option>
+          </ng-select>
+        </div> -->
+        <div class="col-md-2">
+          <label> رقم طباعة  شحنات المندوب </label>
+          <input type="text" class="form-control"   [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.AgentPrintNumber">
+        </div>
+        <div class="col-md-2">
+          <label> من تاريخ</label>
+          <ejs-datepicker name="FromDate" [(ngModel)]='filtering.AgentPrintStartDate'  id="fromdate"
+            placeholder='اختر تاريخ'>
+          </ejs-datepicker>
+        </div>
+        <div class="col-md-2">
+          <label> الى تاريخ</label>
+          <ejs-datepicker name="FromDate" [(ngModel)]='filtering.AgentPrintEndDate'  id="fromdate"
+            placeholder='اختر تاريخ'>
+          </ejs-datepicker>
+        </div>
+        
+        <div class="col-md-3">
+          <button (click)="saveEdit()" class="btn btn-primary"> تم التسليم</button>&nbsp;
+          <!-- <button (click)="print()" class="btn btn-primary"> <svg xmlns="http://www.w3.org/2000/svg" width="17"
+              height="17" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+              <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+              <path
+                d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
+            </svg> &nbsp;المعاينة قبل الطباعة</button> -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+  
+        </div>
+  
+        <!-- <div class="col-2">
+          <label>حالة الشحنة</label>
+          <ng-select appendTo="body" [(ngModel)]="OrderplacedId" [ngModelOptions]="{standalone: true}" [clearable]="false"
+            name="Orderplaced" (ngModelChange)="changeOrderPlaced()" style="width: 120px; overflow: visible;">
+            <ng-option *ngFor="let order of orderPlace " [value]="order">{{order.name}}</ng-option>
+          </ng-select>
+        </div>
+        <div class="col-2">
+          <label>موقع المبلغ</label>
+          <ng-select appendTo="body" [(ngModel)]="MoenyPlacedId" [ngModelOptions]="{standalone: true}"
+            style="width: 140px;" [clearable]="false" (ngModelChange)="changeMoenyPlaced()" name="MonePlaced">
+            <ng-option *ngFor="let moenyPlaced of getMoenyPlaced" [value]="moenyPlaced">{{moenyPlaced.name}}
+            </ng-option>
+          </ng-select>
+        </div> -->
+        <div class="col-3">
+  
+        </div>
+      </div>
+  
+    </div>
+  </div>
+  <div class="example-container mat-elevation-z8">
+  
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                        [aria-label]="checkboxLabel()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)"
+                        [aria-label]="checkboxLabel(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef  style="padding-right: 10px;"> ترقيم </th>
+        <td mat-cell *matCellDef="let element;index as i" style="padding-right: 10px;"> {{i+1}}</td>
+      </ng-container>
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef  style="padding-right: 10px;"> كود </th>
+        <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.code}}</td>
+      </ng-container>
+      <ng-container matColumnDef="client">
+        <th mat-header-cell *matHeaderCellDef  style="padding-right: 10px;"> العميل </th>
+        <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.client.name}}</td>
+      </ng-container>
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef > المدينة</th>
+        <td mat-cell *matCellDef="let element"> {{element.country!=null?element.country.name:null}}</td>
+      </ng-container>
+      <ng-container matColumnDef="region">
+        <th mat-header-cell *matHeaderCellDef > المنطقة</th>
+        <td mat-cell *matCellDef="let element"> {{element.region!=null?element.region.name:null}}</td>
+      </ng-container>
+      <ng-container matColumnDef="agentCost">
+        <th mat-header-cell *matHeaderCellDef  style="padding-right: 10px;"> كلفة توصيل المندوب </th>
+        <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.agentCost}}</td>
+      </ng-container>
+      <ng-container matColumnDef="cost">
+        <th mat-header-cell *matHeaderCellDef > كلفة الطلب</th>
+        <td mat-cell *matCellDef="let element;index as i">
+          <h4 *ngIf="element.canEditCount">{{element.cost}}</h4>
+          <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" *ngIf="!element.canEditCount"
+            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+            [(ngModel)]="element.cost" (ngModelChange)=" changeCost(element,i)" style="width: 110px;">
+          <h5 style="color: red;"> {{element.messageCost}}</h5>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="deliveryCost">
+        <th mat-header-cell *matHeaderCellDef > كلفة التوصيل</th>
+        <td mat-cell *matCellDef="let element">
+          {{element.deliveryCost}}
+  
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="isClientDiliverdMoney">
+        <th mat-header-cell *matHeaderCellDef > تسليم المبلغ للعميل</th>
+        <td mat-cell *matCellDef="let element">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2"
+            viewBox="0 0 16 16" *ngIf="element.isClientDiliverdMoney==true">
+            <path
+              d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+          </svg>
+  
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
+            viewBox="0 0 16 16" *ngIf="element.isClientDiliverdMoney==false">
+            <path
+              d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+          </svg>
+  
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="orderplaced">
+        <th mat-header-cell *matHeaderCellDef > حالة الشحنة</th>
+        <td mat-cell *matCellDef="let element;index as i">
+         {{element.orderplaced.name}}
+        </td>
+      </ng-container>
+      <!-- <ng-container matColumnDef="monePlaced">
+        <th mat-header-cell *matHeaderCellDef > موقع المبلغ</th>
+        <td mat-cell *matCellDef="let element;index as i">
+                   {{element.monePlaced.name}}
+
+        </td>
+      </ng-container> -->
+      <ng-container matColumnDef="agentPrintNumber">
+        <th mat-header-cell *matHeaderCellDef  style="padding:10px;"> اخر رقم طباعة للمندوب</th>
+        <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.agentPrintNumber}}</td>
+      </ng-container>
+      <!-- <ng-container matColumnDef="clientPrintNumber">
+        <th mat-header-cell *matHeaderCellDef  style="padding:10px;"> اخر رقم طباعة للعميل</th>
+        <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.clientPrintNumber}}</td>
+      </ng-container> -->
+      <!-- <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef >
+              <button (click)="saveEdit()" class="btn btn-primary"> حفظ</button>
+      
+            </th>
+            <td mat-cell *matCellDef="let element">
+      
+            </td>
+          </ng-container>-->
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+      </tr>
+    </table>
+    <!--
+         <mat-paginator [length]="100"
+        [pageSize]="10"
+        [pageSizeOptions]="[ 10, 25,50, 100]">
+      </mat-paginator>
+       -->
+    <h5 style="padding-top: 20px; padding-right: 10px;" *ngIf="noDataFound">لايوجد بيانات للعرض</h5>
+  
+  </div>
+  
+  <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
+    [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
+    <div class="row" style=" background-color: white;font-size: 15px;text-align: center;">
+      <div class="col-3">
+        الإجمالي
+      </div>
+      <div class="col-1">
+        {{totalCost}}
+      </div>
+      <div class="col-1">
+        {{totalDelaveryCost}}
+      </div>
+      <div class="col-5">
+       الإجمالي النهائي : {{endTotal}} 
+      </div>
+    </div>
+  <simple-notifications></simple-notifications>

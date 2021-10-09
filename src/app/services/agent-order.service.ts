@@ -12,4 +12,14 @@ export class AgentOrderService {
   Get() {
     return this.http.get<any>(this.controler+"Order")
   }
+  InStock(){
+    return this.http.get<any>(this.controler+"InStock")
+  }
+  InWay(){
+    return this.http.get<any>(this.controler+"InWay")
+  }
+  MakeOrderInWay(ids){
+    return this.http.get<any>(this.controler+"InWay")
+  }
+  
 }

@@ -462,22 +462,34 @@ const data: IMenuItem[] = [
 ];
 export const agentmenu: IMenuItem[] = [
   //order
+  // {
+  //   icon: 'iconsminds-box-close',
+  //   label: 'الطلبات التي لدي',
+  //   to: `${agentRoot}/orders`,
+  //   badge:true,
+  //   // subs: [
+  //   //   {
+  //   //     icon: 'iconsminds-box-close',
+  //   //     label: 'الطلبات الجديدة',
+  //   //     to: `${adminRoot}/order/neworders`,
+  //   //     //permission:[UserPermission.ShowOrder]
+  //   //     badge:true,
+  //   //   },
+  //   // ],
+  //   //permission:[UserPermission.ShowOrder]
+
+  // },
   {
     icon: 'iconsminds-box-close',
-    label: 'الطلبات التي لدي',
-    to: `${agentRoot}/orders`,
-    badge:true,
-    // subs: [
-    //   {
-    //     icon: 'iconsminds-box-close',
-    //     label: 'الطلبات الجديدة',
-    //     to: `${adminRoot}/order/neworders`,
-    //     //permission:[UserPermission.ShowOrder]
-    //     badge:true,
-    //   },
-    // ],
-    //permission:[UserPermission.ShowOrder]
-
+    label: 'طلبات التي في المخزن',
+    to: `${agentRoot}/instock`,
+    
+  },
+  {
+    icon: 'iconsminds-box-close',
+    label: 'طلبات التي في الطريق',
+    to: `${agentRoot}/onway`,
+    
   },
 ];
 export default data ;
