@@ -39,7 +39,7 @@ export class AgentOrdersReportComponent implements OnInit {
   Agent
   AgentPrints:any[]=[]
   Code
-  Date
+  Date:Date
   Get() {
     this.orderService.Print(this.paging, this.printNmber,this.Date).subscribe(res => {
       // this.orderFilter=res
