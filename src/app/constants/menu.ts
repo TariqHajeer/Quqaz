@@ -491,5 +491,17 @@ export const agentmenu: IMenuItem[] = [
     to: `${agentRoot}/onway`,
     
   },
+  {
+    icon: 'iconsminds-box-close',
+    label: 'طلبات المعلقة',
+    to: `${agentRoot}/Suspended`,
+    
+  },
+  {
+    icon: 'iconsminds-box-close',
+    label: 'الكشوفات',
+    to: `${agentRoot}/Report`,
+    
+  },
 ];
 export default data ;

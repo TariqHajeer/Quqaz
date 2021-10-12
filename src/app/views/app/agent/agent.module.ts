@@ -23,10 +23,13 @@ import { NgxPrintModule } from 'ngx-print';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { OrderInStockComponent } from './order-in-stock/order-in-stock.component';
 import { OrdersOnWayComponent } from './orders-on-way/orders-on-way.component';
+import { OrderSuspendedComponent } from './order-suspended/order-suspended.component';
+import { AgentOrdersReportComponent } from './agent-orders-report/agent-orders-report.component';
+import { ShowReportComponent } from './show-report/show-report.component';
 
 
 @NgModule({
-  declarations: [AgenthomeComponent, AgentOrdersComponent, OrderInStockComponent, OrdersOnWayComponent],
+  declarations: [AgenthomeComponent, AgentOrdersComponent, OrderInStockComponent, OrdersOnWayComponent, OrderSuspendedComponent, AgentOrdersReportComponent, ShowReportComponent],
   imports: [
     CommonModule,
     AgentRoutingModule,

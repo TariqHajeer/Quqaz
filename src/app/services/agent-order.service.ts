@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
@@ -21,5 +21,19 @@ export class AgentOrderService {
   MakeOrderInWay(ids){
     return this.http.get<any>(this.controler+"InWay")
   }
-  
+  OrderSuspended(){
+    return this.http.get<any>(this.controler+"OrderSuspended")
+  }
+  Print(paging, number,date) {
+    let params = new HttpParams();
+    if (paging.RowCount != undefined || paging.RowCount != null)
+      params = params.append("RowCount", paging.RowCount);
+    if (paging.Page != undefined || paging.Page != null)
+      params = params.append("Page", paging.Page);
+    if (number)
+      params = params.append("Number", number);
+    if (date)
+      params = params.append("Date", date);
+    return this.http.get<any>(this.controler + "Print", { params: params })
+  }
 }
