@@ -43,7 +43,8 @@ export class AgentOrdersReportComponent implements OnInit {
   Date
   Get() {
     if(this.Date)
-    this.Date=formatDate(this.Date , 'MM/dd/yyyy', 'en');
+    this.Date=formatDate(this.Date ,  'yyyy-MM-dd', 'en-US');
+    console.log(this.Date)
     this.orderService.Print(this.paging, this.printNmber,this.Date).subscribe(res => {
       // this.orderFilter=res
       // this.orderFilter.forEach(o=>{
