@@ -34,6 +34,12 @@ export class AgentOrderService {
       params = params.append("Number", number);
     if (date)
       params = params.append("Date", date);
+    return this.http.get<any>(this.controler + "Prints", { params: params })
+  }
+  Printid(printNumber){
+    let params = new HttpParams();
+    if (printNumber)
+      params = params.append("printNumber", printNumber);
     return this.http.get<any>(this.controler + "Print", { params: params })
   }
 }

@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -39,14 +40,16 @@ export class AgentOrdersReportComponent implements OnInit {
   Agent
   AgentPrints:any[]=[]
   Code
-  Date:Date
+  Date
   Get() {
+    if(this.Date)
+    this.Date=formatDate(this.Date , 'MM/dd/yyyy', 'en');
     this.orderService.Print(this.paging, this.printNmber,this.Date).subscribe(res => {
       // this.orderFilter=res
       // this.orderFilter.forEach(o=>{
       //   o.printNmber=JSON.stringify(o.printNmber)
       // })
-      // console.log(res.data)
+      console.log(res.data)
       this.AgentPrints=res.data
       this.dataSource = new MatTableDataSource(res.data)
       this.totalCount = res.total
@@ -65,7 +68,7 @@ export class AgentOrdersReportComponent implements OnInit {
   }
   printNmber: number = null
   print(number) {
-    this.router.navigate(['/app/reports/agentprintnumber/', number])
+    this.router.navigate(['/app/agent/showReport', number])
   }
   //orderFilter=[]
   // printNmberFillter() {

@@ -7,6 +7,7 @@ import { PrintNumberOrder } from 'src/app/Models/order/PrintNumberOrder.model';
 import { OrderService } from 'src/app/services/order.service';
 import { environment } from 'src/environments/environment';
 import * as jspdf from 'jspdf';
+import { AgentOrderService } from 'src/app/services/agent-order.service';
 
 @Component({
   selector: 'app-show-report',
@@ -16,7 +17,7 @@ import * as jspdf from 'jspdf';
 export class ShowReportComponent implements OnInit {
 
  
-  constructor(private orderservice: OrderService,
+  constructor(private orderservice: AgentOrderService,
     private notifications: NotificationsService,
     public sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef,
@@ -56,7 +57,7 @@ this.changeDeleiverMoneyForClient()
       this.printnumber = par['printnumber'] as any
     });
     this.spinner.show()
-    this.orderservice.GetOrderByAgnetPrintNumber(this.printnumber).subscribe(res => {
+    this.orderservice.Printid(this.printnumber).subscribe(res => {
       this.spinner.hide()
       this.showPrintbtn = true
       this.orders = res.orders

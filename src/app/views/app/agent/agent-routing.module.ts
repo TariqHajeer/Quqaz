@@ -7,6 +7,7 @@ import { AgenthomeComponent } from './agenthome/agenthome.component';
 import { OrderInStockComponent } from './order-in-stock/order-in-stock.component';
 import { OrderSuspendedComponent } from './order-suspended/order-suspended.component';
 import { OrdersOnWayComponent } from './orders-on-way/orders-on-way.component';
+import { ShowReportComponent } from './show-report/show-report.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'onway', component: OrdersOnWayComponent, canActivate: [AuthGuard], },
   { path: 'Suspended', component: OrderSuspendedComponent, canActivate: [AuthGuard], },
   { path: 'Report', component: AgentOrdersReportComponent, canActivate: [AuthGuard], },
+  { path: 'showReport/:id', component: ShowReportComponent, canActivate: [AuthGuard], },
 ];
 
 @NgModule({
