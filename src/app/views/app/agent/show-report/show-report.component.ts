@@ -54,8 +54,9 @@ this.changeDeleiverMoneyForClient()
   phones
   changeDeleiverMoneyForClient() {
     this.getroute.params.subscribe(par => {
-      this.printnumber = par['printnumber'] as any
+      this.printnumber = par['id'] as any
     });
+    // console.log(this.printnumber)
     this.spinner.show()
     this.orderservice.Printid(this.printnumber).subscribe(res => {
       this.spinner.hide()
