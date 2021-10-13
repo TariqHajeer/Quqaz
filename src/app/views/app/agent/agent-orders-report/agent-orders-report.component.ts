@@ -50,7 +50,7 @@ export class AgentOrdersReportComponent implements OnInit {
       // this.orderFilter.forEach(o=>{
       //   o.printNmber=JSON.stringify(o.printNmber)
       // })
-      console.log(res.data)
+      // console.log(res.data)
       this.AgentPrints=res.data
       this.dataSource = new MatTableDataSource(res.data)
       this.totalCount = res.total
