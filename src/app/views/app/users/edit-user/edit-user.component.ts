@@ -77,6 +77,10 @@ export class EditUserComponent implements OnInit {
     this.User.phones = []
     this.spinner.show()
     this.User.salary = Number(this.User.salary);
+    if(this.User.password==null)
+    this.User.password=""
+    if(this.User.userName==null)
+    this.User.userName=""
     console.log(this.User)
     this.UserService.Update(this.User).subscribe(
       res => {
