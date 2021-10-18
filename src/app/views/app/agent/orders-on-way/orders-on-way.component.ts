@@ -25,7 +25,7 @@ export class OrdersOnWayComponent implements OnInit {
 
   
   displayedColumns: string[] = ['select', 'index', 'code', 'client', 'country', 'region'
-    , 'agentCost', 'cost', 'deliveryCost', 'isClientDiliverdMoney', 'orderplaced', 'agentPrintNumber'];
+    , 'agentCost', 'cost', 'deliveryCost', 'agentPrintNumber'];
   dataSource = new MatTableDataSource([]);
   ids: any[] = []
   orders: any[] = []
@@ -60,7 +60,7 @@ export class OrdersOnWayComponent implements OnInit {
   ngOnInit(): void {
     this.paging = new Paging
     this.filtering = new OrderFilter
-    localStorage.removeItem('printordersagent')
+    localStorage.removeItem('ordersagent')
     localStorage.removeItem('printagent')
     this.allFilter()
   }
@@ -98,9 +98,9 @@ export class OrdersOnWayComponent implements OnInit {
         return
       else {
      
-        this.ids.push(row.order.id)
+        // this.ids.push(row.order.id)
         this.orders.push(row.order)
-        localStorage.setItem('printordersagent', JSON.stringify(this.orders))
+        localStorage.setItem('ordersagent', JSON.stringify(this.orders))
         if (this.OrderplacedId) {
           row.order.orderplaced = this.OrderplacedId
         }
@@ -220,11 +220,11 @@ export class OrdersOnWayComponent implements OnInit {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    var agent=this.Agents.find(c => c.id == this.filtering.AgentId)
-    console.log(agent)
-    localStorage.setItem('printagent', JSON.stringify(agent))
-    localStorage.setItem('printordersagent', JSON.stringify(this.orders))
-    this.route.navigate(['app/reports/printagentpreview'])
+    // var agent=this.Agents.find(c => c.id == this.filtering.AgentId)
+    // console.log(agent)
+    // localStorage.setItem('printagent', JSON.stringify(agent))
+    localStorage.setItem('ordersagent', JSON.stringify(this.orders))
+    // this.route.navigate(['app/reports/printagentpreview'])
 
   }
   totalCost: number = 0
