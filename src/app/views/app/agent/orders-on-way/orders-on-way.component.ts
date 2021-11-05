@@ -23,7 +23,7 @@ import { AgentOrderService } from 'src/app/services/agent-order.service';
 })
 export class OrdersOnWayComponent implements OnInit {
 
-  
+
   displayedColumns: string[] = ['select', 'index', 'code', 'client', 'country', 'region'
     , 'agentCost', 'cost', 'deliveryCost', 'agentPrintNumber'];
   dataSource = new MatTableDataSource([]);
@@ -74,8 +74,8 @@ export class OrdersOnWayComponent implements OnInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.orders=[]
-    this.ids=[]
+    this.orders = []
+    this.ids = []
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => { this.selection.select(row) });
@@ -97,14 +97,14 @@ export class OrdersOnWayComponent implements OnInit {
       if (this.ids.filter(d => d == row.order.id).length > 0)
         return
       else {
-     
+
         // this.ids.push(row.order.id)
         this.orders.push(row.order)
         localStorage.setItem('ordersagent', JSON.stringify(this.orders))
         if (this.OrderplacedId) {
           row.order.orderplaced = this.OrderplacedId
         }
-         if (this.MoenyPlacedId) {
+        if (this.MoenyPlacedId) {
           row.order.monePlaced = this.MoenyPlacedId
           if (this.OrderplacedId.id == 4 && this.MoenyPlacedId.id == 4) {
             if (row.order.isClientDiliverdMoney) {
@@ -123,8 +123,8 @@ export class OrdersOnWayComponent implements OnInit {
       this.orders = this.orders.filter(o => o != row.order)
     }
   }
-  
- 
+
+
   switchPage(event: PageEvent) {
     this.paging.allItemsLength = event.length
     this.paging.RowCount = event.pageSize
@@ -187,6 +187,7 @@ export class OrdersOnWayComponent implements OnInit {
       // this.total()
       console.log(response)
       this.dataSource = new MatTableDataSource(response)
+      this.getorders=response
       this.totalCount = response.length
     },
       err => {
@@ -243,4 +244,15 @@ export class OrdersOnWayComponent implements OnInit {
     this.endTotal = this.totalCost - this.totalDelaveryCost
   }
 
+  fillter() {
+    this.dataSource.data = this.getorders
+    if (this.filtering.AgentPrintEndDate&&this.filtering.AgentPrintStartDate) {
+      this.dataSource.data =this.dataSource.data .filter(o=>o.date>=this.filtering.AgentPrintStartDate&&
+        o.date<=this.filtering.AgentPrintEndDate)
+    }
+    if (this.filtering.AgentPrintNumber) {
+      this.dataSource.data =this.dataSource.data .filter(o=>o.agentPrintNumber==this.filtering.AgentPrintNumber)
+    }
+    console.log("gg")
+  }
 }
