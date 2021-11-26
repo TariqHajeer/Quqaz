@@ -25,7 +25,7 @@ export class OrdersOnWayComponent implements OnInit {
 
 
   displayedColumns: string[] = ['select', 'index', 'code', 'client', 'country', 'region'
-    , 'agentCost', 'cost', 'deliveryCost', 'agentPrintNumber'];
+    , 'agentCost', 'cost', 'deliveryCost', 'orderplaced', 'agentPrintNumber'];
   dataSource = new MatTableDataSource([]);
   ids: any[] = []
   orders: any[] = []
@@ -63,6 +63,13 @@ export class OrdersOnWayComponent implements OnInit {
     localStorage.removeItem('ordersagent')
     localStorage.removeItem('printagent')
     this.allFilter()
+    this.GetorderPlace();
+  }
+  GetorderPlace() {
+    this.orderservice.orderPlace().subscribe(res => {
+      this.orderPlace = res
+      this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
+    })
   }
   selection = new SelectionModel<any>(true, []);
 
@@ -162,32 +169,32 @@ export class OrdersOnWayComponent implements OnInit {
   allFilter() {
     // console.log(this.filtering)
     this.orderservice.InWay().subscribe(response => {
+      console.log(response)
       this.getorders = []
-      // if (response)
-      //   if (response.data.length == 0)
-      //     this.noDataFound = true
-      //   else this.noDataFound = false
-      // response.data.forEach(element => {
-      //   this.getorder.order = element
-      //   this.getorder.MoenyPlaced = this.MoenyPlaced
-      //   this.getorder.OrderPlaced = this.orderPlace
-      //   this.getorder.canEditCount = true
-      //   this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced)
-      //   if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2)
-      //     this.getorder.order.orderplaced = this.getorder.OrderPlaced[0]
-      //   this.getorder.order.date = this.getorder.order.date.split('T')[0]
-      //   this.getorder.order.date = new Date(this.getorder.order.date)
-      //   this.getorders.push(this.getorder)
-      //   this.getorder = new GetOrder()
-      // });
-      // this.temporderscost = Object.assign({}, this.getorders.map(o => o.order.cost));
+      if (response)
+        if (response.length == 0)
+          this.noDataFound = true
+        else this.noDataFound = false
+      response.forEach(element => {
+        this.getorder.order = element
+        // this.getorder.MoenyPlaced = this.MoenyPlaced
+        this.getorder.OrderPlaced = this.orderPlace
+        this.getorder.canEditCount = true
+        // this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced)
+        // if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2)
+          // this.getorder.order.orderplaced = this.getorder.OrderPlaced[0]
+        this.getorder.order.date = this.getorder.order.date.split('T')[0]
+        this.getorder.order.date = new Date(this.getorder.order.date)
+        this.getorders.push(this.getorder)
+        this.getorder = new GetOrder()
+      });
+      this.temporderscost = Object.assign({}, this.getorders.map(o => o.order.cost));
       // this.tempordersmonePlaced = Object.assign({}, this.getorders.map(o => o.order.monePlaced));
       // this.tempisClientDiliverdMoney = Object.assign({}, this.getorders.map(o => o.order.isClientDiliverdMoney));
-      // this.temporder = this.getorders
-      // this.total()
-      console.log(response)
-      this.dataSource = new MatTableDataSource(response)
-      this.getorders=response
+      this.temporder = this.getorders
+      this.total()
+      this.dataSource = new MatTableDataSource(this.getorders)
+      this.getorders = response
       this.totalCount = response.length
     },
       err => {
@@ -247,14 +254,23 @@ export class OrdersOnWayComponent implements OnInit {
   fillter() {
     this.dataSource.data = this.getorders
     if (this.filtering.AgentPrintNumber) {
-      this.dataSource.data =this.dataSource.data .filter(o=>o.agentPrintNumber==this.filtering.AgentPrintNumber)
+      this.dataSource.data = this.dataSource.data.filter(o => o.agentPrintNumber == this.filtering.AgentPrintNumber)
     }
     if (this.filtering.Code) {
-      this.dataSource.data =this.dataSource.data .filter(o=>o.code==this.filtering.Code)
+      this.dataSource.data = this.dataSource.data.filter(o => o.code == this.filtering.Code)
     }
-    if (this.filtering.AgentPrintEndDate&&this.filtering.AgentPrintStartDate) {
-      this.dataSource.data =this.dataSource.data .filter(o=>o.date>=this.filtering.AgentPrintStartDate&&
-        o.date<=this.filtering.AgentPrintEndDate)
+    if (this.filtering.AgentPrintEndDate && this.filtering.AgentPrintStartDate) {
+      this.dataSource.data = this.dataSource.data.filter(o => o.date >= this.filtering.AgentPrintStartDate &&
+        o.date <= this.filtering.AgentPrintEndDate)
     }
+  }
+  ChangeOrderplacedId(element, index) {
+    this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
+    this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced, this.tempordersmonePlaced[index], this.tempisClientDiliverdMoney[index])
+    this.orderplacedstate.onWay(element, this.MoenyPlaced)
+    this.orderplacedstate.unacceptable(element, this.MoenyPlaced)
+    this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
+    this.total()
+
   }
 }

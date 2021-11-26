@@ -42,4 +42,8 @@ export class AgentOrderService {
       params = params.append("printNumber", printNumber);
     return this.http.get<any>(this.controler + "Print", { params: params })
   }
+  orderPlace() {
+    return this.http.get<any>(this.controler + "GetOrderState")
+
+  }
 }
