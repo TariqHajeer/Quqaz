@@ -63,7 +63,7 @@ export class OrdersOnWayComponent implements OnInit {
     localStorage.removeItem('ordersagent')
     localStorage.removeItem('printagent')
     this.allFilter()
-    this.GetorderPlace();
+    // this.GetorderPlace();
   }
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {

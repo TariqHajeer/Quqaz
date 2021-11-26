@@ -14,6 +14,18 @@ export class AgenthomeComponent implements OnInit {
   }
   totlaOrder
   AgentOrders() {
-    // this.router.navigate(['/app/agent/orders'])
+    this.router.navigate(['/app/agent/orders'])
+  }
+  onWay(){
+    this.router.navigate(['/app/agent/onway'])
+  }
+  inStor() {
+    this.router.navigate(['/app/agent/instock'])
+  }
+  report() {
+    this.router.navigate(['/app/agent/Report'])
+  }
+  suspended() {
+    this.router.navigate(['/app/agent/Suspended'])
   }
 }
