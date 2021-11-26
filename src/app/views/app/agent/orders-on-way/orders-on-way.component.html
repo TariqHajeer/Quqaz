@@ -5,18 +5,15 @@
     <div class="card-body">
       <h3>  طلبات التي في الطريق </h3>
       <div class="row">
-        
-        <!-- <div class="col-md-2">
-          <label>المحافظة</label>
-          <ng-select [(ngModel)]="filtering.CountryId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Country"
-            >
-            <ng-option *ngFor="let Country of countriesAgent" [value]="Country.id">{{Country.name}}</ng-option>
-          </ng-select>
-        </div> -->
         <div class="col-md-2">
           <label> رقم طباعة  شحنات المندوب </label>
           <input type="text" class="form-control"  (keyup.enter)="fillter()"
            [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.AgentPrintNumber">
+        </div>
+        <div class="col-md-2">
+          <label>كود</label>
+          <input type="text" class="form-control"  (keyup.enter)="fillter()"
+          [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Code">
         </div>
         <div class="col-md-2">
           <label> من تاريخ</label>

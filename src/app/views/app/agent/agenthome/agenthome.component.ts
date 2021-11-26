@@ -14,6 +14,6 @@ export class AgenthomeComponent implements OnInit {
   }
   totlaOrder
   AgentOrders() {
-    this.router.navigate(['/app/agent/orders'])
+    // this.router.navigate(['/app/agent/orders'])
   }
 }

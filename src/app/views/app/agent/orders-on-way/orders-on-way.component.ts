@@ -246,13 +246,15 @@ export class OrdersOnWayComponent implements OnInit {
 
   fillter() {
     this.dataSource.data = this.getorders
+    if (this.filtering.AgentPrintNumber) {
+      this.dataSource.data =this.dataSource.data .filter(o=>o.agentPrintNumber==this.filtering.AgentPrintNumber)
+    }
+    if (this.filtering.Code) {
+      this.dataSource.data =this.dataSource.data .filter(o=>o.code==this.filtering.Code)
+    }
     if (this.filtering.AgentPrintEndDate&&this.filtering.AgentPrintStartDate) {
       this.dataSource.data =this.dataSource.data .filter(o=>o.date>=this.filtering.AgentPrintStartDate&&
         o.date<=this.filtering.AgentPrintEndDate)
     }
-    if (this.filtering.AgentPrintNumber) {
-      this.dataSource.data =this.dataSource.data .filter(o=>o.agentPrintNumber==this.filtering.AgentPrintNumber)
-    }
-    console.log("gg")
   }
 }

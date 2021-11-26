@@ -23,7 +23,7 @@ export class AgentOrdersComponent implements OnInit {
   @ViewChild('infoModal') public infoModal: ModalDirective;
 
   ngOnInit(): void {
-    this.get()
+    // this.get()
   }
   get() {
     this.OrderService.Get().subscribe(res => {
