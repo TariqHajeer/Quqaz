@@ -76,6 +76,13 @@ const data: IMenuItem[] = [
 
       },
       {
+        icon: 'simple-icon-layers',
+        label: 'طلبات تعديل حالة الشحنة',
+        to: `${adminRoot}/reports/agentOrderstaterequests`,
+        //permission:[UserPermission.ShowOrder]
+
+      },
+      {
         icon: 'iconsminds-add',
         label: 'إضافة طلب',
         to: `${adminRoot}/order/addorder`,
@@ -174,6 +181,7 @@ const data: IMenuItem[] = [
             //permission:[UserPermission.ShowOrder]
 
           },
+         
         ]
       },
       {//client

@@ -290,5 +290,8 @@ export class OrderService {
   AddPrintNumber(id){
     return this.http.patch(this.controler+"AddPrintNumber/"+id,id)
   }
+  OrderRequestEditState(){
+    return this.http.get<any>(this.controler + "OrderRequestEditState")
+  }
 }
 

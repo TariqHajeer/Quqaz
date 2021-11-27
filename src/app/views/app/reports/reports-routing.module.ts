@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/auth.guard';
 import { UserPermission } from 'src/app/shared/auth.roles';
+import { AgentOrderStateComponent } from './agent-order-state/agent-order-state.component';
 import { AgentPrintComponent } from './agent-print/agent-print.component';
 import { AgentStatisticsComponent } from './agent-statistics/agent-statistics.component';
 import { ChangeAgentByOrdersComponent } from './change-agent-by-orders/change-agent-by-orders.component';
@@ -137,6 +138,11 @@ const routes: Routes = [
   {
     path:'changeagentbyorders',
     component: ChangeAgentByOrdersComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
+  },
+  {
+    path:'agentOrderstaterequests',
+    component: AgentOrderStateComponent,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowReports]}
   },
 ];

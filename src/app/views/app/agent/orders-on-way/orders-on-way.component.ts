@@ -25,7 +25,7 @@ export class OrdersOnWayComponent implements OnInit {
 
 
   displayedColumns: string[] = ['select', 'index', 'code', 'client', 'country', 'region'
-    , 'agentCost', 'cost', 'deliveryCost', 'orderplaced', 'agentPrintNumber'];
+    , 'agentCost', 'cost', 'deliveryCost', 'orderplaced', 'agentRequestStatus','agentPrintNumber'];
   dataSource = new MatTableDataSource([]);
   ids: any[] = []
   orders: any[] = []
@@ -107,10 +107,9 @@ export class OrdersOnWayComponent implements OnInit {
 
         this.ids.push(row.order.id)
         this.orders.push(row.order)
-        // localStorage.setItem('ordersagent', JSON.stringify(this.orders))
-        // if (this.OrderplacedId) {
-        //   row.order.orderplaced = this.OrderplacedId
-        // }
+        if (this.OrderplacedId) {
+          row.order.orderplaced = this.OrderplacedId
+        }
         // if (this.MoenyPlacedId) {
         //   row.order.monePlaced = this.MoenyPlacedId
         //   if (this.OrderplacedId.id == 4 && this.MoenyPlacedId.id == 4) {
@@ -122,7 +121,6 @@ export class OrdersOnWayComponent implements OnInit {
         //     }
         //   }
         // }
-        // this.client = this.orders.map(o => o.order.client)[0]
         //this.orderplaced = this.orders.map(o => o.order.orderplaced)[0]
       }
     if (!this.selection.isSelected(row)) {
