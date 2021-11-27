@@ -110,6 +110,7 @@ export class OrdersOnWayComponent implements OnInit {
         if (this.OrderplacedId) {
           row.order.orderplaced = this.OrderplacedId
         }
+        row.order.canEditCount=true
         // if (this.MoenyPlacedId) {
         //   row.order.monePlaced = this.MoenyPlacedId
         //   if (this.OrderplacedId.id == 4 && this.MoenyPlacedId.id == 4) {
@@ -177,7 +178,7 @@ export class OrdersOnWayComponent implements OnInit {
         this.getorder.order = element
         // this.getorder.MoenyPlaced = this.MoenyPlaced
         this.getorder.OrderPlaced = this.orderPlace
-        this.getorder.canEditCount = true
+        this.getorder.canEditCount = false
         // this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced)
         // if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2)
           // this.getorder.order.orderplaced = this.getorder.OrderPlaced[0]
