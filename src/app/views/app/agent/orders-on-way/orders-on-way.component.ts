@@ -62,8 +62,8 @@ export class OrdersOnWayComponent implements OnInit {
     this.filtering = new OrderFilter
     localStorage.removeItem('ordersagent')
     localStorage.removeItem('printagent')
+    this.GetorderPlace();
     this.allFilter()
-    // this.GetorderPlace();
   }
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
@@ -105,23 +105,23 @@ export class OrdersOnWayComponent implements OnInit {
         return
       else {
 
-        // this.ids.push(row.order.id)
+        this.ids.push(row.order.id)
         this.orders.push(row.order)
-        localStorage.setItem('ordersagent', JSON.stringify(this.orders))
-        if (this.OrderplacedId) {
-          row.order.orderplaced = this.OrderplacedId
-        }
-        if (this.MoenyPlacedId) {
-          row.order.monePlaced = this.MoenyPlacedId
-          if (this.OrderplacedId.id == 4 && this.MoenyPlacedId.id == 4) {
-            if (row.order.isClientDiliverdMoney) {
-              row.order.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
-            }
-            else {
-              row.order.monePlaced = this.MoenyPlaced.find(m => m.id == 3)
-            }
-          }
-        }
+        // localStorage.setItem('ordersagent', JSON.stringify(this.orders))
+        // if (this.OrderplacedId) {
+        //   row.order.orderplaced = this.OrderplacedId
+        // }
+        // if (this.MoenyPlacedId) {
+        //   row.order.monePlaced = this.MoenyPlacedId
+        //   if (this.OrderplacedId.id == 4 && this.MoenyPlacedId.id == 4) {
+        //     if (row.order.isClientDiliverdMoney) {
+        //       row.order.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
+        //     }
+        //     else {
+        //       row.order.monePlaced = this.MoenyPlaced.find(m => m.id == 3)
+        //     }
+        //   }
+        // }
         // this.client = this.orders.map(o => o.order.client)[0]
         //this.orderplaced = this.orders.map(o => o.order.orderplaced)[0]
       }
@@ -192,7 +192,7 @@ export class OrdersOnWayComponent implements OnInit {
       // this.tempordersmonePlaced = Object.assign({}, this.getorders.map(o => o.order.monePlaced));
       // this.tempisClientDiliverdMoney = Object.assign({}, this.getorders.map(o => o.order.isClientDiliverdMoney));
       this.temporder = this.getorders
-      this.total()
+      // this.total()
       this.dataSource = new MatTableDataSource(this.getorders)
       this.getorders = response
       this.totalCount = response.length
@@ -202,54 +202,47 @@ export class OrdersOnWayComponent implements OnInit {
       });
   }
   saveEdit() {
-    // for (let i = 0; i < this.orders.length; i++) {
-    //   this.orderstate.Id = this.orders[i].id
-    //   this.orderstate.Cost = this.orders[i].cost*1
-    //   this.orderstate.DeliveryCost = this.orders[i].deliveryCost*1
-    //   this.orderstate.AgentCost = this.orders[i].agentCost*1
-    //   this.orderstate.Note = this.orders[i].note
-    //   this.orderstate.MoenyPlacedId = this.orders[i].monePlaced.id
-    //   this.orderstate.OrderplacedId = this.orders[i].orderplaced.id
-    //   this.orderstates.push(this.orderstate)
-    //   this.orderstate = new OrderState
-    // }
-    // this.spinner.show();
-    // this.orderservice.UpdateOrdersStatusFromAgent(this.orderstates).subscribe(res => {
-    //   this.allFilter()
-    //   this.spinner.hide()
-    //   this.orderstates = []
-    //   this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-    // }, err => {
-    //   this.spinner.hide()
-    // })
-  }
-  print() {
-    if (this.noDataFound == true || this.getorders.length == 0) {
+    this.orderstates=[]
+    if (this.noDataFound == true || this.orders.length == 0) {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    // var agent=this.Agents.find(c => c.id == this.filtering.AgentId)
-    // console.log(agent)
-    // localStorage.setItem('printagent', JSON.stringify(agent))
-    localStorage.setItem('ordersagent', JSON.stringify(this.orders))
-    // this.route.navigate(['app/reports/printagentpreview'])
-
+    for (let i = 0; i < this.orders.length; i++) {
+      this.orderstate.Id = this.orders[i].id
+      this.orderstate.Cost = this.orders[i].cost*1
+      this.orderstate.AgentCost = this.orders[i].agentCost*1
+      this.orderstate.OrderplacedId = this.orders[i].orderplaced.id
+      this.orderstates.push(this.orderstate)
+      this.orderstate = new OrderState
+    }
+    this.spinner.show();
+    // console.log(this.orderstates)
+    this.orderservice.SetOrderPlaced(this.orderstates).subscribe(res => {
+      this.allFilter()
+      this.spinner.hide()
+      this.orderstates = []
+      this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    }, err => {
+      console.log(err)
+      this.spinner.hide()
+    })
   }
+ 
   totalCost: number = 0
   totalDelaveryCost: number = 0
   endTotal: number = 0
-  total() {
-    this.totalCost = 0
-    this.totalDelaveryCost = 0
-    this.endTotal = 0
-    this.getorders.forEach(d => {
-      if (d.order.orderplaced.id == 4 || d.order.orderplaced.id == 6)
-        this.totalCost += d.order.cost
-      if (d.order.orderplaced.id == 4 || d.order.orderplaced.id == 6 || d.order.orderplaced.id == 7)
-        this.totalDelaveryCost += d.order.deliveryCost
-    })
-    this.endTotal = this.totalCost - this.totalDelaveryCost
-  }
+  // total() {
+  //   this.totalCost = 0
+  //   this.totalDelaveryCost = 0
+  //   this.endTotal = 0
+  //   this.getorders.forEach(d => {
+  //     if (d.order.orderplaced.id == 4 || d.order.orderplaced.id == 6)
+  //       this.totalCost += d.order.cost
+  //     if (d.order.orderplaced.id == 4 || d.order.orderplaced.id == 6 || d.order.orderplaced.id == 7)
+  //       this.totalDelaveryCost += d.order.deliveryCost
+  //   })
+  //   this.endTotal = this.totalCost - this.totalDelaveryCost
+  // }
 
   fillter() {
     this.dataSource.data = this.getorders
@@ -270,7 +263,7 @@ export class OrdersOnWayComponent implements OnInit {
     this.orderplacedstate.onWay(element, this.MoenyPlaced)
     this.orderplacedstate.unacceptable(element, this.MoenyPlaced)
     this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
-    this.total()
+    // this.total()
 
   }
 }

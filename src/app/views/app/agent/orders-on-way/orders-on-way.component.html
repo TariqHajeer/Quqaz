@@ -29,7 +29,7 @@
         </div>
         
         <div class="col-md-3">
-          <button (click)="print()" class="btn btn-primary"> تم التسليم</button>&nbsp;
+          <button (click)="saveEdit()" class="btn btn-primary"> تم التسليم</button>&nbsp;
           <!-- <button (click)="print()" class="btn btn-primary"> <svg xmlns="http://www.w3.org/2000/svg" width="17"
               height="17" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
               <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
@@ -170,7 +170,7 @@
   
   <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
     [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
-    <div class="row" style=" background-color: white;font-size: 15px;text-align: center;">
+    <!-- <div class="row" style=" background-color: white;font-size: 15px;text-align: center;">
       <div class="col-3">
         الإجمالي
       </div>
@@ -183,5 +183,5 @@
       <div class="col-5">
        الإجمالي النهائي : {{endTotal}} 
       </div>
-    </div>
+    </div> -->
   <simple-notifications></simple-notifications>

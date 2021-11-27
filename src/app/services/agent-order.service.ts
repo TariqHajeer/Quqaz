@@ -10,21 +10,21 @@ export class AgentOrderService {
   constructor(private http: HttpClient) { }
   controler = environment.baseUrl + "api/AgentOrder/";
   Get() {
-    return this.http.get<any>(this.controler+"Order")
+    return this.http.get<any>(this.controler + "Order")
   }
-  InStock(){
-    return this.http.get<any>(this.controler+"InStock")
+  InStock() {
+    return this.http.get<any>(this.controler + "InStock")
   }
-  InWay(){
-    return this.http.get<any>(this.controler+"InWay")
+  InWay() {
+    return this.http.get<any>(this.controler + "InWay")
   }
-  MakeOrderInWay(ids){
-    return this.http.get<any>(this.controler+"InWay")
+  MakeOrderInWay(ids) {
+    return this.http.get<any>(this.controler + "InWay")
   }
-  OrderSuspended(){
-    return this.http.get<any>(this.controler+"OrderSuspended")
+  OrderSuspended() {
+    return this.http.get<any>(this.controler + "OrderSuspended")
   }
-  Print(paging, number,date) {
+  Print(paging, number, date) {
     let params = new HttpParams();
     if (paging.RowCount != undefined || paging.RowCount != null)
       params = params.append("RowCount", paging.RowCount);
@@ -36,14 +36,16 @@ export class AgentOrderService {
       params = params.append("Date", date);
     return this.http.get<any>(this.controler + "Prints", { params: params })
   }
-  Printid(printNumber){
+  Printid(printNumber) {
     let params = new HttpParams();
     if (printNumber)
       params = params.append("printNumber", printNumber);
     return this.http.get<any>(this.controler + "Print", { params: params })
   }
   orderPlace() {
-    return this.http.get<any>(this.controler + "GetOrderState")
-
+    return this.http.get<any>(this.controler + "GetOrderPlaced")
+  }
+  SetOrderPlaced(orderstate) {
+  return  this.http.post<any>(this.controler + "SetOrderPlaced", orderstate)
   }
 }
