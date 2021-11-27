@@ -15,9 +15,9 @@ export class ErrorComponent implements OnInit,OnDestroy {
 
   ngOnInit() {
     document.body.classList.add('background');
-setTimeout(() => {
-  this.goToPage()
-}, 5000);
+// setTimeout(() => {
+//   this.goToPage()
+// }, 5000);
   }
 
   ngOnDestroy() {
