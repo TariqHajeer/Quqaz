@@ -216,7 +216,7 @@ export class OrdersOnWayComponent implements OnInit {
       this.orderstate = new OrderState
     }
     this.spinner.show();
-    // console.log(this.orderstates)
+    console.log(this.orderstates)
     this.orderservice.SetOrderPlaced(this.orderstates).subscribe(res => {
       this.allFilter()
       this.spinner.hide()

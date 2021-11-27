@@ -1,5 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-unauthorized',
@@ -8,7 +9,7 @@ import { environment } from 'src/environments/environment';
 export class UnauthorizedComponent implements OnInit, OnDestroy {
   adminRoot = '/app/HomePage/start';
 
-  constructor() { }
+  constructor(private location: Location) { }
 prv=[]
   ngOnInit() {
     document.body.classList.add('background');
@@ -17,6 +18,13 @@ prv=[]
 
   ngOnDestroy() {
     document.body.classList.remove('background');
+    this.goToPage()
+  }
+  @HostListener('window:beforeunload')
+  goToPage() {
+    console.log("goo")
+    this.location.back()
+    return false
   }
 
 }
