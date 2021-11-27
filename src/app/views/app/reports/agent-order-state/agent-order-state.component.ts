@@ -31,12 +31,12 @@ export class AgentOrderStateComponent implements OnInit {
     })
   }
   Accept(id) {
-    this.orderService.Accept(id).subscribe(res => {
+    this.orderService.AproveOrderRequestEditStateCount(id).subscribe(res => {
       this.Get()
     })
   }
   DisAccept(id) {
-    this.orderService.DisAccept(id).subscribe(res => {
+    this.orderService.DisAproveOrderRequestEditStateCount(id).subscribe(res => {
       this.Get()
     })
   }

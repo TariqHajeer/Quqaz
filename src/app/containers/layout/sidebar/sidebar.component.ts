@@ -149,16 +149,33 @@ export class SidebarComponent implements OnInit, OnDestroy {
       this.countEditClient = res.length
     })
   }
+  countOrderRequestEditState = 0
+  newNotfecationOrderRequestEditState = 0
+  OrderRequestEditStateCount() {
+    this.orderService.OrderRequestEditStateCount().subscribe(res => {
+      if (this.countOrderRequestEditState != res) {
+        this.newNotfecationOrderRequestEditState = res - this.countOrderRequestEditState
+        let message = ' لديك ' + this.newNotfecationOrderRequestEditState + 'من طلبات تعديل المندوب على حالة الشحنة'
+        if (this.newNotfecationOrderRequestEditState > 0)
+          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+
+      }
+      this.countOrderRequestEditState = res
+    })
+  }
   async ngOnInit() {
-    if (this.userlogin.policy == "Employee") { 
+    if (this.userlogin.policy == "Employee") {
       this.getNewOrders()
       this.getNewOrdersDontSend()
       this.newPaymentOrders()
+      this.NewEditClientRequest()
+      this.OrderRequestEditStateCount()
       setInterval(() => {
         this.getNewOrders()
         this.getNewOrdersDontSend()
         this.newPaymentOrders()
         this.NewEditClientRequest()
+        this.OrderRequestEditStateCount()
       }, 5000);
     }
 

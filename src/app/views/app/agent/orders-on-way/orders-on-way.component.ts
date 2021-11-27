@@ -127,6 +127,7 @@ export class OrdersOnWayComponent implements OnInit {
     if (!this.selection.isSelected(row)) {
       this.ids = this.ids.filter(i => i != row.order.id)
       this.orders = this.orders.filter(o => o != row.order)
+      // row.order.canEditCount=false
     }
   }
 
