@@ -100,34 +100,22 @@ export class OrdersOnWayComponent implements OnInit {
   client = this.orders.map(o => o.agent)[0]
   orderplaced = this.orders.map(o => o.orderplaced)[0]
   checkboxId(row) {
+    let order=this.dataSource.data.find(o=>o.order.id==row)
     if (this.selection.isSelected(row))
-      if (this.ids.filter(d => d == row.order.id).length > 0)
+      if (this.ids.filter(d => d == row).length > 0)
         return
       else {
-
-        this.ids.push(row.order.id)
-        this.orders.push(row.order)
+        this.ids.push(row)
+        this.orders.push(order.order)
         if (this.OrderplacedId) {
-          row.order.orderplaced = this.OrderplacedId
+          order.order.orderplaced = this.OrderplacedId
         }
-        row.order.canEditCount=true
-        // if (this.MoenyPlacedId) {
-        //   row.order.monePlaced = this.MoenyPlacedId
-        //   if (this.OrderplacedId.id == 4 && this.MoenyPlacedId.id == 4) {
-        //     if (row.order.isClientDiliverdMoney) {
-        //       row.order.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
-        //     }
-        //     else {
-        //       row.order.monePlaced = this.MoenyPlaced.find(m => m.id == 3)
-        //     }
-        //   }
-        // }
-        //this.orderplaced = this.orders.map(o => o.order.orderplaced)[0]
+        order.order.canEditCount=true
       }
     if (!this.selection.isSelected(row)) {
-      this.ids = this.ids.filter(i => i != row.order.id)
-      this.orders = this.orders.filter(o => o != row.order)
-      // row.order.canEditCount=false
+      this.ids = this.ids.filter(i => i != row)
+      this.orders = this.orders.filter(o => o.id != row)
+      order.order.canEditCount=false
     }
   }
 
