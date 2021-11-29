@@ -22,11 +22,10 @@ export class ErrorComponent implements OnInit,OnDestroy {
 
   ngOnDestroy() {
     document.body.classList.remove('background');
-    this.goToPage()
+    // this.goToPage()
   }
-  @HostListener('window:beforeunload')
+  // @HostListener('window:beforeunload')
   goToPage() {
-    console.log("goo")
     this.location.back()
     return false
   }
