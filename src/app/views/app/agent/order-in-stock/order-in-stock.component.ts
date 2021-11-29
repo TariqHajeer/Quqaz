@@ -19,7 +19,7 @@ import { AgentOrderService } from 'src/app/services/agent-order.service';
 })
 export class OrderInStockComponent implements OnInit {
 
-  displayedColumns: string[] = ['select','indexs', 'code', 'client','cost', 'country', 'region'];
+  displayedColumns: string[] = ['indexs', 'code', 'client','cost', 'country', 'region'];
 dataSource = new MatTableDataSource([]);
 selection = new SelectionModel<any>(true, []);
 
