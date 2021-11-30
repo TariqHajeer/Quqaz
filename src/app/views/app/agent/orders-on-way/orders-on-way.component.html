@@ -41,7 +41,7 @@
       <div class="col-2">
         <label>حالة الشحنة</label>
         <ng-select appendTo="body" [(ngModel)]="OrderplacedId" [ngModelOptions]="{standalone: true}" [clearable]="false"
-          name="Orderplaced" style="width: 120px; overflow: visible;">
+          name="Orderplaced" style="width: 120px; overflow: visible;" (change)="ChengeOrderplaced()">
           <ng-option *ngFor="let order of orderPlace " [value]="order">{{order.name}}</ng-option>
         </ng-select>
       </div>
@@ -66,8 +66,9 @@
     <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>
         <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
-          [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+           [aria-label]="checkboxLabel()">
         </mat-checkbox>
+        <!-- [indeterminate]="selection.hasValue() && !isAllSelected()" -->
       </th>
       <td mat-cell *matCellDef="let row">
         <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row.order.id) : null"

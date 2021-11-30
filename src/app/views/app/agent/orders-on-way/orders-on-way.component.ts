@@ -72,7 +72,7 @@ export class OrdersOnWayComponent implements OnInit {
     this.ids = []
     this.isAllSelected() ?
       this.selection.clear() :
-      this.dataSource.data.forEach(row => { this.selection.select(row) });
+      this.dataSource.data.forEach(row => { this.selection.select(row.order.id) });
   }
 
   /** The label for the checkbox on the passed row */
@@ -95,12 +95,12 @@ export class OrdersOnWayComponent implements OnInit {
         this.ids.push(row)
         this.orders.push(order.order)
         if (this.OrderplacedId) {
-          order.order.orderplaced = this.OrderplacedId
+          order.order.orderplaced = {...this.OrderplacedId}
         }
         order.order.canEditCount=true
       }
     if (!this.selection.isSelected(row)) {
-      order.order=this.temporder.find(o => o.id == row)
+      order.order={...this.temporder.find(o => o.id == row)}
       order.order.canEditCount=false
       this.ids = this.ids.filter(i => i != row)
       this.orders = this.orders.filter(o => o.id != row)
@@ -149,6 +149,12 @@ export class OrdersOnWayComponent implements OnInit {
       this.dataSource.data = this.dataSource.data.filter(o => o.date >= this.filtering.AgentPrintStartDate &&
         o.date <= this.filtering.AgentPrintEndDate)
     }
+  }
+  ChengeOrderplaced(){
+    let array=this.dataSource.data.filter(o=>o.order.canEditCount==true)
+    array.forEach(o=>{
+      o.order.orderplaced = {...this.OrderplacedId}
+    })
   }
   saveEdit() {
     this.orderstates=[]
