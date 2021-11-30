@@ -18,11 +18,11 @@ prv=[]
 
   ngOnDestroy() {
     document.body.classList.remove('background');
-    this.goToPage()
+    // this.goToPage()
   }
-  @HostListener('window:beforeunload')
+  // @HostListener('window:beforeunload')
   goToPage() {
-    console.log("goo")
+    // console.log("goo")
     this.location.back()
     return false
   }
