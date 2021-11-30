@@ -106,7 +106,7 @@
         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
           *ngIf="element.order.canEditCount"
           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-          [(ngModel)]="element.order.cost" (ngModelChange)=" changeCost(element,i)" style="width: 110px;">
+          [(ngModel)]="element.order.cost"  style="width: 110px;">
         <h5 style="color: red;"> {{element.order.messageCost}}</h5>
       </td>
     </ng-container>
@@ -119,7 +119,7 @@
       <td mat-cell *matCellDef="let element;index as i"> 
       <a *ngIf="!element.order.canEditCount"> {{element.order.orderplaced.name}}</a> 
         <ng-select appendTo="body" [(ngModel)]="element.order.orderplaced.id" [ngModelOptions]="{standalone: true}"
-          [clearable]="false" id="i*2" name="Orderplaced" (change)="ChangeOrderplacedId(element,i)"
+          [clearable]="false" id="i*2" name="Orderplaced" 
           style="width: 120px; overflow: visible;" *ngIf="element.order.canEditCount">
           <ng-option *ngFor="let order of element.OrderPlaced" [value]="order.id">{{order.name}}</ng-option>
         </ng-select>
@@ -161,8 +161,8 @@
 
 </div>
 
-<mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
-  [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
+<!-- <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
+  [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator> -->
 <!-- <div class="row" style=" background-color: white;font-size: 15px;text-align: center;">
       <div class="col-3">
         الإجمالي
