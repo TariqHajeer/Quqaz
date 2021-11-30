@@ -14,16 +14,16 @@
                   <span class="logo-single"></span>
                 </a>
                 <h6 class="mb-4"></h6>
+                <p class="mb-0 text-muted text-small mb-0">
+                  عفوا انت لا تملك الصلاحيات للقيام بهذه العملية
+                 </p>
                 <p class="mb-0 text-muted text-small mb-0" *ngIf="prv&&prv.length>0">
-                   :عفوا يجب عليك ان تملك الصلاحيات التالية للقيام بهذه العملية
+                   يجب ان تملك الصلاحيات التالية :
                   <li *ngFor="let p of prv">
                     {{p.name}}
                   </li>
                 </p>
-                <p class="mb-0 text-muted text-small mb-0" *ngIf="prv.length<=0 ||prv==null || prv==undefined">
-                عفوا انت لا تملك الصلاحيات للقيام بهذه العملية
-                 
-               </p>
+               
                 <p class="display-1 font-weight-bold mb-5">403</p>
                 <a class="btn btn-primary btn-lg btn-shadow" type="submit" (click)="goToPage()">
                   العودة الى الصفحة السابقة  
