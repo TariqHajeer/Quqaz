@@ -411,8 +411,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
         if (item.to == "/app/order/orderswithclient" && item.badge) {
           item.badgeLable = this.countNewOrdersDontSend
         }
+        if (item.to == "/app/reports/agentOrderstaterequests" && item.badge) {
+          item.badgeLable = this.countOrderRequestEditState
+        }
       })
-    // filter the menu by role
+    // filter the menu by role 
     return menuItems
       ? menuItems.filter(
         (x) =>

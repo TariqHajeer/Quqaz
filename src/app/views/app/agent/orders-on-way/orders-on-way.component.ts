@@ -162,6 +162,10 @@ export class OrdersOnWayComponent implements OnInit {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
+    if(this.orders.filter(o=>o.orderplaced.id==3).length>0){
+      this.notifications.create('error', 'لايمكن ان تكون الطلبات في الطريق', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      return
+    }
     for (let i = 0; i < this.orders.length; i++) {
       this.orderstate.Id = this.orders[i].id
       this.orderstate.Cost = this.orders[i].cost*1
@@ -171,11 +175,16 @@ export class OrdersOnWayComponent implements OnInit {
       this.orderstate = new OrderState
     }
     this.spinner.show();
-    console.log(this.orderstates)
+    // console.log(this.orderstates)
+    // console.log(this.orders)
     this.orderservice.SetOrderPlaced(this.orderstates).subscribe(res => {
-      this.allFilter()
+      // this.allFilter()
       this.spinner.hide()
       this.orderstates = []
+      this.orders.forEach(o=>{
+        this.dataSource.data=this.dataSource.data.filter(d=>d.order!=o)
+      })
+      this.orders=[]
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
     }, err => {
       console.log(err)

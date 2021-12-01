@@ -79,6 +79,7 @@ const data: IMenuItem[] = [
         icon: 'simple-icon-layers',
         label: 'طلبات تعديل حالة الشحنة',
         to: `${adminRoot}/reports/agentOrderstaterequests`,
+        badge:true,
         //permission:[UserPermission.ShowOrder]
 
       },
