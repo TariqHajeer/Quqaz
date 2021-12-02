@@ -40,25 +40,30 @@ export class JwtInterceptor implements HttpInterceptor {
                     return this.generalErrorHandling(error);
                   }
                   else {
-                    return this.logoutUser();
+                    return this.logoutUser(error);
                   }
                 case 0:
                   {
                     this.router.navigate(['/noconnection']);
+                    break
                   }
                 case 403: {
                   this.router.navigate(['/unauthorized']);
+                  break
                 }
                 case 404: {
                   this.router.navigate(['/error']);
+                  break
                 }
                 case 400:
                   this.notifications.error('error', 'يجب التأكد من ادخال البيانات', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-                case 409:
+                  break
+                  case 409:
                   this.notifications.error('error', error.message, NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-                case 500:
+                  break
+                  case 500:
                   this.notifications.error('error', error.message, NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-
+                  break
                 default:
                   return this.generalErrorHandling(error);
               }
@@ -99,22 +104,22 @@ export class JwtInterceptor implements HttpInterceptor {
 
   }
 
-  logoutUser() {
+  logoutUser(error) {
     // Route to the login page (implementation up to you)
     const authService = this.injector.get(AuthService);
     localStorage.removeItem('token')
     authService.signOut();
-    return observableThrowError("");
+    return observableThrowError(error);
   }
 
   generalErrorHandling(error) {
     let errMsg = '';
     // Client Side Error
     if (error.error instanceof ErrorEvent) {
-      errMsg = `Error: ${error.error.message}`;
+      errMsg = `Error: ${error.message}`;
     }
     else {  // Server Side Error
-      errMsg = `Error Code: ${error.status},  Message: ${error.error.message}`;
+      errMsg = `Error Code: ${error.status},  Message: ${error.message}`;
     }
     // return an observable
     return throwError(errMsg);

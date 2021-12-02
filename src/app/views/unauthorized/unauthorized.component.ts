@@ -13,6 +13,7 @@ export class UnauthorizedComponent implements OnInit, OnDestroy {
 prv=[]
   ngOnInit() {
     document.body.classList.add('background');
+    if(localStorage.getItem('route'))
    this.prv=JSON.parse(localStorage.getItem('route')) as any
   }
 
@@ -23,6 +24,7 @@ prv=[]
   // @HostListener('window:beforeunload')
   goToPage() {
     // console.log("goo")
+    this.location.back()
     this.location.back()
     return false
   }
