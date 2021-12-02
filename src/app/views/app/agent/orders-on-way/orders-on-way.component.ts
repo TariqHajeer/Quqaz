@@ -15,6 +15,7 @@ import { OrderPlacedStateService, GetOrder } from 'src/app/services/order-placed
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
 import { AgentOrderService } from 'src/app/services/agent-order.service';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 
 @Component({
   selector: 'app-orders-on-way',
@@ -162,7 +163,7 @@ export class OrdersOnWayComponent implements OnInit {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    if(this.orders.filter(o=>o.orderplaced.id==3).length>0){
+    if(this.orders.filter(o=>o.orderplaced.id==OrderplacedEnum.Way).length>0){
       this.notifications.create('error', 'لايمكن ان تكون الطلبات في الطريق', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
