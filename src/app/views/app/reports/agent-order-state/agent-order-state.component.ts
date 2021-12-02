@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { OrderService } from 'src/app/services/order.service';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-agent-order-state',
@@ -15,7 +16,8 @@ export class AgentOrderStateComponent implements OnInit {
 
   
   constructor(private orderService: OrderService,
-    private notifications: NotificationsService,) { }
+    private notifications: NotificationsService,
+    public spinner: NgxSpinnerService,) { }
   displayedColumns: string[]=  ['select','agent', 'code', 'agentCost', 'newagentCost', 'neworderplaced'];;
   dataSource = new MatTableDataSource([]);
   payments: [] = []
@@ -76,10 +78,14 @@ export class AgentOrderStateComponent implements OnInit {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       return
     }
+    this.spinner.show()
     this.orderService.AproveOrderRequestEditStateCount(this.ids).subscribe(res => {
       this.notifications.create('success', '  تم القبول بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Get()
+      this.spinner.hide()
       this.ids = []
+    },err=>{
+      this.spinner.hide()
     })
   }
   DisAccept() {
@@ -87,10 +93,14 @@ export class AgentOrderStateComponent implements OnInit {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       return
     }
+    this.spinner.show()
     this.orderService.DisAproveOrderRequestEditStateCount(this.ids).subscribe(res => {
       this.notifications.create('success', '  تم الرقض بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Get()
+      this.spinner.hide()
       this.ids = []
+    },err=>{
+      this.spinner.hide()
     })
   }
 
