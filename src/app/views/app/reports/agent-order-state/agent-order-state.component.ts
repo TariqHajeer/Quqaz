@@ -16,8 +16,8 @@ export class AgentOrderStateComponent implements OnInit {
   
   constructor(private orderService: OrderService,
     private notifications: NotificationsService,) { }
-  displayedColumns: string[]=  ['select','agent', 'code', 'orderplaced', 'agentCost'];;
-  dataSource
+  displayedColumns: string[]=  ['select','agent', 'code', 'orderplaced', 'agentCost', 'neworderplaced', 'newagentCost'];;
+  dataSource = new MatTableDataSource([]);
   payments: [] = []
   ids: any[] = []
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -29,7 +29,7 @@ export class AgentOrderStateComponent implements OnInit {
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
+    const numRows =this.dataSource.data.length;
     return numSelected === numRows;
   }
 
@@ -38,7 +38,7 @@ export class AgentOrderStateComponent implements OnInit {
     this.ids = []
     this.isAllSelected() ?
       this.selection.clear() :
-      this.dataSource.data.forEach(row => { this.selection.select(row) });
+      this.dataSource.data.forEach(row => { this.selection.select(row.order.id) });
   }
 
   /** The label for the checkbox on the passed row */
@@ -64,11 +64,11 @@ export class AgentOrderStateComponent implements OnInit {
 
   Get() {
     this.orderService.OrderRequestEditState().subscribe(res => {
+      // console.log(res)
       this.payments = res
       this.dataSource = new MatTableDataSource(this.payments);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
-      // console.log(res)
     })
   }
   Accept() {
@@ -77,6 +77,7 @@ export class AgentOrderStateComponent implements OnInit {
       return
     }
     this.orderService.AproveOrderRequestEditStateCount(this.ids).subscribe(res => {
+      this.notifications.create('success', '  تم القبول بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Get()
       this.ids = []
     })
@@ -87,6 +88,7 @@ export class AgentOrderStateComponent implements OnInit {
       return
     }
     this.orderService.DisAproveOrderRequestEditStateCount(this.ids).subscribe(res => {
+      this.notifications.create('success', '  تم الرقض بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Get()
       this.ids = []
     })
