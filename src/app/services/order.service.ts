@@ -294,10 +294,10 @@ export class OrderService {
     return this.http.get<any>(this.controler + "OrderRequestEditState")
   }
   AproveOrderRequestEditStateCount(id) {
-    return this.http.put<any>(this.controler + "AproveOrderRequestEditStateCount", id)
+    return this.http.put<any>(this.controler + "AproveOrderRequestEditState", id)
   }
   DisAproveOrderRequestEditStateCount(id) {
-    return this.http.put<any>(this.controler + "DisAproveOrderRequestEditStateCount", id)
+    return this.http.put<any>(this.controler + "DisAproveOrderRequestEditState", id)
   }
   OrderRequestEditStateCount(){
     return this.http.get<any>(this.controler + "OrderRequestEditStateCount")
