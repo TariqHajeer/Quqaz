@@ -20,8 +20,8 @@
                       </mat-checkbox>
                     </th>
                     <td mat-cell *matCellDef="let row">
-                      <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row.order.id) : null"
-                        [checked]="selection.isSelected(row.order.id)" [aria-label]="checkboxLabel(row.order.id)">
+                      <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row.id) : null"
+                        [checked]="selection.isSelected(row.id)" [aria-label]="checkboxLabel(row.id)">
                       </mat-checkbox>
                     </td>
                   </ng-container>
