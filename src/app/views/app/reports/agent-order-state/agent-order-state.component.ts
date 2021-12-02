@@ -16,7 +16,7 @@ export class AgentOrderStateComponent implements OnInit {
   
   constructor(private orderService: OrderService,
     private notifications: NotificationsService,) { }
-  displayedColumns: string[]=  ['select','agent', 'code', 'orderplaced', 'agentCost', 'neworderplaced', 'newagentCost'];;
+  displayedColumns: string[]=  ['select','agent', 'code', 'agentCost', 'newagentCost', 'neworderplaced'];;
   dataSource = new MatTableDataSource([]);
   payments: [] = []
   ids: any[] = []
@@ -38,7 +38,7 @@ export class AgentOrderStateComponent implements OnInit {
     this.ids = []
     this.isAllSelected() ?
       this.selection.clear() :
-      this.dataSource.data.forEach(row => { this.selection.select(row.order.id) });
+      this.dataSource.data.forEach(row => { this.selection.select(row.id) });
   }
 
   /** The label for the checkbox on the passed row */
