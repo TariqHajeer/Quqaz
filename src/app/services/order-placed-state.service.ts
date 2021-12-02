@@ -25,7 +25,9 @@ export class OrderPlacedStateService {
       || element.order.orderplaced.id == OrderplacedEnum.Delivered) {
       element.canEditCount = false
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent || m.id == MoneyPalcedEnum.InsideCompany)]
-      element.order.monePlaced = { ...element.MoenyPlaced[1] }
+      if (element.MoenyPlaced.filter(o => o .id== element.order.monePlaced.id).length > 0)
+        element.order.monePlaced =element.order.monePlaced
+        else element.order.monePlaced ={ ...element.MoenyPlaced[0] }
     } else {
       if (temporderscostindex) {
         element.order.cost = Object.assign(temporderscostindex, temporderscostindex);
@@ -86,18 +88,18 @@ export class OrderPlacedStateService {
       //   }
     }
   }
-  changeDeliveryCost(element, tempdeliveryCost?,MoenyPlaced?) {
-    if(tempdeliveryCost== element.order.deliveryCost){
+  changeDeliveryCost(element, tempdeliveryCost?, MoenyPlaced?) {
+    if (tempdeliveryCost == element.order.deliveryCost) {
       this.isClientDiliverdMoney(element, MoenyPlaced)
-    }else{
-      if( element.order.orderplaced.id == OrderplacedEnum.Delivered){
+    } else {
+      if (element.order.orderplaced.id == OrderplacedEnum.Delivered) {
         element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent || m.id == MoneyPalcedEnum.InsideCompany)]
         element.order.monePlaced = { ...element.MoenyPlaced[0] }
       }
     }
   }
   EditDeliveryCostAndAgentCost(element, tempdeliveryCost?, tempagentCost?) {
-   
+
     if (element.order.orderplaced.id == OrderplacedEnum.Unacceptable || element.order.orderplaced.id == OrderplacedEnum.CompletelyReturned || element.order.orderplaced.id == OrderplacedEnum.Delayed) {
       // if (element.order.orderplaced.id == 5) {
       //   element.order.deliveryCost = 0
@@ -113,10 +115,10 @@ export class OrderPlacedStateService {
       element.canEditDeliveryCost = false
     } else {
       element.canEditDeliveryCost = true
-      
+
       element.order.deliveryCost = Object.assign(tempdeliveryCost, tempdeliveryCost);
       element.order.agentCost = Object.assign(tempagentCost, tempagentCost);
-      
+
     }
   }
   //monyPlaceArray
