@@ -26,10 +26,11 @@ import { OrdersOnWayComponent } from './orders-on-way/orders-on-way.component';
 import { OrderSuspendedComponent } from './order-suspended/order-suspended.component';
 import { AgentOrdersReportComponent } from './agent-orders-report/agent-orders-report.component';
 import { ShowReportComponent } from './show-report/show-report.component';
+import { OwedOrderComponent } from './owed-order/owed-order.component';
 
 
 @NgModule({
-  declarations: [AgenthomeComponent, AgentOrdersComponent, OrderInStockComponent, OrdersOnWayComponent, OrderSuspendedComponent, AgentOrdersReportComponent, ShowReportComponent],
+  declarations: [AgenthomeComponent, AgentOrdersComponent, OrderInStockComponent, OrdersOnWayComponent, OrderSuspendedComponent, AgentOrdersReportComponent, ShowReportComponent, OwedOrderComponent],
   imports: [
     CommonModule,
     AgentRoutingModule,

@@ -48,4 +48,7 @@ export class AgentOrderService {
   SetOrderPlaced(orderstate) {
   return  this.http.post<any>(this.controler + "SetOrderPlaced", orderstate)
   }
+  OwedOrder(){
+    return this.http.get<any>(this.controler + "OwedOrder")
+  }
 }

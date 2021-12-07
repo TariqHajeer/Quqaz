@@ -508,6 +508,12 @@ export const agentmenu: IMenuItem[] = [
   },
   {
     icon: 'iconsminds-box-close',
+    label: 'طلبات في الذمة',
+    to: `${agentRoot}/owed`,
+    
+  },
+  {
+    icon: 'iconsminds-box-close',
     label: 'الكشوفات',
     to: `${agentRoot}/Report`,
     
