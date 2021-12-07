@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-unauthorized',
@@ -9,12 +10,12 @@ import { Location } from '@angular/common';
 export class UnauthorizedComponent implements OnInit, OnDestroy {
   adminRoot = '/app/HomePage/start';
 
-  constructor(private location: Location) { }
-prv=[]
+  constructor(private location: Location, private router: Router) { }
+  prv = []
   ngOnInit() {
     document.body.classList.add('background');
-    if(localStorage.getItem('route'))
-   this.prv=JSON.parse(localStorage.getItem('route')) as any
+    if (localStorage.getItem('route'))
+      this.prv = JSON.parse(localStorage.getItem('route')) as any
   }
 
   ngOnDestroy() {
@@ -28,5 +29,7 @@ prv=[]
     this.location.back()
     return false
   }
-
+  goToLogin() {
+    this.router.navigate(['/user/login'])
+  }
 }

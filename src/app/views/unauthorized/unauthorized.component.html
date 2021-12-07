@@ -1,38 +1,41 @@
 <div id="root">
-  <div class="fixed-background">
-    <main>
-      <div class="container">
-        <div class="row h-100">
-          <div class="col-12 col-md-10 mx-auto my-auto">
-            <div class="card auth-card">
-              <div class="position-relative image-side ">
-                <p class=" text-white h2"></p>
-                <p class="white mb-0"></p>
-              </div>
-              <div class="form-side">
-                <a>
-                  <span class="logo-single"></span>
-                </a>
-                <h6 class="mb-4"></h6>
-                <p class="mb-0 text-muted text-small mb-0">
-                  عفوا انت لا تملك الصلاحيات للقيام بهذه العملية
-                 </p>
-                <p class="mb-0 text-muted text-small mb-0" *ngIf="prv&&prv.length>0">
-                   يجب ان تملك الصلاحيات التالية :
-                  <li *ngFor="let p of prv">
-                    {{p.name}}
-                  </li>
-                </p>
-               
-                <p class="display-1 font-weight-bold mb-5">403</p>
-                <a class="btn btn-primary btn-lg btn-shadow" type="button" (click)="goToPage()">
+    <div class="fixed-background">
+        <main>
+            <div class="container">
+                <div class="row h-100">
+                    <div class="col-12 col-md-10 mx-auto my-auto">
+                        <div class="card auth-card">
+                            <div class="position-relative image-side ">
+                                <p class=" text-white h2"></p>
+                                <p class="white mb-0"></p>
+                            </div>
+                            <div class="form-side">
+                                <a>
+                                    <span class="logo-single"></span>
+                                </a>
+                                <h6 class="mb-4"></h6>
+                                <p class="mb-0 text-muted text-small mb-0">
+                                    عفوا انت لا تملك الصلاحيات للقيام بهذه العملية
+                                </p>
+                                <p class="mb-0 text-muted text-small mb-0" *ngIf="prv&&prv.length>0">
+                                    يجب ان تملك الصلاحيات التالية :
+                                    <li *ngFor="let p of prv">
+                                        {{p.name}}
+                                    </li>
+                                </p>
+
+                                <p class="display-1 font-weight-bold mb-5">403</p>
+                                <a class="btn btn-primary btn-lg btn-shadow" type="button" (click)="goToPage()">
                   العودة الى الصفحة السابقة  
                    </a>
-              </div>
+                                <a class="btn btn-primary btn-lg btn-shadow" type="button" (click)="goToLogin()">
+                    تسجيل الدخول مجددا
+                     </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </main>
-  </div>
+        </main>
+    </div>
 </div>
