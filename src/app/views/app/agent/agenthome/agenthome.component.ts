@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AgentOrderService } from 'src/app/services/agent-order.service';
 
 @Component({
   selector: 'app-agenthome',
@@ -8,15 +9,21 @@ import { Router } from '@angular/router';
 })
 export class AgenthomeComponent implements OnInit {
 
-  constructor(private router: Router,) { }
+  constructor(private router: Router,
+    private agentService: AgentOrderService) { }
 
   ngOnInit(): void {
+    this.getAgentStatics()
   }
-  totlaOrder
+  totalOrderInSotre
+  totalOrderInWay
+  totalOrderSuspended
+  totlaOwedOrder
+  totlaPrintOrder
   AgentOrders() {
     this.router.navigate(['/app/agent/orders'])
   }
-  onWay(){
+  onWay() {
     this.router.navigate(['/app/agent/onway'])
   }
   inStor() {
@@ -27,5 +34,14 @@ export class AgenthomeComponent implements OnInit {
   }
   suspended() {
     this.router.navigate(['/app/agent/Suspended'])
+  }
+  getAgentStatics() {
+    this.agentService.GetAgentStatics().subscribe(res => {
+      this.totalOrderInSotre=res.totalOrderInSotre
+      this.totalOrderInWay=res.totalOrderInWay
+      this.totalOrderSuspended=res.totalOrderSuspended
+      this.totlaOwedOrder=res.totlaOwedOrder
+      this.totlaPrintOrder=res.totlaPrintOrder
+    })
   }
 }

@@ -51,4 +51,7 @@ export class AgentOrderService {
   OwedOrder(){
     return this.http.get<any>(this.controler + "OwedOrder")
   }
+  GetAgentStatics(){
+    return this.http.get<any>(this.controler + "GetAgentStatics")
+  }
 }
