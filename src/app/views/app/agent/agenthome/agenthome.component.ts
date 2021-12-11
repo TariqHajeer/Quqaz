@@ -35,6 +35,9 @@ export class AgenthomeComponent implements OnInit {
   suspended() {
     this.router.navigate(['/app/agent/Suspended'])
   }
+  OwedOrder(){
+    this.router.navigate(['/app/agent/owed'])
+  }
   getAgentStatics() {
     this.agentService.GetAgentStatics().subscribe(res => {
       this.totalOrderInSotre=res.totalOrderInSotre
