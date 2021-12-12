@@ -18,6 +18,12 @@ export class AgentOrderService {
   InWay() {
     return this.http.get<any>(this.controler + "InWay")
   }
+  InWayByCode(code) {
+    let params = new HttpParams();
+    if (code)
+      params = params.append("code", code);
+    return this.http.get<any>(this.controler + "InWayByCode",{ params: params })
+  }
   MakeOrderInWay(ids) {
     return this.http.get<any>(this.controler + "InWay")
   }
@@ -46,12 +52,12 @@ export class AgentOrderService {
     return this.http.get<any>(this.controler + "GetOrderPlaced")
   }
   SetOrderPlaced(orderstate) {
-  return  this.http.post<any>(this.controler + "SetOrderPlaced", orderstate)
+    return this.http.post<any>(this.controler + "SetOrderPlaced", orderstate)
   }
-  OwedOrder(){
+  OwedOrder() {
     return this.http.get<any>(this.controler + "OwedOrder")
   }
-  GetAgentStatics(){
+  GetAgentStatics() {
     return this.http.get<any>(this.controler + "GetAgentStatics")
   }
 }

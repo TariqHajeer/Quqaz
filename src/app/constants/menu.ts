@@ -506,6 +506,7 @@ export const agentmenu: IMenuItem[] = [
     to: `${agentRoot}/Suspended`,
     
   },
+
   {
     icon: 'iconsminds-box-close',
     label: 'طلبات في الذمة',
@@ -514,9 +515,16 @@ export const agentmenu: IMenuItem[] = [
   },
   {
     icon: 'iconsminds-box-close',
+    label: 'عرض بواسطة الكود',
+    to: `${agentRoot}/bycode`,
+    
+  },
+  {
+    icon: 'iconsminds-box-close',
     label: 'الكشوفات',
     to: `${agentRoot}/Report`,
     
   },
+
 ];
 export default data ;
