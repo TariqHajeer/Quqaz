@@ -25,7 +25,7 @@ import { AgentOrderService } from 'src/app/services/agent-order.service';
 export class OrderByCodeComponent implements OnInit {
 
   displayedColumns: string[] = ['index', 'code', 'client', 'country'
-    , 'cost', 'orderplaced', 'monePlaced', 'deliveryCost', 'agentCost',  'edit'];
+    , 'cost', 'orderplaced','deliveryCost',  'edit'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
   Code

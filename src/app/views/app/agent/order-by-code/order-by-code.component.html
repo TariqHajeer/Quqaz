@@ -111,12 +111,6 @@
         </ng-select>
       </td>
     </ng-container>
-    <ng-container matColumnDef="monePlaced">
-      <th mat-header-cell *matHeaderCellDef> موقع المبلغ</th>
-      <td mat-cell *matCellDef="let element;index as i">
-        {{element.order.monePlaced?element.order.monePlaced.name:null}}
-      </td>
-    </ng-container>
     <ng-container matColumnDef="deliveryCost">
       <th mat-header-cell *matHeaderCellDef> كلفة التوصيل </th>
       <td mat-cell *matCellDef="let element;index as i">
@@ -124,12 +118,7 @@
       </td>
 
     </ng-container>
-    <ng-container matColumnDef="agentCost">
-      <th mat-header-cell *matHeaderCellDef> كلفة توصيل المندوب </th>
-      <td mat-cell *matCellDef="let element;index as i">
-          {{element.order.agentCost}}
-      </td>
-    </ng-container>
+    
     <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef>
 
@@ -171,6 +160,6 @@
   <h5 style="padding-top: 20px; padding-right: 10px;" *ngIf="noDataFound">لايوجد بيانات للعرض</h5>
 </div>
 <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
-  [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
+  [pageSizeOptions]="paging.selectItemsPerPage"></mat-paginator>
 
 <simple-notifications></simple-notifications>
