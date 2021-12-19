@@ -181,4 +181,11 @@ export class TopnavComponent implements OnInit, OnDestroy {
     }
     this.searchKey = "";
   }
+  home(){
+    if(this.userName.policy== 'Agent'){
+      this.router.navigate(['/app/agent/start'])
+    }
+    else
+    this.router.navigate(['/app/HomePage/start'])
+  }
 }
