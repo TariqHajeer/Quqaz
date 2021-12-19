@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -31,15 +32,18 @@ export class OrderSuspendedComponent implements OnInit {
 
   ngOnInit(): void {
     this.get()
-   
+
     // this.order = new Order()
   }
   // ngOnChanges() {
   //   this.print()
   // }
-
+  date
   get() {
-    this.OrderService.OrderSuspended().subscribe(res => {
+    this.date = new Date();
+    this.date = formatDate(this.date, 'yyyy-MM-dd', 'en-US');
+    console.log(this.date)
+    this.OrderService.OrderSuspended(this.date).subscribe(res => {
       // console.log(res)
       this.orders = res
       this.orders.forEach(res => {
@@ -61,7 +65,7 @@ export class OrderSuspendedComponent implements OnInit {
   AgentId
   Agents: User[] = []
   IdsDto: IdsDto = new IdsDto
- 
- 
+
+
 
 }

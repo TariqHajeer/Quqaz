@@ -27,8 +27,11 @@ export class AgentOrderService {
   MakeOrderInWay(ids) {
     return this.http.get<any>(this.controler + "InWay")
   }
-  OrderSuspended() {
-    return this.http.get<any>(this.controler + "OrderSuspended")
+  OrderSuspended(date) {
+    let params = new HttpParams();
+    if (date)
+      params = params.append("dateTime",date);
+    return this.http.get<any>(this.controler + "OrderSuspended",{ params: params })
   }
   Print(paging, number, date) {
     let params = new HttpParams();
