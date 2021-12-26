@@ -64,6 +64,7 @@ orders:any[]=[]
     }
   }
 ngOnInit(): void {
+  localStorage.removeItem('printordersagent')
   this.allFilter()
 }
 
