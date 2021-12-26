@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
+import { Location } from '@angular/common';
 import { PrintNumberOrder } from 'src/app/Models/order/PrintNumberOrder.model';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { environment } from 'src/environments/environment';
@@ -15,6 +15,7 @@ export class AgentPrintComponent implements OnInit {
 
   constructor(
     public sanitizer: DomSanitizer,
+    private location: Location
   ) { }
   heads = ['ترقيم', 'كود', 'الإجمالي','التاريخ', 'المحافظة ','المنطقة', 'الهاتف', 'اسم العميل','ملاحظات العميل', 'مـلاحظـــــات']
   orders: any[] = []
@@ -30,6 +31,10 @@ export class AgentPrintComponent implements OnInit {
   ngOnInit(): void {
     this.PrintNumberOrder = new PrintNumberOrder
     this.orders = JSON.parse(localStorage.getItem('printordersagent'))
+    console.log(this.orders)
+    if(!this.orders){
+      this.location.back()
+    }
     this.orders=this.orders.sort((a,b)=>a.code-b.code)
     this.agent = JSON.parse(localStorage.getItem('printagent'))
     this.sumCost()
