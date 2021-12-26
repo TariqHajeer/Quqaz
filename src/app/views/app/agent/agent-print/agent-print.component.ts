@@ -1,26 +1,20 @@
-import { AfterViewInit, ChangeDetectorRef, Component, HostListener, Input, OnChanges, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { NotificationsService, NotificationType } from 'angular2-notifications';
-import { UserLogin } from 'src/app/Models/userlogin.model';
-import { OrderService } from 'src/app/services/order.service';
-import { PrintNumberOrder } from 'src/app/Models/order/PrintNumberOrder.model';
-import * as jspdf from 'jspdf';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
-import { environment } from 'src/environments/environment.prod';
+import { PrintNumberOrder } from 'src/app/Models/order/PrintNumberOrder.model';
+import { UserLogin } from 'src/app/Models/userlogin.model';
+import { environment } from 'src/environments/environment';
+import * as jspdf from 'jspdf';
 
 @Component({
-  selector: 'app-agent',
-  templateUrl: './agent.component.html',
-  styleUrls: ['./agent.component.scss']
+  selector: 'app-agent-print',
+  templateUrl: './agent-print.component.html',
+  styleUrls: ['./agent-print.component.scss']
 })
-export class AgentComponent implements OnInit {
+export class AgentPrintComponent implements OnInit {
 
-  constructor(private orderservice: OrderService,
-    private notifications: NotificationsService,
+  constructor(
     public sanitizer: DomSanitizer,
-    private cdr: ChangeDetectorRef,
-    private spinner: NgxSpinnerService,
   ) { }
   heads = ['ترقيم', 'كود', 'الإجمالي','التاريخ', 'المحافظة ','المنطقة', 'الهاتف', 'اسم العميل','ملاحظات العميل', 'مـلاحظـــــات']
   orders: any[] = []
@@ -37,29 +31,9 @@ export class AgentComponent implements OnInit {
     this.PrintNumberOrder = new PrintNumberOrder
     this.orders = JSON.parse(localStorage.getItem('printordersagent'))
     this.orders=this.orders.sort((a,b)=>a.code-b.code)
-    console.log(  this.orders )
     this.agent = JSON.parse(localStorage.getItem('printagent'))
-    this.orderplaced = this.orders.map(o => o.orderplaced)[0]
     this.sumCost()
-    this.onAWay()
-   var address=""
-    for(let i=0;i<this.orders.length;i++){
-      var space=0
-      if(this.orders[i].address)
-      for(let j=0;j<this.orders[i].address.length;j++){
-        address+= this.orders[i].address[j]
-      if(this.orders[i].address[j]==" ")
-      space++
-      if(space==2){
-        this.orders[i].address=address
-        address=""
-        break
       }
-      } 
-    }
-  
-    // this.getPrintnumber()
-  }
 
   sumCost() {
     this.count = 0
@@ -69,39 +43,12 @@ export class AgentComponent implements OnInit {
       })
     return this.count
   }
-  showPrintbtn = false
-  showPrintnumber = false
-  onAWay() {
-    if (this.showPrintnumber == true) return
-    if (this.orderplaced.id == OrderplacedEnum.Store) {
-      this.showPrintnumber = false
-      this.showPrintbtn=false
-    } else {
-      this.showPrintnumber = true
-      this.showPrintbtn=true
-    }
-  }
+  showPrintbtn = true
+  showPrintnumber = true
+ 
   dateWithIds 
 
-  afterPrint() {
-    this.spinner.show()
-    this.dateWithIds = {
-      Ids: this.orders.map(o => o.id),
-      Date: new Date
-    }
-    this.orderservice.MakeOrderInWay(this.dateWithIds).subscribe(res => {
-      this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      //this.orders=[]
-      this.printnumber = res.printNumber
-      this.showPrintbtn = true
-      this.spinner.hide()
-
-      //  this.setPrintnumber()
-
-    }, err => {
-      this.spinner.hide()
-    })
-  }
+ 
   @HostListener('window:keydown', ['$event'])
   onKeyPress($event: KeyboardEvent) {
     if (($event.ctrlKey || $event.metaKey) && $event.keyCode == 80) {
@@ -136,5 +83,6 @@ export class AgentComponent implements OnInit {
 
     }, 1000);
   }
+
 
 }

@@ -42,7 +42,6 @@ export class OrderSuspendedComponent implements OnInit {
   get() {
     this.date = new Date();
     this.date = formatDate(this.date, 'yyyy-MM-dd', 'en-US');
-    console.log(this.date)
     this.OrderService.OrderSuspended(this.date).subscribe(res => {
       // console.log(res)
       this.orders = res

@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AgentOrderService } from 'src/app/services/agent-order.service';
@@ -38,9 +39,10 @@ export class AgenthomeComponent implements OnInit {
   OwedOrder(){
     this.router.navigate(['/app/agent/owed'])
   } 
-  date:Date
+  date
   getAgentStatics() {
     this.date=new Date();
+    this.date = formatDate(this.date, 'yyyy-MM-dd', 'en-US');
     this.agentService.GetAgentStatics(this.date).subscribe(res => {
       this.totalOrderInSotre=res.totalOrderInSotre
       this.totalOrderInWay=res.totalOrderInWay

@@ -88,7 +88,7 @@ export class OrderByCodeComponent implements OnInit {
       })
       this.MoenyPlacedId = null
       this.getMoenyPlaced = this.orderplacedstate.ChangeOrderPlace(this.OrderplacedId.id, this.MoenyPlaced)
-     console.log( this.getMoenyPlaced )
+    //  console.log( this.getMoenyPlaced )
       // if (this.OrderplacedId.id == 4)
       //   this.getMoenyPlaced = [{ id: 2, name: "مندوب" }, { id: 4, name: "تم تسليمها/داخل الشركة" }]
 

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/auth.guard';
 import { AgentOrdersReportComponent } from './agent-orders-report/agent-orders-report.component';
 import { AgentOrdersComponent } from './agent-orders/agent-orders.component';
+import { AgentPrintComponent } from './agent-print/agent-print.component';
 import { AgenthomeComponent } from './agenthome/agenthome.component';
 import { OrderByCodeComponent } from './order-by-code/order-by-code.component';
 import { OrderInStockComponent } from './order-in-stock/order-in-stock.component';
@@ -23,6 +24,8 @@ const routes: Routes = [
   { path: 'Report', component: AgentOrdersReportComponent, canActivate: [AuthGuard], },
   { path: 'showReport/:id', component: ShowReportComponent, canActivate: [AuthGuard], },
   { path: 'bycode', component: OrderByCodeComponent, canActivate: [AuthGuard], },
+  { path: 'agentprint', component: AgentPrintComponent, canActivate: [AuthGuard], },
+
 ];
 
 @NgModule({
