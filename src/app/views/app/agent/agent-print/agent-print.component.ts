@@ -31,7 +31,6 @@ export class AgentPrintComponent implements OnInit {
   ngOnInit(): void {
     this.PrintNumberOrder = new PrintNumberOrder
     this.orders = JSON.parse(localStorage.getItem('printordersagent'))
-    console.log(this.orders)
     if(!this.orders){
       this.location.back()
     }
