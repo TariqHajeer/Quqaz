@@ -304,7 +304,7 @@ export class ShipmentsOnWayComponent implements OnInit {
       return
     }
     var agent=this.Agents.find(c => c.id == this.filtering.AgentId)
-    console.log(agent)
+    // console.log(agent)
     localStorage.setItem('printagent', JSON.stringify(agent))
     localStorage.setItem('printordersagent', JSON.stringify(this.orders))
     this.route.navigate(['app/reports/printagentpreview'])
