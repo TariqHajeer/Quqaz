@@ -60,7 +60,9 @@ export class AgentOrderService {
   OwedOrder() {
     return this.http.get<any>(this.controler + "OwedOrder")
   }
-  GetAgentStatics() {
-    return this.http.get<any>(this.controler + "GetAgentStatics")
+  GetAgentStatics(date) {
+    let params = new HttpParams();
+    params = params.append("date", date);
+    return this.http.get<any>(this.controler + "GetAgentStatics", { params: params })
   }
 }
