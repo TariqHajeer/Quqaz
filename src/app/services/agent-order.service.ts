@@ -62,7 +62,7 @@ export class AgentOrderService {
   }
   GetAgentStatics(date) {
     let params = new HttpParams();
-    params = params.append("date", date);
+    params = params.append("dateTime", date);
     return this.http.get<any>(this.controler + "GetAgentStatics", { params: params })
   }
 }
