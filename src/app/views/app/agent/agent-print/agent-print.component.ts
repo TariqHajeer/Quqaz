@@ -35,9 +35,11 @@ export class AgentPrintComponent implements OnInit {
     if(!this.orders){
       this.location.back()
     }
-    this.orders=this.orders.sort((a,b)=>a.code-b.code)
-    this.agent = JSON.parse(localStorage.getItem('printagent'))
-    this.sumCost()
+    else{
+      this.orders=this.orders.sort((a,b)=>a.code-b.code)
+      this.agent = JSON.parse(localStorage.getItem('printagent'))
+      this.sumCost()
+    }
       }
 
   sumCost() {
