@@ -23,10 +23,10 @@ export class OrderVicdanAgentComponent implements OnInit {
   displayedColumns: string[] = ['select', 'code', 'client', 'cost', 'country', 'region'
     , 'orderplaced'];
   dataSource = new MatTableDataSource([]);
-  count=0
-  showcount=false
+  count = 0
+  showcount = false
   selection = new SelectionModel<any>(true, []);
-orders:any[]=[]
+  orders: any[] = []
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
@@ -35,7 +35,7 @@ orders:any[]=[]
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.orders=[]
+    this.orders = []
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => { this.selection.select(row) });
@@ -76,23 +76,23 @@ orders:any[]=[]
   }
   sumCost() {
     this.count = 0
-    if (this.dataSource.data.length!=0){
+    if (this.dataSource.data.length != 0) {
       this.dataSource.data.forEach(o => {
         this.count += o.cost
       })
-      this.showcount=true
+      this.showcount = true
     }
     else
-    this.showcount=false
-     
+      this.showcount = false
+
     return this.count
   }
   print() {
-    if ( this.orders.length == 0) {
+    if (this.orders.length == 0) {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    var agent=this.Agents.find(c => c.id == this.AgentId)
+    var agent = this.Agents.find(c => c.id == this.AgentId)
     localStorage.setItem('printagent', JSON.stringify(agent))
     localStorage.setItem('printordersagent', JSON.stringify(this.orders))
     this.route.navigate(['app/reports/printagentpreview'])

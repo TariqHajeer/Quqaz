@@ -39,6 +39,7 @@ import { MoveOrdersComponent } from './move-orders/move-orders.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { OrdersWithClientComponent } from './orders-with-client/orders-with-client.component';
 import { NewOrdersDontSendComponent } from './new-orders-dont-send/new-orders-dont-send.component';
+import { ReceiptsNewOrdersComponent } from './receipts-new-orders/receipts-new-orders.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { NewOrdersDontSendComponent } from './new-orders-dont-send/new-orders-do
     MoveOrdersComponent,
     OrdersWithClientComponent,
     NewOrdersDontSendComponent,
+    ReceiptsNewOrdersComponent,
   ],
   imports: [
     CommonModule,

@@ -137,6 +137,12 @@ export class OrderService {
     // params = params.append("id", id);
     return this.http.put<any>(this.controler + "DisAccept", id)
   }
+  Acceptmultiple(ids) {
+    return this.http.put<number>(this.controler + "Acceptmultiple", ids)
+  }
+  DisAcceptmultiple(ids) {
+    return this.http.put<number>(this.controler + "DisAcceptmultiple", ids)
+  }
   MakeOrderInWay(ids) {
     let params = new FormData();
     params.append("ids", ids);

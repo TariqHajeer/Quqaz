@@ -14,6 +14,7 @@ import { NewOrdersDontSendComponent } from './new-orders-dont-send/new-orders-do
 import { OrdersWithClientComponent } from './orders-with-client/orders-with-client.component';
 import { ProfitsOfOrdersComponent } from './profits-of-orders/profits-of-orders.component';
 import { ReceiptNewOrdersComponent } from './receipt-new-orders/receipt-new-orders.component';
+import { ReceiptsNewOrdersComponent } from './receipts-new-orders/receipts-new-orders.component';
 import { ViewNewOrderComponent } from './view-new-order/view-new-order.component';
 import { ViewOrdersComponent } from './view-orders/view-orders.component';
 
@@ -87,6 +88,11 @@ const routes: Routes = [
   {
     path:'newordersdonotsend',
     component:NewOrdersDontSendComponent ,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder]}
+  },
+  {
+    path:'newordersprint',
+    component:ReceiptsNewOrdersComponent ,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowOrder]}
   },
 ];

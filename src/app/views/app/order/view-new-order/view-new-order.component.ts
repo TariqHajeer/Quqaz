@@ -11,6 +11,9 @@ import { CustomService } from 'src/app/services/custom.service';
 import { OrderService } from 'src/app/services/order.service';
 import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
+import { SelectionModel } from '@angular/cdk/collections';
+import { NotificationsService, NotificationType } from 'angular2-notifications';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-new-order',
@@ -27,9 +30,46 @@ export class ViewNewOrderComponent implements OnInit {
 
   constructor(private OrderService: OrderService,
     private clientService: ClientService
-    , private customerService: CustomService,) { }
+    , private customerService: CustomService,
+    private notifications: NotificationsService,
+    private route: Router
+  ) { }
   @ViewChild('infoModal') public infoModal: ModalDirective;
+  selection = new SelectionModel<any>(true, []);
+  selectOrders: any[] = []
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
 
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.selectOrders = []
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => { this.selection.select(row) });
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: any): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    this.checkboxId(row)
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+  }
+  checkboxId(row) {
+    if (this.selection.isSelected(row))
+      if (this.selectOrders.filter(d => d == row).length > 0)
+        return
+      else {
+        this.selectOrders.push(row)
+      }
+    if (!this.selection.isSelected(row)) {
+      this.selectOrders = this.selectOrders.filter(o => o != row)
+    }
+  }
   ngOnInit(): void {
     this.get()
     this.GetClient()
@@ -53,9 +93,9 @@ export class ViewNewOrderComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.orders);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
-      this.displayedColumns = ['code', 'cost', 'recipientName',
+      this.displayedColumns = ['select', 'code', 'cost', 'recipientName',
         'recipientPhones', 'address', 'note', 'client', 'country'
-        , 'region', 'agent', 'date', 'printedTimes','print', 'Accept', 'DisAccept'];
+        , 'region', 'agent', 'date', 'printedTimes', 'print', 'Accept', 'DisAccept'];
     })
 
   }
@@ -63,6 +103,7 @@ export class ViewNewOrderComponent implements OnInit {
   AgentId
   Agents: User[] = []
   IdsDto: IdsDto = new IdsDto
+  Ids: IdsDto[]=[];
   MultiAgent(order) {
     this.order = order
     // console.log(order)
@@ -88,7 +129,42 @@ export class ViewNewOrderComponent implements OnInit {
         this.infoModal.hide()
       })
   }
+  AcceptAll() {
+    if (this.selectOrders.length == 0) {
+      this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      return
+    }
+    this.selectOrders=this.selectOrders.filter(o=>o.country.agnets.length == 1)
+    this.selectOrders.forEach(item=>{
+      this.IdsDto.AgentId=item.country.agnets[0].id
+      this.IdsDto.OrderId=item.id
+      this.Ids.push(this.IdsDto)
+      this.IdsDto=new IdsDto
+    })
+    this.OrderService.Acceptmultiple(this.Ids).subscribe(res=>{
+      this.get()
+      this.selectOrders=[]
+    })
+  }
+  DisAcceptAll() {
+    this.dateWithIds=new DateWithIds
+   this.dateWithIds.Date=new Date
+   this.dateWithIds.Ids=this.selectOrders.map(o=>o.id)
+    this.OrderService.DisAcceptmultiple(this.dateWithIds).subscribe(res=>{
+      this.get()
+      this.selectOrders=[]
+    })
+  }
+  printAll() {
+    if (this.selectOrders.length == 0) {
+      this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      return
+    }
+    localStorage.setItem('printneworders', JSON.stringify(this.selectOrders))
+    this.route.navigate(['app/order/newordersprint'])
+  }
   dateWithId: DateWithIds<number>
+  dateWithIds: DateWithIds<number[]>
   DisAccept(elementid) {
     this.dateWithId = new DateWithIds
     this.dateWithId.Ids = elementid
@@ -103,9 +179,9 @@ export class ViewNewOrderComponent implements OnInit {
   }
   print(i, element) {
     // this.order=element
-    this.OrderService.AddPrintNumber(element.id).subscribe(res=>{
+    this.OrderService.AddPrintNumber(element.id).subscribe(res => {
       // console.log(res)
-      element.printedTimes+=1
+      element.printedTimes += 1
 
     })
     element.show = true
@@ -156,7 +232,7 @@ export class ViewNewOrderComponent implements OnInit {
         this.dataSource.data = this.dataSource.data.filter(d => d.country.id == this.CountryId)
       }
     }
-  
+
   }
   // @HostListener("window:afterprint", ["$event"])
   // onafterPrint(event) {
