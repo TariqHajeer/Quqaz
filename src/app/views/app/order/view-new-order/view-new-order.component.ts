@@ -144,6 +144,8 @@ export class ViewNewOrderComponent implements OnInit {
     this.OrderService.Acceptmultiple(this.Ids).subscribe(res=>{
       this.get()
       this.selectOrders=[]
+      this.notifications.create('success', '  تم القبول بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+
     })
   }
   DisAcceptAll() {
@@ -153,6 +155,8 @@ export class ViewNewOrderComponent implements OnInit {
     this.OrderService.DisAcceptmultiple(this.dateWithIds).subscribe(res=>{
       this.get()
       this.selectOrders=[]
+      this.notifications.create('success', '  تم الرفض بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+
     })
   }
   printAll() {
