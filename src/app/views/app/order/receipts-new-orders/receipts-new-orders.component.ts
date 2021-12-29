@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-receipts-new-orders',
@@ -8,9 +8,9 @@ import { Component, OnInit } from '@angular/core';
 export class ReceiptsNewOrdersComponent implements OnInit {
 
   constructor() { }
-  orders: any[] = [];
+ @Input() orders: any[] = [];
   ngOnInit(): void {
-    this.orders=JSON.parse(localStorage.getItem("printneworders"));
+    // this.orders=JSON.parse(localStorage.getItem("printneworders"));
   }
   print() {
     // this.OrderService.AddPrintNumber(element.id).subscribe(res => {
