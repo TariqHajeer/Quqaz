@@ -13,7 +13,6 @@ import { CustomService } from '../../../../services/custom.service'
   styleUrls: ['./cities.component.scss']
 })
 export class CitiesComponent implements OnInit {
-  //city={name:'',deliveryCost:0,regions:[]};
   city = new CreateCity();
   constructor(private customService: CustomService, private notifications: NotificationsService,
     private pointService: PointSettingsService,) { }
@@ -110,42 +109,6 @@ export class CitiesComponent implements OnInit {
     }
   }
   onActionBegin(args: ActionEventArgs) {
-    // if (args.action == "edit") {
-    //   let name = args.data["name"].trim();
-    //   if (name == "") {
-    //     this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
-    //     args.cancel = true;
-    //   }
-
-    //   if (this.cities.filter(c => c.name == name).length > 1) {
-    //     this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
-    //     args.cancel = true;
-    //   }
-    // }
-    // if (args.action == "edit") {
-    //   let name = args.data["name"].trim();
-    //   let id = args.data["id"];
-    //   let deliveryCost = args.data["deliveryCost"];
-
-    //   if (this.cities.filter(c => c.name == name && c.id != id).length > 0) {
-    //     this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
-    //     args.cancel = true;
-    //   }
-    //   else if (deliveryCost == "" || deliveryCost <= 0) {
-
-    //     this.notifications.create('', 'خطأ في المبلغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
-    //     args.cancel = true;
-    //   }
-    //   else {
-    //     var updatedCity= this.cities.filter(c => c.id == id)[0];
-    //     updatedCity.name =name;
-    //     updatedCity.deliveryCost =deliveryCost;
-    //     this.customService.addOrUpdate(this.apiName, { name: name, deliveryCost: deliveryCost, id: id }, "update").subscribe();
-    //     this.notifications.create('', 'تم تعديل المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-    //     args.cancel = true;
-    //      this.gridInstance.refresh();
-    //   }
-    // }
     if (args.requestType == "delete") {
       let city = args.data[0] as City;
 
@@ -165,16 +128,12 @@ export class CitiesComponent implements OnInit {
     var city = this.cities.find(c => c.id == data.id)
     this.editCity.id = city.id
     this.editCity.name = city.name
-    this.editCity.mediatorId = city.mediator ? city.mediator.id : ''
+    this.editCity.mediatorId = city.mediator ? city.mediator.id : null
     this.editCity.deliveryCost = city.deliveryCost
     this.editCity.regions = city.regions
     this.editCity.points=city.points
-
-    // this.editCity.mediatorId=data.mediator.id
-    // console.log(data)
   }
   save() {
-    // console.log(this.editCity)
     if (this.cities.filter(c => c.name == this.editCity.name && c.id != this.editCity.id).length > 0) {
       this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
       return
