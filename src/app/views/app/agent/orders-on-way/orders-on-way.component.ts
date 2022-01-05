@@ -114,11 +114,13 @@ export class OrdersOnWayComponent implements OnInit {
     this.orderservice.InWay().subscribe(response => {
       // console.log(response)
       this.getorders = []
-      if (response)
-        if (response.length == 0)
+      this.temporder=response
+      if (this.temporder)
+        if (this.temporder.length == 0)
           this.noDataFound = true
         else this.noDataFound = false
-      response.forEach(element => {
+        // console.log(response)
+        this.temporder.forEach(element => {
         this.getorder.order = element
         this.getorder.OrderPlaced = this.orderPlace
         this.getorder.canEditCount = false
@@ -127,11 +129,11 @@ export class OrdersOnWayComponent implements OnInit {
         this.getorders.push(this.getorder)
         this.getorder = new GetOrder()
       });
-      this.temporder = [...this.getorders.map(o=>o.order)]
-      console.log(this.temporder)
+      // this.temporder = [...this.getorders.map(o=>o.order)]
       // this.total()
+      // console.log(this.getorders)
       this.dataSource = new MatTableDataSource(this.getorders)
-      this.getorders = response
+      // this.getorders = response
       this.totalCount = response.length
     },
       err => {
@@ -141,14 +143,14 @@ export class OrdersOnWayComponent implements OnInit {
   fillter() {
     this.dataSource.data = this.getorders
     if (this.filtering.AgentPrintNumber) {
-      this.dataSource.data = this.dataSource.data.filter(o => o.agentPrintNumber == this.filtering.AgentPrintNumber)
+      this.dataSource.data = this.dataSource.data.filter(o => o.order.agentPrintNumber == this.filtering.AgentPrintNumber)
     }
     if (this.filtering.Code) {
-      this.dataSource.data = this.dataSource.data.filter(o => o.code == this.filtering.Code)
+      this.dataSource.data = this.dataSource.data.filter(o => o.order.code == this.filtering.Code)
     }
     if (this.filtering.AgentPrintEndDate && this.filtering.AgentPrintStartDate) {
-      this.dataSource.data = this.dataSource.data.filter(o => o.date >= this.filtering.AgentPrintStartDate &&
-        o.date <= this.filtering.AgentPrintEndDate)
+      this.dataSource.data = this.dataSource.data.filter(o => o.order.date >= this.filtering.AgentPrintStartDate &&
+        o.order.date <= this.filtering.AgentPrintEndDate)
     }
   }
   ChengeOrderplaced(){

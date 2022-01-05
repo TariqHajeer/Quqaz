@@ -29,8 +29,8 @@ export const environment = {
 
   // appNameAR:"شركة الأجنحة الذهبية",
   // appNameEN:"Golden Wings",
-  // Address: "اربيل",
-  // companyPhones:["07514550880 "," 07700890880"],
+  // Address: "حي العدل قرب بانزيخانة لؤلؤة العدل  مجاور افران الوردة",
+  // companyPhones:["07729394949 "," 07711166333"],
   // Facebook:" الأجنحة الذهبية",
   // instgram:"Golden.Wings",
   // whatsapp:"07714400880",

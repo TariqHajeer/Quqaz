@@ -34,23 +34,23 @@ export class LoginComponent implements OnInit {
     // if (!this.loginForm.valid || this.buttonDisabled) {
     //   return;
     // }
-   
+
     this.buttonDisabled = true;
     this.buttonState = 'show-spinner';
     if (this.loginForm.value)
       this.authService.signIn(this.loginForm.value).subscribe(
         response => {
           // console.log(response)
-          localStorage.setItem('user','employee')
+          localStorage.setItem('user', 'employee')
           this.user = response as UserLogin
           this.user.expiry = new Date().getTime()
-         if(this.user.policy=="Employee")
-          this.router.navigate(['/app/HomePage']);
+          if (this.user.policy == "Employee")
+            this.router.navigate(['/app/HomePage']);
           else
-          this.router.navigate(['/app/agent']);
+            this.router.navigate(['/app/agent']);
           localStorage.setItem('token', this.user.token)
           this.authService.setAuthenticatedUser(this.user);
-           //this.user.expiry.setMinutes(this.myDate.getMinutes()+1);
+          //this.user.expiry.setMinutes(this.myDate.getMinutes()+1);
           // this.notifications.create('success', 'تم تسجيل الدخول بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
           //  this.authService.setAuthenticatedUser(response.data[0].user);
           // this.authService.setAuthenticatedUser(response);
@@ -60,7 +60,11 @@ export class LoginComponent implements OnInit {
         }, error => {
           this.buttonDisabled = false;
           this.buttonState = '';
-          this.notifications.create('Error', ' اسم المستخدم او كلمة المرور غير صحيح', NotificationType.Error, { theClass: 'primary', timeOut: 6000, showProgressBar: false });
+          // console.log(error)
+          // if (error.message)
+          //   this.notifications.create('Error', error.message, NotificationType.Error, { theClass: 'primary', timeOut: 6000, showProgressBar: false });
+          // else
+            this.notifications.create('Error', ' اسم المستخدم او كلمة المرور غير صحيح', NotificationType.Error, { theClass: 'primary', timeOut: 6000, showProgressBar: false });
 
         }
 
