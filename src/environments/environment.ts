@@ -14,27 +14,16 @@ export const environment = {
   baseUrl: "https://localhost:44333/",
   clientApp: "http://localhost:4201",
 
-  // Quqaz
-
-  appNameAR: "شركة القوقز للتوصيل السريع",
-  appNameEN: "Quqaz",
-   Address: "اربيل - قرب تقاطع كوك ايه",
-  companyPhones:["07514550880 "," 07700890880"],
-  Facebook:" القوقز للتوصيل السريع",
-  instgram:" quqaz.fast",
-  whatsapp:"07714400880",
-  email:" Support@quqaz.com",
-
   // Golden Wings
 
-  // appNameAR:"شركة الأجنحة الذهبية",
-  // appNameEN:"Golden Wings",
-  // Address: "حي العدل قرب بانزيخانة لؤلؤة العدل  مجاور افران الوردة",
-  // companyPhones:["07729394949 "," 07711166333"],
-  // Facebook:" الأجنحة الذهبية",
-  // instgram:"Golden.Wings",
-  // whatsapp:"07714400880",
-  // email:" Support@GoldenWings.com",
+  appNameAR:"شركة الأجنحة الذهبية للتوصيل",
+  appNameEN:"Golden Wings",
+  Address: "حي العدل قرب بانزيخانة لؤلؤة العدل  مجاور افران الوردة",
+  companyPhones:["07729394949 "," 07711166333"],
+  Facebook:" شركة الأجنحة الذهبية للتوصيل",
+  instgram:"Golden.Wings",
+  whatsapp:"07714400880",
+  email:" Support@GoldenWings.com",
 
 };
 
