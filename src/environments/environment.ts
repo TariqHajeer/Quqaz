@@ -16,7 +16,7 @@ export const environment = {
 
   // Golden Wings
 
-  appNameAR:"شركة الأجنحة الذهبية للتوصيل",
+  appNameAR:"شركة الأجنحة الذهبية ",
   appNameEN:"Golden Wings",
   Address: "حي العدل قرب بانزيخانة لؤلؤة العدل  مجاور افران الوردة",
   companyPhones:["07729394949 "," 07711166333"],
