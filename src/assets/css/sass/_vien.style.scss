@@ -2076,7 +2076,7 @@ a.btn-secondary:not([href]):not([tabindex]) {
 
 .logo {
   width: 74px;
-  height: 59px;
+  height: 70px;
   background: url($logo-path) no-repeat;
   background-position: center center;
   margin: 0 auto;
@@ -2088,7 +2088,7 @@ a.btn-secondary:not([href]):not([tabindex]) {
 
 .logo-mobile {
   width: 20px;
-  height: 35px;
+  height: 50px;
   background: url($logo-path-mobile) no-repeat;
   background-position: center center;
   background-size: contain;
@@ -9608,8 +9608,8 @@ footer.page-footer {
       @include respond-below(lg) {
         height: $navbar-height-md;
         .navbar-logo {
-          width: 100px;
-          height: 30px;
+          width: 75px;
+          height: 50px;
 
           .white,
           .dark {

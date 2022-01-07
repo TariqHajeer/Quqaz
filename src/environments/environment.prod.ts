@@ -5,20 +5,16 @@ import { UserPermission } from '../app/shared/auth.roles';
 
 export const environment = {
   production: true,
-  // Quqaz
-
-  
-
-
+ 
   // Golden Wings
 
-  appNameAR:"شركة الأجنحة الذهبية",
+  appNameAR:"شركة الأجنحة الذهبية للتوصيل",
   appNameEN:"Golden Wings",
   baseUrl: "http://mohammedhatem-001-site4.itempurl.com/",
   clientApp:"http://mohammedhatem-001-site6.itempurl.com",
   Address: "حي العدل قرب بانزيخانة لؤلؤة العدل  مجاور افران الوردة",
   companyPhones:["07729394949 "," 07711166333"],
-  Facebook:" الأجنحة الذهبية",
+  Facebook:" شركة الأجنحة الذهبية للتوصيل",
   instgram:"Golden.Wings",
   whatsapp:"07714400880",
   email:" Support@GoldenWings.com",
