@@ -23,19 +23,7 @@ export const environment = {
   Facebook:" القوقز للتوصيل السريع",
   instgram:" quqaz.fast",
   whatsapp:"07714400880",
-  email:" Support@quqaz.com",
-
-  // Golden Wings
-
-  // appNameAR:"شركة الأجنحة الذهبية",
-  // appNameEN:"Golden Wings",
-  // Address: "حي العدل قرب بانزيخانة لؤلؤة العدل  مجاور افران الوردة",
-  // companyPhones:["07729394949 "," 07711166333"],
-  // Facebook:" الأجنحة الذهبية",
-  // instgram:"Golden.Wings",
-  // whatsapp:"07714400880",
-  // email:" Support@GoldenWings.com",
-
+  email:" Support@quqaz.com"
 };
 
 
