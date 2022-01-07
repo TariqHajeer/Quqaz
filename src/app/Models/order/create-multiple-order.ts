@@ -3,6 +3,8 @@ export class CreateMultipleOrder {
     CountryId:number
     CountryName:string
     Country
+    RegionId:number
+    RegionName:string
     Countrys:number[]
     AgentId:number
     AgentName:string

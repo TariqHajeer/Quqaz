@@ -45,8 +45,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
   MoenyPlaced: NameAndIdDto[] = []
   clients: Client[] = []
   cities: City[] = []
-  Region: Region[] = []
-  Regions: Region[] = []
+  regions: Region[] = []
   Agents: User[] = []
   GetAgents: User[] = []
   orderTypes: OrderType[] = []
@@ -63,7 +62,6 @@ export class CreateMulitpleOrderComponent implements OnInit {
   // EdittempPhone: string
   //selectedOrder: any;
   cityapi = "Country"
-  regionapi = "Region"
   ordertypeapi = "OrderType";
   Orders: any[] = []
   //CanEdit: boolean[] = []
@@ -100,7 +98,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
       this.GetAgents = res
-      console.log(res)
+      // console.log(res)
       this.Agents = this.GetAgents.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.Order.CountryId).length>0 )
       // if(this.Agents.length!=0)
       // this.Order.AgentId = this.Agents[0].id
@@ -126,14 +124,17 @@ export class CreateMulitpleOrderComponent implements OnInit {
   }
 
   changeCountry() {
-
     var city = this.cities.find(c => c.id == this.Order.CountryId)
+    // console.log(this.cities)
     this.Agents = this.GetAgents.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.Order.CountryId).length>0 )
-    if (this.Agents.length != 0 && this.Agents.length == 1)
+    if ( this.Agents.length == 1)
       this.Order.AgentId = this.Agents[0].id
     else this.Order.AgentId = null
     this.Order.DeliveryCost = city.deliveryCost
-
+    this.regions=city.regions
+    if ( this.regions.length == 1)
+    this.Order.RegionId = this.regions[0].id
+  else this.Order.RegionId = null
   }
   changeCountryEdit() {
     var city = this.cities.find(c => c.id == this.EditOrder.CountryId)
@@ -142,6 +143,10 @@ export class CreateMulitpleOrderComponent implements OnInit {
       this.EditOrder.AgentId = this.Agents[0].id
     else this.EditOrder.AgentId = null
     this.EditOrder.DeliveryCost = city.deliveryCost
+    this.regions=city.regions
+    if ( this.regions.length == 1)
+    this.EditOrder.RegionId = this.regions[0].id
+  else this.EditOrder.RegionId = null
   }
   showMessageCode: boolean = false
   CheckCode() {
@@ -204,6 +209,8 @@ export class CreateMulitpleOrderComponent implements OnInit {
       return
     var country = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.CountryName = country.name
+    var region = this.regions.find(c => c.id == this.Order.RegionId)
+    this.Order.RegionName = region.name
     var orderplace = this.orderPlace.find(c => c.id == this.Order.OrderplacedId)
     this.Order.OrderplacedName = orderplace.name
     var client = this.clients.find(c => c.id == this.Order.ClientId)
@@ -301,7 +308,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
   }
   @ViewChild('myTr') inputEl:ElementRef;
   changed(index) {
-    if(index==7){this.onEnter(); return}
+    if(index==8){this.onEnter(); return}
     const inputs = this.inputEl.nativeElement.querySelectorAll('input');
     if (inputs.length > index + 1) {
       inputs[index + 1].focus();
