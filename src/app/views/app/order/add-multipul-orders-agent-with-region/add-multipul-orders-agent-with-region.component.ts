@@ -16,11 +16,12 @@ import { Client } from '../../client/client.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 @Component({
-  selector: 'app-add-mulitple-orders-with-region',
-  templateUrl: './add-mulitple-orders-with-region.component.html',
-  styleUrls: ['./add-mulitple-orders-with-region.component.scss']
+  selector: 'app-add-multipul-orders-agent-with-region',
+  templateUrl: './add-multipul-orders-agent-with-region.component.html',
+  styleUrls: ['./add-multipul-orders-agent-with-region.component.scss']
 })
-export class AddMulitpleOrdersWithRegionComponent implements OnInit {
+export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
+
   test(e) {
     e.target.blur();
   }
@@ -31,7 +32,7 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
     public userService: UserService,
     private notifications: NotificationsService,
     public spinner: NgxSpinnerService,
-    private renderer: Renderer2, private elementRef: ElementRef,
+
   ) { }
 
   Order: CreateMultipleOrder
@@ -55,10 +56,12 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
   filter: OrderFilter
   CountryId
   AgentId
+  RegionId
   //tempPhone: string;
   // EdittempPhone: string
   //selectedOrder: any;
   cityapi = "Country"
+  regionapi = "Region"
   ordertypeapi = "OrderType";
   Orders: any[] = []
   //CanEdit: boolean[] = []
@@ -73,78 +76,50 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
     if (order && order.length != 0) {
       this.Orders = order
     }
+
   }
 
   int() {
-    this.GetorderPlace()
-    this.Getcities()
     this.GetClient()
     this.getAgent()
   }
-
-
-  GetorderPlace() {
-    this.orderservice.orderPlace().subscribe(res => {
-      this.orderPlace = res
-      this.Order.OrderplacedId = this.orderPlace[1].id
-      this.orderPlace = this.orderPlace.filter(o => o.id != OrderplacedEnum.Client)
-
-    })
-  }
-
-  getAgent() {
-    this.userService.ActiveAgent().subscribe(res => {
-      this.GetAgents = res
-      // console.log(res)
-      this.Agents = this.GetAgents.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.Order.CountryId).length>0 )
-      // if(this.Agents.length!=0)
-      // this.Order.AgentId = this.Agents[0].id
-      // else this.Order.AgentId=null
-
-    })
-  }
-
   GetClient() {
     this.clientService.getClients().subscribe(res => {
       this.clients = res
-      // this.Order.ClientId = res[0].id
     })
   }
-  Getcities() {
-    this.customerService.getAll(this.cityapi).subscribe(res => {
-      this.cities = res
-      // if( this.cities.length!=0)
-      // this.Order.CountryId =  this.cities[0].id
+  getAgent() {
+    this.userService.ActiveAgent().subscribe(res => {
+      this.Agents = res
+      console.log(res)
+      var agent = JSON.parse(localStorage.getItem('agentid'))
+      if (agent) {
+        this.AgentId = agent
+        var find = this.Agents.find(a => a.id == this.AgentId)
+        this.cities = find.countries
+        var country = JSON.parse(localStorage.getItem('countryid'))
+        if (country) { 
+          this.CountryId = country
+          var findcountry=this.cities.find(c=>c.id==country)
+          this.Order.DeliveryCost = findcountry.deliveryCost
+        }
 
-      // this.changeCountry()
+      }
     })
   }
-
-  changeCountry() {
-    var city = this.cities.find(c => c.id == this.Order.CountryId)
-    // console.log(this.cities)
-    this.Agents = this.GetAgents.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.Order.CountryId).length>0 )
-    if ( this.Agents.length == 1)
-      this.Order.AgentId = this.Agents[0].id
-    else this.Order.AgentId = null
+  changeAgentId() {
+    localStorage.setItem('agentid', this.AgentId)
+    var find = this.Agents.find(a => a.id == this.AgentId)
+    this.cities = find.countries
+    this.CountryId = null;
+  }
+  changeCountryId() {
+    localStorage.setItem('countryid', this.CountryId)
+    var city = this.cities.find(c => c.id == this.CountryId)
     this.Order.DeliveryCost = city.deliveryCost
-    this.regions=city.regions
-    if ( this.regions.length == 1)
-    this.Order.RegionId = this.regions[0].id
-  else this.Order.RegionId = null
+    this.regions = city.regions
   }
-  changeCountryEdit() {
-    var city = this.cities.find(c => c.id == this.EditOrder.CountryId)
-    this.Agents = this.GetAgents.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.EditOrder.CountryId).length>0 )
-    if (this.Agents.length != 0 && this.Agents.length == 1)
-      this.EditOrder.AgentId = this.Agents[0].id
-    else this.EditOrder.AgentId = null
-    this.EditOrder.DeliveryCost = city.deliveryCost
-    this.regions=city.regions
-    if ( this.regions.length == 1)
-    this.EditOrder.RegionId = this.regions[0].id
-  else this.EditOrder.RegionId = null
-  }
+
   showMessageCode: boolean = false
   CheckCode() {
     if (!this.Order.Code || !this.Order.ClientId) return
@@ -194,11 +169,15 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
       return false
     }
   }
-  
+
   onEnter() {
+    this.Order.AgentId = this.AgentId
+    this.Order.CountryId = this.CountryId
+    this.Order.RegionId = this.RegionId
     if (!this.Order.Code || !this.Order.ClientId ||
       !this.Order.CountryId || !this.Order.RecipientPhones
       || !this.Order.AgentId || this.showMessageCode) {
+      console.log("fff")
       this.submitted = true
       return
     } else this.submitted = false
@@ -206,10 +185,6 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
       return
     var country = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.CountryName = country.name
-    var region = this.regions.find(c => c.id == this.Order.RegionId)
-    this.Order.RegionName = region.name
-    var orderplace = this.orderPlace.find(c => c.id == this.Order.OrderplacedId)
-    this.Order.OrderplacedName = orderplace.name
     var client = this.clients.find(c => c.id == this.Order.ClientId)
     this.Order.ClientName = client.name
     var agent = this.Agents.find(c => c.id == this.Order.AgentId)
@@ -239,9 +214,12 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
 
   }
   Save(order: CreateMultipleOrder) {
+    this.EditOrder.AgentId = this.AgentId;
+    this.EditOrder.CountryId = this.CountryId;
+    this.EditOrder.RegionId = this.RegionId;
     if (!this.EditOrder.Code || !this.EditOrder.ClientId ||
       !this.EditOrder.CountryId || !this.EditOrder.RecipientPhones
-      || !this.EditOrder.AgentId 
+      || !this.EditOrder.AgentId
       || order.showEditMessageCode) {
       this.Editsubmitted = true
       return
@@ -251,8 +229,6 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
     this.EditOrder.CanEdit = false
     var country = this.cities.find(c => c.id == this.EditOrder.CountryId)
     this.EditOrder.CountryName = country.name
-    var orderplace = this.orderPlace.find(c => c.id == this.EditOrder.OrderplacedId)
-    this.EditOrder.OrderplacedName = orderplace.name
     var client = this.clients.find(c => c.id == this.EditOrder.ClientId)
     this.EditOrder.ClientName = client.name
     var agent = this.Agents.find(c => c.id == this.EditOrder.AgentId)
@@ -287,9 +263,10 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
       return
     }
     this.Orders.forEach(o => {
-      o.Date=new Date
       o.Cost = o.Cost * 1
       o.DeliveryCost = o.DeliveryCost * 1
+      o.Date = new Date
+
     })
     this.spinner.show()
     this.orderservice.createMultiple(this.Orders).subscribe(res => {
@@ -303,19 +280,20 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
     })
 
   }
-  @ViewChild('myTr') inputEl:ElementRef;
+  @ViewChild('myTr') inputEl: ElementRef;
   changed(index) {
-    if(index==8){this.onEnter(); return}
+    if (index == 6) { this.onEnter(); return }
     const inputs = this.inputEl.nativeElement.querySelectorAll('input');
     if (inputs.length > index + 1) {
       inputs[index + 1].focus();
     }
   }
-  @ViewChild('TrFor') inputEle:ElementRef;
+  @ViewChild('TrFor') inputEle: ElementRef;
   changedngFor(index) {
     const inputs = this.inputEle.nativeElement.querySelectorAll('input');
     if (inputs.length > index + 1) {
       inputs[index + 1].focus();
     }
   }
+
 }
