@@ -91,7 +91,6 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
       this.Agents = res
-      console.log(res)
       var agent = JSON.parse(localStorage.getItem('agentid'))
       if (agent) {
         this.AgentId = agent
@@ -185,6 +184,8 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
       return
     var country = this.cities.find(c => c.id == this.Order.CountryId)
     this.Order.CountryName = country.name
+    var region = this.regions.find(c => c.id == this.Order.RegionId)
+    this.Order.RecipientName = region.name
     var client = this.clients.find(c => c.id == this.Order.ClientId)
     this.Order.ClientName = client.name
     var agent = this.Agents.find(c => c.id == this.Order.AgentId)
@@ -229,6 +230,8 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
     this.EditOrder.CanEdit = false
     var country = this.cities.find(c => c.id == this.EditOrder.CountryId)
     this.EditOrder.CountryName = country.name
+    var region = this.regions.find(c => c.id == this.EditOrder.RegionId)
+    this.EditOrder.RecipientName = region.name
     var client = this.clients.find(c => c.id == this.EditOrder.ClientId)
     this.EditOrder.ClientName = client.name
     var agent = this.Agents.find(c => c.id == this.EditOrder.AgentId)
