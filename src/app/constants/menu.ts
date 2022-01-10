@@ -118,6 +118,13 @@ const data: IMenuItem[] = [
         //permission:[UserPermission.AddOrder]
 
       },
+      {
+        icon: 'iconsminds-add',
+        label: ' إضافة  متعددة للمندوب المنطقة',
+        to: `${adminRoot}/order/addMulitpleOrdersWithRegion`,
+        //permission:[UserPermission.AddOrder]
+
+      },
       // {
       //   icon: 'iconsminds-add',
       //   label: 'طلبات لم يتم سداد مبلغها كاملا',
