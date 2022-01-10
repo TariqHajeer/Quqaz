@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/auth.guard';
 import { UserPermission } from 'src/app/shared/auth.roles';
+import { AddMulitpleOrdersWithRegionComponent } from './add-mulitple-orders-with-region/add-mulitple-orders-with-region.component';
 import { AddOrdersComponent } from './add-orders/add-orders.component';
 import { CreateMulitpleOrderComponent } from './create-mulitple-order/create-mulitple-order.component';
 import { CreateMultiOrderAgentAndClientComponent } from './create-multi-order-agent-and-client/create-multi-order-agent-and-client.component';
@@ -33,6 +34,11 @@ const routes: Routes = [
   {
     path:'addMulitpleOrders',
     component:CreateMulitpleOrderComponent ,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.AddOrder]}
+  },
+  {
+    path:'addMulitpleOrdersWithRegion',
+    component:AddMulitpleOrdersWithRegionComponent ,canActivate: [AuthGuard],
     data: { roles: [UserPermission.AddOrder]}
   },
   {
