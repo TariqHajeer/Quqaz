@@ -14,6 +14,7 @@ import { ClientService } from '../../client/client.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-view-new-order',
@@ -150,7 +151,7 @@ export class ViewNewOrderComponent implements OnInit {
   }
   DisAcceptAll() {
     this.dateWithIds=new DateWithIds
-   this.dateWithIds.Date=new Date
+   this.dateWithIds.Date=moment().format()
    this.dateWithIds.Ids=this.selectOrders.map(o=>o.id)
     this.OrderService.DisAcceptmultiple(this.dateWithIds).subscribe(res=>{
       this.get()
@@ -198,7 +199,7 @@ export class ViewNewOrderComponent implements OnInit {
   DisAccept(elementid) {
     this.dateWithId = new DateWithIds
     this.dateWithId.Ids = elementid
-    this.dateWithId.Date = new Date
+    this.dateWithId.Date = moment().format()
     // this.dateWithId.Ids.push(elementid)
     this.OrderService.DisAccept(this.dateWithId).subscribe(res => {
       this.orders = this.orders.filter(o => o.id != elementid)
