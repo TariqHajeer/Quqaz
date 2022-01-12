@@ -23,17 +23,17 @@ export class OrderPlacedStateService {
   canChangeCost(element, MoenyPlaced, temporderscostindex?) {
     if (element.order.orderplaced.id == OrderplacedEnum.PartialReturned
       || element.order.orderplaced.id == OrderplacedEnum.Delivered) {
-      element.canEditCount = false
+      element.canEditCost = false
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent || m.id == MoneyPalcedEnum.InsideCompany)]
-      if (element.MoenyPlaced.filter(o => o .id== element.order.monePlaced.id).length > 0)
-        element.order.monePlaced =element.order.monePlaced
-        else element.order.monePlaced ={ ...element.MoenyPlaced[0] }
+      if (element.MoenyPlaced.filter(o => o.id == element.order.monePlaced.id).length > 0)
+        element.order.monePlaced = element.order.monePlaced
+      else element.order.monePlaced = { ...element.MoenyPlaced[0] }
     } else {
       if (temporderscostindex) {
         element.order.cost = Object.assign(temporderscostindex, temporderscostindex);
 
       }
-      element.canEditCount = true
+      element.canEditCost = true
     }
     if (temporderscostindex == element.order.cost) {
       this.isClientDiliverdMoney(element, MoenyPlaced)
@@ -150,10 +150,11 @@ export class GetOrder {
     this.OrderPlaced = []
   }
   order
-  canEditCount: boolean = true
-  MoenyPlaced: NameAndIdDto[]
-  OrderPlaced: NameAndIdDto[]
-  messageCost
-  canEditDeliveryCost: boolean = true
+  canEditCost: boolean;
+  canEditOrder: boolean;
+  MoenyPlaced: NameAndIdDto[];
+  OrderPlaced: NameAndIdDto[];
+  messageCost: string;
+  canEditDeliveryCost: boolean = true;
 
 }

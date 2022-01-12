@@ -52,7 +52,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   paging: Paging
   filtering: OrderFilter
   noDataFound: boolean = false
-  canEditCount: boolean[] = []
+  canEditCost: boolean[] = []
   temporderscost: any[] = []
   tempagentCost: any[] = []
   tempdeliveryCost: any[] = []
@@ -185,7 +185,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.getorder.order = { ...this.findorder[0] }
     this.getorder.MoenyPlaced = [...this.MoenyPlaced]
     this.getorder.OrderPlaced = [...this.orderPlace]
-    this.getorder.canEditCount = true
+    this.getorder.canEditCost = true
     this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced)
     this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced)
     this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced)
@@ -287,7 +287,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   }
   allFilter() {
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
-      this.canEditCount = []
+      this.canEditCost = []
       if (response)
         if (response.data.length == 0)
           this.noDataFound = true

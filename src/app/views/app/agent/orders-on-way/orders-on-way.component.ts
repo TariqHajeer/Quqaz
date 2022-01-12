@@ -98,11 +98,11 @@ export class OrdersOnWayComponent implements OnInit {
         if (this.OrderplacedId) {
           order.order.orderplaced = {...this.OrderplacedId}
         }
-        order.order.canEditCount=true
+        order.order.canEditCost=true
       }
     if (!this.selection.isSelected(row)) {
       order.order={...this.temporder.find(o => o.id == row)}
-      order.order.canEditCount=false
+      order.order.canEditCost=false
       this.ids = this.ids.filter(i => i != row)
       this.orders = this.orders.filter(o => o.id != row)
     }
@@ -123,7 +123,7 @@ export class OrdersOnWayComponent implements OnInit {
         this.temporder.forEach(element => {
         this.getorder.order = element
         this.getorder.OrderPlaced = this.orderPlace
-        this.getorder.canEditCount = false
+        this.getorder.canEditCost = false
         this.getorder.order.date = this.getorder.order.date.split('T')[0]
         this.getorder.order.date = new Date(this.getorder.order.date)
         this.getorders.push(this.getorder)
@@ -154,7 +154,7 @@ export class OrdersOnWayComponent implements OnInit {
     }
   }
   ChengeOrderplaced(){
-    let array=this.dataSource.data.filter(o=>o.order.canEditCount==true)
+    let array=this.dataSource.data.filter(o=>o.order.canEditCost==true)
     array.forEach(o=>{
       o.order.orderplaced = {...this.OrderplacedId}
     })

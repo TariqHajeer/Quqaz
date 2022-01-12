@@ -42,7 +42,7 @@ export class PrintOrderInCompanyComponent implements OnInit {
     this.temporder = JSON.parse(localStorage.getItem('temporderincompany'))
     this.client = JSON.parse(localStorage.getItem('clientorderincompany'))
     this.orders.forEach(o => {
-      if (o.order.canEditCount == true)
+      if (o.order.canEditCost == true)
         o.order.oldCost = this.temporder[this.i].order.cost
       this.i++
       this.IdCost.Id = o.order.id

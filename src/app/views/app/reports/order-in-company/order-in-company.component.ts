@@ -46,7 +46,7 @@ export class OrderInCompanyComponent implements OnInit {
   // paging: Paging
   // filtering: OrderFilter
   noDataFound: boolean = false
-  canEditCount: boolean[] = []
+  canEditCost: boolean[] = []
   temporderscost: any[] = []
   tempordersmonePlaced: GetOrder[] = []
   tempisClientDiliverdMoney: any[] = []
@@ -173,9 +173,9 @@ export class OrderInCompanyComponent implements OnInit {
       return
     }
     if (this.getorder.order.orderplaced.id == OrderplacedEnum.PartialReturned || this.getorder.order.orderplaced.id == OrderplacedEnum.Delivered)
-      this.getorder.canEditCount = false
+      this.getorder.canEditCost = false
     else
-      this.getorder.canEditCount = true
+      this.getorder.canEditCost = true
 
     this.getorders.push({ ...this.getorder })
     this.temporders.push({ ...this.getorder })
@@ -202,7 +202,7 @@ export class OrderInCompanyComponent implements OnInit {
   }
 
   changeCost(element, index) {
-    element.canEditCount = true
+    element.canEditCost = true
     element.order.cost = element.order.cost * 1
     this.sumCost()
 
