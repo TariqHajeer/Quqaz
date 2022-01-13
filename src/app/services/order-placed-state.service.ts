@@ -23,7 +23,7 @@ export class OrderPlacedStateService {
   canChangeCost(element, MoenyPlaced, temporderscostindex?) {
     if (element.order.orderplaced.id == OrderplacedEnum.PartialReturned
       || element.order.orderplaced.id == OrderplacedEnum.Delivered) {
-      element.canEditCost = false
+      element.canEditCost = true
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent || m.id == MoneyPalcedEnum.InsideCompany)]
       if (element.MoenyPlaced.filter(o => o.id == element.order.monePlaced.id).length > 0)
         element.order.monePlaced = element.order.monePlaced
@@ -33,7 +33,7 @@ export class OrderPlacedStateService {
         element.order.cost = Object.assign(temporderscostindex, temporderscostindex);
 
       }
-      element.canEditCost = true
+      element.canEditCost = false
     }
     if (temporderscostindex == element.order.cost) {
       this.isClientDiliverdMoney(element, MoenyPlaced)

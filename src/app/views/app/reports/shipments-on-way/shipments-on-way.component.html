@@ -55,7 +55,7 @@
       <div class="col-2">
         <label>حالة الشحنة</label>
         <ng-select appendTo="body" [(ngModel)]="OrderplacedId" [ngModelOptions]="{standalone: true}" [clearable]="false"
-          name="Orderplaced" (ngModelChange)="changeOrderPlaced()" style="width: 120px; overflow: visible;">
+          name="Orderplaced" (ngModelChange)="changeAllOrderPlaced()" style="width: 120px; overflow: visible;">
           <ng-option *ngFor="let order of orderPlace " [value]="order">{{order.name}}</ng-option>
         </ng-select>
       </div>
@@ -88,7 +88,7 @@
       <tr *ngFor="let order of getorders; index as i" style="padding: 5px;">
         <td>
           <div class="form-check">
-            <input class="form-check-input" [(ngModel)]="order.canEditOrder" (ngModelChange)="canSelectAllOrders()" name="canEditOrder" type="checkbox" />
+            <input class="form-check-input" [(ngModel)]="order.canEditOrder" (ngModelChange)="canSelectAllOrders(order)" name="canEditOrder" type="checkbox" />
           </div>
         </td>
         <td>{{i+1}}</td>
@@ -120,7 +120,7 @@
         <td>
           <h4 *ngIf="!order.canEditOrder">{{order.order.orderplaced.name}}</h4>
           <ng-select appendTo="body" *ngIf="order.canEditOrder" [(ngModel)]="order.order.orderplaced.id" [ngModelOptions]="{standalone: true}"
-          [clearable]="false" id="i*2" name="Orderplaced" (change)="ChangeOrderplacedId(element,i)"
+          [clearable]="false" id="i*2" name="Orderplaced" (change)="ChangeOrderplacedId(order,i)"
           style="width: 120px; overflow: visible;">
           <ng-option *ngFor="let order of order.OrderPlaced" [value]="order.id">{{order.name}}</ng-option>
         </ng-select>

@@ -66,14 +66,18 @@ export class ShipmentsOnWayComponent implements OnInit {
     else {
       this.getorders.forEach(order => {
         order.canEditOrder = false;
+        order.canEditCost = false
       })
     }
   }
-  canSelectAllOrders() {
+  canSelectAllOrders(order: GetOrder) {
     if (this.getorders.filter(o => o.canEditOrder == true).length == this.getorders.length)
       this.selectAll = true;
     else
       this.selectAll = false;
+    if (!order.canEditOrder) {
+      order.canEditCost = false;
+    }
   }
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
@@ -108,7 +112,13 @@ export class ShipmentsOnWayComponent implements OnInit {
   }
 
   getMoenyPlaced
-  changeOrderPlaced() {
+  changeAllOrderPlaced() {
+    this.changeMoenyPlacedArray();
+    this.getorders.forEach(order => {
+      this.ChangeOrderplacedId(order, this.getorders.indexOf(order))
+    })
+  }
+  changeMoenyPlacedArray() {
     this.getMoenyPlaced = [...this.MoenyPlaced]
     this.moenyPlaced = null
     if (this.OrderplacedId.id == 3)
@@ -122,7 +132,6 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.getMoenyPlaced = [{ id: 2, name: "مندوب" }, { id: 4, name: "تم تسليمها/داخل الشركة" }]
     this.total()
   }
-
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
       this.Agents = res
