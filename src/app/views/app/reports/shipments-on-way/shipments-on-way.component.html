@@ -61,7 +61,7 @@
       </div>
       <div class="col-2">
         <label>موقع المبلغ</label>
-        <ng-select appendTo="body" [(ngModel)]="MoenyPlacedId" [ngModelOptions]="{standalone: true}"
+        <ng-select appendTo="body" [(ngModel)]="moenyPlaced" [ngModelOptions]="{standalone: true}"
           style="width: 140px;" [clearable]="false" (ngModelChange)="changeMoenyPlaced()" name="MonePlaced">
           <ng-option *ngFor="let moenyPlaced of getMoenyPlaced" [value]="moenyPlaced">{{moenyPlaced.name}}
           </ng-option>
@@ -80,7 +80,7 @@
       <th *ngFor="let th of thead">
         {{th=='اختر' ?null:th}}
         <div class="form-check" style="margin-bottom: 10px;">
-          <input class="form-check-input" type="checkbox" *ngIf="th=='اختر'"/>
+          <input class="form-check-input" [(ngModel)]="selectAll" (ngModelChange)="selectAllOrders()" type="checkbox" *ngIf="th=='اختر'"/>
         </div>
       </th>
     </thead>
@@ -88,7 +88,7 @@
       <tr *ngFor="let order of getorders; index as i" style="padding: 5px;">
         <td>
           <div class="form-check">
-            <input class="form-check-input" [(ngModel)]="order.canEditOrder" name="canEditOrder" type="checkbox" />
+            <input class="form-check-input" [(ngModel)]="order.canEditOrder" (ngModelChange)="canSelectAllOrders()" name="canEditOrder" type="checkbox" />
           </div>
         </td>
         <td>{{i+1}}</td>

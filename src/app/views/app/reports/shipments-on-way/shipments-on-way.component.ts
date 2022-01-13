@@ -21,7 +21,7 @@ export class ShipmentsOnWayComponent implements OnInit {
     , 'كلفة توصيل المندوب ', 'كلفة الطلب', 'كلفة التوصيل', 'تسليم المبلغ للعميل', 'حالة الشحنة', 'موقع المبلغ', 'رقم طياعة المندوب', 'رقم طباعة العميل'];
   ids: any[] = []
   orders: any[] = []
-  MoenyPlacedId
+  moenyPlaced
   MoenyPlaced: any[] = []
   constructor(
     private orderservice: OrderService,
@@ -33,19 +33,22 @@ export class ShipmentsOnWayComponent implements OnInit {
 
   ) { }
   AgentId
+  Agent
+  Agents: User[] = []
   OrderplacedId
   orderPlace: NameAndIdDto[] = []
-  Agents: User[] = []
   filtering: OrderFilter
   noDataFound: boolean = false
   canEditCost: boolean[] = []
   temporderscost: any[] = []
   tempordersmonePlaced: any[] = []
-  tempisClientDiliverdMoney: any[] = []
+  tempordersOrderPlaced: any[] = []
   getorders: GetOrder[] = []
+  temporder: GetOrder[] = []
   getorder: GetOrder = new GetOrder()
   orderstates: OrderState[] = []
   orderstate: OrderState = new OrderState()
+  selectAll: boolean;
   ngOnInit(): void {
     this.getAgent()
     this.GetMoenyPlaced()
@@ -54,7 +57,24 @@ export class ShipmentsOnWayComponent implements OnInit {
     localStorage.removeItem('printordersagent')
     localStorage.removeItem('printagent')
   }
- 
+  selectAllOrders() {
+    if (this.selectAll) {
+      this.getorders.forEach(order => {
+        order.canEditOrder = true;
+      })
+    }
+    else {
+      this.getorders.forEach(order => {
+        order.canEditOrder = false;
+      })
+    }
+  }
+  canSelectAllOrders() {
+    if (this.getorders.filter(o => o.canEditOrder == true).length == this.getorders.length)
+      this.selectAll = true;
+    else
+      this.selectAll = false;
+  }
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
@@ -70,29 +90,27 @@ export class ShipmentsOnWayComponent implements OnInit {
     })
   }
   changeMoenyPlaced() {
-    // if (this.getorders.length != 0) {
-    //   this.getorders.forEach(o => {
-    //     o.order.monePlaced = this.MoenyPlaced.find(m => m.id == this.MoenyPlacedId.id)
-    //     if (this.OrderplacedId.id == 4 && this.MoenyPlacedId.id == 4) {
-    //       if (o.order.isClientDiliverdMoney) {
-    //         o.order.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
-    //       }
-    //       else {
-    //         o.order.monePlaced = this.MoenyPlaced.find(m => m.id == 3)
-    //       }
-    //     }
-
-
-    //   })
-
-    // }
+    if (this.getorders.length != 0) {
+      this.getorders = this.getorders.filter(o => o.canEditOrder == true);
+      this.getorders.forEach(o => {
+        o.order.monePlaced = this.getMoenyPlaced.find(m => m.id == this.moenyPlaced.id)
+        if (this.OrderplacedId.id == 4 && this.moenyPlaced.id == 4) {
+          if (o.order.isClientDiliverdMoney) {
+            o.order.monePlaced = this.getMoenyPlaced.find(m => m.id == 4)
+          }
+          else {
+            o.order.monePlaced = this.getMoenyPlaced.find(m => m.id == 3)
+          }
+        }
+      })
+    }
     this.total()
   }
 
   getMoenyPlaced
   changeOrderPlaced() {
     this.getMoenyPlaced = [...this.MoenyPlaced]
-    this.MoenyPlacedId = null
+    this.moenyPlaced = null
     if (this.OrderplacedId.id == 3)
       this.getMoenyPlaced = this.getMoenyPlaced.filter(m => m.id == 1)
     if (this.OrderplacedId.id == 6)
@@ -104,43 +122,35 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.getMoenyPlaced = [{ id: 2, name: "مندوب" }, { id: 4, name: "تم تسليمها/داخل الشركة" }]
     this.total()
   }
-  Agent
+
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
       this.Agents = res
-      console.log(res)
     })
   }
-  countriesAgent:[]=[]
+  countriesAgent: [] = []
   ChangeAgentId() {
     if (this.Agent) {
-      this.countriesAgent=[]
-      this.filtering.AgentId=this.Agent.id
-      this.countriesAgent=this.Agent.countries
+      this.countriesAgent = []
+      this.filtering.AgentId = this.Agent.id
+      this.countriesAgent = this.Agent.countries
       this.filtering.OrderplacedId = 3
-      if( this.filtering.AgentPrintStartDate )
-      this.filtering.AgentPrintStartDate =  formatDate(this.filtering.AgentPrintStartDate , 'MM/dd/yyyy', 'en');
-      if( this.filtering.AgentPrintEndDate )
-      this.filtering.AgentPrintEndDate =  formatDate(this.filtering.AgentPrintEndDate , 'MM/dd/yyyy', 'en');
-      this.allFilter();
+      if (this.filtering.AgentPrintStartDate)
+        this.filtering.AgentPrintStartDate = formatDate(this.filtering.AgentPrintStartDate, 'MM/dd/yyyy', 'en');
+      if (this.filtering.AgentPrintEndDate)
+        this.filtering.AgentPrintEndDate = formatDate(this.filtering.AgentPrintEndDate, 'MM/dd/yyyy', 'en');
+      this.getOrders();
     }
   }
   ChangeOrderplacedId(element, index) {
     this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
-    this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced, this.tempordersmonePlaced[index], this.tempisClientDiliverdMoney[index])
+    this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced, this.tempordersmonePlaced[index])
     this.orderplacedstate.onWay(element, this.MoenyPlaced)
     this.orderplacedstate.unacceptable(element, this.MoenyPlaced)
     this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
     this.total()
-
   }
-  
- 
-  temporder
- 
-
-  allFilter() {
-    // console.log(this.filtering)
+  getOrders() {
     this.orderservice.WithoutPaging(this.filtering).subscribe(response => {
       this.getorders = []
       if (response)
@@ -161,8 +171,8 @@ export class ShipmentsOnWayComponent implements OnInit {
         this.getorder = new GetOrder()
       });
       this.temporderscost = Object.assign({}, this.getorders.map(o => o.order.cost));
+      this.tempordersOrderPlaced = Object.assign({}, this.getorders.map(o => o.order.monePlaced));
       this.tempordersmonePlaced = Object.assign({}, this.getorders.map(o => o.order.monePlaced));
-      this.tempisClientDiliverdMoney = Object.assign({}, this.getorders.map(o => o.order.isClientDiliverdMoney));
       this.temporder = this.getorders
       this.total()
     },
@@ -173,9 +183,9 @@ export class ShipmentsOnWayComponent implements OnInit {
   saveEdit() {
     for (let i = 0; i < this.orders.length; i++) {
       this.orderstate.Id = this.orders[i].id
-      this.orderstate.Cost = this.orders[i].cost*1
-      this.orderstate.DeliveryCost = this.orders[i].deliveryCost*1
-      this.orderstate.AgentCost = this.orders[i].agentCost*1
+      this.orderstate.Cost = this.orders[i].cost * 1
+      this.orderstate.DeliveryCost = this.orders[i].deliveryCost * 1
+      this.orderstate.AgentCost = this.orders[i].agentCost * 1
       this.orderstate.Note = this.orders[i].note
       this.orderstate.MoenyPlacedId = this.orders[i].monePlaced.id
       this.orderstate.OrderplacedId = this.orders[i].orderplaced.id
@@ -184,7 +194,7 @@ export class ShipmentsOnWayComponent implements OnInit {
     }
     this.spinner.show();
     this.orderservice.UpdateOrdersStatusFromAgent(this.orderstates).subscribe(res => {
-      this.allFilter()
+      this.getOrders()
       this.spinner.hide()
       this.orderstates = []
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
@@ -197,7 +207,7 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    var agent=this.Agents.find(c => c.id == this.filtering.AgentId)
+    var agent = this.Agents.find(c => c.id == this.filtering.AgentId)
     // console.log(agent)
     localStorage.setItem('printagent', JSON.stringify(agent))
     localStorage.setItem('printordersagent', JSON.stringify(this.orders))
