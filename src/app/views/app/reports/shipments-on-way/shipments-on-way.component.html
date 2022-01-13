@@ -54,7 +54,7 @@
 
       <div class="col-2">
         <label>حالة الشحنة</label>
-        <ng-select appendTo="body" [(ngModel)]="OrderplacedId" [ngModelOptions]="{standalone: true}" [clearable]="false"
+        <ng-select appendTo="body" [(ngModel)]="Orderplaced" [ngModelOptions]="{standalone: true}" [clearable]="false"
           name="Orderplaced" (ngModelChange)="changeAllOrderPlaced()" style="width: 120px; overflow: visible;">
           <ng-option *ngFor="let order of orderPlace " [value]="order">{{order.name}}</ng-option>
         </ng-select>

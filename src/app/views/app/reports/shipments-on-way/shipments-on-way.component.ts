@@ -35,7 +35,7 @@ export class ShipmentsOnWayComponent implements OnInit {
   AgentId
   Agent
   Agents: User[] = []
-  OrderplacedId
+  Orderplaced
   orderPlace: NameAndIdDto[] = []
   filtering: OrderFilter
   noDataFound: boolean = false
@@ -61,14 +61,17 @@ export class ShipmentsOnWayComponent implements OnInit {
     if (this.selectAll) {
       this.getorders.forEach(order => {
         order.canEditOrder = true;
+        this.selectOrderPrint(order.order)
       })
     }
     else {
       this.getorders.forEach(order => {
         order.canEditOrder = false;
-        order.canEditCost = false
+        order.canEditCost = false;
+        this.orders = []
       })
     }
+    this.changeAllOrderPlaced()
   }
   canSelectAllOrders(order: GetOrder) {
     if (this.getorders.filter(o => o.canEditOrder == true).length == this.getorders.length)
@@ -77,12 +80,23 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.selectAll = false;
     if (!order.canEditOrder) {
       order.canEditCost = false;
+      this.unSelectOrderPrint(order.order.id);
     }
+    else {
+      this.selectOrderPrint(order.order);
+    }
+    this.changeAllOrderPlaced();
+  }
+  selectOrderPrint(order) {
+    this.orders.push(order)
+  }
+  unSelectOrderPrint(orderId: number) {
+    this.orders = this.orders.filter(o => o.id != orderId);
   }
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
-      this.MoenyPlaced = res
-      this.getMoenyPlaced = [...res]
+      this.MoenyPlaced = res;
+      this.getMoenyPlaced = [...res];
 
       // this.MoenyPlaced = this.MoenyPlaced.filter(o => o.id != 4)
     })
@@ -95,17 +109,18 @@ export class ShipmentsOnWayComponent implements OnInit {
   }
   changeMoenyPlaced() {
     if (this.getorders.length != 0) {
-      this.getorders = this.getorders.filter(o => o.canEditOrder == true);
-      this.getorders.forEach(o => {
-        o.order.monePlaced = this.getMoenyPlaced.find(m => m.id == this.moenyPlaced.id)
-        if (this.OrderplacedId.id == 4 && this.moenyPlaced.id == 4) {
+      this.getorders.filter(o => o.canEditOrder == true).forEach(o => {
+        o.order.monePlaced = { ...this.MoenyPlaced.find(m => m.id == this.moenyPlaced.id) }
+        if (this.Orderplaced.id == 4 && this.moenyPlaced.id == 4) {
           if (o.order.isClientDiliverdMoney) {
-            o.order.monePlaced = this.getMoenyPlaced.find(m => m.id == 4)
+            o.order.monePlaced = { ... this.MoenyPlaced.find(m => m.id == 4) }
           }
           else {
-            o.order.monePlaced = this.getMoenyPlaced.find(m => m.id == 3)
+            o.order.monePlaced = { ...this.MoenyPlaced.find(m => m.id == 3) }
           }
-        }
+        } else
+          if (o.MoenyPlaced.filter(m => m == this.moenyPlaced).length == 0)
+            o.order.monePlaced = { ...o.MoenyPlaced[0] }
       })
     }
     this.total()
@@ -114,22 +129,26 @@ export class ShipmentsOnWayComponent implements OnInit {
   getMoenyPlaced
   changeAllOrderPlaced() {
     this.changeMoenyPlacedArray();
-    this.getorders.forEach(order => {
-      this.ChangeOrderplacedId(order, this.getorders.indexOf(order))
-    })
+    if (this.Orderplaced)
+      this.getorders.filter(o => o.canEditOrder == true).forEach(order => {
+        order.order.orderplaced = { ...this.Orderplaced }
+        this.ChangeOrderplacedId(order, this.getorders.indexOf(order))
+      })
   }
   changeMoenyPlacedArray() {
     this.getMoenyPlaced = [...this.MoenyPlaced]
     this.moenyPlaced = null
-    if (this.OrderplacedId.id == 3)
-      this.getMoenyPlaced = this.getMoenyPlaced.filter(m => m.id == 1)
-    if (this.OrderplacedId.id == 6)
-      this.getMoenyPlaced = this.getMoenyPlaced.filter(m => m.id == 2 || m.id == 3)
-    if (this.OrderplacedId.id == 7 || this.OrderplacedId.id == 5)
-      this.getMoenyPlaced = this.getMoenyPlaced.filter(m => m.id == 3)
-
-    if (this.OrderplacedId.id == 4)
-      this.getMoenyPlaced = [{ id: 2, name: "مندوب" }, { id: 4, name: "تم تسليمها/داخل الشركة" }]
+    if (this.Orderplaced) {
+      this.getMoenyPlaced = this.orderplacedstate.ChangeOrderPlace(this.Orderplaced.id, this.getMoenyPlaced)
+      this.total()
+    }
+  }
+  ChangeOrderplacedId(element, index) {
+    this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
+    this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced, this.tempordersmonePlaced[index])
+    this.orderplacedstate.onWay(element, this.MoenyPlaced)
+    this.orderplacedstate.unacceptable(element, this.MoenyPlaced)
+    this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
     this.total()
   }
   getAgent() {
@@ -151,14 +170,7 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.getOrders();
     }
   }
-  ChangeOrderplacedId(element, index) {
-    this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
-    this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced, this.tempordersmonePlaced[index])
-    this.orderplacedstate.onWay(element, this.MoenyPlaced)
-    this.orderplacedstate.unacceptable(element, this.MoenyPlaced)
-    this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
-    this.total()
-  }
+
   getOrders() {
     this.orderservice.WithoutPaging(this.filtering).subscribe(response => {
       this.getorders = []
@@ -212,7 +224,7 @@ export class ShipmentsOnWayComponent implements OnInit {
     })
   }
   print() {
-    if (this.noDataFound == true || this.getorders.length == 0) {
+    if (this.noDataFound == true || this.orders.length == 0) {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
