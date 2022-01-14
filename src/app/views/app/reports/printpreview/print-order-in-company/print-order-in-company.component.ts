@@ -8,6 +8,7 @@ import * as jspdf from 'jspdf';
 import { DateIdCost, IdCost } from 'src/app/Models/order/order.model';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { environment } from 'src/environments/environment.prod';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-print-order-in-company',
@@ -103,7 +104,7 @@ export class PrintOrderInCompanyComponent implements OnInit {
   IdCosts: IdCost[] = []
   DateIdCost:DateIdCost=new DateIdCost
   changeDeleiverMoneyForClient() {
-    this.DateIdCost.Date=new Date()
+    this.DateIdCost.Date=moment().format()
     this.DateIdCost.IdCosts=this.IdCosts
     // console.log(this.DateIdCost)
     this.orderservice.DeleiverMoneyForClientWithStatus(this.DateIdCost).subscribe(res => {

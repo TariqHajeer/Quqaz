@@ -40,6 +40,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { OrdersWithClientComponent } from './orders-with-client/orders-with-client.component';
 import { NewOrdersDontSendComponent } from './new-orders-dont-send/new-orders-dont-send.component';
 import { ReceiptsNewOrdersComponent } from './receipts-new-orders/receipts-new-orders.component';
+import { AddMulitpleOrdersWithRegionComponent } from './add-mulitple-orders-with-region/add-mulitple-orders-with-region.component';
+import { AddMultipulOrdersAgentWithRegionComponent } from './add-multipul-orders-agent-with-region/add-multipul-orders-agent-with-region.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,8 @@ import { ReceiptsNewOrdersComponent } from './receipts-new-orders/receipts-new-o
     OrdersWithClientComponent,
     NewOrdersDontSendComponent,
     ReceiptsNewOrdersComponent,
+    AddMulitpleOrdersWithRegionComponent,
+    AddMultipulOrdersAgentWithRegionComponent,
   ],
   imports: [
     CommonModule,

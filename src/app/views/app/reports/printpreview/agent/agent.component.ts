@@ -8,6 +8,7 @@ import * as jspdf from 'jspdf';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { environment } from 'src/environments/environment.prod';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-agent',
@@ -87,7 +88,7 @@ export class AgentComponent implements OnInit {
     this.spinner.show()
     this.dateWithIds = {
       Ids: this.orders.map(o => o.id),
-      Date: new Date
+      Date: moment().format()
     }
     this.orderservice.MakeOrderInWay(this.dateWithIds).subscribe(res => {
       this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
