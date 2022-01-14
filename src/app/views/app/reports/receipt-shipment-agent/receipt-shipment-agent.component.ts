@@ -185,7 +185,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.getorder.order = { ...this.findorder[0] }
     this.getorder.MoenyPlaced = [...this.MoenyPlaced]
     this.getorder.OrderPlaced = [...this.orderPlace]
-    this.getorder.canEditCost = true
+    this.getorder.canEditCost = false
     this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced)
     this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced)
     this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced)

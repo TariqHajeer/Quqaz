@@ -173,9 +173,9 @@ export class OrderInCompanyComponent implements OnInit {
       return
     }
     if (this.getorder.order.orderplaced.id == OrderplacedEnum.PartialReturned || this.getorder.order.orderplaced.id == OrderplacedEnum.Delivered)
-      this.getorder.canEditCost = false
-    else
       this.getorder.canEditCost = true
+    else
+      this.getorder.canEditCost = false
 
     this.getorders.push({ ...this.getorder })
     this.temporders.push({ ...this.getorder })
@@ -202,7 +202,7 @@ export class OrderInCompanyComponent implements OnInit {
   }
 
   changeCost(element, index) {
-    element.canEditCost = true
+    // element.canEditCost = true
     element.order.cost = element.order.cost * 1
     this.sumCost()
 
