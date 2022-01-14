@@ -211,6 +211,7 @@ direction:rtl;margin-top: 0%;">
                     </td>
                     <td style="width: 10%;border: 1px black solid;padding: 5px;text-align: center">
                         {{order.region?order.region.name:'-'}}
+                        {{order.address?'-'+order.address:''}}
                     </td>
                     <td style="width: 13%;border: 1px black solid;padding: 5px;text-align: center">
                         {{order.recipientPhones}}
