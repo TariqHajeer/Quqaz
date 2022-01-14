@@ -8,6 +8,7 @@ import { OrderService } from 'src/app/services/order.service';
 import { environment } from 'src/environments/environment';
 import * as jspdf from 'jspdf';
 import { AgentOrderService } from 'src/app/services/agent-order.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-show-report',
@@ -16,7 +17,7 @@ import { AgentOrderService } from 'src/app/services/agent-order.service';
 })
 export class ShowReportComponent implements OnInit {
 
- 
+
   constructor(private orderservice: AgentOrderService,
     private notifications: NotificationsService,
     public sanitizer: DomSanitizer,
@@ -26,19 +27,19 @@ export class ShowReportComponent implements OnInit {
 
 
   ) { }
-  heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ','المنطقة', 'الهاتف', 'اسم العميل','ملاحظات العميل', 'مـلاحظـــــات']
+  heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'المنطقة', 'الهاتف', 'اسم العميل', 'ملاحظات العميل', 'مـلاحظـــــات']
 
   orders: any[] = []
   count = 0
   agent
-  dateOfPrint = new Date()
+  dateOfPrint = moment().format()
   userName
   printnumber
   PrintNumberOrder: PrintNumberOrder
   address = environment.Address
-  companyPhone = environment.companyPhones[0]+" - "+ environment.companyPhones[1]
+  companyPhone = environment.companyPhones[0] + " - " + environment.companyPhones[1]
   ngOnInit(): void {
-this.changeDeleiverMoneyForClient()
+    this.changeDeleiverMoneyForClient()
   }
 
   sumCost() {
@@ -62,22 +63,22 @@ this.changeDeleiverMoneyForClient()
       this.spinner.hide()
       this.showPrintbtn = true
       this.orders = res.orders
-      this.orders=this.orders.sort((a,b)=>a.code-b.code)
-      var address=""
-    for(let i=0;i<this.orders.length;i++){
-      var space=0
-      if(this.orders[i].address)
-      for(let j=0;j<this.orders[i].address.length;j++){
-        address+= this.orders[i].address[j]
-      if(this.orders[i].address[j]==" ")
-      space++
-      if(space==2){
-        this.orders[i].address=address
-        address=""
-        break
+      this.orders = this.orders.sort((a, b) => a.code - b.code)
+      var address = ""
+      for (let i = 0; i < this.orders.length; i++) {
+        var space = 0
+        if (this.orders[i].address)
+          for (let j = 0; j < this.orders[i].address.length; j++) {
+            address += this.orders[i].address[j]
+            if (this.orders[i].address[j] == " ")
+              space++
+            if (space == 2) {
+              this.orders[i].address = address
+              address = ""
+              break
+            }
+          }
       }
-      } 
-    }
       this.agent = res.destinationName
       this.phones = res.destinationPhone
       this.printnumber = res.printNmber
@@ -103,7 +104,7 @@ this.changeDeleiverMoneyForClient()
     const elementToPrint = document.getElementById('contentToConvert'); //The html element to become a pdf
     const pdf = new jspdf('p', 'mm', 'a4');
     pdf.addHTML(elementToPrint, () => {
-      pdf.save( this.dateOfPrint+'.pdf');
+      pdf.save(this.dateOfPrint + '.pdf');
     });
   }
   print() {

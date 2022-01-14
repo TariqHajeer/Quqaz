@@ -15,6 +15,7 @@ import { User } from 'src/app/Models/user/user.model';
 import { Client } from '../../client/client.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
+import * as moment from 'moment';
 @Component({
   selector: 'app-add-multipul-orders-agent-with-region',
   templateUrl: './add-multipul-orders-agent-with-region.component.html',
@@ -270,7 +271,7 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
     this.Orders.forEach(o => {
       o.Cost = o.Cost * 1
       o.DeliveryCost = o.DeliveryCost * 1
-      o.Date = new Date
+      o.Date = moment().format()
 
     })
     this.spinner.show()

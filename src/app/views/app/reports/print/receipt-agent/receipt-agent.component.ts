@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, HostListener, Input, OnChanges, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NotificationsService } from 'angular2-notifications';
+import * as moment from 'moment';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { OrderService } from 'src/app/services/order.service';
 
@@ -9,13 +10,13 @@ import { OrderService } from 'src/app/services/order.service';
   templateUrl: './receipt-agent.component.html',
   styleUrls: ['./receipt-agent.component.scss']
 })
-export class ReceiptAgentComponent implements OnInit ,OnChanges{
+export class ReceiptAgentComponent implements OnInit, OnChanges {
 
   constructor(private orderservice: OrderService,
     private notifications: NotificationsService,
     public sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef) { }
-    heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'الهاتف', 'اسم العميل', 'ملاحظات']
+  heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'الهاتف', 'اسم العميل', 'ملاحظات']
   @Input() orders: any[] = []
   count = 0
   @Input() agent
@@ -23,8 +24,8 @@ export class ReceiptAgentComponent implements OnInit ,OnChanges{
   @Input() printnumber
   @Input() phones
   @Input() showPrintbtn
-  dateOfPrint=new Date()
-  userName:any=JSON.parse(localStorage.getItem('kokazUser'))as UserLogin
+  dateOfPrint = moment().format()
+  userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
 
   ngOnInit(): void {
 

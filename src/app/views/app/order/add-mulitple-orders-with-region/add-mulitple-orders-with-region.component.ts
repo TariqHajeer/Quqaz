@@ -15,6 +15,7 @@ import { User } from 'src/app/Models/user/user.model';
 import { Client } from '../../client/client.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
+import * as moment from 'moment';
 @Component({
   selector: 'app-add-mulitple-orders-with-region',
   templateUrl: './add-mulitple-orders-with-region.component.html',
@@ -289,12 +290,12 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
       return
     }
     this.Orders.forEach(o => {
-      o.Date=new Date
+      o.Date=moment().format()
       o.Cost = o.Cost * 1
       o.DeliveryCost = o.DeliveryCost * 1
     })
     this.spinner.show()
-    console.log(this.Orders)
+    // console.log(this.Orders)
     this.orderservice.createMultiple(this.Orders).subscribe(res => {
       this.spinner.hide()
       this.notifications.create('success', 'تم اضافة الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });

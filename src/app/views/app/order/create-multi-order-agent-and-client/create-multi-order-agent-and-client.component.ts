@@ -16,6 +16,7 @@ import { Client } from '../../client/client.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
+import * as moment from 'moment';
 @Component({
   selector: 'app-create-multi-order-agent-and-client',
   templateUrl: './create-multi-order-agent-and-client.component.html',
@@ -369,7 +370,7 @@ deleteCodeAfterChecked(order){
       o.ClientId = this.ClientId
       o.CountryId = this.CountryId
       o.AgentId = this.AgentId
-      o.Date=new Date
+      o.Date=moment().format()
 
 
     })
