@@ -14,6 +14,7 @@ import { PointSetting } from 'src/app/Models/pointSettings/point-setting.model';
 import { Client } from '../../../client/client.model';
 import { environment } from 'src/environments/environment.prod';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
@@ -126,13 +127,12 @@ export class ClientComponent implements OnInit {
     this.spinner.show()
     this.dateWithIds = {
       Ids: this.orders.map(c => c.id),
-      Date: new Date
+      Date: moment().format()
     }
     this.DeleiverMoneyForClientDto = {
       DateWithId: this.dateWithIds,
       PointsSettingId: this.pointid
     }
-    console.log(this.DeleiverMoneyForClientDto);
     this.orderservice.DeleiverMoneyForClient(this.DeleiverMoneyForClientDto).subscribe(res => {
       // console.log(res)
       this.reloadPage=true
@@ -146,7 +146,9 @@ export class ClientComponent implements OnInit {
       // this.setPrintnumber()
     }, err => {
       this.showPrintbtn = true
-      this.spinner.hide()
+      this.spinner.hide();
+      this.notifications.create('error', 'حدث خطأ ما يرجى المحاولة مجددا', NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
+
     })
 
   }

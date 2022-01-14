@@ -12,6 +12,8 @@ import { ClientService } from '../../client/client.service';
 import { Client } from '../../client/client.model';
 import { OrderClientDontDiliverdMoney } from 'src/app/Models/order/order-client-dont-diliverd-money.model';
 import { PointSettingsService } from 'src/app/services/point-settings.service';
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-shipments-not-been-delivered',
   templateUrl: './shipments-not-been-delivered.component.html',
@@ -103,6 +105,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     this.paging = new Paging
     this.filtering = new OrderFilter
     this.order = new OrderClientDontDiliverdMoney()
+    console.log('today is', moment().format());
   }
 
   getClients() {

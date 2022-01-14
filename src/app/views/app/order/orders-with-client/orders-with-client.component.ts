@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import * as moment from 'moment';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { DateWithIds } from 'src/app/Models/date-with-ids.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
@@ -92,7 +93,7 @@ export class OrdersWithClientComponent implements OnInit {
   DisAccept(elementid) {
     this.dateWithId = new DateWithIds
     this.dateWithId.Ids = elementid
-    this.dateWithId.Date = new Date
+    this.dateWithId.Date = moment().format()
     // this.dateWithId.Ids.push(elementid)
     this.OrderService.DisAccept(this.dateWithId).subscribe(res => {
       this.orders = this.orders.filter(o => o.id != elementid)

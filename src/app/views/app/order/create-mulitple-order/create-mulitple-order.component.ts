@@ -17,6 +17,7 @@ import { Order } from 'src/app/Models/order/order.model';
 import { SpinnerComponent } from '../../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-create-mulitple-order',
@@ -283,7 +284,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
       return
     }
     this.Orders.forEach(o => {
-      o.Date=new Date
+      o.Date=moment().format()
       o.Cost = o.Cost * 1
       o.DeliveryCost = o.DeliveryCost * 1
     })
