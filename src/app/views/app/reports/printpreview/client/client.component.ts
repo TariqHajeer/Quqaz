@@ -133,7 +133,6 @@ export class ClientComponent implements OnInit {
       DateWithId: this.dateWithIds,
       PointsSettingId: this.pointid
     }
-    console.log(this.DeleiverMoneyForClientDto);
     this.orderservice.DeleiverMoneyForClient(this.DeleiverMoneyForClientDto).subscribe(res => {
       // console.log(res)
       this.reloadPage=true
@@ -147,7 +146,9 @@ export class ClientComponent implements OnInit {
       // this.setPrintnumber()
     }, err => {
       this.showPrintbtn = true
-      this.spinner.hide()
+      this.spinner.hide();
+      this.notifications.create('error', 'حدث خطأ ما يرجى المحاولة مجددا', NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
+
     })
 
   }
