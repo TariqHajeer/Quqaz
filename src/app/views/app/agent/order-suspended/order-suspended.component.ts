@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import * as moment from 'moment';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { DateWithIds } from 'src/app/Models/date-with-ids.model';
@@ -40,8 +41,7 @@ export class OrderSuspendedComponent implements OnInit {
   // }
   date
   get() {
-    this.date = new Date();
-    this.date = formatDate(this.date, 'yyyy-MM-dd', 'en-US');
+    this.date =formatDate(new Date(),  'yyyy-MM-dd', 'en-US');
     this.OrderService.OrderSuspended(this.date).subscribe(res => {
       // console.log(res)
       this.orders = res

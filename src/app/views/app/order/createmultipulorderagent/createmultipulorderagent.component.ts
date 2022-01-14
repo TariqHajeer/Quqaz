@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
+import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
@@ -274,7 +275,7 @@ export class CreatemultipulorderagentComponent implements OnInit {
     this.Orders.forEach(o => {
       o.Cost = o.Cost * 1
       o.DeliveryCost = o.DeliveryCost * 1
-      o.Date=new Date
+      o.Date=moment().format()
 
     })
     this.spinner.show()

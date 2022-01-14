@@ -1,6 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
+import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { concat, Observable, of, Subject } from 'rxjs';
 import { catchError, delay, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
@@ -103,7 +104,7 @@ export class AddOrdersComponent implements OnInit {
     this.spinner.show()
     this.Order.DeliveryCost = Number(this.Order.DeliveryCost)
     this.Order.Cost = Number(this.Order.Cost)
-    this.Order.Date = new Date
+    this.Order.Date = moment().format()
     this.orderservice.Creat(this.Order).subscribe(res => {
       this.notifications.create('success', 'تم اضافة طلب بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.int()

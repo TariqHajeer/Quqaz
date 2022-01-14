@@ -5,6 +5,7 @@ import { PrintNumberOrder } from 'src/app/Models/order/PrintNumberOrder.model';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { environment } from 'src/environments/environment';
 import * as jspdf from 'jspdf';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-agent-print',
@@ -22,7 +23,7 @@ export class AgentPrintComponent implements OnInit {
   count = 0
   agent
   orderplaced
-  dateOfPrint = new Date()
+  dateOfPrint = moment().format()
   userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
   printnumber
   PrintNumberOrder: PrintNumberOrder

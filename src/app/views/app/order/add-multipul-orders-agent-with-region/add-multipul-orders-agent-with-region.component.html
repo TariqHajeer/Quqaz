@@ -75,7 +75,7 @@
                     <td>
                         <h4 *ngIf="!order.CanEdit">{{order.RegionName}}</h4>
                         <ng-select appendTo="body" [(ngModel)]="EditOrder.RegionId" *ngIf="order.CanEdit"
-                            [ngModelOptions]="{standalone: true}" [clearable]="false" name="Region">
+                            [ngModelOptions]="{standalone: true}" [clearable]="false" name="Regionedit">
                             <ng-option *ngFor="let region of regions" [value]="region.id">{{region.name}}</ng-option>
                         </ng-select>
                     </td>
