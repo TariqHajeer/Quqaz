@@ -11,6 +11,7 @@ import { CustomService } from 'src/app/services/custom.service';
 import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
 import { OrderService } from 'src/app/services/order.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-new-orders-dont-send',
@@ -94,7 +95,7 @@ export class NewOrdersDontSendComponent implements OnInit {
   DisAccept(elementid) {
     this.dateWithId = new DateWithIds
     this.dateWithId.Ids = elementid
-    this.dateWithId.Date = new Date
+    this.dateWithId.Date = moment().format()
     // this.dateWithId.Ids.push(elementid)
     this.OrderService.DisAccept(this.dateWithId).subscribe(res => {
       this.orders = this.orders.filter(o => o.id != elementid)
