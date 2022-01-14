@@ -30,7 +30,7 @@ export class OrdersWithClientComponent implements OnInit {
   constructor(private OrderService: OrderService,
     private clientService: ClientService) { }
   @ViewChild('infoModal') public infoModal: ModalDirective;
-  filtering: OrderFilter=new OrderFilter()
+  filtering: OrderFilter = new OrderFilter()
   ngOnInit(): void {
     this.GetClient()
     this.get()
@@ -55,11 +55,11 @@ export class OrdersWithClientComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.displayedColumns = ['code', 'cost', 'recipientName',
         'recipientPhones', 'address', 'note', 'client', 'country'
-        , 'region', 'agent', 'printedTimes','print', 'Accept', 'DisAccept'];
+        , 'region', 'agent', 'printedTimes', 'print', 'Accept', 'DisAccept'];
     })
 
   }
- 
+
   order: Order = new Order
   AgentId
   Agents: User[] = []
@@ -94,19 +94,14 @@ export class OrdersWithClientComponent implements OnInit {
     this.dateWithId = new DateWithIds
     this.dateWithId.Ids = elementid
     this.dateWithId.Date = moment().format()
-    // this.dateWithId.Ids.push(elementid)
     this.OrderService.DisAccept(this.dateWithId).subscribe(res => {
       this.orders = this.orders.filter(o => o.id != elementid)
       this.dataSource = new MatTableDataSource(this.orders);
-
-      // this.get()
     })
   }
   print(i, element) {
-    // this.order=element
-    this.OrderService.AddPrintNumber(element.id).subscribe(res=>{
-      // console.log(res)
-      element.printedTimes+=1
+    this.OrderService.AddPrintNumber(element.id).subscribe(res => {
+      element.printedTimes += 1
 
     })
     element.show = true

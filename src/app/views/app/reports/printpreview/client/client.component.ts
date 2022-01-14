@@ -82,7 +82,6 @@ export class ClientComponent implements OnInit {
       this.orders.forEach(o => {
         this.count += o.cost
         this.deliveryCostCount += o.deliveryCost
-        // console.log(o);
         this.clientCalc += o.payForClient;
         // if (!o.isClientDiliverdMoney) {
         //   if (o.orderplaced.id == OrderplacedEnum.CompletelyReturned) {
@@ -134,7 +133,6 @@ export class ClientComponent implements OnInit {
       PointsSettingId: this.pointid
     }
     this.orderservice.DeleiverMoneyForClient(this.DeleiverMoneyForClientDto).subscribe(res => {
-      // console.log(res)
       this.reloadPage=true
       localStorage.setItem('reloadPage',this.reloadPage)
       this.reloadPrintNumber=res.printNumber
@@ -143,7 +141,6 @@ export class ClientComponent implements OnInit {
       this.showPrintbtn = true
       this.spinner.hide()
       this.printnumber = res.printNumber
-      // this.setPrintnumber()
     }, err => {
       this.showPrintbtn = true
       this.spinner.hide();

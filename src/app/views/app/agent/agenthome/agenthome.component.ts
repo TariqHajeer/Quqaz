@@ -42,7 +42,7 @@ export class AgenthomeComponent implements OnInit {
   }
   date
   getAgentStatics() {
-    this.date = moment().format()
+    this.date =formatDate(new Date(),  'yyyy-MM-dd', 'en-US');
     this.agentService.GetAgentStatics(this.date).subscribe(res => {
       this.totalOrderInSotre = res.totalOrderInSotre
       this.totalOrderInWay = res.totalOrderInWay
