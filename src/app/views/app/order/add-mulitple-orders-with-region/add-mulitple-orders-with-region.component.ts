@@ -252,6 +252,8 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
     this.EditOrder.CanEdit = false
     var country = this.cities.find(c => c.id == this.EditOrder.CountryId)
     this.EditOrder.CountryName = country.name
+    var region = this.regions.find(c => c.id == this.EditOrder.RegionId)
+    this.EditOrder.RecipientName = region.name
     var orderplace = this.orderPlace.find(c => c.id == this.EditOrder.OrderplacedId)
     this.EditOrder.OrderplacedName = orderplace.name
     var client = this.clients.find(c => c.id == this.EditOrder.ClientId)
@@ -293,6 +295,7 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
       o.DeliveryCost = o.DeliveryCost * 1
     })
     this.spinner.show()
+    // console.log(this.Orders)
     this.orderservice.createMultiple(this.Orders).subscribe(res => {
       this.spinner.hide()
       this.notifications.create('success', 'تم اضافة الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
