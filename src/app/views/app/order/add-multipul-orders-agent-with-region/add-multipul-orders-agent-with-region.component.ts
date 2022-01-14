@@ -83,15 +83,6 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
       this.clients = res
     })
   }
-  getRegions() {
-    this.regions=[]
-    this.customService.getAll('Region').subscribe(
-      res => {
-        this.regions = res;
-        this.regions=this.regions.filter(r=>r.country.id==this.CountryId)
-      }
-    )
-  }
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
       this.Agents = res
@@ -103,9 +94,11 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
         var country = JSON.parse(localStorage.getItem('countryid'))
         if (country) {
           this.CountryId = country
-          var findcountry = this.cities.find(c => c.id == country)
-          this.Order.DeliveryCost = findcountry.deliveryCost
-          this.getRegions()
+          var findcountry = this.cities.find(c => c.id == this.CountryId)
+          if (findcountry) {
+            this.Order.DeliveryCost = findcountry.deliveryCost
+            this.regions = findcountry.regions
+          }
         }
 
       }
@@ -122,7 +115,6 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
     var city = this.cities.find(c => c.id == this.CountryId)
     this.Order.DeliveryCost = city.deliveryCost
     this.regions = city.regions
-    this.getRegions()
   }
 
   showMessageCode: boolean = false
