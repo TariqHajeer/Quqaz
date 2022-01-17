@@ -164,7 +164,7 @@ export class ShipmentsOnWayComponent implements OnInit {
     this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
     this.total()
   }
-  canselChange(element, index) {
+  canselChange(element: GetOrder, index: number) {
     element.order.cost = Object.assign(this.temporderscost[index], this.temporderscost[index]);
     element.order.orderplaced = Object.assign(this.tempordersOrderPlaced[index], this.tempordersOrderPlaced[index]);
     element.order.monePlaced = Object.assign(this.tempordersmonePlaced[index], this.tempordersmonePlaced[index]);
