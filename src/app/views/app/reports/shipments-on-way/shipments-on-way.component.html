@@ -88,7 +88,7 @@
       <tr *ngFor="let order of getorders; index as i" style="padding: 5px;">
         <td>
           <div class="form-check">
-            <input class="form-check-input" [(ngModel)]="order.canEditOrder" (ngModelChange)="canSelectAllOrders(order)" name="canEditOrder" type="checkbox" />
+            <input class="form-check-input" [(ngModel)]="order.canEditOrder" (ngModelChange)="canSelectAllOrders(order,i)" name="canEditOrder" type="checkbox" />
           </div>
         </td>
         <td>{{i+1}}</td>
@@ -101,7 +101,7 @@
           <h4 *ngIf="!order.canEditCost">{{order.order.cost}}</h4>
           <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" *ngIf="order.canEditCost"
             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-            [(ngModel)]="order.order.cost" (ngModelChange)=" changeCost(element,i)" style="width: 110px;">
+            [(ngModel)]="order.order.cost"  style="width: 110px;">
         </td>
         <td>{{order.order.deliveryCost}}</td>
         <td>

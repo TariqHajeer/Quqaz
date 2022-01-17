@@ -49,6 +49,12 @@ export class ShipmentsOnWayComponent implements OnInit {
   orderstates: OrderState[] = []
   orderstate: OrderState = new OrderState()
   selectAll: boolean;
+  totalCost: number = 0;
+  totalDelaveryCost: number = 0;
+  endTotal: number = 0;
+  getMoenyPlaced
+  countriesAgent: [] = []
+
   ngOnInit(): void {
     this.getAgent()
     this.GetMoenyPlaced()
@@ -60,30 +66,37 @@ export class ShipmentsOnWayComponent implements OnInit {
   selectAllOrders() {
     if (this.selectAll) {
       this.getorders.forEach(order => {
-        order.canEditOrder = true;
-        this.selectOrderPrint(order.order)
+        this.selectOrder(order);
       })
     }
     else {
       this.getorders.forEach(order => {
-        order.canEditOrder = false;
-        order.canEditCost = false;
-        this.orders = []
+        this.unSelectOrder(order, this.getorders.indexOf(order));
+        this.orders = [];
       })
     }
     this.changeAllOrderPlaced()
   }
-  canSelectAllOrders(order: GetOrder) {
+  selectOrder(order: GetOrder) {
+    order.canEditOrder = true;
+    this.selectOrderPrint(order.order)
+  }
+  unSelectOrder(order: GetOrder, index: number) {
+    order.canEditOrder = false;
+    order.canEditCost = false;
+    this.canselChange(order, index);
+    this.unSelectOrderPrint(order.order.id);
+  }
+  canSelectAllOrders(order: GetOrder, index: number) {
     if (this.getorders.filter(o => o.canEditOrder == true).length == this.getorders.length)
       this.selectAll = true;
     else
       this.selectAll = false;
     if (!order.canEditOrder) {
-      order.canEditCost = false;
-      this.unSelectOrderPrint(order.order.id);
+      this.unSelectOrder(order, index);
     }
     else {
-      this.selectOrderPrint(order.order);
+      this.selectOrder(order);
     }
     this.changeAllOrderPlaced();
   }
@@ -110,6 +123,10 @@ export class ShipmentsOnWayComponent implements OnInit {
   changeMoenyPlaced() {
     if (this.getorders.length != 0) {
       this.getorders.filter(o => o.canEditOrder == true).forEach(o => {
+        if (o.MoenyPlaced.filter(m => m == this.moenyPlaced).length == 0) {
+          o.order.monePlaced = { ...o.MoenyPlaced[0] }
+          return;
+        }
         o.order.monePlaced = { ...this.MoenyPlaced.find(m => m.id == this.moenyPlaced.id) }
         if (this.Orderplaced.id == 4 && this.moenyPlaced.id == 4) {
           if (o.order.isClientDiliverdMoney) {
@@ -118,15 +135,11 @@ export class ShipmentsOnWayComponent implements OnInit {
           else {
             o.order.monePlaced = { ...this.MoenyPlaced.find(m => m.id == 3) }
           }
-        } else
-          if (o.MoenyPlaced.filter(m => m == this.moenyPlaced).length == 0)
-            o.order.monePlaced = { ...o.MoenyPlaced[0] }
+        }
       })
     }
     this.total()
   }
-
-  getMoenyPlaced
   changeAllOrderPlaced() {
     this.changeMoenyPlacedArray();
     if (this.Orderplaced)
@@ -143,7 +156,7 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.total()
     }
   }
-  ChangeOrderplacedId(element, index) {
+  ChangeOrderplacedId(element: GetOrder, index: number) {
     this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
     this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced, this.tempordersmonePlaced[index])
     this.orderplacedstate.onWay(element, this.MoenyPlaced)
@@ -151,12 +164,16 @@ export class ShipmentsOnWayComponent implements OnInit {
     this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
     this.total()
   }
+  canselChange(element, index) {
+    element.order.cost = Object.assign(this.temporderscost[index], this.temporderscost[index]);
+    element.order.orderplaced = Object.assign(this.tempordersOrderPlaced[index], this.tempordersOrderPlaced[index]);
+    element.order.monePlaced = Object.assign(this.tempordersmonePlaced[index], this.tempordersmonePlaced[index]);
+  }
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
       this.Agents = res
     })
   }
-  countriesAgent: [] = []
   ChangeAgentId() {
     if (this.Agent) {
       this.countriesAgent = []
@@ -170,7 +187,6 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.getOrders();
     }
   }
-
   getOrders() {
     this.orderservice.WithoutPaging(this.filtering).subscribe(response => {
       this.getorders = []
@@ -192,7 +208,7 @@ export class ShipmentsOnWayComponent implements OnInit {
         this.getorder = new GetOrder()
       });
       this.temporderscost = Object.assign({}, this.getorders.map(o => o.order.cost));
-      this.tempordersOrderPlaced = Object.assign({}, this.getorders.map(o => o.order.monePlaced));
+      this.tempordersOrderPlaced = Object.assign({}, this.getorders.map(o => o.order.orderplaced));
       this.tempordersmonePlaced = Object.assign({}, this.getorders.map(o => o.order.monePlaced));
       this.temporder = this.getorders
       this.total()
@@ -235,9 +251,6 @@ export class ShipmentsOnWayComponent implements OnInit {
     this.route.navigate(['app/reports/printagentpreview'])
 
   }
-  totalCost: number = 0
-  totalDelaveryCost: number = 0
-  endTotal: number = 0
   total() {
     this.totalCost = 0
     this.totalDelaveryCost = 0
