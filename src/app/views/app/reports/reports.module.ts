@@ -42,6 +42,7 @@ import { OrdersTodayComponent } from './orders-today/orders-today.component';
 import { OrdersUnacceptableComponent } from './orders-unacceptable/orders-unacceptable.component';
 import { ChangeAgentByOrdersComponent } from './change-agent-by-orders/change-agent-by-orders.component';
 import { AgentOrderStateComponent } from './agent-order-state/agent-order-state.component';
+import { AgentOrdersLastTimeComponent } from './agent-orders-last-time/agent-orders-last-time.component';
 @NgModule({
   declarations: [ShipmentInStockComponent,
     ClientOrderComponent,
@@ -69,7 +70,8 @@ import { AgentOrderStateComponent } from './agent-order-state/agent-order-state.
     OrdersTodayComponent,
     OrdersUnacceptableComponent,
     ChangeAgentByOrdersComponent,
-    AgentOrderStateComponent,],
+    AgentOrderStateComponent,
+    AgentOrdersLastTimeComponent,],
   imports: [
     CommonModule,
     ReportsRoutingModule,
