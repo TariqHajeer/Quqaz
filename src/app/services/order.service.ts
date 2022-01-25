@@ -1,11 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { OrderFilter } from '../Models/order-filter.model';
 import { DateFiter, Paging } from '../Models/paging';
 import { OrderClientDontDiliverdMoney } from '../Models/order/order-client-dont-diliverd-money.model';
+import { FrozenOrder } from 'src/app/Models/order/frozen-order.model';
 
 @Injectable({
   providedIn: 'root'
@@ -310,6 +309,16 @@ export class OrderService {
   }
   OrderRequestEditStateCount(){
     return this.http.get<any>(this.controler + "OrderRequestEditStateCount")
+  }
+  ForzenInWay(frozenOrder:FrozenOrder){
+    let params = new HttpParams();
+    if (frozenOrder.AgentId)
+      params = params.append("AgentId", frozenOrder.AgentId);
+      if (frozenOrder.CurrentDate)
+      params = params.append("CurrentDate", frozenOrder.CurrentDate);
+      if (frozenOrder.Hour)
+      params = params.append("Hour", frozenOrder.Hour);
+    return this.http.get<any>(this.controler + "ForzenInWay", { params: params })
   }
 }
 

@@ -7,9 +7,9 @@ import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/Models/user/user.model';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { Paging } from 'src/app/Models/paging';
-import { OrderFilter } from 'src/app/Models/order-filter.model';
-import { PageEvent } from '@angular/material/paginator';
+import { FrozenOrder } from 'src/app/Models/order/frozen-order.model';
 import { Router } from '@angular/router';
+import { formatDate } from '@angular/common';
 @Component({
   selector: 'app-agent-orders-last-time',
   templateUrl: './agent-orders-last-time.component.html',
@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 })
 export class AgentOrdersLastTimeComponent implements OnInit {
 
-  displayedColumns: string[] = ['select','index', 'code', 'client','cost', 'country', 'region'
+  displayedColumns: string[] = ['select', 'index', 'code', 'client', 'cost', 'country', 'region'
     , 'orderplaced'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
@@ -31,8 +31,8 @@ export class AgentOrdersLastTimeComponent implements OnInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.orders=[]
-    this.ids=[]
+    this.orders = []
+    this.ids = []
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => { this.selection.select(row) });
@@ -48,21 +48,21 @@ export class AgentOrdersLastTimeComponent implements OnInit {
   }
   ids: any[] = []
   orders: any[] = []
-  checkboxId(row) {  
+  checkboxId(row) {
     if (this.selection.isSelected(row))
       if (this.ids.filter(d => d == row.id).length > 0)
         return
       else {
         this.ids.push(row.id)
         this.orders.push(row)
-        this.agent=this.orders.map(o=>o.agent)[0]
-        this.orderplaced=this.orders.map(o=>o.orderplaced)[0]
-      
+        this.agent = this.orders.map(o => o.agent)[0]
+        this.orderplaced = this.orders.map(o => o.orderplaced)[0]
+
       }
     if (!this.selection.isSelected(row)) {
       this.ids = this.ids.filter(i => i != row.id)
       this.orders = this.orders.filter(o => o != row)
-      
+
     }
   }
   constructor(
@@ -71,12 +71,9 @@ export class AgentOrdersLastTimeComponent implements OnInit {
     private notifications: NotificationsService,
     public route: Router
   ) { }
-  AgentId
-  OrderplacedId
-  orderPlace: NameAndIdDto[] = []
   Agents: User[] = []
   paging: Paging
-  filtering: OrderFilter
+  filtering: FrozenOrder
   noDataFound: boolean = false
 
   @Input() totalCount: number;
@@ -85,75 +82,71 @@ export class AgentOrdersLastTimeComponent implements OnInit {
     localStorage.removeItem('printordersagent')
     localStorage.removeItem('printagent')
     this.getAgent()
-    //this.GetorderPlace()
     this.paging = new Paging
-    this.filtering = new OrderFilter
+    this.filtering = new FrozenOrder
+    this.allFilter();
   }
 
-  // GetorderPlace() {
-  //   this.orderservice.orderPlace().subscribe(res => {
-  //     this.orderPlace = res
-  //     this.orderPlace = this.orderPlace.filter(o => o.id == 3 || o.id == 2)
-
-  //   })
-  // }
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
       this.Agents = res
     })
   }
-  cities=[]
-  ChangeAgentIdOrOrderplacedId() {
-    if (this.AgentId) {
-      this.filtering.AgentId=this.AgentId
-      this.cities=[]
-      this.filtering.CountryId=null
-      var agent=this.Agents.find(a=>a.id==this.filtering.AgentId)
-      this.cities=agent.countries
+  cities = []
+  ChangeAgentId() {
+    if (this.filtering.AgentId) {
+      this.cities = []
+      this.filtering.CountryId = null
+      var agent = this.Agents.find(a => a.id == this.filtering.AgentId)
+      this.cities = agent.countries
       this.allFilter();
     }
-
   }
-  switchPage(event: PageEvent) {
-    this.paging.allItemsLength = event.length
-    this.paging.RowCount = event.pageSize
-    this.paging.Page = event.pageIndex + 1
-    //this.allFilter();
+  keyPressNumbers(event, num) {
+    var charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode == 45 && num == 0) {
+      return true
+    }
+    else
+      if ((charCode < 48 || charCode > 57)) {
+        event.preventDefault();
+        return false;
+      } else {
+        return true;
+      }
+  }
+  changeCountryId() {
+    if (this.filtering.CountryId)
+      this.dataSource.data = this.dataSource.data.filter(d => d.country.id == this.filtering.CountryId)
+    else
+      this.allFilter()
   }
   allFilter() {
-    this.filtering.OrderplacedId = 2
-    this.orderservice.WithoutPaging(this.filtering).subscribe(response => {
+    this.filtering.CurrentDate = formatDate(Date.now(), 'yyyy-MM-dd', 'en-US') + " " + new Date().toLocaleTimeString();
+    this.orderservice.ForzenInWay(this.filtering).subscribe(response => {
       if (response)
-        if (response.data.length == 0)
+        if (response.length == 0)
           this.noDataFound = true
         else this.noDataFound = false
-      this.dataSource = new MatTableDataSource(response.data)
-      //this.dataSource.data = this.dataSource.data.filter(d => d.agent.id == this.AgentId)
-      this.totalCount = response.total
+      this.dataSource = new MatTableDataSource(response)
+      this.totalCount = response.length
     },
       err => {
 
       });
   }
-  agent=this.orders.map(o=>o.agent)[0]
-  orderplaced=this.orders.map(o=>o.orderplaced)[0]
+  agent = this.orders.map(o => o.agent)[0]
+  orderplaced = this.orders.map(o => o.orderplaced)[0]
   print() {
-    if ( this.noDataFound == true || this.orders.length==0) {
+    if (this.noDataFound == true || this.orders.length == 0) {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    localStorage.setItem('printagent',JSON.stringify(this.Agents.find(c=>c.id==this.AgentId)))
-
-    localStorage.setItem('printordersagent',JSON.stringify(this.orders))
+    localStorage.setItem('printagent', JSON.stringify(this.Agents.find(c => c.id == this.filtering.AgentId)))
+    localStorage.setItem('printordersagent', JSON.stringify(this.orders))
     this.route.navigate(['app/reports/printagentpreview'])
-   
+
   }
-  afterPrint() {
-    this.orderservice.MakeOrderInWay(this.orders.map(o=>o.id)).subscribe(res=>{
-      this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      this.orders=[]
-      this.allFilter()
-    })
-  }     
+
 
 }
