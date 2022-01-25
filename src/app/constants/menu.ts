@@ -283,6 +283,12 @@ const data: IMenuItem[] = [
         to: `${adminRoot}/reports/ordersUnacceptable`,
         //permission:[UserPermission.ShowOrder]
       },
+      {
+        icon: 'simple-icon-layers',
+        label: ' شحنات معلقة بالساعة ',
+        to: `${adminRoot}/reports/agentOrdersLastTime`,
+        //permission:[UserPermission.ShowOrder]
+      },
     ]
   },
   //clients 
