@@ -17,7 +17,7 @@ import { formatDate } from '@angular/common';
 })
 export class AgentOrdersLastTimeComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'index', 'code', 'client', 'cost', 'country', 'region'
+  displayedColumns: string[] = ['select', 'index', 'code','agent', 'client', 'cost', 'country', 'region'
     , 'orderplaced'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
