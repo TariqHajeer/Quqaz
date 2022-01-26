@@ -299,7 +299,7 @@ export class ShipmentsOnWayComponent implements OnInit {
     })
   }
   print() {
-    if (this.noDataFound == true || this.getorders.length == 0) {
+    if (this.noDataFound == true || this.orders.length == 0) {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
