@@ -56,8 +56,6 @@ export class AgentOrdersLastTimeComponent implements OnInit {
         this.ids.push(row.id)
         this.orders.push(row)
         this.agent = this.orders.map(o => o.agent)[0]
-        this.orderplaced = this.orders.map(o => o.orderplaced)[0]
-
       }
     if (!this.selection.isSelected(row)) {
       this.ids = this.ids.filter(i => i != row.id)
@@ -136,14 +134,16 @@ export class AgentOrdersLastTimeComponent implements OnInit {
 
       });
   }
-  agent = this.orders.map(o => o.agent)[0]
-  orderplaced = this.orders.map(o => o.orderplaced)[0]
+  agent 
   print() {
     if (this.noDataFound == true || this.orders.length == 0) {
-      this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    localStorage.setItem('printagent', JSON.stringify(this.Agents.find(c => c.id == this.filtering.AgentId)))
+    if(this.filtering.AgentId){
+      var agent = this.Agents.find(c => c.id == this.filtering.AgentId)
+      localStorage.setItem('printagent', JSON.stringify(agent))
+    }
     localStorage.setItem('printordersagent', JSON.stringify(this.orders))
     this.route.navigate(['app/reports/printagentpreview'])
 

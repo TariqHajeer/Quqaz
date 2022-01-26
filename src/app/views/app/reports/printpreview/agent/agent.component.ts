@@ -23,7 +23,7 @@ export class AgentComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private spinner: NgxSpinnerService,
   ) { }
-  heads = ['ترقيم', 'كود', 'الإجمالي','التاريخ', 'المحافظة ','المنطقة / العنوان', 'الهاتف', 'اسم العميل','ملاحظات العميل', 'مـلاحظـــــات']
+  heads = ['ترقيم', 'كود', 'الإجمالي', 'التاريخ', 'المحافظة ', 'المنطقة / العنوان', 'الهاتف', 'اسم العميل', 'ملاحظات العميل', 'مـلاحظـــــات']
   orders: any[] = []
   count = 0
   agent
@@ -33,32 +33,32 @@ export class AgentComponent implements OnInit {
   printnumber
   PrintNumberOrder: PrintNumberOrder
   address = environment.Address
-  companyPhone = environment.companyPhones[0]+" - "+ environment.companyPhones[1]
+  companyPhone = environment.companyPhones[0] + " - " + environment.companyPhones[1]
   ngOnInit(): void {
     this.PrintNumberOrder = new PrintNumberOrder
     this.orders = JSON.parse(localStorage.getItem('printordersagent'))
-    this.orders=this.orders.sort((a,b)=>a.code-b.code)
-    console.log(  this.orders )
-    this.agent = JSON.parse(localStorage.getItem('printagent'))
+    this.orders = this.orders.sort((a, b) => a.code - b.code)
+    if (localStorage.getItem('printagent'))
+      this.agent = JSON.parse(localStorage.getItem('printagent'))
     this.orderplaced = this.orders.map(o => o.orderplaced)[0]
     this.sumCost()
     this.onAWay()
-   var address=""
-    for(let i=0;i<this.orders.length;i++){
-      var space=0
-      if(this.orders[i].address)
-      for(let j=0;j<this.orders[i].address.length;j++){
-        address+= this.orders[i].address[j]
-      if(this.orders[i].address[j]==" ")
-      space++
-      if(space==2){
-        this.orders[i].address=address
-        address=""
-        break
-      }
-      } 
+    var address = ""
+    for (let i = 0; i < this.orders.length; i++) {
+      var space = 0
+      if (this.orders[i].address)
+        for (let j = 0; j < this.orders[i].address.length; j++) {
+          address += this.orders[i].address[j]
+          if (this.orders[i].address[j] == " ")
+            space++
+          if (space == 2) {
+            this.orders[i].address = address
+            address = ""
+            break
+          }
+        }
     }
-  
+
     // this.getPrintnumber()
   }
 
@@ -76,13 +76,13 @@ export class AgentComponent implements OnInit {
     if (this.showPrintnumber == true) return
     if (this.orderplaced.id == OrderplacedEnum.Store) {
       this.showPrintnumber = false
-      this.showPrintbtn=false
+      this.showPrintbtn = false
     } else {
       this.showPrintnumber = true
-      this.showPrintbtn=true
+      this.showPrintbtn = true
     }
   }
-  dateWithIds 
+  dateWithIds
 
   afterPrint() {
     this.spinner.show()
@@ -126,7 +126,7 @@ export class AgentComponent implements OnInit {
     style.type = 'text/css';
     style.media = 'print';
     style.appendChild(document.createTextNode(css));
-    divToPrint.appendChild(style); 
+    divToPrint.appendChild(style);
     var newWin = window.open('', 'Print-Window');
     newWin?.document.open();
     newWin?.document.write('<html dir="rtl"><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"><link rel="stylesheet/less" type="text/css" href="app/reports/printpreview/agent/agent.component.less" /></head><body onload="window.print()">' + divToPrint?.innerHTML + '</body></html>');
