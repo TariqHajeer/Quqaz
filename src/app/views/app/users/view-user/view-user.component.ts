@@ -70,6 +70,7 @@ export class ViewUserComponent implements OnInit {
   addFinish(value: CreateUser) {
     this.User=new User
     this.User.phones=[]
+    this.User.id = value.Id
     this.User.userName = value.UserName
     this.User.experince = value.Experince
     this.User.hireDate = value.HireDate

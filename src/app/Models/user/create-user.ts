@@ -1,4 +1,5 @@
 export class CreateUser {
+      Id:number
       Name:string 
       DepartmentId:number 
       Experince:string 
