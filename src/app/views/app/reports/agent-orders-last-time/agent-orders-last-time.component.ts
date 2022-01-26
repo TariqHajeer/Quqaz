@@ -17,7 +17,7 @@ import { formatDate } from '@angular/common';
 })
 export class AgentOrdersLastTimeComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'index', 'code','agent', 'client', 'cost', 'country', 'region'
+  displayedColumns: string[] = ['select', 'index', 'code', 'agent', 'client', 'cost', 'country', 'region'
     , 'orderplaced'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
@@ -75,7 +75,7 @@ export class AgentOrdersLastTimeComponent implements OnInit {
   paging: Paging
   filtering: FrozenOrder
   noDataFound: boolean = false
-
+  tempOrders: any[] = [];
   @Input() totalCount: number;
 
   ngOnInit(): void {
@@ -117,9 +117,9 @@ export class AgentOrdersLastTimeComponent implements OnInit {
   }
   changeCountryId() {
     if (this.filtering.CountryId)
-      this.dataSource.data = this.dataSource.data.filter(d => d.country.id == this.filtering.CountryId)
+      this.dataSource.data = this.tempOrders.filter(d => d.country.id == this.filtering.CountryId)
     else
-      this.allFilter()
+      this.dataSource.data = this.tempOrders;
   }
   allFilter() {
     this.filtering.CurrentDate = formatDate(Date.now(), 'yyyy-MM-dd', 'en-US') + " " + new Date().toLocaleTimeString();
@@ -128,6 +128,7 @@ export class AgentOrdersLastTimeComponent implements OnInit {
         if (response.length == 0)
           this.noDataFound = true
         else this.noDataFound = false
+      this.tempOrders = response;
       this.dataSource = new MatTableDataSource(response)
       this.totalCount = response.length
     },
