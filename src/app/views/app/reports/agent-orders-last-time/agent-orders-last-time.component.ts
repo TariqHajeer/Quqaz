@@ -10,6 +10,7 @@ import { Paging } from 'src/app/Models/paging';
 import { FrozenOrder } from 'src/app/Models/order/frozen-order.model';
 import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
+import * as moment from 'moment';
 @Component({
   selector: 'app-agent-orders-last-time',
   templateUrl: './agent-orders-last-time.component.html',
@@ -120,7 +121,8 @@ export class AgentOrdersLastTimeComponent implements OnInit {
       this.dataSource.data = this.tempOrders;
   }
   allFilter() {
-    this.filtering.CurrentDate = formatDate(Date.now(), 'yyyy-MM-dd', 'en-US') + " " + new Date().toLocaleTimeString();
+    // this.filtering.CurrentDate = formatDate(Date.now(), 'yyyy-MM-dd', 'en-US') + " " + new Date().toLocaleTimeString();
+    this.filtering.CurrentDate = moment().format();
     this.orderservice.ForzenInWay(this.filtering).subscribe(response => {
       if (response)
         if (response.length == 0)
@@ -134,13 +136,13 @@ export class AgentOrdersLastTimeComponent implements OnInit {
 
       });
   }
-  agent 
+  agent
   print() {
     if (this.noDataFound == true || this.orders.length == 0) {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    if(this.filtering.AgentId){
+    if (this.filtering.AgentId) {
       var agent = this.Agents.find(c => c.id == this.filtering.AgentId)
       localStorage.setItem('printagent', JSON.stringify(agent))
     }

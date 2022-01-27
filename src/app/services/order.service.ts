@@ -311,14 +311,7 @@ export class OrderService {
     return this.http.get<any>(this.controler + "OrderRequestEditStateCount")
   }
   ForzenInWay(frozenOrder:FrozenOrder){
-    let params = new HttpParams();
-    if (frozenOrder.AgentId)
-      params = params.append("AgentId", frozenOrder.AgentId);
-      if (frozenOrder.CurrentDate)
-      params = params.append("CurrentDate", frozenOrder.CurrentDate);
-      if (frozenOrder.Hour)
-      params = params.append("Hour", frozenOrder.Hour);
-    return this.http.get<any>(this.controler + "ForzenInWay", { params: params })
+    return this.http.post<any>(this.controler + "ForzenInWay", frozenOrder)
   }
 }
 
