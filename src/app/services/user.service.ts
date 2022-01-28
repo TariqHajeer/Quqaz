@@ -43,7 +43,7 @@ export class UserService {
     return this.http.get<any>(this.controler + "ActiveAgent")
   }
   Creat(item: CreateUser) {
-    return this.http.post(this.controler, item)
+    return this.http.post<any>(this.controler, item)
   }
   Delete(id) {
     return this.http.delete(this.controler + id)
