@@ -10,7 +10,7 @@ export class ReceiptAndExchange {
     client: Client
     ClinetId:number
     clientName
-    date:Date
+    date
     Note:string
     //يعني اذا صرف او قبض
     IsPay: boolean

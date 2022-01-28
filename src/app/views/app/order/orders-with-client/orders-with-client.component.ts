@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import * as moment from 'moment';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { DateWithIds } from 'src/app/Models/date-with-ids.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
@@ -29,7 +30,7 @@ export class OrdersWithClientComponent implements OnInit {
   constructor(private OrderService: OrderService,
     private clientService: ClientService) { }
   @ViewChild('infoModal') public infoModal: ModalDirective;
-  filtering: OrderFilter=new OrderFilter()
+  filtering: OrderFilter = new OrderFilter()
   ngOnInit(): void {
     this.GetClient()
     this.get()
@@ -54,11 +55,11 @@ export class OrdersWithClientComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.displayedColumns = ['code', 'cost', 'recipientName',
         'recipientPhones', 'address', 'note', 'client', 'country'
-        , 'region', 'agent', 'printedTimes','print', 'Accept', 'DisAccept'];
+        , 'region', 'agent', 'printedTimes', 'print', 'Accept', 'DisAccept'];
     })
 
   }
- 
+
   order: Order = new Order
   AgentId
   Agents: User[] = []
@@ -92,20 +93,15 @@ export class OrdersWithClientComponent implements OnInit {
   DisAccept(elementid) {
     this.dateWithId = new DateWithIds
     this.dateWithId.Ids = elementid
-    this.dateWithId.Date = new Date
-    // this.dateWithId.Ids.push(elementid)
+    this.dateWithId.Date = moment().format()
     this.OrderService.DisAccept(this.dateWithId).subscribe(res => {
       this.orders = this.orders.filter(o => o.id != elementid)
       this.dataSource = new MatTableDataSource(this.orders);
-
-      // this.get()
     })
   }
   print(i, element) {
-    // this.order=element
-    this.OrderService.AddPrintNumber(element.id).subscribe(res=>{
-      // console.log(res)
-      element.printedTimes+=1
+    this.OrderService.AddPrintNumber(element.id).subscribe(res => {
+      element.printedTimes += 1
 
     })
     element.show = true

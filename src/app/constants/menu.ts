@@ -99,6 +99,13 @@ const data: IMenuItem[] = [
       },
       {
         icon: 'iconsminds-add',
+        label: ' إضافة  طلبات متعددة مع المنطقة  ',
+        to: `${adminRoot}/order/addMulitpleOrdersWithRegion`,
+        //permission:[UserPermission.AddOrder]
+
+      },
+      {
+        icon: 'iconsminds-add',
         label: 'إضافة طلبات متعددة للعميل',
         to: `${adminRoot}/order/addMulitpleOrdersfromClient`,
         //permission:[UserPermission.AddOrder]
@@ -115,6 +122,13 @@ const data: IMenuItem[] = [
         icon: 'iconsminds-add',
         label: ' إضافة  متعددة للعميل والمندوب',
         to: `${adminRoot}/order/addMulitpleOrdersfromClientandAgent`,
+        //permission:[UserPermission.AddOrder]
+
+      },
+      {
+        icon: 'iconsminds-add',
+        label: ' إضافة  متعددة للمندوب و المنطقة',
+        to: `${adminRoot}/order/addMulitpleOrdersAgentWithRegion`,
         //permission:[UserPermission.AddOrder]
 
       },

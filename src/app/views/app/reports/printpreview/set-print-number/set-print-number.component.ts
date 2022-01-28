@@ -25,7 +25,7 @@ export class SetPrintNumberComponent implements OnInit {
 
 
   ) { }
-  heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ','المنطقة', 'الهاتف', 'اسم العميل','ملاحظات العميل', 'مـلاحظـــــات']
+  heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ','المنطقة  ', 'الهاتف', 'اسم العميل','ملاحظات العميل', 'مـلاحظـــــات']
 
   orders: any[] = []
   count = 0
@@ -57,6 +57,7 @@ this.changeDeleiverMoneyForClient()
     });
     this.spinner.show()
     this.orderservice.GetOrderByAgnetPrintNumber(this.printnumber).subscribe(res => {
+      console.log(res)
       this.spinner.hide()
       this.showPrintbtn = true
       this.orders = res.orders
