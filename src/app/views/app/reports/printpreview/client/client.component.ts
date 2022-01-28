@@ -142,7 +142,6 @@ export class ClientComponent implements OnInit {
       this.spinner.hide()
       this.printnumber = res.printNumber
     }, err => {
-      this.showPrintbtn = true
       this.spinner.hide();
       this.notifications.create('error', 'حدث خطأ ما يرجى المحاولة مجددا', NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
 
