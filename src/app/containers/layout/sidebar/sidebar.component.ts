@@ -176,7 +176,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
         this.newPaymentOrders()
         this.NewEditClientRequest()
         this.OrderRequestEditStateCount()
-      }, 5000);
+      }, 15000);
     }
 
     setTimeout(() => {
