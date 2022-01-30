@@ -6,7 +6,6 @@ import { environment } from '../../environments/environment';
 })
 export class SignalRService {
   controler = environment.baseUrl + "NotificationHub"
-  // countdata:number
   data: any[]=[];
   public hubConnection: signalR.HubConnection
   public startConnection = () => {
@@ -17,14 +16,6 @@ export class SignalRService {
       .start()
       .then(() => console.log('Connection started'))
       .catch(err => console.log('Error while starting connection: ' + err))
-  }
-  public addTransferChartDataListener = () => {
-    this.hubConnection.on('RM', (data) => {
-      data = JSON.parse(data);
-      data.forEach(element => {
-        this.data.push(element)
-      });
-    });
   }
   constructor() { }
 }

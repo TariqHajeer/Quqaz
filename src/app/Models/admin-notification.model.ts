@@ -1,7 +1,7 @@
 export class AdminNotification {
-    NewOrdersCount: number;
-    NewOrdersDontSendCount: number;
-    OrderRequestEditStateCount: number;
-    NewEditRquests: number;
-    NewPaymentRequetsCount: number;
+    newOrdersCount: number;
+    newOrdersDontSendCount: number;
+    orderRequestEditStateCount: number;
+    newEditRquests: number;
+    newPaymentRequetsCount: number;
 }
