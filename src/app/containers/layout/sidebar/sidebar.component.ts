@@ -13,6 +13,7 @@ import { PaymentRequestService } from 'src/app/services/payment-request.service'
 import { EditRequestService } from 'src/app/services/edit-request.service';
 import { EditRequest } from 'src/app/Models/edit-request.model';
 import { UserLogin } from 'src/app/Models/userlogin.model';
+import { StatisticsService } from 'src/app/services/statistics.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -43,6 +44,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private notifications: NotificationsService,
     private paymentService: PaymentRequestService,
     private editrequestService: EditRequestService,
+    private statisticsService:StatisticsService
 
   ) {
     if (this.userlogin.policy == "Employee")
