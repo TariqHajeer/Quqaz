@@ -45,6 +45,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private editrequestService: EditRequestService,
 
   ) {
+    this.currentUserPermissions = this.userlogin.privileges;
+    console.log(this.currentUserPermissions)
     if (this.userlogin.policy == "Employee")
       this.menuItems = menuItems
     else
@@ -419,7 +421,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     return menuItems
       ? menuItems.filter(
         (x) =>
-          !x.permission || (x.permission && this.currentUserPermissions.some(per => x.permission.includes(per.name))) || this.currentUserPermissions.some(per => per.name.includes(UserPermission.AllPermissions))
+          !x.permission || (x.permission && this.currentUserPermissions.some(per => x.permission.includes(per.sysName)))
       )
       : [];
   }
