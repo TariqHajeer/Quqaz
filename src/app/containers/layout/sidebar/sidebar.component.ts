@@ -99,31 +99,48 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
   Notfiaction() {
     this.signalRService.startConnection();
-    this.signalRService.hubConnection.on('AdminNotification', (data) => {
-      this.AdminNotification.newEditRquests = data.newEditRquests
-      if (this.AdminNotification.newEditRquests > 0) {
-        let message = ' لديك ' + this.AdminNotification.newEditRquests + ' من طلبات تعديل العملاء الجديدة'
-        this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+    this.signalRService.hubConnection.on('AdminNotification', (data: AdminNotification) => {
+      // {
+      //   this.AdminNotification.newEditRquests=data.newEditRquests==-1?this.AdminNotification.newEditRquests:data.newEditRquests;
+      //   this.AdminNotification.newOrdersCount=data.newOrdersCount==-1?this.AdminNotification.newOrdersCount:data.newOrdersCount;
+      //   this.AdminNotification.newOrdersDontSendCount=data.newOrdersDontSendCount==-1?this.AdminNotification.newOrdersDontSendCount:data.newOrdersDontSendCount;
+      //   this.AdminNotification.newPaymentRequetsCount=data.newPaymentRequetsCount==-1?this.AdminNotification.newPaymentRequetsCount:data.newPaymentRequetsCount;
+      //   this.AdminNotification.orderRequestEditStateCount=data.orderRequestEditStateCount==-1?this.AdminNotification.orderRequestEditStateCount:data.orderRequestEditStateCount;
+      // }
+      if (data.newEditRquests != -1) {
+        this.AdminNotification.newEditRquests = data.newEditRquests
+        if (this.AdminNotification.newEditRquests > 0) {
+          let message = ' لديك ' + this.AdminNotification.newEditRquests + ' من طلبات تعديل العملاء الجديدة'
+          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+        }
       }
-      this.AdminNotification.newOrdersCount = data.newOrdersCount
-      if (this.AdminNotification.newOrdersCount > 0) {
-        let message = ' لديك ' + this.AdminNotification.newOrdersCount + ' من الطلبات جديدة'
-        this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+      if (data.newOrdersCount != -1) {
+        this.AdminNotification.newOrdersCount = data.newOrdersCount
+        if (this.AdminNotification.newOrdersCount > 0) {
+          let message = ' لديك ' + this.AdminNotification.newOrdersCount + ' من الطلبات جديدة'
+          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+        }
       }
-      this.AdminNotification.newPaymentRequetsCount = data.newPaymentRequetsCount
-      if (this.AdminNotification.newPaymentRequetsCount > 0) {
-        let message = ' لديك ' + this.AdminNotification.newPaymentRequetsCount + ' من طلبات دفع العملاء الجديدة'
-        this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+      if (data.newPaymentRequetsCount > -1) {
+        this.AdminNotification.newPaymentRequetsCount = data.newPaymentRequetsCount
+        if (this.AdminNotification.newPaymentRequetsCount > 0) {
+          let message = ' لديك ' + this.AdminNotification.newPaymentRequetsCount + ' من طلبات دفع العملاء الجديدة'
+          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+        }
       }
-      this.AdminNotification.orderRequestEditStateCount = data.orderRequestEditStateCount
-      if (this.AdminNotification.orderRequestEditStateCount > 0) {
-        let message = ' لديك ' + this.AdminNotification.orderRequestEditStateCount + 'من طلبات تعديل المندوب على حالة الشحنة'
-        this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+      if (data.orderRequestEditStateCount > -1) {
+        this.AdminNotification.orderRequestEditStateCount = data.orderRequestEditStateCount
+        if (this.AdminNotification.orderRequestEditStateCount > 0) {
+          let message = ' لديك ' + this.AdminNotification.orderRequestEditStateCount + 'من طلبات تعديل المندوب على حالة الشحنة'
+          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+        }
       }
-      this.AdminNotification.newOrdersDontSendCount = data.newOrdersDontSendCount
-      if (this.AdminNotification.newOrdersDontSendCount > 0) {
-        let message = ' لديك ' + this.AdminNotification.newOrdersDontSendCount + ' من الطلبات جديدة التي لم يتم ارسالها'
-        this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+      if (data.newOrdersDontSendCount > -1) {
+        this.AdminNotification.newOrdersDontSendCount = data.newOrdersDontSendCount
+        if (this.AdminNotification.newOrdersDontSendCount > 0) {
+          let message = ' لديك ' + this.AdminNotification.newOrdersDontSendCount + ' من الطلبات جديدة التي لم يتم ارسالها'
+          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+        }
       }
     });
     setTimeout(() => {
