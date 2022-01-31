@@ -58,7 +58,6 @@
     "@syncfusion/ej2-angular-schedule": "^18.2.55",
     "@syncfusion/ej2-navigations": "^18.2.55",
     "@types/jquery": "^3.5.1",
-    "@types/signalr": "^2.2.37",
     "angular-archwizard": "^6.1.0",
     "angular-svg-round-progressbar": "^3.0.1",
     "angular2-hotkeys": "^2.2.0",
