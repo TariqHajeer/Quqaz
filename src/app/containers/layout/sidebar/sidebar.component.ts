@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, Input } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { SidebarService, ISidebar } from './sidebar.service';
@@ -35,7 +35,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   currentUserPermissions: any = JSON.parse(localStorage.getItem(this.permissionlocalStorageKey));
   userlogin: UserLogin = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
 
-  AdminNotification: AdminNotification = new AdminNotification();
+  public AdminNotification: AdminNotification = new AdminNotification();
 
   constructor(
     private router: Router,
@@ -108,37 +108,37 @@ export class SidebarComponent implements OnInit, OnDestroy {
       //   this.AdminNotification.orderRequestEditStateCount=data.orderRequestEditStateCount==-1?this.AdminNotification.orderRequestEditStateCount:data.orderRequestEditStateCount;
       // }
       if (data.newEditRquests != -1) {
-        this.AdminNotification.newEditRquests = data.newEditRquests
-        if (this.AdminNotification.newEditRquests > 0) {
-          let message = ' لديك ' + this.AdminNotification.newEditRquests + ' من طلبات تعديل العملاء الجديدة'
+        this.signalRService.AdminNotification.newEditRquests = data.newEditRquests
+        if (this.signalRService.AdminNotification.newEditRquests > 0) {
+          let message = ' لديك ' + this.signalRService.AdminNotification.newEditRquests + ' من طلبات تعديل العملاء الجديدة'
           this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
         }
       }
       if (data.newOrdersCount != -1) {
-        this.AdminNotification.newOrdersCount = data.newOrdersCount
-        if (this.AdminNotification.newOrdersCount > 0) {
-          let message = ' لديك ' + this.AdminNotification.newOrdersCount + ' من الطلبات جديدة'
+        this.signalRService.AdminNotification.newOrdersCount = data.newOrdersCount
+        if (this.signalRService.AdminNotification.newOrdersCount > 0) {
+          let message = ' لديك ' + this.signalRService.AdminNotification.newOrdersCount + ' من الطلبات جديدة'
           this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
         }
       }
       if (data.newPaymentRequetsCount > -1) {
-        this.AdminNotification.newPaymentRequetsCount = data.newPaymentRequetsCount
-        if (this.AdminNotification.newPaymentRequetsCount > 0) {
-          let message = ' لديك ' + this.AdminNotification.newPaymentRequetsCount + ' من طلبات دفع العملاء الجديدة'
+        this.signalRService.AdminNotification.newPaymentRequetsCount = data.newPaymentRequetsCount
+        if (this.signalRService.AdminNotification.newPaymentRequetsCount > 0) {
+          let message = ' لديك ' + this.signalRService.AdminNotification.newPaymentRequetsCount + ' من طلبات دفع العملاء الجديدة'
           this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
         }
       }
       if (data.orderRequestEditStateCount > -1) {
-        this.AdminNotification.orderRequestEditStateCount = data.orderRequestEditStateCount
-        if (this.AdminNotification.orderRequestEditStateCount > 0) {
-          let message = ' لديك ' + this.AdminNotification.orderRequestEditStateCount + 'من طلبات تعديل المندوب على حالة الشحنة'
+        this.signalRService.AdminNotification.orderRequestEditStateCount = data.orderRequestEditStateCount
+        if (this.signalRService.AdminNotification.orderRequestEditStateCount > 0) {
+          let message = ' لديك ' + this.signalRService.AdminNotification.orderRequestEditStateCount + 'من طلبات تعديل المندوب على حالة الشحنة'
           this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
         }
       }
       if (data.newOrdersDontSendCount > -1) {
-        this.AdminNotification.newOrdersDontSendCount = data.newOrdersDontSendCount
-        if (this.AdminNotification.newOrdersDontSendCount > 0) {
-          let message = ' لديك ' + this.AdminNotification.newOrdersDontSendCount + ' من الطلبات جديدة التي لم يتم ارسالها'
+        this.signalRService.AdminNotification.newOrdersDontSendCount = data.newOrdersDontSendCount
+        if (this.signalRService.AdminNotification.newOrdersDontSendCount > 0) {
+          let message = ' لديك ' + this.signalRService.AdminNotification.newOrdersDontSendCount + ' من الطلبات جديدة التي لم يتم ارسالها'
           this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
         }
       }
@@ -374,19 +374,20 @@ export class SidebarComponent implements OnInit, OnDestroy {
     if (menuItems)
       menuItems.forEach(item => {
         if (item.to == "/app/client" && item.badge) {
-          item.badgeLable = this.AdminNotification.newPaymentRequetsCount
+          item.badgeLable = this.signalRService.AdminNotification.newPaymentRequetsCount
         }
         if (item.to == "/app/order" && item.badge) {
-          item.badgeLable = this.AdminNotification.newOrdersCount + this.AdminNotification.newOrdersDontSendCount
+          item.badgeLable = this.signalRService.AdminNotification.newOrdersCount + 
+          this.signalRService.AdminNotification.newOrdersDontSendCount+this.signalRService.AdminNotification.orderRequestEditStateCount
         }
         if (item.to == "/app/order/neworders" && item.badge) {
-          item.badgeLable = this.AdminNotification.newOrdersCount
+          item.badgeLable = this.signalRService.AdminNotification.newOrdersCount
         }
         if (item.to == "/app/order/orderswithclient" && item.badge) {
-          item.badgeLable = this.AdminNotification.newOrdersDontSendCount
+          item.badgeLable = this.signalRService.AdminNotification.newOrdersDontSendCount
         }
         if (item.to == "/app/reports/agentOrderstaterequests" && item.badge) {
-          item.badgeLable = this.AdminNotification.orderRequestEditStateCount
+          item.badgeLable = this.signalRService.AdminNotification.orderRequestEditStateCount
         }
       })
     // filter the menu by role 
