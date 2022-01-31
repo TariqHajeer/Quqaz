@@ -10,6 +10,8 @@ import { OrderState } from 'src/app/Models/order/order.model';
 import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed-state.service';
 import { formatDate } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
+import { MoneyPalcedEnum } from 'src/app/Models/Enums/MoneyPalcedEnum';
 @Component({
   selector: 'app-shipments-on-way',
   templateUrl: './shipments-on-way.component.html',
@@ -80,12 +82,14 @@ export class ShipmentsOnWayComponent implements OnInit {
   selectOrder(order: GetOrder) {
     order.canEditOrder = true;
     this.selectOrderPrint(order.order)
+    this.total()
   }
   unSelectOrder(order: GetOrder, index: number) {
     order.canEditOrder = false;
     order.canEditCost = false;
     this.canselChange(order, index);
     this.unSelectOrderPrint(order.order.id);
+    this.total();
   }
   canSelectAllOrders(order: GetOrder, index: number) {
     if (this.getorders.filter(o => o.canEditOrder == true).length == this.getorders.length)
@@ -110,32 +114,30 @@ export class ShipmentsOnWayComponent implements OnInit {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res;
       this.getMoenyPlaced = [...res];
-
-      // this.MoenyPlaced = this.MoenyPlaced.filter(o => o.id != 4)
     })
   }
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
-      this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
+      this.orderPlace = this.orderPlace.filter(o => o.id != OrderplacedEnum.Client && o.id != OrderplacedEnum.Store)
     })
   }
   changeMoenyPlaced() {
     if (this.getorders.length != 0) {
       this.getorders.filter(o => o.canEditOrder == true).forEach(o => {
-        if (o.MoenyPlaced.filter(m => m == this.moenyPlaced).length == 0) {
-          o.order.monePlaced = { ...o.MoenyPlaced[0] }
-          return;
-        }
-        o.order.monePlaced = { ...this.MoenyPlaced.find(m => m.id == this.moenyPlaced.id) }
-        if (this.Orderplaced.id == 4 && this.moenyPlaced.id == 4) {
+        if (this.moenyPlaced)
+          o.order.monePlaced = { ...this.MoenyPlaced.find(m => m.id == this.moenyPlaced.id) }
+        if (this.Orderplaced.id == OrderplacedEnum.Delivered && this.moenyPlaced.id == MoneyPalcedEnum.Delivered) {
           if (o.order.isClientDiliverdMoney) {
-            o.order.monePlaced = { ... this.MoenyPlaced.find(m => m.id == 4) }
+            o.order.monePlaced = { ... this.MoenyPlaced.find(m => m.id == MoneyPalcedEnum.Delivered) }
           }
           else {
-            o.order.monePlaced = { ...this.MoenyPlaced.find(m => m.id == 3) }
+            o.order.monePlaced = { ...this.MoenyPlaced.find(m => m.id == MoneyPalcedEnum.InsideCompany) }
           }
-        }
+        } else
+          if (o.MoenyPlaced.filter(m => m.id == this.moenyPlaced.id).length == 0) {
+            o.order.monePlaced = { ...o.MoenyPlaced[0] }
+          }
       })
     }
     this.total()
@@ -256,11 +258,11 @@ export class ShipmentsOnWayComponent implements OnInit {
     this.totalDelaveryCost = 0
     this.endTotal = 0
     this.getorders.forEach(d => {
-      if (d.order.orderplaced.id == 4 || d.order.orderplaced.id == 6)
-        this.totalCost += d.order.cost
-      if (d.order.orderplaced.id == 4 || d.order.orderplaced.id == 6 || d.order.orderplaced.id == 7)
-        this.totalDelaveryCost += d.order.deliveryCost
+      if (d.order.orderplaced.id == OrderplacedEnum.Delivered || d.order.orderplaced.id == OrderplacedEnum.PartialReturned)
+        this.totalCost += d.order.cost * 1
+      if (d.order.orderplaced.id == OrderplacedEnum.Delivered || d.order.orderplaced.id == OrderplacedEnum.PartialReturned || d.order.orderplaced.id == OrderplacedEnum.Unacceptable)
+        this.totalDelaveryCost += d.order.deliveryCost * 1
     })
-    this.endTotal = this.totalCost - this.totalDelaveryCost
+    this.endTotal = this.totalCost - this.totalDelaveryCost * 1
   }
 }

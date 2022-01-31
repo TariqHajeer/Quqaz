@@ -101,7 +101,7 @@
           <h4 *ngIf="!order.canEditCost">{{order.order.cost}}</h4>
           <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" *ngIf="order.canEditCost"
             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-            [(ngModel)]="order.order.cost"  style="width: 110px;">
+            [(ngModel)]="order.order.cost" (ngModelChange)="total()" style="width: 110px;">
         </td>
         <td>{{order.order.deliveryCost}}</td>
         <td>
