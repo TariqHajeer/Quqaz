@@ -41,12 +41,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private router: Router,
     private sidebarService: SidebarService,
     private activatedRoute: ActivatedRoute,
-    private authService: AuthService,
-    private localStorageService: LocalStorageService,
-    private orderService: OrderService,
     private notifications: NotificationsService,
-    private paymentService: PaymentRequestService,
-    private editrequestService: EditRequestService,
     private statisticsService: StatisticsService,
     private signalRService: SignalRService
 
@@ -100,21 +95,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
   Notfiaction() {
     this.signalRService.startConnection();
     this.signalRService.hubConnection.on('AdminNotification', (data: AdminNotification) => {
-      // {
-      //   this.AdminNotification.newEditRquests=data.newEditRquests==-1?this.AdminNotification.newEditRquests:data.newEditRquests;
-      //   this.AdminNotification.newOrdersCount=data.newOrdersCount==-1?this.AdminNotification.newOrdersCount:data.newOrdersCount;
-      //   this.AdminNotification.newOrdersDontSendCount=data.newOrdersDontSendCount==-1?this.AdminNotification.newOrdersDontSendCount:data.newOrdersDontSendCount;
-      //   this.AdminNotification.newPaymentRequetsCount=data.newPaymentRequetsCount==-1?this.AdminNotification.newPaymentRequetsCount:data.newPaymentRequetsCount;
-      //   this.AdminNotification.orderRequestEditStateCount=data.orderRequestEditStateCount==-1?this.AdminNotification.orderRequestEditStateCount:data.orderRequestEditStateCount;
-      // }
-      if (data.newEditRquests != -1) {
+      
+      if (data.newEditRquests > -1) {
         this.signalRService.AdminNotification.newEditRquests = data.newEditRquests
         if (this.signalRService.AdminNotification.newEditRquests > 0) {
           let message = ' لديك ' + this.signalRService.AdminNotification.newEditRquests + ' من طلبات تعديل العملاء الجديدة'
           this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
         }
       }
-      if (data.newOrdersCount != -1) {
+      if (data.newOrdersCount > -1) {
         this.signalRService.AdminNotification.newOrdersCount = data.newOrdersCount
         if (this.signalRService.AdminNotification.newOrdersCount > 0) {
           let message = ' لديك ' + this.signalRService.AdminNotification.newOrdersCount + ' من الطلبات جديدة'
