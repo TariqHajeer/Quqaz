@@ -4,14 +4,8 @@ import { filter, map } from 'rxjs/operators';
 import { SidebarService, ISidebar } from './sidebar.service';
 import menuItems, { agentmenu, IMenuItem } from 'src/app/constants/menu';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/shared/auth.service';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { UserPermission } from 'src/app/shared/auth.roles';
-import { OrderService } from 'src/app/services/order.service';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
-import { PaymentRequestService } from 'src/app/services/payment-request.service';
-import { EditRequestService } from 'src/app/services/edit-request.service';
-import { EditRequest } from 'src/app/Models/edit-request.model';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { StatisticsService } from 'src/app/services/statistics.service';
 import { SignalRService } from 'src/app/services/signal-r.service';
@@ -25,7 +19,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
   selectedParentMenu = '';
   viewingParentMenu = '';
   currentUrl: string;
-  private localStorageKey: string = 'currnetUser';
   private permissionlocalStorageKey: string = 'permissions';
 
   sidebar: ISidebar;
