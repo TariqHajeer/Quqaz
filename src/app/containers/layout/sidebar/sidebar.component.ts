@@ -1,19 +1,15 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, Input } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { SidebarService, ISidebar } from './sidebar.service';
 import menuItems, { agentmenu, IMenuItem } from 'src/app/constants/menu';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/shared/auth.service';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { UserPermission } from 'src/app/shared/auth.roles';
-import { OrderService } from 'src/app/services/order.service';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
-import { PaymentRequestService } from 'src/app/services/payment-request.service';
-import { EditRequestService } from 'src/app/services/edit-request.service';
-import { EditRequest } from 'src/app/Models/edit-request.model';
 import { UserLogin } from 'src/app/Models/userlogin.model';
-
+import { StatisticsService } from 'src/app/services/statistics.service';
+import { SignalRService } from 'src/app/services/signal-r.service';
+import { AdminNotification } from 'src/app/Models/admin-notification.model';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -23,7 +19,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
   selectedParentMenu = '';
   viewingParentMenu = '';
   currentUrl: string;
-  private localStorageKey: string = 'currnetUser';
   private permissionlocalStorageKey: string = 'permissions';
 
   sidebar: ISidebar;
@@ -33,16 +28,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
   currentUserPermissions: any = JSON.parse(localStorage.getItem(this.permissionlocalStorageKey));
   userlogin: UserLogin = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
 
+  public AdminNotification: AdminNotification = new AdminNotification();
+
   constructor(
     private router: Router,
     private sidebarService: SidebarService,
     private activatedRoute: ActivatedRoute,
-    private authService: AuthService,
-    private localStorageService: LocalStorageService,
-    private orderService: OrderService,
     private notifications: NotificationsService,
-    private paymentService: PaymentRequestService,
-    private editrequestService: EditRequestService,
+    private statisticsService: StatisticsService,
+    private signalRService: SignalRService
 
   ) {
     this.currentUserPermissions = this.userlogin.privileges;
@@ -93,92 +87,54 @@ export class SidebarComponent implements OnInit, OnDestroy {
         window.scrollTo(0, 0);
       });
   }
-  countNewOrders = 0
-  newNotfecation = 0
-  getNewOrders() {
-    this.orderService.NewOrderCount().subscribe(res => {
-      if (this.countNewOrders != res) {
-        this.newNotfecation = res - this.countNewOrders
-        let message = ' لديك ' + this.newNotfecation + ' من الطلبات جديدة'
-        if (this.newNotfecation > 0)
+  Notfiaction() {
+    this.signalRService.startConnection();
+    this.signalRService.hubConnection.on('AdminNotification', (data: AdminNotification) => {
+      
+      if (data.newEditRquests > -1) {
+        this.signalRService.AdminNotification.newEditRquests = data.newEditRquests
+        if (this.signalRService.AdminNotification.newEditRquests > 0) {
+          let message = ' لديك ' + this.signalRService.AdminNotification.newEditRquests + ' من طلبات تعديل العملاء الجديدة'
           this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
-
+        }
       }
-      this.countNewOrders = res
-    })
-  }
-  countNewOrdersDontSend = 0
-  newNotfecationDontSend = 0
-  getNewOrdersDontSend() {
-    this.orderService.NewOrdersDontSendCount().subscribe(res => {
-      if (this.countNewOrdersDontSend != res) {
-        this.newNotfecationDontSend = res - this.countNewOrdersDontSend
-        let message = ' لديك ' + this.newNotfecationDontSend + ' من الطلبات جديدة التي لم يتم ارسالها'
-        if (this.newNotfecationDontSend > 0)
+      if (data.newOrdersCount > -1) {
+        this.signalRService.AdminNotification.newOrdersCount = data.newOrdersCount
+        if (this.signalRService.AdminNotification.newOrdersCount > 0) {
+          let message = ' لديك ' + this.signalRService.AdminNotification.newOrdersCount + ' من الطلبات جديدة'
           this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
-
+        }
       }
-      this.countNewOrdersDontSend = res
-    })
-  }
-  countPayment = 0
-  newpayment = 0
-  newPaymentOrders() {
-    this.paymentService.Get().subscribe(res => {
-      if (this.countPayment != res.length) {
-        this.newpayment = res.length - this.countPayment
-        let message = ' لديك ' + this.newpayment + ' من طلبات دفع العملاء الجديدة'
-        if (this.newpayment > 0)
+      if (data.newPaymentRequetsCount > -1) {
+        this.signalRService.AdminNotification.newPaymentRequetsCount = data.newPaymentRequetsCount
+        if (this.signalRService.AdminNotification.newPaymentRequetsCount > 0) {
+          let message = ' لديك ' + this.signalRService.AdminNotification.newPaymentRequetsCount + ' من طلبات دفع العملاء الجديدة'
           this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
-
+        }
       }
-      this.countPayment = res.length
-    })
-  }
-
-  editRequest: EditRequest[] = []
-  countEditClient = 0
-  newEditClient = 0
-  NewEditClientRequest() {
-    this.editrequestService.NewEditReuqet().subscribe(res => {
-      if (this.countEditClient != res.length) {
-        this.newEditClient = res.length - this.countEditClient
-        let message = ' لديك ' + this.newEditClient + ' من طلبات تعديل العملاء الجديدة'
-        if (this.newEditClient > 0)
+      if (data.orderRequestEditStateCount > -1) {
+        this.signalRService.AdminNotification.orderRequestEditStateCount = data.orderRequestEditStateCount
+        if (this.signalRService.AdminNotification.orderRequestEditStateCount > 0) {
+          let message = ' لديك ' + this.signalRService.AdminNotification.orderRequestEditStateCount + 'من طلبات تعديل المندوب على حالة الشحنة'
           this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
-
+        }
       }
-      this.countEditClient = res.length
-    })
-  }
-  countOrderRequestEditState = 0
-  newNotfecationOrderRequestEditState = 0
-  OrderRequestEditStateCount() {
-    this.orderService.OrderRequestEditStateCount().subscribe(res => {
-      if (this.countOrderRequestEditState != res) {
-        this.newNotfecationOrderRequestEditState = res - this.countOrderRequestEditState
-        let message = ' لديك ' + this.newNotfecationOrderRequestEditState + 'من طلبات تعديل المندوب على حالة الشحنة'
-        if (this.newNotfecationOrderRequestEditState > 0)
+      if (data.newOrdersDontSendCount > -1) {
+        this.signalRService.AdminNotification.newOrdersDontSendCount = data.newOrdersDontSendCount
+        if (this.signalRService.AdminNotification.newOrdersDontSendCount > 0) {
+          let message = ' لديك ' + this.signalRService.AdminNotification.newOrdersDontSendCount + ' من الطلبات جديدة التي لم يتم ارسالها'
           this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
-
+        }
       }
-      this.countOrderRequestEditState = res
-    })
+    });
+    setTimeout(() => {
+      this.statisticsService.Notification().subscribe();
+    }, 1000);
+
   }
-  async ngOnInit() {
+  ngOnInit() {
     if (this.userlogin.policy == "Employee") {
-      this.getNewOrders()
-      this.getNewOrdersDontSend()
-      this.newPaymentOrders()
-      this.NewEditClientRequest()
-      this.OrderRequestEditStateCount()
-      setInterval(() => {
-        this.getNewOrders()
-        this.getNewOrdersDontSend()
-        this.newPaymentOrders()
-        this.NewEditClientRequest()
-        this.OrderRequestEditStateCount()
-      }, 15000);
+      this.Notfiaction();
     }
 
     setTimeout(() => {
@@ -402,19 +358,20 @@ export class SidebarComponent implements OnInit, OnDestroy {
     if (menuItems)
       menuItems.forEach(item => {
         if (item.to == "/app/client" && item.badge) {
-          item.badgeLable = this.countPayment
+          item.badgeLable = this.signalRService.AdminNotification.newPaymentRequetsCount
         }
         if (item.to == "/app/order" && item.badge) {
-          item.badgeLable = this.countNewOrders + this.countNewOrdersDontSend
+          item.badgeLable = this.signalRService.AdminNotification.newOrdersCount + 
+          this.signalRService.AdminNotification.newOrdersDontSendCount+this.signalRService.AdminNotification.orderRequestEditStateCount
         }
         if (item.to == "/app/order/neworders" && item.badge) {
-          item.badgeLable = this.countNewOrders
+          item.badgeLable = this.signalRService.AdminNotification.newOrdersCount
         }
         if (item.to == "/app/order/orderswithclient" && item.badge) {
-          item.badgeLable = this.countNewOrdersDontSend
+          item.badgeLable = this.signalRService.AdminNotification.newOrdersDontSendCount
         }
         if (item.to == "/app/reports/agentOrderstaterequests" && item.badge) {
-          item.badgeLable = this.countOrderRequestEditState
+          item.badgeLable = this.signalRService.AdminNotification.orderRequestEditStateCount
         }
       })
     // filter the menu by role 

@@ -6,6 +6,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { OrderService } from 'src/app/services/order.service';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SignalRService } from 'src/app/services/signal-r.service';
 
 @Component({
   selector: 'app-agent-order-state',
@@ -14,11 +15,12 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class AgentOrderStateComponent implements OnInit {
 
-  
+
   constructor(private orderService: OrderService,
     private notifications: NotificationsService,
-    public spinner: NgxSpinnerService,) { }
-  displayedColumns: string[]=  ['select','agent', 'code', 'agentCost', 'newagentCost', 'neworderplaced'];;
+    public spinner: NgxSpinnerService,
+    private signalRService: SignalRService) { }
+  displayedColumns: string[] = ['select', 'agent', 'code', 'agentCost', 'newagentCost', 'neworderplaced'];;
   dataSource = new MatTableDataSource([]);
   payments: [] = []
   ids: any[] = []
@@ -31,7 +33,7 @@ export class AgentOrderStateComponent implements OnInit {
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows =this.dataSource.data.length;
+    const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
 
@@ -74,32 +76,34 @@ export class AgentOrderStateComponent implements OnInit {
     })
   }
   Accept() {
-    if(this.ids.length==0){
+    if (this.ids.length == 0) {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       return
     }
     this.spinner.show()
     this.orderService.AproveOrderRequestEditStateCount(this.ids).subscribe(res => {
+      this.signalRService.AdminNotification.orderRequestEditStateCount-=this.ids.length;
       this.notifications.create('success', '  تم القبول بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Get()
       this.spinner.hide()
       this.ids = []
-    },err=>{
+    }, err => {
       this.spinner.hide()
     })
   }
   DisAccept() {
-    if(this.ids.length==0){
+    if (this.ids.length == 0) {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       return
     }
     this.spinner.show()
     this.orderService.DisAproveOrderRequestEditStateCount(this.ids).subscribe(res => {
+      this.signalRService.AdminNotification.orderRequestEditStateCount-=this.ids.length;
       this.notifications.create('success', '  تم الرقض بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Get()
       this.spinner.hide()
       this.ids = []
-    },err=>{
+    }, err => {
       this.spinner.hide()
     })
   }
