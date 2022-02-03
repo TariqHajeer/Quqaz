@@ -90,7 +90,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   Notfiaction() {
     this.signalRService.startConnection();
     this.signalRService.hubConnection.on('AdminNotification', (data: AdminNotification) => {
-      
+
       if (data.newEditRquests > -1) {
         this.signalRService.AdminNotification.newEditRquests = data.newEditRquests
         if (this.signalRService.AdminNotification.newEditRquests > 0) {
@@ -128,7 +128,29 @@ export class SidebarComponent implements OnInit, OnDestroy {
       }
     });
     setTimeout(() => {
-      this.statisticsService.Notification().subscribe();
+      this.statisticsService.Notification().subscribe(data => {
+        this.signalRService.AdminNotification = data;
+        if (this.signalRService.AdminNotification.newEditRquests > 0) {
+          let message = ' لديك ' + this.signalRService.AdminNotification.newEditRquests + ' من طلبات تعديل العملاء الجديدة'
+          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+        }
+        if (this.signalRService.AdminNotification.newOrdersCount > 0) {
+          let message = ' لديك ' + this.signalRService.AdminNotification.newOrdersCount + ' من الطلبات جديدة'
+          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+        }
+        if (this.signalRService.AdminNotification.newPaymentRequetsCount > 0) {
+          let message = ' لديك ' + this.signalRService.AdminNotification.newPaymentRequetsCount + ' من طلبات دفع العملاء الجديدة'
+          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+        }
+        if (this.signalRService.AdminNotification.orderRequestEditStateCount > 0) {
+          let message = ' لديك ' + this.signalRService.AdminNotification.orderRequestEditStateCount + 'من طلبات تعديل المندوب على حالة الشحنة'
+          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+        }
+        if (this.signalRService.AdminNotification.newOrdersDontSendCount > 0) {
+          let message = ' لديك ' + this.signalRService.AdminNotification.newOrdersDontSendCount + ' من الطلبات جديدة التي لم يتم ارسالها'
+          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+        }
+      });
     }, 1000);
 
   }
@@ -361,8 +383,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
           item.badgeLable = this.signalRService.AdminNotification.newPaymentRequetsCount
         }
         if (item.to == "/app/order" && item.badge) {
-          item.badgeLable = this.signalRService.AdminNotification.newOrdersCount + 
-          this.signalRService.AdminNotification.newOrdersDontSendCount+this.signalRService.AdminNotification.orderRequestEditStateCount
+          item.badgeLable = this.signalRService.AdminNotification.newOrdersCount +
+            this.signalRService.AdminNotification.newOrdersDontSendCount + this.signalRService.AdminNotification.orderRequestEditStateCount
         }
         if (item.to == "/app/order/neworders" && item.badge) {
           item.badgeLable = this.signalRService.AdminNotification.newOrdersCount
