@@ -81,6 +81,7 @@ export class ShipmentsOnWayComponent implements OnInit {
   }
   selectOrder(order: GetOrder) {
     order.canEditOrder = true;
+    this.ChangeOrderplacedId(order,this.getorders.indexOf(order))
     this.selectOrderPrint(order.order)
     this.total()
   }
