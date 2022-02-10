@@ -37,7 +37,6 @@ export class CitiesComponent implements OnInit {
     this.Getpoints()
     this.editSettings = { showDeleteConfirmDialog: false, allowAdding: false };
     this.toolbar = [
-      { text: 'حذف', tooltipText: 'حذف', prefixIcon: 'e-delete', id: 'normalgrid_delete' },
       'Search'
     ]
     this.filterSettings = { type: "CheckBox" };
@@ -131,7 +130,25 @@ export class CitiesComponent implements OnInit {
     this.editCity.mediatorId = city.mediator ? city.mediator.id : null
     this.editCity.deliveryCost = city.deliveryCost
     this.editCity.regions = city.regions
-    this.editCity.points=city.points
+    this.editCity.points = city.points
+  }
+  delete(city) {
+    if (city.canDeleteWithRegion) {
+      if (confirm("سوف يتم حذف المناطق الموجودة ضمن هذه المدينة")) {
+        this.customService.delete(this.apiName, city.id).subscribe(res => {
+          this.notifications.create('', 'تم حذف المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+          this.getCities()
+        })
+      } 
+    } else if (!city.canDelete) {
+      this.notifications.create('', 'لا يمكن الحذف', NotificationType.Error, { timeOut: 6000, showProgressBar: false });
+    }
+    else {
+      this.customService.delete(this.apiName, city.id).subscribe(res => {
+        this.notifications.create('', 'تم حذف المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+        this.getCities()
+      })
+    }
   }
   save() {
     if (this.cities.filter(c => c.name == this.editCity.name && c.id != this.editCity.id).length > 0) {
@@ -144,9 +161,9 @@ export class CitiesComponent implements OnInit {
       return
     }
     else {
-      this.editCity.deliveryCost=this.editCity.deliveryCost*1
-      this.editCity.points =this.editCity.points*1
-      this.customService.addOrUpdate(this.apiName, this.editCity, "update").subscribe(res=>{
+      this.editCity.deliveryCost = this.editCity.deliveryCost * 1
+      this.editCity.points = this.editCity.points * 1
+      this.customService.addOrUpdate(this.apiName, this.editCity, "update").subscribe(res => {
         this.notifications.create('', 'تم تعديل المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         this.editCity = new CreateCity
         this.gridInstance.refresh();
