@@ -79,9 +79,12 @@
           </e-column>
           <e-column field='edit' textAlign="Center" headerText="" width='140'>
             <ng-template #template let-data>
-
               <span class="btn-primary btn btn-xs" (click)="edit(data);addClientModal.show()">تعديل</span>
-           
+            </ng-template>
+          </e-column>
+          <e-column field='delete' textAlign="Center" headerText="" width='140'>
+            <ng-template #template let-data>
+              <span class="btn-primary btn btn-xs" (click)="delete(data);">حذف</span>
             </ng-template>
           </e-column>
           <!-- <e-column   field='regions' [allowEditing]='false' textAlign="Center" headerText="" width='140'>
