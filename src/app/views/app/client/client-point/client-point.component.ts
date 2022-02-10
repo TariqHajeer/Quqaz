@@ -25,7 +25,7 @@ export class ClientPointComponent implements OnInit {
     )
   }
   GiveOrDiscountPoints() {
-    if(!this.GiveOrDiscountPointsDto.Points||!this.GiveOrDiscountPointsDto.IsGive||!this.GiveOrDiscountPointsDto.ClientId){
+    if(!this.GiveOrDiscountPointsDto.Points||(this.GiveOrDiscountPointsDto.IsGive==null||this.GiveOrDiscountPointsDto.IsGive==undefined)||!this.GiveOrDiscountPointsDto.ClientId){
       this.notifications.create('error', 'يجب اختيار جميع الحقول', NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       return
     }

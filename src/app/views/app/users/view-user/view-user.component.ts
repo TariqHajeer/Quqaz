@@ -100,7 +100,7 @@ export class ViewUserComponent implements OnInit {
       if (args) {
         this.UserService.Delete(id).subscribe(
           res => {
-            this.notifications.create('success', 'تم حذف  العميل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
+            this.notifications.create('success', 'تم حذف  الموظف بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
           }
         )
       }
