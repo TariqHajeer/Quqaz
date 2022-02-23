@@ -186,7 +186,6 @@ export class CitiesComponent implements OnInit {
     this.customService.getAll(this.apiName).subscribe(
       res => {
         this.cities = res;
-        console.log(res)
       }
     )
   }

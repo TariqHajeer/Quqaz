@@ -10,6 +10,7 @@ import { Paging } from 'src/app/Models/paging';
 import { User } from 'src/app/Models/user/user.model';
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
+import { CustomService } from 'src/app/services/custom.service';
 
 @Component({
   selector: 'app-change-agent-by-orders',
@@ -70,7 +71,8 @@ export class ChangeAgentByOrdersComponent implements OnInit {
     private orderservice: OrderService,
     public userService: UserService,
     private notifications: NotificationsService,
-    public route: Router
+    public route: Router,
+    private customService: CustomService,
   ) { }
   AgentId
   newAgentId
@@ -78,7 +80,7 @@ export class ChangeAgentByOrdersComponent implements OnInit {
   paging: Paging
   filtering: OrderFilter
   noDataFound: boolean = false
-
+  apiName: string = "Country"
   @Input() totalCount: number;
 
   ngOnInit(): void {
@@ -94,8 +96,19 @@ export class ChangeAgentByOrdersComponent implements OnInit {
       this.Agents = res
     })
   }
+  getCities() {
+    this.customService.getAll(this.apiName).subscribe(
+      res => {
+        this.cities = res;
+        var city = this.cities.find(a => a.id == this.filtering.CountryId)
+        this.newAgents = city.agnets.filter(a => a.id != this.filtering.AgentId)
+        this.allFilter();
+      }
+    )
+  }
   cities = []
   ChangeAgentId() {
+    this.newAgentId=null;
     if (this.AgentId) {
       this.filtering.AgentId = this.AgentId
       this.cities = []
@@ -110,9 +123,8 @@ export class ChangeAgentByOrdersComponent implements OnInit {
   newAgents = []
   ChangeCountry() {
     this.newAgents = []
-    var city = this.cities.find(a => a.id == this.filtering.CountryId)
-    this.newAgents = city.agnets.filter(a => a.id != this.filtering.AgentId)
-    this.allFilter();
+    this.newAgentId=null;
+    this.getCities()
   }
   switchPage(event: PageEvent) {
     this.paging.allItemsLength = event.length
@@ -149,15 +161,15 @@ export class ChangeAgentByOrdersComponent implements OnInit {
     }
     this.moveOrder = {
       NewAgentId: this.newAgentId,
-      Ids:this.orders.map(o=>o.id)
+      Ids: this.orders.map(o => o.id)
     }
-    this.orderservice.changeAgentOrders( this.moveOrder ).subscribe(res=>{
-      this.filtering=new OrderFilter()
-      this.AgentId=null
-      this.newAgents=[]
-      this.newAgentId=null
-      this.cities=[]
-      this.orders=[]
+    this.orderservice.changeAgentOrders(this.moveOrder).subscribe(res => {
+      this.filtering = new OrderFilter()
+      this.AgentId = null
+      this.newAgents = []
+      this.newAgentId = null
+      this.cities = []
+      this.orders = []
       this.dataSource = new MatTableDataSource([])
       this.notifications.create('Success', '   تم النقل بنجاح ', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 
