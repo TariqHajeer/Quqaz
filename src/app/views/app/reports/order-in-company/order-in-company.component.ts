@@ -7,9 +7,6 @@ import { UserService } from 'src/app/services/user.service';
 import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed-state.service';
 import { User } from 'src/app/Models/user/user.model';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
-import { Paging } from 'src/app/Models/paging';
-import { OrderFilter } from 'src/app/Models/order-filter.model';
-import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { OrderState } from 'src/app/Models/order/order.model';
 import { ClientService } from '../../client/client.service';
@@ -40,18 +37,10 @@ export class OrderInCompanyComponent implements OnInit {
   OrderplacedId
   ClientId
   Clients: Client[] = []
-  AgentId
   orderPlace: NameAndIdDto[] = []
-  Agents: User[] = []
-  // paging: Paging
-  // filtering: OrderFilter
   noDataFound: boolean = false
   canEditCount: boolean[] = []
   temporderscost: any[] = []
-  tempordersmonePlaced: GetOrder[] = []
-  tempisClientDiliverdMoney: any[] = []
-  orderstates: OrderState[] = []
-  orderstate: OrderState = new OrderState()
   @Input() totalCount: number;
   constructor(
     private orderservice: OrderService,
@@ -64,73 +53,12 @@ export class OrderInCompanyComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.GetMoenyPlaced()
-    this.GetorderPlace()
     this.getClients()
-    // this.paging = new Paging
-    // this.filtering = new OrderFilter
     this.dataSource = new MatTableDataSource([])
     this.getorder = new GetOrder
-
   }
-
-  GetMoenyPlaced() {
-    this.orderservice.MoenyPlaced().subscribe(res => {
-      this.MoenyPlaced = res
-      this.getMoenyPlaced = [...res]
-      // this.MoenyPlaced = this.MoenyPlaced.filter(o => o.id != 4)
-
-    })
-  }
-  getmony() {
-    this.orderservice.MoenyPlaced().subscribe(res => {
-      this.MoenyPlaced = res
-
-    })
-  }
-  changeMoenyPlaced() {
-    if (this.getorders.length != 0) {
-      this.getorders.forEach(o => {
-        o.order.monePlaced = this.MoenyPlaced.find(m => m.id == this.MoenyPlacedId.id)
-        if (this.OrderplacedId.id ==OrderplacedEnum.Delivered && this.MoenyPlacedId.id == MoneyPalcedEnum.Delivered) {
-          if (o.order.isClientDiliverdMoney) {
-            o.order.monePlaced = this.MoenyPlaced.find(m => m.id == MoneyPalcedEnum.Delivered)
-          }
-          else {
-            o.order.monePlaced = this.MoenyPlaced.find(m => m.id == MoneyPalcedEnum.InsideCompany)
-          }
-        }
-
-
-      })
-
-    }
-  }
-
-  GetorderPlace() {
-    this.orderservice.orderPlace().subscribe(res => {
-      this.orderPlace = res
-      this.orderPlace = this.orderPlace.filter(o => o.id != OrderplacedEnum.Client && o.id != OrderplacedEnum.Store)
-    })
-  }
-  changeOrderPlaced() {
-    if (this.getorders.length != 0) {
-      this.getorders.forEach(o => {
-        o.order.orderplaced = { ...this.OrderplacedId }
-        this.ChangeOrderplacedId(o, this.getorders.indexOf(o))
-      })
-      this.MoenyPlacedId = null
-      this.getMoenyPlaced = [...this.getorders[0].MoenyPlaced]
-      if (this.OrderplacedId.id == OrderplacedEnum.Delivered)
-        this.getMoenyPlaced = [{ id: MoneyPalcedEnum.WithAgent, name: "مندوب" }, { id: MoneyPalcedEnum.Delivered, name: "تم تسليمها/داخل الشركة" }]
-
-    }
-
-  }
-
   showcount = false
   findorder
-  // Ordersfilter: any[] = []
   addOrder() {
     this.showTable = false
     if (!this.ClientId) {
@@ -156,18 +84,7 @@ export class OrderInCompanyComponent implements OnInit {
 
   }
   addOrders() {
-
     this.getorder.order = { ...this.findorder }
-    this.getorder.MoenyPlaced = [...this.MoenyPlaced]
-    this.getorder.OrderPlaced = [...this.orderPlace]
-    // this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced)
-    // this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced)
-    // this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced)
-    // this.orderplacedstate.unacceptable(this.getorder, this.MoenyPlaced)
-    // this.orderplacedstate.isClientDiliverdMoney(this.getorder, this.MoenyPlaced)
-    // if (this.getorder.order.orderplaced.id == 1 || this.getorder.order.orderplaced.id == 2) {
-    //   this.getorder.order.orderplaced = this.getorder.OrderPlaced.find(o => o.id == 3)
-    // }
     if (this.getorders.filter(o => o.order.code == this.getorder.order.code && o.order.client.id == this.getorder.order.client.id).length > 0) {
       this.notifications.create("error", "الشحنة مضافة مسبقا", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       return
@@ -176,7 +93,6 @@ export class OrderInCompanyComponent implements OnInit {
       this.getorder.canEditCount = false
     else
       this.getorder.canEditCount = true
-
     this.getorders.push({ ...this.getorder })
     this.temporders.push({ ...this.getorder })
     this.sumCost()
@@ -184,50 +100,22 @@ export class OrderInCompanyComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.getorders)
     this.totalCount = this.dataSource.data.length
     this.temporderscost = Object.assign({}, this.getorders.map(o => o.order.cost));
-    this.tempordersmonePlaced = Object.assign({}, this.getorders.map(o => o.order.monePlaced));
-    this.tempisClientDiliverdMoney = Object.assign({}, this.getorders.map(o => o.order.isClientDiliverdMoney));
     this.Code = ""
     this.getorder = new GetOrder
   }
   showTable: boolean = false
 
-  ChangeOrderplacedId(element, index) {
-    // this.GetMoenyPlaced()
-    this.getmony()
-    this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
-    this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced)
-    this.orderplacedstate.onWay(element, this.MoenyPlaced)
-    this.orderplacedstate.unacceptable(element, this.MoenyPlaced)
-    this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
-  }
 
-  changeCost(element, index) {
-    element.canEditCount = true
+  changeCost(element) {
     element.order.cost = element.order.cost * 1
     this.sumCost()
-
-    // if (this.orderplacedstate.rangeCost(element, this.temporderscost[index])) {
-    //   element.messageCost = ""
-    // } else
-    //   element.messageCost = " الكلفة لايمكن أن تتجاوز " + this.temporderscost[index]
   }
-  // switchPage(event: PageEvent) {
-  //   this.paging.allItemsLength = event.length
-  //   this.paging.RowCount = event.pageSize
-  //   this.paging.Page = event.pageIndex + 1
-  //   this.allFilter();
-  // }
-
   count = 0
-
-  deliveryCostCount
   sumCost() {
     this.count = 0
-    this.deliveryCostCount = 0
     if (this.getorders)
       this.getorders.forEach(o => {
         this.count += o.order.cost
-        this.deliveryCostCount += o.order.deliveryCost
       })
     return this.count
   }
