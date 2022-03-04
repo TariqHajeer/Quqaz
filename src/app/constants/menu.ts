@@ -291,13 +291,7 @@ const data: IMenuItem[] = [
       },
     ],
   },
-  //payment tab paymentrequest
-  {
-    icon: 'iconsminds-basket-coins',
-    label: 'طرق الدفع',
-    to: `${adminRoot}/payment`,
-    permission: [UserPermission.ShowIncome]
-  },
+
   //income tab
   {
     icon: 'iconsminds-inbox-into',
@@ -375,7 +369,13 @@ const data: IMenuItem[] = [
         label: 'المجموعات',
         to: `${adminRoot}/setting/group`,
         permission: [UserPermission.ShowGroup, UserPermission.AddGroup]
-      }
+      },
+      {
+        icon: 'iconsminds-basket-coins',
+        label: 'طرق الدفع',
+        to: `${adminRoot}/payment`,
+        permission: [UserPermission.ShowIncome]
+      },
     ]
   },
 
