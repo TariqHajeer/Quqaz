@@ -89,7 +89,8 @@ export class OrderInCompanyComponent implements OnInit {
       this.notifications.create("error", "الشحنة مضافة مسبقا", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       return
     }
-    if (this.getorder.order.orderplaced.id == OrderplacedEnum.PartialReturned || this.getorder.order.orderplaced.id == OrderplacedEnum.Delivered)
+    if (this.getorder.order.orderplaced.id == OrderplacedEnum.PartialReturned || this.getorder.order.orderplaced.id == OrderplacedEnum.Delivered
+      || this.getorder.order.orderplaced.id == OrderplacedEnum.Way)
       this.getorder.canEditCount = false
     else
       this.getorder.canEditCount = true
