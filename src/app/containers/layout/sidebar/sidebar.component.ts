@@ -40,7 +40,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   ) {
     this.currentUserPermissions = this.userlogin.privileges;
-    console.log(this.currentUserPermissions)
     if (this.userlogin.policy == "Employee")
       this.menuItems = menuItems
     else
