@@ -5,14 +5,11 @@ import { OrderService } from 'src/app/services/order.service';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { UserService } from 'src/app/services/user.service';
 import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed-state.service';
-import { User } from 'src/app/Models/user/user.model';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { Router } from '@angular/router';
-import { OrderState } from 'src/app/Models/order/order.model';
 import { ClientService } from '../../client/client.service';
 import { Client } from '../../client/client.model';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
-import { MoneyPalcedEnum } from 'src/app/Models/Enums/MoneyPalcedEnum';
 @Component({
   selector: 'app-order-in-company',
   templateUrl: './order-in-company.component.html',
