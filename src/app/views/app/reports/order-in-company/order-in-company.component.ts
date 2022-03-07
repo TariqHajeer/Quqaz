@@ -20,8 +20,8 @@ import { MoneyPalcedEnum } from 'src/app/Models/Enums/MoneyPalcedEnum';
 })
 export class OrderInCompanyComponent implements OnInit {
 
-  displayedColumns: string[] = ['index', 'code', 'country', 'region'
-    , 'cost', 'orderplaced', 'monePlaced', 'edit'];
+  displayedColumns: string[] = [ 'code', 'agent', 'oldCost', 'cost',  'clientCost', 'country', 'region'
+  , 'monePlaced', 'orderplaced', 'date', 'agentPrintNumber', 'clientPrintNumber', 'note', 'isClientDiliverdMoney'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
   Code
