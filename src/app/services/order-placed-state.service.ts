@@ -25,9 +25,9 @@ export class OrderPlacedStateService {
       || element.order.orderplaced.id == OrderplacedEnum.Delivered) {
       element.canEditCount = false
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent || m.id == MoneyPalcedEnum.InsideCompany)]
-      if (element.MoenyPlaced.filter(o => o .id== element.order.monePlaced.id).length > 0)
-        element.order.monePlaced =element.order.monePlaced
-        else element.order.monePlaced ={ ...element.MoenyPlaced[0] }
+      if (element.MoenyPlaced.filter(o => o.id == element.order.monePlaced.id).length > 0)
+        element.order.monePlaced = element.order.monePlaced
+      else element.order.monePlaced = { ...element.MoenyPlaced[0] }
     } else {
       if (temporderscostindex) {
         element.order.cost = Object.assign(temporderscostindex, temporderscostindex);
@@ -63,8 +63,7 @@ export class OrderPlacedStateService {
       element.messageCost = ""
       //element.order.orderplaced = element.OrderPlaced[1]
     }
-    if (element.order.isClientDiliverdMoney == true && (element.order.orderplaced.id == OrderplacedEnum.PartialReturned
-      || element.order.orderplaced.id == OrderplacedEnum.Unacceptable
+    if (element.order.isClientDiliverdMoney == true && (element.order.orderplaced.id == OrderplacedEnum.Unacceptable
       || element.order.orderplaced.id == OrderplacedEnum.CompletelyReturned)) {
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.InsideCompany)]
       element.order.monePlaced = { ...element.MoenyPlaced[0] }
