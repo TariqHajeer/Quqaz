@@ -18,7 +18,7 @@ import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 export class OrderInCompanyComponent implements OnInit {
 
   displayedColumns: string[] = [ 'code', 'agent', 'oldCost', 'cost',  'clientCost', 'country', 'region'
-  , 'monePlaced', 'orderplaced', 'date', 'agentPrintNumber', 'clientPrintNumber', 'note', 'isClientDiliverdMoney'];
+  , 'monePlaced', 'orderplaced', 'date', 'agentPrintNumber', 'clientPrintNumber', 'note', 'isClientDiliverdMoney','edit'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
   Code
