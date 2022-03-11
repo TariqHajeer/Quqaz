@@ -18,7 +18,7 @@ import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 export class OrderInCompanyComponent implements OnInit {
 
   displayedColumns: string[] = [ 'code', 'agent', 'oldCost', 'cost',  'clientCost', 'country', 'region'
-  , 'monePlaced', 'orderplaced', 'date', 'agentPrintNumber', 'clientPrintNumber', 'note', 'isClientDiliverdMoney'];
+  , 'monePlaced', 'orderplaced', 'date', 'agentPrintNumber', 'clientPrintNumber', 'note', 'isClientDiliverdMoney','edit'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
   Code
@@ -91,8 +91,8 @@ export class OrderInCompanyComponent implements OnInit {
       this.getorder.canEditCount = false
     else
       this.getorder.canEditCount = true
-    this.getorders.push({ ...this.getorder })
-    this.temporders.push({ ...this.getorder })
+    this.getorders.unshift({ ...this.getorder })
+    this.temporders.unshift({ ...this.getorder })
     this.sumCost()
     this.showcount = true
     this.dataSource = new MatTableDataSource(this.getorders)
