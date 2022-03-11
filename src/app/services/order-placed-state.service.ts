@@ -57,7 +57,8 @@ export class OrderPlacedStateService {
     return element
   }
   isClientDiliverdMoney(element, MoenyPlaced) {
-    if (element.order.isClientDiliverdMoney == true && element.order.orderplaced.id == OrderplacedEnum.Delivered) {
+    if (element.order.isClientDiliverdMoney == true && (element.order.orderplaced.id == OrderplacedEnum.Delivered||
+      element.order.orderplaced.id == OrderplacedEnum.PartialReturned)) {
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent || m.id == MoneyPalcedEnum.Delivered)]
       element.order.monePlaced = { ...element.MoenyPlaced[0] }
       element.messageCost = ""
