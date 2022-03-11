@@ -91,8 +91,8 @@ export class OrderInCompanyComponent implements OnInit {
       this.getorder.canEditCount = false
     else
       this.getorder.canEditCount = true
-    this.getorders.push({ ...this.getorder })
-    this.temporders.push({ ...this.getorder })
+    this.getorders.unshift({ ...this.getorder })
+    this.temporders.unshift({ ...this.getorder })
     this.sumCost()
     this.showcount = true
     this.dataSource = new MatTableDataSource(this.getorders)
