@@ -30,6 +30,8 @@ export class PaymentComponent implements OnInit {
       return
     }
     this.paymentService.Add(this.payment).subscribe(res => {
+      this.dataSource.data.push(this.payment);
+      this.dataSource._updateChangeSubscription();
       this.payment = new NameAndIdDto
       this.notifications.create('success', 'تمت الاضافة  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 

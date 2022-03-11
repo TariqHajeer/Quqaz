@@ -260,7 +260,7 @@ export class OrderService {
     return this.http.get(this.controler + "OrderVicdanAgent/" + AgentId)
   }
   OrderInCompany(ClientId, code) {
-    return this.http.get(this.controler + "OrderInCompany/" + ClientId + "/" + code)
+    return this.http.get(this.controler + "GetOrderForPayBy/" + ClientId + "/" + code)
   }
   DeleiverMoneyForClientWithStatus(ids) {
     return this.http.put<any>(this.controler + "DeleiverMoneyForClientWithStatus", ids)
