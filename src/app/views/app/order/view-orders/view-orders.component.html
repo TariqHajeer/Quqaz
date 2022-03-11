@@ -13,21 +13,24 @@
     <div class="row">
       <div class="col-md-2">
         <label> المدينة</label>
-        <ng-select [(ngModel)]="filtering.CountryId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
+        <ng-select [(ngModel)]="filtering.CountryId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+        (keyup.enter)="allFilter()">
           <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}
           </ng-option>
         </ng-select>
       </div>
       <div class="col-md-2">
         <label>المنطقة</label>
-        <ng-select [(ngModel)]="filtering.RegionId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
+        <ng-select [(ngModel)]="filtering.RegionId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+        (keyup.enter)="allFilter()">
           <ng-option *ngFor="let region of Region" [value]="region.id">{{region.name}}</ng-option>
         </ng-select>
 
       </div>
       <div class="col-md-2">
         <label> العميل</label>
-        <ng-select [(ngModel)]="filtering.ClientId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
+        <ng-select [(ngModel)]="filtering.ClientId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+        (keyup.enter)="allFilter()">
           <ng-option *ngFor="let client of clients" [value]="client.id">{{client.name}}
           </ng-option>
         </ng-select>
@@ -36,7 +39,8 @@
       </div>
       <div class="col-md-2">
         <label> المندوب</label>
-        <ng-select [(ngModel)]="filtering.AgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
+        <ng-select [(ngModel)]="filtering.AgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+        (keyup.enter)="allFilter()">
           <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}
           </ng-option>
         </ng-select>
@@ -45,7 +49,8 @@
       </div>
       <div class="col-md-2">
         <label> موقع المبلغ</label>
-        <ng-select [(ngModel)]="filtering.MonePlacedId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
+        <ng-select [(ngModel)]="filtering.MonePlacedId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+        (keyup.enter)="allFilter()">
           <ng-option *ngFor="let moenyPlaced of MoenyPlaced" [value]="moenyPlaced.id">{{moenyPlaced.name}}
           </ng-option>
         </ng-select>
@@ -53,7 +58,8 @@
       </div>
       <div class="col-md-2">
         <label>حالة الشحنة</label>
-        <ng-select [(ngModel)]="filtering.OrderplacedId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
+        <ng-select [(ngModel)]="filtering.OrderplacedId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+        (keyup.enter)="allFilter()">
           <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}
           </ng-option>
         </ng-select>
@@ -63,32 +69,35 @@
     <div class="row">
       <div class="col-md-2">
         <label>كود</label>
-        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Code">
+        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Code"
+        (keyup.enter)="allFilter()">
       </div>
       <div class="col-md-2">
         <label>الهاتف</label>
 
-        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Phone">
+        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Phone"
+        (keyup.enter)="allFilter()">
       </div>
       <div class="col-md-2">
         <label>اسم المستلم</label>
         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-          [(ngModel)]="filtering.RecipientName">
+          [(ngModel)]="filtering.RecipientName"(keyup.enter)="allFilter()">
 
       </div>
       <div class="col-md-2">
         <label>اخر رقم طباعة للمندوب</label>
         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-          [(ngModel)]="filtering.AgentPrintNumber">
+          [(ngModel)]="filtering.AgentPrintNumber"(keyup.enter)="allFilter()">
       </div>
       <div class="col-md-2">
         <label>اخر رقم طباعة للعميل</label>
         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-          [(ngModel)]="filtering.ClientPrintNumber">
+          [(ngModel)]="filtering.ClientPrintNumber"(keyup.enter)="allFilter()">
       </div>
       <div class="col-md-8">
         <label> ملاحظات</label>
-        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Note">
+        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Note"
+        (keyup.enter)="allFilter()">
       </div>
       <div class="col-md-4">
         <button type="button" class="btn btn-primary" style="margin-top: 7%;"
