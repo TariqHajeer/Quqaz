@@ -54,6 +54,7 @@ export enum UserPermission {
   ShowReports="ShowReports",
   PrintClient="PrintClient",
   PrintAgent="PrintAgent",
+  Pay="Pay"
 
 
 }
