@@ -15,6 +15,9 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import menuItems, { agentmenu, IMenuItem } from 'src/app/constants/menu';
+import { SignalRService } from 'src/app/services/signal-r.service';
+
 
 @Component({
   selector: 'app-view-new-order',
@@ -33,7 +36,8 @@ export class ViewNewOrderComponent implements OnInit {
     private clientService: ClientService
     , private customerService: CustomService,
     private notifications: NotificationsService,
-    private route: Router
+    private route: Router,
+    private signalRService: SignalRService
   ) { }
   @ViewChild('infoModal') public infoModal: ModalDirective;
   selection = new SelectionModel<any>(true, []);
@@ -104,7 +108,7 @@ export class ViewNewOrderComponent implements OnInit {
   AgentId
   Agents: User[] = []
   IdsDto: IdsDto = new IdsDto
-  Ids: IdsDto[]=[];
+  Ids: IdsDto[] = [];
   MultiAgent(order) {
     this.order = order
     // console.log(order)
@@ -124,6 +128,7 @@ export class ViewNewOrderComponent implements OnInit {
     else
       this.OrderService.Accept(this.IdsDto).subscribe(res => {
         // this.print(i)
+        this.signalRService.AdminNotification.newOrdersCount--;
         this.IdsDto = new IdsDto
         this.AgentId = null
         this.get()
@@ -135,29 +140,30 @@ export class ViewNewOrderComponent implements OnInit {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    this.selectOrders=this.selectOrders.filter(o=>o.country.agnets.length == 1)
-    this.selectOrders.forEach(item=>{
-      this.IdsDto.AgentId=item.country.agnets[0].id
-      this.IdsDto.OrderId=item.id
+    this.selectOrders = this.selectOrders.filter(o => o.country.agnets.length == 1)
+    this.selectOrders.forEach(item => {
+      this.IdsDto.AgentId = item.country.agnets[0].id
+      this.IdsDto.OrderId = item.id
       this.Ids.push(this.IdsDto)
-      this.IdsDto=new IdsDto
+      this.IdsDto = new IdsDto
     })
-    this.OrderService.Acceptmultiple(this.Ids).subscribe(res=>{
+    this.OrderService.Acceptmultiple(this.Ids).subscribe(res => {
+      this.signalRService.AdminNotification.newOrdersCount-=this.selectOrders.length;
       this.get()
-      this.selectOrders=[]
+      this.selectOrders = []
       this.notifications.create('success', '  تم القبول بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 
     })
   }
   DisAcceptAll() {
-    this.dateWithIds=new DateWithIds
-   this.dateWithIds.Date=moment().format()
-   this.dateWithIds.Ids=this.selectOrders.map(o=>o.id)
-    this.OrderService.DisAcceptmultiple(this.dateWithIds).subscribe(res=>{
+    this.dateWithIds = new DateWithIds
+    this.dateWithIds.Date = moment().format()
+    this.dateWithIds.Ids = this.selectOrders.map(o => o.id)
+    this.OrderService.DisAcceptmultiple(this.dateWithIds).subscribe(res => {
       this.get()
-      this.selectOrders=[]
+      this.signalRService.AdminNotification.newOrdersCount-=this.selectOrders.length;
+      this.selectOrders = []
       this.notifications.create('success', '  تم الرفض بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-
     })
   }
   printAll() {
@@ -165,12 +171,12 @@ export class ViewNewOrderComponent implements OnInit {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    this.OrderService.AddPrintNumberMultiple(this.selectOrders.map(o=>o.id)).subscribe(res => {
+    this.OrderService.AddPrintNumberMultiple(this.selectOrders.map(o => o.id)).subscribe(res => {
       // console.log(res)
       this.dataSource.data.forEach(element => {
-        this.selectOrders.forEach(order=>{
-          if(element.id==order.id)
-          element.printedTimes += 1
+        this.selectOrders.forEach(order => {
+          if (element.id == order.id)
+            element.printedTimes += 1
         })
       });
     })
@@ -200,7 +206,7 @@ export class ViewNewOrderComponent implements OnInit {
     this.dateWithId = new DateWithIds
     this.dateWithId.Ids = elementid
     this.dateWithId.Date = moment().format()
-    // this.dateWithId.Ids.push(elementid)
+    this.signalRService.AdminNotification.newOrdersCount--;
     this.OrderService.DisAccept(this.dateWithId).subscribe(res => {
       this.orders = this.orders.filter(o => o.id != elementid)
       this.dataSource = new MatTableDataSource(this.orders);

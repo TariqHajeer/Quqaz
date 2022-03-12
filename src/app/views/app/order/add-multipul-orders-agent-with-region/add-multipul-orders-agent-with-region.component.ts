@@ -97,7 +97,7 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
           var findcountry = this.cities.find(c => c.id == this.CountryId)
           if (findcountry) {
             this.Order.DeliveryCost = findcountry.deliveryCost
-            this.regions = findcountry.regions
+            this.getRegions()
           }
         }
 
@@ -114,9 +114,16 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
     localStorage.setItem('countryid', this.CountryId)
     var city = this.cities.find(c => c.id == this.CountryId)
     this.Order.DeliveryCost = city.deliveryCost
-    this.regions = city.regions
+    this.getRegions()
   }
-
+  getRegions() {
+    this.customService.getAll('Region').subscribe(
+      res => {
+        this.regions = res;
+        this.regions=this.regions.filter(a=>a.country.id==this.CountryId)
+      }
+    )
+  }
   showMessageCode: boolean = false
   CheckCode() {
     if (!this.Order.Code || !this.Order.ClientId) return

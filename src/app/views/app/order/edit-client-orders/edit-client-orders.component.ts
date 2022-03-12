@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ClientService } from '../../client/client.service';
 import { Client } from '../../client/client.model';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
+import { SignalRService } from 'src/app/services/signal-r.service';
 @Component({
   selector: 'app-edit-client-orders',
   templateUrl: './edit-client-orders.component.html',
@@ -17,7 +18,8 @@ export class EditClientOrdersComponent implements OnInit {
 
   constructor(private editrequestService: EditRequestService,
     private clientService: ClientService,
-    private notifications: NotificationsService,) { }
+    private notifications: NotificationsService,
+    private signalRService: SignalRService) { }
 
   ngOnInit(): void {
     this.Get()
@@ -62,11 +64,13 @@ export class EditClientOrdersComponent implements OnInit {
     if(  this.nameIsRepeated||  this.usernameIsRepeated)return
     else
     this.editrequestService.Accpet(element.id).subscribe(res => {
+      this.signalRService.AdminNotification.newEditRquests--;
      this.Get()
     })
   }
   DisAccpet(id) {
     this.editrequestService.DisAccpet(id).subscribe(res => {
+      this.signalRService.AdminNotification.newEditRquests--;
       this.Get()
     })
   }

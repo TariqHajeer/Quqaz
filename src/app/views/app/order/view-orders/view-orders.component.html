@@ -1,331 +1,335 @@
-<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff"
- type = "ball-pulse" [fullScreen] = "true">
-    <p style="color: white" > </p>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-pulse" [fullScreen]="true">
+  <p style="color: white"> </p>
 </ngx-spinner>
 <div class="card">
-    <div class="card-body">
-        <div class="d-flex justify-content-between">
-            <h3 >الطلبات</h3>
-            <button class="btn  mb-3" (click)="AddOrder()"><i class="iconsminds-add  text-primary" style="font-size: 38px;"></i></button>
-        </div>
+  <div class="card-body">
+    <div class="d-flex justify-content-between">
+      <h3>الطلبات</h3>
+      <button class="btn  mb-3" (click)="AddOrder()"><i class="iconsminds-add  text-primary"
+          style="font-size: 38px;"></i></button>
+    </div>
 
-        <h5 class="card-title">بحث على حسب : </h5>
-        <div class="row">
-          <div class="col-md-2">
-            <label> المدينة</label>
-            <ng-select [(ngModel)]="filtering.CountryId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-            (ngModelChange)="allFilter()">
-              <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}
-              </ng-option>
-            </ng-select>
-          </div>
-          <div class="col-md-2">
-            <label>المنطقة</label>
-            <ng-select [(ngModel)]="filtering.RegionId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-            (ngModelChange)="allFilter()">
-              <ng-option *ngFor="let region of Region" [value]="region.id">{{region.name}}</ng-option>
-            </ng-select>
-  
-          </div>
-          <div class="col-md-2">
-            <label> العميل</label>
-            <ng-select [(ngModel)]="filtering.ClientId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-            (ngModelChange)="allFilter()">
-              <ng-option *ngFor="let client of clients" [value]="client.id">{{client.name}}
-              </ng-option>
-            </ng-select>
-           
-  
-          </div>
-          <div class="col-md-2">
-            <label> المندوب</label>
-            <ng-select [(ngModel)]="filtering.AgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-            (ngModelChange)="allFilter()">
-              <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}
-              </ng-option>
-            </ng-select>
-           
-  
-          </div>
-          <div class="col-md-2">
-            <label> موقع المبلغ</label>
-            <ng-select [(ngModel)]="filtering.MonePlacedId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-            (ngModelChange)="allFilter()">
-              <ng-option *ngFor="let moenyPlaced of MoenyPlaced" [value]="moenyPlaced.id">{{moenyPlaced.name}}
-              </ng-option>
-            </ng-select>
-  
-          </div>
-          <div class="col-md-2">
-            <label>حالة الشحنة</label>
-            <ng-select [(ngModel)]="filtering.OrderplacedId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-            (ngModelChange)="allFilter()">
-              <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}
-              </ng-option>
-            </ng-select>
-          </div>
-       
-        </div>
-        <div class="row">
-          <div class="col-md-2">
-            <label>كود</label>
-            <input type="text" 
-            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Code"
-            (ngModelChange)="allFilter()">
-          </div>
-          <div class="col-md-2">
-            <label>الهاتف</label>
-            
-            <input type="text" 
-            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Phone"
-            (ngModelChange)="allFilter()">
-          </div>
-          <div class="col-md-2">
-            <label>اسم المستلم</label>
-            <input type="text" 
-            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.RecipientName"
-            (ngModelChange)="allFilter()">
-  
-          </div>
-          <div class="col-md-2">
-            <label>اخر رقم طباعة للمندوب</label>
-            <input type="text" 
-            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.AgentPrintNumber"
-            (ngModelChange)="allFilter()">
-          </div>
-          <div class="col-md-2">
-            <label>اخر رقم طباعة للعميل</label>
-            <input type="text" 
-            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.ClientPrintNumber"
-            (ngModelChange)="allFilter()">
-          </div>
-          <div class="col-md-12">
-            <label> ملاحظات</label>
-            <input type="text" 
-            class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Note"
-            (ngModelChange)="allFilter()">
-  
-          </div>
-        </div>
-       </div>
+    <h5 class="card-title">بحث على حسب : </h5>
+    <div class="row">
+      <div class="col-md-2">
+        <label> المدينة</label>
+        <ng-select [(ngModel)]="filtering.CountryId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+        (keyup.enter)="allFilter()">
+          <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}
+          </ng-option>
+        </ng-select>
+      </div>
+      <div class="col-md-2">
+        <label>المنطقة</label>
+        <ng-select [(ngModel)]="filtering.RegionId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+        (keyup.enter)="allFilter()">
+          <ng-option *ngFor="let region of Region" [value]="region.id">{{region.name}}</ng-option>
+        </ng-select>
+
+      </div>
+      <div class="col-md-2">
+        <label> العميل</label>
+        <ng-select [(ngModel)]="filtering.ClientId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+        (keyup.enter)="allFilter()">
+          <ng-option *ngFor="let client of clients" [value]="client.id">{{client.name}}
+          </ng-option>
+        </ng-select>
+
+
+      </div>
+      <div class="col-md-2">
+        <label> المندوب</label>
+        <ng-select [(ngModel)]="filtering.AgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+        (keyup.enter)="allFilter()">
+          <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}
+          </ng-option>
+        </ng-select>
+
+
+      </div>
+      <div class="col-md-2">
+        <label> موقع المبلغ</label>
+        <ng-select [(ngModel)]="filtering.MonePlacedId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+        (keyup.enter)="allFilter()">
+          <ng-option *ngFor="let moenyPlaced of MoenyPlaced" [value]="moenyPlaced.id">{{moenyPlaced.name}}
+          </ng-option>
+        </ng-select>
+
+      </div>
+      <div class="col-md-2">
+        <label>حالة الشحنة</label>
+        <ng-select [(ngModel)]="filtering.OrderplacedId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+        (keyup.enter)="allFilter()">
+          <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}
+          </ng-option>
+        </ng-select>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <label>كود</label>
+        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Code"
+        (keyup.enter)="allFilter()">
+      </div>
+      <div class="col-md-2">
+        <label>الهاتف</label>
+
+        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Phone"
+        (keyup.enter)="allFilter()">
+      </div>
+      <div class="col-md-2">
+        <label>اسم المستلم</label>
+        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+          [(ngModel)]="filtering.RecipientName"(keyup.enter)="allFilter()">
+
+      </div>
+      <div class="col-md-2">
+        <label>اخر رقم طباعة للمندوب</label>
+        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+          [(ngModel)]="filtering.AgentPrintNumber"(keyup.enter)="allFilter()">
+      </div>
+      <div class="col-md-2">
+        <label>اخر رقم طباعة للعميل</label>
+        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+          [(ngModel)]="filtering.ClientPrintNumber"(keyup.enter)="allFilter()">
+      </div>
+      <div class="col-md-8">
+        <label> ملاحظات</label>
+        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Note"
+        (keyup.enter)="allFilter()">
+      </div>
+      <div class="col-md-4">
+        <button type="button" class="btn btn-primary" style="margin-top: 7%;"
+        (click)="allFilter()">بحث</button>
+      </div>
+    </div>
+  </div>
 </div>
 <br>
-<div class="example-container mat-elevation-z8" >
+<div class="example-container mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort (onPageSwitch)="switchPage($event)">
-  
-  <ng-container matColumnDef="code">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> كود </th>
-    <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.code}}</td>
-  </ng-container>
-  <ng-container matColumnDef="deliveryCost">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> تكلفة التوصيل</th>
-    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.deliveryCost}}</td>
-  </ng-container>
-  <ng-container matColumnDef="cost">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> كلفة الطلب</th>
-    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.cost}}</td>
-  </ng-container>
-  <ng-container matColumnDef="oldCost">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>  الكلفة القديمة</th>
-    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.oldCost}}</td>
-  </ng-container>
-  <ng-container matColumnDef="recipientName">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> اسم المستلم</th>
-    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.recipientName}}</td>
-  </ng-container>
-  
-  
-  <ng-container matColumnDef="recipientPhones">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 30px;"> رقم المستلم</th>
-    <td mat-cell *matCellDef="let element"style="width: 100px;padding:10px;"> {{element.recipientPhones}}</td>
-  </ng-container>
- 
-  <ng-container matColumnDef="client">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> اسم العميل</th>
-    <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.client!=null?element.client.name:null}}</td>
-  </ng-container>
-  <ng-container matColumnDef="clientPrintNumber">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> اخر رقم طباعة للعميل</th>
-    <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.clientPrintNumber}}</td>
-  </ng-container>
-  <ng-container matColumnDef="country">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> المدينة</th>
-    <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.country!=null?element.country.name:null}}</td>
-  </ng-container>
-  <ng-container matColumnDef="region">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> المنطقة</th>
-    <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.region!=null?element.region.name:null}}</td>
-  </ng-container>
-  <ng-container matColumnDef="agent">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> المندوب</th>
-    <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.agent!=null?element.agent.name:null}}</td>
-  </ng-container>
-  <ng-container matColumnDef="agentPrintNumber">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> اخر رقم طباعة للمندوب</th>
-    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.agentPrintNumber}}</td>
-  </ng-container>
 
-  
-  <ng-container matColumnDef="monePlaced">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> موقع المبلغ</th>
-    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.monePlaced!=null?element.monePlaced.name:null}}</td>
-  </ng-container>
-  <ng-container matColumnDef="orderplaced">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> حالة الشحنة</th>
-    <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.orderplaced!=null?element.orderplaced.name:null}}</td>
-  </ng-container>
- 
-  <ng-container matColumnDef="address">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> العنوان</th>
-    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.address}}</td>
-  </ng-container>
-  <ng-container matColumnDef="createdBy">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> بواسطه</th>
-    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.createdBy}}</td>
-  </ng-container>
-  <ng-container matColumnDef="date">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> التاريخ</th>
-    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.date| date: 'yyyy/MM/dd'}}</td>
-  </ng-container>
-  
-  
-  <ng-container matColumnDef="diliveryDate" >
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> تاريخ التوصيل</th>
-    <td mat-cell *matCellDef="let element"style="padding:10px;"> {{element.diliveryDate| date: 'yyyy/MM/dd'}}</td>
-  </ng-container> 
-  <ng-container matColumnDef="note" >
-    <th mat-header-cell *matHeaderCellDef  style="padding:10px "> ملاحظات</th>
-    <td mat-cell *matCellDef="let element"style="padding:10px"> {{element.note}}</td>
-  </ng-container>
-  <ng-container matColumnDef="completelyReturn">
-    <th mat-header-cell *matHeaderCellDef>  </th>
-    <td mat-cell *matCellDef="let element"style="padding:10px;"> 
-      <button class="btn btn-primary btn-sm"*ngIf="element.orderplaced.id==2"data-toggle="modal"  data-target="#allmodel" >مرتجع كلي</button>
-      <div class="modal fade" id="allmodel"  role="dialog"
-      aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-          <div class="modal-content">
+    <ng-container matColumnDef="code">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> كود </th>
+      <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.code}}</td>
+    </ng-container>
+    <ng-container matColumnDef="deliveryCost">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> تكلفة التوصيل</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.deliveryCost}}</td>
+    </ng-container>
+    <ng-container matColumnDef="cost">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> كلفة الطلب</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.cost}}</td>
+    </ng-container>
+    <ng-container matColumnDef="oldCost">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> الكلفة القديمة</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.oldCost}}</td>
+    </ng-container>
+    <ng-container matColumnDef="recipientName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> اسم المستلم</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.recipientName}}</td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="recipientPhones">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 30px;"> رقم المستلم</th>
+      <td mat-cell *matCellDef="let element" style="width: 100px;padding:10px;"> {{element.recipientPhones}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="client">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> اسم العميل</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.client!=null?element.client.name:null}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="clientPrintNumber">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> اخر رقم طباعة للعميل</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.clientPrintNumber}}</td>
+    </ng-container>
+    <ng-container matColumnDef="country">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> المدينة</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.country!=null?element.country.name:null}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="region">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> المنطقة</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.region!=null?element.region.name:null}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="agent">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> المندوب</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.agent!=null?element.agent.name:null}}</td>
+    </ng-container>
+    <ng-container matColumnDef="agentPrintNumber">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> اخر رقم طباعة للمندوب</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.agentPrintNumber}}</td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="monePlaced">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> موقع المبلغ</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;">
+        {{element.monePlaced!=null?element.monePlaced.name:null}}</td>
+    </ng-container>
+    <ng-container matColumnDef="orderplaced">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> حالة الشحنة</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;">
+        {{element.orderplaced!=null?element.orderplaced.name:null}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="address">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> العنوان</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.address}}</td>
+    </ng-container>
+    <ng-container matColumnDef="createdBy">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> بواسطه</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.createdBy}}</td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> التاريخ</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.date| date: 'yyyy/MM/dd'}}</td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="diliveryDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> تاريخ التوصيل</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.diliveryDate| date: 'yyyy/MM/dd'}}</td>
+    </ng-container>
+    <ng-container matColumnDef="note">
+      <th mat-header-cell *matHeaderCellDef style="padding:10px "> ملاحظات</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px"> {{element.note}}</td>
+    </ng-container>
+    <ng-container matColumnDef="completelyReturn">
+      <th mat-header-cell *matHeaderCellDef> </th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;">
+        <button class="btn btn-primary btn-sm" *ngIf="element.orderplaced.id==2" data-toggle="modal"
+          data-target="#allmodel">مرتجع كلي</button>
+        <div class="modal fade" id="allmodel" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
               <div class="modal-header">
-                <h2 style="text-align: center;">تأكيد   </h2>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
+                <h2 style="text-align: center;">تأكيد </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
               </div>
               <div class="modal-body" style="text-align: center;">
-                <button type="button" class="btn btn-primary"  (click)="completelyReturn(element.id)" data-dismiss="modal">مرتجع كلي</button>&nbsp;
-                <button type="button" class="btn btn-primary"   data-dismiss="modal">الغاء</button>
+                <button type="button" class="btn btn-primary" (click)="completelyReturn(element.id)"
+                  data-dismiss="modal">مرتجع كلي</button>&nbsp;
+                <button type="button" class="btn btn-primary" data-dismiss="modal">الغاء</button>
               </div>
-              
-          </div>
-      </div>
-  </div>
-      <button class="btn btn-primary btn-sm"data-toggle="modal"  data-target="#resend"
-      *ngIf="element.orderplaced.id==5||element.orderplaced.id==7||element.orderplaced.id==8" (click)="fillResend(element)">اعادة ارسال </button>
 
-      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"id="resend" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#resend"
+          *ngIf="element.orderplaced.id==5||element.orderplaced.id==7||element.orderplaced.id==8"
+          (click)="fillResend(element)">اعادة ارسال </button>
+
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="resend"
+          aria-labelledby="myLargeModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
               <div class="modal-body">
-                  <div class="row ">
-                      <div class="col-md-3">
-                          <label>المدينة<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                          <ng-select [(ngModel)]="orderResend.CountryId" (change)="changeCountryResend()"
-                              [ngModelOptions]="{standalone: true}" [clearable]="false" name="Country">
-                              <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
-                          </ng-select>
-                      </div>
-      
-      
-                      <div class="col-md-3">
-                          <label>المنطقة</label>
-                          <ng-select [(ngModel)]="orderResend.RegionId" placeholder="اختر منطقة"
-                              [ngModelOptions]="{standalone: true}" [clearable]="false" name="Region" [addTag]="true">
-                              <ng-option *ngFor="let region of Regionsresend" [value]="region.id">{{region.name}}</ng-option>
-                          </ng-select>
-                      </div>
-                      <div class="col-md-3">
-                          <label>المندوب<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                          <ng-select [(ngModel)]="orderResend.AgnetId" [ngModelOptions]="{standalone: true}" [clearable]="false"
-                              name="Agent" placeholder="اختر مندوب" >
-                              <ng-option *ngFor="let Agent of Agentsresend" [value]="Agent.id">{{Agent.name}}</ng-option>
-                          </ng-select>
-                      </div>
-                      <div class="col-md-3">
-                          <label>كلفة التوصيل</label>
-                          <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                              oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                              [(ngModel)]="orderResend.DeliveryCost">
-                      </div>
+                <div class="row ">
+                  <div class="col-md-3">
+                    <label>المدينة<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <ng-select [(ngModel)]="orderResend.CountryId" (change)="changeCountryResend()"
+                      [ngModelOptions]="{standalone: true}" [clearable]="false" name="Country">
+                      <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
+                    </ng-select>
                   </div>
+
+
+                  <div class="col-md-3">
+                    <label>المنطقة</label>
+                    <ng-select [(ngModel)]="orderResend.RegionId" placeholder="اختر منطقة"
+                      [ngModelOptions]="{standalone: true}" [clearable]="false" name="Region" [addTag]="true">
+                      <ng-option *ngFor="let region of Regionsresend" [value]="region.id">{{region.name}}</ng-option>
+                    </ng-select>
+                  </div>
+                  <div class="col-md-3">
+                    <label>المندوب<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <ng-select [(ngModel)]="orderResend.AgnetId" [ngModelOptions]="{standalone: true}"
+                      [clearable]="false" name="Agent" placeholder="اختر مندوب">
+                      <ng-option *ngFor="let Agent of Agentsresend" [value]="Agent.id">{{Agent.name}}</ng-option>
+                    </ng-select>
+                  </div>
+                  <div class="col-md-3">
+                    <label>كلفة التوصيل</label>
+                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                      oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                      [(ngModel)]="orderResend.DeliveryCost">
+                  </div>
+                </div>
 
               </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" data-dismiss="modal"  (click)="Resend()">اعادة ارسال</button>&nbsp;
-                  <button type="button" class="btn btn-primary" data-dismiss="modal">اغلاق</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="Resend()">اعادة
+                  ارسال</button>&nbsp;
+                <button type="button" class="btn btn-primary" data-dismiss="modal">اغلاق</button>
 
               </div>
+            </div>
           </div>
         </div>
-      </div>
-    
-    </td>
-  </ng-container>
-  
-  <ng-container matColumnDef="Edit">
-    <th mat-header-cell *matHeaderCellDef>خيارات </th>
-    <td mat-cell *matCellDef="let element">
-      <abbr title="التعديل ممنوع لان الشحنة تم تسليمها" *ngIf="element.orderStateId==3">.</abbr>
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16"
-      (click)="Edit(element)"style="cursor: pointer;"[disabled]="element.orderStateId==3"
-      ><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-      </svg>  
-    </td>
-  </ng-container>
-  <ng-container matColumnDef="Delete">
-    <th mat-header-cell *matHeaderCellDef  style="padding: 10px;"> </th>
 
-    <td mat-cell *matCellDef="let element" style="padding: 10px;">
-      <svg (click)="getElement(element)"
-      data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"
-      xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-        class="bi bi-trash" viewBox="0 0 16 16" style="cursor: pointer;">
-        <path
-          d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-        <path fill-rule="evenodd"
-          d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-      </svg>
-     
+      </td>
+    </ng-container>
 
-  <div class="modal fade" id="exampleModal"  role="dialog"
-      aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-          <div class="modal-content">
+    <ng-container matColumnDef="Edit">
+      <th mat-header-cell *matHeaderCellDef>خيارات </th>
+      <td mat-cell *matCellDef="let element">
+        <abbr title="التعديل ممنوع لان الشحنة تم تسليمها" *ngIf="element.orderStateId==3">.</abbr>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil"
+          viewBox="0 0 16 16" (click)="Edit(element)" style="cursor: pointer;" [disabled]="element.orderStateId==3">
+          <path
+            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+        </svg>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="Delete">
+      <th mat-header-cell *matHeaderCellDef style="padding: 10px;"> </th>
+
+      <td mat-cell *matCellDef="let element" style="padding: 10px;">
+        <svg (click)="getElement(element)" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"
+          xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
+          viewBox="0 0 16 16" style="cursor: pointer;">
+          <path
+            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+          <path fill-rule="evenodd"
+            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+        </svg>
+
+
+        <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
               <div class="modal-header">
                 <h2 style="text-align: center;">التأكيد قبل الحذف </h2>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
               </div>
               <div class="modal-body" style="text-align: center;">
-                <button type="button" class="btn btn-primary"  (click)="delete()" data-dismiss="modal">حذف</button>&nbsp;
-                <button type="button" class="btn btn-primary"   data-dismiss="modal">الغاء</button>
+                <button type="button" class="btn btn-primary" (click)="delete()" data-dismiss="modal">حذف</button>&nbsp;
+                <button type="button" class="btn btn-primary" data-dismiss="modal">الغاء</button>
               </div>
-              
-          </div>
-      </div>
-  </div>
 
-    </td>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </div>
+          </div>
+        </div>
+
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   <simple-notifications></simple-notifications>
 
-  
-  <h5 style="padding-top: 20px; padding-right: 10px;"  *ngIf="noDataFound">  لايوجد بيانات للعرض</h5>
-  
-  </div>
-  <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
+
+  <h5 style="padding-top: 20px; padding-right: 10px;" *ngIf="noDataFound"> لايوجد بيانات للعرض</h5>
+
+</div>
+<mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
   [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
-  

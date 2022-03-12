@@ -32,5 +32,8 @@ export class StatisticsService {
   ClientBalance(){
    return this.http.get<any>(this.controler+"ClientBalance")
   }
+  Notification(){
+    return this.http.get<any>(this.controler+"Notification")
+  }
 }
 

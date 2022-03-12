@@ -81,7 +81,6 @@ export class EditUserComponent implements OnInit {
     this.User.password=""
     if(this.User.userName==null)
     this.User.userName=""
-    console.log(this.User)
     this.UserService.Update(this.User).subscribe(
       res => {
         this.spinner.hide()
@@ -94,7 +93,6 @@ export class EditUserComponent implements OnInit {
   }
   GetUserById() {
     this.UserService.GetById(this.id).subscribe(res => {
-      console.log(res)
       this.User = res
       this.User.countries=this.User.countries.map(c=>c.id)
       this.phones = this.User.phones

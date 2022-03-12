@@ -5,7 +5,7 @@ import { UserLogin } from 'src/app/Models/userlogin.model';
 import { PrintNumberOrder } from 'src/app/Models/order/PrintNumberOrder.model';
 import { OrderService } from 'src/app/services/order.service';
 import * as jspdf from 'jspdf';
-import { DateIdCost, IdCost } from 'src/app/Models/order/order.model';
+import { DateIdCost, DateWithId, IdCost } from 'src/app/Models/order/order.model';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { environment } from 'src/environments/environment.prod';
 import * as moment from 'moment';
@@ -37,7 +37,6 @@ export class PrintOrderInCompanyComponent implements OnInit {
   i = 0
   ngOnInit(): void {
     this.PrintNumberOrder = new PrintNumberOrder
-    this.IdCost = new IdCost
     this.orders = JSON.parse(localStorage.getItem('orderincompany'))
     this.orders=this.orders.sort((a,b)=>a.code-b.code)
     this.temporder = JSON.parse(localStorage.getItem('temporderincompany'))
@@ -46,12 +45,7 @@ export class PrintOrderInCompanyComponent implements OnInit {
       if (o.order.canEditCount == true)
         o.order.oldCost = this.temporder[this.i].order.cost
       this.i++
-      this.IdCost.Id = o.order.id
-      this.IdCost.Cost = o.order.cost
-      this.IdCost.PayForClient =this.payForCleint(o.order) 
-      this.IdCosts.push(this.IdCost)
-      this.IdCost = new IdCost
-
+      this.Ids.push(o.order.id)
     })
     this.sumCost()
     //  this.getPrintnumber()
@@ -100,12 +94,11 @@ export class PrintOrderInCompanyComponent implements OnInit {
   }
 
   showPrintbtn = false
-  IdCost: IdCost
-  IdCosts: IdCost[] = []
-  DateIdCost:DateIdCost=new DateIdCost
+  Ids: number[] = []
+  DateIdCost:DateWithId<number[]>=new DateWithId
   changeDeleiverMoneyForClient() {
     this.DateIdCost.Date=moment().format()
-    this.DateIdCost.IdCosts=this.IdCosts
+    this.DateIdCost.Ids=this.Ids
     // console.log(this.DateIdCost)
     this.orderservice.DeleiverMoneyForClientWithStatus(this.DateIdCost).subscribe(res => {
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
