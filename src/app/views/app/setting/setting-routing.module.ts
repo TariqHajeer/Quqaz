@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/auth.guard';
 import { UserPermission } from 'src/app/shared/auth.roles';
 import { CitiesComponent } from './cities/cities.component';
-import { DepartmentsComponent } from './departments/departments.component';
 import { ExportsTypesComponent } from './exports-types/exports-types.component';
 import { GroupsComponent } from './groups/groups.component';
 import { ImportsTypesComponent } from './imports-types/imports-types.component';
