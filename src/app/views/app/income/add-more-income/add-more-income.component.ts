@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActionEventArgs, EditSettingsModel, GridComponent, IEditCell, SaveEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { CustomService } from 'src/app/services/custom.service';
-import { Coin } from 'src/app/Models/Coins/coin.model';
 import { Query, DataManager } from '@syncfusion/ej2-data';
 import { Router } from '@angular/router';
 import { CreateIncome } from 'src/app/Models/inCome/create-income.model';
@@ -20,7 +19,6 @@ export class AddMoreIncomeComponent implements OnInit {
 
   submitted = false;
   Incomes: any[] = []
-  coins: Coin[];
   importTypes
   apiName = "Currency";
   public stTime: any;
@@ -33,7 +31,6 @@ export class AddMoreIncomeComponent implements OnInit {
   public gridInstance: GridComponent;
   public toolbar: Object[];
   public pageSettings: Object;
-  public coinsParams: IEditCell
   public importTypesParams: IEditCell
   public userTypesParams: IEditCell
   public inComeTypeDs: DataManager;
@@ -76,60 +73,21 @@ export class AddMoreIncomeComponent implements OnInit {
     this.pageSettings = { pageCount: 5 };
     this.selectionSettings = {  type: "Multiple" };
     this.lines = 'Horizontal';
-   // this.Getcoins()
-   // this.GetUsers()
   }
 
 
   addOrEditUser() {
     this.submitted = true;
   }
-  // Getcoins() {
-
-  //   this.customService.getAll("Currency").subscribe(res => {
-  //     this.coins = res;
-  //     this.coinsParams = {
-  //       params: {
-  //         allowFiltering: true,
-  //         dataSource: new DataManager(this.coins),
-  //         fields: { text: 'العملة', value: 'name' },
-  //         query: new Query(),
-  //         actionComplete: () => false
-  //       }
-  //     };
-  //   });
-  //   this.coinsParams = { params: { popupHeight: '300px' } };
-  // }
   getIncomeType() {
     this.customService.getAll('IncomeType').subscribe(
       res => {
         this.importTypes = res;
         this.inComeTypeDs =new DataManager()
         this.inComeTypeDs.dataSource.data=res as JSON
-        // this.importTypesParams = {
-        //   params: {
-        //     allowFiltering: true,
-        //     dataSource: new DataManager(this.importTypes),
-        //     fields: { text: 'نوع الواردات', value: 'name' },
-        //     query: new Query(),
-        //     actionComplete: () => false
-        //   }
-        // };
       }
     )
   }
-  // GetUsers(){
-  //   this.userservic.GetAll()
-  //   this.userTypesParams = {
-  //     params: {
-  //       allowFiltering: true,
-  //       dataSource: new DataManager(this.userservic.users),
-  //       fields: { text: 'الموظف', value: 'name' },
-  //       query: new Query(),
-  //       actionComplete: () => false
-  //     }
-  //   };
-  // }
 
   load() {
     const rowHeight: number = this.gridInstance.getRowHeight();  // height of the each row
@@ -144,15 +102,12 @@ export class AddMoreIncomeComponent implements OnInit {
 
     if (args.action == 'add') {
       if (args.requestType == "save") {
-       // args.data["date"] = new Date(args.data["data"]);
-        //     this.notifications.create('', 'تم التعديل', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+       
 
       }
     }
-  
 
     else if (args.requestType == "delete") {
-     // this.notifications.create('', 'تم الحذف', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
     }
   }
 

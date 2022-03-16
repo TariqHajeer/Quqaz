@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActionEventArgs, EditSettingsModel, GridComponent, IEditCell, SaveEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { CustomService } from 'src/app/services/custom.service';
-import { Coin } from 'src/app/Models/Coins/coin.model';
 import { CreateOutCome } from 'src/app/Models/OutCome/create-out-come.model';
 import { OutcomeService } from 'src/app/views/app/outcome/outcome.service';
 import { DropDownList } from '@syncfusion/ej2-dropdowns';
@@ -19,13 +18,10 @@ export class AddMoreOutcomeComponent implements OnInit {
   submitted = false;
   tempId: 1;
   public OutComes: CreateOutCome[] = []
-  coins: Object[] = [];
   exportTypes
-  apiName = "Currency";
-  coinsapi = environment.baseUrl + "api/Currency";
   OutComeTypeapi = environment.baseUrl + "api/OutComeType";
   public stTime: any;
-  public filter: Object;
+  public filter: Object
   public filterSettings: Object;
   public editSettings: EditSettingsModel;
   public selectionSettings: Object;
@@ -36,7 +32,6 @@ export class AddMoreOutcomeComponent implements OnInit {
   public pageSettings: Object;
   public gridDs: any;
   public outComeTypeDs: DataManager;
-  public coinDs: any;
   public dateFormatOptions: any = { type: 'date', format: 'dd/MM/yyyy' };
   public requiredValidation = { required: [true, "هذا الحقل مطلوب"] };
 
@@ -49,8 +44,6 @@ export class AddMoreOutcomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetOutComeType()
-    // this.Getcoins() 
-    // this.coinDs = new DataManager({url:this.coinsapi})
     this.editSettings = { showDeleteConfirmDialog: false, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
     this.toolbar = [
       { text: 'اضافة', tooltipText: 'اضافة', prefixIcon: 'e-add', id: 'normalgrid_add' },
@@ -89,11 +82,6 @@ export class AddMoreOutcomeComponent implements OnInit {
       if (args.requestType == "save") {
       }
     }
-    // else if (args.action == "edit") {
-    //   // this.notifications.create('', 'تم التعديل', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-
-    // }
-
     else if (args.requestType == "delete") {
       this.notifications.create('', 'تم الحذف', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
     }
@@ -123,11 +111,5 @@ export class AddMoreOutcomeComponent implements OnInit {
 
       }
     )
-  }
-  Getcoins() {
-    this.customService.getAll(this.apiName).subscribe(res => {
-      this.coins = res;
-      this.coinDs = res as object[]
-    });
   }
 }
