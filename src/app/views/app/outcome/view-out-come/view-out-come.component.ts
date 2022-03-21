@@ -4,7 +4,6 @@ import { Outcome } from '../outcome.model'
 import { OutcomeService } from '../outcome.service'
 import { Filtering } from 'src/app/Models/Filtering.model'
 import { CustomService } from 'src/app/services/custom.service';
-import { Coin } from 'src/app/Models/Coins/coin.model';
 import { UserService } from 'src/app/services/user.service';
 import { DatePipe } from '@angular/common';
 import { MatSort } from '@angular/material/sort';
@@ -26,7 +25,6 @@ export class ViewOutComeComponent implements OnInit {
   outcome: any;
   addClicked: any;
   filtering: Filtering
-  coins: Coin[];
   exportTypes: any[] = [];
   totalRecoreds: number;
   displayedColumns: string[] = ['outComeType', 'amount',  'date', 'reason', 'note',"createdBy", "Edit","Delete"];
@@ -44,7 +42,6 @@ export class ViewOutComeComponent implements OnInit {
     this.paging = new Paging
 
     this.filtering = new Filtering()
-    this.Getcoins()
     this.UserService.GetAll();
     this.getExportTypes()
     this.allFilter()
@@ -97,11 +94,6 @@ export class ViewOutComeComponent implements OnInit {
   }
   AddMoreOutcome() {
     this.router.navigate(['app/outcome/addmore'])
-  }
-  Getcoins() {
-    this.customService.getAll("Currency").subscribe(res => {
-      this.coins = res;
-    });
   }
   getExportTypes() {
     this.customService.getAll('OutComeType').subscribe(

@@ -5,7 +5,6 @@ import { Income } from '../income.model'
 import { IncomeService } from '../income.service'
 import { UserService } from 'src/app/services/user.service';
 import { Filtering } from 'src/app/Models/Filtering.model';
-import { Coin } from 'src/app/Models/Coins/coin.model';
 import { Router } from '@angular/router';
 import { CreateIncome } from 'src/app/Models/inCome/create-income.model';
 import { MatSort } from '@angular/material/sort';
@@ -30,7 +29,6 @@ export class ViewIncomComponent implements OnInit {
   Income: any;
   addClicked: any;
   filtering: Filtering
-  coins: Coin[] = [];
   importTypes: any[] = [];
 
   ///////////////
@@ -48,7 +46,6 @@ export class ViewIncomComponent implements OnInit {
     this.paging = new Paging
     this.filtering = new Filtering()
     this.getImportTypes()
-    this.Getcoins()
     this.UserService.GetAll();
     this.allFilter()
   }
@@ -85,11 +82,7 @@ export class ViewIncomComponent implements OnInit {
   addNewClicked() {
     this.addClicked = true;
   }
-  Getcoins() {
-    this.customService.getAll("Currency").subscribe(res => {
-      this.coins = res;
-    });
-  }
+
   getImportTypes() {
     this.customService.getAll("IncomeType").subscribe(
       res => {

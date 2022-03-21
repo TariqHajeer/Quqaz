@@ -3,8 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/auth.guard';
 import { UserPermission } from 'src/app/shared/auth.roles';
 import { CitiesComponent } from './cities/cities.component';
-import { CoinsComponent } from './coins/coins.component';
-import { DepartmentsComponent } from './departments/departments.component';
 import { ExportsTypesComponent } from './exports-types/exports-types.component';
 import { GroupsComponent } from './groups/groups.component';
 import { ImportsTypesComponent } from './imports-types/imports-types.component';
@@ -25,12 +23,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowRegion,UserPermission.AddRegion]}
   },
-  // {
-  //   path:'departments',
-  //   component:DepartmentsComponent,
-  //   canActivate: [AuthGuard],
-  //   data: { roles: [UserPermission.ShowOrderType,UserPermission.AddOrderType]}
-  // },
   {
     path:'exportTypes',
     component:ExportsTypesComponent,
@@ -48,12 +40,6 @@ const routes: Routes = [
     component:ShipmentsTypesComponent,
     canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowOrderType,UserPermission.AddOrderType]}
-  },
-  {
-    path:'coins',
-    component:CoinsComponent,
-    canActivate: [AuthGuard],
-    data: { roles: [UserPermission.AddClient,UserPermission.AddCountry]}
   },
   {
     path:'group',

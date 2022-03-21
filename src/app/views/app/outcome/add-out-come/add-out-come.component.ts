@@ -4,7 +4,6 @@ import { from } from 'rxjs';
 import { CustomService } from 'src/app/services/custom.service';
 import { OutcomeService } from 'src/app/views/app/outcome/outcome.service';
 import { CreateOutCome } from 'src/app/Models/OutCome/create-out-come.model';
-import { Coin } from 'src/app/Models/Coins/coin.model';
 import { DatePipe } from '@angular/common';
 import { Data } from '@syncfusion/ej2-angular-grids';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -30,18 +29,9 @@ export class AddOutComeComponent implements OnInit, OnChanges {
   CreateOutCome: CreateOutCome
   ngOnInit(): void {
     this.CreateOutCome = new CreateOutCome()
-    this.Getcoins()
     this.getExportTypes()
   }
-  coins: Coin[];
   exportTypes: any[] = [];
-
-  Getcoins() {
-
-    this.customService.getAll("Currency").subscribe(res => {
-      this.coins = res;
-    });
-  }
   getExportTypes() {
     this.customService.getAll('OutComeType').subscribe(
       res => {
