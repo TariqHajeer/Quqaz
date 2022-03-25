@@ -11,11 +11,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CitiesComponent } from './cities/cities.component';
-import { DepartmentsComponent } from './departments/departments.component';
 import { ImportsTypesComponent } from './imports-types/imports-types.component';
 import { ExportsTypesComponent } from './exports-types/exports-types.component';
 import { ShipmentsTypesComponent } from './shipments-types/shipments-types.component';
-import { CoinsComponent } from './coins/coins.component';
 import { RegionComponent } from './region/region.component';
 import { GroupsComponent } from './groups/groups.component';
 import { MainCityComponent } from './main-city/main-city.component';
@@ -29,7 +27,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
-  declarations: [ CitiesComponent, DepartmentsComponent, ImportsTypesComponent, ExportsTypesComponent, ShipmentsTypesComponent, CoinsComponent, RegionComponent, GroupsComponent, MainCityComponent, PointSettingComponent],
+  declarations: [ CitiesComponent, ImportsTypesComponent, ExportsTypesComponent, ShipmentsTypesComponent, RegionComponent, GroupsComponent, MainCityComponent, PointSettingComponent],
   imports: [
     CommonModule,
     SettingRoutingModule,

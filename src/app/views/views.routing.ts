@@ -15,7 +15,6 @@ let routes = [
     path: '',
     loadChildren: () => import('./app/app.module').then((m) => m.AppModule),
      canActivate: [AuthGuard],
-    // canActivateChild: [AuthGuard],
   },
     {
       path: 'home',

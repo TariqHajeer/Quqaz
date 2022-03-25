@@ -19,7 +19,6 @@ import { NotificationsService, SimpleNotificationsModule } from 'angular2-notifi
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { OnReturnDirective } from './helpers/on-return.directive';
 import { TestComponent } from './test/test.component';
-//import { allIcons, NgxBootstrapIconsModule } from 'ngx-bootstrap-icons';
 
 @NgModule({
   imports: [
@@ -35,9 +34,6 @@ import { TestComponent } from './test/test.component';
     EffectsModule.forRoot([]),
     NgxSpinnerModule,
     SimpleNotificationsModule.forRoot(),
-
-  //  NgxBootstrapIconsModule.forRoot(allIcons) 
-
   ],
   declarations: [
     AppComponent,
@@ -46,7 +42,6 @@ import { TestComponent } from './test/test.component';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-   // {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
   ,schemas:[CUSTOM_ELEMENTS_SCHEMA],
