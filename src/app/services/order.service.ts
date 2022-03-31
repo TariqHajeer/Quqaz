@@ -13,6 +13,7 @@ import { OrderClientDontDiliverdMoney } from '../Models/order/order-client-dont-
 export class OrderService {
 
   controler = environment.baseUrl + "api/Order/";
+  printClientOrders:any[]=[];
   constructor(public http: HttpClient) { }
   GetAll(filter: OrderFilter, paging: Paging) {
     let params = new HttpParams();

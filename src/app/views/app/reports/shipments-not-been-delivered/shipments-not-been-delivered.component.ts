@@ -167,7 +167,8 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     // console.log(this.orders)
     this.orderplace = this.orderplace.filter(op => this.orders.filter(o => o.orderplaced.id == op.id).length > 0)
     localStorage.setItem('printclientorderplaced', JSON.stringify(this.orderplace))
-    localStorage.setItem('printordersclient', JSON.stringify(this.orders))
+    // localStorage.setItem('printordersclient', JSON.stringify(this.orders))
+    this.orderservice.printClientOrders=this.orders
     localStorage.setItem('printclient', JSON.stringify(this.Clients.find(c => c.id == this.ClientId)))
     if (this.PointId == 0) {
       localStorage.setItem('point', JSON.stringify(null))
