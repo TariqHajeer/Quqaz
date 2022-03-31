@@ -40,7 +40,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   ) {
     this.currentUserPermissions = this.userlogin.privileges;
-    console.log(this.currentUserPermissions)
     if (this.userlogin.policy == "Employee")
       this.menuItems = menuItems
     else
@@ -379,7 +378,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   filteredMenuItems(menuItems: IMenuItem[]) {
     if (menuItems)
       menuItems.forEach(item => {
-        if (item.to == "/app/client" && item.badge) {
+        if ((item.to == "/app/client" || item.to == "/app/payment/paymentrequest/") && item.badge) {
           item.badgeLable = this.signalRService.AdminNotification.newPaymentRequetsCount
         }
         if (item.to == "/app/order" && item.badge) {
