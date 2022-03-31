@@ -136,7 +136,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     var orderPlace = this.orderPlace.filter(o => o.checked == true)
     this.orderplace = this.orderPlace.filter(o => o.checked == true)
     this.order.OrderPlacedId = orderPlace.map(o => o.id)
-    if (this.orderPlace.filter(o => o.checked == true).length > 0 && (this.IsClientDeleviredMoney || this.ClientDoNotDeleviredMoney)) {
+    if (this.ClientId && this.orderPlace.filter(o => o.checked == true).length > 0 && (this.IsClientDeleviredMoney || this.ClientDoNotDeleviredMoney)) {
       this.orderservice.ClientDontDiliverdMoney(this.order).subscribe(response => {
         if (response)
           if (response.length == 0)
@@ -157,7 +157,8 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
         });
 
     }
-    else return
+    else
+      this.dataSource = new MatTableDataSource([])
   }
   print() {
     if (this.noDataFound == true || this.orders.length == 0) {
