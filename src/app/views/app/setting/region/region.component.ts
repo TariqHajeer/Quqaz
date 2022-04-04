@@ -26,12 +26,16 @@ export class RegionComponent implements OnInit {
   public pageSettings: Object;
   public citiesParameter: IEditCell;
   apiName: string = "Region";
-  countryapi = environment.baseUrl + "api/Country";
+  countryapi = "Country";
+  cities: any[] = []
+  name: string
+  countryId: number
   ngOnInit(): void {
     this.getRegions();
+    this.getCities();
     this.editSettings = { showDeleteConfirmDialog: false, allowAdding: true, allowEditing: true, allowEditOnDblClick: true, allowDeleting: true };
     this.toolbar = [
-      { text: 'اضافة', tooltipText: 'اضافة', prefixIcon: 'e-add', id: 'normalgrid_add' },
+      // { text: 'اضافة', tooltipText: 'اضافة', prefixIcon: 'e-add', id: 'normalgrid_add' },
       { text: 'تعديل', tooltipText: 'تعديل', prefixIcon: 'e-edit', id: 'normalgrid_edit' },
       { text: 'حذف', tooltipText: 'حذف', prefixIcon: 'e-delete', id: 'normalgrid_delete' },
       { text: 'حفظ', tooltipText: 'حفظ', prefixIcon: 'e-update', id: 'normalgrid_update' },
@@ -41,15 +45,16 @@ export class RegionComponent implements OnInit {
     this.filter = { type: "CheckBox" };
     this.stTime = performance.now();
     this.pageSettings = { pageCount: 5 };
-    this.selectionSettings = {  type: "Multiple" };
+    this.selectionSettings = { type: "Multiple" };
     this.lines = 'Horizontal';
     this.citiesParameter = {
       params: {
         allowFiltering: true,
-        dataSource: new DataManager({ url: this.countryapi,
-          headers: [{'Authorization': 'Bearer '  + localStorage.getItem('token') }]
-        }, 
-         ),
+        dataSource: new DataManager({
+          url: this.countryapi,
+          headers: [{ 'Authorization': 'Bearer ' + localStorage.getItem('token') }],
+        },
+        ),
         fields: { text: 'name', value: 'id' },
         actionComplete: () => false
       }
@@ -78,6 +83,29 @@ export class RegionComponent implements OnInit {
         }
       )
 
+    }
+  }
+  addRegion() {
+    if (!this.name) {
+      this.notifications.create('', 'الأسم فارغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+      return
+    }
+
+    if (!this.countryId) {
+      this.notifications.create('', 'يجب اختيار المدينة', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+      return
+    }
+    if (this.regions.filter(c => c.name == this.name && c.country.id == this.countryId).length != 0) {
+      this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+      return
+    } else {
+      this.customService.Create(this.apiName, { name: this.name, countryId: this.countryId }).toPromise().then(res => {
+        this.notifications.create('', 'تم اضافة المنطقة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+        this.regions.push(res);
+        this.gridInstance.refresh();
+        this.name = null;
+        this.countryId = null;
+      });
     }
   }
   onActionBegin(args: ActionEventArgs) {
@@ -139,6 +167,13 @@ export class RegionComponent implements OnInit {
     this.customService.getAll('Region').subscribe(
       res => {
         this.regions = res;
+      }
+    )
+  }
+  getCities() {
+    this.customService.getAll(this.countryapi).subscribe(
+      res => {
+        this.cities = res;
       }
     )
   }
