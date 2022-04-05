@@ -17,12 +17,19 @@ export class LoginComponent implements OnInit {
   buttonState = '';
   constructor(private authService: AuthService
     , private notifications: NotificationsService
-    , private router: Router
-    , private groupService: GroupService) { }
+    , private router: Router) { }
 
   ngOnInit() {
     this.myDate = new Date
     this.user = new UserLogin
+    if (localStorage.getItem('kokazUser')) {
+      this.user = JSON.parse(localStorage.getItem('kokazUser'))
+      if (this.user.policy == "Employee")
+        this.router.navigate(['/app/HomePage']);
+      else
+        this.router.navigate(['/app/agent']);
+    }
+
   }
   user: UserLogin
   myDate: Date
@@ -45,9 +52,7 @@ export class LoginComponent implements OnInit {
           this.buttonDisabled = false;
           this.buttonState = '';
           this.notifications.create('Error', ' اسم المستخدم او كلمة المرور غير صحيح', NotificationType.Error, { theClass: 'primary', timeOut: 6000, showProgressBar: false });
-
         }
-
       )
   }
 }
