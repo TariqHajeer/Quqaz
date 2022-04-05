@@ -172,14 +172,14 @@ const data: IMenuItem[] = [
             icon: 'simple-icon-layers',
             label: 'تسديد العميل',
             to: `${adminRoot}/reports/Shipmentsnotbeendelivered`,
-            permission: [UserPermission.ShowReports]
+            permission: [UserPermission.Pay]
 
           },
           {
             icon: 'simple-icon-layers',
             label: 'تسديد الشركات ',
             to: `${adminRoot}/reports/orderincompany`,
-            permission: [UserPermission.ShowReports]
+            permission: [UserPermission.Pay]
 
           },
           {
@@ -254,7 +254,9 @@ const data: IMenuItem[] = [
         icon: 'iconsminds-box-close',
         label: 'طلبات دفع العملاءالجديدة ',
         to: `${adminRoot}/payment/paymentrequest/`,
-        permission: [UserPermission.ShowClient]
+        badge: true,
+        permission: [UserPermission.ShowClient],
+        
       },
       {
         icon: 'iconsminds-box-close',

@@ -50,7 +50,6 @@ export class GroupsComponent implements OnInit {
       this.notifications.create('success', 'تم اضافة مجموعة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.Group.name = this.CreateGroup.Name
       this.Group.privilegesId = this.CreateGroup.PrivilegesId
-     // this.Groups.push(this.Group)
      this.GetAllGroups()
       this.Group = new Group()
       this.CreateGroup = new CreateGroup()
@@ -129,5 +128,4 @@ export class GroupsComponent implements OnInit {
     }
     return false;
   }
- //hi tariq 
 }

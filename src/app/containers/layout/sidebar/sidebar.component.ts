@@ -378,7 +378,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   filteredMenuItems(menuItems: IMenuItem[]) {
     if (menuItems)
       menuItems.forEach(item => {
-        if (item.to == "/app/client" && item.badge) {
+        if ((item.to == "/app/client" || item.to == "/app/payment/paymentrequest/") && item.badge) {
           item.badgeLable = this.signalRService.AdminNotification.newPaymentRequetsCount
         }
         if (item.to == "/app/order" && item.badge) {
