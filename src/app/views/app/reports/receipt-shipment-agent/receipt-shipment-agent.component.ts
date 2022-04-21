@@ -71,22 +71,17 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.dataSource = new MatTableDataSource([])
     this.getorder = new GetOrder
     this.getorder.order.index = 0;
-
-
   }
 
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
       this.getMoenyPlaced = [...res]
-      // this.MoenyPlaced = this.MoenyPlaced.filter(o => o.id != 4)
-
     })
   }
   getmony() {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
-
     })
   }
   changeMoenyPlaced() {
@@ -97,7 +92,6 @@ export class ReceiptShipmentAgentComponent implements OnInit {
           o.order.monePlaced = o.MoenyPlaced[0]
         else
           o.order.monePlaced = find
-        // o.order.monePlaced = this.MoenyPlaced.find(m => m.id == this.MoenyPlacedId.id)
         //تم تسليمها/داخل الشركة
         if (this.OrderplacedId.id == OrderplacedEnum.Delivered && this.MoenyPlacedId.id == 4) {
           if (o.order.isClientDiliverdMoney) {
@@ -131,10 +125,6 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       })
       this.MoenyPlacedId = null
       this.getMoenyPlaced = this.orderplacedstate.ChangeOrderPlace(this.OrderplacedId.id, this.MoenyPlaced)
-     console.log( this.getMoenyPlaced )
-      // if (this.OrderplacedId.id == 4)
-      //   this.getMoenyPlaced = [{ id: 2, name: "مندوب" }, { id: 4, name: "تم تسليمها/داخل الشركة" }]
-
     }
 
   }
@@ -143,12 +133,6 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       this.Agents = res
     })
   }
-  // ChangeAgentId() {
-  //   if (this.AgentId != null) {
-  //     this.filtering.AgentId = this.AgentId
-  //     this.allFilter();
-  //   }
-  // }
   showcount = false
   findorder
   Ordersfilter: any[] = []
@@ -157,15 +141,22 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.showTable = false
     if (this.Code) {
       this.orderservice.GetOrderByAgent(this.Code).subscribe(res => {
-        // console.log(res)
         this.findorder = res
         if (this.findorder) {
           if (this.findorder.length == 1) {
             this.addOrders()
           }
           else if (this.findorder.length > 1) {
-            this.showTable = true
             this.Ordersfilter = res as []
+            if (this.dataSource.data.length > 0)
+              this.Ordersfilter = this.Ordersfilter.filter(orderf => !this.dataSource.data.some(order => order.order.code === orderf.code && order.order.client.id == orderf.client.id));
+            if (this.Ordersfilter.length == 0)
+              this.notifications.create("error", "الشحنة مضافة مسبقا", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
+            if (this.Ordersfilter.length > 1)
+              this.showTable = true
+            if (this.Ordersfilter.length == 1) {
+              this.addOrders()
+            }
           }
         }
         else {
@@ -235,7 +226,7 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     }
   }
   ChangeAllOrderplacedId(element, index) {
-    try{
+    try {
       this.getmony()
       this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
       this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced)
@@ -244,14 +235,13 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
       this.orderplacedstate.EditDeliveryCostAndAgentCost(element, this.tempdeliveryCost[index], this.tempagentCost[index])
       this.sumCost()
-    }catch{
+    } catch {
       this.notifications.create("error", "يوجد خطأ في 237", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
 
     }
-   
+
   }
   ChangeOrderplacedId(element, index) {
-    // this.GetMoenyPlaced()
     this.OrderplacedId = null
     this.MoenyPlacedId = null
     this.getMoenyPlaced = []
@@ -267,15 +257,8 @@ export class ReceiptShipmentAgentComponent implements OnInit {
 
   changeCost(element, index) {
     this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
-
-    // element.order.cost = element.order.cost * 1
-    // this.sumCost()
-    // if (this.orderplacedstate.rangeCost(element, this.temporderscost[index])) {
-    //   element.messageCost = ""
-    // } else
-    //   element.messageCost = " الكلفة لايمكن أن تتجاوز " + this.temporderscost[index]
   }
-  changeDeliveryCost(element, index){
+  changeDeliveryCost(element, index) {
     this.orderplacedstate.changeDeliveryCost(element, this.tempdeliveryCost[index], this.MoenyPlaced)
 
   }
@@ -324,12 +307,10 @@ export class ReceiptShipmentAgentComponent implements OnInit {
       this.orderstate.Note = this.dataSource.data[i].order.note
       this.orderstate.MoenyPlacedId = this.dataSource.data[i].order.monePlaced.id
       this.orderstate.OrderplacedId = this.dataSource.data[i].order.orderplaced.id
-      // console.log(this.orderstate)
       this.orderstates.push(this.orderstate)
       this.orderstate = new OrderState
     }
     this.spinner.show();
-    // console.log(this.orderstates)
     this.orderservice.UpdateOrdersStatusFromAgent(this.orderstates).subscribe(res => {
       this.allFilter()
       this.spinner.hide();
@@ -362,30 +343,21 @@ export class ReceiptShipmentAgentComponent implements OnInit {
     this.tempisClientDiliverdMoney = Object.assign({}, this.getorders.map(o => o.order.isClientDiliverdMoney));
     this.tempdeliveryCost = Object.assign({}, this.getorders.map(o => o.order.deliveryCost));
     this.tempagentCost = Object.assign({}, this.getorders.map(o => o.order.agentCost));
-    // var index = this.dataSource.data.indexOf(order);
-    // this.dataSource.data.splice(index, 1);
-    // this.dataSource._updateChangeSubscription();
     this.sumCost()
 
   }
   keyPressNumbers(event, cost) {
-    // console.log(cost)
-    // console.log("1")
     var charCode = (event.which) ? event.which : event.keyCode;
-    // console.log(charCode)
 
     if (charCode == 45 && cost == 0) {
-      // console.log("2")
       return true
     }
     else
       // Only Numbers 0-9
       if ((charCode < 48 || charCode > 57)) {
-        // console.log("3")
         event.preventDefault();
         return false;
       } else {
-        // console.log("4")
         return true;
       }
   }
