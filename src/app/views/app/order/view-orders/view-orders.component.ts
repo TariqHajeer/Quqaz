@@ -79,7 +79,7 @@ export class ViewOrdersComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   switchPage(event: PageEvent) {
-
+console.log("swich")
     this.paging.allItemsLength = event.length
     this.paging.RowCount = event.pageSize
     this.paging.Page = event.pageIndex + 1
@@ -89,15 +89,15 @@ export class ViewOrdersComponent implements OnInit {
 
   }
   orderResend: Resend = new Resend()
-  fillResend(order){
-    this.orderResend.Id=order.id
-    this.orderResend.AgnetId=order.agent.id
-    this.orderResend.CountryId=order.country.id
-    this.orderResend.RegionId=order.region?order.region.id:null
+  fillResend(order) {
+    this.orderResend.Id = order.id
+    this.orderResend.AgnetId = order.agent.id
+    this.orderResend.CountryId = order.country.id
+    this.orderResend.RegionId = order.region ? order.region.id : null
     this.orderResend.DeliveryCost = order.country.deliveryCost * 1
     this.Regionsresend = this.Region.filter(r => r.country.id == this.orderResend.CountryId)
-    this.Agentsresend = this.tempAgent.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.orderResend.CountryId).length>0 )
-   
+    this.Agentsresend = this.tempAgent.filter(a => a.countries.map(c => c.id).filter(co => co == this.orderResend.CountryId).length > 0)
+
   }
   Resend() {
     this.orderResend.DeliveryCost = this.orderResend.DeliveryCost * 1
@@ -110,7 +110,7 @@ export class ViewOrdersComponent implements OnInit {
     this.orderResend.DeliveryCost = city.deliveryCost
     this.orderResend.RegionId = null
     this.Regionsresend = this.tempRegions.filter(r => r.country.id == this.orderResend.CountryId)
-    this.Agentsresend = this.tempAgent.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.orderResend.CountryId).length>0 )
+    this.Agentsresend = this.tempAgent.filter(a => a.countries.map(c => c.id).filter(co => co == this.orderResend.CountryId).length > 0)
     if (this.Agentsresend.length == 1)
       this.orderResend.AgnetId = this.Agentsresend[0].id
     else
@@ -122,6 +122,7 @@ export class ViewOrdersComponent implements OnInit {
   }
   allFilter() {
     this.spinner.show()
+    console.log(this.paging)
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
       this.spinner.hide()
       if (response.data.length == 0)
@@ -133,8 +134,8 @@ export class ViewOrdersComponent implements OnInit {
           element.orderplaced.name = "لديك مبلغ مع العميل"
         }
         else if (element.orderStateId == OrderStateEnum.Finished) {
-        //element.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
-        //  element.orderplaced = this.orderPlace.find(o => o.id == 4)
+          //element.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
+          //  element.orderplaced = this.orderPlace.find(o => o.id == 4)
         }
       });
       this.dataSource = new MatTableDataSource(response.data)
@@ -144,7 +145,11 @@ export class ViewOrdersComponent implements OnInit {
         this.spinner.hide()
       });
   }
-
+  searchOrders() {
+    this.paging = new Paging();
+    this.dataSource.paginator = this.paginator;
+    this.allFilter();
+  }
   AddOrder() {
     this.router.navigate(['/app/order/addorder'])
   }
@@ -159,7 +164,7 @@ export class ViewOrdersComponent implements OnInit {
     this.element = element
   }
   Edit(element) {
-    this.router.navigate(['/app/order/editorder',element.id])
+    this.router.navigate(['/app/order/editorder', element.id])
     // localStorage.setItem('editorder', JSON.stringify(element))
   }
   getAgent() {
@@ -167,14 +172,14 @@ export class ViewOrdersComponent implements OnInit {
       this.Agents = res
       this.Agentsresend = res
       this.tempAgent = res
-      this.Agentsresend = this.tempAgent.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.orderResend.CountryId).length>0 )
+      this.Agentsresend = this.tempAgent.filter(a => a.countries.map(c => c.id).filter(co => co == this.orderResend.CountryId).length > 0)
 
-      
+
     })
   }
   tempRegions
   tempAgent
-  
+
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
       this.orderPlace = res
