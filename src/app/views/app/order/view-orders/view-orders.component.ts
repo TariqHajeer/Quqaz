@@ -63,7 +63,6 @@ export class ViewOrdersComponent implements OnInit {
     this.GetClient()
     this.getAgent()
     this.allFilter()
-
   }
   get() {
     this.dataSource = new MatTableDataSource(this.orders);
@@ -134,8 +133,6 @@ console.log("swich")
           element.orderplaced.name = "لديك مبلغ مع العميل"
         }
         else if (element.orderStateId == OrderStateEnum.Finished) {
-          //element.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
-          //  element.orderplaced = this.orderPlace.find(o => o.id == 4)
         }
       });
       this.dataSource = new MatTableDataSource(response.data)
@@ -165,7 +162,6 @@ console.log("swich")
   }
   Edit(element) {
     this.router.navigate(['/app/order/editorder', element.id])
-    // localStorage.setItem('editorder', JSON.stringify(element))
   }
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
