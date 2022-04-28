@@ -52,9 +52,6 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   }
   ids: any[] = []
   orders: any[] = []
-
-  client = this.orders.map(o => o.agent)[0]
-  orderplaced = this.orders.map(o => o.orderplaced)[0]
   checkboxId(row) {
     if (this.selection.isSelected(row))
       if (this.ids.filter(d => d == row.id).length > 0)
@@ -62,9 +59,6 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       else {
         this.ids.push(row.id)
         this.orders.push(row)
-        localStorage.setItem('orders', JSON.stringify(this.orders))
-        this.client = this.orders.map(o => o.client)[0]
-        this.orderplaced = this.orders.map(o => o.orderplaced)[0]
       }
     if (!this.selection.isSelected(row)) {
       this.ids = this.ids.filter(i => i != row.id)
@@ -101,7 +95,6 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     localStorage.removeItem('printclient')
     localStorage.removeItem('printclientorderplaced')
     this.getClients()
-    // this.GetorderPlace()
     this.paging = new Paging
     this.filtering = new OrderFilter
     this.order = new OrderClientDontDiliverdMoney()
@@ -136,20 +129,15 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     var orderPlace = this.orderPlace.filter(o => o.checked == true)
     this.orderplace = this.orderPlace.filter(o => o.checked == true)
     this.order.OrderPlacedId = orderPlace.map(o => o.id)
-    if (this.orderPlace.filter(o => o.checked == true).length > 0 && (this.IsClientDeleviredMoney || this.ClientDoNotDeleviredMoney)) {
+    if (this.ClientId && this.orderPlace.filter(o => o.checked == true).length > 0 && (this.IsClientDeleviredMoney || this.ClientDoNotDeleviredMoney)) {
       this.orderservice.ClientDontDiliverdMoney(this.order).subscribe(response => {
         if (response)
           if (response.length == 0)
             this.noDataFound = true
           else this.noDataFound = false
-        // console.log(response);
         var x = response.sort((a, b) => a.code - b.code * 1);
-        // console.log(response);
-        // console.log(x);
         this.orderFilter = response
-
         this.dataSource = new MatTableDataSource(x)
-        //this.dataSource.data = this.dataSource.data.filter(d => d.agent.id == this.ClientId)
         this.totalCount = response.length
       },
         err => {
@@ -157,14 +145,14 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
         });
 
     }
-    else return
+    else
+      this.dataSource = new MatTableDataSource([])
   }
   print() {
     if (this.noDataFound == true || this.orders.length == 0) {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    // console.log(this.orders)
     this.orderplace = this.orderplace.filter(op => this.orders.filter(o => o.orderplaced.id == op.id).length > 0)
     localStorage.setItem('printclientorderplaced', JSON.stringify(this.orderplace))
     localStorage.setItem('printordersclient', JSON.stringify(this.orders))
@@ -183,28 +171,6 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       this.allFilter()
     })
   }
-  // payForCleint(element): number {
-
-  //   if (!element.isClientDiliverdMoney) {
-  //     if (element.orderplaced.id == 5)
-  //       return 0;
-  //     return element.cost - element.deliveryCost;
-
-  //   }
-  //   else {
-
-  //     //مرتجع كلي
-  //     if (element.orderplaced.id == 5)
-  //       return element.deliveryCost - element.oldCost;
-  //     //مرفوض
-  //     else if (element.orderplaced.id == 7)
-  //       return (-element.oldCost);
-  //     //مرتجع جزئي
-  //     else if (element.orderplaced.id == 6)
-  //       return element.cost - element.oldCost;
-  //   }
-
-  // }
   code
   orderFilter
   codeFillter() {
@@ -220,11 +186,9 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       var client = this.Clients.find(c => c.id == this.ClientId)
       this.pointSettingService.GetSettingLessThanPoint(client.points).subscribe(res => {
         this.points = res
-        // console.log(res)
       })
     } else {
       this.points = []
     }
-
   }
 }

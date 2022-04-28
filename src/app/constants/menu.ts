@@ -254,7 +254,9 @@ const data: IMenuItem[] = [
         icon: 'iconsminds-box-close',
         label: 'طلبات دفع العملاءالجديدة ',
         to: `${adminRoot}/payment/paymentrequest/`,
-        permission: [UserPermission.ShowClient]
+        badge: true,
+        permission: [UserPermission.ShowClient],
+        
       },
       {
         icon: 'iconsminds-box-close',
