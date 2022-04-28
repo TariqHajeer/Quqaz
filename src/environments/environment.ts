@@ -11,7 +11,7 @@ export const environment = {
   isDarkSwitchActive: true,
   defaultColor: 'light.blueyale',
 
-  baseUrl: "https://backend.quqaz.com/",
+  baseUrl: "https://localhost:44333/",
   clientApp: "http://localhost:4201",
 
   // Quqaz
