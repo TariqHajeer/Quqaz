@@ -15,9 +15,10 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { ShowAgentComponent } from './show-agent/show-agent.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { UserTreasuryComponent } from './user-treasury/user-treasury.component';
 
 @NgModule({
-  declarations: [AddUserComponent, ViewUserComponent, EditUserComponent, ShowAgentComponent],
+  declarations: [AddUserComponent, ViewUserComponent, EditUserComponent, ShowAgentComponent, UserTreasuryComponent],
   imports: [
     CommonModule,
     UsersRoutingModule,
