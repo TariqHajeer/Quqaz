@@ -8,6 +8,7 @@ import { TreasuryService } from 'src/app/services/treasury.service';
 import { CreateTreasury } from 'src/app/Models/user/create-treasury.model';
 import { Treasury } from 'src/app/Models/user/treasury.model';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
+import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'app-user-treasury',
   templateUrl: './user-treasury.component.html',
@@ -42,6 +43,11 @@ export class UserTreasuryComponent implements OnInit {
   }
   getTreasury() {
     this.treasuryService.getByUserId(this.id).subscribe(res => {
+      if(res){
+        this.treasury=res
+        if(this.treasury.History&&this.treasury.History.data.length!=0)
+        this.dataSource = new MatTableDataSource(this.treasury.History.data)
+      }
       console.log(res)
     });
   }
