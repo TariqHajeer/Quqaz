@@ -20,7 +20,7 @@ export class UserTreasuryComponent implements OnInit {
     private getroute: ActivatedRoute,
     private treasuryService: TreasuryService,
     private notifications: NotificationsService,) { }
-  id: any;
+  id: number;
   User: User = new User();
   GiveOrDiscountPointsDto: boolean;
   noDataFound: boolean;
@@ -38,7 +38,7 @@ export class UserTreasuryComponent implements OnInit {
   }
   GetUserById() {
     this.getroute.params.subscribe(par => {
-      this.id = par['id'] as string;
+      this.id = par['id'] as number;
       this.getTreasury()
     });
     this.UserService.GetById(this.id).subscribe(res => {
@@ -77,8 +77,11 @@ export class UserTreasuryComponent implements OnInit {
   addTreasury() {
     if (!this.validation()) return
     else {
-      this.createTreasury.UserId = this.id;
+      console.log('id');
+      console.log(this.id);
+      this.createTreasury.UserId =Number( this.id);
       this.createTreasury.Amount = this.createTreasury.Amount * 1;
+      console.log(this.createTreasury);
       this.treasuryService.Add(this.createTreasury).subscribe(res => {
         this.notifications.create('success', 'تم اضافة صندوق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         this.getTreasury();
