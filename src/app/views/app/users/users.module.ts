@@ -16,6 +16,8 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 import { ShowAgentComponent } from './show-agent/show-agent.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { UserTreasuryComponent } from './user-treasury/user-treasury.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [AddUserComponent, ViewUserComponent, EditUserComponent, ShowAgentComponent, UserTreasuryComponent],
@@ -32,7 +34,9 @@ import { UserTreasuryComponent } from './user-treasury/user-treasury.component';
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
     NgSelectModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    MatTableModule,
+    MatPaginatorModule,
   ]
 })
 export class UsersModule { }
