@@ -62,25 +62,45 @@ export class UserTreasuryComponent implements OnInit {
     });
   }
   addTreasury() {
-    this.createTreasury.UserId = this.id;
-    this.createTreasury.Amount = this.createTreasury.Amount * 1;
-    this.treasuryService.Add(this.createTreasury).subscribe(res => {
-      this.notifications.create('success', 'تم اضافة صندوق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      this.getTreasury();
-    });
+    if (!this.validation()) return
+    else {
+      this.createTreasury.UserId = this.id;
+      this.createTreasury.Amount = this.createTreasury.Amount * 1;
+      this.treasuryService.Add(this.createTreasury).subscribe(res => {
+        this.notifications.create('success', 'تم اضافة صندوق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+        this.getTreasury();
+      });
+    }
   }
-  GiveMoney(){
-    this.createTreasury.Amount = this.createTreasury.Amount * 1;
-    this.treasuryService.GiveMoney(this.treasury.id,this.createTreasury.Amount).subscribe(res => {
-      this.notifications.create('success', 'تم اعطاء المبلغ بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      this.getTreasury();
-    });
+  GiveMoney() {
+    if (!this.validation()) return
+    else {
+      this.createTreasury.UserId = this.id;
+      this.createTreasury.Amount = this.createTreasury.Amount * 1;
+      this.treasuryService.GiveMoney(this.createTreasury.UserId, this.createTreasury.Amount).subscribe(res => {
+        this.notifications.create('success', 'تم اعطاء المبلغ بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+        this.getTreasury();
+      });
+    }
   }
-  GetMoney(){
-    this.createTreasury.Amount = this.createTreasury.Amount * -1;
-    this.treasuryService.GetMoney(this.treasury.id,this.createTreasury.Amount).subscribe(res => {
-      this.notifications.create('success', 'تم اخذ البلغ بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      this.getTreasury();
-    });
+  GetMoney() {
+    if (!this.validation()) return
+    else {
+      this.createTreasury.UserId = this.id;
+      this.createTreasury.Amount = this.createTreasury.Amount * -1;
+      this.treasuryService.GetMoney(this.createTreasury.UserId, this.createTreasury.Amount).subscribe(res => {
+        this.notifications.create('success', 'تم اخذ البلغ بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+        this.getTreasury();
+      });
+    }
+  }
+  validation() {
+    if (this.createTreasury.Amount) {
+      return true
+    }
+    else {
+      this.notifications.create('success', 'يجب ادخال قيمة المبلغ', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      return false
+    }
   }
 }
