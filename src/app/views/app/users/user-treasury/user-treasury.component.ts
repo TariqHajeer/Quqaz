@@ -23,12 +23,13 @@ export class UserTreasuryComponent implements OnInit {
   User: User = new User();
   GiveOrDiscountPointsDto: boolean;
   noDataFound: boolean;
-  displayedColumns: string[] = ['amount','type','createdOnUtc'];
+  displayedColumns: string[] = ['amount', 'type', 'createdOnUtc'];
   dataSource
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   createTreasury: CreateTreasury = new CreateTreasury();
   treasury: Treasury = new Treasury();
+  firstAdd: boolean = true;
   ngOnInit(): void {
     this.GetUserById();
   }
@@ -43,10 +44,19 @@ export class UserTreasuryComponent implements OnInit {
   }
   getTreasury() {
     this.treasuryService.getByUserId(this.id).subscribe(res => {
-      if(res){
-        this.treasury=res
-        if(this.treasury.History&&this.treasury.History.data.length!=0)
-        this.dataSource = new MatTableDataSource(this.treasury.History.data)
+      if (res) {
+        this.firstAdd = false;
+        this.treasury = res
+        console.log(this.treasury)
+        if (this.treasury.history && this.treasury.history.data.length != 0) {
+          this.dataSource = new MatTableDataSource(this.treasury.history.data)
+          this.noDataFound = false;
+        } else
+          this.noDataFound = true;
+      }
+      else {
+        this.firstAdd = true;
+        this.noDataFound = true;
       }
       console.log(res)
     });
@@ -56,6 +66,20 @@ export class UserTreasuryComponent implements OnInit {
     this.createTreasury.Amount = this.createTreasury.Amount * 1;
     this.treasuryService.Add(this.createTreasury).subscribe(res => {
       this.notifications.create('success', 'تم اضافة صندوق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.getTreasury();
+    });
+  }
+  GiveMoney(){
+    this.createTreasury.Amount = this.createTreasury.Amount * 1;
+    this.treasuryService.GiveMoney(this.treasury.id,this.createTreasury.Amount).subscribe(res => {
+      this.notifications.create('success', 'تم اعطاء المبلغ بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.getTreasury();
+    });
+  }
+  GetMoney(){
+    this.createTreasury.Amount = this.createTreasury.Amount * -1;
+    this.treasuryService.GetMoney(this.treasury.id,this.createTreasury.Amount).subscribe(res => {
+      this.notifications.create('success', 'تم اخذ البلغ بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.getTreasury();
     });
   }

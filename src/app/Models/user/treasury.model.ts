@@ -3,7 +3,7 @@ export class Treasury {
     total: number;
     createOnUtc: Date;
     isActive: boolean;
-    History: {
+    history: {
         data: TreasuryHistory[],
         total:number
     };
