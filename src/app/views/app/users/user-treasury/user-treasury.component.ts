@@ -76,7 +76,7 @@ export class UserTreasuryComponent implements OnInit {
     if (!this.validation()) return
     else {
       this.createTreasury.UserId = this.id;
-      this.createTreasury.Amount = this.createTreasury.Amount * 1;
+      this.createTreasury.Amount = this.createTreasury.Amount * -1;
       this.treasuryService.GiveMoney(this.createTreasury.UserId, this.createTreasury.Amount).subscribe(res => {
         this.notifications.create('success', 'تم اعطاء المبلغ بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         this.getTreasury();
@@ -87,7 +87,7 @@ export class UserTreasuryComponent implements OnInit {
     if (!this.validation()) return
     else {
       this.createTreasury.UserId = this.id;
-      this.createTreasury.Amount = this.createTreasury.Amount * -1;
+      this.createTreasury.Amount = this.createTreasury.Amount * 1;
       this.treasuryService.GetMoney(this.createTreasury.UserId, this.createTreasury.Amount).subscribe(res => {
         this.notifications.create('success', 'تم اخذ البلغ بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         this.getTreasury();
