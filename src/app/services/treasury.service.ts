@@ -12,6 +12,14 @@ export class TreasuryService {
   getByUserId(id) {
     return this.http.get<any>(this.controler + id)
   }
+  Hisotry(id, paging) {
+    let params = new HttpParams();
+    if (paging.RowCount != undefined || paging.RowCount != null)
+      params = params.append("RowCount", paging.RowCount);
+    if (paging.Page != undefined || paging.Page != null)
+      params = params.append("Page", paging.Page);
+    return this.http.get<any>(this.controler + "Hisotry/" + id, { params: params })
+  }
   Add(treasury) {
     return this.http.post<any>(this.controler, treasury)
   }

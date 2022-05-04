@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/Models/user/user.model';
@@ -9,6 +9,7 @@ import { CreateTreasury } from 'src/app/Models/user/create-treasury.model';
 import { Treasury } from 'src/app/Models/user/treasury.model';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { MatTableDataSource } from '@angular/material/table';
+import { Paging } from 'src/app/Models/paging';
 @Component({
   selector: 'app-user-treasury',
   templateUrl: './user-treasury.component.html',
@@ -30,6 +31,8 @@ export class UserTreasuryComponent implements OnInit {
   createTreasury: CreateTreasury = new CreateTreasury();
   treasury: Treasury = new Treasury();
   firstAdd: boolean = true;
+  paging: Paging = new Paging();
+  total: number;
   ngOnInit(): void {
     this.GetUserById();
   }
@@ -47,9 +50,9 @@ export class UserTreasuryComponent implements OnInit {
       if (res) {
         this.firstAdd = false;
         this.treasury = res
-        console.log(this.treasury)
         if (this.treasury.history && this.treasury.history.data.length != 0) {
           this.dataSource = new MatTableDataSource(this.treasury.history.data)
+          this.total = this.treasury.history.total;
           this.noDataFound = false;
         } else
           this.noDataFound = true;
@@ -58,8 +61,18 @@ export class UserTreasuryComponent implements OnInit {
         this.firstAdd = true;
         this.noDataFound = true;
       }
-      console.log(res)
     });
+  }
+  getByPaging() {
+    this.treasuryService.Hisotry(this.treasury.id, this.paging).subscribe(res => {
+      this.dataSource = new MatTableDataSource(res)
+    })
+  }
+  switchPage(event: PageEvent) {
+    this.paging.allItemsLength = event.length
+    this.paging.RowCount = event.pageSize
+    this.paging.Page = event.pageIndex + 1
+    this.getByPaging();
   }
   addTreasury() {
     if (!this.validation()) return
@@ -76,7 +89,7 @@ export class UserTreasuryComponent implements OnInit {
     if (!this.validation()) return
     else {
       this.createTreasury.UserId = this.id;
-      this.createTreasury.Amount = this.createTreasury.Amount * -1;
+      this.createTreasury.Amount = this.createTreasury.Amount * 1;
       this.treasuryService.GiveMoney(this.createTreasury.UserId, this.createTreasury.Amount).subscribe(res => {
         this.notifications.create('success', 'تم اعطاء المبلغ بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         this.getTreasury();
