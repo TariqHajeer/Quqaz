@@ -19,12 +19,18 @@ export class TreasuryService {
     let params = new HttpParams();
     params = params.append('id', id);
     params = params.append('amount', amount);
-    return this.http.patch<any>(this.controler, params)
+    return this.http.patch<any>(this.controler + "GiveMoney", params)
   }
   GetMoney(id, amount) {
     let params = new HttpParams();
     params = params.append('id', id);
     params = params.append('amount', amount);
-    return this.http.patch<any>(this.controler, params)
+    return this.http.patch<any>(this.controler + "GetMoney", params)
+  }
+  DisActive(id) {
+    return this.http.patch<any>(this.controler + "DisActive", id)
+  }
+  Active(id) {
+    return this.http.patch<any>(this.controler + "Active", id)
   }
 }

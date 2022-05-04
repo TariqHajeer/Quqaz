@@ -94,12 +94,29 @@ export class UserTreasuryComponent implements OnInit {
       });
     }
   }
+  ActiveOrDisActive() {
+    this.treasury.isActive = !this.treasury.isActive;
+    if (this.treasury.isActive)
+      this.Active()
+    else
+      this.DisActive()
+  }
+  DisActive() {
+    this.treasuryService.DisActive(this.treasury.id).subscribe(res => {
+      this.notifications.create('success', 'تم الغاء التفعيل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    })
+  }
+  Active() {
+    this.treasuryService.Active(this.treasury.id).subscribe(res => {
+      this.notifications.create('success', 'تم التفعيل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    })
+  }
   validation() {
     if (this.createTreasury.Amount) {
       return true
     }
     else {
-      this.notifications.create('success', 'يجب ادخال قيمة المبلغ', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.notifications.create('error', 'يجب ادخال قيمة المبلغ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return false
     }
   }
