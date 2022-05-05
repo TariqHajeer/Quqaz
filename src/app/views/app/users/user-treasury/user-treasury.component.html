@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-body">
-        <h3>صندوق الموظف</h3>
+        <h3>صندوق الموظف : {{User.name}}</h3>
         <div class="row">
             <div class="col-md-3" *ngIf="firstAdd">
                 <label>المبلغ المبدئي </label>
@@ -47,9 +47,6 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-3">
-                <label>اسم صاحب الصندوق : {{User.name}}</label>
-            </div>
-            <div class="col-md-3">
                 <label>قيمة الصندوق الحالية : {{treasury.total}}</label>
             </div>
             <div class="col-md-3">
@@ -63,18 +60,20 @@
             </div>
         </div>
         <div class="example-container mat-elevation-z8">
+            <h3>حركات الصندوق</h3>
+
             <table mat-table [dataSource]="dataSource">
                 <ng-container matColumnDef="amount">
-                    <th mat-header-cell *matHeaderCellDef style="padding-right: 10px;"> قيمة بدائية للصندوق </th>
+                    <th mat-header-cell *matHeaderCellDef style="padding-right: 10px;"> قيمة  الحركة</th>
                     <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.amount}}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="type">
-                    <th mat-header-cell *matHeaderCellDef style="padding-right: 10px;">أخذ \ اعطاء</th>
+                    <th mat-header-cell *matHeaderCellDef style="padding-right: 10px;">نوع الحركة</th>
                     <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.type}}</td>
                 </ng-container>
                 <ng-container matColumnDef="createdOnUtc">
-                    <th mat-header-cell *matHeaderCellDef style="padding-right: 10px;"> تاريخ انشاء الصندوق </th>
+                    <th mat-header-cell *matHeaderCellDef style="padding-right: 10px;"> تاريخ انشاء الحركة</th>
                     <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.createdOnUtc|
                         date:"dd/MM/yyyy"}}</td>
                 </ng-container>
