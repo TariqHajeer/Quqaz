@@ -14,6 +14,7 @@ import { OrdersTodayComponent } from './orders-today/orders-today.component';
 import { OrdersUnacceptableComponent } from './orders-unacceptable/orders-unacceptable.component';
 import { ReceiptAgentComponent } from './print/receipt-agent/receipt-agent.component';
 import { AgentComponent } from './printpreview/agent/agent.component';
+import { ClientReciptAndExchangeComponent } from './printpreview/client-recipt-and-exchange/client-recipt-and-exchange.component';
 import { ClientComponent } from './printpreview/client/client.component';
 import { PayComponent } from './printpreview/pay/pay.component';
 import { PrintOrderInCompanyComponent } from './printpreview/print-order-in-company/print-order-in-company.component';
@@ -123,6 +124,11 @@ const routes: Routes = [
   {
     path:'printorderincompany',
     component: PrintOrderInCompanyComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
+  },
+  {
+    path:'printclientreciptandexchange/:id',
+    component: ClientReciptAndExchangeComponent,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowReports]}
   },
   {
