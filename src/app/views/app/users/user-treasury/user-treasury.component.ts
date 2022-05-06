@@ -149,12 +149,12 @@ export class UserTreasuryComponent implements OnInit {
     }
   }
   clientPayment(id) {
-    this.router.navigate(['/app/reports/clientprintnumber/'], id);
+    this.router.navigate(['/app/reports/clientprintnumber/', id]);
   }
   cashMovment(id) {
-    this.router.navigate(['/app/reports/clientprintnumber/'], id);
+    this.router.navigate(['/app/reports/clientprintnumber/', id]);
   }
   receipt(id) {
-    this.router.navigate(['/app/reports/clientprintnumber/'], id);
+    this.router.navigate(['/app/reports/clientprintnumber/', id]);
   }
 }
