@@ -97,6 +97,8 @@ export class UserTreasuryComponent implements OnInit {
         this.notifications.create('success', 'تم اعطاء المبلغ بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         this.getTreasury();
         this.createTreasury = new CreateTreasury();
+      }, err => {
+        this.notifications.create('error', 'حدث خطأ ما يرجى اعادة المحاولة', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       });
     }
   }
@@ -109,6 +111,8 @@ export class UserTreasuryComponent implements OnInit {
         this.notifications.create('success', 'تم اخذ البلغ بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         this.getTreasury();
         this.createTreasury = new CreateTreasury();
+      }, err => {
+        this.notifications.create('error', 'حدث خطأ ما يرجى اعادة المحاولة', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       });
     }
   }
