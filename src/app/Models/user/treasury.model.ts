@@ -5,7 +5,7 @@ export class Treasury {
     isActive: boolean;
     history: {
         data: TreasuryHistory[],
-        total:number
+        total: number
     };
 }
 export class TreasuryHistory {
@@ -14,4 +14,5 @@ export class TreasuryHistory {
     createdOnUtc: Date;
     clientPaymentId: number;
     cashMovmentId: number;
+    receiptId: number;
 }

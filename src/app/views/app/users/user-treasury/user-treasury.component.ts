@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/Models/user/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { TreasuryService } from 'src/app/services/treasury.service';
@@ -19,12 +19,13 @@ export class UserTreasuryComponent implements OnInit {
   constructor(public UserService: UserService,
     private getroute: ActivatedRoute,
     private treasuryService: TreasuryService,
-    private notifications: NotificationsService,) { }
+    private notifications: NotificationsService,
+    private router: Router) { }
   id: number;
   User: User = new User();
   GiveOrDiscountPointsDto: boolean;
   noDataFound: boolean;
-  displayedColumns: string[] = ['amount', 'type', 'createdOnUtc'];
+  displayedColumns: string[] = ['amount', 'type', 'createdOnUtc', 'more'];
   dataSource
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -47,6 +48,7 @@ export class UserTreasuryComponent implements OnInit {
   }
   getTreasury() {
     this.treasuryService.getByUserId(this.id).subscribe(res => {
+      console.log(res)
       if (res) {
         this.firstAdd = false;
         this.treasury = res
@@ -120,11 +122,17 @@ export class UserTreasuryComponent implements OnInit {
   DisActive() {
     this.treasuryService.DisActive(this.treasury.id).subscribe(res => {
       this.notifications.create('success', 'تم الغاء التفعيل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    }, err => {
+      this.notifications.create('error', 'حدث خطأ ما يرجى اعادة المحاولة', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.treasury.isActive = !this.treasury.isActive;
     })
   }
   Active() {
     this.treasuryService.Active(this.treasury.id).subscribe(res => {
       this.notifications.create('success', 'تم التفعيل بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    }, err => {
+      this.notifications.create('error', 'حدث خطأ ما يرجى اعادة المحاولة', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.treasury.isActive = !this.treasury.isActive;
     })
   }
   validation() {
@@ -135,5 +143,14 @@ export class UserTreasuryComponent implements OnInit {
       this.notifications.create('error', 'يجب ادخال قيمة المبلغ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return false
     }
+  }
+  clientPayment(id) {
+    this.router.navigate(['/app/reports/clientprintnumber/'], id);
+  }
+  cashMovment(id) {
+    this.router.navigate(['/app/reports/clientprintnumber/'], id);
+  }
+  receipt(id) {
+    this.router.navigate(['/app/reports/clientprintnumber/'], id);
   }
 }
