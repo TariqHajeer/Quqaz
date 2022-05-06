@@ -2,18 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
-import { ReceiptAndExchange } from 'src/app/Models/receipt-and-exchange.model';
+import {  ReceiptAndExchange } from 'src/app/Models/receipt-and-exchange.model';
 import { UserLogin } from 'src/app/Models/userlogin.model';
+import { ReciptService } from 'src/app/services/recipt.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-client-recipt-and-exchange',
   templateUrl: './client-recipt-and-exchange.component.html',
   styleUrls: ['./client-recipt-and-exchange.component.scss']
-})
+})   
 export class ClientReciptAndExchangeComponent implements OnInit {
 
-  constructor(public sanitizer: DomSanitizer, public getroute: ActivatedRoute) { }
+  constructor(public sanitizer: DomSanitizer,
+    public getroute: ActivatedRoute,
+    private reciptService: ReciptService) { }
   client: ReceiptAndExchange = new ReceiptAndExchange();
   userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin;
   companyPhone = "07714400880";
@@ -31,6 +34,10 @@ export class ClientReciptAndExchangeComponent implements OnInit {
   getById() {
     this.getroute.params.subscribe(par => {
       this.id = par['id'] as any;
+      this.reciptService.GetById(this.id).subscribe(res => {
+        console.log(res)
+        this.client = res;
+      })
     });
   }
   print() {

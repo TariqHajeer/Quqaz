@@ -48,9 +48,9 @@
                     <img [src]="sanitizer.bypassSecurityTrustUrl('/assets/logos/logo.PNG')" width="175px" height="150px"
                         style="margin-right: 20%;" />
                     <h2 style="text-align: center;"><b>
-                            سند {{!client.IsPay?'قبض':'صرف'}}
+                            سند {{!client.isPay?'قبض':'صرف'}}
                         </b> </h2>
-                    <h5 style="text-align: center;"> {{!client.IsPay?'Receipt':'Exchange'}} Voucher </h5>
+                    <h5 style="text-align: center;"> {{!client.isPay?'Receipt':'Exchange'}} Voucher </h5>
                 </div>
                 <div class="col-4" style="text-align: left;">
                     <p style="font-size: 17px;">
@@ -103,18 +103,18 @@
             </div> -->
             <div class="row">
                 <div class="col-12">
-                    {{!client.IsPay?'قبضنا من السيد/ة ':'صرفنا للسيد/ة'}} :&nbsp;
-                    <a style="padding-right: 280px;"> {{client.client.name}}</a>
+                    {{!client.isPay?'قبضنا من السيد/ة ':'صرفنا للسيد/ة'}} :&nbsp;
+                    <a style="padding-right: 280px;"> {{client.clientName?client.clientName:""}}</a>
                     <hr style="border-bottom: black 1px dotted;width: 80%;">
                 </div>
                 <div class="col-12">
                     مبلغ قدره :
-                    <a style="padding-right: 280px;"> {{client.IsPay?client.Amount*-1:client.Amount}}</a>
+                    <a style="padding-right: 280px;"> {{client.isPay?client.amount*-1:client.amount}}</a>
                     <hr style="border-bottom: black 1px dotted;width: 80%;">
                 </div>
                 <div class="col-12">
                     وذلك عن :
-                    <a style="padding-right: 280px;">{{client.About}}</a>
+                    <a style="padding-right: 280px;">{{client.about}}</a>
                     <hr style="border-bottom: black 1px dotted;width: 80%;">
                 </div>
                 <div class="col-12">
@@ -132,7 +132,7 @@
 
                 </div>
                 <div class="col-4">
-                    المدير : {{client.Manager}}
+                    المدير : {{client.manager}}
                     <!--
                       <hr style="border-bottom: black 1px dotted;width: 80%;">
                   -->
