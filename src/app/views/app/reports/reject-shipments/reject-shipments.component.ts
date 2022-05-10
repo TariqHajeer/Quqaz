@@ -19,11 +19,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { MoneyPalcedEnum } from 'src/app/Models/Enums/MoneyPalcedEnum';
 @Component({
-  selector: 'app-receiptf-receiving-shipment',
-  templateUrl: './receiptf-receiving-shipment.component.html',
-  styleUrls: ['./receiptf-receiving-shipment.component.scss'],
+  selector: 'reject-shipments',
+  templateUrl: './reject-shipments.component.html',
+  styleUrls: ['./reject-shipments.component.scss'],
 })
-export class ReceiptfReceivingShipmentComponent implements OnInit {
+export class RejectShipmentsComponent implements OnInit {
   displayedColumns: string[] = [
     'index',
     'code',
@@ -134,14 +134,14 @@ export class ReceiptfReceivingShipmentComponent implements OnInit {
       this.orderPlace = res;
       this.orderPlace = this.orderPlace.filter(
         (o) =>
-          o.id == OrderplacedEnum.PartialReturned ||
-          o.id == OrderplacedEnum.Delivered ||
+          o.id == OrderplacedEnum.CompletelyReturned ||
+          o.id == OrderplacedEnum.Unacceptable ||
           o.id == OrderplacedEnum.Way
       );
       this.orderPleacedFilters = this.orderPlace.filter(
         (o) =>
-          o.id == OrderplacedEnum.PartialReturned ||
-          o.id == OrderplacedEnum.Delivered
+        o.id == OrderplacedEnum.CompletelyReturned ||
+        o.id == OrderplacedEnum.Unacceptable 
       );
     });
   }

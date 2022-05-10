@@ -46,6 +46,12 @@ const data: IMenuItem[] = [
       },
       {
         icon: 'iconsminds-box-close',
+        label: 'استلام حالة الشحنة المرتجعة ',
+        to: `${adminRoot}/reports/rejectShipments`,
+        permission: [UserPermission.AddOrder]
+      },
+      {
+        icon: 'iconsminds-box-close',
         label: 'نقل الطلبات ',
         to: `${adminRoot}/order/moveorder`,
         permission: [UserPermission.AddOrder]
