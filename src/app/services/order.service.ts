@@ -175,8 +175,8 @@ export class OrderService {
   GetOrderByAgent(orderCode) {
     return this.http.get(this.controler + "GetOrderByAgent/" + orderCode)
   }
-  GetOrderToReciveForDelivredOrders(orderCode) {
-    return this.http.get<any>(this.controler + "GetOrderToReciveForDelivredOrders/" + orderCode)
+  GetOrderToReciveFromAgent(orderCode) {
+    return this.http.get<any>(this.controler + "GetOrderToReciveFromAgent/" + orderCode)
   }
   GetEarning(paging: Paging, datefilter: DateFiter) {
     let params = new HttpParams();
