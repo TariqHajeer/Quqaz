@@ -40,8 +40,8 @@ const data: IMenuItem[] = [
       },
       {
         icon: 'iconsminds-box-close',
-        label: 'استلام حالة الشحنة ',
-        to: `${adminRoot}/reports/ReceiptShipmentAgentComponent`,
+        label: 'استلام حالة الشحنة المستلمة ',
+        to: `${adminRoot}/reports/ReceiptfReceivingShipment`,
         permission: [UserPermission.AddOrder]
       },
       {
