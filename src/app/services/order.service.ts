@@ -149,6 +149,9 @@ export class OrderService {
     return this.http.put<any>(this.controler + "MakeOrderInWay", ids)
 
   }
+  UpdateOrdersStatusFromAgent(orderstate) {
+    return this.http.put<any>(this.controler + "UpdateOrdersStatusFromAgent", orderstate)
+  }
   ReceiptOfTheStatusOfTheReturnedShipment(orderstate) {
     return this.http.put<any>(this.controler + "ReceiptOfTheStatusOfTheReturnedShipment", orderstate)
   }
@@ -174,9 +177,6 @@ export class OrderService {
   }
   GetOrderByAgent(orderCode) {
     return this.http.get(this.controler + "GetOrderByAgent/" + orderCode)
-  }
-  GetOrderToReciveFromAgent(orderCode) {
-    return this.http.get<any>(this.controler + "GetOrderToReciveFromAgent/" + orderCode)
   }
   GetEarning(paging: Paging, datefilter: DateFiter) {
     let params = new HttpParams();
@@ -212,7 +212,7 @@ export class OrderService {
     return this.http.get<any>(this.controler + "GetOrderByClientPrintNumber", { params: params })
   }
 
-  GetClientprint(paging, number, client, code) {
+  GetClientprint(paging, number, client,code) {
     let params = new HttpParams();
     if (paging.RowCount != undefined || paging.RowCount != null)
       params = params.append("RowCount", paging.RowCount);
@@ -220,7 +220,7 @@ export class OrderService {
       params = params.append("Page", paging.Page);
     if (number)
       params = params.append("number", number);
-    if (code)
+      if (code)
       params = params.append("code", code);
     if (client)
       params = params.append("clientName", client);
@@ -262,6 +262,9 @@ export class OrderService {
   OrderVicdanAgent(AgentId) {
     return this.http.get(this.controler + "OrderVicdanAgent/" + AgentId)
   }
+  GetOrderToReciveFromAgent(code) {
+    return this.http.get<any>(this.controler + "GetOrderToReciveFromAgent/" + code)
+  }
   OrderInCompany(ClientId, code) {
     return this.http.get(this.controler + "GetOrderForPayBy/" + ClientId + "/" + code)
   }
@@ -294,15 +297,15 @@ export class OrderService {
     return this.http.get<any>(this.controler + "OrderAtClient", { params: params })
   }
   changeAgentOrders(moveOrder) {
-    return this.http.put(this.controler + "TransferOrderToAnotherAgnet", moveOrder)
+    return this.http.put(this.controler+"TransferOrderToAnotherAgnet",moveOrder)
   }
-  AddPrintNumber(id) {
-    return this.http.patch(this.controler + "AddPrintNumber/" + id, id)
+  AddPrintNumber(id){
+    return this.http.patch(this.controler+"AddPrintNumber/"+id,id)
   }
-  AddPrintNumberMultiple(ids) {
-    return this.http.patch(this.controler + "AddPrintNumberMultiple", ids)
+  AddPrintNumberMultiple(ids){
+    return this.http.patch(this.controler+"AddPrintNumberMultiple",ids)
   }
-  OrderRequestEditState() {
+  OrderRequestEditState(){
     return this.http.get<any>(this.controler + "OrderRequestEditState")
   }
   AproveOrderRequestEditStateCount(id) {
@@ -311,7 +314,7 @@ export class OrderService {
   DisAproveOrderRequestEditStateCount(id) {
     return this.http.put<any>(this.controler + "DisAproveOrderRequestEditState", id)
   }
-  OrderRequestEditStateCount() {
+  OrderRequestEditStateCount(){
     return this.http.get<any>(this.controler + "OrderRequestEditStateCount")
   }
 }
