@@ -375,24 +375,7 @@ export class ReceiptfReceivingShipmentComponent implements OnInit {
       this.MoenyPlaced
     );
   }
-  switchPage(event: PageEvent) {
-    this.paging.allItemsLength = event.length;
-    this.paging.RowCount = event.pageSize;
-    this.paging.Page = event.pageIndex + 1;
-    this.allFilter();
-  }
-  allFilter() {
-    this.orderservice.GetAll(this.filtering, this.paging).subscribe(
-      (response) => {
-        this.canEditCount = [];
-        if (response)
-          if (response.data.length == 0) this.noDataFound = true;
-          else this.noDataFound = false;
-        this.orders = response.data;
-      },
-      (err) => {}
-    );
-  }
+ 
   count = 0;
   agentCost;
   deliveryCostCount;
@@ -427,7 +410,6 @@ export class ReceiptfReceivingShipmentComponent implements OnInit {
     this.spinner.show();
     this.orderservice.ReceiptOfTheStatusOfTheReturnedShipment(this.orderstates).subscribe(
       (res) => {
-        this.allFilter();
         this.spinner.hide();
         this.orderstates = [];
         this.dataSource = new MatTableDataSource([]);
