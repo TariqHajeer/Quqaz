@@ -295,7 +295,7 @@ export class RejectShipmentsComponent implements OnInit {
   }
   disabledOrderPlaec(orderplaced) {
     if (!this.getorder.OrderPlaced.find((o) => o.id == orderplaced.id))
-      this.getorder.OrderPlaced.push({ ...orderplaced });
+      this.getorder.OrderPlaced.push(orderplaced);
   }
   showTable: boolean = false;
   add(order) {
@@ -341,7 +341,15 @@ export class RejectShipmentsComponent implements OnInit {
       );
     }
   }
-  ChangeOrderplacedId(element, index) {
+  ChangeOrderplacedId(element, index, op) {
+    if (op.id == OrderplacedEnum.Delayed) {
+      element.MoenyPlaced = [
+        ...this.MoenyPlaced.filter(
+          (m) => m.id == MoneyPalcedEnum.InsideCompany
+        ),
+      ];
+      element.order.monePlaced = { ...element.MoenyPlaced[0] }
+    }
     this.OrderplacedId = null;
     this.MoenyPlacedId = null;
     this.getMoenyPlaced = [];
@@ -377,7 +385,7 @@ export class RejectShipmentsComponent implements OnInit {
       this.MoenyPlaced
     );
   }
- 
+
   count = 0;
   agentCost;
   deliveryCostCount;
@@ -410,27 +418,29 @@ export class RejectShipmentsComponent implements OnInit {
       this.orderstate = new OrderState();
     }
     this.spinner.show();
-    this.orderservice.ReceiptOfTheStatusOfTheReturnedShipment(this.orderstates).subscribe(
-      (res) => {
-        this.spinner.hide();
-        this.orderstates = [];
-        this.dataSource = new MatTableDataSource([]);
-        this.getorders = [];
-        this.sumCost();
-        this.OrderplacedId = null;
-        this.MoenyPlacedId = null;
-        this.getMoenyPlaced = [];
-        this.notifications.create(
-          'success',
-          'تم تعديل الطلبيات  بنجاح',
-          NotificationType.Success,
-          { theClass: 'success', timeOut: 6000, showProgressBar: false }
-        );
-      },
-      (err) => {
-        this.spinner.hide();
-      }
-    );
+    this.orderservice
+      .ReceiptOfTheStatusOfTheReturnedShipment(this.orderstates)
+      .subscribe(
+        (res) => {
+          this.spinner.hide();
+          this.orderstates = [];
+          this.dataSource = new MatTableDataSource([]);
+          this.getorders = [];
+          this.sumCost();
+          this.OrderplacedId = null;
+          this.MoenyPlacedId = null;
+          this.getMoenyPlaced = [];
+          this.notifications.create(
+            'success',
+            'تم تعديل الطلبيات  بنجاح',
+            NotificationType.Success,
+            { theClass: 'success', timeOut: 6000, showProgressBar: false }
+          );
+        },
+        (err) => {
+          this.spinner.hide();
+        }
+      );
   }
   tempOrders: any[] = [];
   CancelOrder(order) {

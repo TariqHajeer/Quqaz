@@ -12,7 +12,7 @@
     <h3>استلام حالة الشحنة المرتجعة</h3>
 
     <div class="row">
-      <div class="col-md-5">
+      <div class="col-md-5">   
         <label>كود الشحنة</label>
         <input
           type="text"
@@ -219,7 +219,7 @@
           [ngModelOptions]="{ standalone: true }"
           [clearable]="false"
           id="i*2"
-          (ngModelChange)="ChangeOrderplacedId(element, i)"
+          (change)="ChangeOrderplacedId(element, i,element.order.orderplaced)"
           style="width: 120px; overflow: visible"
         >
           <ng-option
