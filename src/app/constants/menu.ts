@@ -40,8 +40,14 @@ const data: IMenuItem[] = [
       },
       {
         icon: 'iconsminds-box-close',
-        label: 'استلام حالة الشحنة ',
-        to: `${adminRoot}/reports/ReceiptShipmentAgentComponent`,
+        label: 'استلام حالة الشحنة المستلمة ',
+        to: `${adminRoot}/reports/ReceiptfReceivingShipment`,
+        permission: [UserPermission.AddOrder]
+      },
+      {
+        icon: 'iconsminds-box-close',
+        label: 'استلام حالة الشحنة المرتجعة ',
+        to: `${adminRoot}/reports/rejectShipments`,
         permission: [UserPermission.AddOrder]
       },
       {

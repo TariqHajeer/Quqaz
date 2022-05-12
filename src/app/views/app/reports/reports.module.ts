@@ -42,6 +42,8 @@ import { OrdersTodayComponent } from './orders-today/orders-today.component';
 import { OrdersUnacceptableComponent } from './orders-unacceptable/orders-unacceptable.component';
 import { ChangeAgentByOrdersComponent } from './change-agent-by-orders/change-agent-by-orders.component';
 import { AgentOrderStateComponent } from './agent-order-state/agent-order-state.component';
+import { ReceiptfReceivingShipmentComponent } from './receiptf-receiving-shipment/receiptf-receiving-shipment.component';
+import { RejectShipmentsComponent } from './reject-shipments/reject-shipments.component';
 import { ClientReciptAndExchangeComponent } from './printpreview/client-recipt-and-exchange/client-recipt-and-exchange.component';
 @NgModule({
   declarations: [ShipmentInStockComponent,
@@ -71,6 +73,8 @@ import { ClientReciptAndExchangeComponent } from './printpreview/client-recipt-a
     OrdersUnacceptableComponent,
     ChangeAgentByOrdersComponent,
     AgentOrderStateComponent,
+    ReceiptfReceivingShipmentComponent,
+    RejectShipmentsComponent,
     ClientReciptAndExchangeComponent,],
   imports: [
     CommonModule,
