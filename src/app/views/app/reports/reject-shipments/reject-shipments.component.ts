@@ -132,16 +132,11 @@ export class RejectShipmentsComponent implements OnInit {
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe((res) => {
       this.orderPlace = res;
-      this.orderPlace = this.orderPlace.filter(
+      this.orderPlace = this.orderPleacedFilters = this.orderPlace.filter(
         (o) =>
           o.id == OrderplacedEnum.CompletelyReturned ||
           o.id == OrderplacedEnum.Unacceptable ||
-          o.id == OrderplacedEnum.Way
-      );
-      this.orderPleacedFilters = this.orderPlace.filter(
-        (o) =>
-        o.id == OrderplacedEnum.CompletelyReturned ||
-        o.id == OrderplacedEnum.Unacceptable 
+          o.id == OrderplacedEnum.Delayed
       );
     });
   }
@@ -230,6 +225,7 @@ export class RejectShipmentsComponent implements OnInit {
     this.getorder.MoenyPlaced = [...this.MoenyPlaced];
     this.getorder.OrderPlaced = [...this.orderPlace];
     this.getorder.canEditCount = true;
+    this.disabledOrderPlaec(this.getorder.order.orderplaced);
     this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced);
     this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced);
     this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced);
@@ -296,6 +292,10 @@ export class RejectShipmentsComponent implements OnInit {
     );
     this.Code = '';
     this.getorder = new GetOrder();
+  }
+  disabledOrderPlaec(orderplaced) {
+    if (!this.getorder.OrderPlaced.find((o) => o.id == orderplaced.id))
+      this.getorder.OrderPlaced.push({ ...orderplaced });
   }
   showTable: boolean = false;
   add(order) {
@@ -427,7 +427,7 @@ export class RejectShipmentsComponent implements OnInit {
       this.orderstate = new OrderState();
     }
     this.spinner.show();
-    this.orderservice.UpdateOrdersStatusFromAgent(this.orderstates).subscribe(
+    this.orderservice.ReceiptOfTheStatusOfTheReturnedShipment(this.orderstates).subscribe(
       (res) => {
         this.allFilter();
         this.spinner.hide();

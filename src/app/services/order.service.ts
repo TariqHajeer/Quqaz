@@ -149,8 +149,8 @@ export class OrderService {
     return this.http.put<any>(this.controler + "MakeOrderInWay", ids)
 
   }
-  UpdateOrdersStatusFromAgent(orderstate) {
-    return this.http.put<any>(this.controler + "UpdateOrdersStatusFromAgent", orderstate)
+  ReceiptOfTheStatusOfTheReturnedShipment(orderstate) {
+    return this.http.put<any>(this.controler + "ReceiptOfTheStatusOfTheReturnedShipment", orderstate)
   }
   DeleiverMoneyForClient(ids) {
     return this.http.put<any>(this.controler + "DeleiverMoneyForClient", ids)

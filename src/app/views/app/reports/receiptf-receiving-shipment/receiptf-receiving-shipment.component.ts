@@ -132,13 +132,7 @@ export class ReceiptfReceivingShipmentComponent implements OnInit {
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe((res) => {
       this.orderPlace = res;
-      this.orderPlace = this.orderPlace.filter(
-        (o) =>
-          o.id == OrderplacedEnum.PartialReturned ||
-          o.id == OrderplacedEnum.Delivered ||
-          o.id == OrderplacedEnum.Way
-      );
-      this.orderPleacedFilters = this.orderPlace.filter(
+      this.orderPlace = this.orderPleacedFilters = this.orderPlace.filter(
         (o) =>
           o.id == OrderplacedEnum.PartialReturned ||
           o.id == OrderplacedEnum.Delivered
@@ -269,6 +263,7 @@ export class ReceiptfReceivingShipmentComponent implements OnInit {
     }
     this.getorder.order.Cost = this.getorder.order.Cost * 1;
     this.getorder.order.index = this.getorders.length + 1;
+    this.disabledOrderPlaec(this.getorder.order.orderplaced);
     this.getorders.unshift({ ...this.getorder });
     this.sumCost();
     this.showcount = true;
@@ -362,7 +357,10 @@ export class ReceiptfReceivingShipmentComponent implements OnInit {
     );
     this.sumCost();
   }
-
+  disabledOrderPlaec(orderplaced) {
+    if (!this.getorder.OrderPlaced.find((o) => o.id == orderplaced.id))
+      this.getorder.OrderPlaced.push({ ...orderplaced });
+  }
   changeCost(element, index) {
     this.orderplacedstate.canChangeCost(
       element,
@@ -427,7 +425,7 @@ export class ReceiptfReceivingShipmentComponent implements OnInit {
       this.orderstate = new OrderState();
     }
     this.spinner.show();
-    this.orderservice.UpdateOrdersStatusFromAgent(this.orderstates).subscribe(
+    this.orderservice.ReceiptOfTheStatusOfTheReturnedShipment(this.orderstates).subscribe(
       (res) => {
         this.allFilter();
         this.spinner.hide();
