@@ -155,6 +155,9 @@ export class OrderService {
   ReceiptOfTheStatusOfTheReturnedShipment(orderstate) {
     return this.http.put<any>(this.controler + "ReceiptOfTheStatusOfTheReturnedShipment", orderstate)
   }
+  ReceiptOfTheStatusOfTheDeliveredShipment(orderstate) {
+    return this.http.put<any>(this.controler + "ReceiptOfTheStatusOfTheDeliveredShipment", orderstate)
+  }
   DeleiverMoneyForClient(ids) {
     return this.http.put<any>(this.controler + "DeleiverMoneyForClient", ids)
 

@@ -408,7 +408,7 @@ export class ReceiptfReceivingShipmentComponent implements OnInit {
       this.orderstate = new OrderState();
     }
     this.spinner.show();
-    this.orderservice.ReceiptOfTheStatusOfTheReturnedShipment(this.orderstates).subscribe(
+    this.orderservice.ReceiptOfTheStatusOfTheDeliveredShipment(this.orderstates).subscribe(
       (res) => {
         this.spinner.hide();
         this.orderstates = [];
