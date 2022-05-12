@@ -113,5 +113,7 @@ export class ViewUserComponent implements OnInit {
   showAgent(id) {
     this.route.navigate(['/app/user/showagent', id])
   }
-
+  userTreasury(id) {
+    this.route.navigate(['/app/user/usertreasury', id])
+  }
 }

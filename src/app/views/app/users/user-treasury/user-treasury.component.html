@@ -1,0 +1,110 @@
+<div class="card">
+    <div class="card-body">
+        <h3 class="text-center">صندوق الموظف : {{User.name}}</h3>
+        <div class="row">
+            <div class="col-md-3" *ngIf="firstAdd">
+                <label>المبلغ المبدئي </label>
+                <input type="text" class="form-control"
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..-*)\./g, '$1');"
+                    [ngModelOptions]="{standalone: true}" [(ngModel)]="createTreasury.Amount">
+            </div>
+            <div class="col-md-3" style="padding-top:15px;" *ngIf="firstAdd">
+                <button class="btn  btn-primary" (click)="addTreasury()">
+                    &nbsp;اضافة
+                </button>
+            </div>
+            <!-- <div class="col-md-3" *ngIf="!firstAdd">
+                <label>اخذ\ إعطاء</label>
+                <ng-select [(ngModel)]="GiveOrDiscountPointsDto" [ngModelOptions]="{standalone: true}"
+                    [closeOnSelect]="true">
+                    <ng-option [value]="false">اخذ</ng-option>
+                    <ng-option [value]="true">إعطاء</ng-option>
+                </ng-select>
+            </div> -->
+
+
+            <div class="col-md-3" *ngIf="!firstAdd">
+                <label>المبلغ </label>
+                <input type="text" class="form-control"
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..-*)\./g, '$1');"
+                    [ngModelOptions]="{standalone: true}" [(ngModel)]=" this.createTreasury.Amount">
+            </div>
+            <div class="col-md-2" style="padding-top:15px;" *ngIf="!firstAdd">
+                <button class="btn  btn-primary" (click)="GetMoney()">
+                    &nbsp;أخذ
+                </button>
+            </div>
+            <div class="col-md-2" style="padding-top:15px;" *ngIf="!firstAdd">
+                <button class="btn  btn-primary" (click)="GiveMoney()">
+                    &nbsp;اعطاء
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<br>
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <label>قيمة الصندوق الحالية : {{treasury.total}}</label>
+            </div>
+            <div class="col-md-4">
+                <label>تاريخ انشاء الصندوق : {{treasury.createOnUtc| date:"dd/MM/yyyy"}}</label>
+            </div>
+            <div class="col-md-4">
+                <label>
+                    فعال : <input type="checkbox" [(ngModel)]="treasury.isActive" (click)="ActiveOrDisActive()">
+                </label>
+
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="card">
+    <div class="card-body">
+        <h3 class="text-center">حركات الصندوق</h3>
+        <div class="example-container mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="amount">
+                    <th mat-header-cell *matHeaderCellDef style="padding-right: 10px;"> قيمة الحركة</th>
+                    <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.amount}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef style="padding-right: 10px;">نوع الحركة</th>
+                    <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.type}}</td>
+                </ng-container>
+                <ng-container matColumnDef="createdOnUtc">
+                    <th mat-header-cell *matHeaderCellDef style="padding-right: 10px;"> تاريخ انشاء الحركة</th>
+                    <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.createdOnUtc|
+                        date:"dd/MM/yyyy"}}</td>
+                </ng-container>
+               
+                <ng-container matColumnDef="more">
+                    <th mat-header-cell *matHeaderCellDef style="padding-right: 10px;"> خيارات</th>
+                    <td mat-cell *matCellDef="let element" style="padding-right: 10px;">
+                        <a class="btn  btn-primary btn-xs" (click)="clientPayment(element.clientPaymentId)" *ngIf="element.clientPaymentId">
+                            &nbsp;عرض الحركة 
+                        </a>
+                        <a class="btn  btn-primary btn-xs" (click)="cashMovment(element.cashMovmentId)"*ngIf="element.cashMovmentId">
+                            &nbsp;عرض الحركة
+                        </a>
+                        <a class="btn  btn-primary btn-xs" (click)="receipt(element.receiptId)"*ngIf="element.receiptId">
+                            &nbsp;عرض الحركة
+                        </a>
+                    </td>
+                </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <h5 style="padding-top: 20px; padding-right: 10px;" *ngIf="noDataFound"> لايوجد بيانات للعرض</h5>
+        </div>
+    </div>
+</div>
+<mat-paginator showFirstLastButtons [length]="total" [pageSize]="paging.RowCount"
+    [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
+<simple-notifications></simple-notifications>

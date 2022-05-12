@@ -44,6 +44,7 @@ import { ChangeAgentByOrdersComponent } from './change-agent-by-orders/change-ag
 import { AgentOrderStateComponent } from './agent-order-state/agent-order-state.component';
 import { ReceiptfReceivingShipmentComponent } from './receiptf-receiving-shipment/receiptf-receiving-shipment.component';
 import { RejectShipmentsComponent } from './reject-shipments/reject-shipments.component';
+import { ClientReciptAndExchangeComponent } from './printpreview/client-recipt-and-exchange/client-recipt-and-exchange.component';
 @NgModule({
   declarations: [ShipmentInStockComponent,
     ClientOrderComponent,
@@ -73,7 +74,8 @@ import { RejectShipmentsComponent } from './reject-shipments/reject-shipments.co
     ChangeAgentByOrdersComponent,
     AgentOrderStateComponent,
     ReceiptfReceivingShipmentComponent,
-    RejectShipmentsComponent,],
+    RejectShipmentsComponent,
+    ClientReciptAndExchangeComponent,],
   imports: [
     CommonModule,
     ReportsRoutingModule,
