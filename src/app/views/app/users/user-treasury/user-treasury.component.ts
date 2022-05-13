@@ -81,10 +81,10 @@ export class UserTreasuryComponent implements OnInit {
     else {
       this.createTreasury.UserId = Number(this.id);
       this.createTreasury.Amount = this.createTreasury.Amount * 1;
-      this.createTreasury = new CreateTreasury();
       this.treasuryService.Add(this.createTreasury).subscribe(res => {
         this.notifications.create('success', 'تم اضافة صندوق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         this.getTreasury();
+        this.createTreasury = new CreateTreasury();
       });
     }
   }
