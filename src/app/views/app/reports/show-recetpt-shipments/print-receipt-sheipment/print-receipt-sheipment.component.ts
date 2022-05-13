@@ -17,6 +17,7 @@ export class PrintReceiptSheipmentComponent implements OnInit {
   receiptOfTheOrderStatus: ReceiptOfTheOrderStatus =
     new ReceiptOfTheOrderStatus();
     displayedColumns: string[] = [
+      'id',
       'orderCode',
       'client',
       'cost',
