@@ -12,6 +12,7 @@ export interface IMenuItem {
   permission?: UserPermission[];
   badge?: boolean
   badgeLable?
+  enabled?:boolean;
 }
 
 const data: IMenuItem[] = [

@@ -4,4 +4,5 @@ export class UserLogin {
     privileges:any[]
     expiry:any
     policy:any
+    haveTreasury:boolean
 }
