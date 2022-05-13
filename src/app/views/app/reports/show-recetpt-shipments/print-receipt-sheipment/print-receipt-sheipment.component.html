@@ -3,61 +3,87 @@
     <h3>تقرير استلام حالة الشحنة</h3>
     <div class="row">
       <div class="col-3">
-        <label> كود الشحنة</label>
-        <h4>{{ receiptOfTheOrderStatus.orderCode }}</h4>
+        <label> تاريخ الادخال </label>
+        <h4>{{ receiptOfTheOrderStatus.createdOn | date: "yyyy/MM/dd" }}</h4>
       </div>
       <div class="col-3">
-        <label> العميل</label>
+        <label> اسم المستلم </label>
         <h4>
-          {{
-            receiptOfTheOrderStatus.client
-              ? receiptOfTheOrderStatus.client.name
-              : null
-          }}
+          {{ receiptOfTheOrderStatus.reciverName }}
         </h4>
-      </div>
-      <div class="col-3">
-        <label> المبلغ</label>
-        <h4>{{ receiptOfTheOrderStatus.cost }}</h4>
-      </div>
-      <div class="col-3">
-        <label> المندوب</label>
-        <h4>
-          {{
-            receiptOfTheOrderStatus.agent
-              ? receiptOfTheOrderStatus.agent.name
-              : null
-          }}
-        </h4>
-      </div>
-      <div class="col-3">
-        <label> كلفة توصيل المندوب</label>
-        <h4>{{ receiptOfTheOrderStatus.agentCost }}</h4>
-      </div>
-      <div class="col-3">
-        <label> حالة الشحنة</label>
-        <h4>
-          {{
-            receiptOfTheOrderStatus.orderPlaced
-              ? receiptOfTheOrderStatus.orderPlaced.name
-              : null
-          }}
-        </h4>
-      </div>
-      <div class="col-3">
-        <label> موقع المبلغ</label>
-        <h4>
-          {{
-            receiptOfTheOrderStatus.orderPlaced
-              ? receiptOfTheOrderStatus.moneyPlaced.name
-              : null
-          }}
-        </h4>
-      </div>
-      <div class="col-3">
-        <label>رقم التقرير</label>
-        <h4>{{ receiptOfTheOrderStatus.receiptOfTheOrderStatusId }}</h4>
       </div>
     </div>
   </div>
+</div>
+<div class="example-container mat-elevation-z8">
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    matSort
+    class="mat-elevation-z8"
+    style="width: 100%"
+  >
+    <ng-container matColumnDef="orderCode">
+      <th mat-header-cell *matHeaderCellDef style="padding: 10px">الكود</th>
+      <td mat-cell *matCellDef="let element" style="padding: 10px">
+        {{ element.orderCode }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="client">
+      <th mat-header-cell *matHeaderCellDef style="padding: 10px">
+        اسم العميل
+      </th>
+      <td mat-cell *matCellDef="let element" style="padding: 10px">
+        {{ element.client ? element.client.name : null }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="cost">
+      <th mat-header-cell *matHeaderCellDef style="padding: 10px">
+        كلفة الشحنة
+      </th>
+      <td mat-cell *matCellDef="let element" style="padding: 10px">
+        {{ element.cost }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="agent">
+      <th mat-header-cell *matHeaderCellDef style="padding: 10px">المندوب</th>
+      <td mat-cell *matCellDef="let element" style="padding: 10px">
+        {{ element.agent ? eleelement.agent.name : null }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="agentCost">
+      <th mat-header-cell *matHeaderCellDef style="padding: 10px">
+        كلفة توصيل المندوب
+      </th>
+      <td mat-cell *matCellDef="let element" style="padding: 10px">
+        {{ element.agentCost }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="orderPlaced">
+      <th mat-header-cell *matHeaderCellDef style="padding: 10px">
+        حالة الشحنة
+      </th>
+      <td mat-cell *matCellDef="let element" style="padding: 10px">
+        {{ element.orderPlaced ? eleelement.orderPlaced.name : null }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="moneyPlaced">
+      <th mat-header-cell *matHeaderCellDef style="padding: 10px">
+        موقع المبلغ
+      </th>
+      <td mat-cell *matCellDef="let element" style="padding: 10px">
+        {{ element.moneyPlaced ? eleelement.moneyPlaced.name : null }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <h5 style="padding-top: 20px; padding-right: 10px" *ngIf="noDataFound">
+    لا يوجد بيانات للعرض
+  </h5>
 </div>
