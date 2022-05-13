@@ -95,7 +95,7 @@ export class RejectShipmentsComponent implements OnInit {
   }
   getmony() {
     this.orderservice.MoenyPlaced().subscribe((res) => {
-      this.MoenyPlaced = res;
+      this.MoenyPlaced = [...res];
     });
   }
   changeMoenyPlaced() {
@@ -341,15 +341,7 @@ export class RejectShipmentsComponent implements OnInit {
       );
     }
   }
-  ChangeOrderplacedId(element, index, op) {
-    if (op.id == OrderplacedEnum.Delayed) {
-      element.MoenyPlaced = [
-        ...this.MoenyPlaced.filter(
-          (m) => m.id == MoneyPalcedEnum.InsideCompany
-        ),
-      ];
-      element.order.monePlaced = { ...element.MoenyPlaced[0] }
-    }
+  ChangeOrderplacedId(element, index) {
     this.OrderplacedId = null;
     this.MoenyPlacedId = null;
     this.getMoenyPlaced = [];
@@ -368,6 +360,7 @@ export class RejectShipmentsComponent implements OnInit {
       this.tempdeliveryCost[index],
       this.tempagentCost[index]
     );
+    this.orderplacedstate.Delayed(element, this.MoenyPlaced);
     this.sumCost();
   }
 
