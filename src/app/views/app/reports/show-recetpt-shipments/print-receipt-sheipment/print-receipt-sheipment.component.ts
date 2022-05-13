@@ -36,7 +36,6 @@ export class PrintReceiptSheipmentComponent implements OnInit {
     this.getroute.params.subscribe((par) => {
       this.id = par['id'] as any;
       this.orderService.ReceiptOfTheOrderStatu(this.id).subscribe((res) => {
-        console.log(res);
         this.receiptOfTheOrderStatus.receiptOfTheOrderStatusDetalis = [];
         this.receiptOfTheOrderStatus = res.data;
         this.dataSource = new MatTableDataSource(

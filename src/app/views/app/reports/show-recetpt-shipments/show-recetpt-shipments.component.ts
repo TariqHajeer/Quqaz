@@ -18,6 +18,7 @@ export class ShowRecetptShipmentsComponent implements OnInit {
     this.Get();
   }
   displayedColumns: string[] = [
+    'id',
     'reciverName',
     'createdOn',
   ];
@@ -33,7 +34,6 @@ export class ShowRecetptShipmentsComponent implements OnInit {
     this.orderService
       .ReceiptOfTheOrderStatus(this.paging)
       .subscribe((res) => {
-        console.log(res);
         this.dataSource = new MatTableDataSource(res.data);
         this.totalCount = res.total;
       });

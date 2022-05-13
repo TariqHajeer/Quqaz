@@ -27,6 +27,24 @@
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="id">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        style="padding: 10px"
+      >
+        رقم العملية
+      </th>
+      <td mat-cell *matCellDef="let element" style="padding: 10px">
+        <a
+          class="btn"
+          style="color: rgb(2, 52, 128)"
+          (click)="print(element.id)"
+          >{{ element.id }}</a
+        >
+      </td>
+    </ng-container>
     <ng-container matColumnDef="reciverName">
       <th
         mat-header-cell
@@ -37,12 +55,7 @@
         اسم المستلم
       </th>
       <td mat-cell *matCellDef="let element" style="padding: 10px">
-        <a
-          class="btn"
-          style="color: rgb(2, 52, 128)"
-          (click)="print(element.id)"
-          >{{ element.reciverName }}</a
-        >
+        {{ element.reciverName }}
       </td>
     </ng-container>
 
