@@ -3,14 +3,12 @@
     <h3>تقرير استلام حالة الشحنة</h3>
     <div class="row">
       <div class="col-3">
-        <label> تاريخ الادخال </label>
-        <h4>{{ receiptOfTheOrderStatus.createdOn | date: "yyyy/MM/dd" }}</h4>
+        : تاريخ الادخال
+        {{ receiptOfTheOrderStatus.createdOn | date: "yyyy/MM/dd" }}
       </div>
       <div class="col-3">
-        <label> اسم المستلم </label>
-        <h4>
-          {{ receiptOfTheOrderStatus.reciverName }}
-        </h4>
+        :اسم المستلم
+        {{ receiptOfTheOrderStatus.reciverName }}
       </div>
     </div>
   </div>
@@ -43,7 +41,7 @@
         كلفة الشحنة
       </th>
       <td mat-cell *matCellDef="let element" style="padding: 10px">
-        {{ element.cost }}
+        {{ element.cost | number }}
       </td>
     </ng-container>
 
@@ -58,7 +56,7 @@
         كلفة توصيل المندوب
       </th>
       <td mat-cell *matCellDef="let element" style="padding: 10px">
-        {{ element.agentCost }}
+        {{ element.agentCost | number }}
       </td>
     </ng-container>
 
