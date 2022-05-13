@@ -390,7 +390,17 @@ export class OrderService {
   OrderRequestEditStateCount() {
     return this.http.get<any>(this.controler + 'OrderRequestEditStateCount');
   }
-  ReceiptOfTheOrderStatus(id) {
+  ReceiptOfTheOrderStatu(id) {
     return this.http.get<any>(this.controler + 'ReceiptOfTheOrderStatus/' + id);
+  }
+  ReceiptOfTheOrderStatus(paging) {
+    let params = new HttpParams();
+    if (paging.RowCount != undefined || paging.RowCount != null)
+      params = params.append('RowCount', paging.RowCount);
+    if (paging.Page != undefined || paging.Page != null)
+      params = params.append('Page', paging.Page);
+    return this.http.get<any>(this.controler + 'ReceiptOfTheOrderStatus', {
+      params: params,
+    });
   }
 }

@@ -1,1 +1,63 @@
-<p>print-receipt-sheipment works!</p>
+<div class="card">
+  <div class="card-body">
+    <h3>تقرير استلام حالة الشحنة</h3>
+    <div class="row">
+      <div class="col-3">
+        <label> كود الشحنة</label>
+        <h4>{{ receiptOfTheOrderStatus.orderCode }}</h4>
+      </div>
+      <div class="col-3">
+        <label> العميل</label>
+        <h4>
+          {{
+            receiptOfTheOrderStatus.client
+              ? receiptOfTheOrderStatus.client.name
+              : null
+          }}
+        </h4>
+      </div>
+      <div class="col-3">
+        <label> المبلغ</label>
+        <h4>{{ receiptOfTheOrderStatus.cost }}</h4>
+      </div>
+      <div class="col-3">
+        <label> المندوب</label>
+        <h4>
+          {{
+            receiptOfTheOrderStatus.agent
+              ? receiptOfTheOrderStatus.agent.name
+              : null
+          }}
+        </h4>
+      </div>
+      <div class="col-3">
+        <label> كلفة توصيل المندوب</label>
+        <h4>{{ receiptOfTheOrderStatus.agentCost }}</h4>
+      </div>
+      <div class="col-3">
+        <label> حالة الشحنة</label>
+        <h4>
+          {{
+            receiptOfTheOrderStatus.orderPlaced
+              ? receiptOfTheOrderStatus.orderPlaced.name
+              : null
+          }}
+        </h4>
+      </div>
+      <div class="col-3">
+        <label> موقع المبلغ</label>
+        <h4>
+          {{
+            receiptOfTheOrderStatus.orderPlaced
+              ? receiptOfTheOrderStatus.moneyPlaced.name
+              : null
+          }}
+        </h4>
+      </div>
+      <div class="col-3">
+        <label>رقم التقرير</label>
+        <h4>{{ receiptOfTheOrderStatus.receiptOfTheOrderStatusId }}</h4>
+      </div>
+    </div>
+  </div>
+</div>
