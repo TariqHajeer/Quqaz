@@ -16,19 +16,19 @@ export class PrintReceiptSheipmentComponent implements OnInit {
   id: number;
   receiptOfTheOrderStatus: ReceiptOfTheOrderStatus =
     new ReceiptOfTheOrderStatus();
-    displayedColumns: string[] = [
-      'id',
-      'orderCode',
-      'client',
-      'cost',
-      'agent',
-      'agentCost',
-      'orderPlaced',
-      'moneyPlaced',
-    ];
-    dataSource;
-    @Input() totalCount: number;
-    noDataFound: boolean = false;
+  displayedColumns: string[] = [
+    'id',
+    'orderCode',
+    'client',
+    'cost',
+    'agent',
+    'agentCost',
+    'orderPlaced',
+    'moneyPlaced',
+  ];
+  dataSource;
+  @Input() totalCount: number;
+  noDataFound: boolean = false;
   ngOnInit(): void {
     this.get();
   }
@@ -36,11 +36,13 @@ export class PrintReceiptSheipmentComponent implements OnInit {
     this.getroute.params.subscribe((par) => {
       this.id = par['id'] as any;
       this.orderService.ReceiptOfTheOrderStatu(this.id).subscribe((res) => {
-        console.log(res)
+        console.log(res);
+        this.receiptOfTheOrderStatus.receiptOfTheOrderStatusDetalis = [];
         this.receiptOfTheOrderStatus = res.data;
-        this.dataSource = new MatTableDataSource(this.receiptOfTheOrderStatus.receiptOfTheOrderStatusDetalis);
+        this.dataSource = new MatTableDataSource(
+          this.receiptOfTheOrderStatus.receiptOfTheOrderStatusDetalis
+        );
       });
     });
   }
-
 }
