@@ -204,7 +204,12 @@ const data: IMenuItem[] = [
         ]
       },
 
-
+      {
+        icon: 'simple-icon-layers',
+        label: ' تقرير استلام حالة الشحنة  ',
+        to: `${adminRoot}/reports/showreceiptshipment`,
+        permission: [UserPermission.ShowReports]
+      },
       {
         icon: 'simple-icon-layers',
         label: ' أرباح الطلبات ',
