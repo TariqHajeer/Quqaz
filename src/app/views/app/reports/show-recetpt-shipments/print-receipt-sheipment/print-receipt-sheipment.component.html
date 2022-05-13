@@ -73,7 +73,7 @@
         حالة الشحنة
       </th>
       <td mat-cell *matCellDef="let element" style="padding: 10px">
-        {{ element.orderPlaced ? eleelement.orderPlaced.name : null }}
+        {{ element.orderPlaced ? element.orderPlaced.name : null }}
       </td>
     </ng-container>
     <ng-container matColumnDef="moneyPlaced">
@@ -81,7 +81,7 @@
         موقع المبلغ
       </th>
       <td mat-cell *matCellDef="let element" style="padding: 10px">
-        {{ element.moneyPlaced ? eleelement.moneyPlaced.name : null }}
+        {{ element.moneyPlaced ? element.moneyPlaced.name : null }}
       </td>
     </ng-container>
 
