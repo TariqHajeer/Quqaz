@@ -43,13 +43,13 @@ const data: IMenuItem[] = [
         icon: 'iconsminds-box-close',
         label: 'استلام حالة الشحنة المستلمة ',
         to: `${adminRoot}/reports/ReceiptfReceivingShipment`,
-        permission: [UserPermission.AddOrder,UserPermission.ReceiptOfTheStatusOfTheDeliveredShipment]
+        permission: [UserPermission.ReceiptOfTheStatusOfTheDeliveredShipment]
       },
       {
         icon: 'iconsminds-box-close',
         label: 'استلام حالة الشحنة المرتجعة ',
         to: `${adminRoot}/reports/rejectShipments`,
-        permission: [UserPermission.AddOrder,UserPermission.ReceiptOfTheStatusOfTheReturnedShipment]
+        permission: [UserPermission.ReceiptOfTheStatusOfTheReturnedShipment]
       },
       {
         icon: 'iconsminds-box-close',
