@@ -519,8 +519,4 @@ export class SidebarComponent implements OnInit, OnDestroy {
         )
       : [];
   }
-
-  isMyPermission(pername, pers) {
-    return pers.includes(pername);
-  }
 }
