@@ -14,6 +14,7 @@ import { CreateUser } from 'src/app/Models/user/create-user';
 import { Phone } from 'src/app/Models/phone.model';
 import data from 'src/app/constants/menu';
 import { UserPermission } from 'src/app/shared/auth.roles';
+import { UserLogin } from 'src/app/Models/userlogin.model';
 
 @Component({
   selector: 'app-view-user',
@@ -130,12 +131,17 @@ export class ViewUserComponent implements OnInit {
   userTreasury(id) {
     this.route.navigate(['/app/user/usertreasury', id]);
   }
-  private permissionlocalStorageKey: string = 'permissions';
-  currentUserPermissions: any = JSON.parse(
-    localStorage.getItem(this.permissionlocalStorageKey)
-  );
-  filterPrivlige(): boolean {
-    if (this.currentUserPermissions.filter(pr=>pr.sysName==UserPermission.TreasuryManagment).length > 0) return true;
+  currentUserPermissions: UserLogin = JSON.parse(
+    localStorage.getItem('kokazUser')
+  ) as UserLogin;
+  filterPrivlige(data): boolean {
+    if (
+      this.currentUserPermissions.privileges.find(
+        (pr) => pr.sysName == UserPermission.TreasuryManagment
+      ) &&
+      data==false
+    )
+      return true;
     else return false;
   }
 }

@@ -1,185 +1,70 @@
+
 <div class="col-md-12 mb-4">
   <div class="card">
     <div class="card-body">
       <div class="d-flex justify-content-between">
         <h5 class="card-title">الموظفون</h5>
-        <button class="btn mb-3" (click)="addUserModal.show(); addNewClicked()">
-          <i class="iconsminds-add text-primary" style="font-size: 38px"></i>
-        </button>
+        <button class="btn  mb-3" (click)="addUserModal.show();addNewClicked()"><i class="iconsminds-add  text-primary"
+            style="font-size: 38px;"></i></button>
       </div>
 
-      <ejs-grid
-        style="text-align: center"
-        #normalgrid
-        id="normalgrid"
-        (load)="load()"
-        [allowPaging]="true"
-        [gridLines]="lines"
-        [pageSettings]="pageSettings"
-        [toolbar]="toolbar"
-        [editSettings]="editSettings"
-        [dataSource]="UserService.users"
-        rowHeight="38"
-        [allowSorting]="true"
-        height="400"
-        [enableHover]="true"
-        [selectionSettings]="selectionSettings"
-        [filterSettings]="filterSettings"
-        [allowSorting]="true"
-        [allowFiltering]="true"
-        (actionComplete)="actionComplete($event)"
-      >
+      <ejs-grid style="text-align: center;" #normalgrid id='normalgrid' (load)='load()' [allowPaging]='true' [gridLines]="lines"
+        [pageSettings]='pageSettings' [toolbar]='toolbar' [editSettings]='editSettings' [dataSource]='UserService.users'
+        rowHeight='38' [allowSorting]='true' height='400' [enableHover]='true' [selectionSettings]='selectionSettings'
+        [filterSettings]='filterSettings' [allowSorting]='true' [allowFiltering]='true'(actionComplete)="actionComplete($event)">
         <e-columns>
-          <e-column
-            field="id"
-            textAlign="Center"
-            [visible]="false"
-            headerText="#"
-            [filter]="filter"
-            width="50"
-            [isPrimaryKey]="true"
-          ></e-column>
-          <e-column
-            field="name"
-            [allowEditing]="true"
-            textAlign="Center"
-            headerText="الاسم"
-            width="140"
-          ></e-column>
-          <e-column
-            field="userName"
-            [allowEditing]="false"
-            textAlign="Center"
-            headerText="اسم المستخدم"
-            width="170"
-          ></e-column>
+          <e-column field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter' width='50'
+            [isPrimaryKey]='true'></e-column>
+          <e-column field='name' [allowEditing]='true' textAlign="Center" headerText="الاسم" width='140'></e-column>
+          <e-column field='userName' [allowEditing]='false' textAlign="Center" headerText="اسم المستخدم" width='170'></e-column>
           <!--<e-column field='department.name' [allowEditing]='false' textAlign="Center" headerText="القسم" width='140'></e-column>-->
-          <e-column
-            field="employeeType"
-            [allowEditing]="false"
-            textAlign="Center"
-            headerText="نوع الموظف"
-            width="170"
-          ></e-column>
-          <e-column
-            field="userStatics.orderInStore"
-            [allowEditing]="false"
-            textAlign="Center"
-            headerText="طلبات في المخزن"
-            width="170"
-          ></e-column>
-          <e-column
-            field="userStatics.orderInWay"
-            [allowEditing]="false"
-            textAlign="Center"
-            headerText=" طلبات في الطريق"
-            width="170"
-          ></e-column>
-          <e-column
-            field="phonesAsString"
-            [allowEditing]="false"
-            textAlign="Center"
-            headerText="ارقام الهاتف"
-            width="140"
-          >
+          <e-column field='employeeType' [allowEditing]='false' textAlign="Center" headerText="نوع الموظف" width='170'></e-column>
+          <e-column field='userStatics.orderInStore' [allowEditing]='false' textAlign="Center" headerText="طلبات في المخزن" width='170'></e-column>
+          <e-column field='userStatics.orderInWay' [allowEditing]='false' textAlign="Center" headerText=" طلبات في الطريق" width='170'></e-column>
+          <e-column field='phonesAsString' [allowEditing]='false' textAlign="Center" headerText="ارقام الهاتف" width='140'>
           </e-column>
-          <e-column
-            [allowEditing]="false"
-            textAlign="Center"
-            headerText=" مفعل"
-            width="120"
-          >
-            <ng-template #template let-data1>
-              <div class="custom-control custom-checkbox mr-sm-2">
-                <input
-                  type="checkbox"
-                  class="custom-control-input"
-                  [checked]="data1.isActive"
-                />
-                <label
-                  class="custom-control-label"
-                  for="customControlAutosizing"
-                >
-                </label>
-              </div>
+          <e-column  [allowEditing]='false' textAlign="Center" headerText=" مفعل" width='120'>
+            <ng-template  #template let-data1>
+           
+            <div class="custom-control custom-checkbox mr-sm-2">
+              <input type="checkbox" class="custom-control-input" [checked]="data1.isActive">
+              <label class="custom-control-label" for="customControlAutosizing"> </label>
+            </div>
             </ng-template>
           </e-column>
-          <e-column
-            [allowEditing]="false"
-            textAlign="Center"
-            headerText=""
-            width="140"
-          >
-            <ng-template #template let-data>
+          <e-column    [allowEditing]='false' textAlign="Center" headerText="" width='140'>
+            <ng-template  #template let-data>
               <div>
-                <span
-                  class="btn btn-xs badge-primary mx-1"
-                  (click)="onEditClicked(data.id)"
-                  >{{ "forms.edit" | translate }}</span
-                >
-                <span
-                  class="btn btn-xs badge-primary mx-1"
-                  *ngIf="data.canWorkAsAgent && filterPrivlige()"
-                  (click)="showAgent(data.id)"
-                  >تفاصيل</span
-                >
-                <span
-                  class="btn btn-xs badge-primary mx-1"
-                  *ngIf="!data.canWorkAsAgent"
-                  (click)="userTreasury(data.id)"
-                  >صندوق</span
-                >
-              </div>
-            </ng-template>
+                    <span class="btn btn-xs badge-primary mx-1" (click)="onEditClicked(data.id)">{{'forms.edit' | translate}}</span>
+                    <span class="btn btn-xs badge-primary mx-1"*ngIf="data.canWorkAsAgent" (click)="showAgent(data.id)">تفاصيل</span>
+                    <span class="btn btn-xs badge-primary mx-1" *ngIf="filterPrivlige(!data.canWorkAsAgent )" (click)="userTreasury(data.id)">صندوق</span>
+            </div>
+          </ng-template>
           </e-column>
         </e-columns>
       </ejs-grid>
+
     </div>
   </div>
 </div>
 
-<div
-  bsModal
-  #addUserModal="bs-modal"
-  class="modal fade"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="dialog-sizes-name1"
->
-  <div class="modal-dialog modal-md modal-right" style="max-width: 70%">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4
-          *ngIf="addClicked"
-          id="dialog-sizes-name1"
-          class="modal-title pull-left"
-        >
-          اضافة موظف
-        </h4>
-        <h4
-          *ngIf="editClicked"
-          id="dialog-sizes-name1"
-          class="modal-title pull-left"
-        >
-          تعديل موظف
-        </h4>
 
-        <button
-          type="button"
-          class="close pull-right"
-          (click)="addUserModal.hide()"
-          aria-label="Close"
-        >
+
+<div bsModal #addUserModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-md modal-right " style="max-width: 70%;">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <h4 *ngIf="addClicked" id="dialog-sizes-name1" class="modal-title pull-left">اضافة موظف</h4>
+        <h4 *ngIf="editClicked" id="dialog-sizes-name1" class="modal-title pull-left">تعديل موظف</h4>
+
+        <button type="button" class="close pull-right" (click)="addUserModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" style="font-size: 15px">
-        <app-add-user
-          (addFinish)="addFinish($event); addUserModal.hide()"
-          [addClicked]="addClicked"
-          [editClicked]="editClicked"
-          [currentUserId]="currentUserId"
-        ></app-add-user>
+      <div class="modal-body" style="font-size: 15px;">
+        <app-add-user (addFinish)="addFinish($event);addUserModal.hide()" [addClicked]="addClicked"
+          [editClicked]="editClicked" [currentUserId]="currentUserId"></app-add-user>
       </div>
     </div>
   </div>
