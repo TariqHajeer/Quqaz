@@ -25,7 +25,7 @@ export class UserTreasuryComponent implements OnInit {
   User: User = new User();
   GiveOrDiscountPointsDto: boolean;
   noDataFound: boolean;
-  displayedColumns: string[] = ['amount', 'type', 'createdOnUtc'];
+  displayedColumns: string[] = ['amount', 'type', 'createdOnUtc','more']
   dataSource
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
