@@ -138,8 +138,8 @@ export class ViewUserComponent implements OnInit {
     if (
       this.currentUserPermissions.privileges.find(
         (pr) => pr.sysName == UserPermission.TreasuryManagment
-      ) &&
-      data==false
+      ) ||
+      !data
     )
       return true;
     else return false;
