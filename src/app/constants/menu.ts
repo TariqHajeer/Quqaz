@@ -12,6 +12,7 @@ export interface IMenuItem {
   permission?: UserPermission[];
   badge?: boolean
   badgeLable?
+  enabled?:boolean;
 }
 
 const data: IMenuItem[] = [
@@ -40,9 +41,15 @@ const data: IMenuItem[] = [
       },
       {
         icon: 'iconsminds-box-close',
-        label: 'استلام حالة الشحنة ',
-        to: `${adminRoot}/reports/ReceiptShipmentAgentComponent`,
-        permission: [UserPermission.AddOrder]
+        label: 'استلام حالة الشحنة المستلمة ',
+        to: `${adminRoot}/reports/ReceiptfReceivingShipment`,
+        permission: [UserPermission.ReceiptOfTheStatusOfTheDeliveredShipment]
+      },
+      {
+        icon: 'iconsminds-box-close',
+        label: 'استلام حالة الشحنة المرتجعة ',
+        to: `${adminRoot}/reports/rejectShipments`,
+        permission: [UserPermission.ReceiptOfTheStatusOfTheReturnedShipment]
       },
       {
         icon: 'iconsminds-box-close',
@@ -197,7 +204,12 @@ const data: IMenuItem[] = [
         ]
       },
 
-
+      {
+        icon: 'simple-icon-layers',
+        label: ' تقرير استلام حالة الشحنة  ',
+        to: `${adminRoot}/reports/showreceiptshipment`,
+        permission: [UserPermission.ShowReports]
+      },
       {
         icon: 'simple-icon-layers',
         label: ' أرباح الطلبات ',

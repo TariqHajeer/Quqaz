@@ -5,7 +5,7 @@ import { UserPermission } from 'src/app/shared/auth.roles';
 import { AddClientComponent } from './add-client/add-client.component';
 import { ClientPointComponent } from './client-point/client-point.component';
 import { EditClientComponent } from './edit-client/edit-client.component';
-import { ReceiptAndExchangeComponent } from './receipt-and-exchange/receipt-and-exchange.component';
+import { CreateReceiptAndExchangeComponent } from './receipt-and-exchange/receipt-and-exchange.component';
 import { ViewClientsComponent } from './view-clients/view-clients.component';
 
 
@@ -26,8 +26,8 @@ const routes: Routes = [
       data: { roles: [UserPermission.UpdateClient]}
     },
     {
-      path:'ReceiptAndExchange',
-      component:ReceiptAndExchangeComponent ,canActivate: [AuthGuard],
+      path:'CreateReceiptAndExchange',
+      component:CreateReceiptAndExchangeComponent ,canActivate: [AuthGuard],
     },
     {
       path:'clientPoint',

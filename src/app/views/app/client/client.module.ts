@@ -13,7 +13,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { EditClientComponent } from './edit-client/edit-client.component';
-import { ReceiptAndExchangeComponent } from './receipt-and-exchange/receipt-and-exchange.component';
+import { CreateReceiptAndExchangeComponent } from './receipt-and-exchange/receipt-and-exchange.component';
 import { NgxPrintModule } from 'ngx-print';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ClientPointComponent } from './client-point/client-point.component';
@@ -21,7 +21,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 @NgModule({
-  declarations: [AddClientComponent, ViewClientsComponent, EditClientComponent, ReceiptAndExchangeComponent, ClientPointComponent],
+  declarations: [AddClientComponent, ViewClientsComponent, EditClientComponent, CreateReceiptAndExchangeComponent, ClientPointComponent],
   imports: [
     CommonModule,
     ClientRoutingModule,

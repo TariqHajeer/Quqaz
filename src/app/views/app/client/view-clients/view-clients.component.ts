@@ -117,7 +117,7 @@ export class ViewClientsComponent implements OnInit {
     // }
     // this.client.client = data
     localStorage.setItem('client', JSON.stringify(data))
-    this.route.navigate(['/app/client/ReceiptAndExchange'])
+    this.route.navigate(['/app/client/CreateReceiptAndExchange'])
   }
   printpay() {
     //صرف

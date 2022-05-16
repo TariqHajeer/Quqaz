@@ -14,16 +14,21 @@ import { OrdersTodayComponent } from './orders-today/orders-today.component';
 import { OrdersUnacceptableComponent } from './orders-unacceptable/orders-unacceptable.component';
 import { ReceiptAgentComponent } from './print/receipt-agent/receipt-agent.component';
 import { AgentComponent } from './printpreview/agent/agent.component';
+import { ClientReciptAndExchangeComponent } from './printpreview/client-recipt-and-exchange/client-recipt-and-exchange.component';
 import { ClientComponent } from './printpreview/client/client.component';
 import { PayComponent } from './printpreview/pay/pay.component';
 import { PrintOrderInCompanyComponent } from './printpreview/print-order-in-company/print-order-in-company.component';
 import { SetPrintNumberClientComponent } from './printpreview/set-print-number-client/set-print-number-client.component';
 import { SetPrintNumberComponent } from './printpreview/set-print-number/set-print-number.component';
 import { ReceiptShipmentAgentComponent } from './receipt-shipment-agent/receipt-shipment-agent.component';
+import { ReceiptfReceivingShipmentComponent } from './receiptf-receiving-shipment/receiptf-receiving-shipment.component';
 import { ReceiptsAndExchangesComponent } from './receipts-and-exchanges/receipts-and-exchanges.component';
+import { RejectShipmentsComponent } from './reject-shipments/reject-shipments.component';
 import { ShipmentInStockComponent } from './shipment-in-stock/shipment-in-stock.component';
 import { ShipmentsNotBeenDeliveredComponent } from './shipments-not-been-delivered/shipments-not-been-delivered.component';
 import { ShipmentsOnWayComponent } from './shipments-on-way/shipments-on-way.component';
+import { PrintReceiptSheipmentComponent } from './show-recetpt-shipments/print-receipt-sheipment/print-receipt-sheipment.component';
+import { ShowRecetptShipmentsComponent } from './show-recetpt-shipments/show-recetpt-shipments.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 
 
@@ -51,8 +56,23 @@ const routes: Routes = [
     data: { roles: [UserPermission.ShowReports]}
   },
   {
-    path:'ReceiptShipmentAgentComponent',
-    component: ReceiptShipmentAgentComponent,canActivate: [AuthGuard],
+    path:'ReceiptfReceivingShipment',
+    component: ReceiptfReceivingShipmentComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
+  },
+  {
+    path:'rejectShipments',
+    component: RejectShipmentsComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
+  },
+  {
+    path:'showreceiptshipment',
+    component: ShowRecetptShipmentsComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
+  },
+  {
+    path:'printreceiptshipment/:id',
+    component: PrintReceiptSheipmentComponent,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowReports]}
   },
   {
@@ -123,6 +143,11 @@ const routes: Routes = [
   {
     path:'printorderincompany',
     component: PrintOrderInCompanyComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports]}
+  },
+  {
+    path:'printclientreciptandexchange/:id',
+    component: ClientReciptAndExchangeComponent,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowReports]}
   },
   {

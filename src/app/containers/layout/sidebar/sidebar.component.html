@@ -6,7 +6,7 @@
                     [ngClass]="{'active': (selectedParentMenu === item.to && viewingParentMenu === '') || viewingParentMenu === item.to}">
 
                             <!-- if the item go to new page -->
-                    <a *ngIf="item.newWindow" [href]="item.to" rel="noopener noreferrer" target="_blank">
+                    <a  *ngIf="item.newWindow" [href]="item.to" rel="noopener noreferrer" target="_blank">
                         <i [ngClass]="item.icon" class="text-center"></i>
 
                         {{item.label | translate}}
@@ -41,35 +41,35 @@
                 [ngClass]="{'d-block': (selectedParentMenu === item.to && viewingParentMenu==='') || viewingParentMenu === item.to}">
                 <li *ngFor="let sub of filteredMenuItems(item.subs)"
                     [ngClass]="{'active': currentUrl === sub.to ,'has-sub-item' : sub.subs&& sub.subs.length>0 }">
-                    <a *ngIf="sub.newWindow" [href]="sub.to" rel="noopener noreferrer" target="_blank">
+                    <a *ngIf="sub.newWindow&&sub.enabled" [href]="sub.to" rel="noopener noreferrer" target="_blank">
                         <i [ngClass]="sub.icon"></i>
                         <span class="d-inline-block">{{sub.label | translate}}</span>
                         &nbsp;
                         <span class="badge badge-danger"*ngIf="sub.badge">{{sub.badgeLable}}</span>
                     </a>
-                    <a *ngIf="!sub.newWindow && (!sub.subs || sub.subs.length<=0)" [routerLink]="[sub.to]"
+                    <a *ngIf="!sub.newWindow && (!sub.subs || sub.subs.length<=0)&&sub.enabled" [routerLink]="[sub.to]"
                         routerLinkActive="active">
                         <i [ngClass]="sub.icon"></i>
                         <span class="d-inline-block">{{sub.label | translate}}</span>  &nbsp;
-                        <span class="badge badge-danger"*ngIf="sub.badge">{{sub.badgeLable}}</span>
+                        <span class="badge badge-danger"*ngIf="sub.badge">{{sub.b&&sub.enabledadgeLable}}</span>
                     </a>
-                    <a (click)="toggleCollapse(sub.to)" *ngIf="sub.subs && sub.subs.length > 0"
+                    <a (click)="toggleCollapse(sub.to)" *ngIf="sub.subs && sub.subs.length > 0&&sub.enabled"
                         [ngClass]="{'rotate-arrow-icon opacity-50 c-pointer': true, 'collapsed': closedCollapseList.includes(sub.to)}">
                         <i class="simple-icon-arrow-down"></i>
                         <span class="d-inline-block">{{sub.label | translate}}</span>  &nbsp;
                         <span class="badge badge-danger"*ngIf="sub.badge">{{sub.badgeLable}}</span>
                     </a>
                     <div [collapse]="closedCollapseList.includes(sub.to)" [isAnimated]="true">
-                        <div *ngIf="sub.subs && sub.subs.length > 0">
+                        <div *ngIf="sub.subs && sub.subs.length > 0&&sub.enabled">
                             <ul class="list-unstyled inner-level-menu">
                                 <li  *ngFor="let deepSub of filteredMenuItems(sub.subs)"
                                     [ngClass]="{'active': currentUrl === deepSub.to}">
-                                    <a *ngIf="deepSub.newWindow" [href]="deepSub.to" rel="noopener noreferrer"
+                                    <a *ngIf="deepSub.newWindow&&deepSub.enabled" [href]="deepSub.to" rel="noopener noreferrer"
                                         target="_blank">
                                         <i [ngClass]="deepSub.icon"></i>
                                         <span class="d-inline-block">{{deepSub.label | translate}}</span>
                                     </a>
-                                    <a *ngIf="!deepSub.newWindow && (!deepSub.subs || deepSub.subs.length<=0)"
+                                    <a *ngIf="!deepSub.newWindow && (!deepSub.subs || deepSub.subs.length<=0)&&deepSub.enabled"
                                         [routerLink]="[deepSub.to]" routerLinkActive="active">
                                         <i [ngClass]="deepSub.icon"></i>
                                         <span class="d-inline-block">{{deepSub.label | translate}}</span>

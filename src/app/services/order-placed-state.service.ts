@@ -88,6 +88,12 @@ export class OrderPlacedStateService {
       //   }
     }
   }
+  Delayed (element, MoenyPlaced){
+  if ( element.order.orderplaced.id == OrderplacedEnum.Delayed){
+    element.MoenyPlaced = [...MoenyPlaced.filter(m =>  m.id == MoneyPalcedEnum.InsideCompany)]
+    element.order.monePlaced = { ...element.MoenyPlaced[0] }
+  }
+  }
   changeDeliveryCost(element, tempdeliveryCost?, MoenyPlaced?) {
     if (tempdeliveryCost == element.order.deliveryCost) {
       this.isClientDiliverdMoney(element, MoenyPlaced)
