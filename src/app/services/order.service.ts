@@ -8,308 +8,399 @@ import { DateFiter, Paging } from '../Models/paging';
 import { OrderClientDontDiliverdMoney } from '../Models/order/order-client-dont-diliverd-money.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrderService {
-
-  controler = environment.baseUrl + "api/Order/";
-  constructor(public http: HttpClient) { }
+  controler = environment.baseUrl + 'api/Order/';
+  constructor(public http: HttpClient) {}
   GetAll(filter: OrderFilter, paging: Paging) {
     let params = new HttpParams();
     if (filter.Code != undefined || filter.Code != null)
-      params = params.append("Code", filter.Code);
+      params = params.append('Code', filter.Code);
     if (filter.AgentId != undefined || filter.AgentId != null)
-      params = params.append("AgentId", filter.AgentId);
+      params = params.append('AgentId', filter.AgentId);
     if (filter.Phone != undefined || filter.Phone != null)
-      params = params.append("Phone", filter.Phone);
+      params = params.append('Phone', filter.Phone);
     if (filter.CountryId != undefined || filter.CountryId != null)
-      params = params.append("CountryId", filter.CountryId);
+      params = params.append('CountryId', filter.CountryId);
     if (filter.RegionId != undefined || filter.RegionId != null)
-      params = params.append("RegionId", filter.RegionId);
+      params = params.append('RegionId', filter.RegionId);
     if (filter.ClientId != undefined || filter.ClientId != null)
-      params = params.append("ClientId", filter.ClientId);
+      params = params.append('ClientId', filter.ClientId);
     if (filter.Note != undefined || filter.Note != null)
-      params = params.append("Note", filter.Note);
+      params = params.append('Note', filter.Note);
     if (filter.RecipientName != undefined || filter.RecipientName != null)
-      params = params.append("RecipientName", filter.RecipientName);
+      params = params.append('RecipientName', filter.RecipientName);
     if (filter.MonePlacedId != undefined || filter.MonePlacedId != null)
-      params = params.append("MonePlacedId", filter.MonePlacedId);
+      params = params.append('MonePlacedId', filter.MonePlacedId);
     if (filter.OrderplacedId != undefined || filter.OrderplacedId != null)
-      params = params.append("OrderplacedId", filter.OrderplacedId);
-    if (filter.IsClientDiliverdMoney != undefined || filter.IsClientDiliverdMoney != null)
-      params = params.append("IsClientDiliverdMoney", filter.IsClientDiliverdMoney);
-    if (filter.AgentPrintStartDate != undefined || filter.AgentPrintStartDate != null)
-      params = params.append("AgentPrintStartDate", filter.AgentPrintStartDate);
-    if (filter.AgentPrintEndDate != undefined || filter.AgentPrintEndDate != null)
-      params = params.append("AgentPrintEndDate", filter.AgentPrintEndDate);
+      params = params.append('OrderplacedId', filter.OrderplacedId);
+    if (
+      filter.IsClientDiliverdMoney != undefined ||
+      filter.IsClientDiliverdMoney != null
+    )
+      params = params.append(
+        'IsClientDiliverdMoney',
+        filter.IsClientDiliverdMoney
+      );
+    if (
+      filter.AgentPrintStartDate != undefined ||
+      filter.AgentPrintStartDate != null
+    )
+      params = params.append('AgentPrintStartDate', filter.AgentPrintStartDate);
+    if (
+      filter.AgentPrintEndDate != undefined ||
+      filter.AgentPrintEndDate != null
+    )
+      params = params.append('AgentPrintEndDate', filter.AgentPrintEndDate);
     if (filter.AgentPrintNumber != undefined || filter.AgentPrintNumber != null)
-      params = params.append("AgentPrintNumber", filter.AgentPrintNumber);
+      params = params.append('AgentPrintNumber', filter.AgentPrintNumber);
     if (paging.RowCount != undefined || paging.RowCount != null)
-      params = params.append("RowCount", paging.RowCount);
+      params = params.append('RowCount', paging.RowCount);
 
     if (paging.Page != undefined || paging.Page != null)
-      params = params.append("Page", paging.Page);
-    return this.http.get<any>(this.controler, { params: params })
+      params = params.append('Page', paging.Page);
+    return this.http.get<any>(this.controler, { params: params });
   }
   WithoutPaging(filter: OrderFilter) {
     let params = new HttpParams();
     if (filter.Code != undefined || filter.Code != null)
-      params = params.append("Code", filter.Code);
+      params = params.append('Code', filter.Code);
     if (filter.AgentId != undefined || filter.AgentId != null)
-      params = params.append("AgentId", filter.AgentId);
+      params = params.append('AgentId', filter.AgentId);
     if (filter.Phone != undefined || filter.Phone != null)
-      params = params.append("Phone", filter.Phone);
+      params = params.append('Phone', filter.Phone);
     if (filter.CountryId != undefined || filter.CountryId != null)
-      params = params.append("CountryId", filter.CountryId);
+      params = params.append('CountryId', filter.CountryId);
     if (filter.CreatedDate != undefined || filter.CreatedDate != null)
-      params = params.append("CreatedDate", filter.CreatedDate);
+      params = params.append('CreatedDate', filter.CreatedDate);
     if (filter.RegionId != undefined || filter.RegionId != null)
-      params = params.append("RegionId", filter.RegionId);
+      params = params.append('RegionId', filter.RegionId);
     if (filter.ClientId != undefined || filter.ClientId != null)
-      params = params.append("ClientId", filter.ClientId);
+      params = params.append('ClientId', filter.ClientId);
     if (filter.RecipientName != undefined || filter.RecipientName != null)
-      params = params.append("RecipientName", filter.RecipientName);
+      params = params.append('RecipientName', filter.RecipientName);
     if (filter.MonePlacedId != undefined || filter.MonePlacedId != null)
-      params = params.append("MonePlacedId", filter.MonePlacedId);
+      params = params.append('MonePlacedId', filter.MonePlacedId);
     if (filter.OrderplacedId != undefined || filter.OrderplacedId != null)
-      params = params.append("OrderplacedId", filter.OrderplacedId);
-    if (filter.IsClientDiliverdMoney != undefined || filter.IsClientDiliverdMoney != null)
-      params = params.append("IsClientDiliverdMoney", filter.IsClientDiliverdMoney);
-    return this.http.get<any>(this.controler + "WithoutPaging", { params: params })
-
+      params = params.append('OrderplacedId', filter.OrderplacedId);
+    if (
+      filter.IsClientDiliverdMoney != undefined ||
+      filter.IsClientDiliverdMoney != null
+    )
+      params = params.append(
+        'IsClientDiliverdMoney',
+        filter.IsClientDiliverdMoney
+      );
+    return this.http.get<any>(this.controler + 'WithoutPaging', {
+      params: params,
+    });
   }
   GetById(id) {
-    return this.http.get<any>(this.controler + id)
+    return this.http.get<any>(this.controler + id);
   }
 
   Creat(item) {
-    return this.http.post(this.controler, item)
-
+    return this.http.post(this.controler, item);
   }
   createMultiple(item) {
-    return this.http.post(this.controler + "createMultiple", item)
-
+    return this.http.post(this.controler + 'createMultiple', item);
   }
   Update(item) {
-    return this.http.patch(this.controler, item)
-
+    return this.http.patch(this.controler, item);
   }
   Delete(id) {
-    return this.http.delete(this.controler + id)
-
+    return this.http.delete(this.controler + id);
   }
   orderPlace() {
-    return this.http.get<any>(this.controler + "orderPlace")
-
+    return this.http.get<any>(this.controler + 'orderPlace');
   }
   MoenyPlaced() {
-    return this.http.get<any>(this.controler + "MoenyPlaced")
-
+    return this.http.get<any>(this.controler + 'MoenyPlaced');
   }
   chekcCode(code, ClientId) {
     let params = new HttpParams();
-    params = params.append("code", code != null || code != undefined ? code : null);
-    params = params.append("clientid", ClientId != null || ClientId != undefined ? ClientId : null);
-    return this.http.get<any>(this.controler + "chekcCode", { params: params })
+    params = params.append(
+      'code',
+      code != null || code != undefined ? code : null
+    );
+    params = params.append(
+      'clientid',
+      ClientId != null || ClientId != undefined ? ClientId : null
+    );
+    return this.http.get<any>(this.controler + 'chekcCode', { params: params });
   }
   CheckMulieCode(code, ClientId) {
-    return this.http.post<any>(this.controler + "CheckMulieCode/" + ClientId, code)
+    return this.http.post<any>(
+      this.controler + 'CheckMulieCode/' + ClientId,
+      code
+    );
   }
   GetNewOrder() {
-    return this.http.get<any>(this.controler + "NewOrders")
+    return this.http.get<any>(this.controler + 'NewOrders');
   }
   NewOrderCount() {
-    return this.http.get<any>(this.controler + "NewOrdersCount")
+    return this.http.get<any>(this.controler + 'NewOrdersCount');
   }
   NewOrdersDontSendCount() {
-    return this.http.get<any>(this.controler + "NewOrdersDontSendCount")
+    return this.http.get<any>(this.controler + 'NewOrdersDontSendCount');
   }
   NewOrderDontSned() {
-    return this.http.get<any>(this.controler + "NewOrderDontSned")
+    return this.http.get<any>(this.controler + 'NewOrderDontSned');
   }
   Accept(id) {
     // let params = new HttpParams();
     // params = params.append("id", id);
-    return this.http.put<any>(this.controler + "Accept", id)
+    return this.http.put<any>(this.controler + 'Accept', id);
   }
   DisAccept(id) {
     // let params = new HttpParams();
     // params = params.append("id", id);
-    return this.http.put<any>(this.controler + "DisAccept", id)
+    return this.http.put<any>(this.controler + 'DisAccept', id);
   }
   Acceptmultiple(ids) {
-    return this.http.put<number>(this.controler + "Acceptmultiple", ids)
+    return this.http.put<number>(this.controler + 'Acceptmultiple', ids);
   }
   DisAcceptmultiple(ids) {
-    return this.http.put<number>(this.controler + "DisAcceptmultiple", ids)
+    return this.http.put<number>(this.controler + 'DisAcceptmultiple', ids);
   }
   MakeOrderInWay(ids) {
     let params = new FormData();
-    params.append("ids", ids);
-    return this.http.put<any>(this.controler + "MakeOrderInWay", ids)
-
+    params.append('ids', ids);
+    return this.http.put<any>(this.controler + 'MakeOrderInWay', ids);
   }
   UpdateOrdersStatusFromAgent(orderstate) {
-    return this.http.put<any>(this.controler + "UpdateOrdersStatusFromAgent", orderstate)
+    return this.http.put<any>(
+      this.controler + 'UpdateOrdersStatusFromAgent',
+      orderstate
+    );
+  }
+  ReceiptOfTheStatusOfTheReturnedShipment(orderstate) {
+    return this.http.put<any>(
+      this.controler + 'ReceiptOfTheStatusOfTheReturnedShipment',
+      orderstate
+    );
+  }
+  ReceiptOfTheStatusOfTheDeliveredShipment(orderstate) {
+    return this.http.put<any>(
+      this.controler + 'ReceiptOfTheStatusOfTheDeliveredShipment',
+      orderstate
+    );
   }
   DeleiverMoneyForClient(ids) {
-    return this.http.put<any>(this.controler + "DeleiverMoneyForClient", ids)
-
+    return this.http.put<any>(this.controler + 'DeleiverMoneyForClient', ids);
   }
   OrdersUnacceptable(filter, paging) {
     let params = new HttpParams();
     if (filter.Code != undefined || filter.Code != null)
-      params = params.append("Code", filter.Code);
+      params = params.append('Code', filter.Code);
     if (filter.ClientId != undefined || filter.ClientId != null)
-      params = params.append("ClientId", filter.ClientId);
+      params = params.append('ClientId', filter.ClientId);
     if (paging.RowCount != undefined || paging.RowCount != null)
-      params = params.append("RowCount", paging.RowCount);
+      params = params.append('RowCount', paging.RowCount);
     if (paging.Page != undefined || paging.Page != null)
-      params = params.append("Page", paging.Page);
-    return this.http.get<any>(this.controler + "DisAccept", { params: params })
-
+      params = params.append('Page', paging.Page);
+    return this.http.get<any>(this.controler + 'DisAccept', { params: params });
   }
   SetPrintNumber(number) {
-    return this.http.post<any>(this.controler + "SetPrintNumber", number)
+    return this.http.post<any>(this.controler + 'SetPrintNumber', number);
   }
   GetOrderByAgent(orderCode) {
-    return this.http.get(this.controler + "GetOrderByAgent/" + orderCode)
+    return this.http.get(this.controler + 'GetOrderByAgent/' + orderCode);
   }
   GetEarning(paging: Paging, datefilter: DateFiter) {
     let params = new HttpParams();
     if (paging.RowCount != undefined || paging.RowCount != null)
-      params = params.append("RowCount", paging.RowCount);
+      params = params.append('RowCount', paging.RowCount);
     if (paging.Page != undefined || paging.Page != null)
-      params = params.append("Page", paging.Page);
+      params = params.append('Page', paging.Page);
     if (datefilter.FromDate != undefined || datefilter.FromDate != null)
-      params = params.append("FromDate", datefilter.FromDate);
+      params = params.append('FromDate', datefilter.FromDate);
     if (datefilter.ToDate != undefined || datefilter.ToDate != null)
-      params = params.append("ToDate", datefilter.ToDate);
-    return this.http.get<any>(this.controler + "GetEarnings", { params: params })
+      params = params.append('ToDate', datefilter.ToDate);
+    return this.http.get<any>(this.controler + 'GetEarnings', {
+      params: params,
+    });
   }
   ShipmentsNotReimbursedToTheClient(clientid) {
-    return this.http.get<any>(this.controler + "ShipmentsNotReimbursedToTheClient/" + clientid)
+    return this.http.get<any>(
+      this.controler + 'ShipmentsNotReimbursedToTheClient/' + clientid
+    );
   }
   ShortageOfCash(clientId) {
     let params = new HttpParams();
-    params = params.append("clientId", clientId);
-    return this.http.get<any>(this.controler + "ShortageOfCash", { params: params })
+    params = params.append('clientId', clientId);
+    return this.http.get<any>(this.controler + 'ShortageOfCash', {
+      params: params,
+    });
   }
   ReiveMoneyFromClient(ids) {
-    return this.http.put<any>(this.controler + "ReiveMoneyFromClient", ids)
+    return this.http.put<any>(this.controler + 'ReiveMoneyFromClient', ids);
   }
   GetOrderByAgnetPrintNumber(printNumber) {
     let params = new HttpParams();
-    params = params.append("printNumber", printNumber);
-    return this.http.get<any>(this.controler + "GetOrderByAgnetPrintNumber", { params: params })
+    params = params.append('printNumber', printNumber);
+    return this.http.get<any>(this.controler + 'GetOrderByAgnetPrintNumber', {
+      params: params,
+    });
   }
   GetOrderByClientPrintNumber(printnumber) {
     let params = new HttpParams();
-    params = params.append("printNumber", printnumber);
-    return this.http.get<any>(this.controler + "GetOrderByClientPrintNumber", { params: params })
+    params = params.append('printNumber', printnumber);
+    return this.http.get<any>(this.controler + 'GetOrderByClientPrintNumber', {
+      params: params,
+    });
   }
 
-  GetClientprint(paging, number, client,code) {
+  GetClientprint(paging, number, client, code) {
     let params = new HttpParams();
     if (paging.RowCount != undefined || paging.RowCount != null)
-      params = params.append("RowCount", paging.RowCount);
+      params = params.append('RowCount', paging.RowCount);
     if (paging.Page != undefined || paging.Page != null)
-      params = params.append("Page", paging.Page);
-    if (number)
-      params = params.append("number", number);
-      if (code)
-      params = params.append("code", code);
-    if (client)
-      params = params.append("clientName", client);
-    return this.http.get<any>(this.controler + "GetClientprint", { params: params })
-
+      params = params.append('Page', paging.Page);
+    if (number) params = params.append('number', number);
+    if (code) params = params.append('code', code);
+    if (client) params = params.append('clientName', client);
+    return this.http.get<any>(this.controler + 'GetClientprint', {
+      params: params,
+    });
   }
   GetAgentPrint(paging, number, agent) {
     let params = new HttpParams();
     if (paging.RowCount != undefined || paging.RowCount != null)
-      params = params.append("RowCount", paging.RowCount);
+      params = params.append('RowCount', paging.RowCount);
     if (paging.Page != undefined || paging.Page != null)
-      params = params.append("Page", paging.Page);
-    if (number)
-      params = params.append("number", number);
-    if (agent)
-      params = params.append("agnetName", agent);
-    return this.http.get<any>(this.controler + "GetAgentPrint", { params: params })
-
+      params = params.append('Page', paging.Page);
+    if (number) params = params.append('number', number);
+    if (agent) params = params.append('agnetName', agent);
+    return this.http.get<any>(this.controler + 'GetAgentPrint', {
+      params: params,
+    });
   }
   ClientDontDiliverdMoney(item: OrderClientDontDiliverdMoney) {
     let params = new HttpParams();
 
     if (item.ClientId != undefined || item.ClientId != null)
-      params = params.append("ClientId", item.ClientId);
-    if (item.ClientDoNotDeleviredMoney != undefined || item.ClientDoNotDeleviredMoney != null)
-      params = params.append("ClientDoNotDeleviredMoney", item.ClientDoNotDeleviredMoney);
-    if (item.IsClientDeleviredMoney != undefined || item.IsClientDeleviredMoney != null)
-      params = params.append("IsClientDeleviredMoney", item.IsClientDeleviredMoney);
-    if (item.OrderPlacedId.length != 0) { // params = params.append("OrderPlacedId", item.OrderPlacedId);
-      let index = 0
-      item.OrderPlacedId.forEach(element => {
-        var key = "OrderPlacedId[" + index + "]"
+      params = params.append('ClientId', item.ClientId);
+    if (
+      item.ClientDoNotDeleviredMoney != undefined ||
+      item.ClientDoNotDeleviredMoney != null
+    )
+      params = params.append(
+        'ClientDoNotDeleviredMoney',
+        item.ClientDoNotDeleviredMoney
+      );
+    if (
+      item.IsClientDeleviredMoney != undefined ||
+      item.IsClientDeleviredMoney != null
+    )
+      params = params.append(
+        'IsClientDeleviredMoney',
+        item.IsClientDeleviredMoney
+      );
+    if (item.OrderPlacedId.length != 0) {
+      // params = params.append("OrderPlacedId", item.OrderPlacedId);
+      let index = 0;
+      item.OrderPlacedId.forEach((element) => {
+        var key = 'OrderPlacedId[' + index + ']';
         params = params.append(key, element);
         index++;
       });
     }
-    return this.http.get<any>(this.controler + "OrdersDontFinished", { params: params })
+    return this.http.get<any>(this.controler + 'OrdersDontFinished', {
+      params: params,
+    });
   }
   OrderVicdanAgent(AgentId) {
-    return this.http.get(this.controler + "OrderVicdanAgent/" + AgentId)
+    return this.http.get(this.controler + 'OrderVicdanAgent/' + AgentId);
+  }
+  GetOrderToReciveFromAgent(code) {
+    return this.http.get<any>(
+      this.controler + 'GetOrderToReciveFromAgent/' + code
+    );
   }
   OrderInCompany(ClientId, code) {
-    return this.http.get(this.controler + "GetOrderForPayBy/" + ClientId + "/" + code)
+    return this.http.get(
+      this.controler + 'GetOrderForPayBy/' + ClientId + '/' + code
+    );
   }
   DeleiverMoneyForClientWithStatus(ids) {
-    return this.http.put<any>(this.controler + "DeleiverMoneyForClientWithStatus", ids)
+    return this.http.put<any>(
+      this.controler + 'DeleiverMoneyForClientWithStatus',
+      ids
+    );
   }
   ReSend(order) {
-    return this.http.put<any>(this.controler + "ReSend", order)
+    return this.http.put<any>(this.controler + 'ReSend', order);
   }
   MakeStoreOrderCompletelyReturned(id) {
-    return this.http.put<any>(this.controler + "MakeStoreOrderCompletelyReturned", id)
+    return this.http.put<any>(
+      this.controler + 'MakeStoreOrderCompletelyReturned',
+      id
+    );
   }
   TrakingOrder(agentid, cityid) {
     let params = new HttpParams();
-    if (agentid)
-      params = params.append("agentId", agentid);
-    if (cityid)
-      params = params.append("nextCountry", cityid);
-    return this.http.get<any>(this.controler + "TrakingOrder", { params: params })
+    if (agentid) params = params.append('agentId', agentid);
+    if (cityid) params = params.append('nextCountry', cityid);
+    return this.http.get<any>(this.controler + 'TrakingOrder', {
+      params: params,
+    });
   }
   MoveToNextStep(ids) {
-    return this.http.put(this.controler + "MoveToNextStep", ids)
+    return this.http.put(this.controler + 'MoveToNextStep', ids);
   }
   OrderAtClient(filter) {
     let params = new HttpParams();
     if (filter.Code != undefined || filter.Code != null)
-      params = params.append("Code", filter.Code);
+      params = params.append('Code', filter.Code);
     if (filter.ClientId != undefined || filter.ClientId != null)
-      params = params.append("ClientId", filter.ClientId);
-    return this.http.get<any>(this.controler + "OrderAtClient", { params: params })
+      params = params.append('ClientId', filter.ClientId);
+    return this.http.get<any>(this.controler + 'OrderAtClient', {
+      params: params,
+    });
   }
   changeAgentOrders(moveOrder) {
-    return this.http.put(this.controler+"TransferOrderToAnotherAgnet",moveOrder)
+    return this.http.put(
+      this.controler + 'TransferOrderToAnotherAgnet',
+      moveOrder
+    );
   }
-  AddPrintNumber(id){
-    return this.http.patch(this.controler+"AddPrintNumber/"+id,id)
+  AddPrintNumber(id) {
+    return this.http.patch(this.controler + 'AddPrintNumber/' + id, id);
   }
-  AddPrintNumberMultiple(ids){
-    return this.http.patch(this.controler+"AddPrintNumberMultiple",ids)
+  AddPrintNumberMultiple(ids) {
+    return this.http.patch(this.controler + 'AddPrintNumberMultiple', ids);
   }
-  OrderRequestEditState(){
-    return this.http.get<any>(this.controler + "OrderRequestEditState")
+  OrderRequestEditState() {
+    return this.http.get<any>(this.controler + 'OrderRequestEditState');
   }
   AproveOrderRequestEditStateCount(id) {
-    return this.http.put<any>(this.controler + "AproveOrderRequestEditState", id)
+    return this.http.put<any>(
+      this.controler + 'AproveOrderRequestEditState',
+      id
+    );
   }
   DisAproveOrderRequestEditStateCount(id) {
-    return this.http.put<any>(this.controler + "DisAproveOrderRequestEditState", id)
+    return this.http.put<any>(
+      this.controler + 'DisAproveOrderRequestEditState',
+      id
+    );
   }
-  OrderRequestEditStateCount(){
-    return this.http.get<any>(this.controler + "OrderRequestEditStateCount")
+  OrderRequestEditStateCount() {
+    return this.http.get<any>(this.controler + 'OrderRequestEditStateCount');
+  }
+  ReceiptOfTheOrderStatu(id) {
+    return this.http.get<any>(this.controler + 'ReceiptOfTheOrderStatus/' + id);
+  }
+  ReceiptOfTheOrderStatus(paging) {
+    let params = new HttpParams();
+    if (paging.RowCount != undefined || paging.RowCount != null)
+      params = params.append('RowCount', paging.RowCount);
+    if (paging.Page != undefined || paging.Page != null)
+      params = params.append('Page', paging.Page);
+    return this.http.get<any>(this.controler + 'ReceiptOfTheOrderStatus', {
+      params: params,
+    });
   }
 }
-

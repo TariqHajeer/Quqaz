@@ -7,7 +7,7 @@ import { AccountFilter } from 'src/app/Models/account-filter.model';
 import { Client } from '../../client/client.model';
 import { MatSort } from '@angular/material/sort';
 import { ReciptService } from 'src/app/services/recipt.service';
-import { ReceiptAndExchange } from 'src/app/Models/receipt-and-exchange.model';
+import { CreateReceiptAndExchange } from 'src/app/Models/receipt-and-exchange.model';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -33,7 +33,7 @@ export class ReceiptsAndExchangesComponent implements OnInit {
   exchange: boolean
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  client: ReceiptAndExchange =new ReceiptAndExchange
+  client: CreateReceiptAndExchange =new CreateReceiptAndExchange
   address = "اربيل - برايتي - قرب ماركيت آيه "
   companyPhone = "07714400880"
   ngOnInit(): void {
