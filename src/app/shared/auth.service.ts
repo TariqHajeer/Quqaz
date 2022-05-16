@@ -1,14 +1,9 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { from, Observable, of, Subscription } from 'rxjs';
-
-import { getUserRole } from 'src/app/utils/util';
+import { from, Observable} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import {LocalStorageService} from '../services/local-storage.service'
 import { Router } from '@angular/router';
-import { delay, tap } from 'rxjs/operators';
-import { UserLogin } from '../Models/userlogin.model';
 export interface user {
   email: string;
   password: string;
