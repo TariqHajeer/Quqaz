@@ -93,7 +93,7 @@ export class AgentComponent implements OnInit {
     this.orderservice.MakeOrderInWay(this.dateWithIds).subscribe(res => {
       this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       //this.orders=[]
-      this.printnumber = res.printNumber
+      this.printnumber = res.data
       this.showPrintbtn = true
       this.spinner.hide()
 

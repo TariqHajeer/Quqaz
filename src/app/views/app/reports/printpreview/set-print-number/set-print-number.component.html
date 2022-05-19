@@ -175,12 +175,15 @@
                         {{order.total| number}}
                     </td>
                     <td style="width: 12%;border: 1px black solid;padding: 5px;text-align: center;">
+                        {{order.date| date:"dd/MM/yyyy"}}
+                    </td>
+                    <td style="width: 12%;border: 1px black solid;padding: 5px;text-align: center;">
                         {{order.country}}
                     </td>
                     <td style="width: 12%;border: 1px black solid;padding: 5px;text-align: center;">
                         {{order.region?order.region:' - '}}
-                        <!-- {{'/'}}
-                        {{order.address?order.address:' - '}} -->
+                        {{'/'}}
+                        {{order.address?order.address:' - '}}
                     </td>
                     <td style="width: 13%;border: 1px black solid;padding: 5px;text-align: center;">
                         {{order.phone}}
@@ -206,7 +209,7 @@
                     <td style="border: 1px black solid;padding: 5px;text-align: center;">
                         <!----> {{ count| number}}
                     </td>
-                    <td colspan="6" style="border: 1px black solid;padding: 5px;text-align: center;"></td>
+                    <td colspan="7" style="border: 1px black solid;padding: 5px;text-align: center;"></td>
                 </tr>
             </tbody>
 

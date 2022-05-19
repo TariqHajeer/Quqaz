@@ -223,6 +223,6 @@ export class UserTreasuryComponent implements OnInit {
     this.router.navigate(['/app/reports/printclientreciptandexchange/', id]);
   }
   receiptOfTheOrderStatus(id) {
-    this.router.navigate(['/app/reports/printreceiptshipment/', id]);
+    this.router.navigate(['/app/reports/printReceiptShipments/', id]);
   }
 }
