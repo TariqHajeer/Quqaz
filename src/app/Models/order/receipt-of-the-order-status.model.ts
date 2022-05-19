@@ -6,6 +6,8 @@ export class ReceiptOfTheOrderStatus {
   createdOn: Date;
   receiptOfTheOrderStatusDetalis: ReceiptOfTheOrderStatusDetalis[];
   reciverName: string;
+  orderTotal: number;
+  treasuryIncome: number;
 }
 export class ReceiptOfTheOrderStatusDetalis {
   id: number;

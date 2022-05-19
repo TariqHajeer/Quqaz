@@ -48,6 +48,6 @@ export class ShowRecetptShipmentsComponent implements OnInit {
     this.Get();
   }
   print(number) {
-    this.router.navigate(['/app/reports/printreceiptshipment/', number]);
+    this.router.navigate(['/app/reports/printReceiptShipments/', number]);
   }
 }

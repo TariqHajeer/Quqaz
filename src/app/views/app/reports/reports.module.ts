@@ -46,7 +46,7 @@ import { ReceiptfReceivingShipmentComponent } from './receiptf-receiving-shipmen
 import { RejectShipmentsComponent } from './reject-shipments/reject-shipments.component';
 import { ClientReciptAndExchangeComponent } from './printpreview/client-recipt-and-exchange/client-recipt-and-exchange.component';
 import { ShowRecetptShipmentsComponent } from './show-recetpt-shipments/show-recetpt-shipments.component';
-import { PrintReceiptSheipmentComponent } from './show-recetpt-shipments/print-receipt-sheipment/print-receipt-sheipment.component';
+import { PrintReceiptShipmentComponent } from './printpreview/print-receipt-shipment/print-receipt-shipment.component';
 @NgModule({
   declarations: [ShipmentInStockComponent,
     ClientOrderComponent,
@@ -79,7 +79,7 @@ import { PrintReceiptSheipmentComponent } from './show-recetpt-shipments/print-r
     RejectShipmentsComponent,
     ClientReciptAndExchangeComponent,
     ShowRecetptShipmentsComponent,
-    PrintReceiptSheipmentComponent,],
+    PrintReceiptShipmentComponent,],
   imports: [
     CommonModule,
     ReportsRoutingModule,
