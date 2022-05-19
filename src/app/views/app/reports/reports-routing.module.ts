@@ -21,7 +21,6 @@ import { PrintOrderInCompanyComponent } from './printpreview/print-order-in-comp
 import { PrintReceiptShipmentComponent } from './printpreview/print-receipt-shipment/print-receipt-shipment.component';
 import { SetPrintNumberClientComponent } from './printpreview/set-print-number-client/set-print-number-client.component';
 import { SetPrintNumberComponent } from './printpreview/set-print-number/set-print-number.component';
-import { ReceiptShipmentAgentComponent } from './receipt-shipment-agent/receipt-shipment-agent.component';
 import { ReceiptfReceivingShipmentComponent } from './receiptf-receiving-shipment/receiptf-receiving-shipment.component';
 import { ReceiptsAndExchangesComponent } from './receipts-and-exchanges/receipts-and-exchanges.component';
 import { RejectShipmentsComponent } from './reject-shipments/reject-shipments.component';
@@ -166,7 +165,7 @@ const routes: Routes = [
     data: { roles: [UserPermission.ShowReports]}
   },
   {
-    path:'printReceiptShipment/:id',
+    path:'printReceiptShipments/:id',
     component: PrintReceiptShipmentComponent,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowReports]}
   },
