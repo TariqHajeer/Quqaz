@@ -7,6 +7,7 @@ export class ReceiptOfTheOrderStatus {
   receiptOfTheOrderStatusDetalis: ReceiptOfTheOrderStatusDetalis[];
   reciverName: string;
   orderTotal: number;
+  treasuryIncome: number;
 }
 export class ReceiptOfTheOrderStatusDetalis {
   id: number;
