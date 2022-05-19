@@ -103,10 +103,10 @@
       </div>
       <div class="col-2"></div>
       <div class="col-3" style="text-align: right; font-size: 14px">
-        <div style="margin-bottom: 25px;">
-            <h4>تقرير استلام حالة شحنة</h4>
+        <div style="margin-bottom: 25px">
+          <h4>تقرير استلام حالة شحنة</h4>
         </div>
-        <div style="margin-bottom: 7px;">
+        <div style="margin-bottom: 7px">
           <svg
             style="color: rgb(153, 1, 1)"
             xmlns="http://www.w3.org/2000/svg"
@@ -123,7 +123,7 @@
           اسم المستلم :
           {{ receiptOfTheOrderStatus.reciverName }}
         </div>
-        <div style="margin-bottom: 7px;">
+        <div style="margin-bottom: 7px">
           <svg
             style="color: rgb(153, 1, 1)"
             xmlns="http://www.w3.org/2000/svg"
@@ -140,7 +140,7 @@
           تاريخ الادخال :
           {{ receiptOfTheOrderStatus.createdOn | date: "dd/MM/yyyy" }}
         </div>
-        <div style="margin-bottom: 7px;">
+        <div style="margin-bottom: 7px">
           <svg
             style="color: rgb(153, 1, 1)"
             xmlns="http://www.w3.org/2000/svg"
@@ -258,6 +258,16 @@
           </td>
           <td
             style="
+              width: 17%;
+              border: 1px black solid;
+              padding: 5px;
+              text-align: center;
+            "
+          >
+            {{ order.agentCost | number }}
+          </td>
+          <td
+            style="
               width: 15%;
               border: 1px black solid;
               padding: 5px;
@@ -277,16 +287,6 @@
             {{ order.agent ? order.agent.name : null }}
           </td>
 
-          <td
-            style="
-              width: 17%;
-              border: 1px black solid;
-              padding: 5px;
-              text-align: center;
-            "
-          >
-            {{ order.agentCost | number }}
-          </td>
           <td
             style="
               width: 15%;
@@ -322,16 +322,12 @@
           <td style="border: 1px black solid; padding: 5px; text-align: center">
             {{ cost | number }}
           </td>
-          <td
-            style="border: 1px black solid; padding: 5px; text-align: center"
-            colspan="2"
-          ></td>
           <td style="border: 1px black solid; padding: 5px; text-align: center">
             {{ agentCost | number }}
           </td>
           <td
             style="border: 1px black solid; padding: 5px; text-align: center"
-            colspan="2"
+            colspan="4"
           ></td>
         </tr>
       </tbody>
