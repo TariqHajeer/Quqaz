@@ -21,7 +21,6 @@ export class PrintReceiptShipmentComponent implements OnInit {
     new ReceiptOfTheOrderStatus();
   heads = [
     'ترقيم',
-    'رقم العملية',
     'كود',
     'كلفة الشحنة',
     'كلفة توصيل المندوب',
