@@ -1,14 +1,17 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { OrderService } from 'src/app/services/order.service';
-import { ReceiptOfTheOrderStatus } from 'src/app/Models/order/receipt-of-the-order-status.model';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+import { ReceiptOfTheOrderStatus } from 'src/app/Models/order/receipt-of-the-order-status.model';
+import { OrderService } from 'src/app/services/order.service';
+
 @Component({
-  selector: 'app-print-receipt-sheipment',
-  templateUrl: './print-receipt-sheipment.component.html',
-  styleUrls: ['./print-receipt-sheipment.component.scss'],
+  selector: 'app-print-receipt-shipment',
+  templateUrl: './print-receipt-shipment.component.html',
+  styleUrls: ['./print-receipt-shipment.component.scss']
 })
-export class PrintReceiptSheipmentComponent implements OnInit {
+export class PrintReceiptShipmentComponent implements OnInit {
+
   constructor(
     private orderService: OrderService,
     public getroute: ActivatedRoute
