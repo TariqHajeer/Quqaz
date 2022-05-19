@@ -48,6 +48,7 @@ export class PrintReceiptShipmentComponent implements OnInit {
       this.orderService.ReceiptOfTheOrderStatu(this.id).subscribe((res) => {
         this.receiptOfTheOrderStatus.receiptOfTheOrderStatusDetalis = [];
         this.receiptOfTheOrderStatus = res.data;
+        console.log(res.data)
         this.sumCost();
       });
     });
