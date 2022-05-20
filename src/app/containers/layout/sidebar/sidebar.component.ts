@@ -499,11 +499,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
         if (this.userlogin.haveTreasury) {
           item.enabled = true;
         } else if (
-          item.to == '/app/reports/ReceiptfReceivingShipment' ||
-          item.to == '/app/reports/Shipmentsnotbeendelivered' ||
-          item.to == '/app/reports/receiptsandexchanges'||
-          item.to == '/app/income'||
-          item.to == '/app/outcome'
+          (item.to == '/app/reports/ReceiptfReceivingShipment' ||
+            item.to == '/app/reports/Shipmentsnotbeendelivered' ||
+            item.to == '/app/reports/receiptsandexchanges' ||
+            item.to == '/app/income' ||
+            item.to == '/app/outcome') &&
+          !this.userlogin.haveTreasury
         ) {
           item.enabled = false;
         }
