@@ -501,7 +501,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
         } else if (
           item.to == '/app/reports/ReceiptfReceivingShipment' ||
           item.to == '/app/reports/Shipmentsnotbeendelivered' ||
-          item.to == '/app/reports/receiptsandexchanges'
+          item.to == '/app/reports/receiptsandexchanges'||
+          item.to == '/app/income'||
+          item.to == '/app/outcome'
         ) {
           item.enabled = false;
         }
