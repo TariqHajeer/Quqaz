@@ -6,7 +6,7 @@
                     [ngClass]="{'active': (selectedParentMenu === item.to && viewingParentMenu === '') || viewingParentMenu === item.to}">
 
                             <!-- if the item go to new page -->
-                    <a  *ngIf="item.newWindow" [href]="item.to" rel="noopener noreferrer" target="_blank">
+                    <a  *ngIf="item.newWindow&&item.enabled" [href]="item.to" rel="noopener noreferrer" target="_blank">
                         <i [ngClass]="item.icon" class="text-center"></i>
 
                         {{item.label | translate}}
@@ -14,7 +14,7 @@
 
                     </a>
                             <!-- if the item has sub itemes -->
-                    <a *ngIf="!item.newWindow && item.subs &&  item.subs.length>0"
+                    <a *ngIf="!item.newWindow && item.subs &&  item.subs.length>0&&item.enabled"
                         (click)="openSubMenu($event,item); false" [href]="item.to">
                         <i [ngClass]="item.icon" class="text-center"></i>
                         {{item.label | translate}}
@@ -23,7 +23,7 @@
                     </a>
                            
                         <!-- if the item dosnot has sub itemes -->
-                    <a *ngIf="!item.newWindow && (!item.subs || (item.subs &&  item.subs.length===0))"
+                    <a *ngIf="!item.newWindow && (!item.subs || (item.subs &&  item.subs.length===0))&&item.enabled"
                         (click)="changeSelectedParentHasNoSubmenu(item.to); false" [routerLink]="item.to">
                         <i [ngClass]="item.icon" class="text-center"></i> 
                         {{item.label | translate}}

@@ -142,12 +142,12 @@ const data: IMenuItem[] = [
             to: `${adminRoot}/reports/ShipmentInStock`,
             permission: [UserPermission.ShowReports]
           },
-          // {
-          //   icon: 'simple-icon-layers',
-          //   label: 'كشف شحنات   في الطريق',
-          //   to: `${adminRoot}/reports/Shipmentonway`,
-          //   permission: [UserPermission.ShowReports]
-          // },
+          {
+            icon: 'simple-icon-layers',
+            label: 'كشف شحنات   في الطريق',
+            to: `${adminRoot}/reports/Shipmentonway`,
+            permission: [UserPermission.ShowReports]
+          },
           {
             icon: 'simple-icon-layers',
             label: 'تفاصيل المندوبين ',
