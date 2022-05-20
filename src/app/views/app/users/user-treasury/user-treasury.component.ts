@@ -69,7 +69,7 @@ export class UserTreasuryComponent implements OnInit {
     this.treasuryService
       .Hisotry(this.treasury.id, this.paging)
       .subscribe((res) => {
-        this.dataSource = new MatTableDataSource(res);
+        this.dataSource = new MatTableDataSource(res.data);
       });
   }
   switchPage(event: PageEvent) {
