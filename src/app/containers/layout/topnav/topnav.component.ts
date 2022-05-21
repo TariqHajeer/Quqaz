@@ -188,4 +188,7 @@ export class TopnavComponent implements OnInit, OnDestroy {
     else
     this.router.navigate(['/app/HomePage/start'])
   }
+  profile(){
+    this.router.navigate(['/app/user/profile'])
+  }
 }
