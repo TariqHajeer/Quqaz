@@ -20,9 +20,11 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { GetGiveFormComponent } from './data/get-give-form/get-give-form.component';
+import { TreasuryTableComponent } from './data/treasury-table/treasury-table.component';
 
 @NgModule({
-  declarations: [AddUserComponent, ViewUserComponent, EditUserComponent, ShowAgentComponent, UserTreasuryComponent, UserProfileComponent],
+  declarations: [AddUserComponent, ViewUserComponent, EditUserComponent, ShowAgentComponent, UserTreasuryComponent, UserProfileComponent, GetGiveFormComponent, TreasuryTableComponent],
   imports: [
     CommonModule,
     UsersRoutingModule,
