@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/auth.guard';
 import { UserPermission } from 'src/app/shared/auth.roles';
-import { ViewByIdComponent } from '../income/view-by-id/view-by-id.component';
 import { AddMoreOutcomeComponent } from './add-more-outcome/add-more-outcome.component';
+import { ViewByIdComponent } from './view-by-id/view-by-id.component';
 import { ViewOutComeComponent } from './view-out-come/view-out-come.component';
 
 
@@ -19,7 +19,7 @@ const routes: Routes = [
     data: { roles: [UserPermission.AddOutCome]}
   }
   , {
-    path: '/:id',
+    path: 'view/:id',
     component: ViewByIdComponent ,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowOutCome]}
   }

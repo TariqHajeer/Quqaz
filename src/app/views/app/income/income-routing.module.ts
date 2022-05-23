@@ -18,7 +18,7 @@ const routes: Routes = [
     component:AddMoreIncomeComponent ,canActivate: [AuthGuard],
     data: { roles: [UserPermission.AddIncome]}
   } , {
-    path: '/:id',
+    path: 'view/:id',
     component: ViewByIdComponent ,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowIncome]}
   }

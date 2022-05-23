@@ -73,9 +73,9 @@ export class TreasuryTableComponent implements OnInit {
     this.router.navigate(['/app/reports/printReceiptShipments/', id]);
   }
   income(id) {
-    this.router.navigate(['/app/reports/printReceiptShipments/', id]);
+    this.router.navigate(['/app/income/view/', id]);
   }
   outcome(id) {
-    this.router.navigate(['/app/reports/printReceiptShipments/', id]);
+    this.router.navigate(['/app/outcome/view/', id]);
   }
 }
