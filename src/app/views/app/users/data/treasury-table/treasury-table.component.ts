@@ -39,6 +39,8 @@ export class TreasuryTableComponent implements OnInit {
       if (res) {
         this.treasury = res;
         this.dataSource = new MatTableDataSource(this.treasury.history.data);
+        this.total=this.treasury.history.total
+        console.log(res)
       }
     });
   }
@@ -68,6 +70,12 @@ export class TreasuryTableComponent implements OnInit {
     this.router.navigate(['/app/reports/printclientreciptandexchange/', id]);
   }
   receiptOfTheOrderStatus(id) {
+    this.router.navigate(['/app/reports/printReceiptShipments/', id]);
+  }
+  income(id) {
+    this.router.navigate(['/app/reports/printReceiptShipments/', id]);
+  }
+  outcome(id) {
     this.router.navigate(['/app/reports/printReceiptShipments/', id]);
   }
 }

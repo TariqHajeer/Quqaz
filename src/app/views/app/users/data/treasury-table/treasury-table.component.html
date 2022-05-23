@@ -41,9 +41,7 @@
             >
               &nbsp;عرض الحركة
             </a>
-            <!-- <a class="btn  btn-primary btn-xs" (click)="cashMovment(element.cashMovmentId)"*ngIf="element.cashMovmentId">
-                            &nbsp;عرض الحركة
-                        </a> -->
+
             <a
               class="btn btn-primary btn-xs"
               (click)="receipt(element.receiptId)"
@@ -59,6 +57,20 @@
               *ngIf="element.receiptOfTheOrderStatusId"
             >
               &nbsp;عرض الحركة
+            </a>
+            <a
+              class="btn btn-primary btn-xs"
+              (click)="outcome(element.outcomeId)"
+              *ngIf="element.outcomeId"
+            >
+              &nbsp;عرض الحركة الصادرات
+            </a>
+            <a
+              class="btn btn-primary btn-xs"
+              (click)="income(element.incomeId)"
+              *ngIf="element.incomeId"
+            >
+              &nbsp;عرض الحركة الواردات
             </a>
           </td>
         </ng-container>
