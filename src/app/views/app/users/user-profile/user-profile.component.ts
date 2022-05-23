@@ -16,10 +16,7 @@ export class UserProfileComponent implements OnInit {
   ) as UserLogin;
   constructor() {}
   ngOnInit(): void {}
-  listMenu: ListMenu[] = [
-    { id: 1, lable: 'صندوق الخاص بي', visibl: false },
-    { id: 2, lable: 'حركات الصندوق', visibl: false },
-  ];
+  listMenu: ListMenu[] = [{ id: 1, lable: 'حركات الصندوق', visibl: false }];
   visiblListMenu(id) {
     this.listMenu.forEach((list) => {
       if (list.id != id) list.visibl = false;

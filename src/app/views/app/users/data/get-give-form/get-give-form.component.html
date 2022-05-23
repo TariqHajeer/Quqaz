@@ -39,29 +39,5 @@
     </div>
   </div>
 </div>
-<div class="card" *ngIf="!firstAdd">
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md-4">
-        <label>قيمة الصندوق الحالية : {{ treasury.total }}</label>
-      </div>
-      <div class="col-md-4">
-        <label
-          >تاريخ انشاء الصندوق :
-          {{ treasury.createOnUtc | date: "dd/MM/yyyy" }}</label
-        >
-      </div>
-      <div class="col-md-4">
-        <label>
-          فعال :
-          <input
-            type="checkbox"
-            [(ngModel)]="treasury.isActive"
-            (click)="ActiveOrDisActive()"
-          />
-        </label>
-      </div>
-    </div>
-  </div>
-</div>
+
 <simple-notifications></simple-notifications>
