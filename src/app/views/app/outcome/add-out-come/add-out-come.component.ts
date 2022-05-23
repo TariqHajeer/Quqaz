@@ -47,7 +47,7 @@ export class AddOutComeComponent implements OnInit, OnChanges {
       this.CreateOutCome.Id = this.outcome.id
       this.CreateOutCome.Amount = this.outcome.amount
       this.CreateOutCome.Date = this.outcome.date
-      this.CreateOutCome.CurrencyId = this.outcome.currency.id
+      // this.CreateOutCome.CurrencyId = this.outcome.currency.id
       this.CreateOutCome.Note = this.outcome.note
       this.CreateOutCome.Reason = this.outcome.reason
       this.CreateOutCome.OutComeTypeId = this.outcome.outComeType.id
