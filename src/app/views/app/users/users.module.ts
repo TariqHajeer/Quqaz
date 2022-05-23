@@ -22,6 +22,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { GetGiveFormComponent } from './data/get-give-form/get-give-form.component';
 import { TreasuryTableComponent } from './data/treasury-table/treasury-table.component';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [AddUserComponent, ViewUserComponent, EditUserComponent, ShowAgentComponent, UserTreasuryComponent, UserProfileComponent, GetGiveFormComponent, TreasuryTableComponent],
@@ -41,7 +43,9 @@ import { TreasuryTableComponent } from './data/treasury-table/treasury-table.com
     NgxSpinnerModule,
     MatTableModule,
     MatPaginatorModule,
-    MatTabsModule
+    MatTabsModule,
+    MatDividerModule,
+    MatListModule
   ]
 })
 export class UsersModule { }
