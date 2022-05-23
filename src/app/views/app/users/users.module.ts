@@ -18,9 +18,15 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { UserTreasuryComponent } from './user-treasury/user-treasury.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { GetGiveFormComponent } from './data/get-give-form/get-give-form.component';
+import { TreasuryTableComponent } from './data/treasury-table/treasury-table.component';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
-  declarations: [AddUserComponent, ViewUserComponent, EditUserComponent, ShowAgentComponent, UserTreasuryComponent],
+  declarations: [AddUserComponent, ViewUserComponent, EditUserComponent, ShowAgentComponent, UserTreasuryComponent, UserProfileComponent, GetGiveFormComponent, TreasuryTableComponent],
   imports: [
     CommonModule,
     UsersRoutingModule,
@@ -37,6 +43,9 @@ import { MatTableModule } from '@angular/material/table';
     NgxSpinnerModule,
     MatTableModule,
     MatPaginatorModule,
+    MatTabsModule,
+    MatDividerModule,
+    MatListModule
   ]
 })
 export class UsersModule { }
