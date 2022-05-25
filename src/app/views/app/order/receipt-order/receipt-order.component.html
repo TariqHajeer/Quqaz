@@ -1,0 +1,37 @@
+<div class="row card">
+  <div class="col-12">
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <th>رقم الطباعة</th>
+          <th>
+            {{
+              type == "agentPrint" || type == "receiptPrint"
+                ? "المندوب"
+                : "العميل"
+            }}
+          </th>
+          <th>تاريخ الطباعة</th>
+          <th>الهاتف</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let print of ordersPrint">
+            <td>
+              <a
+                class="btn"
+                style="color: rgb(2, 52, 128)"
+                (click)="printReceipt(print.printNmber)"
+              >
+                {{ print.printNmber }}
+              </a>
+            </td>
+            <td>{{ print.destinationName }}</td>
+            <td>{{ print.printerName }}</td>
+            <td>{{ print.date }}</td>
+            <td>{{ print.destinationPhone }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

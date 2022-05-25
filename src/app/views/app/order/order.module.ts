@@ -42,6 +42,7 @@ import { NewOrdersDontSendComponent } from './new-orders-dont-send/new-orders-do
 import { ReceiptsNewOrdersComponent } from './receipts-new-orders/receipts-new-orders.component';
 import { AddMulitpleOrdersWithRegionComponent } from './add-mulitple-orders-with-region/add-mulitple-orders-with-region.component';
 import { AddMultipulOrdersAgentWithRegionComponent } from './add-multipul-orders-agent-with-region/add-multipul-orders-agent-with-region.component';
+import { ReceiptOrderComponent } from './receipt-order/receipt-order.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { AddMultipulOrdersAgentWithRegionComponent } from './add-multipul-orders
     ReceiptsNewOrdersComponent,
     AddMulitpleOrdersWithRegionComponent,
     AddMultipulOrdersAgentWithRegionComponent,
+    ReceiptOrderComponent,
   ],
   imports: [
     CommonModule,
