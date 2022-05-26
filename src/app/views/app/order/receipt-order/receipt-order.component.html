@@ -12,12 +12,17 @@
                 class="btn"
                 style="color: rgb(2, 52, 128)"
                 (click)="printReceipt(print.printNmber)"
+                *ngIf="type != 'receiptPrint'"
               >
-                {{
-                  type == "receiptPrint"
-                    ? print.receiptOfTheOrderStatusId
-                    : print.printNmber
-                }}
+                {{ print.printNmber }}
+              </a>
+              <a
+                class="btn"
+                style="color: rgb(2, 52, 128)"
+                (click)="printReceipt(print.receiptOfTheOrderStatusId)"
+                *ngIf="type == 'receiptPrint'"
+              >
+                {{ print.receiptOfTheOrderStatusId }}
               </a>
             </td>
             <td>
