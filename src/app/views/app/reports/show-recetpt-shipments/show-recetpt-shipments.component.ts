@@ -17,11 +17,7 @@ export class ShowRecetptShipmentsComponent implements OnInit {
     this.paging = new Paging();
     this.Get();
   }
-  displayedColumns: string[] = [
-    'id',
-    'reciverName',
-    'createdOn',
-  ];
+  displayedColumns: string[] = ['id', 'reciverName', 'createdOn','types'];
   dataSource;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -29,22 +25,18 @@ export class ShowRecetptShipmentsComponent implements OnInit {
   pageEvent: PageEvent;
   paging: Paging;
   noDataFound: boolean = false;
-
+  printNmber: number;
+  Code: number;
   Get() {
-    this.orderService
-      .ReceiptOfTheOrderStatus(this.paging)
-      .subscribe((res) => {
-        this.dataSource = new MatTableDataSource(res.data);
-        this.totalCount = res.total;
-      });
+    this.orderService.ReceiptOfTheOrderStatus(this.paging,this.Code).subscribe((res) => {
+      this.dataSource = new MatTableDataSource(res.data);
+      this.totalCount = res.total;
+    });
   }
   switchPage(event: PageEvent) {
     this.paging.allItemsLength = event.length;
     this.paging.RowCount = event.pageSize;
     this.paging.Page = event.pageIndex + 1;
-    this.Get();
-  }
-  printNmberFillter() {
     this.Get();
   }
   print(number) {
