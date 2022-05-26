@@ -3,16 +3,7 @@
     <div class="card-body">
       <table class="table">
         <thead>
-          <th>رقم الطباعة</th>
-          <th>
-            {{
-              type == "agentPrint" || type == "receiptPrint"
-                ? "المندوب"
-                : "العميل"
-            }}
-          </th>
-          <th>تاريخ الطباعة</th>
-          <th>الهاتف</th>
+          <th *ngFor="let head of heads">{{ head }}</th>
         </thead>
         <tbody>
           <tr *ngFor="let print of ordersPrint">
@@ -22,13 +13,41 @@
                 style="color: rgb(2, 52, 128)"
                 (click)="printReceipt(print.printNmber)"
               >
-                {{ print.printNmber }}
+                {{
+                  type == "receiptPrint"
+                    ? print.receiptOfTheOrderStatusId
+                    : print.printNmber
+                }}
               </a>
             </td>
-            <td>{{ print.destinationName }}</td>
-            <td>{{ print.printerName }}</td>
-            <td>{{ print.date }}</td>
-            <td>{{ print.destinationPhone }}</td>
+            <td>
+              {{
+                type == "receiptPrint"
+                  ? (convertToDate(print.createdOn) | date: "yyyy/MM/dd")
+                  : print.destinationName
+              }}
+            </td>
+            <td>
+              {{ type == "receiptPrint" ? print.reciver : print.printerName }}
+            </td>
+            <td>
+              {{
+                type == "receiptPrint"
+                  ? print.orderPlaced
+                    ? print.orderPlaced.name
+                    : null
+                  : (print.date | date: "yyyy/MM/dd")
+              }}
+            </td>
+            <td>
+              {{
+                type == "receiptPrint"
+                  ? print.moneyPlaced
+                    ? print.moneyPlaced.name
+                    : null
+                  : print.destinationPhone
+              }}
+            </td>
           </tr>
         </tbody>
       </table>
