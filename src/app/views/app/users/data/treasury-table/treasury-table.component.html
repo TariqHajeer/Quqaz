@@ -1,47 +1,5 @@
 <div class="card">
   <div class="card-body">
-    <h3 class="text-center">صندوق الموظف : {{ User.name }}</h3>
-    <div class="row">
-      <div class="col-md-3" *ngIf="firstAdd">
-        <label>المبلغ المبدئي </label>
-        <input
-          type="text"
-          class="form-control"
-          oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..-*)\./g, '$1');"
-          [ngModelOptions]="{ standalone: true }"
-          [(ngModel)]="createTreasury.Amount"
-        />
-      </div>
-      <div class="col-md-3" style="padding-top: 15px" *ngIf="firstAdd">
-        <button class="btn btn-primary" (click)="addTreasury()">
-          &nbsp;اضافة
-        </button>
-      </div>
-
-      <div class="col-md-3" *ngIf="!firstAdd">
-        <label>المبلغ </label>
-        <input
-          type="text"
-          class="form-control"
-          oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..-*)\./g, '$1');"
-          [ngModelOptions]="{ standalone: true }"
-          [(ngModel)]="this.createTreasury.Amount"
-        />
-      </div>
-      <div class="col-md-2" style="padding-top: 15px" *ngIf="!firstAdd">
-        <button class="btn btn-primary" (click)="GetMoney()">&nbsp;أخذ</button>
-      </div>
-      <div class="col-md-2" style="padding-top: 15px" *ngIf="!firstAdd">
-        <button class="btn btn-primary" (click)="GiveMoney()">
-          &nbsp;اعطاء
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-<br />
-<div class="card">
-  <div class="card-body">
     <div class="row">
       <div class="col-md-4">
         <label>قيمة الصندوق الحالية : {{ treasury.total }}</label>
@@ -58,14 +16,13 @@
           <input
             type="checkbox"
             [(ngModel)]="treasury.isActive"
-            (click)="ActiveOrDisActive()"
+           [disabled]="true"
           />
         </label>
       </div>
     </div>
   </div>
 </div>
-<br />
 <div class="card">
   <div class="card-body">
     <h3 class="text-center">حركات الصندوق</h3>
@@ -109,9 +66,7 @@
             >
               &nbsp;عرض الحركة
             </a>
-            <!-- <a class="btn  btn-primary btn-xs" (click)="cashMovment(element.cashMovmentId)"*ngIf="element.cashMovmentId">
-                            &nbsp;عرض الحركة
-                        </a> -->
+
             <a
               class="btn btn-primary btn-xs"
               (click)="receipt(element.receiptId)"
@@ -133,14 +88,13 @@
               (click)="outcome(element.outcomeId)"
               *ngIf="element.outcomeId"
             >
-              &nbsp;عرض الحركة
-            </a>
+              &nbsp;عرض الحركة             </a>
             <a
               class="btn btn-primary btn-xs"
               (click)="income(element.incomeId)"
               *ngIf="element.incomeId"
             >
-              &nbsp;عرض الحركة
+              &nbsp;عرض الحركة 
             </a>
           </td>
         </ng-container>
@@ -152,13 +106,13 @@
         لايوجد بيانات للعرض
       </h5>
     </div>
+    <mat-paginator
+      showFirstLastButtons
+      [length]="total"
+      [pageSize]="paging.RowCount"
+      [pageSizeOptions]="paging.selectItemsPerPage"
+      (page)="switchPage($event)"
+    ></mat-paginator>
+    <simple-notifications></simple-notifications>
   </div>
 </div>
-<mat-paginator
-  showFirstLastButtons
-  [length]="total"
-  [pageSize]="paging.RowCount"
-  [pageSizeOptions]="paging.selectItemsPerPage"
-  (page)="switchPage($event)"
-></mat-paginator>
-<simple-notifications></simple-notifications>

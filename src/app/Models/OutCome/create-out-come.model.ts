@@ -4,7 +4,7 @@ export class CreateOutCome {
     }
     Id:number
     Amount:number
-    CurrencyId:number
+    CurrencyId?:number
     Date:any
     Reason:string
     Note:string

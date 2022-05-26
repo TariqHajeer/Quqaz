@@ -269,7 +269,7 @@ export class EditOrdersComponent implements OnInit {
     this.customerService.getAll(this.cityapi).subscribe(res => {
       this.cities = res
       var country = this.cities.find(c => c.id == this.Order.CountryId)
-      this.orderResend.DeliveryCost = country.deliveryCost
+      this.orderResend.DeliveryCost = country.deliveryCost?country.deliveryCost:0
       if(this.tempRegions)
       this.Regionsresend = this.tempRegions.filter(r => r.country.id == this.orderResend.CountryId)
       if(this.tempAgent)
@@ -420,11 +420,5 @@ export class EditOrdersComponent implements OnInit {
       // location.reload();
 
     }, 1000);
-  }
-  printagent(number){
-    this.router.navigate(['/app/reports/agentprintnumber/', number])
-  }
-  printclient(number){
-    this.router.navigate(['/app/reports/clientprintnumber/', number])
   }
 }

@@ -15,4 +15,6 @@ export class TreasuryHistory {
     clientPaymentId: number;
     cashMovmentId: number;
     receiptId: number;
+    incomeId: number;
+    outcomeId: number;
 }
