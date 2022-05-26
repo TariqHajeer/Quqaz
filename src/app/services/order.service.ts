@@ -393,12 +393,14 @@ export class OrderService {
   ReceiptOfTheOrderStatu(id) {
     return this.http.get<any>(this.controler + 'ReceiptOfTheOrderStatus/' + id);
   }
-  ReceiptOfTheOrderStatus(paging) {
+  ReceiptOfTheOrderStatus(paging,code) {
     let params = new HttpParams();
     if (paging.RowCount != undefined || paging.RowCount != null)
       params = params.append('RowCount', paging.RowCount);
     if (paging.Page != undefined || paging.Page != null)
       params = params.append('Page', paging.Page);
+      if (code)
+      params = params.append('code',code);
     return this.http.get<any>(this.controler + 'ReceiptOfTheOrderStatus', {
       params: params,
     });
