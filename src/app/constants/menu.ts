@@ -203,12 +203,18 @@ const data: IMenuItem[] = [
           },
         ]
       },
-
+      
       {
         icon: 'simple-icon-layers',
         label: ' تقرير استلام حالة الشحنة  ',
         to: `${adminRoot}/reports/showreceiptshipment`,
         permission: [UserPermission.ShowReports]
+      },
+      {
+        icon: 'simple-icon-layers',
+        label: ' عرض الصناديق ',
+        to: `${adminRoot}/reports/showtreasury`,
+        permission: [UserPermission.ShowReports,UserPermission.TreasuryManagment]
       },
       {
         icon: 'simple-icon-layers',
