@@ -1,0 +1,42 @@
+<h3 class="text-center">الصناديق</h3>
+<div class="row text-reight">
+  <div
+    class="col-sm-6 col-md-3"
+    *ngFor="let treasury of treasuries; let i = index"
+  >
+    <a
+      class="stat-card"
+      target="_blank"
+      [routerLink]="['/app/user/usertreasury', treasury.id]"
+    >
+      <div class="stat-card__content">
+        <p class="text-uppercase mb-1 text-muted"></p>
+        <div style="margin-bottom: 10px">
+          <span class="text-muted">{{ treasury.userName }}</span>
+        </div>
+        <div style="margin-bottom: 10px">
+          <h4 class="text-primary">{{ treasury.total | number }}</h4>
+        </div>
+
+        <div style="margin-bottom: 10px">
+          <span class="text-muted">{{
+            convertDate(treasury.createOnUtc) | date: "yyyy/MM/dd"
+          }}</span>
+        </div>
+
+        <div>
+          <input
+            type="checkbox"
+            [(ngModel)]="treasury.isActive"
+            [disabled]="true"
+          />
+        </div>
+      </div>
+      <div class="stat-card__icon" [ngClass]="ColorClass(i + 2)">
+        <div class="stat-card__icon-circle">
+          <i class="iconsminds-box-close"></i>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>

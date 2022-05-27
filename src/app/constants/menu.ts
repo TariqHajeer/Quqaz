@@ -10,14 +10,12 @@ export interface IMenuItem {
   newWindow?: boolean;
   subs?: IMenuItem[];
   permission?: UserPermission[];
-  badge?: boolean
-  badgeLable?
-  enabled?:boolean;
+  badge?: boolean;
+  badgeLable?;
+  enabled?: boolean;
 }
 
 const data: IMenuItem[] = [
-
-
   //order
   {
     icon: 'iconsminds-box-close',
@@ -37,33 +35,31 @@ const data: IMenuItem[] = [
         icon: 'iconsminds-box-close',
         label: 'عرض الطلبات',
         to: `${adminRoot}/order/`,
-        permission: [UserPermission.ShowOrder]
+        permission: [UserPermission.ShowOrder],
       },
       {
         icon: 'iconsminds-box-close',
         label: 'استلام حالة الشحنة المستلمة ',
         to: `${adminRoot}/reports/ReceiptfReceivingShipment`,
-        permission: [UserPermission.ReceiptOfTheStatusOfTheDeliveredShipment]
+        permission: [UserPermission.ReceiptOfTheStatusOfTheDeliveredShipment],
       },
       {
         icon: 'iconsminds-box-close',
         label: 'استلام حالة الشحنة المرتجعة ',
         to: `${adminRoot}/reports/rejectShipments`,
-        permission: [UserPermission.ReceiptOfTheStatusOfTheReturnedShipment]
+        permission: [UserPermission.ReceiptOfTheStatusOfTheReturnedShipment],
       },
       {
         icon: 'iconsminds-box-close',
         label: 'نقل الطلبات ',
         to: `${adminRoot}/order/moveorder`,
-        permission: [UserPermission.AddOrder]
-
+        permission: [UserPermission.AddOrder],
       },
       {
         icon: 'iconsminds-box-close',
         label: 'نقل الطلبات الى مندوب آخر',
         to: `${adminRoot}/reports/changeagentbyorders`,
-        permission: [UserPermission.ShowOrder]
-
+        permission: [UserPermission.ShowOrder],
       },
       {
         icon: 'iconsminds-box-close',
@@ -71,56 +67,55 @@ const data: IMenuItem[] = [
         to: `${adminRoot}/order/orderswithclient`,
         permission: [UserPermission.AddOrder],
         badge: true,
-
       },
       {
         icon: 'simple-icon-layers',
         label: 'طلبات تعديل حالة الشحنة',
         to: `${adminRoot}/reports/agentOrderstaterequests`,
         badge: true,
-        permission: [UserPermission.ShowOrder]
+        permission: [UserPermission.ShowOrder],
       },
       {
         icon: 'iconsminds-add',
         label: 'إضافة طلب',
         to: `${adminRoot}/order/addorder`,
-        permission: [UserPermission.AddOrder]
+        permission: [UserPermission.AddOrder],
       },
       {
         icon: 'iconsminds-add',
         label: 'إضافة طلبات متعددة ',
         to: `${adminRoot}/order/addMulitpleOrders`,
-        permission: [UserPermission.AddOrder]
+        permission: [UserPermission.AddOrder],
       },
       {
         icon: 'iconsminds-add',
         label: ' إضافة  طلبات متعددة مع المنطقة  ',
         to: `${adminRoot}/order/addMulitpleOrdersWithRegion`,
-        permission: [UserPermission.AddOrder]
+        permission: [UserPermission.AddOrder],
       },
       {
         icon: 'iconsminds-add',
         label: 'إضافة طلبات متعددة للعميل',
         to: `${adminRoot}/order/addMulitpleOrdersfromClient`,
-        permission: [UserPermission.AddOrder]
+        permission: [UserPermission.AddOrder],
       },
       {
         icon: 'iconsminds-add',
         label: 'إضافة طلبات متعددة للمندوب',
         to: `${adminRoot}/order/addMulitpleOrdersfromAgent`,
-        permission: [UserPermission.AddOrder]
+        permission: [UserPermission.AddOrder],
       },
       {
         icon: 'iconsminds-add',
         label: ' إضافة  متعددة للعميل والمندوب',
         to: `${adminRoot}/order/addMulitpleOrdersfromClientandAgent`,
-        permission: [UserPermission.AddOrder]
+        permission: [UserPermission.AddOrder],
       },
       {
         icon: 'iconsminds-add',
         label: ' إضافة  متعددة للمندوب و المنطقة',
         to: `${adminRoot}/order/addMulitpleOrdersAgentWithRegion`,
-        permission: [UserPermission.AddOrder]
+        permission: [UserPermission.AddOrder],
       },
     ],
   },
@@ -131,7 +126,8 @@ const data: IMenuItem[] = [
     to: `${adminRoot}/reports`,
     permission: [UserPermission.ShowReports],
     subs: [
-      {//agent
+      {
+        //agent
         icon: 'simple-icon-layers',
         label: 'المندوب',
         to: `${adminRoot}/reports/ShipmentInStock`,
@@ -140,36 +136,36 @@ const data: IMenuItem[] = [
             icon: 'simple-icon-layers',
             label: 'كشف شحنات  في المخزن',
             to: `${adminRoot}/reports/ShipmentInStock`,
-            permission: [UserPermission.ShowReports]
+            permission: [UserPermission.ShowReports],
           },
           {
             icon: 'simple-icon-layers',
             label: 'كشف شحنات   في الطريق',
             to: `${adminRoot}/reports/Shipmentonway`,
-            permission: [UserPermission.ShowReports]
+            permission: [UserPermission.ShowReports],
           },
           {
             icon: 'simple-icon-layers',
             label: 'تفاصيل المندوبين ',
             to: `${adminRoot}/reports/AgentStatistics`,
-            permission: [UserPermission.ShowReports]
+            permission: [UserPermission.ShowReports],
           },
           {
             icon: 'simple-icon-layers',
             label: ' طلبات في ذمة المندوب ',
             to: `${adminRoot}/reports/OrderVicdanAgent`,
-            permission: [UserPermission.ShowReports]
+            permission: [UserPermission.ShowReports],
           },
           {
             icon: 'simple-icon-layers',
             label: 'عمليات الطباعة ',
             to: `${adminRoot}/reports/agentprint`,
-            permission: [UserPermission.PrintAgent]
+            permission: [UserPermission.PrintAgent],
           },
-
-        ]
+        ],
       },
-      {//client
+      {
+        //client
         icon: 'simple-icon-layers',
         label: 'العميل',
         to: `${adminRoot}/reports/Shipmentonway`,
@@ -179,70 +175,77 @@ const data: IMenuItem[] = [
             icon: 'simple-icon-layers',
             label: 'تسديد العميل',
             to: `${adminRoot}/reports/Shipmentsnotbeendelivered`,
-            permission: [UserPermission.Pay]
-
+            permission: [UserPermission.Pay],
           },
           {
             icon: 'simple-icon-layers',
             label: 'تسديد الشركات ',
             to: `${adminRoot}/reports/orderincompany`,
-            permission: [UserPermission.Pay]
-
+            permission: [UserPermission.Pay],
           },
           {
             icon: 'simple-icon-layers',
             label: ' صرف وقبض ',
             to: `${adminRoot}/reports/receiptsandexchanges`,
-            permission: [UserPermission.ShowReports]
+            permission: [UserPermission.ShowReports],
           },
           {
             icon: 'simple-icon-layers',
             label: 'عمليات الطباعة ',
             to: `${adminRoot}/reports/clientprint`,
-            permission: [UserPermission.PrintClient]
+            permission: [UserPermission.PrintClient],
           },
-        ]
+        ],
       },
 
       {
         icon: 'simple-icon-layers',
         label: ' تقرير استلام حالة الشحنة  ',
         to: `${adminRoot}/reports/showreceiptshipment`,
-        permission: [UserPermission.ShowReports]
+        permission: [UserPermission.ShowReports],
+      },
+      {
+        icon: 'simple-icon-layers',
+        label: '  الصناديق ',
+        to: `${adminRoot}/reports/showtreasury`,
+        permission: [
+          UserPermission.ShowReports,
+          UserPermission.TreasuryManagment,
+        ],
       },
       {
         icon: 'simple-icon-layers',
         label: ' أرباح الطلبات ',
         to: `${adminRoot}/order/ProfitsOfOrders`,
-        permission: [UserPermission.ShowReports]
+        permission: [UserPermission.ShowReports],
       },
       {
         icon: 'simple-icon-layers',
         label: ' الإحصائيات  ',
         to: `${adminRoot}/reports/Statistics`,
-        permission: [UserPermission.ShowReports]
+        permission: [UserPermission.ShowReports],
       },
       {
         icon: 'simple-icon-layers',
         label: ' القاصة  ',
         to: `${adminRoot}/reports/pay`,
-        permission: [UserPermission.ShowReports]
+        permission: [UserPermission.ShowReports],
       },
       {
         icon: 'simple-icon-layers',
         label: ' شحنات حسب تاريخ  ',
         to: `${adminRoot}/reports/orderstoday`,
-        permission: [UserPermission.ShowReports]
+        permission: [UserPermission.ShowReports],
       },
       {
         icon: 'simple-icon-layers',
         label: ' شحنات مرفوضة  ',
         to: `${adminRoot}/reports/ordersUnacceptable`,
-        permission: [UserPermission.ShowReports]
+        permission: [UserPermission.ShowReports],
       },
-    ]
+    ],
   },
-  //clients 
+  //clients
   {
     icon: 'simple-icon-people',
     label: 'menu.clients',
@@ -254,13 +257,13 @@ const data: IMenuItem[] = [
         icon: 'iconsminds-box-close',
         label: 'عرض العملاء',
         to: `${adminRoot}/client/`,
-        permission: [UserPermission.ShowClient, UserPermission.AddClient]
+        permission: [UserPermission.ShowClient, UserPermission.AddClient],
       },
       {
         icon: 'simple-icon-people',
         label: 'طلبات تعديل العملاء',
         to: `${adminRoot}/order/editclientorders`,
-        permission: [UserPermission.ShowClient]
+        permission: [UserPermission.ShowClient],
       },
       {
         icon: 'iconsminds-box-close',
@@ -268,19 +271,18 @@ const data: IMenuItem[] = [
         to: `${adminRoot}/payment/paymentrequest/`,
         badge: true,
         permission: [UserPermission.ShowClient],
-        
       },
       {
         icon: 'iconsminds-box-close',
         label: 'طلبات دفع العملاء ',
         to: `${adminRoot}/payment/oldpaymentrequest/`,
-        permission: [UserPermission.ShowClient]
+        permission: [UserPermission.ShowClient],
       },
       {
         icon: 'simple-icon-layers',
         label: 'خصم و إعطاء النقاط ',
         to: `${adminRoot}/client/clientPoint`,
-        permission: [UserPermission.ShowClient]
+        permission: [UserPermission.ShowClient],
       },
     ],
   },
@@ -295,13 +297,13 @@ const data: IMenuItem[] = [
         icon: 'iconsminds-add',
         label: 'اضافة متجر ',
         to: `${adminRoot}/store/addstore`,
-        permission: [UserPermission.ShowOrder]
+        permission: [UserPermission.ShowOrder],
       },
       {
         icon: 'iconsminds-box-close',
         label: 'عرض المتاجر ',
         to: `${adminRoot}/store/`,
-        permission: [UserPermission.ShowOrder]
+        permission: [UserPermission.ShowOrder],
       },
     ],
   },
@@ -311,129 +313,136 @@ const data: IMenuItem[] = [
     icon: 'iconsminds-inbox-into',
     label: 'menu.income',
     to: `${adminRoot}/income`,
-    permission: [UserPermission.ShowIncome, UserPermission.AddIncome]
+    permission: [UserPermission.ShowIncome, UserPermission.AddIncome],
   },
   //outcom tab
   {
     icon: 'iconsminds-inbox-out',
     label: 'menu.outcome',
     to: `${adminRoot}/outcome`,
-    permission: [UserPermission.ShowOutCome, UserPermission.AddOutCome]
+    permission: [UserPermission.ShowOutCome, UserPermission.AddOutCome],
   },
   //users
   {
     icon: 'simple-icon-people',
     label: 'menu.employees',
     to: `${adminRoot}/user`,
-    permission: [UserPermission.ShowUser, UserPermission.AddUser]
+    permission: [UserPermission.ShowUser, UserPermission.AddUser],
   },
   //setting tab
   {
     icon: 'simple-icon-settings',
     label: 'menu.setting.setting',
     to: `${adminRoot}/setting`,
-    permission: [UserPermission.ShowCountry, UserPermission.AddCountry, UserPermission.ShowRegion, UserPermission.AddRegion
-      , UserPermission.ShowOutComeType, UserPermission.AddOutComeType, UserPermission.ShowIncomeType, UserPermission.AddIncomeType
-      , UserPermission.ShowOrderType, UserPermission.AddOrderType, UserPermission.ShowGroup, UserPermission.AddGroup],
+    permission: [
+      UserPermission.ShowCountry,
+      UserPermission.AddCountry,
+      UserPermission.ShowRegion,
+      UserPermission.AddRegion,
+      UserPermission.ShowOutComeType,
+      UserPermission.AddOutComeType,
+      UserPermission.ShowIncomeType,
+      UserPermission.AddIncomeType,
+      UserPermission.ShowOrderType,
+      UserPermission.AddOrderType,
+      UserPermission.ShowGroup,
+      UserPermission.AddGroup,
+    ],
     subs: [
       {
         icon: 'iconsminds-map2',
         label: 'menu.setting.cities',
         to: `${adminRoot}/setting/cities`,
-        permission: [UserPermission.ShowCountry, UserPermission.AddCountry]
+        permission: [UserPermission.ShowCountry, UserPermission.AddCountry],
       },
       {
         icon: 'iconsminds-map2',
         label: 'المدينة الرئيسية',
         to: `${adminRoot}/setting/maincity`,
-        permission: [UserPermission.ShowCountry, UserPermission.AddCountry]
+        permission: [UserPermission.ShowCountry, UserPermission.AddCountry],
       },
       {
         icon: 'iconsminds-map2',
         label: 'ادارة النقاط',
         to: `${adminRoot}/setting/pointsetting`,
-        permission: [UserPermission.ShowCountry]
+        permission: [UserPermission.ShowCountry],
       },
       {
         icon: 'iconsminds-map2',
         label: 'menu.setting.regions',
         to: `${adminRoot}/setting/regions`,
-        permission: [UserPermission.ShowRegion, UserPermission.AddRegion]
+        permission: [UserPermission.ShowRegion, UserPermission.AddRegion],
       },
       {
         icon: 'iconsminds-inbox-out',
         label: 'menu.setting.exportTypes',
         to: `${adminRoot}/setting/exportTypes`,
-        permission: [UserPermission.ShowOutComeType, UserPermission.AddOutComeType]
+        permission: [
+          UserPermission.ShowOutComeType,
+          UserPermission.AddOutComeType,
+        ],
       },
       {
         icon: 'iconsminds-inbox-into',
         label: 'menu.setting.importTypes',
         to: `${adminRoot}/setting/importTypes`,
-        permission: [UserPermission.ShowIncomeType, UserPermission.AddIncomeType]
+        permission: [
+          UserPermission.ShowIncomeType,
+          UserPermission.AddIncomeType,
+        ],
       },
       {
         icon: 'iconsminds-box-close',
         label: 'menu.setting.shipmentsTypes',
         to: `${adminRoot}/setting/shipmentsTypes`,
-        permission: [UserPermission.ShowOrderType, UserPermission.AddOrderType]
+        permission: [UserPermission.ShowOrderType, UserPermission.AddOrderType],
       },
       {
         icon: 'simple-icon-layers',
         label: 'المجموعات',
         to: `${adminRoot}/setting/group`,
-        permission: [UserPermission.ShowGroup, UserPermission.AddGroup]
+        permission: [UserPermission.ShowGroup, UserPermission.AddGroup],
       },
       {
         icon: 'iconsminds-basket-coins',
         label: 'طرق الدفع',
         to: `${adminRoot}/payment`,
-        permission: [UserPermission.ShowIncome]
+        permission: [UserPermission.ShowIncome],
       },
-    ]
+    ],
   },
-
-
-
 ];
 export const agentmenu: IMenuItem[] = [
   {
     icon: 'iconsminds-box-close',
     label: 'طلبات التي في المخزن',
     to: `${agentRoot}/instock`,
-
   },
   {
     icon: 'iconsminds-box-close',
     label: 'طلبات التي في الطريق',
     to: `${agentRoot}/onway`,
-
   },
   {
     icon: 'iconsminds-box-close',
     label: 'طلبات المعلقة',
     to: `${agentRoot}/Suspended`,
-
   },
 
   {
     icon: 'iconsminds-box-close',
     label: 'طلبات في الذمة',
     to: `${agentRoot}/owed`,
-
   },
   {
     icon: 'iconsminds-box-close',
     label: 'عرض بواسطة الكود',
     to: `${agentRoot}/bycode`,
-
   },
   {
     icon: 'iconsminds-box-close',
     label: 'الكشوفات',
     to: `${agentRoot}/Report`,
-
   },
-
 ];
 export default data;

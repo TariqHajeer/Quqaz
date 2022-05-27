@@ -28,6 +28,7 @@ import { ShipmentInStockComponent } from './shipment-in-stock/shipment-in-stock.
 import { ShipmentsNotBeenDeliveredComponent } from './shipments-not-been-delivered/shipments-not-been-delivered.component';
 import { ShipmentsOnWayComponent } from './shipments-on-way/shipments-on-way.component';
 import { ShowRecetptShipmentsComponent } from './show-recetpt-shipments/show-recetpt-shipments.component';
+import { ShowTreasuryComponent } from './show-treasury/show-treasury.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 
 
@@ -168,6 +169,11 @@ const routes: Routes = [
     path:'printReceiptShipments/:id',
     component: PrintReceiptShipmentComponent,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowReports]}
+  },
+  {
+    path:'showtreasury',
+    component: ShowTreasuryComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports,UserPermission.TreasuryManagment]}
   },
 ];
 
