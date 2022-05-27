@@ -1,6 +1,9 @@
 <h3 class="text-center">الصناديق</h3>
 <div class="row text-reight">
-  <div class="col-sm-6 col-md-3" *ngFor="let treasury of treasuries">
+  <div
+    class="col-sm-6 col-md-3"
+    *ngFor="let treasury of treasuries; let i = index"
+  >
     <a
       class="stat-card"
       target="_blank"
@@ -29,7 +32,7 @@
           />
         </div>
       </div>
-      <div class="stat-card__icon stat-card__icon--primary">
+      <div class="stat-card__icon" [ngClass]="ColorClass(i + 2)">
         <div class="stat-card__icon-circle">
           <i class="iconsminds-box-close"></i>
         </div>

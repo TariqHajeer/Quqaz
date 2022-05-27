@@ -21,4 +21,10 @@ export class ShowTreasuryComponent implements OnInit {
   convertDate(date) {
     return new Date(date);
   }
+  ColorClass(i) {
+    if (i % 2 == 0) return 'stat-card__icon--primary';
+    else if (i % 3 == 0) return 'stat-card__icon--success';
+    else if (i % 5 == 0) return 'stat-card__icon--warning';
+    else return 'stat-card__icon--danger';
+  }
 }
