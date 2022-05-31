@@ -215,6 +215,15 @@ const data: IMenuItem[] = [
       },
       {
         icon: 'simple-icon-layers',
+        label: '   حركات الصناديق ',
+        to: `${adminRoot}/reports/cashMovment`,
+        permission: [
+          UserPermission.ShowReports,
+          UserPermission.TreasuryManagment,
+        ],
+      },
+      {
+        icon: 'simple-icon-layers',
         label: ' أرباح الطلبات ',
         to: `${adminRoot}/order/ProfitsOfOrders`,
         permission: [UserPermission.ShowReports],

@@ -45,4 +45,15 @@ export class TreasuryService {
   Active(id) {
     return this.http.patch<any>(this.controler + 'Active', id);
   }
+  CashMovment(paging, treausryId) {
+    let params = new HttpParams();
+    if (paging.RowCount != undefined || paging.RowCount != null)
+      params = params.append('RowCount', paging.RowCount);
+    if (paging.Page != undefined || paging.Page != null)
+      params = params.append('Page', paging.Page);
+    if (treausryId) params = params.append('treausryId', treausryId);
+    return this.http.get<any>(this.controler + 'CashMovment/', {
+      params: params,
+    });
+  }
 }

@@ -5,6 +5,7 @@ import { UserPermission } from 'src/app/shared/auth.roles';
 import { AgentOrderStateComponent } from './agent-order-state/agent-order-state.component';
 import { AgentPrintComponent } from './agent-print/agent-print.component';
 import { AgentStatisticsComponent } from './agent-statistics/agent-statistics.component';
+import { CashMovmentComponent } from './cash-movment/cash-movment.component';
 import { ChangeAgentByOrdersComponent } from './change-agent-by-orders/change-agent-by-orders.component';
 import { ClientOrderComponent } from './client-order/client-order.component';
 import { ClientPrintComponent } from './client-print/client-print.component';
@@ -173,6 +174,11 @@ const routes: Routes = [
   {
     path:'showtreasury',
     component: ShowTreasuryComponent,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports,UserPermission.TreasuryManagment]}
+  },
+  {
+    path:'cashMovment',
+    component: CashMovmentComponent,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowReports,UserPermission.TreasuryManagment]}
   },
 ];

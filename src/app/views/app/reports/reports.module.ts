@@ -48,6 +48,7 @@ import { ClientReciptAndExchangeComponent } from './printpreview/client-recipt-a
 import { ShowRecetptShipmentsComponent } from './show-recetpt-shipments/show-recetpt-shipments.component';
 import { PrintReceiptShipmentComponent } from './printpreview/print-receipt-shipment/print-receipt-shipment.component';
 import { ShowTreasuryComponent } from './show-treasury/show-treasury.component';
+import { CashMovmentComponent } from './cash-movment/cash-movment.component';
 @NgModule({
   declarations: [ShipmentInStockComponent,
     ClientOrderComponent,
@@ -81,7 +82,8 @@ import { ShowTreasuryComponent } from './show-treasury/show-treasury.component';
     ClientReciptAndExchangeComponent,
     ShowRecetptShipmentsComponent,
     PrintReceiptShipmentComponent,
-    ShowTreasuryComponent,],
+    ShowTreasuryComponent,
+    CashMovmentComponent,],
   imports: [
     CommonModule,
     ReportsRoutingModule,
