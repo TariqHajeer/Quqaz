@@ -27,14 +27,16 @@ export class TreasuryService {
   Add(treasury) {
     return this.http.post<any>(this.controler, treasury);
   }
-  GiveMoney(id, amount) {
+  GiveMoney(id, data) {
     let params = new FormData();
-    params.append('amount', amount);
+    params.append('Amount', data.Amount);
+    params.append('Note', data.Note);
     return this.http.patch<any>(this.controler + 'GiveMoney/' + id, params);
   }
-  GetMoney(id, amount) {
+  GetMoney(id, data) {
     let params = new FormData();
-    params.append('amount', amount);
+    params.append('Amount', data.Amount);
+    params.append('Note', data.Note);
     return this.http.patch<any>(this.controler + 'GetMoney/' + id, params);
   }
   DisActive(id) {

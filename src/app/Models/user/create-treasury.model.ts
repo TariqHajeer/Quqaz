@@ -1,4 +1,5 @@
 export class CreateTreasury {
-    UserId: number;
-    Amount: number;
+  UserId: number;
+  Amount: number;
+  Note: string;
 }

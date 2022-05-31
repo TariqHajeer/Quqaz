@@ -65,7 +65,7 @@ export class GetGiveFormComponent implements OnInit {
       this.createTreasury.UserId = this.id;
       this.createTreasury.Amount = this.createTreasury.Amount * 1;
       this.treasuryService
-        .GiveMoney(this.createTreasury.UserId, this.createTreasury.Amount)
+        .GiveMoney(this.createTreasury.UserId, this.createTreasury)
         .subscribe(
           (res) => {
             this.getTreasury();
@@ -94,7 +94,7 @@ export class GetGiveFormComponent implements OnInit {
       this.createTreasury.UserId = this.id;
       this.createTreasury.Amount = this.createTreasury.Amount * 1;
       this.treasuryService
-        .GetMoney(this.createTreasury.UserId, this.createTreasury.Amount)
+        .GetMoney(this.createTreasury.UserId, this.createTreasury)
         .subscribe(
           (res) => {
             this.getTreasury();
@@ -130,51 +130,5 @@ export class GetGiveFormComponent implements OnInit {
       return false;
     }
   }
-  ActiveOrDisActive() {
-    this.treasury.isActive = !this.treasury.isActive;
-    if (this.treasury.isActive) this.Active();
-    else this.DisActive();
-  }
-  DisActive() {
-    this.treasuryService.DisActive(this.treasury.id).subscribe(
-      (res) => {
-        this.notifications.create(
-          'success',
-          'تم الغاء التفعيل بنجاح',
-          NotificationType.Success,
-          { theClass: 'success', timeOut: 6000, showProgressBar: false }
-        );
-      },
-      (err) => {
-        this.notifications.create(
-          'error',
-          'حدث خطأ ما يرجى اعادة المحاولة',
-          NotificationType.Error,
-          { theClass: 'success', timeOut: 6000, showProgressBar: false }
-        );
-        this.treasury.isActive = !this.treasury.isActive;
-      }
-    );
-  }
-  Active() {
-    this.treasuryService.Active(this.treasury.id).subscribe(
-      (res) => {
-        this.notifications.create(
-          'success',
-          'تم التفعيل بنجاح',
-          NotificationType.Success,
-          { theClass: 'success', timeOut: 6000, showProgressBar: false }
-        );
-      },
-      (err) => {
-        this.notifications.create(
-          'error',
-          'حدث خطأ ما يرجى اعادة المحاولة',
-          NotificationType.Error,
-          { theClass: 'success', timeOut: 6000, showProgressBar: false }
-        );
-        this.treasury.isActive = !this.treasury.isActive;
-      }
-    );
-  }
+ 
 }

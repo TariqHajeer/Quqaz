@@ -16,7 +16,8 @@
           <input
             type="checkbox"
             [(ngModel)]="treasury.isActive"
-           [disabled]="true"
+           [disabled]="isActive"
+           (click)="ActiveOrDisActive()"
           />
         </label>
       </div>
