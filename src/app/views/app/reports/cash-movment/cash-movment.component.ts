@@ -9,17 +9,23 @@ import { TreasuryService } from 'src/app/services/treasury.service';
 @Component({
   selector: 'app-cash-movment',
   templateUrl: './cash-movment.component.html',
-  styleUrls: ['./cash-movment.component.scss']
+  styleUrls: ['./cash-movment.component.scss'],
 })
 export class CashMovmentComponent implements OnInit {
-
-  constructor(public treasuryService: TreasuryService, private router: Router) {}
+  constructor(public treasuryService: TreasuryService) {}
 
   ngOnInit(): void {
     this.paging = new Paging();
     this.Get();
+    this.getUser();
   }
-  displayedColumns: string[] = ['amount', 'treasuryUserName', 'createdOnUtc', 'createdBy','note'];
+  displayedColumns: string[] = [
+    'amount',
+    'treasuryUserName',
+    'createdOnUtc',
+    'createdBy',
+    'note',
+  ];
   dataSource;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -29,11 +35,17 @@ export class CashMovmentComponent implements OnInit {
   noDataFound: boolean = false;
   printNmber: number;
   treausryId: number;
+  users: any[] = [];
   Get() {
-    this.treasuryService.CashMovment(this.paging,this.treausryId).subscribe((res) => {
-      this.dataSource = new MatTableDataSource(res.data);
-      this.totalCount = res.total;
-    });
+    this.treasuryService
+      .CashMovment(this.paging, this.treausryId)
+      .subscribe((res) => {
+        this.dataSource = new MatTableDataSource(res.data);
+        this.totalCount = res.total;
+      });
+  }
+  getUser() {
+    
   }
   switchPage(event: PageEvent) {
     this.paging.allItemsLength = event.length;
@@ -41,8 +53,4 @@ export class CashMovmentComponent implements OnInit {
     this.paging.Page = event.pageIndex + 1;
     this.Get();
   }
-  // print(number) {
-  //   this.router.navigate(['/app/reports/printReceiptShipments/', number]);
-  // }
-
 }
