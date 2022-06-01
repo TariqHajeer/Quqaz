@@ -22,7 +22,7 @@ export class TreasuryTableComponent implements OnInit {
     private router: Router
   ) {}
   noDataFound: boolean;
-  displayedColumns: string[] = ['amount', 'type', 'createdOnUtc','view', 'more'];
+  displayedColumns: string[] = ['amount', 'type', 'createdOnUtc', 'more'];
   dataSource;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -132,5 +132,8 @@ export class TreasuryTableComponent implements OnInit {
     this.treasuryService.CashMovmentId(id).subscribe(res=>{
       this.cashMovmentid=res
     })
+  }
+  convertDate(date) {
+    return new Date(date);
   }
 }
