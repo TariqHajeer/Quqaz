@@ -16,7 +16,8 @@
           <input
             type="checkbox"
             [(ngModel)]="treasury.isActive"
-           [disabled]="true"
+            [disabled]="isActive"
+            (click)="ActiveOrDisActive()"
           />
         </label>
       </div>
@@ -50,10 +51,9 @@
             تاريخ انشاء الحركة
           </th>
           <td mat-cell *matCellDef="let element" style="padding-right: 10px">
-            {{ element.createdOnUtc | date: "dd/MM/yyyy" }}
+            {{ convertDate(element.createdOnUtc) | date: "dd/MM/yyyy" }}
           </td>
         </ng-container>
-
         <ng-container matColumnDef="more">
           <th mat-header-cell *matHeaderCellDef style="padding-right: 10px">
             خيارات
@@ -61,7 +61,8 @@
           <td mat-cell *matCellDef="let element" style="padding-right: 10px">
             <a
               class="btn btn-primary btn-xs"
-              (click)="clientPayment(element.clientPaymentId)"
+              target="_blank"
+              [routerLink]="['/app/reports/clientprintnumber/', element.clientPaymentId]"
               *ngIf="element.clientPaymentId"
             >
               &nbsp;عرض الحركة
@@ -69,33 +70,116 @@
 
             <a
               class="btn btn-primary btn-xs"
-              (click)="receipt(element.receiptId)"
+              target="_blank"
+              [routerLink]="['/app/reports/printclientreciptandexchange/', element.receiptId]"
               *ngIf="element.receiptId"
             >
               &nbsp;عرض الحركة
             </a>
             <a
               class="btn btn-primary btn-xs"
-              (click)="
-                receiptOfTheOrderStatus(element.receiptOfTheOrderStatusId)
-              "
+              target="_blank"
+              [routerLink]="['/app/reports/printReceiptShipments/', element.receiptOfTheOrderStatusId]"
               *ngIf="element.receiptOfTheOrderStatusId"
             >
               &nbsp;عرض الحركة
             </a>
             <a
               class="btn btn-primary btn-xs"
+              target="_blank"
+              [routerLink]="['/app/outcome/view/', element.outcomeId]"
               (click)="outcome(element.outcomeId)"
               *ngIf="element.outcomeId"
             >
-              &nbsp;عرض الحركة             </a>
+              &nbsp;عرض الحركة
+            </a>
             <a
+              target="_blank"
+              [routerLink]="['/app/income/view/', element.incomeId]"
               class="btn btn-primary btn-xs"
-              (click)="income(element.incomeId)"
               *ngIf="element.incomeId"
             >
-              &nbsp;عرض الحركة 
+              &nbsp;عرض الحركة
             </a>
+            <a
+              class="btn btn-primary btn-xs"
+              (click)="CashMovmentId(element.cashMovmentId)"
+              data-toggle="modal"
+              data-target="#exampleModal"
+              data-whatever="@getbootstrap"
+              *ngIf="element.cashMovmentId"
+            >
+              &nbsp;عرض الحركة
+            </a>
+            <div
+              class="modal fade bd-example-modal-lg"
+              id="exampleModal"
+              role="dialog"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h2>عرض الحركة</h2>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <table class="table">
+                      <thead class="table-primary">
+                        <th>المبلغ</th>
+                        <th>تاريخ الحركة</th>
+                        <th>صاحب الصندوق</th>
+                        <th>بواسطة</th>
+                        <th>ملاحظات</th>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{ cashMovmentid.amount | number }}</td>
+                          <td>
+                            {{
+                              cashMovmentid.treasuryUserName
+                                ? cashMovmentid.treasuryUserName
+                                : null
+                            }}
+                          </td>
+                          <td>
+                            {{
+                              convertDate(cashMovmentid.createdOnUtc)
+                                | date: "yyyy/MM/dd"
+                            }}
+                          </td>
+                          <td>
+                            {{
+                              cashMovmentid.createdBy
+                                ? cashMovmentid.createdBy
+                                : null
+                            }}
+                          </td>
+                          <td>
+                            {{ cashMovmentid.note ? cashMovmentid.note : null }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      data-dismiss="modal"
+                    >
+                      اغلاق
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </td>
         </ng-container>
 

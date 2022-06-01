@@ -197,22 +197,42 @@ const data: IMenuItem[] = [
           },
         ],
       },
-
+      {
+        icon: 'simple-icon-layers',
+        label: '   ادارةالصناديق ',
+        to: `${adminRoot}/reports/showtreasury`,
+        permission: [
+          UserPermission.ShowReports,
+          UserPermission.TreasuryManagment,
+        ],
+        subs: [
+          {
+            icon: 'simple-icon-layers',
+            label: '  الصناديق ',
+            to: `${adminRoot}/reports/showtreasury`,
+            permission: [
+              UserPermission.ShowReports,
+              UserPermission.TreasuryManagment,
+            ],
+          },
+          {
+            icon: 'simple-icon-layers',
+            label: 'الأخذ والاعطاء',
+            to: `${adminRoot}/reports/cashMovment`,
+            permission: [
+              UserPermission.ShowReports,
+              UserPermission.TreasuryManagment,
+            ],
+          },
+        ],
+      },
       {
         icon: 'simple-icon-layers',
         label: ' تقرير استلام حالة الشحنة  ',
         to: `${adminRoot}/reports/showreceiptshipment`,
         permission: [UserPermission.ShowReports],
       },
-      {
-        icon: 'simple-icon-layers',
-        label: '  الصناديق ',
-        to: `${adminRoot}/reports/showtreasury`,
-        permission: [
-          UserPermission.ShowReports,
-          UserPermission.TreasuryManagment,
-        ],
-      },
+
       {
         icon: 'simple-icon-layers',
         label: ' أرباح الطلبات ',

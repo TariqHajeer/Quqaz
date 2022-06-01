@@ -3,12 +3,12 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { NotificationsService } from 'angular2-notifications';
+import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { Paging } from 'src/app/Models/paging';
 import { Treasury } from 'src/app/Models/user/treasury.model';
 import { UserService } from 'src/app/services/user.service';
 import { TreasuryService } from 'src/app/services/treasury.service';
-
+import { CashMovment } from 'src/app/Models/user/cash-movment.model';
 @Component({
   selector: 'app-treasury-table',
   templateUrl: './treasury-table.component.html',
@@ -30,6 +30,9 @@ export class TreasuryTableComponent implements OnInit {
   paging: Paging = new Paging();
   total: number;
   @Input() id: number;
+  @Input() isActive: boolean;
+  cashMovmentid:CashMovment=new CashMovment();
+
   ngOnInit(): void {
     this.getTreasury()
   }
@@ -77,5 +80,61 @@ export class TreasuryTableComponent implements OnInit {
   }
   outcome(id) {
     this.router.navigate(['/app/outcome/view/', id]);
+  }
+  ActiveOrDisActive() {
+    this.treasury.isActive = !this.treasury.isActive;
+    if (this.treasury.isActive) this.Active();
+    else this.DisActive();
+  }
+  DisActive() {
+    this.treasuryService.DisActive(this.treasury.id).subscribe(
+      (res) => {
+        this.notifications.create(
+          'success',
+          'تم الغاء التفعيل بنجاح',
+          NotificationType.Success,
+          { theClass: 'success', timeOut: 6000, showProgressBar: false }
+        );
+      },
+      (err) => {
+        this.notifications.create(
+          'error',
+          'حدث خطأ ما يرجى اعادة المحاولة',
+          NotificationType.Error,
+          { theClass: 'success', timeOut: 6000, showProgressBar: false }
+        );
+        this.treasury.isActive = !this.treasury.isActive;
+      }
+    );
+  }
+  Active() {
+    this.treasuryService.Active(this.treasury.id).subscribe(
+      (res) => {
+        this.notifications.create(
+          'success',
+          'تم التفعيل بنجاح',
+          NotificationType.Success,
+          { theClass: 'success', timeOut: 6000, showProgressBar: false }
+        );
+      },
+      (err) => {
+        this.notifications.create(
+          'error',
+          'حدث خطأ ما يرجى اعادة المحاولة',
+          NotificationType.Error,
+          { theClass: 'success', timeOut: 6000, showProgressBar: false }
+        );
+        this.treasury.isActive = !this.treasury.isActive;
+      }
+    );
+  }
+  CashMovmentId(id){
+    this.treasuryService.CashMovmentId(id).subscribe(res=>{
+      this.cashMovmentid=res
+    })
+  }
+  convertDate(date) {
+    if(date)
+    return new Date(date);
   }
 }

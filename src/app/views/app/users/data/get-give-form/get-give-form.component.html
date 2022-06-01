@@ -28,6 +28,15 @@
           [(ngModel)]="this.createTreasury.Amount"
         />
       </div>
+      <div class="col-md-9" *ngIf="!firstAdd">
+        <label>ملاحظات </label>
+        <input
+          type="text"
+          class="form-control"
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="this.createTreasury.Note"
+        />
+      </div>
       <div class="col-md-2" style="padding-top: 15px" *ngIf="!firstAdd">
         <button class="btn btn-primary" (click)="GetMoney()">&nbsp;أخذ</button>
       </div>
