@@ -56,4 +56,7 @@ export class TreasuryService {
       params: params,
     });
   }
+  CashMovmentId(id) {
+    return this.http.get<any>(this.controler + 'CashMovment/' + id);
+  }
 }

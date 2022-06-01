@@ -8,7 +8,7 @@ import { Paging } from 'src/app/Models/paging';
 import { Treasury } from 'src/app/Models/user/treasury.model';
 import { UserService } from 'src/app/services/user.service';
 import { TreasuryService } from 'src/app/services/treasury.service';
-
+import { CashMovment } from 'src/app/Models/user/cash-movment.model';
 @Component({
   selector: 'app-treasury-table',
   templateUrl: './treasury-table.component.html',
@@ -22,7 +22,7 @@ export class TreasuryTableComponent implements OnInit {
     private router: Router
   ) {}
   noDataFound: boolean;
-  displayedColumns: string[] = ['amount', 'type', 'createdOnUtc', 'more'];
+  displayedColumns: string[] = ['amount', 'type', 'createdOnUtc','view', 'more'];
   dataSource;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -31,6 +31,8 @@ export class TreasuryTableComponent implements OnInit {
   total: number;
   @Input() id: number;
   @Input() isActive: boolean;
+  cashMovmentid:CashMovment=new CashMovment();
+
   ngOnInit(): void {
     this.getTreasury()
   }
@@ -125,5 +127,10 @@ export class TreasuryTableComponent implements OnInit {
         this.treasury.isActive = !this.treasury.isActive;
       }
     );
+  }
+  CashMovmentId(id){
+    this.treasuryService.CashMovmentId(id).subscribe(res=>{
+      this.cashMovmentid=res
+    })
   }
 }
