@@ -134,6 +134,7 @@ export class TreasuryTableComponent implements OnInit {
     })
   }
   convertDate(date) {
+    if(date)
     return new Date(date);
   }
 }
