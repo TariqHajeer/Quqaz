@@ -90,7 +90,7 @@
                             تاريخ الطباعة
                         </td>
                         <td style="border: 1px black solid;padding: 7px;">
-                            {{dateOfPrint | date:"dd/MM/yyyy"}}
+                            {{dateService.convertUTCToDate(dateOfPrint) | date:"dd/MM/yyyy"}}
                         </td>
                     </tr>
                     <tr>
@@ -98,7 +98,7 @@
                             وقت الطباعة
                         </td>
                         <td style="border: 1px black solid;padding: 7px;">
-                            {{dateOfPrint | date:'shortTime'}}
+                            {{dateService.convertUTCToDate(dateOfPrint) | date:'shortTime'}}
                         </td>
                     </tr>
 

@@ -128,7 +128,7 @@ export class ClientComponent implements OnInit {
       Ids: this.orders.map(c => c.id),
     }
     this.DeleiverMoneyForClientDto = {
-      DateWithId: this.dateWithIds,
+      Ids: this.orders.map(c => c.id),
       PointsSettingId: this.pointid
     }
     this.orderservice.DeleiverMoneyForClient(this.DeleiverMoneyForClientDto).subscribe(res => {

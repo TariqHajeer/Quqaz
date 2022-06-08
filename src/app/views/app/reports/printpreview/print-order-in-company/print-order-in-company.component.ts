@@ -106,8 +106,8 @@ export class PrintOrderInCompanyComponent implements OnInit {
       this.printnumber = res.printNumber
       // this.setPrintnumber()
     }, err => {
-      this.showPrintbtn = true
-      // console.log(err)
+      this.showPrintbtn = false
+      this.notifications.create('error', 'حدث خطأ ما يرجى المحاولة مجددا', NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
 
     })
 
