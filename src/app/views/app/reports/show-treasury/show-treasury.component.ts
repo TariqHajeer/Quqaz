@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Treasury } from 'src/app/Models/user/treasury.model';
+import { DateService } from 'src/app/services/date.service';
 import { TreasuryService } from 'src/app/services/treasury.service';
 
 @Component({
@@ -8,7 +9,8 @@ import { TreasuryService } from 'src/app/services/treasury.service';
   styleUrls: ['./show-treasury.component.scss'],
 })
 export class ShowTreasuryComponent implements OnInit {
-  constructor(private treasuryService: TreasuryService) {}
+  constructor(private treasuryService: TreasuryService,
+    public dateService: DateService) {}
   treasuries: Treasury[] = [];
   ngOnInit(): void {
     this.Get();
@@ -17,9 +19,6 @@ export class ShowTreasuryComponent implements OnInit {
     this.treasuryService.Get().subscribe((res) => {
       this.treasuries = res;
     });
-  }
-  convertDate(date) {
-    return new Date(date);
   }
   ColorClass(i) {
     if (i % 2 == 0) return 'stat-card__icon--primary';

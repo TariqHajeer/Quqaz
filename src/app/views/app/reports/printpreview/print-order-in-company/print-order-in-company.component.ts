@@ -97,10 +97,10 @@ export class PrintOrderInCompanyComponent implements OnInit {
   Ids: number[] = []
   DateIdCost:DateWithId<number[]>=new DateWithId
   changeDeleiverMoneyForClient() {
-    this.DateIdCost.Date=moment().format()
+    // this.DateIdCost.Date=moment().format()
     this.DateIdCost.Ids=this.Ids
     // console.log(this.DateIdCost)
-    this.orderservice.DeleiverMoneyForClientWithStatus(this.DateIdCost).subscribe(res => {
+    this.orderservice.DeleiverMoneyForClientWithStatus(this.DateIdCost.Ids).subscribe(res => {
       this.notifications.create('success', 'تم تعديل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.showPrintbtn = true
       this.printnumber = res.printNumber

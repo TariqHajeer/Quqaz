@@ -126,7 +126,6 @@ export class ClientComponent implements OnInit {
     this.spinner.show()
     this.dateWithIds = {
       Ids: this.orders.map(c => c.id),
-      Date: moment().format()
     }
     this.DeleiverMoneyForClientDto = {
       DateWithId: this.dateWithIds,

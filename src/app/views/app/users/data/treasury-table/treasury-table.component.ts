@@ -9,6 +9,7 @@ import { Treasury } from 'src/app/Models/user/treasury.model';
 import { UserService } from 'src/app/services/user.service';
 import { TreasuryService } from 'src/app/services/treasury.service';
 import { CashMovment } from 'src/app/Models/user/cash-movment.model';
+import { DateService } from 'src/app/services/date.service';
 @Component({
   selector: 'app-treasury-table',
   templateUrl: './treasury-table.component.html',
@@ -19,7 +20,8 @@ export class TreasuryTableComponent implements OnInit {
     public UserService: UserService,
     private treasuryService: TreasuryService,
     private notifications: NotificationsService,
-    private router: Router
+    private router: Router,
+    public dateService: DateService
   ) {}
   noDataFound: boolean;
   displayedColumns: string[] = ['amount', 'type', 'createdOnUtc', 'more'];
@@ -133,8 +135,5 @@ export class TreasuryTableComponent implements OnInit {
       this.cashMovmentid=res
     })
   }
-  convertDate(date) {
-    if(date)
-    return new Date(date);
-  }
+
 }

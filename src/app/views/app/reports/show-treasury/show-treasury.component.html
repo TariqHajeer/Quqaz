@@ -20,7 +20,7 @@
 
         <div style="margin-bottom: 10px">
           <span class="text-muted">{{
-            convertDate(treasury.createOnUtc) | date: "yyyy/MM/dd"
+            dateService.convertUTCToDate(treasury.createOnUtc) | date: "yyyy/MM/dd"
           }}</span>
         </div>
 

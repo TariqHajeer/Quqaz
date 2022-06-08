@@ -51,7 +51,7 @@
             تاريخ انشاء الحركة
           </th>
           <td mat-cell *matCellDef="let element" style="padding-right: 10px">
-            {{ convertDate(element.createdOnUtc) | date: "dd/MM/yyyy" }}
+            {{ dateService.convertUTCToDate(element.createdOnUtc) | date: "dd/MM/yyyy" }}
           </td>
         </ng-container>
         <ng-container matColumnDef="more">
@@ -152,7 +152,7 @@
                           </td>
                           <td>
                             {{
-                              convertDate(cashMovmentid.createdOnUtc)
+                              dateService.convertUTCToDate(cashMovmentid.createdOnUtc)
                                 | date: "yyyy/MM/dd"
                             }}
                           </td>
