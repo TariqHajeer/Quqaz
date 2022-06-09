@@ -191,7 +191,7 @@ export class ViewNewOrderComponent implements OnInit {
     this.dateWithIds = new DateWithIds();
     // this.dateWithIds.Date = moment().format()
     this.dateWithIds.Ids = this.selectOrders.map((o) => o.id);
-    this.OrderService.DisAcceptmultiple(this.dateWithIds).subscribe((res) => {
+    this.OrderService.DisAcceptmultiple(this.dateWithIds.Ids).subscribe((res) => {
       this.get();
       this.signalRService.AdminNotification.newOrdersCount -=
         this.selectOrders.length;
