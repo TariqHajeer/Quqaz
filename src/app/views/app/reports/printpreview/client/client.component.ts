@@ -126,10 +126,9 @@ export class ClientComponent implements OnInit {
     this.spinner.show()
     this.dateWithIds = {
       Ids: this.orders.map(c => c.id),
-      Date: moment().format()
     }
     this.DeleiverMoneyForClientDto = {
-      DateWithId: this.dateWithIds,
+      Ids: this.orders.map(c => c.id),
       PointsSettingId: this.pointid
     }
     this.orderservice.DeleiverMoneyForClient(this.DeleiverMoneyForClientDto).subscribe(res => {

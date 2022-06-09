@@ -88,9 +88,9 @@ export class AgentComponent implements OnInit {
     this.spinner.show()
     this.dateWithIds = {
       Ids: this.orders.map(o => o.id),
-      Date: moment().format()
+      // Date: moment().format()
     }
-    this.orderservice.MakeOrderInWay(this.dateWithIds).subscribe(res => {
+    this.orderservice.MakeOrderInWay(this.dateWithIds.Ids).subscribe(res => {
       this.notifications.create('success', 'تم نقل الطلبيات من المخزن الى الطريق بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       //this.orders=[]
       this.printnumber = res.data

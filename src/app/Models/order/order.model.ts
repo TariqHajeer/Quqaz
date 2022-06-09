@@ -49,9 +49,10 @@ export class IdsDto{
 }
 export class DateWithId<T>{
       Ids:number[]
-      Date
+      Date?
 }
 export class DeleiverMoneyForClientDto{
-      DateWithId:DateWithId<number[]>
+      Ids:number[]
+      // DateWithId:DateWithId<number[]>
       PointsSettingId:number
 }

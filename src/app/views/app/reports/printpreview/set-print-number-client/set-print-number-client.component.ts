@@ -10,6 +10,7 @@ import { ReciptService } from 'src/app/services/recipt.service';
 import { ActivatedRoute } from '@angular/router';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { environment } from 'src/environments/environment.prod';
+import { DateService } from 'src/app/services/date.service';
 
 @Component({
   selector: 'app-set-print-number-client',
@@ -24,7 +25,8 @@ export class SetPrintNumberClientComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private spinner: NgxSpinnerService,
     private recepitservce: ReciptService,
-    public getroute: ActivatedRoute
+    public getroute: ActivatedRoute,
+    public dateService: DateService
 
   ) { }
   heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'موقع المبلغ', 'حالة الشحنة ', 'الهاتف', 'ملاحظات']
