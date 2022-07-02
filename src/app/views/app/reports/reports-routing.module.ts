@@ -142,7 +142,7 @@ const routes: Routes = [
     data: { roles: [UserPermission.ShowReports]}
   },
   {
-    path:'printclientreciptandexchange/:id',
+    path:'printclientreciptandexchange',
     component: ClientReciptAndExchangeComponent,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowReports]}
   },

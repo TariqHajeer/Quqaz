@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
@@ -27,18 +27,24 @@ export class ClientReciptAndExchangeComponent implements OnInit {
   whatsapp = environment.whatsapp;
   instgram = environment.instgram;
   facebook = environment.Facebook;
-  id: number;
+  @Input() id: number;
   ngOnInit(): void {
     this.getById();
   }
   getById() {
-    this.getroute.params.subscribe(par => {
-      this.id = par['id'] as any;
+    console.log(this.id);
+    
       this.reciptService.GetById(this.id).subscribe(res => {
-        console.log(res)
         this.client = res;
       })
-    });
+    //   return;
+    // } else
+    // this.getroute.params.subscribe(par => {
+    //   this.id = par['id'] as any;
+    //   this.reciptService.GetById(this.id).subscribe(res => {
+    //     this.client = res;
+    //   })
+    // });
   }
   print() {
     var divToPrint = document.getElementById('contentToConvert');
