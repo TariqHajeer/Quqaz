@@ -16,6 +16,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/app/shared/auth.service';
 @Component({
   selector: 'app-treasury-table',
   templateUrl: './treasury-table.component.html',
@@ -30,6 +31,8 @@ export class TreasuryTableComponent implements OnInit {
     public dateService: DateService,
     private reciptService: ReciptService,
     public sanitizer: DomSanitizer,
+    private authService:AuthService
+
   ) {}
   noDataFound: boolean;
   displayedColumns: string[] = ['amount', 'type', 'createdOnUtc', 'more'];
@@ -72,7 +75,7 @@ export class TreasuryTableComponent implements OnInit {
   }
 
   client: ReceiptAndExchange = new ReceiptAndExchange();
-  userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin;
+  userName: UserLogin = this.authService.getUser(); 
   companyPhone = "07714400880";
   showButton = true;
   dateOfPrint = moment().format();

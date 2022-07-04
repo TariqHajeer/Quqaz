@@ -8,6 +8,7 @@ import { CreateReceiptAndExchange } from 'src/app/Models/receipt-and-exchange.mo
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
 import * as moment from 'moment';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-receipt-and-exchange',
@@ -18,8 +19,9 @@ export class CreateReceiptAndExchangeComponent implements OnInit {
 
   constructor(private clientService: ClientService,
     public sanitizer: DomSanitizer,
-    private spinner: NgxSpinnerService) { }
-    userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
+    private spinner: NgxSpinnerService,
+    private authService:AuthService) { }
+    userName: any =  this.authService.getUser();
 
   ngOnInit(): void {
     this.client = new CreateReceiptAndExchange()

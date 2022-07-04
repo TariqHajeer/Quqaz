@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import {  ReceiptAndExchange } from 'src/app/Models/receipt-and-exchange.model';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { ReciptService } from 'src/app/services/recipt.service';
+import { AuthService } from 'src/app/shared/auth.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -16,9 +17,10 @@ export class ClientReciptAndExchangeComponent implements OnInit {
 
   constructor(public sanitizer: DomSanitizer,
     public getroute: ActivatedRoute,
-    private reciptService: ReciptService) { }
+    private reciptService: ReciptService,
+    private authService:AuthService) { }
   client: ReceiptAndExchange = new ReceiptAndExchange();
-  userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin;
+  userName: UserLogin =  this.authService.getUser();
   companyPhone = "07714400880";
   showButton = true;
   dateOfPrint = moment().format();
