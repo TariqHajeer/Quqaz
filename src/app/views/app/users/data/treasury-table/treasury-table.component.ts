@@ -13,10 +13,6 @@ import { DateService } from 'src/app/services/date.service';
 import { ReceiptAndExchange } from 'src/app/Models/receipt-and-exchange.model';
 import { ReciptService } from 'src/app/services/recipt.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { UserLogin } from 'src/app/Models/userlogin.model';
-import * as moment from 'moment';
-import { environment } from 'src/environments/environment';
-import { AuthService } from 'src/app/shared/auth.service';
 @Component({
   selector: 'app-treasury-table',
   templateUrl: './treasury-table.component.html',
@@ -29,10 +25,8 @@ export class TreasuryTableComponent implements OnInit {
     private notifications: NotificationsService,
     private router: Router,
     public dateService: DateService,
-    private reciptService: ReciptService,
     public sanitizer: DomSanitizer,
-    private authService:AuthService
-
+    private reciptService: ReciptService,
   ) {}
   noDataFound: boolean;
   displayedColumns: string[] = ['amount', 'type', 'createdOnUtc', 'more'];
@@ -44,10 +38,10 @@ export class TreasuryTableComponent implements OnInit {
   total: number;
   @Input() id: number;
   @Input() isActive: boolean;
-  cashMovmentid:CashMovment=new CashMovment();
+  cashMovmentid: CashMovment = new CashMovment();
 
   ngOnInit(): void {
-    this.getTreasury()
+    this.getTreasury();
   }
   getTreasury() {
     this.treasury = new Treasury();
@@ -55,8 +49,7 @@ export class TreasuryTableComponent implements OnInit {
       if (res) {
         this.treasury = res;
         this.dataSource = new MatTableDataSource(this.treasury.history.data);
-        this.total=this.treasury.history.total
-        console.log(res)
+        this.total = this.treasury.history.total;
       }
     });
   }
@@ -74,44 +67,18 @@ export class TreasuryTableComponent implements OnInit {
     this.getByPaging();
   }
 
-  client: ReceiptAndExchange = new ReceiptAndExchange();
-  userName: UserLogin = this.authService.getUser(); 
-  companyPhone = "07714400880";
-  showButton = true;
-  dateOfPrint = moment().format();
-  agentPhone = environment.companyPhones[1];
-  address = environment.Address;
-  whatsapp = environment.whatsapp;
-  instgram = environment.instgram;
-  facebook = environment.Facebook;
   clientPayment(id) {
     this.router.navigate(['/app/reports/clientprintnumber/', id]);
   }
   cashMovment(id) {
     this.router.navigate(['/app/reports/clientprintnumber/', id]);
   }
+  client: ReceiptAndExchange = new ReceiptAndExchange();
   receipt(id) {
-    this.reciptService.GetById(id).subscribe(res => {
+    this.client=new ReceiptAndExchange();
+    this.reciptService.GetById(id).subscribe((res) => {
       this.client = res;
-    })
-  }
-  print() {
-    var divToPrint = document.getElementById('contentToConvert');
-    var css = '@page { size: A5 landscape;color-adjust: exact;-webkit-print-color-adjust: exact; }',
-      style = document.createElement('style');
-    style.type = 'text/css';
-    style.media = 'print';
-    style.appendChild(document.createTextNode(css));
-    divToPrint.appendChild(style);
-    var newWin = window.open('', 'Print-Window');
-    newWin?.document.open();
-    newWin?.document.write('<html dir="rtl"><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"><link rel="stylesheet/less" type="text/css" href="app/reports/printpreview/agent/agent.component.less" /></head><body onload="window.print()">' + divToPrint?.innerHTML + '</body></html>');
-    newWin?.document.close();
-    setTimeout(function () {
-      newWin?.close();
-      // location.reload();
-
-    }, 1000);
+    });
   }
   receiptOfTheOrderStatus(id) {
     this.router.navigate(['/app/reports/printReceiptShipments/', id]);
@@ -169,10 +136,9 @@ export class TreasuryTableComponent implements OnInit {
       }
     );
   }
-  CashMovmentId(id){
-    this.treasuryService.CashMovmentId(id).subscribe(res=>{
-      this.cashMovmentid=res
-    })
+  CashMovmentId(id) {
+    this.treasuryService.CashMovmentId(id).subscribe((res) => {
+      this.cashMovmentid = res;
+    });
   }
-
 }
