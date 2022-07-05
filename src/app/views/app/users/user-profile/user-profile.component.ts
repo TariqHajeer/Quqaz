@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserLogin } from 'src/app/Models/userlogin.model';
+import { AuthService } from 'src/app/shared/auth.service';
 interface ListMenu {
   id: number;
   lable: string;
@@ -11,10 +12,8 @@ interface ListMenu {
   styleUrls: ['./user-profile.component.scss'],
 })
 export class UserProfileComponent implements OnInit {
-  userlogin: UserLogin = JSON.parse(
-    localStorage.getItem('kokazUser')
-  ) as UserLogin;
-  constructor() {}
+  userlogin: UserLogin = this.authService.getUser();
+  constructor(private authService:AuthService) {}
   ngOnInit(): void {}
   listMenu: ListMenu[] = [{ id: 1, lable: 'حركات الصندوق', visibl: false }];
   visiblListMenu(id) {

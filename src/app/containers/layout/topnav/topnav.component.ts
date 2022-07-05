@@ -70,7 +70,7 @@ export class TopnavComponent implements OnInit, OnDestroy {
     this.langService.language = lang.code;
     this.currentLanguage = this.langService.languageShorthand;
   }
-  userName:any=JSON.parse(localStorage.getItem('kokazUser'))as UserLogin
+  userName:any=this.authService.getUser();
 
   async ngOnInit() {
     // this.displayName=JSON.parse(localStorage.getItem('currnetUser')).email;

@@ -16,6 +16,7 @@ import { UserLogin } from 'src/app/Models/userlogin.model';
 import { StatisticsService } from 'src/app/services/statistics.service';
 import { SignalRService } from 'src/app/services/signal-r.service';
 import { AdminNotification } from 'src/app/Models/admin-notification.model';
+import { AuthService } from 'src/app/shared/auth.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -34,9 +35,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   currentUserPermissions: any = JSON.parse(
     localStorage.getItem(this.permissionlocalStorageKey)
   );
-  userlogin: UserLogin = JSON.parse(
-    localStorage.getItem('kokazUser')
-  ) as UserLogin;
+  userlogin: UserLogin = this.authService.getUser();
 
   public AdminNotification: AdminNotification = new AdminNotification();
 
@@ -46,7 +45,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private notifications: NotificationsService,
     private statisticsService: StatisticsService,
-    private signalRService: SignalRService
+    private signalRService: SignalRService,
+    private authService:AuthService
   ) {
     this.currentUserPermissions = this.userlogin.privileges;
     if (this.userlogin.policy == 'Employee') this.menuItems = menuItems;

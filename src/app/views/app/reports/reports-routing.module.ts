@@ -13,7 +13,6 @@ import { OrderInCompanyComponent } from './order-in-company/order-in-company.com
 import { OrderVicdanAgentComponent } from './order-vicdan-agent/order-vicdan-agent.component';
 import { OrdersTodayComponent } from './orders-today/orders-today.component';
 import { OrdersUnacceptableComponent } from './orders-unacceptable/orders-unacceptable.component';
-import { ReceiptAgentComponent } from './print/receipt-agent/receipt-agent.component';
 import { AgentComponent } from './printpreview/agent/agent.component';
 import { ClientReciptAndExchangeComponent } from './printpreview/client-recipt-and-exchange/client-recipt-and-exchange.component';
 import { ClientComponent } from './printpreview/client/client.component';
@@ -32,159 +31,185 @@ import { ShowRecetptShipmentsComponent } from './show-recetpt-shipments/show-rec
 import { ShowTreasuryComponent } from './show-treasury/show-treasury.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 
-
 const routes: Routes = [
   {
-    path:'ShipmentInStock',
-    component: ShipmentInStockComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'ShipmentInStock',
+    component: ShipmentInStockComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'Shipmentonway',
-    component: ShipmentsOnWayComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'Shipmentonway',
+    component: ShipmentsOnWayComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'clientorder',
-    component: ClientOrderComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'clientorder',
+    component: ClientOrderComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
-  
-  
+
   {
-    path:'Shipmentsnotbeendelivered',
-    component: ShipmentsNotBeenDeliveredComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
-  },
-  {
-    path:'ReceiptfReceivingShipment',
-    component: ReceiptfReceivingShipmentComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'Shipmentsnotbeendelivered',
+    component: ShipmentsNotBeenDeliveredComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'rejectShipments',
-    component: RejectShipmentsComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'ReceiptfReceivingShipment',
+    component: ReceiptfReceivingShipmentComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'showreceiptshipment',
-    component: ShowRecetptShipmentsComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'rejectShipments',
+    component: RejectShipmentsComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'printagentpreview',
-    component: AgentComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'showreceiptshipment',
+    component: ShowRecetptShipmentsComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'printclientpreview',
-    component: ClientComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'printagentpreview',
+    component: AgentComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'agentprintnumber/:printnumber',
-    component: SetPrintNumberComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'printclientpreview',
+    component: ClientComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'clientprintnumber/:printnumber',
-    component: SetPrintNumberClientComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'agentprintnumber/:printnumber',
+    component: SetPrintNumberComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'Statistics',
-    component: StatisticsComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'clientprintnumber/:printnumber',
+    component: SetPrintNumberClientComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'AgentStatistics',
-    component: AgentStatisticsComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'Statistics',
+    component: StatisticsComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'pay',
-    component: PayComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'AgentStatistics',
+    component: AgentStatisticsComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'test',
-    component: ReceiptAgentComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'pay',
+    component: PayComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
+  },
+
+  {
+    path: 'OrderVicdanAgent',
+    component: OrderVicdanAgentComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'OrderVicdanAgent',
-    component: OrderVicdanAgentComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'agentprint',
+    component: AgentPrintComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'agentprint',
-    component: AgentPrintComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'clientprint',
+    component: ClientPrintComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'clientprint',
-    component: ClientPrintComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'receiptsandexchanges',
+    component: ReceiptsAndExchangesComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'receiptsandexchanges',
-    component: ReceiptsAndExchangesComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'orderincompany',
+    component: OrderInCompanyComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'orderincompany',
-    component: OrderInCompanyComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'printorderincompany',
+    component: PrintOrderInCompanyComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'printorderincompany',
-    component: PrintOrderInCompanyComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'printclientreciptandexchange/:id',
+    component: ClientReciptAndExchangeComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'printclientreciptandexchange/:id',
-    component: ClientReciptAndExchangeComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'orderstoday',
+    component: OrdersTodayComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'orderstoday',
-    component: OrdersTodayComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'ordersUnacceptable',
+    component: OrdersUnacceptableComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'ordersUnacceptable',
-    component: OrdersUnacceptableComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'changeagentbyorders',
+    component: ChangeAgentByOrdersComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'changeagentbyorders',
-    component: ChangeAgentByOrdersComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'agentOrderstaterequests',
+    component: AgentOrderStateComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'agentOrderstaterequests',
-    component: AgentOrderStateComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'printReceiptShipments/:id',
+    component: PrintReceiptShipmentComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowReports] },
   },
   {
-    path:'printReceiptShipments/:id',
-    component: PrintReceiptShipmentComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports]}
+    path: 'showtreasury',
+    component: ShowTreasuryComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: [UserPermission.ShowReports, UserPermission.TreasuryManagment],
+    },
   },
   {
-    path:'showtreasury',
-    component: ShowTreasuryComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports,UserPermission.TreasuryManagment]}
-  },
-  {
-    path:'cashMovment',
-    component: CashMovmentComponent,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowReports,UserPermission.TreasuryManagment]}
+    path: 'cashMovment',
+    component: CashMovmentComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: [UserPermission.ShowReports, UserPermission.TreasuryManagment],
+    },
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ReportsRoutingModule { }
+export class ReportsRoutingModule {}

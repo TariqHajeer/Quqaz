@@ -10,6 +10,9 @@ import { UserService } from 'src/app/services/user.service';
 import { TreasuryService } from 'src/app/services/treasury.service';
 import { CashMovment } from 'src/app/Models/user/cash-movment.model';
 import { DateService } from 'src/app/services/date.service';
+import { ReceiptAndExchange } from 'src/app/Models/receipt-and-exchange.model';
+import { ReciptService } from 'src/app/services/recipt.service';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-treasury-table',
   templateUrl: './treasury-table.component.html',
@@ -21,7 +24,9 @@ export class TreasuryTableComponent implements OnInit {
     private treasuryService: TreasuryService,
     private notifications: NotificationsService,
     private router: Router,
-    public dateService: DateService
+    public dateService: DateService,
+    public sanitizer: DomSanitizer,
+    private reciptService: ReciptService,
   ) {}
   noDataFound: boolean;
   displayedColumns: string[] = ['amount', 'type', 'createdOnUtc', 'more'];
@@ -33,10 +38,10 @@ export class TreasuryTableComponent implements OnInit {
   total: number;
   @Input() id: number;
   @Input() isActive: boolean;
-  cashMovmentid:CashMovment=new CashMovment();
+  cashMovmentid: CashMovment = new CashMovment();
 
   ngOnInit(): void {
-    this.getTreasury()
+    this.getTreasury();
   }
   getTreasury() {
     this.treasury = new Treasury();
@@ -44,8 +49,7 @@ export class TreasuryTableComponent implements OnInit {
       if (res) {
         this.treasury = res;
         this.dataSource = new MatTableDataSource(this.treasury.history.data);
-        this.total=this.treasury.history.total
-        console.log(res)
+        this.total = this.treasury.history.total;
       }
     });
   }
@@ -63,16 +67,18 @@ export class TreasuryTableComponent implements OnInit {
     this.getByPaging();
   }
 
-
-
   clientPayment(id) {
     this.router.navigate(['/app/reports/clientprintnumber/', id]);
   }
   cashMovment(id) {
     this.router.navigate(['/app/reports/clientprintnumber/', id]);
   }
+  client: ReceiptAndExchange = new ReceiptAndExchange();
   receipt(id) {
-    this.router.navigate(['/app/reports/printclientreciptandexchange/', id]);
+    this.client=new ReceiptAndExchange();
+    this.reciptService.GetById(id).subscribe((res) => {
+      this.client = res;
+    });
   }
   receiptOfTheOrderStatus(id) {
     this.router.navigate(['/app/reports/printReceiptShipments/', id]);
@@ -130,10 +136,9 @@ export class TreasuryTableComponent implements OnInit {
       }
     );
   }
-  CashMovmentId(id){
-    this.treasuryService.CashMovmentId(id).subscribe(res=>{
-      this.cashMovmentid=res
-    })
+  CashMovmentId(id) {
+    this.treasuryService.CashMovmentId(id).subscribe((res) => {
+      this.cashMovmentid = res;
+    });
   }
-
 }

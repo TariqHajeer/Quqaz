@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ReceiptOfTheOrderStatus } from 'src/app/Models/order/receipt-of-the-order-status.model';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { OrderService } from 'src/app/services/order.service';
+import { AuthService } from 'src/app/shared/auth.service';
 import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-print-receipt-shipment',
@@ -14,7 +15,8 @@ export class PrintReceiptShipmentComponent implements OnInit {
   constructor(
     private orderService: OrderService,
     public getroute: ActivatedRoute,
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer,
+    private authService:AuthService
   ) {}
   id: number;
   receiptOfTheOrderStatus: ReceiptOfTheOrderStatus =
@@ -32,7 +34,7 @@ export class PrintReceiptShipmentComponent implements OnInit {
   cost = 0;
   agentCost = 0;
   dateOfPrint = new Date();
-  userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin;
+  userName: UserLogin = this.authService.getUser();
   address = environment.Address;
   companyPhone =
     environment.companyPhones[0] + ' - ' + environment.companyPhones[1];
