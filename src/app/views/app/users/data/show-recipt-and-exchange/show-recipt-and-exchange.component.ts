@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { ReceiptAndExchange } from 'src/app/Models/receipt-and-exchange.model';
 import { UserLogin } from 'src/app/Models/userlogin.model';
@@ -9,18 +8,20 @@ import { AuthService } from 'src/app/shared/auth.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-client-recipt-and-exchange',
-  templateUrl: './client-recipt-and-exchange.component.html',
-  styleUrls: ['./client-recipt-and-exchange.component.scss'],
+  selector: 'app-show-recipt-and-exchange',
+  templateUrl: './show-recipt-and-exchange.component.html',
+  styleUrls: ['./show-recipt-and-exchange.component.scss'],
 })
-export class ClientReciptAndExchangeComponent implements OnInit {
+export class ShowReciptAndExchangeComponent implements OnInit {
   constructor(
-    public sanitizer: DomSanitizer,
-    public getroute: ActivatedRoute,
     private reciptService: ReciptService,
-    private authService: AuthService
+    private authService: AuthService,
+    public sanitizer: DomSanitizer
   ) {}
-  client: ReceiptAndExchange = new ReceiptAndExchange();
+
+  ngOnInit(): void {
+  }
+  @Input() client: ReceiptAndExchange;
   userName: UserLogin = this.authService.getUser();
   companyPhone = '07714400880';
   showButton = true;
@@ -30,16 +31,11 @@ export class ClientReciptAndExchangeComponent implements OnInit {
   whatsapp = environment.whatsapp;
   instgram = environment.instgram;
   facebook = environment.Facebook;
-  @Input() id: number;
-  ngOnInit(): void {
-    this.getById();
-  }
-  getById() {
-    this.getroute.params.subscribe(par => {
-      this.id = par['id'] as any;
-      this.reciptService.GetById(this.id).subscribe(res => {
-        this.client = res;
-      })
+  @Input() id;
+  receipt() {
+    this.client=new ReceiptAndExchange();
+    this.reciptService.GetById(this.id).subscribe((res) => {
+      this.client = res;
     });
   }
   print() {

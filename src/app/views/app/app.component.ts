@@ -16,16 +16,12 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
 
-    if (localStorage.getItem('kokazUser') == null || localStorage.getItem('kokazUser') == undefined || localStorage.getItem('kokazUser') == '')
+    if (!this.authService.getUser())
       return this._router.navigate(['/home']);
-      // else  this._router.navigate(['/app/HomePage/start']);
     var user = this.authService.authenticatedUser
     if (user == null || (user.expiry && (new Date().getTime() - user.expiry > 7 * 60 * 60 * 1000))) {
-      localStorage.removeItem('kokazUser')
-      localStorage.removeItem('token')
       return this.authService.signOut();
     }
-    // else  this._router.navigate(['/app/HomePage/start']);
     this.subscription = this.sidebarService.getSidebar().subscribe(
       res => {
         this.sidebar = res;

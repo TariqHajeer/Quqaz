@@ -15,6 +15,7 @@ import { Phone } from 'src/app/Models/phone.model';
 import data from 'src/app/constants/menu';
 import { UserPermission } from 'src/app/shared/auth.roles';
 import { UserLogin } from 'src/app/Models/userlogin.model';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-view-user',
@@ -24,7 +25,7 @@ import { UserLogin } from 'src/app/Models/userlogin.model';
 export class ViewUserComponent implements OnInit {
   constructor(
     public UserService: UserService,
-    private customService: CustomService,
+    private authService:AuthService,
     private notifications: NotificationsService,
     public route: Router
   ) {}
@@ -131,9 +132,7 @@ export class ViewUserComponent implements OnInit {
   userTreasury(id) {
     this.route.navigate(['/app/user/usertreasury', id]);
   }
-  currentUserPermissions: UserLogin = JSON.parse(
-    localStorage.getItem('kokazUser')
-  ) as UserLogin;
+  currentUserPermissions: UserLogin = this.authService.getUser();
   filterPrivlige(data): boolean {
     if (
       this.currentUserPermissions.privileges.find(

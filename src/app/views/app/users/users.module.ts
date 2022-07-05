@@ -24,9 +24,10 @@ import { GetGiveFormComponent } from './data/get-give-form/get-give-form.compone
 import { TreasuryTableComponent } from './data/treasury-table/treasury-table.component';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
+import { ShowReciptAndExchangeComponent } from './data/show-recipt-and-exchange/show-recipt-and-exchange.component';
 
 @NgModule({
-  declarations: [AddUserComponent, ViewUserComponent, EditUserComponent, ShowAgentComponent, UserTreasuryComponent, UserProfileComponent, GetGiveFormComponent, TreasuryTableComponent],
+  declarations: [AddUserComponent, ViewUserComponent, EditUserComponent, ShowAgentComponent, UserTreasuryComponent, UserProfileComponent, GetGiveFormComponent, TreasuryTableComponent, ShowReciptAndExchangeComponent],
   imports: [
     CommonModule,
     UsersRoutingModule,

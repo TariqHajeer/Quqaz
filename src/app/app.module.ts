@@ -19,6 +19,7 @@ import { NotificationsService, SimpleNotificationsModule } from 'angular2-notifi
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { OnReturnDirective } from './helpers/on-return.directive';
 import { TestComponent } from './test/test.component';
+import { UTCDateDirective } from './directive/utcdate.directive';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { TestComponent } from './test/test.component';
     AppComponent,
     OnReturnDirective,
     TestComponent,
+    UTCDateDirective,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
