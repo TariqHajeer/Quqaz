@@ -6,6 +6,7 @@ import { UserLogin } from 'src/app/Models/userlogin.model';
 import { environment } from 'src/environments/environment';
 import * as jspdf from 'jspdf';
 import * as moment from 'moment';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-agent-print',
@@ -16,7 +17,8 @@ export class AgentPrintComponent implements OnInit {
 
   constructor(
     public sanitizer: DomSanitizer,
-    private location: Location
+    private location: Location,
+    private authService:AuthService
   ) { }
   heads = ['ترقيم', 'كود', 'الإجمالي','التاريخ', 'المحافظة ','المنطقة', 'الهاتف', 'اسم العميل','ملاحظات العميل', 'مـلاحظـــــات']
   orders: any[] = []
@@ -24,7 +26,7 @@ export class AgentPrintComponent implements OnInit {
   agent
   orderplaced
   dateOfPrint = moment().format()
-  userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
+  userName: any = this.authService.getUser();
   printnumber
   PrintNumberOrder: PrintNumberOrder
   address = environment.Address

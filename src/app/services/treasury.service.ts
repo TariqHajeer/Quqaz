@@ -27,14 +27,16 @@ export class TreasuryService {
   Add(treasury) {
     return this.http.post<any>(this.controler, treasury);
   }
-  GiveMoney(id, amount) {
+  GiveMoney(id, data) {
     let params = new FormData();
-    params.append('amount', amount);
+    params.append('Amount', data.Amount);
+    params.append('Note', data.Note);
     return this.http.patch<any>(this.controler + 'GiveMoney/' + id, params);
   }
-  GetMoney(id, amount) {
+  GetMoney(id, data) {
     let params = new FormData();
-    params.append('amount', amount);
+    params.append('Amount', data.Amount);
+    params.append('Note', data.Note);
     return this.http.patch<any>(this.controler + 'GetMoney/' + id, params);
   }
   DisActive(id) {
@@ -42,5 +44,19 @@ export class TreasuryService {
   }
   Active(id) {
     return this.http.patch<any>(this.controler + 'Active', id);
+  }
+  CashMovment(paging, treausryId) {
+    let params = new HttpParams();
+    if (paging.RowCount != undefined || paging.RowCount != null)
+      params = params.append('RowCount', paging.RowCount);
+    if (paging.Page != undefined || paging.Page != null)
+      params = params.append('Page', paging.Page);
+    if (treausryId) params = params.append('treausryId', treausryId);
+    return this.http.get<any>(this.controler + 'CashMovment/', {
+      params: params,
+    });
+  }
+  CashMovmentId(id) {
+    return this.http.get<any>(this.controler + 'CashMovment/' + id);
   }
 }

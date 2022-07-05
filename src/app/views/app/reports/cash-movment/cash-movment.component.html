@@ -1,0 +1,116 @@
+<div class="card">
+    <div class="card-body">
+      <h3>الأخذ والاعطاء</h3>
+      <!-- <div class="row">
+          <div class="col-md-3">
+            <ng-select appendTo="body" [(ngModel)]="treausryId" (change)="Get()"
+            [ngModelOptions]="{standalone: true}" [clearable]="false" name="Client">
+            <ng-option *ngFor="let user of users" [value]="user.id">{{user.name}}
+            </ng-option>
+        </ng-select>
+          </div>
+        <div class="col-md-1">
+        <a class="btn" (click)="Get()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+          </svg>
+        </a>
+        </div>
+        
+      </div>
+      <br> -->
+    </div>
+  </div>
+  <br />
+  <div class="example-container mat-elevation-z8">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      class="mat-elevation-z8"
+      style="width: 100%"
+      (onPageSwitch)="switchPage($event)"
+    >
+      <ng-container matColumnDef="amount">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          style="padding: 10px"
+        >
+         المبلغ
+        </th>
+        <td mat-cell *matCellDef="let element" style="padding: 10px">
+          {{ element.amount|number }}
+        </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="treasuryUserName">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          style="padding: 10px"
+        >
+          صاحب الصندوق
+        </th>
+        <td mat-cell *matCellDef="let element" style="padding: 10px">
+         
+            {{ element.treasuryUserName }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="createdOnUtc">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          style="padding: 10px"
+        >
+          تاريخ  الحركة
+        </th>
+        <td mat-cell *matCellDef="let element" style="padding: 10px">
+          {{ element.createdOnUtc| date: "yyyy/MM/dd"  }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="createdBy">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          style="padding: 10px"
+        >
+        بواسطة
+        </th>
+        <td mat-cell *matCellDef="let element" style="padding: 10px">
+          {{ element.createdBy }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="note">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          style="padding: 10px"
+        >
+         ملاحظات
+        </th>
+        <td mat-cell *matCellDef="let element" style="padding: 10px">
+          {{ element.note }}
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  
+    <h5 style="padding-top: 20px; padding-right: 10px" *ngIf="noDataFound">
+      لا يوجد بيانات للعرض
+    </h5>
+  </div>
+  <mat-paginator
+    showFirstLastButtons
+    [length]="totalCount"
+    [pageSize]="paging.RowCount"
+    [pageSizeOptions]="paging.selectItemsPerPage"
+    (page)="switchPage($event)"
+  ></mat-paginator>
+  
