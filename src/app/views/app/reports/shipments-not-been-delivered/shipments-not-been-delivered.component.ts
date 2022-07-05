@@ -94,11 +94,11 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   ClientId;
   OrderplacedId;
   orderPlace: any[] = [
-    { id: 3, name: 'في الطريق', permission: 'ShowGroup' },
-    { id: 4, name: 'تم التسليم', permission: '' },
-    { id: 5, name: 'مرتجع كلي', permission: '' },
-    { id: 6, name: 'مرتجع جزئي', permission: '' },
-    { id: 7, name: 'مرفوض', permission: '' },
+    { id: 3, name: 'في الطريق', permission: 'PayInWay' },
+    { id: 4, name: 'تم التسليم', permission: 'PayCompletelyReturned' },
+    { id: 5, name: 'مرتجع كلي', permission: 'PayPartialReturned' },
+    { id: 6, name: 'مرتجع جزئي', permission: 'PayDelivered' },
+    { id: 7, name: 'مرفوض', permission: 'PayUnacceptable' },
   ];
   Clients: Client[] = [];
   paging: Paging;
