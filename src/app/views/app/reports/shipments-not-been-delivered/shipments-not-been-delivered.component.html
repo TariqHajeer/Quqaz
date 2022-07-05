@@ -14,8 +14,8 @@
           <mat-checkbox class="example-margin" *ngFor="let orderplaced of showOrderPlaceds()" [(ngModel)]="orderplaced.checked" (change)="allFilter()">&nbsp;{{orderplaced.name}}</mat-checkbox>
         </section>
         <section class="example-section">
-          <mat-checkbox class="example-margin" [(ngModel)]="IsClientDeleviredMoney" (change)="allFilter()">&nbsp;تسديد المبلغ مسبقاً</mat-checkbox>
-          <mat-checkbox class="example-margin" [(ngModel)]="ClientDoNotDeleviredMoney" (change)="allFilter()">&nbsp; لم يتم تسديد المبلغ مسبقاً</mat-checkbox>
+          <mat-checkbox class="example-margin" [(ngModel)]="IsClientDeleviredMoney" *ngIf="showOrderPlaceds().length!=0" (change)="allFilter()">&nbsp;تسديد المبلغ مسبقاً</mat-checkbox>
+          <mat-checkbox class="example-margin" [(ngModel)]="ClientDoNotDeleviredMoney" *ngIf="showOrderPlaceds().length!=0" (change)="allFilter()">&nbsp; لم يتم تسديد المبلغ مسبقاً</mat-checkbox>
         </section>
         <div class="col-md-3">
           <input type="text" class="form-control"placeholder="بحث على حسب كود الشحنة"
