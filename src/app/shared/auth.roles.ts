@@ -58,4 +58,9 @@ export enum UserPermission {
   TreasuryManagment = 'TreasuryManagment',
   ReceiptOfTheStatusOfTheDeliveredShipment = 'ReceiptOfTheStatusOfTheDeliveredShipment',
   ReceiptOfTheStatusOfTheReturnedShipment = 'ReceiptOfTheStatusOfTheReturnedShipment',
+  PayInWay="PayInWay",
+  PayCompletelyReturned="PayCompletelyReturned",
+  PayPartialReturned="PayPartialReturned",
+  PayDelivered="PayDelivered",
+  PayUnacceptable="PayUnacceptable"
 }

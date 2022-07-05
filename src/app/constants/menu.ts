@@ -175,7 +175,14 @@ const data: IMenuItem[] = [
             icon: 'simple-icon-layers',
             label: 'تسديد العميل',
             to: `${adminRoot}/reports/Shipmentsnotbeendelivered`,
-            permission: [UserPermission.Pay],
+            permission: [
+              UserPermission.Pay,
+              UserPermission.PayInWay,
+              UserPermission.PayCompletelyReturned,
+              UserPermission.PayPartialReturned,
+              UserPermission.PayDelivered,
+              UserPermission.PayUnacceptable,
+            ],
           },
           {
             icon: 'simple-icon-layers',
