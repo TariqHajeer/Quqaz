@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, HostListener, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  HostListener,
+  Input,
+} from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { SidebarService, ISidebar } from './sidebar.service';
@@ -10,6 +16,7 @@ import { UserLogin } from 'src/app/Models/userlogin.model';
 import { StatisticsService } from 'src/app/services/statistics.service';
 import { SignalRService } from 'src/app/services/signal-r.service';
 import { AdminNotification } from 'src/app/Models/admin-notification.model';
+import { AuthService } from 'src/app/shared/auth.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -25,8 +32,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   closedCollapseList = [];
 
-  currentUserPermissions: any = JSON.parse(localStorage.getItem(this.permissionlocalStorageKey));
-  userlogin: UserLogin = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
+  currentUserPermissions: any = JSON.parse(
+    localStorage.getItem(this.permissionlocalStorageKey)
+  );
+  userlogin: UserLogin = this.authService.getUser();
 
   public AdminNotification: AdminNotification = new AdminNotification();
 
@@ -36,14 +45,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private notifications: NotificationsService,
     private statisticsService: StatisticsService,
-    private signalRService: SignalRService
-
+    private signalRService: SignalRService,
+    private authService:AuthService
   ) {
     this.currentUserPermissions = this.userlogin.privileges;
-    if (this.userlogin.policy == "Employee")
-      this.menuItems = menuItems
-    else
-      this.menuItems = agentmenu
+    if (this.userlogin.policy == 'Employee') this.menuItems = menuItems;
+    else this.menuItems = agentmenu;
     this.subscription = this.sidebarService.getSidebar().subscribe(
       (res) => {
         this.sidebar = res;
@@ -88,73 +95,157 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
   Notfiaction() {
     this.signalRService.startConnection();
-    this.signalRService.hubConnection.on('AdminNotification', (data: AdminNotification) => {
-
-      if (data.newEditRquests > -1) {
-        this.signalRService.AdminNotification.newEditRquests = data.newEditRquests
-        if (this.signalRService.AdminNotification.newEditRquests > 0) {
-          let message = ' لديك ' + this.signalRService.AdminNotification.newEditRquests + ' من طلبات تعديل العملاء الجديدة'
-          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+    this.signalRService.hubConnection.on(
+      'AdminNotification',
+      (data: AdminNotification) => {
+        if (data.newEditRquests > -1) {
+          this.signalRService.AdminNotification.newEditRquests =
+            data.newEditRquests;
+          if (this.signalRService.AdminNotification.newEditRquests > 0) {
+            let message =
+              ' لديك ' +
+              this.signalRService.AdminNotification.newEditRquests +
+              ' من طلبات تعديل العملاء الجديدة';
+            this.notifications.create('', message, NotificationType.Info, {
+              theClass: 'info',
+              timeOut: 6000,
+              showProgressBar: false,
+            });
+          }
+        }
+        if (data.newOrdersCount > -1) {
+          this.signalRService.AdminNotification.newOrdersCount =
+            data.newOrdersCount;
+          if (this.signalRService.AdminNotification.newOrdersCount > 0) {
+            let message =
+              ' لديك ' +
+              this.signalRService.AdminNotification.newOrdersCount +
+              ' من الطلبات جديدة';
+            this.notifications.create('', message, NotificationType.Info, {
+              theClass: 'info',
+              timeOut: 6000,
+              showProgressBar: false,
+            });
+          }
+        }
+        if (data.newPaymentRequetsCount > -1) {
+          this.signalRService.AdminNotification.newPaymentRequetsCount =
+            data.newPaymentRequetsCount;
+          if (
+            this.signalRService.AdminNotification.newPaymentRequetsCount > 0
+          ) {
+            let message =
+              ' لديك ' +
+              this.signalRService.AdminNotification.newPaymentRequetsCount +
+              ' من طلبات دفع العملاء الجديدة';
+            this.notifications.create('', message, NotificationType.Info, {
+              theClass: 'info',
+              timeOut: 6000,
+              showProgressBar: false,
+            });
+          }
+        }
+        if (data.orderRequestEditStateCount > -1) {
+          this.signalRService.AdminNotification.orderRequestEditStateCount =
+            data.orderRequestEditStateCount;
+          if (
+            this.signalRService.AdminNotification.orderRequestEditStateCount > 0
+          ) {
+            let message =
+              ' لديك ' +
+              this.signalRService.AdminNotification.orderRequestEditStateCount +
+              'من طلبات تعديل المندوب على حالة الشحنة';
+            this.notifications.create('', message, NotificationType.Info, {
+              theClass: 'info',
+              timeOut: 6000,
+              showProgressBar: false,
+            });
+          }
+        }
+        if (data.newOrdersDontSendCount > -1) {
+          this.signalRService.AdminNotification.newOrdersDontSendCount =
+            data.newOrdersDontSendCount;
+          if (
+            this.signalRService.AdminNotification.newOrdersDontSendCount > 0
+          ) {
+            let message =
+              ' لديك ' +
+              this.signalRService.AdminNotification.newOrdersDontSendCount +
+              ' من الطلبات جديدة التي لم يتم ارسالها';
+            this.notifications.create('', message, NotificationType.Info, {
+              theClass: 'info',
+              timeOut: 6000,
+              showProgressBar: false,
+            });
+          }
         }
       }
-      if (data.newOrdersCount > -1) {
-        this.signalRService.AdminNotification.newOrdersCount = data.newOrdersCount
-        if (this.signalRService.AdminNotification.newOrdersCount > 0) {
-          let message = ' لديك ' + this.signalRService.AdminNotification.newOrdersCount + ' من الطلبات جديدة'
-          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
-        }
-      }
-      if (data.newPaymentRequetsCount > -1) {
-        this.signalRService.AdminNotification.newPaymentRequetsCount = data.newPaymentRequetsCount
-        if (this.signalRService.AdminNotification.newPaymentRequetsCount > 0) {
-          let message = ' لديك ' + this.signalRService.AdminNotification.newPaymentRequetsCount + ' من طلبات دفع العملاء الجديدة'
-          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
-        }
-      }
-      if (data.orderRequestEditStateCount > -1) {
-        this.signalRService.AdminNotification.orderRequestEditStateCount = data.orderRequestEditStateCount
-        if (this.signalRService.AdminNotification.orderRequestEditStateCount > 0) {
-          let message = ' لديك ' + this.signalRService.AdminNotification.orderRequestEditStateCount + 'من طلبات تعديل المندوب على حالة الشحنة'
-          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
-        }
-      }
-      if (data.newOrdersDontSendCount > -1) {
-        this.signalRService.AdminNotification.newOrdersDontSendCount = data.newOrdersDontSendCount
-        if (this.signalRService.AdminNotification.newOrdersDontSendCount > 0) {
-          let message = ' لديك ' + this.signalRService.AdminNotification.newOrdersDontSendCount + ' من الطلبات جديدة التي لم يتم ارسالها'
-          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
-        }
-      }
-    });
+    );
     setTimeout(() => {
-      this.statisticsService.Notification().subscribe(data => {
+      this.statisticsService.Notification().subscribe((data) => {
         this.signalRService.AdminNotification = data;
         if (this.signalRService.AdminNotification.newEditRquests > 0) {
-          let message = ' لديك ' + this.signalRService.AdminNotification.newEditRquests + ' من طلبات تعديل العملاء الجديدة'
-          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+          let message =
+            ' لديك ' +
+            this.signalRService.AdminNotification.newEditRquests +
+            ' من طلبات تعديل العملاء الجديدة';
+          this.notifications.create('', message, NotificationType.Info, {
+            theClass: 'info',
+            timeOut: 6000,
+            showProgressBar: false,
+          });
         }
         if (this.signalRService.AdminNotification.newOrdersCount > 0) {
-          let message = ' لديك ' + this.signalRService.AdminNotification.newOrdersCount + ' من الطلبات جديدة'
-          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+          let message =
+            ' لديك ' +
+            this.signalRService.AdminNotification.newOrdersCount +
+            ' من الطلبات جديدة';
+          this.notifications.create('', message, NotificationType.Info, {
+            theClass: 'info',
+            timeOut: 6000,
+            showProgressBar: false,
+          });
         }
         if (this.signalRService.AdminNotification.newPaymentRequetsCount > 0) {
-          let message = ' لديك ' + this.signalRService.AdminNotification.newPaymentRequetsCount + ' من طلبات دفع العملاء الجديدة'
-          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+          let message =
+            ' لديك ' +
+            this.signalRService.AdminNotification.newPaymentRequetsCount +
+            ' من طلبات دفع العملاء الجديدة';
+          this.notifications.create('', message, NotificationType.Info, {
+            theClass: 'info',
+            timeOut: 6000,
+            showProgressBar: false,
+          });
         }
-        if (this.signalRService.AdminNotification.orderRequestEditStateCount > 0) {
-          let message = ' لديك ' + this.signalRService.AdminNotification.orderRequestEditStateCount + 'من طلبات تعديل المندوب على حالة الشحنة'
-          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+        if (
+          this.signalRService.AdminNotification.orderRequestEditStateCount > 0
+        ) {
+          let message =
+            ' لديك ' +
+            this.signalRService.AdminNotification.orderRequestEditStateCount +
+            'من طلبات تعديل المندوب على حالة الشحنة';
+          this.notifications.create('', message, NotificationType.Info, {
+            theClass: 'info',
+            timeOut: 6000,
+            showProgressBar: false,
+          });
         }
         if (this.signalRService.AdminNotification.newOrdersDontSendCount > 0) {
-          let message = ' لديك ' + this.signalRService.AdminNotification.newOrdersDontSendCount + ' من الطلبات جديدة التي لم يتم ارسالها'
-          this.notifications.create('', message, NotificationType.Info, { theClass: 'info', timeOut: 6000, showProgressBar: false });
+          let message =
+            ' لديك ' +
+            this.signalRService.AdminNotification.newOrdersDontSendCount +
+            ' من الطلبات جديدة التي لم يتم ارسالها';
+          this.notifications.create('', message, NotificationType.Info, {
+            theClass: 'info',
+            timeOut: 6000,
+            showProgressBar: false,
+          });
         }
       });
     }, 1000);
-
   }
   ngOnInit() {
-    if (this.userlogin.policy == "Employee") {
+    if (this.userlogin.policy == 'Employee') {
       this.Notfiaction();
     }
 
@@ -377,35 +468,57 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   filteredMenuItems(menuItems: IMenuItem[]) {
     if (menuItems)
-      menuItems.forEach(item => {
-        if ((item.to == "/app/client" || item.to == "/app/payment/paymentrequest/") && item.badge) {
-          item.badgeLable = this.signalRService.AdminNotification.newPaymentRequetsCount
+      menuItems.forEach((item) => {
+        if (
+          (item.to == '/app/client' ||
+            item.to == '/app/payment/paymentrequest/') &&
+          item.badge
+        ) {
+          item.badgeLable =
+            this.signalRService.AdminNotification.newPaymentRequetsCount;
         }
-        if (item.to == "/app/order" && item.badge) {
-          item.badgeLable = this.signalRService.AdminNotification.newOrdersCount +
-            this.signalRService.AdminNotification.newOrdersDontSendCount + this.signalRService.AdminNotification.orderRequestEditStateCount
+        if (item.to == '/app/order' && item.badge) {
+          item.badgeLable =
+            this.signalRService.AdminNotification.newOrdersCount +
+            this.signalRService.AdminNotification.newOrdersDontSendCount +
+            this.signalRService.AdminNotification.orderRequestEditStateCount;
         }
-        if (item.to == "/app/order/neworders" && item.badge) {
-          item.badgeLable = this.signalRService.AdminNotification.newOrdersCount
+        if (item.to == '/app/order/neworders' && item.badge) {
+          item.badgeLable =
+            this.signalRService.AdminNotification.newOrdersCount;
         }
-        if (item.to == "/app/order/orderswithclient" && item.badge) {
-          item.badgeLable = this.signalRService.AdminNotification.newOrdersDontSendCount
+        if (item.to == '/app/order/orderswithclient' && item.badge) {
+          item.badgeLable =
+            this.signalRService.AdminNotification.newOrdersDontSendCount;
         }
-        if (item.to == "/app/reports/agentOrderstaterequests" && item.badge) {
-          item.badgeLable = this.signalRService.AdminNotification.orderRequestEditStateCount
+        if (item.to == '/app/reports/agentOrderstaterequests' && item.badge) {
+          item.badgeLable =
+            this.signalRService.AdminNotification.orderRequestEditStateCount;
         }
-      })
-    // filter the menu by role 
+        item.enabled = true;
+        if (this.userlogin.haveTreasury) {
+          item.enabled = true;
+        } else if (
+          (item.to == '/app/reports/ReceiptfReceivingShipment' ||
+            item.to == '/app/reports/Shipmentsnotbeendelivered' ||
+            item.to == '/app/reports/receiptsandexchanges' ||
+            item.to == '/app/income' ||
+            item.to == '/app/outcome') &&
+          !this.userlogin.haveTreasury
+        ) {
+          item.enabled = false;
+        }
+      });
+    // filter the menu by role
     return menuItems
       ? menuItems.filter(
-        (x) =>
-          !x.permission || (x.permission && this.currentUserPermissions.some(per => x.permission.includes(per.sysName)))
-      )
+          (x) =>
+            !x.permission ||
+            (x.permission &&
+              this.currentUserPermissions.some((per) =>
+                x.permission.includes(per.sysName)
+              ))
+        )
       : [];
-  }
-
-
-  isMyPermission(pername, pers) {
-    return pers.includes(pername);
   }
 }

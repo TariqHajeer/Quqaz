@@ -15,9 +15,19 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { ShowAgentComponent } from './show-agent/show-agent.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { UserTreasuryComponent } from './user-treasury/user-treasury.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { GetGiveFormComponent } from './data/get-give-form/get-give-form.component';
+import { TreasuryTableComponent } from './data/treasury-table/treasury-table.component';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatListModule} from '@angular/material/list';
+import { ShowReciptAndExchangeComponent } from './data/show-recipt-and-exchange/show-recipt-and-exchange.component';
 
 @NgModule({
-  declarations: [AddUserComponent, ViewUserComponent, EditUserComponent, ShowAgentComponent],
+  declarations: [AddUserComponent, ViewUserComponent, EditUserComponent, ShowAgentComponent, UserTreasuryComponent, UserProfileComponent, GetGiveFormComponent, TreasuryTableComponent, ShowReciptAndExchangeComponent],
   imports: [
     CommonModule,
     UsersRoutingModule,
@@ -31,7 +41,12 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
     NgSelectModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatTabsModule,
+    MatDividerModule,
+    MatListModule
   ]
 })
 export class UsersModule { }

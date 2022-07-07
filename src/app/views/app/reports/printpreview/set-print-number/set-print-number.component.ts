@@ -9,6 +9,7 @@ import html2canvas from 'html2canvas';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment.prod';
+import { DateService } from 'src/app/services/date.service';
 @Component({
   selector: 'app-set-print-number',
   templateUrl: './set-print-number.component.html',
@@ -21,11 +22,12 @@ export class SetPrintNumberComponent implements OnInit {
     public sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef,
     private spinner: NgxSpinnerService,
-    public getroute: ActivatedRoute
+    public getroute: ActivatedRoute,
+    public dateService: DateService
 
 
   ) { }
-  heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ','المنطقة  ', 'الهاتف', 'اسم العميل','ملاحظات العميل', 'مـلاحظـــــات']
+  heads = ['ترقيم', 'كود', 'الإجمالي','التاريخ', 'المحافظة ','المنطقة / العنوان  ', 'الهاتف', 'اسم العميل','ملاحظات العميل', 'مـلاحظـــــات']
 
   orders: any[] = []
   count = 0

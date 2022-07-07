@@ -4,31 +4,33 @@ import { ClientService } from '../client.service';
 import * as jspdf from 'jspdf';
 import { DomSanitizer } from '@angular/platform-browser';
 import { UserLogin } from 'src/app/Models/userlogin.model';
-import { ReceiptAndExchange } from 'src/app/Models/receipt-and-exchange.model';
+import { CreateReceiptAndExchange } from 'src/app/Models/receipt-and-exchange.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
 import * as moment from 'moment';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-receipt-and-exchange',
   templateUrl: './receipt-and-exchange.component.html',
   styleUrls: ['./receipt-and-exchange.component.scss']
 })
-export class ReceiptAndExchangeComponent implements OnInit {
+export class CreateReceiptAndExchangeComponent implements OnInit {
 
   constructor(private clientService: ClientService,
     public sanitizer: DomSanitizer,
-    private spinner: NgxSpinnerService) { }
-    userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
+    private spinner: NgxSpinnerService,
+    private authService:AuthService) { }
+    userName: any =  this.authService.getUser();
 
   ngOnInit(): void {
-    this.client = new ReceiptAndExchange()
+    this.client = new CreateReceiptAndExchange()
     this.client.client=new Client
     this.client.Amount=0
     this.client.client=JSON.parse(localStorage.getItem('client'))
   }
   Account:Account
-  client: ReceiptAndExchange 
+  client: CreateReceiptAndExchange 
   // address = "اربيل - برايتي - قرب ماركيت آيه "
   companyPhone = "07714400880"
   showButton=true

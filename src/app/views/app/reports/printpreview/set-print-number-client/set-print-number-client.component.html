@@ -92,7 +92,7 @@
                         </td>
                         <td>
                             <div style="border: 1px black solid;padding: 7px;margin: 1px;">
-                                {{dateOfPrint | date:"dd/MM/yyyy"}}
+                                {{dateService.convertUTCToDate(dateOfPrint) | date:"dd/MM/yyyy"}}
                             </div>
                         </td>
                     </tr>
@@ -104,7 +104,7 @@
                         </td>
                         <td>
                             <div style="border: 1px black solid;padding: 7px;margin: 1px;">
-                                {{dateOfPrint | date:'shortTime'}}
+                                {{dateService.convertUTCToDate(dateOfPrint) | date:'shortTime'}}
                             </div>
                         </td>
                     </tr>

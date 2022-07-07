@@ -17,8 +17,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { ViewByIdComponent } from './view-by-id/view-by-id.component';
 @NgModule({
-  declarations: [ViewIncomComponent, AddInComeComponent, AddMoreIncomeComponent],
+  declarations: [ViewIncomComponent, AddInComeComponent, AddMoreIncomeComponent, ViewByIdComponent],
   imports: [
     CommonModule,
     IncomeRoutingModule,

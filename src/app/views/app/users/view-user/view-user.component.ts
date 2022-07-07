@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { EditSettingsModel, GridComponent, SaveEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
+import {
+  EditSettingsModel,
+  GridComponent,
+  SaveEventArgs,
+  ToolbarItems,
+} from '@syncfusion/ej2-angular-grids';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { CustomService } from 'src/app/services/custom.service';
 import { User, UserStatics } from 'src/app/Models/user/user.model';
@@ -7,16 +12,23 @@ import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { CreateUser } from 'src/app/Models/user/create-user';
 import { Phone } from 'src/app/Models/phone.model';
+import data from 'src/app/constants/menu';
+import { UserPermission } from 'src/app/shared/auth.roles';
+import { UserLogin } from 'src/app/Models/userlogin.model';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-view-user',
   templateUrl: './view-user.component.html',
-  styleUrls: ['./view-user.component.scss']
+  styleUrls: ['./view-user.component.scss'],
 })
 export class ViewUserComponent implements OnInit {
-
-  constructor(public UserService: UserService, private customService: CustomService, private notifications: NotificationsService,
-    public route: Router) { }
+  constructor(
+    public UserService: UserService,
+    private authService:AuthService,
+    private notifications: NotificationsService,
+    public route: Router
+  ) {}
 
   tempRegion: any;
   public stTime: any;
@@ -32,26 +44,32 @@ export class ViewUserComponent implements OnInit {
   editClicked: any;
   addClicked: any;
   currentUserId: any;
-  confirmpassword: string
-  User: User
+  confirmpassword: string;
+  User: User;
   ngOnInit(): void {
     this.getUser();
     this.editSettings = { showDeleteConfirmDialog: true, allowDeleting: true };
     this.toolbar = [
-      { text: 'حذف', tooltipText: 'حذف', prefixIcon: 'e-delete', id: 'normalgrid_delete' }
-      , 'Search'];
-    this.filterSettings = { type: "CheckBox" };
-    this.filter = { type: "CheckBox" };
+      {
+        text: 'حذف',
+        tooltipText: 'حذف',
+        prefixIcon: 'e-delete',
+        id: 'normalgrid_delete',
+      },
+      'Search',
+    ];
+    this.filterSettings = { type: 'CheckBox' };
+    this.filter = { type: 'CheckBox' };
     this.stTime = performance.now();
     this.pageSettings = { pageSize: 10, pageSizes: true };
-    this.selectionSettings = {  type: "Multiple" };
+    this.selectionSettings = { type: 'Multiple' };
     this.lines = 'Horizontal';
   }
   load() {
-    const rowHeight: number = this.gridInstance.getRowHeight();  // height of the each row
-    const gridHeight: any = this.gridInstance.height;  // grid height
-    const pageSize: number = this.gridInstance.pageSettings.pageSize;   // initial page size
-    const pageResize: any = (gridHeight - (pageSize * rowHeight)) / rowHeight; // new page size is obtained here
+    const rowHeight: number = this.gridInstance.getRowHeight(); // height of the each row
+    const gridHeight: any = this.gridInstance.height; // grid height
+    const pageSize: number = this.gridInstance.pageSettings.pageSize; // initial page size
+    const pageResize: any = (gridHeight - pageSize * rowHeight) / rowHeight; // new page size is obtained here
     this.gridInstance.pageSettings.pageSize = pageSize + Math.round(pageResize);
   }
   addNewClicked() {
@@ -63,55 +81,66 @@ export class ViewUserComponent implements OnInit {
     this.UserService.GetAll();
   }
   onEditClicked(id) {
-    this.route.navigate(['/app/user/edit', id])
-
+    this.route.navigate(['/app/user/edit', id]);
   }
-  Phone:Phone=new Phone
+  Phone: Phone = new Phone();
   addFinish(value: CreateUser) {
-    this.User=new User
-    this.User.phones=[]
-    this.User.id = value.Id
-    this.User.userName = value.UserName
-    this.User.experince = value.Experince
-    this.User.hireDate = value.HireDate
-    this.User.password = value.Password
-    this.User.name = value.Name
-    this.User.salary = value.Salary
-    this.User.note = value.Note
-    this.User.groupsId = value.GroupsId
-    this.User.countryId = value.CountryId
-    this.User.canWorkAsAgent = value.CanWorkAsAgent
-    this.User.isActive=true
+    this.User = new User();
+    this.User.phones = [];
+    this.User.id = value.Id;
+    this.User.userName = value.UserName;
+    this.User.experince = value.Experince;
+    this.User.hireDate = value.HireDate;
+    this.User.password = value.Password;
+    this.User.name = value.Name;
+    this.User.salary = value.Salary;
+    this.User.note = value.Note;
+    this.User.groupsId = value.GroupsId;
+    this.User.countryId = value.CountryId;
+    this.User.canWorkAsAgent = value.CanWorkAsAgent;
+    this.User.isActive = true;
     for (let index = 0; index < value.Phones.length; index++) {
-      this.Phone.phone=value.Phones[index]
-      this.User.phones.push(this.Phone)
-
+      this.Phone.phone = value.Phones[index];
+      this.User.phones.push(this.Phone);
     }
-    this.User.UserStatics=new UserStatics
-    this.User.UserStatics.OrderInStore=0
-    this.User.UserStatics.OrderInWay=0
-    this.UserService.users.push(this.User)
+    this.User.UserStatics = new UserStatics();
+    this.User.UserStatics.OrderInStore = 0;
+    this.User.UserStatics.OrderInWay = 0;
+    this.UserService.users.push(this.User);
     this.gridInstance.refresh();
-
   }
   actionComplete(args: SaveEventArgs) {
     if (args.requestType == 'delete') {
       let id = args.data[0].id;
       if (args) {
-        this.UserService.Delete(id).subscribe(
-          res => {
-            this.notifications.create('success', 'تم حذف  الموظف بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 4000, showProgressBar: false });
-          }
-        )
-      }
-      else {
+        this.UserService.Delete(id).subscribe((res) => {
+          this.notifications.create(
+            'success',
+            'تم حذف  الموظف بنجاح',
+            NotificationType.Success,
+            { theClass: 'success', timeOut: 4000, showProgressBar: false }
+          );
+        });
+      } else {
         this.gridInstance.refresh();
       }
     }
   }
-
   showAgent(id) {
-    this.route.navigate(['/app/user/showagent', id])
+    this.route.navigate(['/app/user/showagent', id]);
   }
-
+  userTreasury(id) {
+    this.route.navigate(['/app/user/usertreasury', id]);
+  }
+  currentUserPermissions: UserLogin = this.authService.getUser();
+  filterPrivlige(data): boolean {
+    if (
+      this.currentUserPermissions.privileges.find(
+        (pr) => pr.sysName == UserPermission.TreasuryManagment
+      ) ||
+      !data
+    )
+      return true;
+    else return false;
+  }
 }

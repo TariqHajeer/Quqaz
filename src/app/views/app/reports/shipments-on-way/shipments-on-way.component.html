@@ -37,7 +37,7 @@
       </div>
       
       <div class="col-md-3">
-        <button (click)="saveEdit()" class="btn btn-primary"> حفظ</button>&nbsp;
+        <button (click)="saveEdit()" class="btn btn-primary"*ngIf="false"> حفظ</button>&nbsp;
         <button (click)="print()" class="btn btn-primary"> <svg xmlns="http://www.w3.org/2000/svg" width="17"
             height="17" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
             <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
@@ -46,7 +46,7 @@
           </svg> &nbsp;المعاينة قبل الطباعة</button>
       </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="false">
       <div class="col-6">
 
       </div>
@@ -152,8 +152,8 @@
     </ng-container>
     <ng-container matColumnDef="orderplaced">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> حالة الشحنة</th>
-      <td mat-cell *matCellDef="let element;index as i">
-        <ng-select appendTo="body" [(ngModel)]="element.order.orderplaced.id" [ngModelOptions]="{standalone: true}"
+      <td mat-cell *matCellDef="let element;index as i">{{element.order.orderplaced.name}}
+        <ng-select *ngIf="false" appendTo="body" [(ngModel)]="element.order.orderplaced.id" [ngModelOptions]="{standalone: true}"
           [clearable]="false" id="i*2" name="Orderplaced" (change)="ChangeOrderplacedId(element,i)"
           style="width: 120px; overflow: visible;">
           <ng-option *ngFor="let order of element.OrderPlaced" [value]="order.id">{{order.name}}</ng-option>
@@ -162,8 +162,8 @@
     </ng-container>
     <ng-container matColumnDef="monePlaced">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> موقع المبلغ</th>
-      <td mat-cell *matCellDef="let element;index as i">
-        <ng-select appendTo="body" [(ngModel)]="element.order.monePlaced.id" [ngModelOptions]="{standalone: true}"
+      <td mat-cell *matCellDef="let element;index as i"> {{element.order.monePlaced.name}}
+        <ng-select *ngIf="false" appendTo="body" [(ngModel)]="element.order.monePlaced.id" [ngModelOptions]="{standalone: true}"
           style="width: 120px;" [clearable]="false" name="MonePlaced" id="i*5">
           <ng-option *ngFor="let moenyPlaced of element.MoenyPlaced" [value]="moenyPlaced.id">{{moenyPlaced.name}}
           </ng-option>

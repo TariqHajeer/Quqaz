@@ -3,7 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import * as jspdf from 'jspdf';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { StatisticsService } from 'src/app/services/statistics.service';
-import { ClientBlanace } from 'src/app/Models/client-blanace.model';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-pay',
@@ -13,14 +13,15 @@ import { ClientBlanace } from 'src/app/Models/client-blanace.model';
 export class PayComponent implements OnInit {
 
   constructor(public sanitizer: DomSanitizer,
-    private staticService: StatisticsService) { }
+    private staticService: StatisticsService,
+    private authService:AuthService) { }
   client: {
     client: any,
     cost: number,
     pay: boolean,
     deliveryCost: number
   }
-  userName: any = JSON.parse(localStorage.getItem('kokazUser')) as UserLogin
+  userName: UserLogin =  this.authService.getUser();
   dateOfPrint = new Date()
 
   ngOnInit(): void {

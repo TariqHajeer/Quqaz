@@ -11,13 +11,10 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { NgxPrintModule } from 'ngx-print';
 import { ClientOrderComponent } from './client-order/client-order.component';
 import { ShipmentsOnWayComponent } from './shipments-on-way/shipments-on-way.component';
-import { ReceiptAgentComponent } from './print/receipt-agent/receipt-agent.component';
 import { ShipmentsNotBeenDeliveredComponent } from './shipments-not-been-delivered/shipments-not-been-delivered.component';
-import { ReceiptClientComponent } from './print/receipt-client/receipt-client.component';
 import { ReceiptShipmentAgentComponent } from './receipt-shipment-agent/receipt-shipment-agent.component';
 import { ClientComponent } from './printpreview/client/client.component';
 import { AgentComponent } from './printpreview/agent/agent.component';
-import { ReceiptSetPrintNumberComponent } from './print/receipt-set-print-number/receipt-set-print-number.component';
 import { SetPrintNumberComponent } from './printpreview/set-print-number/set-print-number.component';
 import { SetPrintNumberClientComponent } from './printpreview/set-print-number-client/set-print-number-client.component';
 import { StatisticsComponent } from './statistics/statistics.component';
@@ -29,47 +26,54 @@ import {
 } from '@syncfusion/ej2-angular-charts';
 import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
-import { ReceiptSetPrintNumberClientComponent } from './print/receipt-set-print-number-client/receipt-set-print-number-client.component';
 import { OrderVicdanAgentComponent } from './order-vicdan-agent/order-vicdan-agent.component';
 import { ClientPrintComponent } from './client-print/client-print.component';
 import { AgentPrintComponent } from './agent-print/agent-print.component';
 import { ReceiptsAndExchangesComponent } from './receipts-and-exchanges/receipts-and-exchanges.component';
 import { OrderInCompanyComponent } from './order-in-company/order-in-company.component';
 import { PrintOrderInCompanyComponent } from './printpreview/print-order-in-company/print-order-in-company.component';
-import { ReceiptOrderInCompanyComponent } from './print/receipt-order-in-company/receipt-order-in-company.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { OrdersTodayComponent } from './orders-today/orders-today.component';
 import { OrdersUnacceptableComponent } from './orders-unacceptable/orders-unacceptable.component';
 import { ChangeAgentByOrdersComponent } from './change-agent-by-orders/change-agent-by-orders.component';
 import { AgentOrderStateComponent } from './agent-order-state/agent-order-state.component';
+import { ReceiptfReceivingShipmentComponent } from './receiptf-receiving-shipment/receiptf-receiving-shipment.component';
+import { RejectShipmentsComponent } from './reject-shipments/reject-shipments.component';
+import { ClientReciptAndExchangeComponent } from './printpreview/client-recipt-and-exchange/client-recipt-and-exchange.component';
+import { ShowRecetptShipmentsComponent } from './show-recetpt-shipments/show-recetpt-shipments.component';
+import { PrintReceiptShipmentComponent } from './printpreview/print-receipt-shipment/print-receipt-shipment.component';
+import { ShowTreasuryComponent } from './show-treasury/show-treasury.component';
+import { CashMovmentComponent } from './cash-movment/cash-movment.component';
 @NgModule({
   declarations: [ShipmentInStockComponent,
     ClientOrderComponent,
     ShipmentsOnWayComponent,
-    ReceiptAgentComponent,
     ShipmentsNotBeenDeliveredComponent,
-    ReceiptClientComponent,
     ReceiptShipmentAgentComponent,
     ClientComponent, 
     AgentComponent,
-    ReceiptSetPrintNumberComponent,
     SetPrintNumberComponent,
     SetPrintNumberClientComponent,
     StatisticsComponent,
     PayComponent,
     AgentStatisticsComponent,
-    ReceiptSetPrintNumberClientComponent,
     OrderVicdanAgentComponent,
     ClientPrintComponent,
     AgentPrintComponent,
     ReceiptsAndExchangesComponent,
     OrderInCompanyComponent,
     PrintOrderInCompanyComponent,
-    ReceiptOrderInCompanyComponent,
     OrdersTodayComponent,
     OrdersUnacceptableComponent,
     ChangeAgentByOrdersComponent,
-    AgentOrderStateComponent,],
+    AgentOrderStateComponent,
+    ReceiptfReceivingShipmentComponent,
+    RejectShipmentsComponent,
+    ClientReciptAndExchangeComponent,
+    ShowRecetptShipmentsComponent,
+    PrintReceiptShipmentComponent,
+    ShowTreasuryComponent,
+    CashMovmentComponent,],
   imports: [
     CommonModule,
     ReportsRoutingModule,

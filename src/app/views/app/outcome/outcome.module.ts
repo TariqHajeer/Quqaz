@@ -16,10 +16,11 @@ import { AddMoreOutcomeComponent } from './add-more-outcome/add-more-outcome.com
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { ViewByIdComponent } from './view-by-id/view-by-id.component';
 
 
 @NgModule({
-  declarations: [ViewOutComeComponent, AddOutComeComponent, AddMoreOutcomeComponent],
+  declarations: [ViewOutComeComponent, AddOutComeComponent, AddMoreOutcomeComponent, ViewByIdComponent],
   imports: [
     CommonModule,
     OutcomeRoutingModule,
