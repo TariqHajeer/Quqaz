@@ -16,8 +16,12 @@ import { NoconnectionComponent } from './noconnection/noconnection.component';
 import { SearchOrderComponent } from './search-order/search-order.component';
 import { FormsModule } from '@angular/forms';
 import { ClientHomeComponent } from './client-home/client-home.component';
+import { NavBarComponent } from './home/data/nav-bar/nav-bar.component';
+import { HeaderComponent } from './home/data/header/header.component';
+import { CardComponent } from './home/data/card/card.component';
+import { FooterComponent } from './home/data/footer/footer.component';
 @NgModule({
-  declarations: [HomeComponent, NoconnectionComponent, SearchOrderComponent, ClientHomeComponent],
+  declarations: [HomeComponent, NoconnectionComponent, SearchOrderComponent, ClientHomeComponent, NavBarComponent, HeaderComponent, CardComponent, FooterComponent],
   imports: [
     CommonModule,
     ViewRoutingModule,

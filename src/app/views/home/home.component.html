@@ -170,60 +170,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <div class="carousel-item ">
-                                            <div class="container">
-                                                <div class="row">
-
-                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-
-                                                        <div class="box-part text-center">
-
-                                                            <i class="fa fa-instagram fa-3x" aria-hidden="true"></i>
-
-                                                            <div class="title">
-                                                                <h4>Instagram</h4>
-                                                            </div>
-
-                                                            <div class="text">
-                                                                <span>Lorem ipsum dolor sit amet, id quo eruditi
-                                                                    eloquentiam. Assum decore te sed. Elitr scripta
-                                                                    ocurreret qui ad.</span>
-                                                            </div>
-
-                                                            <a href="#">Learn More</a>
-
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-
-                                                        <div class="box-part text-center">
-
-                                                            <i class="fa fa-twitter fa-3x" aria-hidden="true"></i>
-
-                                                            <div class="title">
-                                                                <h4>Twitter</h4>
-                                                            </div>
-
-                                                            <div class="text">
-                                                                <span>Lorem ipsum dolor sit amet, id quo eruditi
-                                                                    eloquentiam. Assum decore te sed. Elitr scripta
-                                                                    ocurreret qui ad.</span>
-                                                            </div>
-
-                                                            <a href="#">Learn More</a>
-
-                                                        </div>
-                                                    </div>
-
-
-
-
-
-                                                </div>
-                                            </div>
-                                        </div> -->
-
+                                 
                                     </div>
                                     <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
                                         data-slide="prev">
@@ -325,33 +272,7 @@
                         </div>
                     </div>
 
-                    <!-- <div *ngFor="let feature of features;let i = index">
-                        <div *ngIf="i%2==0" class="row feature-row">
-                            <div class="col-12 col-md-6 col-lg-5 d-flex align-items-center">
-                                <div class="feature-text-container">
-                                    <h2>{{feature.title}}</h2>
-                                    <p [innerHTML]="feature.detail"></p>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6 offset-lg-1 offset-md-0 position-relative">
-                                <img [alt]="feature.title" [src]="feature.img"
-                                    class="feature-image-right feature-image-charts position-relative" />
-                            </div>
-                        </div>
-                        <div *ngIf="i%2==1" class="row feature-row">
-                            <div class="col-12 col-md-6 col-lg-6 order-2 order-md-1">
-                                <img [alt]="feature.title" [src]="feature.img"
-                                    class="feature-image-left feature-image-charts" />
-                            </div>
-                            <div
-                                class="col-12 col-md-6 offset-md-0 col-lg-5 offset-lg-1 d-flex align-items-center order-1 order-md-2">
-                                <div class="feature-text-container">
-                                    <h2>{{feature.title}}</h2>
-                                    <p [innerHTML]="feature.detail"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
+                 
                     <section id="clients" class="section-bg">
                         <p style="color: rgb(23, 78, 151);"> خدمة التسوق و الشحن من جميع المواقع العالمية</p>
                         <br>
@@ -407,31 +328,7 @@
                 </div>
             </div>
 
-            <!-- <div class="section background">
-                <div class="container" id="layouts">
-                    <div class="row">
-                        <div class="col-12 offset-0 col-lg-8 offset-lg-2 text-center">
-                            <h1>Structures & Layouts</h1>
-                            <p>
-                                We did our best to create layouts for various needs that developers might have and best
-                                experience
-                                for users.
-                                <br>
-                                They are clean and slick. They function well and look good at the same time.
-
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="row pt-5">
-                        <div class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 mb-5" *ngFor="let l of layouts">
-                            <img class="img-fluid border-radius depth-2 mb-3 semi-rounded" [src]="l.img">
-                            <h4 class="text-center">{{l.title}}</h4>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-
+        
 
 
             <div class="section background">
@@ -560,40 +457,8 @@
 
                 </div>
             </main>
-            <!-- <div class="section mb-0">
-                <div class="container" id="themes">
-                    <div class="row mb-5">
-                        <div class="col-12 offset-0 col-lg-8 offset-lg-2 text-center">
-                            <h1>Themes</h1>
-                            <p>
-                                We carefully choosed colors and created 10 different themes with dark and light
-                                versions. You may also
-                                create your own themes easily since all the theme related styling is managed by Sass
-                                variables.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row mb-5" *ngFor="let t of themes">
-                        <div class="col-12 text-center mb-3">
-                            <h4 class="text-center">{{t.title}}</h4>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4 offset-lg-2 mb-3">
-                            <div class="depth-2 color-container">
-                                <div *ngFor="let align of ['left','center','right'],let i = index"
-                                    class="{{t.class + '-light-'+(i+1)+' color-' + align}}"></div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4 mb-3">
-                            <div class="depth-2 color-container">
-                                <div *ngFor="let align of ['left','center','right'],let i = index"
-                                    class="{{t.class + '-dark-'+(i+1)+' color-' + align}}"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-
-            <!-- <div class="section background background-no-bottom mb-0 pb-0">
+       
+            <div class="section background background-no-bottom mb-0 pb-0">
                 <div class="container">
                     <div class="row">
                         <div class="col-12 offset-0 col-lg-8 offset-lg-2 text-center">
@@ -605,7 +470,7 @@
 
                     </div>
                 </div>
-            </div> -->
+            </div>
 
             <div class="section footer mb-0">
                 <div class="container">
