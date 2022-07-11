@@ -440,7 +440,6 @@ const data: IMenuItem[] = [
         icon: 'iconsminds-basket-coins',
         label: 'الأفرع',
         to: `${adminRoot}/setting/Branch`,
-        permission: []
       },
     ],
   },
