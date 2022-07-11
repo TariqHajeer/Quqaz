@@ -9,4 +9,5 @@ export class UserLogin {
   policy: any;
   haveTreasury: boolean;
   branches: NameAndIdDto[];
+  branche: NameAndIdDto;
 }

@@ -11,9 +11,7 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { AuthService } from '../shared/auth.service';
-import {
-  tap,
-} from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import {
   throwError as observableThrowError,
   Observable,
@@ -48,9 +46,10 @@ export class JwtInterceptor implements HttpInterceptor {
           .set('Authorization', 'Bearer ' + localStorage.getItem('token'))
           .set(
             'branche',
-            JSON.stringify(this.authenticationService.getUser().branches[0].id)
+            JSON.stringify(this.authenticationService.getUser().branche.id)
           ),
       });
+
       return next.handle(clonedReq).pipe(
         tap(
           (succ) => {},
