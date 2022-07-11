@@ -71,15 +71,7 @@
             اسم المستخدم مكرر
           </div>
         </div>
-        <div class="col-md-3">
-          <label>الأفرع <span class="text-danger text-one align-bottom mx-1">*</span></label>
-          <ng-select multiple="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" [selectableGroup]="true"
-            [searchable]="true" [(ngModel)]="User.branchesIds" [ngModelOptions]="{standalone: true}"
-            [closeOnSelect]="true">
-            <ng-option *ngFor="let branche of user.branches" [value]="branche.id">{{branche.name}}</ng-option>
-          </ng-select>
-          <div *ngIf="User.branchesIds.length==0 && submitted" class="invalid-tooltip">الأفرع  حقل مطلوب</div>
-        </div>
+       
         <div class="col-md-3">
           <div class="custom-control custom-checkbox mr-sm-2">
             <input
@@ -97,6 +89,15 @@
       </div>
 
       <div class="row w-100 align-items-end mb-3">
+        <div class="col-md-4">
+          <label>الأفرع <span class="text-danger text-one align-bottom mx-1">*</span></label>
+          <ng-select multiple="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" [selectableGroup]="true"
+            [searchable]="true" [(ngModel)]="User.branchesIds" [ngModelOptions]="{standalone: true}"
+            [closeOnSelect]="true">
+            <ng-option *ngFor="let branche of user.branches" [value]="branche.id">{{branche.name}}</ng-option>
+          </ng-select>
+          <div *ngIf="User.branchesIds.length==0 && submitted" class="invalid-tooltip">الأفرع  حقل مطلوب</div>
+        </div>
         <div class="col-md-3" *ngIf="!User.canWorkAsAgent">
           <label
             >تاريخ التوظيف<span class="text-danger text-one align-bottom mx-1"
@@ -120,7 +121,7 @@
             تاريخ التوظيف حقل مطلوب
           </div>
         </div>
-        <div class="col-md-3" *ngIf="!User.canWorkAsAgent">
+        <div class="col-md-5" *ngIf="!User.canWorkAsAgent">
           <label>العنوان</label>
           <input
             type="text"
@@ -130,7 +131,7 @@
           />
         </div>
 
-        <div class="col-md-5" *ngIf="!User.canWorkAsAgent">
+        <div class="col-md-12" *ngIf="!User.canWorkAsAgent">
           <label>الخبرة</label>
           <input
             type="text"
@@ -185,7 +186,7 @@
         </div>
       </div>
       <div class="row w-100 align-items-end mb-3">
-        <div class="col-md-11">
+        <div class="col-md-12">
           <label>ملاحظات</label>
           <input
             type="text"
