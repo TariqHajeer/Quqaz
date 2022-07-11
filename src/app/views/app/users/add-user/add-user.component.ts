@@ -8,7 +8,6 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
-import { from } from 'rxjs';
 import { CustomService } from 'src/app/services/custom.service';
 import { GroupService } from 'src/app/services/group.service';
 import { UserService } from 'src/app/services/user.service';
@@ -83,9 +82,9 @@ export class AddUserComponent implements OnInit, OnChanges {
       this.checkPassword = false;
     }
   }
-  addOrEditUser() {   
+  addOrEditUser() {
     if (
-      this.RecipientPhoneslengthEdit != null  ||
+      this.RecipientPhoneslengthEdit != null ||
       this.RecipientPhoneslength != null
     )
       return;
@@ -122,9 +121,6 @@ export class AddUserComponent implements OnInit, OnChanges {
     }
     this.CreateUser.Salary = this.CreateUser.Salary * 1;
     this.spinner.show();
-    // this.CreateUser.Salary =0;
-    //this.CreateUser.HireDate =
-    console.log(this.CreateUser);
     this.UserService.Creat(this.CreateUser).subscribe(
       (res) => {
         this.spinner.hide();

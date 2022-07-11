@@ -127,7 +127,6 @@
         <ng-option *ngFor="let branche of user.branches" [value]="branche.id">{{branche.name}}</ng-option>
       </ng-select>
       <div *ngIf="CreateUser.branchesIds.length==0 && submitted" class="invalid-tooltip">الأفرع  حقل مطلوب</div>
-
     </div>
   </div>
   <div
