@@ -24,10 +24,11 @@ import { MatTableModule } from '@angular/material/table';
 import { DatePickerModule, DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { NgxPrintModule } from 'ngx-print';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { BranchComponent } from './branch/branch.component';
 
 
 @NgModule({
-  declarations: [ CitiesComponent, ImportsTypesComponent, ExportsTypesComponent, ShipmentsTypesComponent, RegionComponent, GroupsComponent, MainCityComponent, PointSettingComponent],
+  declarations: [ CitiesComponent, ImportsTypesComponent, ExportsTypesComponent, ShipmentsTypesComponent, RegionComponent, GroupsComponent, MainCityComponent, PointSettingComponent, BranchComponent],
   imports: [
     CommonModule,
     SettingRoutingModule,

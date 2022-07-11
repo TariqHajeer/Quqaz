@@ -436,6 +436,12 @@ const data: IMenuItem[] = [
         to: `${adminRoot}/payment`,
         permission: [UserPermission.ShowIncome],
       },
+      {
+        icon: 'iconsminds-basket-coins',
+        label: 'الأفرع',
+        to: `${adminRoot}/setting/Branch`,
+        permission: []
+      },
     ],
   },
 ];
