@@ -2,7 +2,6 @@ import { Injectable, Injector } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
-  HttpEvent,
   HttpInterceptor,
   HttpSentEvent,
   HttpHeaderResponse,
@@ -13,20 +12,13 @@ import {
 } from '@angular/common/http';
 import { AuthService } from '../shared/auth.service';
 import {
-  catchError,
-  filter,
-  take,
-  switchMap,
-  finalize,
   tap,
 } from 'rxjs/operators';
 import {
   throwError as observableThrowError,
   Observable,
-  BehaviorSubject,
   throwError,
 } from 'rxjs';
-import { UserLogin } from '../Models/userlogin.model';
 import { Router } from '@angular/router';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 
@@ -132,36 +124,6 @@ export class JwtInterceptor implements HttpInterceptor {
       return next.handle(req.clone());
     }
   }
-  // ExpiryTime() {
-  //   var user = this.authenticationService.authenticatedUser
-  //   if (user == null || (user.expiry && (new Date().getTime() - user.expiry > 7 * 60 * 60 * 1000))) {
-  //     localStorage.removeItem('kokazUser')
-  //     localStorage.removeItem('token')
-  //     return this.logoutUser();
-  //   }
-  // }
-  addToken(req: HttpRequest<any>, token: any): HttpRequest<any> {
-    if (token != null) {
-      return req.clone({ setHeaders: { Authorization: 'Bearer ' + token } });
-    } else {
-      this.authenticationService.signOut();
-      return req.clone();
-    }
-  }
-
-  handle400Error(error) {
-    if (
-      error &&
-      error.status === 400 &&
-      error.error &&
-      error.error.error === 'invalid_grant'
-    ) {
-      // If we get a 400 and the error message is 'invalid_grant', the token is no longer valid so logout.
-      //  return this.logoutUser();
-    }
-    return this.generalErrorHandling(error);
-  }
-
   logoutUser(error) {
     // Route to the login page (implementation up to you)
     const authService = this.injector.get(AuthService);
