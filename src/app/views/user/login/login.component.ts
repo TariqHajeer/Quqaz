@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/auth.service';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { GroupService } from 'src/app/services/group.service';
+import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -42,6 +43,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('user', 'employee');
           this.user = response as UserLogin;
           this.user.expiry = new Date().getTime();
+          this.user.branche = new NameAndIdDto();
           this.user.branche = this.user.branches[0];
           if (this.user.policy == 'Employee')
             this.router.navigate(['/app/HomePage']);

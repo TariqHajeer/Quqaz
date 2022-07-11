@@ -8,6 +8,6 @@ export class UserLogin {
   expiry: any;
   policy: any;
   haveTreasury: boolean;
-  branches: NameAndIdDto[];
+  branches: NameAndIdDto[]=[];
   branche: NameAndIdDto;
 }
