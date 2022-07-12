@@ -119,7 +119,7 @@
         تأكيد كلمة السر حقل مطلوب
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4" *ngIf="!CreateUser.CanWorkAsAgent">
       <label>الأفرع <span class="text-danger text-one align-bottom mx-1">*</span></label>
       <ng-select multiple="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" [selectableGroup]="true"
         [searchable]="true" [(ngModel)]="CreateUser.branchesIds" [ngModelOptions]="{standalone: true}"

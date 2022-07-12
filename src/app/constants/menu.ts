@@ -437,7 +437,7 @@ const data: IMenuItem[] = [
         permission: [UserPermission.ShowIncome],
       },
       {
-        icon: 'iconsminds-basket-coins',
+        icon: 'simple-icon-grid',
         label: 'الأفرع',
         to: `${adminRoot}/setting/Branch`,
       },
