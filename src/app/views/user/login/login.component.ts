@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit {
           this.user = response as UserLogin;
           this.user.expiry = new Date().getTime();
           this.user.branche = new NameAndIdDto();
+          if(this.user.branches)
           this.user.branche = this.user.branches[0];
           if (this.user.policy == 'Employee')
             this.router.navigate(['/app/HomePage']);

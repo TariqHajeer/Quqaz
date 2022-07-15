@@ -86,7 +86,7 @@
 
       <!-- --------------branches-------------->
       <div class="position-relative d-none d-sm-inline-block">
-        <div dropdown *ngIf="user.branches.length > 1">
+        <div dropdown *ngIf="user.branches && user.branches.length > 1">
           {{ user.branche.name }}
           <button
             dropdownToggle
@@ -157,7 +157,7 @@
           </div>
         </div>
       </div> -->
-   
+
       <!-- ------------FullScreen------------- -->
       <!-- <button
         class="header-icon btn btn-empty d-none d-sm-inline-block"
