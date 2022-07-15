@@ -60,14 +60,10 @@ export class CreateMulitpleOrderComponent implements OnInit {
   filter: OrderFilter
   CountryId
   AgentId
-  //tempPhone: string;
-  // EdittempPhone: string
-  //selectedOrder: any;
   cityapi = "Country"
   regionapi = "Region"
   ordertypeapi = "OrderType";
   Orders: any[] = []
-  //CanEdit: boolean[] = []
   @ViewChild('code') codeElement: ElementRef;
 
   ngOnInit(): void {
@@ -101,11 +97,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
       this.GetAgents = res
-      console.log(res)
       this.Agents = this.GetAgents.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.Order.CountryId).length>0 )
-      // if(this.Agents.length!=0)
-      // this.Order.AgentId = this.Agents[0].id
-      // else this.Order.AgentId=null
 
     })
   }
@@ -113,17 +105,12 @@ export class CreateMulitpleOrderComponent implements OnInit {
   GetClient() {
     this.clientService.getClients().subscribe(res => {
       this.clients = res
-      // this.Order.ClientId = res[0].id
     })
   }
   Getcities() {
     this.customerService.getAll(this.cityapi).subscribe(res => {
       this.cities = res
-      // if( this.cities.length!=0)
-      // this.Order.CountryId =  this.cities[0].id
-
-      // this.changeCountry()
-    })
+    });
   }
 
   changeCountry() {
@@ -280,7 +267,6 @@ export class CreateMulitpleOrderComponent implements OnInit {
         return
     }
     if (this.Orders == []) {
-      //this.submitedSave=true
       return
     }
     this.Orders.forEach(o => {
