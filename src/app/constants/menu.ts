@@ -49,12 +49,12 @@ const data: IMenuItem[] = [
         to: `${adminRoot}/reports/rejectShipments`,
         permission: [UserPermission.ReceiptOfTheStatusOfTheReturnedShipment],
       },
-      {
-        icon: 'iconsminds-box-close',
-        label: 'نقل الطلبات ',
-        to: `${adminRoot}/order/moveorder`,
-        permission: [UserPermission.AddOrder],
-      },
+      // {
+      //   icon: 'iconsminds-box-close',
+      //   label: 'نقل الطلبات ',
+      //   to: `${adminRoot}/order/moveorder`,
+      //   permission: [UserPermission.AddOrder],
+      // },
       {
         icon: 'iconsminds-box-close',
         label: 'نقل الطلبات الى مندوب آخر',
