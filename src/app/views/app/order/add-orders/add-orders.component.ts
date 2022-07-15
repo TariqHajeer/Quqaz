@@ -35,7 +35,7 @@ export class AddOrdersComponent implements OnInit {
     public spinner: NgxSpinnerService) { }
 
   Order: CreateOrdersFromEmployee
-  submitted = false;
+  submitted:boolean = false;
   orderPlace: NameAndIdDto[] = []
   MoenyPlaced: NameAndIdDto[] = []
   clients: Client[] = []
@@ -50,14 +50,13 @@ export class AddOrdersComponent implements OnInit {
   count
   filter: OrderFilter
   tempPhone: string;
-  //selectedOrder: any;
-  cityapi = "Country"
-  regionapi = "Region"
-  ordertypeapi = "OrderType";
+  cityapi:string = "Country"
+  regionapi:string = "Region"
+  ordertypeapi:string = "OrderType";
 
   EditorderType: OrderType
   EditOrderItem: OrderItem
-  Editcount
+  Editcount: number
   ngOnInit(): void {
     this.Order = new CreateOrdersFromEmployee();
     this.orderType = new OrderType
@@ -113,11 +112,6 @@ export class AddOrdersComponent implements OnInit {
       this.spinner.hide()
     });
 
-  }
-  changeCost(event) {
-    var k;
-    k = event.charCode;  //         k = event.keyCode;  (Both can be used)
-    console.log(k)
   }
   GetorderPlace() {
     this.orderservice.orderPlace().subscribe(res => {
