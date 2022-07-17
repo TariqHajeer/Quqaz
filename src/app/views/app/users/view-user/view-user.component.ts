@@ -3,18 +3,14 @@ import {
   EditSettingsModel,
   GridComponent,
   SaveEventArgs,
-  ToolbarItems,
 } from '@syncfusion/ej2-angular-grids';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
-import { CustomService } from 'src/app/services/custom.service';
 import { User, UserStatics } from 'src/app/Models/user/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { CreateUser } from 'src/app/Models/user/create-user';
 import { Phone } from 'src/app/Models/phone.model';
-import data from 'src/app/constants/menu';
 import { UserPermission } from 'src/app/shared/auth.roles';
-import { UserLogin } from 'src/app/Models/userlogin.model';
 import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
@@ -25,7 +21,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 export class ViewUserComponent implements OnInit {
   constructor(
     public UserService: UserService,
-    private authService:AuthService,
+    private authService: AuthService,
     private notifications: NotificationsService,
     public route: Router
   ) {}
@@ -132,14 +128,8 @@ export class ViewUserComponent implements OnInit {
   userTreasury(id) {
     this.route.navigate(['/app/user/usertreasury', id]);
   }
-  currentUserPermissions: UserLogin = this.authService.getUser();
-  filterPrivlige(data): boolean {
-    if (
-      this.currentUserPermissions.privileges.find(
-        (pr) => pr.sysName == UserPermission.TreasuryManagment
-      ) ||
-      !data
-    )
+  filterPrivlige(): boolean {
+    if (this.authService.hasPermission(UserPermission.TreasuryManagment))
       return true;
     else return false;
   }
