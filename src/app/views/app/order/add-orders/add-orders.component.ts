@@ -81,25 +81,25 @@ export class AddOrdersComponent implements OnInit {
   }
   AddOrder() {
 
-    if (this.tempPhone != '' && this.tempPhone != undefined) {
-      this.Order.RecipientPhones.push(this.tempPhone);
-      this.tempPhone = ''
-    }
+    // if (this.tempPhone != '' && this.tempPhone != undefined) {
+    //   this.Order.RecipientPhones.push(this.tempPhone);
+    //   this.tempPhone = ''
+    // }
 
-    if (this.showMessageCode || this.Order.RecipientPhones.length == 0 ||
-      !this.Order.Cost || !this.Order.Code || !this.Order.ClientId
-      || !this.Order.AgentId || !this.Order.CountryId
-      || !this.Order.OrderplacedId || !this.Order.MoenyPlacedId ||
-      this.RecipientPhoneslengthEdit != null || this.RecipientPhoneslength != null) {
-      this.submitted = true;
-      return
-    } else
-      this.submitted = false;
+    // if (this.showMessageCode || this.Order.RecipientPhones.length == 0 ||
+    //   !this.Order.Cost || !this.Order.Code || !this.Order.ClientId
+    //   || !this.Order.AgentId || !this.Order.CountryId
+    //   || !this.Order.OrderplacedId || !this.Order.MoenyPlacedId ||
+    //   this.RecipientPhoneslengthEdit != null || this.RecipientPhoneslength != null) {
+    //   this.submitted = true;
+    //   return
+    // } else
+    //   this.submitted = false;
 
-    if (isNaN(this.Order.RegionId)) {
-      this.Order.RegionName = this.Order.RegionId.label;
-      this.Order.RegionId = null;
-    }
+    // if (isNaN(this.Order.RegionId)) {
+    //   this.Order.RegionName = this.Order.RegionId.label;
+    //   this.Order.RegionId = null;
+    // }
     this.spinner.show()
     this.Order.DeliveryCost = Number(this.Order.DeliveryCost)
     this.Order.Cost = Number(this.Order.Cost)
