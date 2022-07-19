@@ -46,7 +46,7 @@ export class JwtInterceptor implements HttpInterceptor {
           .set('Authorization', 'Bearer ' + localStorage.getItem('token'))
           .set(
             'branchId',
-            JSON.stringify(this.authenticationService.getUser().branche.id)
+            JSON.stringify(this.authenticationService.getUser().branche?this.authenticationService.getUser().branche.id:null)
           ),
       });
 
