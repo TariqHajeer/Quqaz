@@ -87,15 +87,13 @@ export class JwtInterceptor implements HttpInterceptor {
                   );
                   break;
                 case 409:
-                  {
-                    console.log(error);
-                    
+                  {                    
                     this.notifications.error(
                       'error',
                       error.error.errors,
-                      NotificationType.Success,
+                      NotificationType.Error,
                       {
-                        theClass: 'success',
+                        theClass: 'error',
                         timeOut: 6000,
                         showProgressBar: false,
                       }
@@ -105,10 +103,10 @@ export class JwtInterceptor implements HttpInterceptor {
                 case 500:
                   this.notifications.error(
                     'error',
-                    error.message,
-                    NotificationType.Success,
+                    error.error.errors,
+                    NotificationType.Error,
                     {
-                      theClass: 'success',
+                      theClass: 'error',
                       timeOut: 6000,
                       showProgressBar: false,
                     }
