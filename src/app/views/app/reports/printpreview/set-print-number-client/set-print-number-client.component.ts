@@ -129,7 +129,7 @@ export class SetPrintNumberClientComponent implements OnInit {
     }, err => {
       this.spinner.hide()
       this.showPrintbtn = false
-      this.notifications.create('success', 'رقم الطباعة غير موجود', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.notifications.create('success', err.error.messges?err.error.messges[0]:'حدث خطأ ما يرجى المحاولة مجددا', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 
     })
 
