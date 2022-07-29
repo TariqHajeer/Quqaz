@@ -1,8 +1,4 @@
-import {
-  Component,
-  HostListener,
-  OnInit,
-} from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { UserLogin } from 'src/app/Models/userlogin.model';
@@ -20,6 +16,7 @@ import { PointSetting } from 'src/app/Models/pointSettings/point-setting.model';
 import { Client } from '../../../client/client.model';
 import { environment } from 'src/environments/environment.prod';
 import { AuthService } from 'src/app/shared/auth.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
@@ -32,7 +29,8 @@ export class ClientComponent implements OnInit {
     public sanitizer: DomSanitizer,
     private spinner: NgxSpinnerService,
     private recepitservce: ReciptService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
   // 'موقع المبلغ', 'حالة الشحنة '
   heads = [
@@ -64,14 +62,12 @@ export class ClientComponent implements OnInit {
     this.PrintNumberOrder = new PrintNumberOrder();
     this.client.points = [];
     this.reloadPage = JSON.parse(localStorage.getItem('reloadPage'));
-    console.log(this.reloadPage);
     if (this.reloadPage) {
       this.showPrintbtn = true;
       this.printnumber = JSON.parse(localStorage.getItem('reloadPrintNumber'));
     }
     this.orders = JSON.parse(localStorage.getItem('printordersclient'));
     this.orders = this.orders.sort((a, b) => a.code - b.code);
-    // console.log(this.orders)
     this.client = JSON.parse(localStorage.getItem('printclient'));
     this.orderplaced = JSON.parse(
       localStorage.getItem('printclientorderplaced')
@@ -79,12 +75,7 @@ export class ClientComponent implements OnInit {
     this.reciptClient();
     this.sumCost();
     this.points = JSON.parse(localStorage.getItem('point'));
-    // console.log(this.points)
     if (this.points) this.pointid = this.points.id;
-    //  this.getPrintnumber()
-
-    // else
-    // this.router.navigate(['/app/reports/Shipmentsnotbeendelivered'])
   }
   deliveryCostCount;
   sumCost() {
@@ -96,36 +87,6 @@ export class ClientComponent implements OnInit {
         this.count += o.cost;
         this.deliveryCostCount += o.deliveryCost;
         this.clientCalc += o.payForClient;
-        // if (!o.isClientDiliverdMoney) {
-        //   if (o.orderplaced.id == OrderplacedEnum.CompletelyReturned) {
-        //     this.clientCalc += 0
-        //     return 0;
-        //   }
-        //   else if (o.orderplaced.id == OrderplacedEnum.Unacceptable) {
-        //     this.clientCalc += o.deliveryCost
-        //     return o.deliveryCost;
-        //   }
-        //   this.clientCalc += o.cost - o.deliveryCost
-        //   return o.cost - o.deliveryCost;
-
-        // }
-        // else {
-        //   //مرتجع كلي
-        //   if (o.orderplaced.id == OrderplacedEnum.CompletelyReturned) {
-        //     this.clientCalc += o.deliveryCost - o.cost
-        //     return o.deliveryCost - o.cost;
-        //   }
-        //   //مرفوض
-        //   else if (o.orderplaced.id == OrderplacedEnum.Unacceptable) {
-        //     this.clientCalc += (-o.cost)
-        //     return (-o.cost);
-        //   }
-        //   //مرتجع جزئي
-        //   else if (o.orderplaced.id == OrderplacedEnum.PartialReturned) {
-        //     this.clientCalc += o.cost - o.oldCost;
-        //     return o.cost - o.oldCost;
-        //   }
-        // }
       });
 
     return this.count;
@@ -162,6 +123,11 @@ export class ClientComponent implements OnInit {
           this.showPrintbtn = true;
           this.spinner.hide();
           this.printnumber = res.printNumber;
+          this.router.navigate(['/app/reports/clientprintnumber/', this.printnumber]);
+          localStorage.removeItem('reloadPage');
+          localStorage.removeItem('printordersclient');
+          localStorage.removeItem('printclient');
+          localStorage.removeItem('printclientorderplaced');
         },
         (err) => {
           this.spinner.hide();
@@ -208,32 +174,9 @@ export class ClientComponent implements OnInit {
     newWin?.document.close();
     setTimeout(function () {
       newWin?.close();
-      // location.reload();
     }, 1000);
   }
   clientCalc = 0;
-  // payForCleint(element): number {
-
-  //   if (!element.isClientDiliverdMoney) {
-  //     if (element.orderplaced.id == 5)
-  //       return 0;
-  //     return element.cost - element.deliveryCost;
-
-  //   }
-  //   else {
-
-  //     //مرتجع كلي
-  //     if (element.orderplaced.id == 5)
-  //       return element.deliveryCost - element.oldCost;
-  //     //مرفوض
-  //     else if (element.orderplaced.id == 7)
-  //       return (-element.oldCost);
-  //     //مرتجع جزئي
-  //     else if (element.orderplaced.id == 6)
-  //       return element.cost - element.oldCost;
-  //   }
-
-  // }
   reportstotal;
 
   reciptClient() {
