@@ -55,6 +55,8 @@ export class OrderService {
       params = params.append('AgentPrintEndDate', filter.AgentPrintEndDate);
     if (filter.AgentPrintNumber != undefined || filter.AgentPrintNumber != null)
       params = params.append('AgentPrintNumber', filter.AgentPrintNumber);
+      if (filter.ClientPrintNumber != undefined || filter.ClientPrintNumber != null)
+      params = params.append('ClientPrintNumber', filter.ClientPrintNumber);
     if (paging.RowCount != undefined || paging.RowCount != null)
       params = params.append('RowCount', paging.RowCount);
 
