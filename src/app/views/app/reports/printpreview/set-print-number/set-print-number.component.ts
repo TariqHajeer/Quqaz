@@ -153,4 +153,65 @@ export class SetPrintNumberComponent implements OnInit {
       // location.reload();
     }, 1000);
   }
+  itemMap: {
+    'ترقيم': any;
+    'كود': any;
+    'الإجمالي': any;
+    'التاريخ': any;
+    'المحافظة ': any;
+    'المنطقة / العنوان': any;
+    'الهاتف': any;
+    'اسم العميل': any;
+    'ملاحظات العميل': any;
+    'مـلاحظـــــات': any;
+  };
+  renameHeads(array: any[], heads) {
+    let newArray = [];
+    this.itemMap = {
+      'ترقيم': '',
+      'كود': '',
+      'الإجمالي': '',
+      'التاريخ': '',
+      'المحافظة ': '',
+      'المنطقة / العنوان': '',
+      'اسم العميل': '',
+      'الهاتف': '',
+      'ملاحظات العميل': '',
+      'مـلاحظـــــات': '',
+    };
+    array.forEach((item, index) => {
+      this.itemMap = {
+        'ترقيم': '',
+        'كود': '',
+        'الإجمالي': '',
+        'التاريخ': '',
+        'المحافظة ': '',
+        'المنطقة / العنوان': '',
+        'اسم العميل': '',
+        'الهاتف': '',
+        'ملاحظات العميل': '',
+        'مـلاحظـــــات': '',
+      };
+      this.itemMap[heads[0]] = index;
+      this.itemMap[heads[1]] = item.code;
+      this.itemMap[heads[2]] = item.total;
+      this.itemMap[heads[3]] = item.date;
+      this.itemMap[heads[4]] = item.country;
+      this.itemMap[heads[5]] = item.address;
+      this.itemMap[heads[6]] = item.phone;
+      this.itemMap[heads[7]] = item.clientName;
+      this.itemMap[heads[8]] = item.clientNote;
+      this.itemMap[heads[9]] = item.note;
+      newArray.push(this.itemMap);
+    });
+    console.log(newArray);
+
+    return newArray;
+  }
+  exportToExcel() {
+    this.convertToExcelService.exportAsExcelFile(
+      this.renameHeads(this.orders, this.heads),
+      'agent-print-orders'
+    );
+  }
 }
