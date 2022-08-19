@@ -27,7 +27,7 @@ export class ConvertToExcelService {
     const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
     saveAs.saveAs(
       data,
-      fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
+      fileName + EXCEL_EXTENSION
     );
   }
 }
