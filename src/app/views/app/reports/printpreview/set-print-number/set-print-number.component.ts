@@ -18,6 +18,7 @@ import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment.prod';
 import { DateService } from 'src/app/services/date.service';
 import { ConvertToExcelService } from 'src/app/services/convert-to-excel.service';
+import { formatDate } from '@angular/common';
 @Component({
   selector: 'app-set-print-number',
   templateUrl: './set-print-number.component.html',
@@ -192,12 +193,13 @@ export class SetPrintNumberComponent implements OnInit {
         'ملاحظات العميل': '',
         'مـلاحظـــــات': '',
       };
-      this.itemMap[heads[0]] = index;
+      this.itemMap[heads[0]] = index+1;
       this.itemMap[heads[1]] = item.code;
       this.itemMap[heads[2]] = item.total;
-      this.itemMap[heads[3]] = item.date;
+      this.itemMap[heads[3]] = formatDate(item.date ,  'yyyy-MM-dd', 'en-US');
       this.itemMap[heads[4]] = item.country;
-      this.itemMap[heads[5]] = item.address;
+      this.itemMap[heads[5]] = (item.region ? item.region : " - ")+
+      " / "+(item.address ? item.address : " - ");
       this.itemMap[heads[6]] = item.phone;
       this.itemMap[heads[7]] = item.clientName;
       this.itemMap[heads[8]] = item.clientNote;
