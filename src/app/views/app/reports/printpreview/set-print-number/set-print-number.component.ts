@@ -196,7 +196,7 @@ export class SetPrintNumberComponent implements OnInit {
       this.itemMap[heads[0]] = index+1;
       this.itemMap[heads[1]] = item.code;
       this.itemMap[heads[2]] = item.total;
-      this.itemMap[heads[3]] = formatDate(item.date ,  'yyyy-MM-dd', 'en-US');
+      this.itemMap[heads[3]] =item.date? formatDate(item.date ,  'yyyy-MM-dd', 'en-US'):'';
       this.itemMap[heads[4]] = item.country;
       this.itemMap[heads[5]] = (item.region ? item.region : " - ")+
       " / "+(item.address ? item.address : " - ");
