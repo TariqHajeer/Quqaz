@@ -211,7 +211,7 @@ export class SetPrintNumberComponent implements OnInit {
   exportToExcel() {
     this.convertToExcelService.exportAsExcelFile(
       this.renameHeads(this.orders, this.heads),
-      'agent-print-orders'
+      ' طباعة العميل برقم' + this.printnumber
     );
   }
 }
