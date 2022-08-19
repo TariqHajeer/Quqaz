@@ -204,8 +204,6 @@ export class SetPrintNumberComponent implements OnInit {
       this.itemMap[heads[9]] = item.note;
       newArray.push(this.itemMap);
     });
-    console.log(newArray);
-
     return newArray;
   }
   exportToExcel() {
