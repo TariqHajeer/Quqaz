@@ -34,7 +34,7 @@ export class SetPrintNumberComponent implements OnInit {
     public getroute: ActivatedRoute,
     public dateService: DateService,
     public convertToExcelService: ConvertToExcelService
-  ) {}
+  ) { }
   heads = [
     'ترقيم',
     'كود',
@@ -80,7 +80,7 @@ export class SetPrintNumberComponent implements OnInit {
     this.spinner.show();
     this.orderservice.GetOrderByAgnetPrintNumber(this.printnumber).subscribe(
       (res) => {
-        
+
         this.spinner.hide();
         this.showPrintbtn = true;
         this.orders = res.orders;
@@ -135,7 +135,7 @@ export class SetPrintNumberComponent implements OnInit {
   print() {
     var divToPrint = document.getElementById('contentToConvert');
     var css =
-        '@page { size: A4 landscape;color-adjust: exact;-webkit-print-color-adjust: exact; }',
+      '@page { size: A4 landscape;color-adjust: exact;-webkit-print-color-adjust: exact; }',
       style = document.createElement('style');
     style.type = 'text/css';
     style.media = 'print';
@@ -145,8 +145,8 @@ export class SetPrintNumberComponent implements OnInit {
     newWin?.document.open();
     newWin?.document.write(
       '<html dir="rtl"><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"><link rel="stylesheet/less" type="text/css" href="app/reports/printpreview/agent/agent.component.less" /></head><body onload="window.print()">' +
-        divToPrint?.innerHTML +
-        '</body></html>'
+      divToPrint?.innerHTML +
+      '</body></html>'
     );
     newWin?.document.close();
     setTimeout(function () {
@@ -166,7 +166,7 @@ export class SetPrintNumberComponent implements OnInit {
     'ملاحظات العميل': any;
     'مـلاحظـــــات': any;
   };
-  renameHeads(array: any[], heads) {
+  renameHeads(array: any[], heads, printNumber): any[] {
     let newArray = [];
     this.itemMap = {
       'ترقيم': '',
@@ -193,25 +193,31 @@ export class SetPrintNumberComponent implements OnInit {
         'ملاحظات العميل': '',
         'مـلاحظـــــات': '',
       };
-      this.itemMap[heads[0]] = index+1;
+      this.itemMap[heads[0]] = index + 1;
       this.itemMap[heads[1]] = item.code;
       this.itemMap[heads[2]] = item.total;
-      this.itemMap[heads[3]] =item.date? formatDate(item.date ,  'yyyy-MM-dd', 'en-US'):'';
+      this.itemMap[heads[3]] = item.date ? formatDate(item.date, 'yyyy-MM-dd', 'en-US') : '';
       this.itemMap[heads[4]] = item.country;
-      this.itemMap[heads[5]] = (item.region ? item.region : " - ")+
-      " / "+(item.address ? item.address : " - ");
+      this.itemMap[heads[5]] = (item.region ? item.region : " - ") +
+        " / " + (item.address ? item.address : " - ");
       this.itemMap[heads[6]] = item.phone;
       this.itemMap[heads[7]] = item.clientName;
       this.itemMap[heads[8]] = item.clientNote;
       this.itemMap[heads[9]] = item.note;
-      this.itemMap[ 'رقم الطباعة']=this.printnumber
       newArray.push(this.itemMap);
     });
+    this.itemMap[heads[0]] = "رقم الطباعة";
+    this.itemMap[heads[1]] = printNumber;
+    for (var i = 2; i < heads.length; i++) {
+      this.itemMap[heads[i]] = "";
+    }
     return newArray;
   }
   exportToExcel() {
+
+    var excelstructure = this.renameHeads(this.orders, this.heads, this.printnumber);
     this.convertToExcelService.exportAsExcelFile(
-      this.renameHeads(this.orders, this.heads),
+      excelstructure,
       ' طباعة المندوب برقم' + this.printnumber
     );
   }
