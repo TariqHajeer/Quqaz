@@ -80,7 +80,7 @@ export class SetPrintNumberComponent implements OnInit {
     this.spinner.show();
     this.orderservice.GetOrderByAgnetPrintNumber(this.printnumber).subscribe(
       (res) => {
-        console.log(res);
+        
         this.spinner.hide();
         this.showPrintbtn = true;
         this.orders = res.orders;
@@ -204,6 +204,7 @@ export class SetPrintNumberComponent implements OnInit {
       this.itemMap[heads[7]] = item.clientName;
       this.itemMap[heads[8]] = item.clientNote;
       this.itemMap[heads[9]] = item.note;
+      this.itemMap[ 'رقم الطباعة']=this.printnumber
       newArray.push(this.itemMap);
     });
     return newArray;
