@@ -37,7 +37,7 @@
               <div>
                     <span class="btn btn-xs badge-primary mx-1" (click)="onEditClicked(data.id)">{{'forms.edit' | translate}}</span>
                     <span class="btn btn-xs badge-primary mx-1"*ngIf="data.canWorkAsAgent" (click)="showAgent(data.id)">تفاصيل</span>
-                    <span class="btn btn-xs badge-primary mx-1" *ngIf="filterPrivlige(!data.canWorkAsAgent )" (click)="userTreasury(data.id)">صندوق</span>
+                    <span class="btn btn-xs badge-primary mx-1" *ngIf="filterPrivlige(data.canWorkAsAgent)" (click)="userTreasury(data.id)">صندوق</span>
             </div>
           </ng-template>
           </e-column>

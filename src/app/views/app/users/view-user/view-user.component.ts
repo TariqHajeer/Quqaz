@@ -25,10 +25,10 @@ import { AuthService } from 'src/app/shared/auth.service';
 export class ViewUserComponent implements OnInit {
   constructor(
     public UserService: UserService,
-    private authService:AuthService,
+    private authService: AuthService,
     private notifications: NotificationsService,
     public route: Router
-  ) {}
+  ) { }
 
   tempRegion: any;
   public stTime: any;
@@ -133,14 +133,9 @@ export class ViewUserComponent implements OnInit {
     this.route.navigate(['/app/user/usertreasury', id]);
   }
   currentUserPermissions: UserLogin = this.authService.getUser();
-  filterPrivlige(data): boolean {
-    if (
-      this.currentUserPermissions.privileges.find(
-        (pr) => pr.sysName == UserPermission.TreasuryManagment
-      ) ||
-      !data
-    )
-      return true;
-    else return false;
-  }
+  filterPrivlige(canWorkAsAgent): boolean {
+    if(canWorkAsAgent)
+    return false;
+    return this.currentUserPermissions.privileges.some(pr => pr.sysName == UserPermission.TreasuryManagment);
+  } 
 }
