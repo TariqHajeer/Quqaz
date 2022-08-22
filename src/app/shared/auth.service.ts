@@ -85,8 +85,9 @@ export class AuthService implements OnDestroy {
   hasPermission(permission) {
     if (permission) {
       let permissions = this.getPermission();
-      return permissions.some((per) => per.sysName == permission);
-    } else return false;
+      if (permissions.find((per) => per.sysName == permission)) return true;
+      else return false;
+    }
   }
   private getTokenRemainingTime() {
     const accessToken = this.authenticatedUser;

@@ -117,6 +117,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     this.paging = new Paging();
     this.filtering = new OrderFilter();
     this.order = new OrderClientDontDiliverdMoney();
+    this.showOrderPlaceds();
   }
 
   getClients() {

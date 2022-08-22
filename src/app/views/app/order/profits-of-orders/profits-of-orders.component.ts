@@ -161,17 +161,17 @@ export class ProfitsOfOrdersComponent implements OnInit {
     allfiltering() {
         this.orderservice.GetEarning(this.paging, this.filtering).subscribe(res => {
             this.GetEarning=[]
-            if (res.data && res.data.orders.length == 0)
+            if (res.orders && res.orders.length == 0)
                 this.noDataFound = true
             else this.noDataFound = false
-            this.dataSource = new MatTableDataSource(res.data.orders)
+            this.dataSource = new MatTableDataSource(res.orders)
             this.totalCount = res.total
-            if (res.data.totalEarinig) {
-                this.totalEarinig = res.data.totalEarinig
+            if (res.totalEarinig) {
+                this.totalEarinig = res.totalEarinig
                 this.showcount = true
             }else
             this.showcount=false
-            res.data.orders.forEach(element => {
+            res.orders.forEach(element => {
                 var er=element.deliveryCost-element.agentCost
                 this.GetEarning.push(er)
             });

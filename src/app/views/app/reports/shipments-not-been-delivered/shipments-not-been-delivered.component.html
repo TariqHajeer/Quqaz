@@ -20,7 +20,7 @@
       <section class="example-section">
         <mat-checkbox
           class="example-margin"
-          *ngFor="let orderplaced of showOrderPlaceds()"
+          *ngFor="let orderplaced of orderPlace"
           [(ngModel)]="orderplaced.checked"
           (change)="allFilter()"
           >&nbsp;{{ orderplaced.name }}</mat-checkbox
