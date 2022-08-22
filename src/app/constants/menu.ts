@@ -209,7 +209,6 @@ const data: IMenuItem[] = [
         label: '   ادارةالصناديق ',
         to: `${adminRoot}/reports/showtreasury`,
         permission: [
-          UserPermission.ShowReports,
           UserPermission.TreasuryManagment,
         ],
         subs: [
@@ -218,7 +217,6 @@ const data: IMenuItem[] = [
             label: '  الصناديق ',
             to: `${adminRoot}/reports/showtreasury`,
             permission: [
-              UserPermission.ShowReports,
               UserPermission.TreasuryManagment,
             ],
           },
@@ -227,7 +225,6 @@ const data: IMenuItem[] = [
             label: 'الأخذ والاعطاء',
             to: `${adminRoot}/reports/cashMovment`,
             permission: [
-              UserPermission.ShowReports,
               UserPermission.TreasuryManagment,
             ],
           },
