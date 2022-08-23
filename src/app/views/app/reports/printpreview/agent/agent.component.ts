@@ -110,7 +110,7 @@ export class AgentComponent implements OnInit {
           { theClass: 'success', timeOut: 6000, showProgressBar: false }
         );
         //this.orders=[]
-        this.printnumber = res.data;
+        this.printnumber = res;
         this.showPrintbtn = true;
         this.spinner.hide();
 
