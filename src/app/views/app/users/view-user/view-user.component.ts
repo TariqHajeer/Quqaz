@@ -24,7 +24,7 @@ export class ViewUserComponent implements OnInit {
     private authService: AuthService,
     private notifications: NotificationsService,
     public route: Router
-  ) {}
+  ) { }
 
   tempRegion: any;
   public stTime: any;
@@ -128,9 +128,10 @@ export class ViewUserComponent implements OnInit {
   userTreasury(id) {
     this.route.navigate(['/app/user/usertreasury', id]);
   }
-  filterPrivlige(): boolean {
-    if (this.authService.hasPermission(UserPermission.TreasuryManagment))
-      return true;
-    else return false;
-  }
+  currentUserPermissions: UserLogin = this.authService.getUser();
+  filterPrivlige(canWorkAsAgent): boolean {
+    if(canWorkAsAgent)
+    return false;
+    return this.currentUserPermissions.privileges.some(pr => pr.sysName == UserPermission.TreasuryManagment);
+  } 
 }
