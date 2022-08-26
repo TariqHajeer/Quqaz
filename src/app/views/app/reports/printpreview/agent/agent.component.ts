@@ -81,15 +81,14 @@ export class AgentComponent implements OnInit {
       });
     return this.count;
   }
-  showPrintbtn = false;
-  showPrintnumber = false;
+  showPrintbtn: boolean = false;
+  showPrintnumber: boolean = false;
   onAWay() {
-    if (this.showPrintnumber == true) return;
+    if (this.printnumber) this.showPrintnumber = true;
+    else this.showPrintnumber = false;
     if (this.orderplaced.id == OrderplacedEnum.Store) {
-      this.showPrintnumber = false;
       this.showPrintbtn = false;
     } else {
-      this.showPrintnumber = true;
       this.showPrintbtn = true;
     }
   }
@@ -99,7 +98,6 @@ export class AgentComponent implements OnInit {
     this.spinner.show();
     this.dateWithIds = {
       Ids: this.orders.map((o) => o.id),
-      // Date: moment().format()
     };
     this.orderservice.MakeOrderInWay(this.dateWithIds.Ids).subscribe(
       (res) => {
@@ -109,12 +107,11 @@ export class AgentComponent implements OnInit {
           NotificationType.Success,
           { theClass: 'success', timeOut: 6000, showProgressBar: false }
         );
-        //this.orders=[]
         this.printnumber = res.data;
+        if (this.printnumber) this.showPrintnumber = true;
+        else this.showPrintnumber = false;
         this.showPrintbtn = true;
         this.spinner.hide();
-
-        //  this.setPrintnumber()
       },
       (err) => {
         this.spinner.hide();
