@@ -76,7 +76,7 @@ export class AddOrdersComponent implements OnInit {
     this.Getcities();
     this.GetClient();
     this.ActiveAgent();
-    this.getOrderTypes();
+    // this.getOrderTypes();
   }
   AddOrder() {
     if (this.tempPhone != '' && this.tempPhone != undefined) {
