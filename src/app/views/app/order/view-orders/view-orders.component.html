@@ -94,6 +94,18 @@
         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
           [(ngModel)]="filtering.ClientPrintNumber"(keyup.enter)="allFilter()">
       </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label>من تاريخ</label>
+        <input type="date" class="form-control" [(ngModel)]="filtering.createdDateRangeFilter.start"(change)="allFilter()">
+      </div>
+      <div class="col-md-4">
+        <label>إلى تاريخ</label>
+        <input type="date" class="form-control" [(ngModel)]="filtering.createdDateRangeFilter.end" (change)="allFilter()">
+      </div>
+    </div>
+    <div class="row">
       <div class="col-md-8">
         <label> ملاحظات</label>
         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Note"

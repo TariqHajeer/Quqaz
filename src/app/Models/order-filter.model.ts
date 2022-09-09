@@ -1,4 +1,8 @@
+import {DateRangeFilter} from '../Models/common/DateRangeFilter';
 export class OrderFilter {
+      constructor(){
+            this.createdDateRangeFilter= new DateRangeFilter();
+      }
       Code 
       Phone 
       CountryId 
@@ -12,6 +16,7 @@ export class OrderFilter {
       AgentPrintNumber
       ClientPrintNumber
       CreatedDate
+      createdDateRangeFilter:DateRangeFilter
       Note
       AgentPrintStartDate
       AgentPrintEndDate

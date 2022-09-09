@@ -54,7 +54,7 @@ export class ViewOrdersComponent implements OnInit {
 
   ngOnInit(): void {
     this.paging = new Paging
-    this.filtering = new OrderFilter
+    this.filtering = new OrderFilter()
     this.get()
     this.GetMoenyPlaced()
     this.GetorderPlace()
@@ -133,8 +133,6 @@ export class ViewOrdersComponent implements OnInit {
           element.orderplaced.name = "لديك مبلغ مع العميل"
         }
         else if (element.orderStateId == OrderStateEnum.Finished) {
-        //element.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
-        //  element.orderplaced = this.orderPlace.find(o => o.id == 4)
         }
       });
       this.dataSource = new MatTableDataSource(response.data)
