@@ -94,6 +94,25 @@
         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
           [(ngModel)]="filtering.ClientPrintNumber"(keyup.enter)="allFilter()">
       </div>
+      <div class="col-md-2">
+        <label>بواسطة</label>
+        <ng-select [(ngModel)]="filtering.CreatedBy" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+        (keyup.enter)="allFilter()">
+          <ng-option *ngFor="let user of users" [value]="user">{{user}}</ng-option>
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label>من تاريخ</label>
+        <input type="date" class="form-control" [(ngModel)]="filtering.createdDateRangeFilter.start"(change)="allFilter()">
+      </div>
+      <div class="col-md-4">
+        <label>إلى تاريخ</label>
+        <input type="date" class="form-control" [(ngModel)]="filtering.createdDateRangeFilter.end" (change)="allFilter()">
+      </div>
+    </div>
+    <div class="row">
       <div class="col-md-8">
         <label> ملاحظات</label>
         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Note"
@@ -182,7 +201,7 @@
       <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.address}}</td>
     </ng-container>
     <ng-container matColumnDef="createdBy">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> بواسطه</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> بواسطة</th>
       <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.createdBy}}</td>
     </ng-container>
     <ng-container matColumnDef="date">

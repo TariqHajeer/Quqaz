@@ -35,6 +35,8 @@ export class OrderService {
       params = params.append('MonePlacedId', filter.MonePlacedId);
     if (filter.OrderplacedId != undefined || filter.OrderplacedId != null)
       params = params.append('OrderplacedId', filter.OrderplacedId);
+      if (filter.CreatedBy != undefined || filter.CreatedBy != null)
+      params = params.append('CreatedBy', filter.CreatedBy);
     if (
       filter.IsClientDiliverdMoney != undefined ||
       filter.IsClientDiliverdMoney != null
@@ -62,6 +64,16 @@ export class OrderService {
 
     if (paging.Page != undefined || paging.Page != null)
       params = params.append('Page', paging.Page);
+    if (filter.createdDateRangeFilter.start)
+      params = params.append(
+        'CreatedDateRangeFilter.start',
+        String(filter.createdDateRangeFilter.start)
+      );
+    if (filter.createdDateRangeFilter.end)
+      params = params.append(
+        'CreatedDateRangeFilter.end',
+        String(filter.createdDateRangeFilter.end)
+      );
     return this.http.get<any>(this.controler, { params: params });
   }
   WithoutPaging(filter: OrderFilter) {
@@ -86,6 +98,8 @@ export class OrderService {
       params = params.append('MonePlacedId', filter.MonePlacedId);
     if (filter.OrderplacedId != undefined || filter.OrderplacedId != null)
       params = params.append('OrderplacedId', filter.OrderplacedId);
+      if (filter.CreatedBy != undefined || filter.CreatedBy != null)
+      params = params.append('CreatedBy', filter.CreatedBy);
     if (
       filter.IsClientDiliverdMoney != undefined ||
       filter.IsClientDiliverdMoney != null
@@ -395,16 +409,18 @@ export class OrderService {
   ReceiptOfTheOrderStatu(id) {
     return this.http.get<any>(this.controler + 'ReceiptOfTheOrderStatus/' + id);
   }
-  ReceiptOfTheOrderStatus(paging,code) {
+  ReceiptOfTheOrderStatus(paging, code) {
     let params = new HttpParams();
     if (paging.RowCount != undefined || paging.RowCount != null)
       params = params.append('RowCount', paging.RowCount);
     if (paging.Page != undefined || paging.Page != null)
       params = params.append('Page', paging.Page);
-      if (code)
-      params = params.append('code',code);
+    if (code) params = params.append('code', code);
     return this.http.get<any>(this.controler + 'ReceiptOfTheOrderStatus', {
       params: params,
     });
+  }
+  GetCreatedByNames() {
+    return this.http.get<any>(this.controler + 'GetCreatedByNames');
   }
 }
