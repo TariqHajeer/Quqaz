@@ -94,6 +94,13 @@
         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
           [(ngModel)]="filtering.ClientPrintNumber"(keyup.enter)="allFilter()">
       </div>
+      <div class="col-md-2">
+        <label>بواسطته</label>
+        <ng-select [(ngModel)]="filtering.CreatedBy" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+        (keyup.enter)="allFilter()"[searchFn]="userSearch">
+          <ng-option *ngFor="let user of users" [value]="user">{{user}}</ng-option>
+        </ng-select>
+      </div>
     </div>
     <div class="row">
       <div class="col-md-4">
