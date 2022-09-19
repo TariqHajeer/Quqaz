@@ -95,7 +95,7 @@
           [(ngModel)]="filtering.ClientPrintNumber"(keyup.enter)="allFilter()">
       </div>
       <div class="col-md-2">
-        <label>بواسطته</label>
+        <label>بواسطة</label>
         <ng-select [(ngModel)]="filtering.CreatedBy" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
         (keyup.enter)="allFilter()"[searchFn]="userSearch">
           <ng-option *ngFor="let user of users" [value]="user">{{user}}</ng-option>
@@ -201,7 +201,7 @@
       <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.address}}</td>
     </ng-container>
     <ng-container matColumnDef="createdBy">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> بواسطه</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> بواسطة</th>
       <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.createdBy}}</td>
     </ng-container>
     <ng-container matColumnDef="date">
