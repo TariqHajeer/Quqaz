@@ -97,7 +97,7 @@
       <div class="col-md-2">
         <label>بواسطة</label>
         <ng-select [(ngModel)]="filtering.CreatedBy" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-        (keyup.enter)="allFilter()"[searchFn]="userSearch">
+        (keyup.enter)="allFilter()">
           <ng-option *ngFor="let user of users" [value]="user">{{user}}</ng-option>
         </ng-select>
       </div>

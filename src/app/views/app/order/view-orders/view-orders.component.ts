@@ -178,9 +178,6 @@ export class ViewOrdersComponent implements OnInit {
       this.users = res;
     });
   }
-  userSearch(term: string, item: any) {
-    // console.log(term, item);
-  }
   AddOrder() {
     this.router.navigate(['/app/order/addorder']);
   }
