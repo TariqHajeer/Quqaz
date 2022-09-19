@@ -1,18 +1,24 @@
+import { DateRangeFilter } from '../Models/common/DateRangeFilter';
 export class OrderFilter {
-      Code 
-      Phone 
-      CountryId 
-      RegionId 
-      ClientId 
-      RecipientName 
-      MonePlacedId 
-      OrderplacedId 
-      AgentId
-      IsClientDiliverdMoney
-      AgentPrintNumber
-      ClientPrintNumber
-      CreatedDate
-      Note
-      AgentPrintStartDate
-      AgentPrintEndDate
+  constructor() {
+    this.createdDateRangeFilter = new DateRangeFilter();
+  }
+  Code;
+  Phone;
+  CountryId;
+  RegionId;
+  ClientId;
+  RecipientName;
+  MonePlacedId;
+  OrderplacedId;
+  AgentId;
+  IsClientDiliverdMoney;
+  AgentPrintNumber;
+  ClientPrintNumber;
+  CreatedDate;
+  createdDateRangeFilter: DateRangeFilter;
+  Note;
+  AgentPrintStartDate;
+  AgentPrintEndDate;
+  CreatedBy;
 }
