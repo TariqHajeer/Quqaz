@@ -1,0 +1,118 @@
+import { Component, OnInit } from '@angular/core';
+import { City } from 'src/app/Models/Cities/city.Model';
+import { Resend } from 'src/app/Models/order/resend.model';
+import { Region } from 'src/app/Models/Regions/region.model';
+import { User } from 'src/app/Models/user/user.model';
+import { CustomService } from 'src/app/services/custom.service';
+import { OrderService } from 'src/app/services/order.service';
+import { UserService } from 'src/app/services/user.service';
+
+@Component({
+  selector: 'app-re-send-orders',
+  templateUrl: './re-send-orders.component.html',
+  styleUrls: ['./re-send-orders.component.scss'],
+})
+export class ReSendOrdersComponent implements OnInit {
+  constructor(
+    private customerService: CustomService,
+    private userService: UserService,
+    private orderService: OrderService
+  ) {}
+  orderResend: Resend = new Resend();
+  ordersResend: Resend[] = [];
+  cities: City[] = [];
+  Region: Region[] = [];
+  Agents: User[] = [];
+  cityapi = 'Country';
+  regionapi = 'Region';
+  code: any;
+  showTable: boolean = false;
+  Ordersfilter: any[] = [];
+  ngOnInit(): void {
+    this.getAgent();
+    this.GetRegion();
+    this.Getcities();
+  }
+
+  GetRegion() {
+    this.customerService.getAll(this.regionapi).subscribe((res) => {
+      this.Region = res;
+    });
+  }
+  Getcities() {
+    this.customerService.getAll(this.cityapi).subscribe((res) => {
+      this.cities = res;
+    });
+  }
+  getAgent() {
+    this.userService.ActiveAgent().subscribe((res) => {
+      this.Agents = res;
+    });
+  }
+  getResendOrderByCode() {
+    this.orderService.GetReSendMultiple(this.code).subscribe((res) => {
+      console.log(`res`, res);
+      if (res.length > 1) {
+        this.showTable = true;
+        this.Ordersfilter = res;
+      } else if (res.length == 1) {
+        this.showTable = false;
+        this.add(this.orderResend);
+      } else return;
+    });
+  }
+  add(order) {
+    this.orderResend.AgnetId = order.agent.id;
+    this.orderResend.CountryId = order.country.id;
+    this.orderResend.RegionId = order.region ? order.region.id : null;
+    this.orderResend.DeliveryCost = order.deliveryCost;
+    this.orderResend.Id = order.id;
+    this.orderResend.Countries = [...this.cities];
+    this.orderResend.Agents = [...this.Agents];
+    this.orderResend.Regions = [...this.Region];
+    this.ordersResend.push(this.orderResend);
+    this.cancel(order);
+    this.orderResend = new Resend();
+  }
+  cancel(order) {
+    this.Ordersfilter = this.Ordersfilter.filter((item) => item != order);
+    if (this.Ordersfilter.length == 0) {
+      this.showTable = false;
+    }
+  }
+  changeCountryResend(order) {
+    var city = this.cities.find((c) => c.id == order.CountryId);
+    order.DeliveryCost = city.deliveryCost;
+    order.RegionId = null;
+    order.Regions = [
+      ...this.Region.filter((r) => r.country.id == order.CountryId),
+    ];
+    order.Agents = [
+      ...this.Agents.filter(
+        (a) =>
+          a.countries.map((c) => c.id).filter((co) => co == order.CountryId)
+            .length > 0
+      ),
+    ];
+    if (order.Agents.length == 1) order.AgnetId = order.Agents[0].id;
+    else order.AgnetId = null;
+    if (order.Regions.length == 1) order.RegionId = order.Regions[0].id;
+    else order.RegionId = null;
+  }
+  save() {
+    this.ordersResend.forEach(item=>{
+      item.DeliveryCost=Number( item.DeliveryCost)
+    })
+    if (this.ordersResend.length > 0) {
+      this.orderService
+        .PutReSendMultiple(this.ordersResend)
+        .subscribe((res) => {
+          this.ordersResend=[];
+          this.code=null;
+        });
+    }
+  }
+  cancelOrder(order) {
+    this.ordersResend = this.ordersResend.filter((item) => item != order);
+  }
+}
