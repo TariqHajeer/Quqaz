@@ -53,7 +53,15 @@ export class ReSendOrdersComponent implements OnInit {
   }
   getResendOrderByCode() {
     this.orderService.GetReSendMultiple(this.code).subscribe((res) => {
-      if (res.length < 1) return;
+      if (res.length < 1) {
+        this.notifications.error(
+          'error',
+          'يجب التأكد من كود الشحنة',
+          NotificationType.Error,
+          { theClass: 'error', timeOut: 6000, showProgressBar: false }
+        );
+        return;
+      }
 
       if (res.length > 1) {
         this.showTable = true;
@@ -62,13 +70,6 @@ export class ReSendOrdersComponent implements OnInit {
         this.showTable = false;
         this.add(res[0]);
         this.code = '';
-      }else{
-        this.notifications.error(
-          'error',
-          'يجب التأكد من كود الشحنة',
-          NotificationType.Error,
-          { theClass: 'error', timeOut: 6000, showProgressBar: false }
-        );
       }
     },err=>{
       this.notifications.error(
