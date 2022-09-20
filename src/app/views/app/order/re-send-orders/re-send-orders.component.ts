@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { Resend } from 'src/app/Models/order/resend.model';
 import { Region } from 'src/app/Models/Regions/region.model';
@@ -16,8 +17,9 @@ export class ReSendOrdersComponent implements OnInit {
   constructor(
     private customerService: CustomService,
     private userService: UserService,
-    private orderService: OrderService
-  ) { }
+    private orderService: OrderService,
+    private notifications: NotificationsService
+  ) {}
   orderResend: Resend = new Resend();
   ordersResend: Resend[] = [];
   cities: City[] = [];
@@ -51,31 +53,65 @@ export class ReSendOrdersComponent implements OnInit {
   }
   getResendOrderByCode() {
     this.orderService.GetReSendMultiple(this.code).subscribe((res) => {
-      if (res.length < 1)
-        return;
+      if (res.length < 1) return;
 
       if (res.length > 1) {
         this.showTable = true;
         this.Ordersfilter = res;
-      }
-      else if (res.length == 1) {
+      } else if (res.length == 1) {
         this.showTable = false;
         this.add(res[0]);
-        this.code='';
+        this.code = '';
+      }else if(!res||res.length==0){
+        this.notifications.error(
+          'error',
+          'يجب التأكد من كود الشحنة',
+          NotificationType.Error,
+          { theClass: 'error', timeOut: 6000, showProgressBar: false }
+        );
       }
+    },err=>{
+      this.notifications.error(
+        'error',
+        'حدث خطأ ما يرحى المحاولة لاحقا',
+        NotificationType.Error,
+        { theClass: 'error', timeOut: 6000, showProgressBar: false }
+      );
     });
   }
   add(order) {
-    this.orderResend.code=order.code;
-    this.orderResend.client =order.client;
+    this.orderResend.code = order.code;
+    this.orderResend.client = order.client;
     this.orderResend.AgnetId = order.agent?.id;
     this.orderResend.CountryId = order.country?.id;
     this.orderResend.RegionId = order.region ? order.region.id : null;
     this.orderResend.DeliveryCost = order.deliveryCost;
     this.orderResend.Id = order.id;
     this.orderResend.Countries = [...this.cities];
-    this.orderResend.Agents = [...this.Agents];
-    this.orderResend.Regions = [...this.Region];
+    this.orderResend.Agents = [
+      ...this.Agents.filter(
+        (a) =>
+          a.countries
+            .map((c) => c.id)
+            .filter((co) => co == this.orderResend.CountryId).length > 0
+      ),
+    ];
+    this.orderResend.Regions = [
+      ...this.Region.filter((r) => r.country.id == this.orderResend.CountryId),
+    ];
+    if (
+      this.ordersResend.filter((item) => item.Id == this.orderResend.Id)
+        .length > 0
+    ) {
+      this.notifications.error(
+        'error',
+        'الطلب مضاف مسبقا',
+        NotificationType.Error,
+        { theClass: 'error', timeOut: 6000, showProgressBar: false }
+      );
+      this.cancel(order);
+      return;
+    }
     this.ordersResend.push(this.orderResend);
     this.cancel(order);
     this.orderResend = new Resend();
@@ -84,6 +120,7 @@ export class ReSendOrdersComponent implements OnInit {
     this.Ordersfilter = this.Ordersfilter.filter((item) => item != order);
     if (this.Ordersfilter.length == 0) {
       this.showTable = false;
+      this.code = null;
     }
   }
   changeCountryResend(order) {
@@ -106,15 +143,39 @@ export class ReSendOrdersComponent implements OnInit {
     else order.RegionId = null;
   }
   save() {
-    this.ordersResend.forEach(item => {
-      item.DeliveryCost = Number(item.DeliveryCost)
-    })
+
+    this.ordersResend.forEach((item) => {
+      item.DeliveryCost = Number(item.DeliveryCost);
+    });
+    if(this.ordersResend.filter(item=>!item.AgnetId||!item.CountryId||!item.DeliveryCost).length>0)
+    {
+      this.notifications.error(
+        'error',
+        'يجب التأكد من ملئ جميع الحقول االمطلوبة',
+        NotificationType.Error,
+        { theClass: 'error', timeOut: 6000, showProgressBar: false }
+      );
+      return;
+    }
     if (this.ordersResend.length > 0) {
       this.orderService
         .PutReSendMultiple(this.ordersResend)
         .subscribe((res) => {
+          this.notifications.success(
+            'success',
+            'تمت اعادة ارسال الطلبات بنجاح',
+            NotificationType.Success,
+            { theClass: 'success', timeOut: 6000, showProgressBar: false }
+          );
           this.ordersResend = [];
           this.code = null;
+        },err=>{
+          this.notifications.error(
+            'error',
+            'حدث خطأ ما يرحى المحاولة لاحقا',
+            NotificationType.Error,
+            { theClass: 'error', timeOut: 6000, showProgressBar: false }
+          );
         });
     }
   }

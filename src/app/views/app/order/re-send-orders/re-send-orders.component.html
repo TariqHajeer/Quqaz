@@ -75,10 +75,10 @@
         <thead>
           <th>الكود</th>
           <th>العميل</th>
-          <th>المدينة</th>
+          <th>المدينة <span class="text-danger text-one align-bottom mx-1">*</span></th>
           <th>المنطقة</th>
-          <th>المندوب</th>
-          <th>كلفة التوصيل</th>
+          <th>المندوب <span class="text-danger text-one align-bottom mx-1">*</span></th>
+          <th>كلفة التوصيل <span class="text-danger text-one align-bottom mx-1">*</span></th>
           <th>
             <button class="btn btn-primary" (click)="save()">
                 حفظ
@@ -96,7 +96,7 @@
             <td>
                 <ng-select
                 [(ngModel)]="order.CountryId"
-                (change)="changeCountryResend()"
+                (change)="changeCountryResend(order)"
                 [ngModelOptions]="{ standalone: true }"
                 [clearable]="false"
                 name="Country"
@@ -151,3 +151,4 @@
   </div>
 
 </div>
+<simple-notifications></simple-notifications>
