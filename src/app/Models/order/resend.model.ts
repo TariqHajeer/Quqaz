@@ -4,4 +4,9 @@ export class Resend {
     RegionId
     AgnetId
     DeliveryCost
+    Countries
+    Regions
+    Agents
+    code:string="";
+    client:any;
 }

@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { OrderFilter } from '../Models/order-filter.model';
 import { DateFiter, Paging } from '../Models/paging';
 import { OrderClientDontDiliverdMoney } from '../Models/order/order-client-dont-diliverd-money.model';
+import { Resend } from '../Models/order/resend.model';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +36,7 @@ export class OrderService {
       params = params.append('MonePlacedId', filter.MonePlacedId);
     if (filter.OrderplacedId != undefined || filter.OrderplacedId != null)
       params = params.append('OrderplacedId', filter.OrderplacedId);
-      if (filter.CreatedBy != undefined || filter.CreatedBy != null)
+    if (filter.CreatedBy != undefined || filter.CreatedBy != null)
       params = params.append('CreatedBy', filter.CreatedBy);
     if (
       filter.IsClientDiliverdMoney != undefined ||
@@ -96,7 +97,7 @@ export class OrderService {
       params = params.append('MonePlacedId', filter.MonePlacedId);
     if (filter.OrderplacedId != undefined || filter.OrderplacedId != null)
       params = params.append('OrderplacedId', filter.OrderplacedId);
-      if (filter.CreatedBy != undefined || filter.CreatedBy != null)
+    if (filter.CreatedBy != undefined || filter.CreatedBy != null)
       params = params.append('CreatedBy', filter.CreatedBy);
     if (
       filter.IsClientDiliverdMoney != undefined ||
@@ -420,5 +421,15 @@ export class OrderService {
   }
   GetCreatedByNames() {
     return this.http.get<any>(this.controler + 'GetCreatedByNames');
+  }
+  GetReSendMultiple(code) {
+    let params = new HttpParams();
+    if (code != undefined || code != null) params = params.append('Code', code);
+    return this.http.get<any>(this.controler + 'ReSendMultiple', {
+      params: params,
+    });
+  }
+  PutReSendMultiple(resendArr: Resend[]) {
+    return this.http.put<any>(this.controler + 'ReSendMultiple', resendArr);
   }
 }
