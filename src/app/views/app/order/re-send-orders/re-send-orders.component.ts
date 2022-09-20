@@ -58,7 +58,7 @@ export class ReSendOrdersComponent implements OnInit {
           'error',
           'يجب التأكد من كود الشحنة',
           NotificationType.Error,
-          { theClass: 'error', timeOut: 6000, showProgressBar: false }
+          { theClass: 'error', timeOut: 2000, showProgressBar: false }
         );
         return;
       }
@@ -76,7 +76,7 @@ export class ReSendOrdersComponent implements OnInit {
         'error',
         'حدث خطأ ما يرحى المحاولة لاحقا',
         NotificationType.Error,
-        { theClass: 'error', timeOut: 6000, showProgressBar: false }
+        { theClass: 'error', timeOut: 2000, showProgressBar: false }
       );
     });
   }
@@ -108,7 +108,7 @@ export class ReSendOrdersComponent implements OnInit {
         'error',
         'الطلب مضاف مسبقا',
         NotificationType.Error,
-        { theClass: 'error', timeOut: 6000, showProgressBar: false }
+        { theClass: 'error', timeOut: 2000, showProgressBar: false }
       );
       this.cancel(order);
       return;
@@ -154,7 +154,7 @@ export class ReSendOrdersComponent implements OnInit {
         'error',
         'يجب التأكد من ملئ جميع الحقول االمطلوبة',
         NotificationType.Error,
-        { theClass: 'error', timeOut: 6000, showProgressBar: false }
+        { theClass: 'error', timeOut: 2000, showProgressBar: false }
       );
       return;
     }
@@ -166,7 +166,7 @@ export class ReSendOrdersComponent implements OnInit {
             'success',
             'تمت اعادة ارسال الطلبات بنجاح',
             NotificationType.Success,
-            { theClass: 'success', timeOut: 6000, showProgressBar: false }
+            { theClass: 'success', timeOut: 2000, showProgressBar: false }
           );
           this.ordersResend = [];
           this.code = null;
@@ -175,7 +175,7 @@ export class ReSendOrdersComponent implements OnInit {
             'error',
             'حدث خطأ ما يرحى المحاولة لاحقا',
             NotificationType.Error,
-            { theClass: 'error', timeOut: 6000, showProgressBar: false }
+            { theClass: 'error', timeOut: 2000, showProgressBar: false }
           );
         });
     }
