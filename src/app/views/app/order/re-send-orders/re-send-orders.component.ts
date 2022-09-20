@@ -62,7 +62,7 @@ export class ReSendOrdersComponent implements OnInit {
         this.showTable = false;
         this.add(res[0]);
         this.code = '';
-      }else if(!res||res.length==0){
+      }else{
         this.notifications.error(
           'error',
           'يجب التأكد من كود الشحنة',
