@@ -59,9 +59,9 @@ export class ReSendOrdersComponent implements OnInit {
         this.Ordersfilter = res;
       }
       else if (res.length == 1) {
-        console.log("res",res);
         this.showTable = false;
         this.add(res[0]);
+        this.code='';
       }
     });
   }
