@@ -17,7 +17,7 @@ export class ReSendOrdersComponent implements OnInit {
     private customerService: CustomService,
     private userService: UserService,
     private orderService: OrderService
-  ) {}
+  ) { }
   orderResend: Resend = new Resend();
   ordersResend: Resend[] = [];
   cities: City[] = [];
@@ -51,17 +51,23 @@ export class ReSendOrdersComponent implements OnInit {
   }
   getResendOrderByCode() {
     this.orderService.GetReSendMultiple(this.code).subscribe((res) => {
-      console.log(`res`, res);
+      if (res.length < 1)
+        return;
+
       if (res.length > 1) {
         this.showTable = true;
         this.Ordersfilter = res;
-      } else if (res.length == 1) {
+      }
+      else if (res.length == 1) {
+        console.log("res",res);
         this.showTable = false;
-        this.add(this.orderResend);
-      } else return;
+        this.add(res[0]);
+      }
     });
   }
   add(order) {
+    this.orderResend.code=order.code;
+    this.orderResend.client =order.client;
     this.orderResend.AgnetId = order.agent?.id;
     this.orderResend.CountryId = order.country?.id;
     this.orderResend.RegionId = order.region ? order.region.id : null;
@@ -100,15 +106,15 @@ export class ReSendOrdersComponent implements OnInit {
     else order.RegionId = null;
   }
   save() {
-    this.ordersResend.forEach(item=>{
-      item.DeliveryCost=Number( item.DeliveryCost)
+    this.ordersResend.forEach(item => {
+      item.DeliveryCost = Number(item.DeliveryCost)
     })
     if (this.ordersResend.length > 0) {
       this.orderService
         .PutReSendMultiple(this.ordersResend)
         .subscribe((res) => {
-          this.ordersResend=[];
-          this.code=null;
+          this.ordersResend = [];
+          this.code = null;
         });
     }
   }

@@ -7,4 +7,6 @@ export class Resend {
     Countries
     Regions
     Agents
+    code:string="";
+    client:any;
 }

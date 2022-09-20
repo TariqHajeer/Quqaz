@@ -73,6 +73,8 @@
     <h3>الطلبات</h3>
     <table class="table">
         <thead>
+          <th>الكود</th>
+          <th>العميل</th>
           <th>المدينة</th>
           <th>المنطقة</th>
           <th>المندوب</th>
@@ -85,6 +87,12 @@
         </thead>
         <tbody>
           <tr *ngFor="let order of ordersResend">
+            <td>
+              {{order.code}}
+            </td>
+            <td>
+              {{order.client?.name}}
+            </td>
             <td>
                 <ng-select
                 [(ngModel)]="order.CountryId"
