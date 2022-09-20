@@ -62,8 +62,8 @@ export class ReSendOrdersComponent implements OnInit {
     });
   }
   add(order) {
-    this.orderResend.AgnetId = order.agent.id;
-    this.orderResend.CountryId = order.country.id;
+    this.orderResend.AgnetId = order.agent?.id;
+    this.orderResend.CountryId = order.country?.id;
     this.orderResend.RegionId = order.region ? order.region.id : null;
     this.orderResend.DeliveryCost = order.deliveryCost;
     this.orderResend.Id = order.id;
