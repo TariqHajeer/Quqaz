@@ -11,4 +11,5 @@ export class City {
     isMain:boolean
     points
     agnets
+    branchesIds:number[]
 }

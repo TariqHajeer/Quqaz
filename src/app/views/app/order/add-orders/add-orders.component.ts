@@ -12,9 +12,11 @@ import {
 import { OrderType } from 'src/app/Models/OrderTypes/order-type.model';
 import { Region } from 'src/app/Models/Regions/region.model';
 import { User } from 'src/app/Models/user/user.model';
+import { UserLogin } from 'src/app/Models/userlogin.model';
 import { CustomService } from 'src/app/services/custom.service';
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/shared/auth.service';
 import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
 
@@ -31,7 +33,8 @@ export class AddOrdersComponent implements OnInit {
     private customerService: CustomService,
     public userService: UserService,
     private notifications: NotificationsService,
-    public spinner: NgxSpinnerService
+    public spinner: NgxSpinnerService,
+    private authService: AuthService
   ) {}
 
   Order: CreateOrdersFromEmployee;
@@ -53,10 +56,11 @@ export class AddOrdersComponent implements OnInit {
   cityapi: string = 'Country';
   regionapi: string = 'Region';
   ordertypeapi: string = 'OrderType';
-
   EditorderType: OrderType;
   EditOrderItem: OrderItem;
   Editcount: number;
+  userLogin: UserLogin = this.authService.getUser();
+  disabledAgent: boolean = false;
   ngOnInit(): void {
     this.Order = new CreateOrdersFromEmployee();
     this.orderType = new OrderType();
@@ -64,7 +68,6 @@ export class AddOrdersComponent implements OnInit {
     this.EditorderType = new OrderType();
     this.EditOrderItem = new OrderItem();
     this.submitted = false;
-
     this.int();
   }
   int() {
@@ -190,17 +193,27 @@ export class AddOrdersComponent implements OnInit {
     this.Region = [];
     this.Order.RegionId = null;
     var city = this.cities.find((c) => c.id == this.Order.CountryId);
+    if (
+      city.branchesIds.length > 0 &&
+      city.branchesIds[0] == this.userLogin.branche.id
+    ) {
+      this.disabledAgent = false;
+      this.Agents = this.GetAgents.filter(
+        (a) =>
+          a.countries
+            .map((c) => c.id)
+            .filter((co) => co == this.Order.CountryId).length > 0
+      );
+      if (this.Agents.length != 0) this.Order.AgentId = this.Agents[0].id;
+    } else {
+      this.disabledAgent = true;
+      this.Order.AgentId = null;
+    }
     this.Order.DeliveryCost = city.deliveryCost;
     this.Region = this.Regions.filter(
       (r) => r.country.id == this.Order.CountryId
     );
     if (this.Region.length != 0) this.Order.RegionId = this.Region[0].id;
-    this.Agents = this.GetAgents.filter(
-      (a) =>
-        a.countries.map((c) => c.id).filter((co) => co == this.Order.CountryId)
-          .length > 0
-    );
-    if (this.Agents.length != 0) this.Order.AgentId = this.Agents[0].id;
   }
   showMessageCode: boolean = false;
   CheckCode() {
