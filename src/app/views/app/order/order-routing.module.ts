@@ -17,6 +17,7 @@ import { OrdersWithClientComponent } from './orders-with-client/orders-with-clie
 import { ProfitsOfOrdersComponent } from './profits-of-orders/profits-of-orders.component';
 import { ReceiptNewOrdersComponent } from './receipt-new-orders/receipt-new-orders.component';
 import { ReceiptsNewOrdersComponent } from './receipts-new-orders/receipts-new-orders.component';
+import { TransferToSecondBranchComponent } from './transfer-to-second-branch/transfer-to-second-branch.component';
 import { ViewNewOrderComponent } from './view-new-order/view-new-order.component';
 import { ViewOrdersComponent } from './view-orders/view-orders.component';
 
@@ -105,6 +106,11 @@ const routes: Routes = [
   {
     path:'newordersprint',
     component:ReceiptsNewOrdersComponent ,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder]}
+  },
+  {
+    path:'transferToSecondBranch',
+    component:TransferToSecondBranchComponent ,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowOrder]}
   },
 ];
