@@ -58,7 +58,7 @@
                         <h4 *ngIf="!order.CanEdit">{{order.CountryName}}</h4>
                         <ng-select appendTo="body" [(ngModel)]="EditOrder.CountryId" style="width: 100px;"
                             (change)="changeCountryEdit()" [ngModelOptions]="{standalone: true}" [clearable]="false"
-                            *ngIf="order.CanEdit" name="Country">
+                            *ngIf="order.CanEdit" name="Country" >
                             <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
                         </ng-select>
                         <div *ngIf="!EditOrder.CountryId && Editsubmitted&&order.CanEdit" class="message">المحافظة حقل
@@ -78,7 +78,7 @@
                         <h4 *ngIf="!order.CanEdit">{{order.AgentName}}</h4>
                         <ng-select [(ngModel)]="EditOrder.AgentId" [ngModelOptions]="{standalone: true}"
                             placeholder="اختر مندوب" *ngIf="order.CanEdit" [clearable]="false" name="Agent"
-                            style="width: 100px;">
+                            style="width: 100px;"  [disabled]="disabledEditAgent">
                             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                         </ng-select>
                         <div *ngIf="!EditOrder.AgentId && Editsubmitted&&order.CanEdit" class="message">المندوب حقل
@@ -215,7 +215,7 @@
 
                         <ng-select (keydown.enter)="changed(4)" [(ngModel)]="Order.AgentId"
                             [ngModelOptions]="{standalone: true}" [clearable]="false" name="Agent" style="width: 100px;"
-                            placeholder="اختر مندوب">
+                            placeholder="اختر مندوب"  [disabled]="disabledAddAgent">
                             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                         </ng-select>
                         <div *ngIf="!Order.AgentId && submitted" class="message">المندوب حقل مطلوب</div>

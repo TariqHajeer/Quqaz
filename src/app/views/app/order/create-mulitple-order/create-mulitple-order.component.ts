@@ -272,8 +272,11 @@ export class CreateMulitpleOrderComponent implements OnInit {
     order.CanEdit = true;
     this.tempEdit = Object.assign({}, order);
     this.EditOrder = order;
-    this.Agents = this.GetAgents.filter(
-      (a) => a.countryId == this.EditOrder.CountryId
+    this.Agents =this.GetAgents.filter(
+      (a) =>
+        a.countries
+          .map((c) => c.id)
+          .filter((co) => co == this.EditOrder.CountryId).length > 0
     );
   }
   Save(order: CreateMultipleOrder) {

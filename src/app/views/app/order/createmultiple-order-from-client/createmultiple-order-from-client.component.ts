@@ -16,6 +16,8 @@ import { Client } from '../../client/client.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import * as moment from 'moment';
+import { UserLogin } from 'src/app/Models/userlogin.model';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-createmultiple-order-from-client',
@@ -25,7 +27,7 @@ import * as moment from 'moment';
 export class CreatemultipleOrderFromClientComponent implements OnInit {
 
   constructor(private orderservice: OrderService,
-
+    private authService: AuthService,
     private clientService: ClientService
     , private customerService: CustomService,
     public userService: UserService,
@@ -147,19 +149,38 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
 
   changeCountry() {
     var city = this.cities.find(c => c.id == this.Order.CountryId)
+    if (
+      city.branchesIds.length > 0 &&
+      city.branchesIds[0] == this.userLogin.branche.id
+    ) {
+      this.disabledAddAgent = false;
     this.Agents = this.GetAgents.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.Order.CountryId).length>0 )
     if (this.Agents.length != 0 && this.Agents.length == 1)
       this.Order.AgentId = this.Agents[0].id
     else this.Order.AgentId = null
+  }else {
+    this.disabledAddAgent = true;
+    this.Order.AgentId = null;
+  }
     this.Order.DeliveryCost = city.deliveryCost
 
   }
   changeCountryEdit() {
     var city = this.cities.find(c => c.id == this.EditOrder.CountryId)
+    if (
+      city.branchesIds.length > 0 &&
+      city.branchesIds[0] == this.userLogin.branche.id
+    ) {
+      this.disabledEditAgent = false;
     this.Agents = this.GetAgents.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.EditOrder.CountryId).length>0 )
     if (this.Agents.length != 0 && this.Agents.length == 1)
       this.EditOrder.AgentId = this.Agents[0].id
     else this.EditOrder.AgentId = null
+    }
+    else {
+      this.disabledEditAgent = true;
+      this.EditOrder.AgentId = null;
+    }
     this.EditOrder.DeliveryCost = city.deliveryCost
   }
   //#region changeClientId
@@ -255,8 +276,10 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     }
   }
   RecipientPhoneslength = ""
-  @ViewChild('code') codeElement: ElementRef;
-  checkLengthPhoneNumber(phone) {
+@ViewChild('code') codeElement: ElementRef;
+  disabledAddAgent: boolean = false;
+  disabledEditAgent: boolean = false;
+  userLogin: UserLogin = this.authService.getUser();  checkLengthPhoneNumber(phone) {
     if (phone && phone.length < 11) {
       this.RecipientPhoneslength = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
       return true
@@ -317,13 +340,17 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     order.CanEdit = true
     this.tempEdit = Object.assign({}, order);
     this.EditOrder = order
-    this.Agents = this.GetAgents.filter(a => a.countryId == this.EditOrder.CountryId)
+    this.Agents =this.GetAgents.filter(
+      (a) =>
+        a.countries
+          .map((c) => c.id)
+          .filter((co) => co == this.EditOrder.CountryId).length > 0
+    );
   }
   Save(order: CreateMultipleOrder) {
     this.editNewCountry()
     if (!this.EditOrder.Code || !this.EditOrder.ClientId ||
       !this.EditOrder.RecipientPhones
-      || !this.EditOrder.AgentId
       || order.showEditMessageCode) {
       this.Editsubmitted = true
       return

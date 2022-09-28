@@ -33,7 +33,7 @@
             <label>المندوب</label>
 
             <ng-select appendTo="body" [(ngModel)]="AgentId" [ngModelOptions]="{standalone: true}"
-                placeholder="اختر مندوب" [clearable]="false" name="Agent" (ngModelChange)="changeAgent()">
+                placeholder="اختر مندوب" [clearable]="false" name="Agent" (ngModelChange)="changeAgent()" [disabled]="disabledAddAgent">
                 <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
             </ng-select>
             <div *ngIf="!AgentId && submitted" class="message">المندوب حقل مطلوب</div>

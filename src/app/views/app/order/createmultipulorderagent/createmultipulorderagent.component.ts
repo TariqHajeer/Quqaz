@@ -10,9 +10,11 @@ import { OrderItem } from 'src/app/Models/order/create-orders-from-employee.mode
 import { OrderType } from 'src/app/Models/OrderTypes/order-type.model';
 import { Region } from 'src/app/Models/Regions/region.model';
 import { User } from 'src/app/Models/user/user.model';
+import { UserLogin } from 'src/app/Models/userlogin.model';
 import { CustomService } from 'src/app/services/custom.service';
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/shared/auth.service';
 import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
 
@@ -27,7 +29,7 @@ export class CreatemultipulorderagentComponent implements OnInit {
     e.target.blur();
   }
   constructor(private orderservice: OrderService,
-
+    private authService: AuthService,
     private clientService: ClientService
     , private customerService: CustomService,
     public userService: UserService,
@@ -66,8 +68,7 @@ export class CreatemultipulorderagentComponent implements OnInit {
   ordertypeapi = "OrderType";
   Orders: any[] = []
   //CanEdit: boolean[] = []
-  @ViewChild('code') codeElement: ElementRef;
-
+@ViewChild('code') codeElement: ElementRef;
   ngOnInit(): void {
     this.Order = new CreateMultipleOrder();
     this.EditOrder = new CreateMultipleOrder();
@@ -223,13 +224,17 @@ export class CreatemultipulorderagentComponent implements OnInit {
     order.CanEdit = true
     this.tempEdit = Object.assign({}, order);
     this.EditOrder = order
-    this.Agents = this.GetAgents.filter(a => a.countryId == this.EditOrder.CountryId)
+    this.Agents =this.GetAgents.filter(
+      (a) =>
+        a.countries
+          .map((c) => c.id)
+          .filter((co) => co == this.EditOrder.CountryId).length > 0
+    );
 
   }
   Save(order: CreateMultipleOrder) {
     if (!this.EditOrder.Code || !this.EditOrder.ClientId ||
       !this.EditOrder.CountryId || !this.EditOrder.RecipientPhones
-      || !this.EditOrder.AgentId 
       || order.showEditMessageCode) {
       this.Editsubmitted = true
       return

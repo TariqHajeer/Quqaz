@@ -16,6 +16,8 @@ import { Client } from '../../client/client.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import * as moment from 'moment';
+import { UserLogin } from 'src/app/Models/userlogin.model';
+import { AuthService } from 'src/app/shared/auth.service';
 @Component({
   selector: 'app-add-multipul-orders-agent-with-region',
   templateUrl: './add-multipul-orders-agent-with-region.component.html',
@@ -32,6 +34,7 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
     public userService: UserService,
     private notifications: NotificationsService,
     public spinner: NgxSpinnerService,
+    private authService: AuthService
 
   ) { }
 
@@ -60,8 +63,10 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
   regionapi = "Region"
   ordertypeapi = "OrderType";
   Orders: any[] = []
-  @ViewChild('code') codeElement: ElementRef;
-
+@ViewChild('code') codeElement: ElementRef;
+  disabledAddAgent: boolean = false;
+  disabledEditAgent: boolean = false;
+  userLogin: UserLogin = this.authService.getUser();
   ngOnInit(): void {
     this.Order = new CreateMultipleOrder();
     this.EditOrder = new CreateMultipleOrder();
@@ -214,15 +219,18 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
     order.CanEdit = true
     this.tempEdit = Object.assign({}, order);
     this.EditOrder = order
-    this.Agents = this.GetAgents.filter(a => a.countryId == this.EditOrder.CountryId)
-
+    this.Agents =this.GetAgents.filter(
+      (a) =>
+        a.countries
+          .map((c) => c.id)
+          .filter((co) => co == this.EditOrder.CountryId).length > 0
+    );
   }
   Save(order: CreateMultipleOrder) {
     this.EditOrder.AgentId = this.AgentId;
     this.EditOrder.CountryId = this.CountryId;
     if (!this.EditOrder.Code || !this.EditOrder.ClientId ||
       !this.EditOrder.CountryId || !this.EditOrder.RecipientPhones
-      || !this.EditOrder.AgentId
       || order.showEditMessageCode) {
       this.Editsubmitted = true
       return
