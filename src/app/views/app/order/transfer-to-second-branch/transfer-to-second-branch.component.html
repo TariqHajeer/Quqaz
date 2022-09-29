@@ -4,30 +4,32 @@
 <div class="card">
     <div class="card-body">
         <h3>نقل الطلبات الى فرع آخر</h3>
+        <h5>بحث على حسب</h5>
         <div class="row">
             <div class="col-md-2">
-                <label>المندوب</label>
-                <ng-select [(ngModel)]="Agent" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Agent"
-                    (change)="ChangeAgentId()">
-                    <ng-option *ngFor="let Agent of Agents" [value]="Agent">{{Agent.name}}</ng-option>
-                </ng-select>
+                <label>الكود</label>
+                <input type="text" class="form-control"[(ngModel)]="filtering.Code" [ngModelOptions]="{standalone: true}"
+                     name="code" (keyup.enter)="allFilter()"/>
             </div>
             <div class="col-md-2">
                 <label>المحافظة</label>
                 <ng-select [(ngModel)]="filtering.CountryId" [ngModelOptions]="{standalone: true}"
-                    [closeOnSelect]="true" name="Country" (change)="ChangeAgentId()">
-                    <ng-option *ngFor="let Country of countriesAgent" [value]="Country.id">{{Country.name}}</ng-option>
+                    [closeOnSelect]="true" name="Country" (change)="allFilter()">
+                    <ng-option *ngFor="let Country of countries" [value]="Country.id">{{Country.name}}</ng-option>
                 </ng-select>
             </div>
             <div class="col-md-2">
                 <label>العميل</label>
-                <ng-select [(ngModel)]="filtering.ClientId" [ngModelOptions]="{standalone: true}"
-                    [closeOnSelect]="true" name="client" (change)="allFilter()">
+                <ng-select [(ngModel)]="filtering.ClientId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+                    name="client" (change)="allFilter()">
                     <ng-option *ngFor="let client of clients" [value]="client.id">{{client.name}}</ng-option>
                 </ng-select>
             </div>
-            <div class="col-md-3">
-                <button (click)="moveOrders()" class="btn btn-primary"> نقل الطلبات</button>
+            <div class="col-md-4">
+                <button (click)="allFilter()" class="btn btn-primary" style="margin-top: 20px;"> بحث</button>
+            </div>
+            <div class="col-md-2">
+                <button (click)="moveOrders()" class="btn btn-primary" style="margin-top: 20px;"> نقل الطلبات</button>
             </div>
         </div>
     </div>
@@ -39,11 +41,12 @@
             <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox (change)="$event ? masterToggle() : null"
                     [checked]="selection.hasValue() && isAllSelected()"
-                    [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                   [aria-label]="checkboxLabel()">
                 </mat-checkbox>
+                <!-- [indeterminate]="selection.hasValue() && !isAllSelected()"  -->
             </th>
-            <td mat-cell *matCellDef="let row">
-                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+            <td mat-cell *matCellDef="let row"  (click)="$event.stopPropagation()">
+                <mat-checkbox (change)="$event ? selection.toggle(row) : null"
                     [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
                 </mat-checkbox>
             </td>
@@ -60,21 +63,9 @@
             <th mat-header-cell *matHeaderCellDef> المدينة</th>
             <td mat-cell *matCellDef="let element"> {{element.country!=null?element.country.name:null}}</td>
         </ng-container>
-        <ng-container matColumnDef="region">
-            <th mat-header-cell *matHeaderCellDef> المنطقة</th>
-            <td mat-cell *matCellDef="let element"> {{element.region!=null?element.region.name:null}}</td>
-        </ng-container>
         <ng-container matColumnDef="client">
             <th mat-header-cell *matHeaderCellDef style="padding-right: 10px;"> العميل </th>
-            <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.client.name}}</td>
-        </ng-container>
-        <ng-container matColumnDef="agent">
-            <th mat-header-cell *matHeaderCellDef style="padding-right: 10px;"> المندوب </th>
-            <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.agent.name}}</td>
-        </ng-container>
-        <ng-container matColumnDef="agentCost">
-            <th mat-header-cell *matHeaderCellDef style="padding-right: 10px;"> كلفة توصيل المندوب </th>
-            <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.agentCost}}</td>
+            <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.client?element.client.name:null}}</td>
         </ng-container>
         <ng-container matColumnDef="cost">
             <th mat-header-cell *matHeaderCellDef> كلفة الطلب</th>
