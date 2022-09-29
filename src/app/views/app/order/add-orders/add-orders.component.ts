@@ -35,7 +35,7 @@ export class AddOrdersComponent implements OnInit {
     private notifications: NotificationsService,
     public spinner: NgxSpinnerService,
     private authService: AuthService
-  ) {}
+  ) { }
 
   Order: CreateOrdersFromEmployee;
   submitted: boolean = false;
@@ -86,14 +86,13 @@ export class AddOrdersComponent implements OnInit {
       this.Order.RecipientPhones.push(this.tempPhone);
       this.tempPhone = '';
     }
-
     if (
       this.showMessageCode ||
       this.Order.RecipientPhones.length == 0 ||
       !this.Order.Cost ||
       !this.Order.Code ||
       !this.Order.ClientId ||
-      !this.Order.AgentId ||
+      (!(!this.disabledAgent == !!this.Order.AgentId)) ||
       !this.Order.CountryId ||
       !this.Order.OrderplacedId ||
       !this.Order.MoenyPlacedId ||
@@ -178,7 +177,7 @@ export class AddOrdersComponent implements OnInit {
     ) {
       this.customerService
         .Create(this.ordertypeapi, this.orderType)
-        .subscribe((res) => {});
+        .subscribe((res) => { });
     }
     this.OrderItem.OrderTypeId = this.orderType.id;
     this.OrderItem.OrderTypeName = this.orderType.name;
@@ -193,10 +192,7 @@ export class AddOrdersComponent implements OnInit {
     this.Region = [];
     this.Order.RegionId = null;
     var city = this.cities.find((c) => c.id == this.Order.CountryId);
-    if (
-      city.branchesIds.length > 0 &&
-      city.branchesIds[0] == this.userLogin.branche.id
-    ) {
+    if (city.branchesIds.length > 0 && city.branchesIds[0] == this.userLogin.branche.id) {
       this.disabledAgent = false;
       this.Agents = this.GetAgents.filter(
         (a) =>

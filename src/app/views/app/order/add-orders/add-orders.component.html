@@ -51,7 +51,7 @@
                         name="Agent" [disabled]="disabledAgent">
                         <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                     </ng-select>
-                    <div *ngIf="!Order.AgentId && submitted" class="invalid-tooltip">المندوب حقل مطلوب</div>
+                    <div *ngIf="!(Order.AgentId||disabledAgent) && submitted" class="invalid-tooltip">المندوب حقل مطلوب</div>
                 </div>
             </div>
             <div class="row w-100 align-items-end mb-3">
