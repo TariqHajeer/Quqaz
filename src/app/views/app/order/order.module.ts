@@ -44,6 +44,7 @@ import { AddMulitpleOrdersWithRegionComponent } from './add-mulitple-orders-with
 import { AddMultipulOrdersAgentWithRegionComponent } from './add-multipul-orders-agent-with-region/add-multipul-orders-agent-with-region.component';
 import { ReceiptOrderComponent } from './receipt-order/receipt-order.component';
 import { TransferToSecondBranchComponent } from './transfer-to-second-branch/transfer-to-second-branch.component';
+import { ReSendOrdersComponent } from './re-send-orders/re-send-orders.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { TransferToSecondBranchComponent } from './transfer-to-second-branch/tra
     AddMultipulOrdersAgentWithRegionComponent,
     ReceiptOrderComponent,
     TransferToSecondBranchComponent,
+    ReSendOrdersComponent,
   ],
   imports: [
     CommonModule,

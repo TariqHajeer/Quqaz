@@ -15,6 +15,7 @@ import { MoveOrdersComponent } from './move-orders/move-orders.component';
 import { NewOrdersDontSendComponent } from './new-orders-dont-send/new-orders-dont-send.component';
 import { OrdersWithClientComponent } from './orders-with-client/orders-with-client.component';
 import { ProfitsOfOrdersComponent } from './profits-of-orders/profits-of-orders.component';
+import { ReSendOrdersComponent } from './re-send-orders/re-send-orders.component';
 import { ReceiptNewOrdersComponent } from './receipt-new-orders/receipt-new-orders.component';
 import { ReceiptsNewOrdersComponent } from './receipts-new-orders/receipts-new-orders.component';
 import { TransferToSecondBranchComponent } from './transfer-to-second-branch/transfer-to-second-branch.component';
@@ -24,94 +25,99 @@ import { ViewOrdersComponent } from './view-orders/view-orders.component';
 
 const routes: Routes = [
   {
-    path:'',
-    component:ViewOrdersComponent ,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowOrder,UserPermission.AddOrder]}
+    path: '',
+    component: ViewOrdersComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder, UserPermission.AddOrder] }
   },
   {
-    path:'addorder',
-    component:AddOrdersComponent ,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.AddOrder]}
+    path: 'addorder',
+    component: AddOrdersComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.AddOrder] }
   },
   {
-    path:'addMulitpleOrders',
-    component:CreateMulitpleOrderComponent ,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.AddOrder]}
+    path: 'addMulitpleOrders',
+    component: CreateMulitpleOrderComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.AddOrder] }
   },
   {
-    path:'addMulitpleOrdersWithRegion',
-    component:AddMulitpleOrdersWithRegionComponent ,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.AddOrder]}
+    path: 'addMulitpleOrdersWithRegion',
+    component: AddMulitpleOrdersWithRegionComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.AddOrder] }
   },
   {
-    path:'addMulitpleOrdersAgentWithRegion',
-    component:AddMultipulOrdersAgentWithRegionComponent ,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.AddOrder]}
+    path: 'addMulitpleOrdersAgentWithRegion',
+    component: AddMultipulOrdersAgentWithRegionComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.AddOrder] }
   },
   {
-    path:'addMulitpleOrdersfromClient',
-    component:CreatemultipleOrderFromClientComponent ,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.AddOrder]}
+    path: 'addMulitpleOrdersfromClient',
+    component: CreatemultipleOrderFromClientComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.AddOrder] }
   },
   {
-    path:'addMulitpleOrdersfromAgent',
-    component:CreatemultipulorderagentComponent ,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.AddOrder]}
+    path: 'addMulitpleOrdersfromAgent',
+    component: CreatemultipulorderagentComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.AddOrder] }
   },
   {
-    path:'addMulitpleOrdersfromClientandAgent',
-    component:CreateMultiOrderAgentAndClientComponent ,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.AddOrder]}
+    path: 'addMulitpleOrdersfromClientandAgent',
+    component: CreateMultiOrderAgentAndClientComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.AddOrder] }
   },
   {
-    path:'editorder/:id',
-    component:EditOrdersComponent ,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.UpdateOrder]}
+    path: 'editorder/:id',
+    component: EditOrdersComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.UpdateOrder] }
   },
   {
-    path:'neworders',
-    component:ViewNewOrderComponent ,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowOrder]}
+    path: 'neworders',
+    component: ViewNewOrderComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder] }
   },
   {
-    path:'receiptNeworder',
-    component:ReceiptNewOrdersComponent ,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowOrder]}
+    path: 'receiptNeworder',
+    component: ReceiptNewOrdersComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder] }
   },
   {
-    path:'ProfitsOfOrders',
-    component:ProfitsOfOrdersComponent ,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowOrder]}
+    path: 'ProfitsOfOrders',
+    component: ProfitsOfOrdersComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder] }
   },
   {
-    path:'editclientorders',
-    component:EditClientOrdersComponent ,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowOrder]}
+    path: 'editclientorders',
+    component: EditClientOrdersComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder] }
   },
   {
-    path:'moveorder',
-    component:MoveOrdersComponent ,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowOrder]}
+    path: 'moveorder',
+    component: MoveOrdersComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder] }
   },
   {
-    path:'orderswithclient',
-    component:OrdersWithClientComponent ,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowOrder]}
+    path: 'orderswithclient',
+    component: OrdersWithClientComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder] }
   },
   {
-    path:'newordersdonotsend',
-    component:NewOrdersDontSendComponent ,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowOrder]}
+    path: 'newordersdonotsend',
+    component: NewOrdersDontSendComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder] }
   },
   {
-    path:'newordersprint',
-    component:ReceiptsNewOrdersComponent ,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowOrder]}
+    path: 'newordersprint',
+    component: ReceiptsNewOrdersComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder] }
   },
   {
-    path:'transferToSecondBranch',
-    component:TransferToSecondBranchComponent ,canActivate: [AuthGuard],
-    data: { roles: [UserPermission.ShowOrder]}
+    path: 'transferToSecondBranch',
+    component: TransferToSecondBranchComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder] }
+  }
+  , {
+    path: 'resend',
+    component: ReSendOrdersComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder] }
   },
 ];
 

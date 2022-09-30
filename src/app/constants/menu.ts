@@ -82,6 +82,13 @@ const data: IMenuItem[] = [
         permission: [UserPermission.ShowOrder],
       },
       {
+        icon: 'simple-icon-layers',
+        label: 'اعادة ارسال',
+        to: `${adminRoot}/order/resend`,
+        badge: true,
+        permission: [UserPermission.ShowOrder],
+      },
+      {
         icon: 'iconsminds-add',
         label: 'إضافة طلب',
         to: `${adminRoot}/order/addorder`,

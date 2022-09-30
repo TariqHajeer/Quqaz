@@ -45,6 +45,7 @@ export class ViewOrdersComponent implements OnInit {
   cityapi = 'Country';
   regionapi = 'Region';
   users: string[] = [];
+  checkOrderState: boolean;
   constructor(
     private orderservice: OrderService,
     private router: Router,
@@ -53,7 +54,7 @@ export class ViewOrdersComponent implements OnInit {
     private userService: UserService,
     public spinner: NgxSpinnerService,
     private notifications: NotificationsService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.paging = new Paging();
@@ -156,7 +157,7 @@ export class ViewOrdersComponent implements OnInit {
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(
       (response) => {
         this.spinner.hide();
-        if (response.data.length == 0) this.noDataFound = true;
+        if (response && response.data && response.data.length == 0) this.noDataFound = true;
         else this.noDataFound = false;
         response.data.forEach((element) => {
           if (element.orderStateId == OrderStateEnum.ShortageOfCash) {
@@ -172,6 +173,12 @@ export class ViewOrdersComponent implements OnInit {
         this.spinner.hide();
       }
     );
+  }
+  changeOrderState() {
+    if (this.checkOrderState)
+      this.filtering.OrderState = OrderStateEnum.ShortageOfCash
+    else this.filtering.OrderState = null
+    this.allFilter()
   }
   getUser() {
     this.orderservice.GetCreatedByNames().subscribe((res) => {

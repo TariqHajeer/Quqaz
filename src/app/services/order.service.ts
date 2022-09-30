@@ -6,13 +6,14 @@ import { environment } from 'src/environments/environment';
 import { OrderFilter } from '../Models/order-filter.model';
 import { DateFiter, Paging } from '../Models/paging';
 import { OrderClientDontDiliverdMoney } from '../Models/order/order-client-dont-diliverd-money.model';
+import { Resend } from '../Models/order/resend.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
   controler = environment.baseUrl + 'api/Order/';
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient) { }
   GetAll(filter: OrderFilter, paging: Paging) {
     let params = new HttpParams();
     if (filter.Code != undefined || filter.Code != null)
@@ -35,7 +36,9 @@ export class OrderService {
       params = params.append('MonePlacedId', filter.MonePlacedId);
     if (filter.OrderplacedId != undefined || filter.OrderplacedId != null)
       params = params.append('OrderplacedId', filter.OrderplacedId);
-      if (filter.CreatedBy != undefined || filter.CreatedBy != null)
+    if (filter.OrderState != undefined || filter.OrderState != null)
+      params = params.append('OrderState', filter.OrderState);
+    if (filter.CreatedBy != undefined || filter.CreatedBy != null)
       params = params.append('CreatedBy', filter.CreatedBy);
     if (
       filter.IsClientDiliverdMoney != undefined ||
@@ -57,7 +60,7 @@ export class OrderService {
       params = params.append('AgentPrintEndDate', filter.AgentPrintEndDate);
     if (filter.AgentPrintNumber != undefined || filter.AgentPrintNumber != null)
       params = params.append('AgentPrintNumber', filter.AgentPrintNumber);
-      if (filter.ClientPrintNumber != undefined || filter.ClientPrintNumber != null)
+    if (filter.ClientPrintNumber != undefined || filter.ClientPrintNumber != null)
       params = params.append('ClientPrintNumber', filter.ClientPrintNumber);
     if (paging.RowCount != undefined || paging.RowCount != null)
       params = params.append('RowCount', paging.RowCount);
@@ -98,7 +101,7 @@ export class OrderService {
       params = params.append('MonePlacedId', filter.MonePlacedId);
     if (filter.OrderplacedId != undefined || filter.OrderplacedId != null)
       params = params.append('OrderplacedId', filter.OrderplacedId);
-      if (filter.CreatedBy != undefined || filter.CreatedBy != null)
+    if (filter.CreatedBy != undefined || filter.CreatedBy != null)
       params = params.append('CreatedBy', filter.CreatedBy);
     if (
       filter.IsClientDiliverdMoney != undefined ||
@@ -423,7 +426,7 @@ export class OrderService {
   GetCreatedByNames() {
     return this.http.get<any>(this.controler + 'GetCreatedByNames');
   }
-  GetInStockToTransferToSecondBranch(filter: OrderFilter, paging: Paging){
+  GetInStockToTransferToSecondBranch(filter: OrderFilter, paging: Paging) {
     let params = new HttpParams();
     if (filter.Code != undefined || filter.Code != null)
       params = params.append('Code', filter.Code);
@@ -445,7 +448,7 @@ export class OrderService {
       params = params.append('MonePlacedId', filter.MonePlacedId);
     if (filter.OrderplacedId != undefined || filter.OrderplacedId != null)
       params = params.append('OrderplacedId', filter.OrderplacedId);
-      if (filter.CreatedBy != undefined || filter.CreatedBy != null)
+    if (filter.CreatedBy != undefined || filter.CreatedBy != null)
       params = params.append('CreatedBy', filter.CreatedBy);
     if (
       filter.IsClientDiliverdMoney != undefined ||
@@ -455,7 +458,7 @@ export class OrderService {
         'IsClientDiliverdMoney',
         filter.IsClientDiliverdMoney
       );
-      if (paging.RowCount != undefined || paging.RowCount != null)
+    if (paging.RowCount != undefined || paging.RowCount != null)
       params = params.append('RowCount', paging.RowCount);
 
     if (paging.Page != undefined || paging.Page != null)
@@ -464,7 +467,17 @@ export class OrderService {
       params: params,
     });
   }
-  TransferToSecondBranch(ids){
-    return this.http.put<any>(this.controler + 'TransferToSecondBranch',ids);
+  TransferToSecondBranch(ids) {
+    return this.http.put<any>(this.controler + 'TransferToSecondBranch', ids);
+  }
+  GetReSendMultiple(code) {
+    let params = new HttpParams();
+    if (code != undefined || code != null) params = params.append('Code', code);
+    return this.http.get<any>(this.controler + 'ReSendMultiple', {
+      params: params,
+    });
+  }
+  PutReSendMultiple(resendArr: Resend[]) {
+    return this.http.put<any>(this.controler + 'ReSendMultiple', resendArr);
   }
 }
