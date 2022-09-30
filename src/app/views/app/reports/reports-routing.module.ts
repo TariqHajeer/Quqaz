@@ -27,6 +27,7 @@ import { RejectShipmentsComponent } from './reject-shipments/reject-shipments.co
 import { ShipmentInStockComponent } from './shipment-in-stock/shipment-in-stock.component';
 import { ShipmentsNotBeenDeliveredComponent } from './shipments-not-been-delivered/shipments-not-been-delivered.component';
 import { ShipmentsOnWayComponent } from './shipments-on-way/shipments-on-way.component';
+import { ShortageOfCashComponent } from './shortage-of-cash/shortage-of-cash.component';
 import { ShowRecetptShipmentsComponent } from './show-recetpt-shipments/show-recetpt-shipments.component';
 import { ShowTreasuryComponent } from './show-treasury/show-treasury.component';
 import { StatisticsComponent } from './statistics/statistics.component';
@@ -204,6 +205,14 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
       roles: [UserPermission.ShowReports, UserPermission.TreasuryManagment],
+    },
+  },
+  {
+    path: 'shortageOfCash',
+    component: ShortageOfCashComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: [UserPermission.ShowReports],
     },
   },
 ];

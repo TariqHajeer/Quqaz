@@ -274,6 +274,12 @@ const data: IMenuItem[] = [
         to: `${adminRoot}/reports/ordersUnacceptable`,
         permission: [UserPermission.ShowReports],
       },
+      {
+        icon: 'simple-icon-layers',
+        label: ' شحنات لديها مبلغ مع العميل ',
+        to: `${adminRoot}/reports/shortageOfCash`,
+        permission: [UserPermission.ShowReports],
+      },
     ],
   },
   //clients
