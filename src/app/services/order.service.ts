@@ -36,6 +36,8 @@ export class OrderService {
       params = params.append('MonePlacedId', filter.MonePlacedId);
     if (filter.OrderplacedId != undefined || filter.OrderplacedId != null)
       params = params.append('OrderplacedId', filter.OrderplacedId);
+      if (filter.OrderState != undefined || filter.OrderState != null)
+      params = params.append('OrderState', filter.OrderState);
     if (filter.CreatedBy != undefined || filter.CreatedBy != null)
       params = params.append('CreatedBy', filter.CreatedBy);
     if (

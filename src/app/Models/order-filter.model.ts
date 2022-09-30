@@ -21,5 +21,5 @@ export class OrderFilter {
   AgentPrintStartDate;
   AgentPrintEndDate;
   CreatedBy;
-  OrderState: number
+  OrderState;
 }
