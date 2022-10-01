@@ -1,39 +1,3 @@
-<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="line-scale-party" [fullScreen]="true">
-    <p style="color: white"> </p>
-</ngx-spinner>
-<div class="card">
-    <div class="card-body">
-        <h3>نقل الطلبات الى فرع آخر</h3>
-        <h5>بحث على حسب</h5>
-        <div class="row">
-            <div class="col-md-2">
-                <label>الكود</label>
-                <input type="text" class="form-control"[(ngModel)]="filtering.Code" [ngModelOptions]="{standalone: true}"
-                     name="code" (keyup.enter)="allFilter()"/>
-            </div>
-            <div class="col-md-2">
-                <label>المحافظة</label>
-                <ng-select [(ngModel)]="filtering.CountryId" [ngModelOptions]="{standalone: true}"
-                    [closeOnSelect]="true" name="Country" (change)="allFilter()">
-                    <ng-option *ngFor="let Country of countries" [value]="Country.id">{{Country.name}}</ng-option>
-                </ng-select>
-            </div>
-            <div class="col-md-2">
-                <label>العميل</label>
-                <ng-select [(ngModel)]="filtering.ClientId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-                    name="client" (change)="allFilter()">
-                    <ng-option *ngFor="let client of clients" [value]="client.id">{{client.name}}</ng-option>
-                </ng-select>
-            </div>
-            <div class="col-md-4">
-                <button (click)="allFilter()" class="btn btn-primary" style="margin-top: 20px;"> بحث</button>
-            </div>
-            <div class="col-md-2">
-                <button (click)="moveOrders()" class="btn btn-primary" style="margin-top: 20px;"> نقل الطلبات</button>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="example-container mat-elevation-z8">
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -85,7 +49,3 @@
     <h5 style="padding-top: 20px; padding-right: 10px;" *ngIf="noDataFound">لايوجد بيانات للعرض</h5>
 
 </div>
-
-<mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
-    [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
-<simple-notifications></simple-notifications>
