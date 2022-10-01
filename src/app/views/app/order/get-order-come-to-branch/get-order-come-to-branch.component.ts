@@ -20,7 +20,7 @@ export class GetOrderComeToBranchComponent implements OnInit {
   orders: Order[] = [];
   paging: Paging;
   @Input() totalCount: number;
-  noDataFound: boolean = false
+  noDataFound: boolean = false;
   ngOnInit(): void {
   }
   isAllSelected(): boolean {
