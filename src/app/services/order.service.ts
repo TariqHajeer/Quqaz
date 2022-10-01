@@ -13,49 +13,7 @@ export class OrderService {
   controler = environment.baseUrl + 'api/Order/';
   constructor(public http: HttpClient) { }
   GetAll(filter: OrderFilter, paging: Paging) {
-    let params = new HttpParams();
-    if (filter.Code != undefined || filter.Code != null)
-      params = params.append('Code', filter.Code);
-    if (filter.AgentId != undefined || filter.AgentId != null)
-      params = params.append('AgentId', filter.AgentId);
-    if (filter.Phone != undefined || filter.Phone != null)
-      params = params.append('Phone', filter.Phone);
-    if (filter.CountryId != undefined || filter.CountryId != null)
-      params = params.append('CountryId', filter.CountryId);
-    if (filter.RegionId != undefined || filter.RegionId != null)
-      params = params.append('RegionId', filter.RegionId);
-    if (filter.ClientId != undefined || filter.ClientId != null)
-      params = params.append('ClientId', filter.ClientId);
-    if (filter.Note != undefined || filter.Note != null)
-      params = params.append('Note', filter.Note);
-    if (filter.RecipientName != undefined || filter.RecipientName != null)
-      params = params.append('RecipientName', filter.RecipientName);
-    if (filter.MonePlacedId != undefined || filter.MonePlacedId != null)
-      params = params.append('MonePlacedId', filter.MonePlacedId);
-    if (filter.OrderplacedId != undefined || filter.OrderplacedId != null)
-      params = params.append('OrderplacedId', filter.OrderplacedId);
-    if (filter.OrderState != undefined || filter.OrderState != null)
-      params = params.append('OrderState', filter.OrderState);
-    if (filter.CreatedBy != undefined || filter.CreatedBy != null)
-      params = params.append('CreatedBy', filter.CreatedBy);
-    if (filter.IsClientDiliverdMoney != undefined || filter.IsClientDiliverdMoney != null)
-      params = params.append('IsClientDiliverdMoney', filter.IsClientDiliverdMoney);
-    if (filter.AgentPrintStartDate != undefined || filter.AgentPrintStartDate != null)
-      params = params.append('AgentPrintStartDate', filter.AgentPrintStartDate);
-    if (filter.AgentPrintEndDate != undefined || filter.AgentPrintEndDate != null)
-      params = params.append('AgentPrintEndDate', filter.AgentPrintEndDate);
-    if (filter.AgentPrintNumber != undefined || filter.AgentPrintNumber != null)
-      params = params.append('AgentPrintNumber', filter.AgentPrintNumber);
-    if (filter.ClientPrintNumber != undefined || filter.ClientPrintNumber != null)
-      params = params.append('ClientPrintNumber', filter.ClientPrintNumber);
-    if (paging.RowCount != undefined || paging.RowCount != null)
-      params = params.append('RowCount', paging.RowCount);
-    if (paging.Page != undefined || paging.Page != null)
-      params = params.append('Page', paging.Page);
-    if (filter.createdDateRangeFilter.start)
-      params = params.append('CreatedDateRangeFilter.start', String(filter.createdDateRangeFilter.start));
-    if (filter.createdDateRangeFilter.end)
-      params = params.append('CreatedDateRangeFilter.end', String(filter.createdDateRangeFilter.end));
+    let params = this.getHttpPramsFilteredForOrder(filter, paging);
     return this.http.get<any>(this.controler, { params: params });
   }
   WithoutPaging(filter: OrderFilter) {
@@ -88,14 +46,8 @@ export class OrderService {
   }
   chekcCode(code, ClientId) {
     let params = new HttpParams();
-    params = params.append(
-      'code',
-      code != null || code != undefined ? code : null
-    );
-    params = params.append(
-      'clientid',
-      ClientId != null || ClientId != undefined ? ClientId : null
-    );
+    params = params.append('code', code != null || code != undefined ? code : null);
+    params = params.append('clientid', ClientId != null || ClientId != undefined ? ClientId : null);
     return this.http.get<any>(this.controler + 'chekcCode', { params: params });
   }
   CheckMulieCode(code, ClientId) {
@@ -117,13 +69,9 @@ export class OrderService {
     return this.http.get<any>(this.controler + 'NewOrderDontSned');
   }
   Accept(id) {
-    // let params = new HttpParams();
-    // params = params.append("id", id);
     return this.http.put<any>(this.controler + 'Accept', id);
   }
   DisAccept(id) {
-    // let params = new HttpParams();
-    // params = params.append("id", id);
     return this.http.put<any>(this.controler + 'DisAccept', id);
   }
   Acceptmultiple(ids) {
@@ -250,22 +198,10 @@ export class OrderService {
 
     if (item.ClientId != undefined || item.ClientId != null)
       params = params.append('ClientId', item.ClientId);
-    if (
-      item.ClientDoNotDeleviredMoney != undefined ||
-      item.ClientDoNotDeleviredMoney != null
-    )
-      params = params.append(
-        'ClientDoNotDeleviredMoney',
-        item.ClientDoNotDeleviredMoney
-      );
-    if (
-      item.IsClientDeleviredMoney != undefined ||
-      item.IsClientDeleviredMoney != null
-    )
-      params = params.append(
-        'IsClientDeleviredMoney',
-        item.IsClientDeleviredMoney
-      );
+    if (item.ClientDoNotDeleviredMoney != undefined || item.ClientDoNotDeleviredMoney != null)
+      params = params.append('ClientDoNotDeleviredMoney', item.ClientDoNotDeleviredMoney);
+    if (item.IsClientDeleviredMoney != undefined || item.IsClientDeleviredMoney != null)
+      params = params.append('IsClientDeleviredMoney', item.IsClientDeleviredMoney);
     if (item.OrderPlacedId.length != 0) {
       let index = 0;
       item.OrderPlacedId.forEach((element) => {
@@ -437,6 +373,14 @@ export class OrderService {
       params = params.append('AgentPrintNumber', filter.AgentPrintNumber);
     if (filter.ClientPrintNumber != undefined || filter.ClientPrintNumber != null)
       params = params.append('ClientPrintNumber', filter.ClientPrintNumber);
+    if (filter.createdDateRangeFilter.start)
+      params = params.append('CreatedDateRangeFilter.start', String(filter.createdDateRangeFilter.start));
+    if (filter.createdDateRangeFilter.end)
+      params = params.append('CreatedDateRangeFilter.end', String(filter.createdDateRangeFilter.end));
+    if (paging) {
+      params = params.append('Page', paging.Page);
+      params = params.append('RowCount', paging.RowCount);
+    }
     return params;
   }
 }
