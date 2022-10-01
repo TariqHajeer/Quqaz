@@ -38,7 +38,7 @@ export class OrderService {
       params = params.append('OrderState', filter.OrderState);
     if (filter.CreatedBy != undefined || filter.CreatedBy != null)
       params = params.append('CreatedBy', filter.CreatedBy);
-    if (sfilter.IsClientDiliverdMoney != undefined || filter.IsClientDiliverdMoney != null)
+    if (filter.IsClientDiliverdMoney != undefined || filter.IsClientDiliverdMoney != null)
       params = params.append('IsClientDiliverdMoney', filter.IsClientDiliverdMoney);
     if (filter.AgentPrintStartDate != undefined || filter.AgentPrintStartDate != null)
       params = params.append('AgentPrintStartDate', filter.AgentPrintStartDate);
