@@ -11,7 +11,7 @@ import { CreatemultipleOrderFromClientComponent } from './createmultiple-order-f
 import { CreatemultipulorderagentComponent } from './createmultipulorderagent/createmultipulorderagent.component';
 import { EditClientOrdersComponent } from './edit-client-orders/edit-client-orders.component';
 import { EditOrdersComponent } from './edit-orders/edit-orders.component';
-import { GetOrderComeToBranchComponent } from './get-order-come-to-branch/get-order-come-to-branch.component';
+import { GetOrdersComeToMyBranchComponent } from './get-orders-come-to-my-branch/get-orders-come-to-my-branch.component';
 import { MoveOrdersComponent } from './move-orders/move-orders.component';
 import { NewOrdersDontSendComponent } from './new-orders-dont-send/new-orders-dont-send.component';
 import { OrdersWithClientComponent } from './orders-with-client/orders-with-client.component';
@@ -121,8 +121,8 @@ const routes: Routes = [
     data: { roles: [UserPermission.ShowOrder] }
   },
   {
-    path: "GetOrderComeToBranchComponent",
-    component: GetOrderComeToBranchComponent, canActivate: [AuthGuard],
+    path: "getOrdersComeToMyBranch",
+    component: GetOrdersComeToMyBranchComponent, canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowOrder] }
   }
 ];

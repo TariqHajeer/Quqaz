@@ -1,16 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, Input, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { Order } from 'src/app/Models/order/order.model';
 import { Paging } from 'src/app/Models/paging';
 import { OrderService } from 'src/app/services/order.service';
+
 @Component({
-  selector: 'app-get-order-come-to-branch',
-  templateUrl: './get-order-come-to-branch.component.html',
-  styleUrls: ['./get-order-come-to-branch.component.scss']
+  selector: 'app-get-orders-come-to-my-branch',
+  templateUrl: './get-orders-come-to-my-branch.component.html',
+  styleUrls: ['./get-orders-come-to-my-branch.component.scss']
 })
-export class GetOrderComeToBranchComponent implements OnInit {
+export class GetOrdersComeToMyBranchComponent implements OnInit {
 
   constructor(
     private orderservice: OrderService,
@@ -18,10 +20,14 @@ export class GetOrderComeToBranchComponent implements OnInit {
   selection = new SelectionModel<any>(true, []);
   dataSource = new MatTableDataSource([]);
   orders: Order[] = [];
-  paging: Paging;
+  paging: Paging=new Paging();
+  filtering: OrderFilter=new OrderFilter();
   @Input() totalCount: number;
   noDataFound: boolean = false;
+  displayedColumns: string[] = ['select', 'index', 'code', 'country'
+  , 'client', 'cost', 'deliveryCost'];
   ngOnInit(): void {
+    this.getData();
   }
   isAllSelected(): boolean {
     const numSelected = this.selection.selected.length;
@@ -65,16 +71,14 @@ export class GetOrderComeToBranchComponent implements OnInit {
     this.getData();
   }
   getData(): void {
-    this.orderservice.GetInStockToTransferToSecondBranch(this.filtering, this.paging).subscribe(response => {
-      this.getorders = []
+    this.orderservice.GetOrdersComeToMyBranch(this.filtering, this.paging).subscribe(response => {
       if (response)
         if (response.data.length <= 0)
           this.noDataFound = true
         else {
-          this.getorders = response.data;
           this.noDataFound = false
         }
-      this.dataSource = new MatTableDataSource(this.getorders)
+      this.dataSource = new MatTableDataSource(response.data)
       this.totalCount = response.total
       this.selection.clear()
       this.dataSource.data.forEach(row => {
@@ -87,4 +91,5 @@ export class GetOrderComeToBranchComponent implements OnInit {
 
       });
   }
+
 }

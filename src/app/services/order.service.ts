@@ -334,6 +334,17 @@ export class OrderService {
   PutReSendMultiple(resendArr: Resend[]) {
     return this.http.put<any>(this.controler + 'ReSendMultiple', resendArr);
   }
+  GetOrdersComeToMyBranch(filter: OrderFilter, paging: Paging){
+    let params = this.getHttpPramsFilteredForOrder(filter, paging);
+    if (paging.RowCount != undefined || paging.RowCount != null)
+      params = params.append('RowCount', paging.RowCount);
+
+    if (paging.Page != undefined || paging.Page != null)
+      params = params.append('Page', paging.Page);
+    return this.http.get<any>(this.controler + 'GetOrdersComeToMyBranch', {
+      params: params,
+    });
+  }
   getHttpPramsFilteredForOrder(filter: OrderFilter, paging: Paging): HttpParams {
     let params = new HttpParams();
 
@@ -383,4 +394,5 @@ export class OrderService {
     }
     return params;
   }
+  
 }
