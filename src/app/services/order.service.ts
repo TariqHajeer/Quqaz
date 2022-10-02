@@ -345,6 +345,9 @@ export class OrderService {
       params: params,
     });
   }
+  ReceiveOrdersToMyBranch(ids: number[]) {
+    return this.http.put<any>(this.controler + 'ReceiveOrdersToMyBranch', ids);
+  }
   getHttpPramsFilteredForOrder(filter: OrderFilter, paging: Paging): HttpParams {
     let params = new HttpParams();
 
