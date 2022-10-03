@@ -28,7 +28,10 @@ import { ClientService } from '../../client/client.service';
 })
 export class OrdersTodayComponent implements OnInit {
 
-  displayedColumns: string[];
+  displayedColumns: string[]= ['select', 'number', 'code', 'deliveryCost', 'cost', 'oldCost', 'recipientName',
+  'recipientPhones', 'client', 'clientPrintNumber', 'country'
+  , 'region', 'agent', 'agentPrintNumber', 'monePlaced', 'orderplaced', 'address'
+  , 'createdBy', 'date', 'diliveryDate', 'note'];
   dataSource
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -42,7 +45,8 @@ export class OrdersTodayComponent implements OnInit {
   MoenyPlaced: NameAndIdDto[] = []
   clients: Client[] = []
   cities: City[] = []
-  Region: Region[] = []
+  Regions: Region[] = []
+  tempRegions: Region[] = []
   Agents: User[] = []
   cityapi = "Country"
   regionapi = "Region"
@@ -57,8 +61,10 @@ export class OrdersTodayComponent implements OnInit {
   ngOnInit(): void {
     this.paging = new Paging
     this.filtering = new OrderFilter
-    this.get()
+    this.allFilter()
     this.GetClient()
+    this.GetCities()
+    this.GetRegion()
     localStorage.removeItem('printordersagent')
     localStorage.removeItem('printagent')
 
@@ -74,8 +80,8 @@ export class OrdersTodayComponent implements OnInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.orders=[]
-    this.ids=[]
+    this.orders = []
+    this.ids = []
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => { this.selection.select(row) });
@@ -90,7 +96,7 @@ export class OrdersTodayComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
   ids: any[] = []
-  checkboxId(row) {  
+  checkboxId(row) {
     if (this.selection.isSelected(row))
       if (this.ids.filter(d => d == row.id).length > 0)
         return
@@ -99,19 +105,19 @@ export class OrdersTodayComponent implements OnInit {
         this.orders.push(row)
         // this.agent=this.orders.map(o=>o.agent)[0]
         // this.orderplaced=this.orders.map(o=>o.orderplaced)[0]
-      
+
       }
     if (!this.selection.isSelected(row)) {
       this.ids = this.ids.filter(i => i != row.id)
       this.orders = this.orders.filter(o => o != row)
-      
+
     }
   }
   get() {
-    this.dataSource = new MatTableDataSource(this.orders);
-    this.dataSource.sort = this.sort;
+   this.allFilter()
+    // this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.displayedColumns = ['select','number','code', 'deliveryCost', 'cost', 'oldCost', 'recipientName',
+    this.displayedColumns = ['select', 'number', 'code', 'deliveryCost', 'cost', 'oldCost', 'recipientName',
       'recipientPhones', 'client', 'clientPrintNumber', 'country'
       , 'region', 'agent', 'agentPrintNumber', 'monePlaced', 'orderplaced', 'address'
       , 'createdBy', 'date', 'diliveryDate', 'note'];
@@ -122,10 +128,7 @@ export class OrdersTodayComponent implements OnInit {
   }
 
   allFilter() {
-    // if(!this.filtering.ClientId||!this.filtering.CreatedDate)return
-   // else{
-    //  console.log(this.filtering)
-      this.spinner.show()
+    this.spinner.show()
     this.orderservice.WithoutPaging(this.filtering).subscribe(response => {
       this.spinner.hide()
       if (response.data.length == 0)
@@ -137,21 +140,19 @@ export class OrdersTodayComponent implements OnInit {
           element.orderplaced.name = "لديك مبلغ مع العميل"
         }
         else if (element.orderStateId == OrderStateEnum.Finished) {
-        //element.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
-        //  element.orderplaced = this.orderPlace.find(o => o.id == 4)
+          //element.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
+          //  element.orderplaced = this.orderPlace.find(o => o.id == 4)
         }
       });
-      this.orders=response.data
+      this.orders = response.data
       this.sumCost()
       this.dataSource = new MatTableDataSource(response.data)
       this.totalCount = response.total
-      // console.log(response)
     },
       err => {
         this.spinner.hide()
       });
-   // }
-    
+
   }
   count
   deliveryCostCount
@@ -162,28 +163,44 @@ export class OrdersTodayComponent implements OnInit {
       this.orders.forEach(o => {
         this.count += o.cost
         this.deliveryCostCount += o.deliveryCost
-       
+
       })
-    
+
     return this.count
   }
-  
+
   GetClient() {
     this.clientService.getClients().subscribe(res => {
       this.clients = res
     })
   }
- 
-
+  GetCities() {
+    this.customerService.getAll(this.cityapi).subscribe(res => {
+      this.cities = res
+    })
+  }
+  GetRegion() {
+    this.customerService.getAll(this.regionapi).subscribe(res => {
+      this.Regions = res
+      this.tempRegions=res
+    })
+  }
+  changeCountry() {
+    this.Regions = []
+    this.filtering.RegionId =null
+    this.Regions = this.tempRegions.filter(r => r.country.id == this.filtering.CountryId)
+    if (this.Regions.length != 0)
+      this.filtering.RegionId = this.Regions[0].id
+  }
   print() {
-    if ( this.noDataFound == true || this.orders.length==0) {
+    if (this.noDataFound == true || this.orders.length == 0) {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
     // localStorage.setItem('printagent',JSON.stringify(this.Agents.find(c=>c.id==this.AgentId)))
-    localStorage.setItem('printordersagent',JSON.stringify(this.orders))
+    localStorage.setItem('printordersagent', JSON.stringify(this.orders))
     this.router.navigate(['app/reports/printagentpreview'])
-   
+
   }
 
 }
