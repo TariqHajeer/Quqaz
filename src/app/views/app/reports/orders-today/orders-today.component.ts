@@ -103,9 +103,6 @@ export class OrdersTodayComponent implements OnInit {
       else {
         this.ids.push(row.id)
         this.orders.push(row)
-        // this.agent=this.orders.map(o=>o.agent)[0]
-        // this.orderplaced=this.orders.map(o=>o.orderplaced)[0]
-
       }
     if (!this.selection.isSelected(row)) {
       this.ids = this.ids.filter(i => i != row.id)
@@ -113,19 +110,7 @@ export class OrdersTodayComponent implements OnInit {
 
     }
   }
-  get() {
-   this.allFilter()
-    // this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.displayedColumns = ['select', 'number', 'code', 'deliveryCost', 'cost', 'oldCost', 'recipientName',
-      'recipientPhones', 'client', 'clientPrintNumber', 'country'
-      , 'region', 'agent', 'agentPrintNumber', 'monePlaced', 'orderplaced', 'address'
-      , 'createdBy', 'date', 'diliveryDate', 'note'];
-  }
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
+  
 
   allFilter() {
     this.spinner.show()
