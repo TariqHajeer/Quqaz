@@ -71,43 +71,41 @@ export class OrdersTodayComponent implements OnInit {
   }
   selection = new SelectionModel<any>(true, []);
 
-  /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource?.data?.length;
+    const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
-
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.orders = []
-    this.ids = []
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach(row => { this.selection.select(row) });
+    if (this.isAllSelected()) {
+      this.selection.clear()
+      this.dataSource.data.forEach(item => {
+        this.orders = this.orders.filter(order => order.id != item.id)
+      })
+    }
+    else {
+      this.dataSource.data.forEach(row => {
+        this.selection.select(row)
+      });
+    }
   }
-
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: any): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     this.checkboxId(row)
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row`;
   }
-  ids: any[] = []
   checkboxId(row) {
-    if (this.selection.isSelected(row))
-      if (this.ids.filter(d => d == row.id).length > 0)
+    if (this.selection.isSelected(row)) {
+      if (this.orders.filter(d => d.id == row.id).length > 0)
         return
-      else {
-        this.ids.push(row.id)
-        this.orders.push(row)
-      }
+      else this.orders.push(row)
+    }
     if (!this.selection.isSelected(row)) {
-      this.ids = this.ids.filter(i => i != row.id)
-      this.orders = this.orders.filter(o => o != row)
-
+      this.orders = this.orders.filter(o => o.id != row.id)
     }
   }
 
