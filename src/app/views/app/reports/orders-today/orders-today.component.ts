@@ -132,9 +132,15 @@ export class OrdersTodayComponent implements OnInit {
           //  element.orderplaced = this.orderPlace.find(o => o.id == 4)
         }
       });
-      this.orders = response.data
+      // this.orders = response.data
       this.sumCost()
       this.dataSource = new MatTableDataSource(response.data)
+      this.selection.clear()
+      this.dataSource.data.forEach(row => {
+        if (this.orders.filter(d => d.id == row.id).length == 1) {
+          this.selection.select(row)
+        }
+      });
       this.totalCount = response.total
     },
       err => {
