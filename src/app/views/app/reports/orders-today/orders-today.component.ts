@@ -28,10 +28,10 @@ import { ClientService } from '../../client/client.service';
 })
 export class OrdersTodayComponent implements OnInit {
 
-  displayedColumns: string[]= ['select', 'number', 'code', 'deliveryCost', 'cost', 'oldCost', 'recipientName',
-  'recipientPhones', 'client', 'clientPrintNumber', 'country'
-  , 'region', 'agent', 'agentPrintNumber', 'monePlaced', 'orderplaced', 'address'
-  , 'createdBy', 'date', 'diliveryDate', 'note'];
+  displayedColumns: string[] = ['select', 'number', 'code', 'deliveryCost', 'cost', 'oldCost', 'recipientName',
+    'recipientPhones', 'client', 'clientPrintNumber', 'country'
+    , 'region', 'agent', 'agentPrintNumber', 'monePlaced', 'orderplaced', 'address'
+    , 'createdBy', 'date', 'diliveryDate', 'note'];
   dataSource
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -74,7 +74,7 @@ export class OrdersTodayComponent implements OnInit {
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
+    const numRows = this.dataSource?.data?.length;
     return numSelected === numRows;
   }
 
@@ -110,11 +110,16 @@ export class OrdersTodayComponent implements OnInit {
 
     }
   }
-  
 
+  switchPage(event: PageEvent) {
+    this.paging.allItemsLength = event.length;
+    this.paging.RowCount = event.pageSize;
+    this.paging.Page = event.pageIndex + 1;
+    this.allFilter();
+  }
   allFilter() {
     this.spinner.show()
-    this.orderservice.WithoutPaging(this.filtering).subscribe(response => {
+    this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
       this.spinner.hide()
       if (response.data.length == 0)
         this.noDataFound = true
@@ -167,12 +172,12 @@ export class OrdersTodayComponent implements OnInit {
   GetRegion() {
     this.customerService.getAll(this.regionapi).subscribe(res => {
       this.Regions = res
-      this.tempRegions=res
+      this.tempRegions = res
     })
   }
   changeCountry() {
     this.Regions = []
-    this.filtering.RegionId =null
+    this.filtering.RegionId = null
     this.Regions = this.tempRegions.filter(r => r.country.id == this.filtering.CountryId)
     if (this.Regions.length != 0)
       this.filtering.RegionId = this.Regions[0].id
