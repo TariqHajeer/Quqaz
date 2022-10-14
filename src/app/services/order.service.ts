@@ -13,7 +13,7 @@ import { Resend } from '../Models/order/resend.model';
 })
 export class OrderService {
   controler = environment.baseUrl + 'api/Order/';
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient) { }
   GetAll(filter: OrderFilter, paging: Paging) {
     let params = new HttpParams();
     if (filter.Code != undefined || filter.Code != null)
@@ -36,7 +36,7 @@ export class OrderService {
       params = params.append('MonePlacedId', filter.MonePlacedId);
     if (filter.OrderplacedId != undefined || filter.OrderplacedId != null)
       params = params.append('OrderplacedId', filter.OrderplacedId);
-      if (filter.OrderState != undefined || filter.OrderState != null)
+    if (filter.OrderState != undefined || filter.OrderState != null)
       params = params.append('OrderState', filter.OrderState);
     if (filter.CreatedBy != undefined || filter.CreatedBy != null)
       params = params.append('CreatedBy', filter.CreatedBy);
@@ -433,5 +433,11 @@ export class OrderService {
   }
   PutReSendMultiple(resendArr: Resend[]) {
     return this.http.put<any>(this.controler + 'ReSendMultiple', resendArr);
+  }
+  PrintOrders(orderFilter, selectedIds, isAllSelected) {
+    return this.http.post<any>(this.controler + 'PrintOrders', {
+      'orderFilter': orderFilter, 'selectedIds': selectedIds
+      , 'isAllSelected': isAllSelected
+    });
   }
 }

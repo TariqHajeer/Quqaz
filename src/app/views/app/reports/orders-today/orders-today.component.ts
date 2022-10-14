@@ -10,14 +10,12 @@ import { City } from 'src/app/Models/Cities/city.Model';
 import { OrderStateEnum } from 'src/app/Models/Enums/OrderStateEnum';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
-import { Order, OrderState } from 'src/app/Models/order/order.model';
-import { Resend } from 'src/app/Models/order/resend.model';
+import { Order } from 'src/app/Models/order/order.model';
 import { Paging } from 'src/app/Models/paging';
 import { Region } from 'src/app/Models/Regions/region.model';
 import { User } from 'src/app/Models/user/user.model';
 import { CustomService } from 'src/app/services/custom.service';
 import { OrderService } from 'src/app/services/order.service';
-import { UserService } from 'src/app/services/user.service';
 import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
 
@@ -39,7 +37,7 @@ export class OrdersTodayComponent implements OnInit {
   pageEvent: PageEvent;
   paging: Paging
   filtering: OrderFilter
-  orders: Order[] = []
+  ordersIds: number[] = []
   noDataFound: boolean = false
   orderPlace: NameAndIdDto[] = []
   MoenyPlaced: NameAndIdDto[] = []
@@ -48,13 +46,13 @@ export class OrdersTodayComponent implements OnInit {
   Regions: Region[] = []
   tempRegions: Region[] = []
   Agents: User[] = []
+  unSelectIds: number[] = [];
   cityapi = "Country"
   regionapi = "Region"
   constructor(private orderservice: OrderService,
     private router: Router,
     private clientService: ClientService
     , private customerService: CustomService,
-    private userService: UserService,
     public spinner: NgxSpinnerService,
     private notifications: NotificationsService,) { }
 
@@ -70,42 +68,59 @@ export class OrdersTodayComponent implements OnInit {
 
   }
   selection = new SelectionModel<any>(true, []);
-
+  selectAll: boolean = true;
   isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
+    return this.selectAll = !this.selectAll;
   }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
+    this.ordersIds = [];
+    this.unSelectIds = [];
     if (this.isAllSelected()) {
-      this.selection.clear()
-      this.dataSource.data.forEach(item => {
-        this.orders = this.orders.filter(order => order.id != item.id)
-      })
+      this.selection.clear();
     }
     else {
       this.dataSource.data.forEach(row => {
-        this.selection.select(row)
+        this.selection.select(row);
       });
     }
   }
+  checkboxLabelAll(): string {
+    return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+  }
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: any): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    }
     this.checkboxId(row)
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row`;
   }
   checkboxId(row) {
     if (this.selection.isSelected(row)) {
-      if (this.orders.filter(d => d.id == row.id).length > 0)
-        return
-      else this.orders.push(row)
+      if (this.selectAll) {
+        this.unSelectIds = [];
+        if (this.ordersIds.filter(d => d == row.id).length > 0)
+          return
+        else {
+          this.ordersIds.push(row.id);
+        }
+      }
+      else {
+        this.ordersIds = [];
+        this.unSelectIds = this.unSelectIds.filter(o => o != row.id);
+      }
     }
     if (!this.selection.isSelected(row)) {
-      this.orders = this.orders.filter(o => o.id != row.id)
+      if (!this.selectAll) {
+        if (this.unSelectIds.filter(d => d == row.id).length > 0)
+          return
+        else {
+          this.unSelectIds.push(row.id);
+          this.ordersIds = [];
+        }
+      }
+      else {
+        this.ordersIds = this.ordersIds.filter(o => o != row.id);
+        this.unSelectIds = [];
+      }
     }
   }
 
@@ -127,19 +142,10 @@ export class OrdersTodayComponent implements OnInit {
           element.monePlaced.name = "لديك مبلغ مع العميل"
           element.orderplaced.name = "لديك مبلغ مع العميل"
         }
-        else if (element.orderStateId == OrderStateEnum.Finished) {
-          //element.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
-          //  element.orderplaced = this.orderPlace.find(o => o.id == 4)
-        }
       });
-      // this.orders = response.data
-      this.sumCost()
       this.dataSource = new MatTableDataSource(response.data)
-      this.selection.clear()
       this.dataSource.data.forEach(row => {
-        if (this.orders.filter(d => d.id == row.id).length == 1) {
-          this.selection.select(row)
-        }
+        if (!this.selectAll) { this.selection.select(row) }
       });
       this.totalCount = response.total
     },
@@ -148,20 +154,7 @@ export class OrdersTodayComponent implements OnInit {
       });
 
   }
-  count
-  deliveryCostCount
-  sumCost() {
-    this.count = 0
-    this.deliveryCostCount = 0
-    if (this.orders)
-      this.orders.forEach(o => {
-        this.count += o.cost
-        this.deliveryCostCount += o.deliveryCost
 
-      })
-
-    return this.count
-  }
 
   GetClient() {
     this.clientService.getClients().subscribe(res => {
@@ -187,13 +180,21 @@ export class OrdersTodayComponent implements OnInit {
       this.filtering.RegionId = this.Regions[0].id
   }
   print() {
-    if (this.noDataFound == true || this.orders.length == 0) {
+    if (this.noDataFound == true || (this.ordersIds.length == 0 && this.selectAll)) {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    // localStorage.setItem('printagent',JSON.stringify(this.Agents.find(c=>c.id==this.AgentId)))
-    localStorage.setItem('printordersagent', JSON.stringify(this.orders))
-    this.router.navigate(['app/reports/printagentpreview'])
+    if (!this.selectAll)
+      this.orderservice.PrintOrders(this.filtering, this.unSelectIds, !this.selectAll).subscribe(res => {
+        console.log(res);
+
+      })
+    else this.orderservice.PrintOrders(this.filtering, this.ordersIds, !this.selectAll).subscribe(res => {
+      console.log(res);
+    })
+
+    // localStorage.setItem('printordersagent', JSON.stringify(this.orders))
+    // this.router.navigate(['app/reports/printagentpreview'])
 
   }
 
