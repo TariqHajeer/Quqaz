@@ -13,7 +13,10 @@ import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
 import { CustomService } from 'src/app/services/custom.service';
 import { User } from 'src/app/Models/user/user.model';
-
+export interface AgentOrdersIds {
+  orderId: number
+  agentId: number
+}
 @Component({
   selector: 'app-get-orders-come-to-my-branch',
   templateUrl: './get-orders-come-to-my-branch.component.html',
@@ -21,20 +24,20 @@ import { User } from 'src/app/Models/user/user.model';
 })
 export class GetOrdersComeToMyBranchComponent implements OnInit {
   displayedColumns: string[] = ['select', 'index', 'code', 'country'
-    , 'client', 'cost', 'deliveryCost'];
+    , 'client', 'agent', 'cost', 'deliveryCost'];
   dataSource = new MatTableDataSource([]);
   orders: any[] = []
-  statu
   paging: Paging
   filtering: OrderFilter
   noDataFound: boolean = false
-  getorders: any[] = []
   @Input() totalCount: number;
   selection = new SelectionModel<any>(true, []);
   countries: any[] = []
   clients: Client[] = []
   cityapi: string = 'Country';
   Agents: User[] = []
+  agentOrdersId: AgentOrdersIds
+  agentOrdersIds: AgentOrdersIds[] = []
   constructor(
     private orderservice: OrderService,
     public userService: UserService,
@@ -64,31 +67,33 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     if (this.isAllSelected()) {
       this.selection.clear()
       this.dataSource.data.forEach(item => {
-        this.orders = this.orders.filter(order => order.id != item.id)
+        this.orders = this.orders.filter(order => order != item)
       })
     }
     else {
       this.dataSource.data.forEach(row => {
-        this.selection.select(row)
+        this.selection.select(row.id)
       });
     }
   }
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: any): string {
-    if (!row) {
+  checkboxLabel(rowid?: any, row?): string {
+    if (!rowid) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    this.checkboxId(row)
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row`;
+    this.checkboxId(rowid, row)
+    return `${this.selection.isSelected(rowid) ? 'deselect' : 'select'} row`;
   }
-  checkboxId(row) {
-    if (this.selection.isSelected(row)) {
-      if (this.orders.filter(d => d.id == row.id).length > 0)
+  checkboxId(rowid, row?) {
+    if (this.selection.isSelected(rowid)) {
+      if (this.orders.filter(d => d == row).length > 0)
         return
-      else this.orders.push(row)
+      else {
+        this.orders.push(row)
+      }
     }
-    if (!this.selection.isSelected(row)) {
-      this.orders = this.orders.filter(o => o.id != row.id)
+    if (!this.selection.isSelected(rowid)) {
+      this.orders = this.orders.filter(o => o.id != rowid)
     }
   }
   GetClient() {
@@ -109,20 +114,19 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
   }
   allFilter() {
     this.orderservice.GetOrdersComeToMyBranch(this.filtering, this.paging).subscribe(response => {
-      this.getorders = []
       if (response)
         if (response.data.length <= 0)
           this.noDataFound = true
         else {
-          this.getorders = response.data;
           this.noDataFound = false
         }
-      this.dataSource = new MatTableDataSource(this.getorders)
+      this.dataSource = new MatTableDataSource(response.data)
       this.totalCount = response.total
-      this.selection.clear()
+      // this.selection.clear()
       this.dataSource.data.forEach(row => {
         if (this.orders.filter(d => d.id == row.id).length == 1) {
-          this.selection.select(row)
+          this.selection.select(row.id)
+          row.agent = this.orders.find(order => order.id == row.id).agent
         }
       });
     },
@@ -131,21 +135,41 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
       });
   }
   ReceiveOrders() {
-    if (this.noDataFound == true || this.getorders.length == 0) {
+    if (this.totalCount == 0 || this.orders.length == 0) {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    this.orderservice.ReceiveOrdersToMyBranch(this.orders.map(order => order.id)).subscribe(res => {
+    this.agentOrdersIds = [];
+    if (this.orders.filter(order => !order.agent).length > 0) {
+      this.notifications.create('error', '  يجب اختيار مندوب', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      return
+    }
+    this.orders.forEach(order => {
+      this.agentOrdersId = {
+        orderId: order.id,
+        agentId: order.agent.id
+      }
+      this.agentOrdersIds.push(this.agentOrdersId);
+    })
+    this.orderservice.ReceiveOrdersToMyBranch(this.agentOrdersIds).subscribe(res => {
       this.notifications.success('success', 'تم نقل الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.selection.clear()
-      this.orders = []
+      this.orders = [];
+      this.agentOrdersIds = [];
       this.allFilter()
     })
   }
-  getAgent():void{
-    this.userService.ActiveAgent().subscribe(res=>{
+  getAgent(): void {
+    this.userService.ActiveAgent().subscribe(res => {
       this.Agents = res as User[];
-    });    
+    });
   }
-
+  agentArray(countryId) {
+    return this.Agents.filter(
+      (a) =>
+        a.countries
+          .map((c) => c.id)
+          .filter((co) => co == countryId).length > 0
+    );
+  }
 }

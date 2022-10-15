@@ -334,18 +334,11 @@ export class OrderService {
   PutReSendMultiple(resendArr: Resend[]) {
     return this.http.put<any>(this.controler + 'ReSendMultiple', resendArr);
   }
-  GetOrdersComeToMyBranch(filter: OrderFilter, paging: Paging){
+  GetOrdersComeToMyBranch(filter: OrderFilter, paging: Paging) {
     let params = this.getHttpPramsFilteredForOrder(filter, paging);
-    if (paging.RowCount != undefined || paging.RowCount != null)
-      params = params.append('RowCount', paging.RowCount);
-
-    if (paging.Page != undefined || paging.Page != null)
-      params = params.append('Page', paging.Page);
-    return this.http.get<any>(this.controler + 'GetOrdersComeToMyBranch', {
-      params: params,
-    });
+    return this.http.get<any>(this.controler+'GetOrdersComeToMyBranch', { params: params });
   }
-  ReceiveOrdersToMyBranch(ids: number[]) {
+  ReceiveOrdersToMyBranch(ids: any[]) {
     return this.http.put<any>(this.controler + 'ReceiveOrdersToMyBranch', ids);
   }
   getHttpPramsFilteredForOrder(filter: OrderFilter, paging: Paging): HttpParams {
@@ -391,11 +384,12 @@ export class OrderService {
       params = params.append('CreatedDateRangeFilter.start', String(filter.createdDateRangeFilter.start));
     if (filter.createdDateRangeFilter.end)
       params = params.append('CreatedDateRangeFilter.end', String(filter.createdDateRangeFilter.end));
-    if (paging) {
+    if (paging.Page)
       params = params.append('Page', paging.Page);
+    if (paging.RowCount)
       params = params.append('RowCount', paging.RowCount);
-    }
+
     return params;
   }
-  
+
 }
