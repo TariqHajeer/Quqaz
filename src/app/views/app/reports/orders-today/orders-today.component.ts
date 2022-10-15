@@ -18,6 +18,7 @@ import { CustomService } from 'src/app/services/custom.service';
 import { OrderService } from 'src/app/services/order.service';
 import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
+import { saveAs as importedSaveAs } from 'file-saver';
 
 @Component({
   selector: 'app-orders-today',
@@ -186,11 +187,13 @@ export class OrdersTodayComponent implements OnInit {
     }
     if (!this.selectAll)
       this.orderservice.PrintOrders(this.filtering, this.unSelectIds, !this.selectAll).subscribe(res => {
-        console.log(res);
+        // console.log(res);
+        importedSaveAs(res,new Date())
 
       })
     else this.orderservice.PrintOrders(this.filtering, this.ordersIds, !this.selectAll).subscribe(res => {
-      console.log(res);
+      // console.log(res);
+      importedSaveAs(res,new Date())
     })
 
     // localStorage.setItem('printordersagent', JSON.stringify(this.orders))
