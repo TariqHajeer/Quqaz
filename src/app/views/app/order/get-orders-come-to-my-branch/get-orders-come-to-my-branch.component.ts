@@ -13,9 +13,13 @@ import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
 import { CustomService } from 'src/app/services/custom.service';
 import { User } from 'src/app/Models/user/user.model';
+import { Region } from 'src/app/Models/Regions/region.model';
 export interface AgentOrdersIds {
   orderId: number
   agentId: number
+  regionId?: number
+  cost: number
+  deliveryCost: number
 }
 @Component({
   selector: 'app-get-orders-come-to-my-branch',
@@ -23,8 +27,8 @@ export interface AgentOrdersIds {
   styleUrls: ['./get-orders-come-to-my-branch.component.scss']
 })
 export class GetOrdersComeToMyBranchComponent implements OnInit {
-  displayedColumns: string[] = ['select', 'index', 'code', 'country'
-    , 'client', 'agent', 'cost', 'deliveryCost'];
+  displayedColumns: string[] = ['select', 'index', 'code'
+    , 'client', 'country', 'region', 'agent', 'cost', 'deliveryCost'];
   dataSource = new MatTableDataSource([]);
   orders: any[] = []
   paging: Paging
@@ -35,7 +39,9 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
   countries: any[] = []
   clients: Client[] = []
   cityapi: string = 'Country';
+  regionapi: string = 'Region';
   Agents: User[] = []
+  Regions: Region[] = [];
   agentOrdersId: AgentOrdersIds
   agentOrdersIds: AgentOrdersIds[] = []
   constructor(
@@ -51,10 +57,11 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
   ngOnInit(): void {
     this.GetClient()
     this.getCities()
+    this.getAgent();
+    this.GetRegion();
     this.paging = new Paging
     this.filtering = new OrderFilter
     this.allFilter();
-    this.getAgent();
   }
 
   isAllSelected() {
@@ -144,10 +151,14 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
       this.notifications.create('error', '  يجب اختيار مندوب', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    this.orders.forEach(order => {
+    this.orders.forEach(item => {
+      let order = this.dataSource.data.find(data => data.id == item.id)
       this.agentOrdersId = {
         orderId: order.id,
-        agentId: order.agent.id
+        agentId: order.agent.id,
+        regionId: order.region?.id,
+        deliveryCost: Number(order.deliveryCost),
+        cost: Number(order.cost),
       }
       this.agentOrdersIds.push(this.agentOrdersId);
     })
@@ -170,6 +181,16 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
         a.countries
           .map((c) => c.id)
           .filter((co) => co == countryId).length > 0
+    );
+  }
+  GetRegion() {
+    this.customerService.getAll(this.regionapi).subscribe((res) => {
+      this.Regions = res;
+    });
+  }
+  regionArray(countryId) {
+    return this.Regions.filter(
+      (r) => r.country.id == countryId
     );
   }
 }
