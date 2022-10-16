@@ -480,4 +480,14 @@ export class OrderService {
   PutReSendMultiple(resendArr: Resend[]) {
     return this.http.put<any>(this.controler + 'ReSendMultiple', resendArr);
   }
+  GetOrderReturnedToSecondBranch(code) {
+    let params = new HttpParams();
+    if (code) params = params.append('code', code);
+    return this.http.get<any>(this.controler + 'GetOrderReturnedToSecondBranch', {
+      params: params,
+    });
+  }
+  SendOrdersReturnedToSecondBranch(ids) {
+    return this.http.put<any>(this.controler + 'SendOrdersReturnedToSecondBranch', ids);
+  }
 }

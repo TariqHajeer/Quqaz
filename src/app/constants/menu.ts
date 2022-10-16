@@ -69,6 +69,12 @@ const data: IMenuItem[] = [
       },
       {
         icon: 'iconsminds-box-close',
+        label: 'اعادة الطلبات الى الفرع الرئيسي',
+        to: `${adminRoot}/order/GetOrderReturnedToSecondBranch`,
+        permission: [UserPermission.ShowOrder],
+      },
+      {
+        icon: 'iconsminds-box-close',
         label: ' طلبات عند العميل ',
         to: `${adminRoot}/order/orderswithclient`,
         permission: [UserPermission.AddOrder],
