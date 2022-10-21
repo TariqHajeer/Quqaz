@@ -19,11 +19,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { CreatemultipleOrderFromClientComponent } from './createmultiple-order-from-client/createmultiple-order-from-client.component';
 import { ProfitsOfOrdersComponent } from './profits-of-orders/profits-of-orders.component';
 import { ChartModule } from '@syncfusion/ej2-angular-charts';
-import { DateFormatOptions } from '@syncfusion/ej2-base'
-import {
-  CategoryService, DateTimeService, ScrollBarService, ColumnSeriesService, LineSeriesService,
-  ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService, LegendService, TooltipService
-} from '@syncfusion/ej2-angular-charts';
+import {CategoryService, DateTimeService, ScrollBarService, ColumnSeriesService, LineSeriesService,ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService, LegendService, TooltipService} from '@syncfusion/ej2-angular-charts';
 import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -45,6 +41,7 @@ import { AddMultipulOrdersAgentWithRegionComponent } from './add-multipul-orders
 import { ReceiptOrderComponent } from './receipt-order/receipt-order.component';
 import { TransferToSecondBranchComponent } from './transfer-to-second-branch/transfer-to-second-branch.component';
 import { ReSendOrdersComponent } from './re-send-orders/re-send-orders.component';
+import { GetOrdersComeToMyBranchComponent } from './get-orders-come-to-my-branch/get-orders-come-to-my-branch.component';
 import { GetOrderReturnedToSecondBranchComponent } from './get-order-returned-to-second-branch/get-order-returned-to-second-branch.component';
 
 @NgModule({
@@ -69,6 +66,7 @@ import { GetOrderReturnedToSecondBranchComponent } from './get-order-returned-to
     ReceiptOrderComponent,
     TransferToSecondBranchComponent,
     ReSendOrdersComponent,
+    GetOrdersComeToMyBranchComponent,
     GetOrderReturnedToSecondBranchComponent,
   ],
   imports: [
