@@ -56,6 +56,7 @@ export class GetOrderReturnedToSecondBranchComponent implements OnInit {
         if (this.findorder) {
           if (this.findorder.length == 1) {
             this.addOrders()
+            return
           }
           else if (this.findorder.length > 1) {
             this.Ordersfilter = res as []
@@ -67,6 +68,7 @@ export class GetOrderReturnedToSecondBranchComponent implements OnInit {
               this.showTable = true
             if (this.Ordersfilter.length == 1) {
               this.addOrders()
+              return
             }
           }
         }
@@ -83,7 +85,8 @@ export class GetOrderReturnedToSecondBranchComponent implements OnInit {
 
   }
   addOrders() {
-    this.dataSource.data.unshift(this.findorder[0])
+    this.orders.unshift(this.findorder[0])
+    this.dataSource = new MatTableDataSource(this.orders);
     this.totalCount = this.dataSource.data.length
     this.Code = ""
   }
@@ -134,10 +137,11 @@ export class GetOrderReturnedToSecondBranchComponent implements OnInit {
       return
     }
     this.spinner.show();
-    this.orderservice.SendOrdersReturnedToSecondBranch(this.dataSource.data.map(order => order.id)).subscribe(res => {
+    this.orderservice.SendOrdersReturnedToSecondBranch(this.orders.map(order => order.id)).subscribe(res => {
       this.allFilter()
       this.spinner.hide();
       this.dataSource = new MatTableDataSource([])
+      this.orders = []
       this.notifications.create('success', 'تم نقل الطلبيات  بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
     }, err => {
       this.spinner.hide();
