@@ -43,6 +43,7 @@ import { TransferToSecondBranchComponent } from './transfer-to-second-branch/tra
 import { ReSendOrdersComponent } from './re-send-orders/re-send-orders.component';
 import { GetOrdersComeToMyBranchComponent } from './get-orders-come-to-my-branch/get-orders-come-to-my-branch.component';
 import { GetOrderReturnedToSecondBranchComponent } from './get-order-returned-to-second-branch/get-order-returned-to-second-branch.component';
+import { GetOrdersReturnedToMyBranchComponent } from './get-orders-returned-to-my-branch/get-orders-returned-to-my-branch.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { GetOrderReturnedToSecondBranchComponent } from './get-order-returned-to
     ReSendOrdersComponent,
     GetOrdersComeToMyBranchComponent,
     GetOrderReturnedToSecondBranchComponent,
+    GetOrdersReturnedToMyBranchComponent,
   ],
   imports: [
     CommonModule,

@@ -341,9 +341,25 @@ export class OrderService {
   ReceiveOrdersToMyBranch(ids: any[]) {
     return this.http.put<any>(this.controler + 'ReceiveOrdersToMyBranch', ids);
   }
+  GetOrderReturnedToSecondBranch(code) {
+    let params = new HttpParams();
+    if (code) params = params.append('code', code);
+    return this.http.get<any>(this.controler + 'GetOrderReturnedToSecondBranch', {
+      params: params,
+    });
+  }
+  SendOrdersReturnedToSecondBranch(ids) {
+    return this.http.put<any>(this.controler + 'SendOrdersReturnedToSecondBranch', ids);
+  }
+  GetOrdersReturnedToMyBranch(filter: OrderFilter, paging: Paging) {
+    let params = this.getHttpPramsFilteredForOrder(filter, paging);
+    return this.http.get<any>(this.controler + 'GetOrdersReturnedToMyBranch', { params: params });
+  }
+  ReceiveReturnedToMyBranch(ids: any[]) {
+    return this.http.put<any>(this.controler + 'ReceiveReturnedToMyBranch', ids);
+  }
   getHttpPramsFilteredForOrder(filter: OrderFilter, paging?: Paging): HttpParams {
     let params = new HttpParams();
-
     if (filter.Code != undefined || filter.Code != null)
       params = params.append('Code', filter.Code);
     if (filter.AgentId != undefined || filter.AgentId != null)
@@ -392,14 +408,5 @@ export class OrderService {
     return params;
   }
 
-  GetOrderReturnedToSecondBranch(code) {
-    let params = new HttpParams();
-    if (code) params = params.append('code', code);
-    return this.http.get<any>(this.controler + 'GetOrderReturnedToSecondBranch', {
-      params: params,
-    });
-  }
-  SendOrdersReturnedToSecondBranch(ids) {
-    return this.http.put<any>(this.controler + 'SendOrdersReturnedToSecondBranch', ids);
-  }
+  
 }

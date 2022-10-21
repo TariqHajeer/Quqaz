@@ -23,7 +23,7 @@ import { ReceiptsNewOrdersComponent } from './receipts-new-orders/receipts-new-o
 import { TransferToSecondBranchComponent } from './transfer-to-second-branch/transfer-to-second-branch.component';
 import { ViewNewOrderComponent } from './view-new-order/view-new-order.component';
 import { ViewOrdersComponent } from './view-orders/view-orders.component';
-
+import { GetOrdersReturnedToMyBranchComponent } from './get-orders-returned-to-my-branch/get-orders-returned-to-my-branch.component';
 
 const routes: Routes = [
   {
@@ -125,10 +125,15 @@ const routes: Routes = [
     path: "getOrdersComeToMyBranch",
     component: GetOrdersComeToMyBranchComponent, canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowOrder] }
-  },
-   {
+  }
+  ,{
     path: 'GetOrderReturnedToSecondBranch',
     component: GetOrderReturnedToSecondBranchComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder] }
+  },
+  {
+    path: 'GetOrdersReturnedToMyBranch',
+    component: GetOrdersReturnedToMyBranchComponent, canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowOrder] }
   },
 ];
