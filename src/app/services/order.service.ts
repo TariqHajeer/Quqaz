@@ -17,7 +17,7 @@ export class OrderService {
     return this.http.get<any>(this.controler, { params: params });
   }
   WithoutPaging(filter: OrderFilter) {
-    let params = this.getHttpPramsFilteredForOrder(filter, null);
+    let params = this.getHttpPramsFilteredForOrder(filter);
     return this.http.get<any>(this.controler + 'WithoutPaging', {
       params: params,
     });
@@ -336,12 +336,12 @@ export class OrderService {
   }
   GetOrdersComeToMyBranch(filter: OrderFilter, paging: Paging) {
     let params = this.getHttpPramsFilteredForOrder(filter, paging);
-    return this.http.get<any>(this.controler+'GetOrdersComeToMyBranch', { params: params });
+    return this.http.get<any>(this.controler + 'GetOrdersComeToMyBranch', { params: params });
   }
   ReceiveOrdersToMyBranch(ids: any[]) {
     return this.http.put<any>(this.controler + 'ReceiveOrdersToMyBranch', ids);
   }
-  getHttpPramsFilteredForOrder(filter: OrderFilter, paging: Paging): HttpParams {
+  getHttpPramsFilteredForOrder(filter: OrderFilter, paging?: Paging): HttpParams {
     let params = new HttpParams();
 
     if (filter.Code != undefined || filter.Code != null)
@@ -384,9 +384,9 @@ export class OrderService {
       params = params.append('CreatedDateRangeFilter.start', String(filter.createdDateRangeFilter.start));
     if (filter.createdDateRangeFilter.end)
       params = params.append('CreatedDateRangeFilter.end', String(filter.createdDateRangeFilter.end));
-    if (paging.Page)
+    if (paging && paging.Page)
       params = params.append('Page', paging.Page);
-    if (paging.RowCount)
+    if (paging && paging.RowCount)
       params = params.append('RowCount', paging.RowCount);
 
     return params;
