@@ -93,8 +93,18 @@ export class EditUserComponent implements OnInit {
           { theClass: 'success', timeOut: 6000, showProgressBar: false }
         );
       },
-      (err) => {
+      (error) => {
         this.spinner.hide();
+        this.notifications.error(
+          'error',
+          error.error.errors,
+          NotificationType.Error,
+          {
+            theClass: 'error',
+            timeOut: 6000,
+            showProgressBar: false,
+          }
+        );
       }
     );
   }

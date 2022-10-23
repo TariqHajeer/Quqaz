@@ -6,200 +6,102 @@
         <div class="col-md-3">
           <label>
             نوع الموظف
-            <span class="text-danger text-one align-bottom mx-1">*</span></label
-          >
-          <ng-select
-            [(ngModel)]="User.canWorkAsAgent"
-            [ngModelOptions]="{ standalone: true }"
-            [closeOnSelect]="true"
-            [disabled]="true"
-          >
+            <span class="text-danger text-one align-bottom mx-1">*</span></label>
+          <ng-select [(ngModel)]="User.canWorkAsAgent" [ngModelOptions]="{ standalone: true }" [closeOnSelect]="true"
+            [disabled]="true">
             <ng-option [value]="true">مندوب</ng-option>
             <ng-option [value]="false"> موظف</ng-option>
           </ng-select>
-          <div
-            *ngIf="!User.canWorkAsAgent && submitted"
-            class="invalid-tooltip"
-          >
-            نوع الموظف حقل مطلوب
-          </div>
         </div>
         <div class="col-md-3">
-          <label
-            >الاسم<span class="text-danger text-one align-bottom mx-1"
-              >*</span
-            ></label
-          >
-          <input
-            type="text"
-            class="form-control"
-            [ngModelOptions]="{ standalone: true }"
-            [(ngModel)]="User.name"
-            (keyup)="checkName()"
-          />
-          <div *ngIf="!User.name && submitted" class="invalid-tooltip">
+          <label>الاسم<span class="text-danger text-one align-bottom mx-1">*</span></label>
+          <input type="text" class="form-control" [ngModelOptions]="{ standalone: true }" [(ngModel)]="User.name"
+            (keyup)="checkName()" />
+          <div *ngIf="!User.name" class="invalid-tooltip">
             الاسم حقل مطلوب
           </div>
-          <div
-            *ngIf="nameIsRepeated && User.name != ''"
-            class="invalid-tooltip"
-          >
+          <div *ngIf="nameIsRepeated && User.name != ''" class="invalid-tooltip">
             الأسم مكرر
           </div>
         </div>
         <div class="col-md-3">
-          <label
-            >اسم المستخدم<span class="text-danger text-one align-bottom mx-1"
-              >*</span
-            ></label
-          >
-          <input
-            type="text"
-            oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
-            (keyup)="checkUserName()"
-            class="form-control"
-            [ngModelOptions]="{ standalone: true }"
-            [(ngModel)]="User.userName"
-          />
-          <div *ngIf="!User.userName && submitted" class="invalid-tooltip">
+          <label>اسم المستخدم<span class="text-danger text-one align-bottom mx-1">*</span></label>
+          <input type="text" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
+            (keyup)="checkUserName()" class="form-control" [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="User.userName" />
+          <div *ngIf="!User.userName" class="invalid-tooltip">
             اسم المستخدم حقل مطلوب
           </div>
-          <div
-            *ngIf="usernameIsRepeated && User.userName != ''"
-            class="invalid-tooltip"
-          >
+          <div *ngIf="usernameIsRepeated && User.userName != ''" class="invalid-tooltip">
             اسم المستخدم مكرر
           </div>
         </div>
 
         <div class="col-md-3">
           <div class="custom-control custom-checkbox mr-sm-2">
-            <input
-              type="checkbox"
-              id="customControlAutosizing"
-              class="custom-control-input"
-              [(ngModel)]="User.isActive"
-              name="IsActive"
-            />
+            <input type="checkbox" id="customControlAutosizing" class="custom-control-input" [(ngModel)]="User.isActive"
+              name="IsActive" />
             <label class="custom-control-label" for="customControlAutosizing">
-              مفعل</label
-            >
+              مفعل</label>
           </div>
         </div>
       </div>
 
       <div class="row w-100 align-items-end mb-3">
         <div class="col-md-4" *ngIf="!User.canWorkAsAgent">
-          <label
-            >الأفرع
-            <span class="text-danger text-one align-bottom mx-1">*</span></label
-          >
-          <ng-select
-            multiple="true"
-            [selectableGroupAsModel]="false"
-            [closeOnSelect]="false"
-            [selectableGroup]="true"
-            [searchable]="true"
-            [(ngModel)]="User.branchesIds"
-            [ngModelOptions]="{ standalone: true }"
-            [closeOnSelect]="true"
-          >
-            <ng-option
-              *ngFor="let branche of user.branches"
-              [value]="branche.id"
-              >{{ branche.name }}</ng-option
-            >
+          <label>الأفرع
+            <span class="text-danger text-one align-bottom mx-1">*</span></label>
+          <ng-select multiple="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" [selectableGroup]="true"
+            [searchable]="true" [(ngModel)]="User.branchesIds" [ngModelOptions]="{ standalone: true }"
+            [closeOnSelect]="true">
+            <ng-option *ngFor="let branche of user.branches" [value]="branche.id">{{ branche.name }}</ng-option>
           </ng-select>
-          <div
-            *ngIf="User.branchesIds.length == 0 && submitted"
-            class="invalid-tooltip"
-          >
+          <div *ngIf="User.branchesIds.length == 0" class="invalid-tooltip">
             الأفرع حقل مطلوب
           </div>
         </div>
         <div class="col-md-3" *ngIf="!User.canWorkAsAgent">
-          <label
-            >تاريخ التوظيف<span class="text-danger text-one align-bottom mx-1"
-              >*</span
-            ></label
-          >
-          <input
-            readonly
-            type="text"
-            class="form-control"
-            [ngModelOptions]="{ standalone: true }"
-            [(ngModel)]="User.hireDate"
-            bsDatepicker
-            [container]="'html'"
-            [bsConfig]="{
+          <label>تاريخ التوظيف<span class="text-danger text-one align-bottom mx-1">*</span></label>
+          <input readonly type="text" class="form-control" [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="User.hireDate" bsDatepicker [container]="'html'" [bsConfig]="{
               adaptivePosition: true,
               dateInputFormat: 'YYYY-MM-DD'
-            }"
-          />
-          <div *ngIf="!User.hireDate && submitted" class="invalid-tooltip">
+            }" />
+          <div *ngIf="!User.hireDate" class="invalid-tooltip">
             تاريخ التوظيف حقل مطلوب
           </div>
         </div>
         <div class="col-md-5" *ngIf="!User.canWorkAsAgent">
           <label>العنوان</label>
-          <input
-            type="text"
-            class="form-control"
-            [ngModelOptions]="{ standalone: true }"
-            [(ngModel)]="User.address"
-          />
+          <input type="text" class="form-control" [ngModelOptions]="{ standalone: true }" [(ngModel)]="User.address" />
         </div>
 
         <div class="col-md-12" *ngIf="!User.canWorkAsAgent">
           <label>الخبرة</label>
-          <input
-            type="text"
-            class="form-control"
-            [ngModelOptions]="{ standalone: true }"
-            [(ngModel)]="User.experince"
-          />
+          <input type="text" class="form-control" [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="User.experince" />
         </div>
       </div>
 
       <div class="row w-100 align-items-end mb-3">
         <div class="col-md-3" *ngIf="User.canWorkAsAgent">
-          <label
-            >المدينة<span class="text-danger text-one align-bottom mx-1"
-              >*</span
-            ></label
-          >
-          <ng-select
-            multiple="true"
-            [clearable]="true"
-            [searchable]="true"
-            [selectableGroup]="true"
-            [selectableGroupAsModel]="false"
-            [(ngModel)]="User.countries"
-            [ngModelOptions]="{ standalone: true }"
-            [closeOnSelect]="true"
-          >
+          <label>المدينة<span class="text-danger text-one align-bottom mx-1">*</span></label>
+          <ng-select multiple="true" [clearable]="true" [searchable]="true" [selectableGroup]="true"
+            [selectableGroupAsModel]="false" [(ngModel)]="User.countries" [ngModelOptions]="{ standalone: true }"
+            [closeOnSelect]="true">
             <ng-option *ngFor="let country of countries" [value]="country.id">{{
               country.name
-            }}</ng-option>
+              }}</ng-option>
           </ng-select>
-          <div *ngIf="!User.Countries && submitted" class="invalid-tooltip">
+          <div *ngIf="!User.Countries" class="invalid-tooltip">
             المدينة حقل مطلوب
           </div>
         </div>
         <div class="col-md-3" *ngIf="User.canWorkAsAgent">
-          <label
-            >كلفة التوصيل<span class="text-danger text-one align-bottom mx-1"
-              >*</span
-            ></label
-          >
-          <input
-            type="text"
-            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-            class="form-control"
-            [ngModelOptions]="{ standalone: true }"
-            [(ngModel)]="User.salary"
-          />
-          <div *ngIf="!User.salary && submitted" class="invalid-tooltip">
+          <label>كلفة التوصيل<span class="text-danger text-one align-bottom mx-1">*</span></label>
+          <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+            class="form-control" [ngModelOptions]="{ standalone: true }" [(ngModel)]="User.salary" />
+          <div *ngIf="!User.salary" class="invalid-tooltip">
             كلفة التوصيل حقل مطلوب
           </div>
         </div>
@@ -207,48 +109,27 @@
       <div class="row w-100 align-items-end mb-3">
         <div class="col-md-12">
           <label>ملاحظات</label>
-          <input
-            type="text"
-            class="form-control"
-            [ngModelOptions]="{ standalone: true }"
-            [(ngModel)]="User.note"
-          />
+          <input type="text" class="form-control" [ngModelOptions]="{ standalone: true }" [(ngModel)]="User.note" />
         </div>
       </div>
 
       <div class="row w-100 align-items-end mb-3">
         <div class="col-md-4">
           <!-- Modal -->
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-toggle="modal"
-            data-target="#exampleModal"
-            data-whatever="@getbootstrap"
-          >
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+            data-whatever="@getbootstrap">
             ارقام الهاتف
           </button>
 
-          <div
-            class="modal fade"
-            id="exampleModal"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLabel">
                     ارقام الهاتف
                   </h5>
-                  <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
@@ -256,30 +137,17 @@
                   <form>
                     <div class="form-group">
                       <label for="phone" class="col-form-label">الرقم:</label>
-                      <input
-                        id="phone"
-                        type="text"
-                        maxlength="11"
+                      <input id="phone" type="text" maxlength="11"
                         oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
-                        class="form-control"
-                        [ngModelOptions]="{ standalone: true }"
-                        [(ngModel)]="phone.phone"
-                        (ngModelChange)="checkLengthPhoneNumber(phone.phone)"
-                      />
-                      <div
-                        class="message"
-                        *ngIf="
+                        class="form-control" [ngModelOptions]="{ standalone: true }" [(ngModel)]="phone.phone"
+                        (ngModelChange)="checkLengthPhoneNumber(phone.phone)" />
+                      <div class="message" *ngIf="
                           phone.phone && checkLengthPhoneNumber(phone.phone)
-                        "
-                      >
+                        ">
                         {{ RecipientPhoneslength }}
                       </div>
                     </div>
-                    <button
-                      type="button"
-                      class="btn btn-primary"
-                      (click)="addNewPhone()"
-                    >
+                    <button type="button" class="btn btn-primary" (click)="addNewPhone()">
                       اضافة
                     </button>
                   </form>
@@ -294,23 +162,12 @@
                         <td>{{ i }}</td>
                         <td>{{ phone.phone }}</td>
                         <td>
-                          <svg
-                            (click)="DeletePhone(phone)"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            fill="currentColor"
-                            class="bi bi-trash"
-                            viewBox="0 0 16 16"
-                            style="cursor: pointer"
-                          >
+                          <svg (click)="DeletePhone(phone)" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16" style="cursor: pointer">
                             <path
-                              d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
-                            />
-                            <path
-                              fill-rule="evenodd"
-                              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-                            />
+                              d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                            <path fill-rule="evenodd"
+                              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
                           </svg>
                         </td>
                       </tr>
@@ -318,11 +175,7 @@
                   </table>
                 </div>
                 <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-primary"
-                    data-dismiss="modal"
-                  >
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">
                     اغلاق
                   </button>
                 </div>
@@ -332,35 +185,18 @@
         </div>
         <div class="col-md-4">
           <!-- Modal -->
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-toggle="modal"
-            data-target="#group"
-            data-whatever="@getbootstrap"
-            *ngIf="!User.canWorkAsAgent"
-          >
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#group"
+            data-whatever="@getbootstrap" *ngIf="!User.canWorkAsAgent">
             المجموعات
           </button>
 
-          <div
-            class="modal fade"
-            id="group"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
+          <div class="modal fade" id="group" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLabel">المجموعات</h5>
-                  <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
@@ -368,27 +204,12 @@
                   <form>
                     <div class="form-group">
                       <label>مجموعة</label>
-                      <ng-select
-                        [selectableGroupAsModel]="false"
-                        [(ngModel)]="addGroup"
-                        [closeOnSelect]="false"
-                        [selectableGroup]="true"
-                        [searchable]="true"
-                        name="addGroup"
-                        [closeOnSelect]="true"
-                      >
-                        <ng-option
-                          *ngFor="let group of Groups"
-                          [value]="group"
-                          >{{ group.name }}</ng-option
-                        >
+                      <ng-select [selectableGroupAsModel]="false" [(ngModel)]="addGroup" [closeOnSelect]="false"
+                        [selectableGroup]="true" [searchable]="true" name="addGroup" [closeOnSelect]="true">
+                        <ng-option *ngFor="let group of Groups" [value]="group">{{ group.name }}</ng-option>
                       </ng-select>
                     </div>
-                    <button
-                      type="button"
-                      class="btn btn-primary"
-                      (click)="addNewGroup()"
-                    >
+                    <button type="button" class="btn btn-primary" (click)="addNewGroup()">
                       اضافة
                     </button>
                   </form>
@@ -400,38 +221,26 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let group of addGroups; let i = index">
-                        <td>{{ i }}</td>
+                        <td>{{ i+1 }}</td>
                         <td>{{ group.name }}</td>
                         <td>
-                          <svg
-                            (click)="DeleteGroup(group)"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            fill="currentColor"
-                            class="bi bi-trash"
-                            viewBox="0 0 16 16"
-                            style="cursor: pointer"
-                          >
-                            <path
-                              d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
-                            />
-                            <path
-                              fill-rule="evenodd"
-                              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-                            />
-                          </svg>
+                          <button class="btn" (click)="DeleteGroup(group)" [disabled]="addGroups.length==1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                              class="bi bi-trash" viewBox="0 0 16 16" style="cursor: pointer">
+                              <path
+                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                              <path fill-rule="evenodd"
+                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                            </svg>
+                          </button>
+
                         </td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
                 <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-primary"
-                    data-dismiss="modal"
-                  >
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">
                     اغلاق
                   </button>
                 </div>
@@ -445,33 +254,21 @@
 
       <div class="row">
         <div class="col-md-3">
-          <label
-            >كلمة السر
-            <span class="text-danger text-one align-bottom mx-1">*</span></label
-          >
-          <input
-            type="password"
-            class="form-control"
-            [ngModelOptions]="{ standalone: true }"
-            [(ngModel)]="User.password"
-          />
-          <div *ngIf="!User.password && submitted" class="invalid-tooltip">
+          <label>كلمة السر
+           </label>
+          <input type="password" class="form-control" [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="User.password" />
+          <!-- <div *ngIf="!User.password" class="invalid-tooltip">
             كلمة السر حقل مطلوب
-          </div>
+          </div> -->
         </div>
         <div class="col-md-3">
           <label>
             تأكيد كلمة السر
-            <span class="text-danger text-one align-bottom mx-1">*</span></label
-          >
-          <input
-            (keyup)="CheckPassword()"
-            type="password"
-            class="form-control"
-            [ngModelOptions]="{ standalone: true }"
-            [(ngModel)]="confirmpassword"
-          />
-          <div *ngIf="checkPassword" class="invalid-tooltip">
+            </label>
+          <input (keyup)="CheckPassword()" type="password" class="form-control" [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="confirmpassword" />
+          <div *ngIf="checkPassword||(User.password&&!confirmpassword)" class="invalid-tooltip">
             كلمة السر غير متطابقة
           </div>
         </div>

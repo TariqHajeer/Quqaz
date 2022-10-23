@@ -46,7 +46,7 @@
         class="form-control"
         [ngModelOptions]="{ standalone: true }"
         [(ngModel)]="CreateUser.Name"
-        (ngModelChange)="checkName()"
+        (keyup)="checkName()"
       />
       <div *ngIf="!CreateUser.Name && submitted" class="invalid-tooltip">
         الاسم حقل مطلوب
@@ -67,7 +67,7 @@
       <input
         type="text"
         oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').replace(/(\..*)\./g, '$1');"
-        (ngModelChange)="checkUserName()"
+        (keyup)="checkUserName()"
         class="form-control"
         [ngModelOptions]="{ standalone: true }"
         [(ngModel)]="CreateUser.UserName"

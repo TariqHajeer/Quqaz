@@ -138,9 +138,18 @@ export class AddUserComponent implements OnInit, OnChanges {
           );
         }
       },
-      (err) => {
-        console.log(err);
+      (error) => {
         this.spinner.hide();
+        this.notifications.error(
+          'error',
+          error.error.errors,
+          NotificationType.Error,
+          {
+            theClass: 'error',
+            timeOut: 6000,
+            showProgressBar: false,
+          }
+        );
       }
     );
   }
