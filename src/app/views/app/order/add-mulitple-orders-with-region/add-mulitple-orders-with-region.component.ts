@@ -45,7 +45,7 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
     public spinner: NgxSpinnerService,
     private renderer: Renderer2,
     private elementRef: ElementRef
-  ) {}
+  ) { }
 
   Order: CreateMultipleOrder;
   EditOrder: CreateMultipleOrder;
@@ -132,21 +132,16 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
   Getcities() {
     this.customerService.getAll(this.cityapi).subscribe((res) => {
       this.cities = res;
-      // if( this.cities.length!=0)
-      // this.Order.CountryId =  this.cities[0].id
-
-      // this.changeCountry()
     });
   }
 
   changeCountry() {
     var city = this.cities.find((c) => c.id == this.Order.CountryId);
     if (
-      city.branchesIds.length > 0 &&
-      city.branchesIds[0] == this.userLogin.branche.id
+      (city.branchesIds.length > 0 &&
+        city.branchesIds[0] == this.userLogin.branche.id) || city.branchesIds.length == 0
     ) {
       this.disabledAddAgent = false;
-      // console.log(this.cities)
       this.Agents = this.GetAgents.filter(
         (a) =>
           a.countries
@@ -167,8 +162,8 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
   changeCountryEdit() {
     var city = this.cities.find((c) => c.id == this.EditOrder.CountryId);
     if (
-      city.branchesIds.length > 0 &&
-      city.branchesIds[0] == this.userLogin.branche.id
+      (city.branchesIds.length > 0 &&
+        city.branchesIds[0] == this.userLogin.branche.id) || city.branchesIds.length == 0
     ) {
       this.disabledEditAgent = false;
       this.Agents = this.GetAgents.filter(

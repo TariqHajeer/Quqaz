@@ -124,8 +124,8 @@ export class CreateMulitpleOrderComponent implements OnInit {
   changeCountry() {
     var city = this.cities.find((c) => c.id == this.Order.CountryId);
     if (
-      city.branchesIds.length > 0 &&
-      city.branchesIds[0] == this.userLogin.branche.id
+    (  city.branchesIds.length > 0 &&
+      city.branchesIds[0] == this.userLogin.branche.id)||city.branchesIds.length == 0
     ) {
       this.disabledAddAgent = false;
       this.Agents = this.GetAgents.filter(

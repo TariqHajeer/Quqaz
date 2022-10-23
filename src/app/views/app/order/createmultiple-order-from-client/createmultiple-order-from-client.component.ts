@@ -150,8 +150,8 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   changeCountry() {
     var city = this.cities.find(c => c.id == this.Order.CountryId)
     if (
-      city.branchesIds.length > 0 &&
-      city.branchesIds[0] == this.userLogin.branche.id
+     ( city.branchesIds.length > 0 &&
+      city.branchesIds[0] == this.userLogin.branche.id)||city.branchesIds.length == 0
     ) {
       this.disabledAddAgent = false;
     this.Agents = this.GetAgents.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.Order.CountryId).length>0 )
@@ -168,8 +168,8 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   changeCountryEdit() {
     var city = this.cities.find(c => c.id == this.EditOrder.CountryId)
     if (
-      city.branchesIds.length > 0 &&
-      city.branchesIds[0] == this.userLogin.branche.id
+      (city.branchesIds.length > 0 &&
+      city.branchesIds[0] == this.userLogin.branche.id)||city.branchesIds.length == 0
     ) {
       this.disabledEditAgent = false;
     this.Agents = this.GetAgents.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.EditOrder.CountryId).length>0 )
