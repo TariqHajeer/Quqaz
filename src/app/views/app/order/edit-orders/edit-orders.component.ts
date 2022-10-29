@@ -241,9 +241,7 @@ export class EditOrdersComponent implements OnInit {
     this.orderPlace = [...orderPlaceds]
   }
   GetMoenyPlaced() {
-    this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = [...moneyPlaceds]
-    })
   }
   GetClient() {
     this.clientService.getClients().subscribe(res => {

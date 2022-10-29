@@ -91,9 +91,7 @@ export class ReceiptfReceivingShipmentComponent implements OnInit {
       this.getMoenyPlaced = [...moneyPlaceds];
   }
   getmony() {
-    this.orderservice.MoenyPlaced().subscribe((res) => {
-      this.MoenyPlaced = res;
-    });
+      this.MoenyPlaced = [...moneyPlaceds];
   }
   changeMoenyPlaced() {
     if (this.getorders.length != 0) {

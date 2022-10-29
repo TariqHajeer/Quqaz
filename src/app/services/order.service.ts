@@ -38,12 +38,6 @@ export class OrderService {
   Delete(id) {
     return this.http.delete(this.controler + id);
   }
-  orderPlace() {
-    return this.http.get<any>(this.controler + 'orderPlace');
-  } 
-  MoenyPlaced() {
-    return this.http.get<any>(this.controler + 'MoenyPlaced');
-  }
   chekcCode(code, ClientId) {
     let params = new HttpParams();
     params = params.append('code', code != null || code != undefined ? code : null);
