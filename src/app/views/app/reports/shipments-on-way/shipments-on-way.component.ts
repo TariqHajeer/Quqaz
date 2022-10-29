@@ -5,19 +5,18 @@ import { OrderService } from 'src/app/services/order.service';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/Models/user/user.model';
-import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { Paging } from 'src/app/Models/paging';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { OrderState } from 'src/app/Models/order/order.model';
 import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed-state.service';
-import { DatePipe, formatDate } from '@angular/common';
+import { formatDate } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
-import  orderPlaceds  from 'src/app/data/orderPlaced';
+import orderPlaceds from 'src/app/data/orderPlaced';
 import IIndex from 'src/app/shared/interfaces/IIndex';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
-
+import moneyPlaceds from 'src/app/data/moneyPalced';
 @Component({
   selector: 'app-shipments-on-way',
   templateUrl: './shipments-on-way.component.html',
@@ -31,8 +30,8 @@ export class ShipmentsOnWayComponent implements OnInit {
   ids: any[] = []
   orders: any[] = []
   statu
-  MoenyPlacedId
-  MoenyPlaced: any[] = []
+  MoenyPlacedId;
+  MoenyPlaced: IIndex[]= [...moneyPlaceds];
   constructor(
     private orderservice: OrderService,
     public userService: UserService,
@@ -58,10 +57,10 @@ export class ShipmentsOnWayComponent implements OnInit {
   orderstates: OrderState[] = []
   orderstate: OrderState = new OrderState()
   @Input() totalCount: number;
+  getMoenyPlaced: IIndex[]=[...moneyPlaceds];
   ngOnInit(): void {
     this.getAgent()
-    this.GetMoenyPlaced()
-    this.orderplaced = orderPlaceds.filter(c=>c.id!=OrderplacedEnum.Client&&c.id!=OrderplacedEnum.Store);
+    this.orderplaced = [...orderPlaceds.filter(c => c.id != OrderplacedEnum.Client && c.id != OrderplacedEnum.Store)];
     this.paging = new Paging
     this.filtering = new OrderFilter
     localStorage.removeItem('printordersagent')
@@ -119,22 +118,13 @@ export class ShipmentsOnWayComponent implements OnInit {
             }
           }
         }
-        // this.client = this.orders.map(o => o.order.client)[0]
-        //this.orderplaced = this.orders.map(o => o.order.orderplaced)[0]
       }
     if (!this.selection.isSelected(row)) {
       this.ids = this.ids.filter(i => i != row.order.id)
       this.orders = this.orders.filter(o => o != row.order)
     }
   }
-  GetMoenyPlaced() {
-    this.orderservice.MoenyPlaced().subscribe(res => {
-      this.MoenyPlaced = res
-      this.getMoenyPlaced = [...res]
-    })
-  }
 
-  getMoenyPlaced
   changeOrderPlaced() {
     this.getMoenyPlaced = [...this.MoenyPlaced]
     this.MoenyPlacedId = null
