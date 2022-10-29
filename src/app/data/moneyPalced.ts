@@ -1,9 +1,6 @@
 import { MoneyPalcedEnum } from '../Models/Enums/MoneyPalcedEnum'
-export interface IMoneyPalced {
-    id: number;
-    name: string;
-}
-const data: IMoneyPalced[] = [
+import IIndex from '../shared/interfaces/IIndex'
+const data: IIndex[] = [
     {
         id: MoneyPalcedEnum.OutSideCompany,
         name: 'خارج الشركة'

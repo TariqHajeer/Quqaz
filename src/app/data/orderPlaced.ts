@@ -1,9 +1,6 @@
 import {OrderplacedEnum} from '../Models/Enums/OrderplacedEnum'
-export interface IOrderPalced{
-    id:number;
-    name:string;
-}
-const data:IOrderPalced[]=[
+import IIndex from '../shared/interfaces/IIndex'
+const data:IIndex[]=[
     {
         id:OrderplacedEnum.Client,
         name:"عند العميل"
@@ -38,3 +35,4 @@ const data:IOrderPalced[]=[
         name:"مؤجل"
     },
 ]
+export default data;
