@@ -1,6 +1,6 @@
 import { MoneyPalcedEnum } from '../Models/Enums/MoneyPalcedEnum'
 import IIndex from '../shared/interfaces/IIndex'
-const data: IIndex[] = [
+const moneyPlaceds: IIndex[] = [
     {
         id: MoneyPalcedEnum.OutSideCompany,
         name: 'خارج الشركة'
@@ -19,4 +19,4 @@ const data: IIndex[] = [
     },
 
 ]
-export default data;
+export default moneyPlaceds;

@@ -15,6 +15,8 @@ import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed
 import { DatePipe, formatDate } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
 import  orderPlaceds  from 'src/app/data/orderPlaced';
+import IIndex from 'src/app/shared/interfaces/IIndex';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 
 @Component({
   selector: 'app-shipments-on-way',
@@ -42,7 +44,7 @@ export class ShipmentsOnWayComponent implements OnInit {
   ) { }
   AgentId
   OrderplacedId
-  orderPlace: NameAndIdDto[] = []
+  orderPlace: IIndex[] = []
   Agents: User[] = []
   paging: Paging
   filtering: OrderFilter
@@ -59,7 +61,7 @@ export class ShipmentsOnWayComponent implements OnInit {
   ngOnInit(): void {
     this.getAgent()
     this.GetMoenyPlaced()
-    this.GetorderPlace()
+    this.orderplaced = orderPlaceds.filter(c=>c.id!=OrderplacedEnum.Client&&c.id!=OrderplacedEnum.Store);
     this.paging = new Paging
     this.filtering = new OrderFilter
     localStorage.removeItem('printordersagent')
@@ -129,14 +131,6 @@ export class ShipmentsOnWayComponent implements OnInit {
     this.orderservice.MoenyPlaced().subscribe(res => {
       this.MoenyPlaced = res
       this.getMoenyPlaced = [...res]
-
-      // this.MoenyPlaced = this.MoenyPlaced.filter(o => o.id != 4)
-    })
-  }
-  GetorderPlace() {
-    this.orderservice.orderPlace().subscribe(res => {
-      this.orderPlace = res
-      this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
     })
   }
 
@@ -212,7 +206,6 @@ export class ShipmentsOnWayComponent implements OnInit {
       })
       this.getorders = [...this.getorders.filter(o => o.order.date >= this.todate &&
         o.order.date <= this.fordate)]
-      // console.log(this.getorders)
       this.dataSource = new MatTableDataSource(this.getorders)
     }
 
@@ -227,7 +220,6 @@ export class ShipmentsOnWayComponent implements OnInit {
   }
 
   allFilter() {
-    // console.log(this.filtering)
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
       this.getorders = []
       if (response)
@@ -287,7 +279,6 @@ export class ShipmentsOnWayComponent implements OnInit {
       return
     }
     var agent = this.Agents.find(c => c.id == this.filtering.AgentId)
-    // console.log(agent)
     localStorage.setItem('printagent', JSON.stringify(agent))
     localStorage.setItem('printordersagent', JSON.stringify(this.orders))
     this.route.navigate(['app/reports/printagentpreview'])
