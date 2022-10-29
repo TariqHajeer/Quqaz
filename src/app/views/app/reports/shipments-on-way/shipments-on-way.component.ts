@@ -14,6 +14,8 @@ import { OrderState } from 'src/app/Models/order/order.model';
 import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed-state.service';
 import { DatePipe, formatDate } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
+import  orderPlaceds  from 'src/app/data/orderPlaced';
+
 @Component({
   selector: 'app-shipments-on-way',
   templateUrl: './shipments-on-way.component.html',
@@ -73,8 +75,8 @@ export class ShipmentsOnWayComponent implements OnInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.orders=[]
-    this.ids=[]
+    this.orders = []
+    this.ids = []
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => { this.selection.select(row) });
@@ -96,15 +98,15 @@ export class ShipmentsOnWayComponent implements OnInit {
       if (this.ids.filter(d => d == row.order.id).length > 0)
         return
       else {
-     
+
         this.ids.push(row.order.id)
         this.orders.push(row.order)
         localStorage.setItem('printordersagent', JSON.stringify(this.orders))
         if (this.OrderplacedId) {
           row.order.orderplaced = this.OrderplacedId
-          this.ChangeOrderplacedId(row,this.orders.indexOf(row))
+          this.ChangeOrderplacedId(row, this.orders.indexOf(row))
         }
-         if (this.MoenyPlacedId) {
+        if (this.MoenyPlacedId) {
           row.order.monePlaced = this.MoenyPlacedId
           if (this.OrderplacedId.id == 4 && this.MoenyPlacedId.id == 4) {
             if (row.order.isClientDiliverdMoney) {
@@ -137,25 +139,6 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
     })
   }
-  changeMoenyPlaced() {
-    // if (this.getorders.length != 0) {
-    //   this.getorders.forEach(o => {
-    //     o.order.monePlaced = this.MoenyPlaced.find(m => m.id == this.MoenyPlacedId.id)
-    //     if (this.OrderplacedId.id == 4 && this.MoenyPlacedId.id == 4) {
-    //       if (o.order.isClientDiliverdMoney) {
-    //         o.order.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
-    //       }
-    //       else {
-    //         o.order.monePlaced = this.MoenyPlaced.find(m => m.id == 3)
-    //       }
-    //     }
-
-
-    //   })
-
-    // }
-    this.total()
-  }
 
   getMoenyPlaced
   changeOrderPlaced() {
@@ -179,17 +162,17 @@ export class ShipmentsOnWayComponent implements OnInit {
       console.log(res)
     })
   }
-  countriesAgent:[]=[]
+  countriesAgent: [] = []
   ChangeAgentId() {
     if (this.Agent) {
-      this.countriesAgent=[]
-      this.filtering.AgentId=this.Agent.id
-      this.countriesAgent=this.Agent.countries
+      this.countriesAgent = []
+      this.filtering.AgentId = this.Agent.id
+      this.countriesAgent = this.Agent.countries
       this.filtering.OrderplacedId = 3
-      if( this.filtering.AgentPrintStartDate )
-      this.filtering.AgentPrintStartDate =  formatDate(this.filtering.AgentPrintStartDate , 'MM/dd/yyyy', 'en');
-      if( this.filtering.AgentPrintEndDate )
-      this.filtering.AgentPrintEndDate =  formatDate(this.filtering.AgentPrintEndDate , 'MM/dd/yyyy', 'en');
+      if (this.filtering.AgentPrintStartDate)
+        this.filtering.AgentPrintStartDate = formatDate(this.filtering.AgentPrintStartDate, 'MM/dd/yyyy', 'en');
+      if (this.filtering.AgentPrintEndDate)
+        this.filtering.AgentPrintEndDate = formatDate(this.filtering.AgentPrintEndDate, 'MM/dd/yyyy', 'en');
       this.allFilter();
     }
   }
@@ -279,9 +262,9 @@ export class ShipmentsOnWayComponent implements OnInit {
   saveEdit() {
     for (let i = 0; i < this.orders.length; i++) {
       this.orderstate.Id = this.orders[i].id
-      this.orderstate.Cost = this.orders[i].cost*1
-      this.orderstate.DeliveryCost = this.orders[i].deliveryCost*1
-      this.orderstate.AgentCost = this.orders[i].agentCost*1
+      this.orderstate.Cost = this.orders[i].cost * 1
+      this.orderstate.DeliveryCost = this.orders[i].deliveryCost * 1
+      this.orderstate.AgentCost = this.orders[i].agentCost * 1
       this.orderstate.Note = this.orders[i].note
       this.orderstate.MoenyPlacedId = this.orders[i].monePlaced.id
       this.orderstate.OrderplacedId = this.orders[i].orderplaced.id
@@ -303,7 +286,7 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    var agent=this.Agents.find(c => c.id == this.filtering.AgentId)
+    var agent = this.Agents.find(c => c.id == this.filtering.AgentId)
     // console.log(agent)
     localStorage.setItem('printagent', JSON.stringify(agent))
     localStorage.setItem('printordersagent', JSON.stringify(this.orders))

@@ -1,6 +1,6 @@
 import {OrderplacedEnum} from '../Models/Enums/OrderplacedEnum'
 import IIndex from '../shared/interfaces/IIndex'
-const data:IIndex[]=[
+const orderPlaceds:IIndex[]=[
     {
         id:OrderplacedEnum.Client,
         name:"عند العميل"
@@ -35,4 +35,4 @@ const data:IIndex[]=[
         name:"مؤجل"
     },
 ]
-export default data;
+export default orderPlaceds;
