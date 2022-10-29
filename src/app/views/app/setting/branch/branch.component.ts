@@ -11,7 +11,7 @@ import { BranchesService } from '../../../../services/branches.service'
 export class BranchComponent implements OnInit {
 
   constructor(private branchesService: BranchesService) { }
-  displayedColumns: string[] = ['name'];
+  displayedColumns: string[] = ['name','countryName'];
   dataSource;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   noDataFound: boolean;
