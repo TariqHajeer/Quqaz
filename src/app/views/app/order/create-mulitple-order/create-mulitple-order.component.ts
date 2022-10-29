@@ -18,6 +18,7 @@ import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import * as moment from 'moment';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { AuthService } from 'src/app/shared/auth.service';
+import orderPlaceds from 'src/app/data/orderPlaced';
 
 @Component({
   selector: 'app-create-mulitple-order',
@@ -37,7 +38,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
     private notifications: NotificationsService,
     public spinner: NgxSpinnerService,
     private authService: AuthService
-  ) {}
+  ) { }
 
   Order: CreateMultipleOrder;
   EditOrder: CreateMultipleOrder;
@@ -89,13 +90,11 @@ export class CreateMulitpleOrderComponent implements OnInit {
   }
 
   GetorderPlace() {
-    this.orderservice.orderPlace().subscribe((res) => {
-      this.orderPlace = res;
+      this.orderPlace =  [...orderPlaceds];
       this.Order.OrderplacedId = this.orderPlace[1].id;
       this.orderPlace = this.orderPlace.filter(
         (o) => o.id != OrderplacedEnum.Client
       );
-    });
   }
 
   getAgent() {
@@ -124,8 +123,8 @@ export class CreateMulitpleOrderComponent implements OnInit {
   changeCountry() {
     var city = this.cities.find((c) => c.id == this.Order.CountryId);
     if (
-    (  city.branchesIds.length > 0 &&
-      city.branchesIds[0] == this.userLogin.branche.id)||city.branchesIds.length == 0
+      (city.branchesIds.length > 0 &&
+        city.branchesIds[0] == this.userLogin.branche.id) || city.branchesIds.length == 0
     ) {
       this.disabledAddAgent = false;
       this.Agents = this.GetAgents.filter(
@@ -150,20 +149,20 @@ export class CreateMulitpleOrderComponent implements OnInit {
       city.branchesIds[0] == this.userLogin.branche.id
     ) {
       this.disabledEditAgent = false;
-    this.Agents = this.GetAgents.filter(
-      (a) =>
-        a.countries
-          .map((c) => c.id)
-          .filter((co) => co == this.EditOrder.CountryId).length > 0
-    );
-    if (this.Agents.length != 0 && this.Agents.length == 1)
-      this.EditOrder.AgentId = this.Agents[0].id;
-    else this.EditOrder.AgentId = null;
-  }
-  else {
-    this.disabledEditAgent = true;
-    this.EditOrder.AgentId = null;
-  }
+      this.Agents = this.GetAgents.filter(
+        (a) =>
+          a.countries
+            .map((c) => c.id)
+            .filter((co) => co == this.EditOrder.CountryId).length > 0
+      );
+      if (this.Agents.length != 0 && this.Agents.length == 1)
+        this.EditOrder.AgentId = this.Agents[0].id;
+      else this.EditOrder.AgentId = null;
+    }
+    else {
+      this.disabledEditAgent = true;
+      this.EditOrder.AgentId = null;
+    }
     this.EditOrder.DeliveryCost = city.deliveryCost;
   }
   showMessageCode: boolean = false;
@@ -272,7 +271,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
     order.CanEdit = true;
     this.tempEdit = Object.assign({}, order);
     this.EditOrder = order;
-    this.Agents =this.GetAgents.filter(
+    this.Agents = this.GetAgents.filter(
       (a) =>
         a.countries
           .map((c) => c.id)
@@ -325,7 +324,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
       this.onEnter();
       if (this.submitted == true) return;
     }
-    if (this.Orders == []) {
+    if (this.Orders.length == 0) {
       return;
     }
     this.Orders.forEach((o) => {

@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
+import moneyPlaceds from 'src/app/data/moneyPalced';
+import orderPlaceds from 'src/app/data/orderPlaced';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
@@ -29,16 +31,15 @@ export class EditOrdersComponent implements OnInit {
 
 
   constructor(private orderservice: OrderService,
-
-    private clientService: ClientService
-    , private customerService: CustomService,
+    private clientService: ClientService,
+    private customerService: CustomService,
     public userService: UserService,
     private notifications: NotificationsService,
     private router: Router,
     public spinner: NgxSpinnerService,
     private orderService: OrderService,
     private getroute: ActivatedRoute,
-    ) { }
+  ) { }
 
   Order: CreateOrdersFromEmployee
   tempOrdercode
@@ -58,11 +59,9 @@ export class EditOrdersComponent implements OnInit {
   count
   filter: OrderFilter
   tempPhone: string;
-  //selectedOrder: any;
   cityapi = "Country"
   regionapi = "Region"
   ordertypeapi = "OrderType";
-
   EditorderType: OrderType
   EditOrderItem: OrderItem
   Editcount
@@ -72,7 +71,6 @@ export class EditOrdersComponent implements OnInit {
     this.EditorderType = new OrderType
     this.EditOrderItem = new OrderItem
     this.submitted = false;
-
     this.int()
   }
   orderResend: Resend = new Resend()
@@ -115,21 +113,21 @@ export class EditOrdersComponent implements OnInit {
     this.getOrderTypes()
     this.Getcities()
     this.displayedColumns = ['code', 'deliveryCost', 'cost', 'oldCost', 'recipientName',
-    'recipientPhones', 'client','country','region'
-    , 'agent', 'monePlaced', 'orderplaced', 'address'
-    , 'isClientDiliverdMoney','isSync','updatedBy', 'updatedDate','date', 'diliveryDate', 'note','systemNote'];
+      'recipientPhones', 'client', 'country', 'region'
+      , 'agent', 'monePlaced', 'orderplaced', 'address'
+      , 'isClientDiliverdMoney', 'isSync', 'updatedBy', 'updatedDate', 'date', 'diliveryDate', 'note', 'systemNote'];
     this.getorder()
 
   }
   canResned
   id
-  order:Order=new Order
+  order: Order = new Order
   displayedColumns: string[];
   dataSource
   editorder
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  show=false
+  show = false
   getorder() {
     this.getroute.params.subscribe(par => {
       this.id = par['id'] as string
@@ -139,20 +137,14 @@ export class EditOrdersComponent implements OnInit {
       console.log(res)
       this.getAgent()
       this.spinner.hide()
-      this.order=res
-      this. editorder = res
-      this.show=true
-      this.editorder.recipientPhones=this.editorder.recipientPhones.split(',')
+      this.order = res
+      this.editorder = res
+      this.show = true
+      this.editorder.recipientPhones = this.editorder.recipientPhones.split(',')
       if (this.editorder.orderplaced.id == OrderplacedEnum.CompletelyReturned || this.editorder.orderplaced.id == OrderplacedEnum.Unacceptable || this.editorder.orderplaced.id == OrderplacedEnum.Delayed)
         this.showRsendButton = true
       else
         this.showRsendButton = false
-      // if (this.editorder.canResned == null)
-      //   this.showRsendButton = true
-      // else {
-      //   this.showRsendButton = false
-      //   this.canResned = this.editorder.canResned
-      // }
       this.orderResend.Id = this.editorder.id
       this.orderResend.AgnetId = this.editorder.agent.id
       this.orderResend.CountryId = this.editorder.country.id
@@ -162,7 +154,7 @@ export class EditOrdersComponent implements OnInit {
       this.Order.Id = this.editorder.id
       this.Order.Address = this.editorder.address
       this.Order.ClientId = this.editorder.client.id
-      this.Order.AgentId= this.editorder.agent.id
+      this.Order.AgentId = this.editorder.agent.id
       this.Order.Code = this.editorder.code
       this.tempOrdercode = this.editorder.code
       this.Order.Cost = this.editorder.cost
@@ -175,18 +167,17 @@ export class EditOrdersComponent implements OnInit {
       this.Order.OrderTypeDtos = this.editorder.orderItems
       this.Order.OrderplacedId = this.editorder.orderplaced.id
       this.Order.RecipientName = this.editorder.recipientName
-       this.Order.RecipientPhones = this.editorder.recipientPhones
+      this.Order.RecipientPhones = this.editorder.recipientPhones
       this.Order.OldCost = this.editorder.oldCost
-      this.Order.orderLogs=this.editorder.orderLogs
-      this.Order.printedTimes=this.editorder.printedTimes
+      this.Order.orderLogs = this.editorder.orderLogs
+      this.Order.printedTimes = this.editorder.printedTimes
       this.dataSource = new MatTableDataSource(this.Order.orderLogs)
-      //this.Order.RecipientPhones.push(this.editorder.recipientPhones)
       this.Order.RegionId = this.editorder.region != null ? this.editorder.region.Id : null
-    },err=>{
+    }, err => {
       this.spinner.hide()
 
     })
-   
+
 
 
   }
@@ -247,17 +238,11 @@ export class EditOrdersComponent implements OnInit {
 
   }
   GetorderPlace() {
-    this.orderservice.orderPlace().subscribe(res => {
-      this.orderPlace = res
-      // console.log(res)
-      //this.Order.OrderplacedId = this.orderPlace[1].id
-
-    })
+    this.orderPlace = [...orderPlaceds]
   }
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe(res => {
-      this.MoenyPlaced = res
-      // this.Order.MoenyPlacedId = this.MoenyPlaced[0].id
+      this.MoenyPlaced = [...moneyPlaceds]
     })
   }
   GetClient() {
@@ -269,15 +254,15 @@ export class EditOrdersComponent implements OnInit {
     this.customerService.getAll(this.cityapi).subscribe(res => {
       this.cities = res
       var country = this.cities.find(c => c.id == this.Order.CountryId)
-      this.orderResend.DeliveryCost = country.deliveryCost?country.deliveryCost:0
-      if(this.tempRegions)
-      this.Regionsresend = this.tempRegions.filter(r => r.country.id == this.orderResend.CountryId)
-      if(this.tempAgent)
-      this.Agentsresend = this.tempAgent.filter(r => r.countryId == this.orderResend.CountryId)
-      if(this.tempRegions)
-      this.Regions = this.tempRegions.filter(r => r.country.id == this.Order.CountryId)
-      if(this.tempAgent)
-      this.Agents = this.tempAgent.filter(r => r.countryId == this.Order.CountryId)
+      this.orderResend.DeliveryCost = country.deliveryCost ? country.deliveryCost : 0
+      if (this.tempRegions)
+        this.Regionsresend = this.tempRegions.filter(r => r.country.id == this.orderResend.CountryId)
+      if (this.tempAgent)
+        this.Agentsresend = this.tempAgent.filter(r => r.countryId == this.orderResend.CountryId)
+      if (this.tempRegions)
+        this.Regions = this.tempRegions.filter(r => r.country.id == this.Order.CountryId)
+      if (this.tempAgent)
+        this.Agents = this.tempAgent.filter(r => r.countryId == this.Order.CountryId)
 
 
     })
@@ -401,8 +386,8 @@ export class EditOrdersComponent implements OnInit {
     }
   }
   print() {
-    this.orderService.AddPrintNumber(this.id).subscribe(res=>{
-      this.Order.printedTimes+=1
+    this.orderService.AddPrintNumber(this.id).subscribe(res => {
+      this.Order.printedTimes += 1
     })
     var divToPrint = document.getElementById('contentToConvert');
     var css = '@page { size: A5 landscape ;margin:0;color-adjust: exact;-webkit-print-color-adjust: exact;}',
@@ -417,8 +402,6 @@ export class EditOrdersComponent implements OnInit {
     newWin?.document.close();
     setTimeout(function () {
       newWin?.close();
-      // location.reload();
-
     }, 1000);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { OrderService } from 'src/app/services/order.service';
@@ -15,6 +15,8 @@ import { OrderState } from 'src/app/Models/order/order.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { MoneyPalcedEnum } from 'src/app/Models/Enums/MoneyPalcedEnum';
+import orderPlaceds from 'src/app/data/orderPlaced';
+import moneyPlaceds from 'src/app/data/moneyPalced';
 @Component({
   selector: 'app-receipt-shipment-agent',
   templateUrl: './receipt-shipment-agent.component.html',
@@ -74,15 +76,11 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   }
 
   GetMoenyPlaced() {
-    this.orderservice.MoenyPlaced().subscribe(res => {
-      this.MoenyPlaced = res
-      this.getMoenyPlaced = [...res]
-    })
+      this.MoenyPlaced =  [...moneyPlaceds]
+      this.getMoenyPlaced =  [...moneyPlaceds]
   }
   getmony() {
-    this.orderservice.MoenyPlaced().subscribe(res => {
-      this.MoenyPlaced = res
-    })
+      this.MoenyPlaced =  [...moneyPlaceds]
   }
   changeMoenyPlaced() {
     if (this.getorders.length != 0) {
@@ -112,10 +110,8 @@ export class ReceiptShipmentAgentComponent implements OnInit {
   }
 
   GetorderPlace() {
-    this.orderservice.orderPlace().subscribe(res => {
-      this.orderPlace = res
+      this.orderPlace =  [...orderPlaceds]
       this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
-    })
   }
   changeOrderPlaced() {
     if (this.getorders.length != 0) {

@@ -19,6 +19,7 @@ import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import * as moment from 'moment';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { AuthService } from 'src/app/shared/auth.service';
+import orderPlaceds from 'src/app/data/orderPlaced';
 @Component({
   selector: 'app-create-multi-order-agent-and-client',
   templateUrl: './create-multi-order-agent-and-client.component.html',
@@ -120,37 +121,27 @@ export class CreateMultiOrderAgentAndClientComponent implements OnInit {
     }
   }
   GetorderPlace() {
-    this.orderservice.orderPlace().subscribe((res) => {
-      this.orderPlace = res;
+      this.orderPlace =  [...orderPlaceds];
       this.Order.OrderplacedId = this.orderPlace[1].id;
       this.orderPlace = this.orderPlace.filter(
         (o) => o.id != OrderplacedEnum.Client
       );
-    });
   }
 
   getAgent() {
     this.userService.ActiveAgent().subscribe((res) => {
       this.GetAgents = res;
-      // this.Agents = this.GetAgents.filter(a => a.countryId == this.CountryId)
-      // if(this.Agents.length!=0)
-      // this.Order.AgentId = this.Agents[0].id
-      // else this.Order.AgentId=null
-    });
+       });
   }
 
   GetClient() {
     this.clientService.getClients().subscribe((res) => {
       this.clients = res;
-      // this.Order.ClientId = res[0].id
     });
   }
   Getcities() {
     this.customerService.getAll(this.cityapi).subscribe((res) => {
       this.cities = res;
-      // if (this.cities.length != 0)
-      //   this.Order.CountryId = this.cities[0].id
-      //this.Order.Country = this.cities.find(c => c.id == this.CountryId)
       if (this.CountryId) {
         this.Agents = this.GetAgents.filter(
           (a) => a.countryId == this.CountryId
@@ -412,7 +403,7 @@ export class CreateMultiOrderAgentAndClientComponent implements OnInit {
       if (this.submitted == true) return;
     }
 
-    if (!this.ClientId || this.Orders == []) {
+    if (!this.ClientId || this.Orders.length==0) {
       this.submitedSave = true;
       return;
     }

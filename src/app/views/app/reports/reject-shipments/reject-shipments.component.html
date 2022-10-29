@@ -89,7 +89,7 @@
           (ngModelChange)="changeOrderPlaced()"
           style="width: 120px; overflow: visible"
         >
-          <ng-option *ngFor="let order of orderPleacedFilters" [value]="order">{{
+          <ng-option *ngFor="let order of orderPlace" [value]="order">{{
             order.name
           }}</ng-option>
         </ng-select>

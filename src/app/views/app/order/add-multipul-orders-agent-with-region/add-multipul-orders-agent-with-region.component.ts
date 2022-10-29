@@ -271,7 +271,7 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
       if (this.submitted == true)
         return
     }
-    if (this.Orders == []) {
+    if (this.Orders.length==0) {
       //this.submitedSave=true
       return
     }

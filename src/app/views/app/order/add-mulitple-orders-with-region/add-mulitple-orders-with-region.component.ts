@@ -1,10 +1,7 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
-  HostListener,
   OnInit,
-  Renderer2,
   ViewChild,
 } from '@angular/core';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
@@ -26,6 +23,8 @@ import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import * as moment from 'moment';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { AuthService } from 'src/app/shared/auth.service';
+import orderPlaceds from 'src/app/data/orderPlaced';
+import IIndex from 'src/app/shared/interfaces/IIndex';
 @Component({
   selector: 'app-add-mulitple-orders-with-region',
   templateUrl: './add-mulitple-orders-with-region.component.html',
@@ -43,16 +42,13 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
     public userService: UserService,
     private notifications: NotificationsService,
     public spinner: NgxSpinnerService,
-    private renderer: Renderer2,
-    private elementRef: ElementRef
   ) { }
 
   Order: CreateMultipleOrder;
   EditOrder: CreateMultipleOrder;
   submitted = false;
   Editsubmitted = false;
-  orderPlace: NameAndIdDto[] = [];
-  MoenyPlaced: NameAndIdDto[] = [];
+  orderPlace: IIndex[] = [];
   clients: Client[] = [];
   cities: City[] = [];
   regions: Region[] = [];
@@ -68,13 +64,9 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
   filter: OrderFilter;
   CountryId;
   AgentId;
-  //tempPhone: string;
-  // EdittempPhone: string
-  //selectedOrder: any;
   cityapi = 'Country';
   ordertypeapi = 'OrderType';
   Orders: any[] = [];
-  //CanEdit: boolean[] = []
   @ViewChild('code') codeElement: ElementRef;
   disabledAddAgent: boolean = false;
   disabledEditAgent: boolean = false;
@@ -98,35 +90,24 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
   }
 
   GetorderPlace() {
-    this.orderservice.orderPlace().subscribe((res) => {
-      this.orderPlace = res;
-      this.Order.OrderplacedId = this.orderPlace[1].id;
-      this.orderPlace = this.orderPlace.filter(
-        (o) => o.id != OrderplacedEnum.Client
-      );
-    });
+    this.orderPlace = [...orderPlaceds.filter((o) => o.id != OrderplacedEnum.Client)];
+    this.Order.OrderplacedId = this.orderPlace[1].id;
   }
 
   getAgent() {
     this.userService.ActiveAgent().subscribe((res) => {
       this.GetAgents = res;
-      // console.log(res)
       this.Agents = this.GetAgents.filter(
         (a) =>
           a.countries
             .map((c) => c.id)
-            .filter((co) => co == this.Order.CountryId).length > 0
-      );
-      // if(this.Agents.length!=0)
-      // this.Order.AgentId = this.Agents[0].id
-      // else this.Order.AgentId=null
+            .filter((co) => co == this.Order.CountryId).length > 0);
     });
   }
 
   GetClient() {
     this.clientService.getClients().subscribe((res) => {
       this.clients = res;
-      // this.Order.ClientId = res[0].id
     });
   }
   Getcities() {
@@ -327,7 +308,6 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
     var agent = this.Agents.find((c) => c.id == this.EditOrder.AgentId);
     this.EditOrder.DeliveryCost = this.EditOrder.DeliveryCost * 1;
     this.EditOrder.Cost = this.EditOrder.Cost * 1;
-    //  this.EditOrder.AgentName = agent.name
     order = Object.assign(order, this.EditOrder);
     localStorage.setItem('refrshorder', JSON.stringify(this.Orders));
   }
@@ -348,8 +328,7 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
       this.onEnter();
       if (this.submitted == true) return;
     }
-    if (this.Orders.length==0) {
-      //this.submitedSave=true
+    if (this.Orders.length == 0) {
       return;
     }
     this.Orders.forEach((o) => {
@@ -358,7 +337,6 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
       o.DeliveryCost = o.DeliveryCost * 1;
     });
     this.spinner.show();
-    // console.log(this.Orders)
     this.orderservice.createMultiple(this.Orders).subscribe(
       (res) => {
         this.spinner.hide();

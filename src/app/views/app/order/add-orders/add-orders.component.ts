@@ -2,8 +2,9 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
+import orderPlaceds from 'src/app/data/orderPlaced';
+import moenyplaceds from 'src/app/data/moneyPalced';
 import { City } from 'src/app/Models/Cities/city.Model';
-import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import {
   CreateOrdersFromEmployee,
@@ -17,6 +18,7 @@ import { CustomService } from 'src/app/services/custom.service';
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/shared/auth.service';
+import IIndex from 'src/app/shared/interfaces/IIndex';
 import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
 
@@ -39,8 +41,8 @@ export class AddOrdersComponent implements OnInit {
 
   Order: CreateOrdersFromEmployee;
   submitted: boolean = false;
-  orderPlace: NameAndIdDto[] = [];
-  MoenyPlaced: NameAndIdDto[] = [];
+  orderPlace: IIndex[] = [];
+  MoenyPlaced: IIndex[] = [];
   clients: Client[] = [];
   cities: City[] = [];
   Region: Region[] = [];
@@ -128,16 +130,12 @@ export class AddOrdersComponent implements OnInit {
     );
   }
   GetorderPlace() {
-    this.orderservice.orderPlace().subscribe((res) => {
-      this.orderPlace = res;
+      this.orderPlace = [...orderPlaceds];
       this.Order.OrderplacedId = this.orderPlace[1].id;
-    });
   }
   GetMoenyPlaced() {
-    this.orderservice.MoenyPlaced().subscribe((res) => {
-      this.MoenyPlaced = res;
+      this.MoenyPlaced = [...moenyplaceds];
       this.Order.MoenyPlacedId = this.MoenyPlaced[0].id;
-    });
   }
   GetClient() {
     this.clientService.getClients().subscribe((res) => {

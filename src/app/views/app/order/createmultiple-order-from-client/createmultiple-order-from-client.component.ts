@@ -18,6 +18,7 @@ import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import * as moment from 'moment';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { AuthService } from 'src/app/shared/auth.service';
+import orderPlaceds from 'src/app/data/orderPlaced';
 
 @Component({
   selector: 'app-createmultiple-order-from-client',
@@ -58,14 +59,10 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   filter: OrderFilter
   CountryId
   ClientId
-  //tempPhone: string;
-  // EdittempPhone: string
-  //selectedOrder: any;
   cityapi = "Country"
   regionapi = "Region"
   ordertypeapi = "OrderType";
   Orders: any[] = []
-  //CanEdit: boolean[] = []
   ngOnInit(): void {
     this.Order = new CreateMultipleOrder();
     this.EditOrder = new CreateMultipleOrder();
@@ -111,22 +108,16 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
 
   }
   GetorderPlace() {
-    this.orderservice.orderPlace().subscribe(res => {
-      this.orderPlace = res
-      this.Order.OrderplacedId = this.orderPlace[1].id
-      this.orderPlace = this.orderPlace.filter(o => o.id != OrderplacedEnum.Client)
-
-    })
+    this.orderPlace = [...orderPlaceds]
+    this.Order.OrderplacedId = this.orderPlace[1].id
+    this.orderPlace = this.orderPlace.filter(o => o.id != OrderplacedEnum.Client)
   }
 
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
       this.GetAgents = res
-      this.Agents = this.GetAgents.filter(a => a.countryId == this.Order.CountryId)
-      // if(this.Agents.length!=0)
-      // this.Order.AgentId = this.Agents[0].id
-      // else this.Order.AgentId=null
-
+      this.Agents = this.GetAgents.filter(a => a.countryId == this.Order.CountryId
+      )
     })
   }
 
@@ -134,34 +125,30 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   GetClient() {
     this.clientService.getClients().subscribe(res => {
       this.clients = res
-      // this.Order.ClientId = res[0].id
     })
   }
   Getcities() {
     this.customerService.getAll(this.cityapi).subscribe(res => {
       this.cities = res
-      // if (this.cities.length != 0)
-      //   this.Order.CountryId = this.cities[0].id
       this.Order.Country = this.cities.find(c => c.id == this.Order.CountryId)
-      // this.changeCountry()
     })
   }
 
   changeCountry() {
     var city = this.cities.find(c => c.id == this.Order.CountryId)
     if (
-     ( city.branchesIds.length > 0 &&
-      city.branchesIds[0] == this.userLogin.branche.id)||city.branchesIds.length == 0
+      (city.branchesIds.length > 0 &&
+        city.branchesIds[0] == this.userLogin.branche.id) || city.branchesIds.length == 0
     ) {
       this.disabledAddAgent = false;
-    this.Agents = this.GetAgents.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.Order.CountryId).length>0 )
-    if (this.Agents.length != 0 && this.Agents.length == 1)
-      this.Order.AgentId = this.Agents[0].id
-    else this.Order.AgentId = null
-  }else {
-    this.disabledAddAgent = true;
-    this.Order.AgentId = null;
-  }
+      this.Agents = this.GetAgents.filter(a => a.countries.map(c => c.id).filter(co => co == this.Order.CountryId).length > 0)
+      if (this.Agents.length != 0 && this.Agents.length == 1)
+        this.Order.AgentId = this.Agents[0].id
+      else this.Order.AgentId = null
+    } else {
+      this.disabledAddAgent = true;
+      this.Order.AgentId = null;
+    }
     this.Order.DeliveryCost = city.deliveryCost
 
   }
@@ -169,13 +156,13 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     var city = this.cities.find(c => c.id == this.EditOrder.CountryId)
     if (
       (city.branchesIds.length > 0 &&
-      city.branchesIds[0] == this.userLogin.branche.id)||city.branchesIds.length == 0
+        city.branchesIds[0] == this.userLogin.branche.id) || city.branchesIds.length == 0
     ) {
       this.disabledEditAgent = false;
-    this.Agents = this.GetAgents.filter(a => a.countries.map(c=>c.id).filter(co=>co==this.EditOrder.CountryId).length>0 )
-    if (this.Agents.length != 0 && this.Agents.length == 1)
-      this.EditOrder.AgentId = this.Agents[0].id
-    else this.EditOrder.AgentId = null
+      this.Agents = this.GetAgents.filter(a => a.countries.map(c => c.id).filter(co => co == this.EditOrder.CountryId).length > 0)
+      if (this.Agents.length != 0 && this.Agents.length == 1)
+        this.EditOrder.AgentId = this.Agents[0].id
+      else this.EditOrder.AgentId = null
     }
     else {
       this.disabledEditAgent = true;
@@ -195,8 +182,6 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
           this.tempOrder.push({ ...this.Orders[i] })
         }
       }
-      // console.log(res)
-      // console.log(this.tempOrder)
       if (this.tempOrder.length != 0)
         document.getElementById("openModalButton").click();
 
@@ -219,8 +204,8 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     this.orderservice.chekcCode(order.Code, this.ClientId).subscribe(res => {
       if (res) {
         this.showMessageCodeChange = true
-         return
-         }
+        return
+      }
       else if (!this.showMessageCodeChange) {
         this.showMessageCodeChange = false
         var find = this.Orders.find(o => o.Code == order.beforCode)
@@ -276,10 +261,10 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     }
   }
   RecipientPhoneslength = ""
-@ViewChild('code') codeElement: ElementRef;
+  @ViewChild('code') codeElement: ElementRef;
   disabledAddAgent: boolean = false;
   disabledEditAgent: boolean = false;
-  userLogin: UserLogin = this.authService.getUser();  checkLengthPhoneNumber(phone) {
+  userLogin: UserLogin = this.authService.getUser(); checkLengthPhoneNumber(phone) {
     if (phone && phone.length < 11) {
       this.RecipientPhoneslength = " لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم"
       return true
@@ -340,7 +325,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     order.CanEdit = true
     this.tempEdit = Object.assign({}, order);
     this.EditOrder = order
-    this.Agents =this.GetAgents.filter(
+    this.Agents = this.GetAgents.filter(
       (a) =>
         a.countries
           .map((c) => c.id)
@@ -393,14 +378,14 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
         return
     }
 
-    if (!this.ClientId || this.Orders == []) {
+    if (!this.ClientId || this.Orders.length == 0) {
       this.submitedSave = true
       return
     }
     this.Orders.forEach(o => {
       o.Cost = o.Cost * 1
       o.DeliveryCost = o.DeliveryCost * 1
-      o.Date=moment().format()
+      o.Date = moment().format()
 
     })
     this.spinner.show()

@@ -19,6 +19,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { Resend } from 'src/app/Models/order/resend.model';
 import { OrderStateEnum } from 'src/app/Models/Enums/OrderStateEnum';
+import orderPlaceds from 'src/app/data/orderPlaced';
+import moneyPlaceds from 'src/app/data/moneyPalced';
 
 @Component({
   selector: 'app-view-orders',
@@ -224,9 +226,7 @@ export class ViewOrdersComponent implements OnInit {
   tempAgent;
 
   GetorderPlace() {
-    this.orderservice.orderPlace().subscribe((res) => {
-      this.orderPlace = res;
-    });
+      this.orderPlace =  [...orderPlaceds];
   }
   completelyReturn(id) {
     this.spinner.show();
@@ -241,9 +241,7 @@ export class ViewOrdersComponent implements OnInit {
     );
   }
   GetMoenyPlaced() {
-    this.orderservice.MoenyPlaced().subscribe((res) => {
-      this.MoenyPlaced = res;
-    });
+      this.MoenyPlaced =  [...moneyPlaceds];
   }
   GetClient() {
     this.clientService.getClients().subscribe((res) => {

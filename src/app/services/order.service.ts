@@ -40,7 +40,7 @@ export class OrderService {
   }
   orderPlace() {
     return this.http.get<any>(this.controler + 'orderPlace');
-  }
+  } 
   MoenyPlaced() {
     return this.http.get<any>(this.controler + 'MoenyPlaced');
   }
