@@ -156,6 +156,7 @@ export class AddUserComponent implements OnInit, OnChanges {
   getCountry() {
     this.customService.getAll('Country').subscribe((res) => {
       this.Countries = res;
+      this.Countries=this.Countries.filter(country=>country.branchesIds[0]==this.user.branche.id||country.branchesIds.length==0)
     });
   }
   GetAllGroups() {
