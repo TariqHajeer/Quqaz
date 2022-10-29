@@ -348,7 +348,7 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
       this.onEnter();
       if (this.submitted == true) return;
     }
-    if (this.Orders == []) {
+    if (this.Orders.length==0) {
       //this.submitedSave=true
       return;
     }
