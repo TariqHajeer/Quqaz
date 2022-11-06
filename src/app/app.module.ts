@@ -16,6 +16,11 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { OnReturnDirective } from './helpers/on-return.directive';
 import { TestComponent } from './test/test.component';
 import { UTCDateDirective } from './directive/utcdate.directive';
+import { TableComponent } from './components/table/table.component';
+import { FormsModule } from '@angular/forms';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   imports: [
@@ -31,12 +36,17 @@ import { UTCDateDirective } from './directive/utcdate.directive';
     EffectsModule.forRoot([]),
     NgxSpinnerModule,
     SimpleNotificationsModule.forRoot(),
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    FormsModule,
   ],
   declarations: [
     AppComponent,
     OnReturnDirective,
     TestComponent,
     UTCDateDirective,
+    TableComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
