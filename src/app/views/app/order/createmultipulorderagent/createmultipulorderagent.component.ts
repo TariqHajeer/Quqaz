@@ -3,18 +3,17 @@ import { NotificationsService, NotificationType } from 'angular2-notifications';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { City } from 'src/app/Models/Cities/city.Model';
-import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { CreateMultipleOrder } from 'src/app/Models/order/create-multiple-order';
 import { OrderItem } from 'src/app/Models/order/create-orders-from-employee.model';
 import { OrderType } from 'src/app/Models/OrderTypes/order-type.model';
 import { Region } from 'src/app/Models/Regions/region.model';
 import { User } from 'src/app/Models/user/user.model';
-import { UserLogin } from 'src/app/Models/userlogin.model';
 import { CustomService } from 'src/app/services/custom.service';
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/shared/auth.service';
+import IIndex from 'src/app/shared/interfaces/IIndex';
 import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
 
@@ -42,8 +41,8 @@ export class CreatemultipulorderagentComponent implements OnInit {
   EditOrder: CreateMultipleOrder
   submitted = false;
   Editsubmitted = false
-  orderPlace: NameAndIdDto[] = []
-  MoenyPlaced: NameAndIdDto[] = []
+  orderPlace: IIndex[] = []
+  MoenyPlaced: IIndex[] = []
   clients: Client[] = []
   cities: City[] = []
   Region: Region[] = []

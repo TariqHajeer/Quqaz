@@ -5,7 +5,6 @@ import { UserService } from 'src/app/services/user.service';
 import { OrderService } from 'src/app/services/order.service';
 import { ClientService } from '../../client/client.service';
 import { City } from 'src/app/Models/Cities/city.Model';
-import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { OrderItem } from 'src/app/Models/order/create-orders-from-employee.model';
 import { CreateMultipleOrder } from 'src/app/Models/order/create-multiple-order';
@@ -19,6 +18,7 @@ import * as moment from 'moment';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { AuthService } from 'src/app/shared/auth.service';
 import orderPlaceds from 'src/app/data/orderPlaced';
+import IIndex from 'src/app/shared/interfaces/IIndex';
 
 @Component({
   selector: 'app-createmultiple-order-from-client',
@@ -41,8 +41,8 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   EditOrder: CreateMultipleOrder
   submitted = false;
   Editsubmitted = false
-  orderPlace: NameAndIdDto[] = []
-  MoenyPlaced: NameAndIdDto[] = []
+  orderPlace: IIndex[] = []
+  MoenyPlaced: IIndex[] = []
   clients: Client[] = []
   cities: City[] = []
   Region: Region[] = []
