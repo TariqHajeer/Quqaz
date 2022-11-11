@@ -12,6 +12,7 @@ import { OrderPlacedStateService } from 'src/app/services/order-placed-state.ser
 import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
 import { CustomService } from 'src/app/services/custom.service';
+import { SelectOrder } from 'src/app/Models/order/select-order.model';
 @Component({
   selector: 'app-transfer-to-second-branch',
   templateUrl: './transfer-to-second-branch.component.html',
@@ -33,7 +34,10 @@ export class TransferToSecondBranchComponent implements OnInit {
   countries: any[] = []
   clients: Client[] = []
   cityapi: string = 'Country';
-
+  selectOrder: SelectOrder = new SelectOrder();
+  unSelectIds: number[] = [];
+  ordersIds: number[] = []
+  selectAll: boolean = true;
   constructor(
     private orderservice: OrderService,
     public userService: UserService,
@@ -53,40 +57,57 @@ export class TransferToSecondBranchComponent implements OnInit {
   }
 
   isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
+    return this.selectAll = !this.selectAll;
   }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
+    this.ordersIds = [];
+    this.unSelectIds = [];
     if (this.isAllSelected()) {
-      this.selection.clear()
-      this.dataSource.data.forEach(item => {
-        this.orders = this.orders.filter(order => order.id != item.id)
-      })
+      this.selection.clear();
     }
     else {
       this.dataSource.data.forEach(row => {
-        this.selection.select(row)
+        this.selection.select(row);
       });
     }
   }
+  checkboxLabelAll(): string {
+    return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+  }
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: any): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    }
     this.checkboxId(row)
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row`;
   }
   checkboxId(row) {
     if (this.selection.isSelected(row)) {
-      if (this.orders.filter(d => d.id == row.id).length > 0)
-        return
-      else this.orders.push(row)
+      if (this.selectAll) {
+        this.unSelectIds = [];
+        if (this.ordersIds.filter(d => d == row.id).length > 0)
+          return
+        else {
+          this.ordersIds.push(row.id);
+        }
+      }
+      else {
+        this.ordersIds = [];
+        this.unSelectIds = this.unSelectIds.filter(o => o != row.id);
+      }
     }
     if (!this.selection.isSelected(row)) {
-      this.orders = this.orders.filter(o => o.id != row.id)
+      if (!this.selectAll) {
+        if (this.unSelectIds.filter(d => d == row.id).length > 0)
+          return
+        else {
+          this.unSelectIds.push(row.id);
+          this.ordersIds = [];
+        }
+      }
+      else {
+        this.ordersIds = this.ordersIds.filter(o => o != row.id);
+        this.unSelectIds = [];
+      }
     }
   }
   GetClient() {
@@ -106,7 +127,7 @@ export class TransferToSecondBranchComponent implements OnInit {
     this.allFilter();
   }
   allFilter() {
-    this.orderservice.GetInStockToTransferToSecondBranch(this.filtering, this.paging).subscribe(response => {
+    this.orderservice.GetInStockToTransferToSecondBranch(this.selectOrder).subscribe(response => {
       this.getorders = []
       if (response)
         if (response.data.length <= 0)
@@ -119,9 +140,7 @@ export class TransferToSecondBranchComponent implements OnInit {
       this.totalCount = response.total
       this.selection.clear()
       this.dataSource.data.forEach(row => {
-        if (this.orders.filter(d => d.id == row.id).length == 1) {
-          this.selection.select(row)
-        }
+        if (!this.selectAll) { this.selection.select(row) }
       });
     },
       err => {
@@ -129,14 +148,14 @@ export class TransferToSecondBranchComponent implements OnInit {
       });
   }
   moveOrders() {
-    if (this.noDataFound == true || this.getorders.length == 0) {
-      this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    if (this.noDataFound == true || (this.ordersIds.length == 0 && this.selectAll)) {
+      this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
     this.orderservice.TransferToSecondBranch(this.orders.map(order => order.id)).subscribe(res => {
       this.notifications.success('success', 'تم نقل الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.selection.clear()
-      this.orders=[]
+      this.orders = []
       this.allFilter()
     })
   }

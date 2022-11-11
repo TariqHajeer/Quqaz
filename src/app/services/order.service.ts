@@ -5,6 +5,7 @@ import { OrderFilter } from '../Models/order-filter.model';
 import { DateFiter, Paging } from '../Models/paging';
 import { OrderClientDontDiliverdMoney } from '../Models/order/order-client-dont-diliverd-money.model';
 import { Resend } from '../Models/order/resend.model';
+import { SelectOrder } from '../Models/order/select-order.model';
 
 @Injectable({
   providedIn: 'root',
@@ -304,16 +305,9 @@ export class OrderService {
   GetCreatedByNames() {
     return this.http.get<any>(this.controler + 'GetCreatedByNames');
   }
-  GetInStockToTransferToSecondBranch(filter: OrderFilter, paging: Paging) {
-    let params = this.getHttpPramsFilteredForOrder(filter, paging);
-    if (paging.RowCount != undefined || paging.RowCount != null)
-      params = params.append('RowCount', paging.RowCount);
 
-    if (paging.Page != undefined || paging.Page != null)
-      params = params.append('Page', paging.Page);
-    return this.http.get<any>(this.controler + 'GetInStockToTransferToSecondBranch', {
-      params: params,
-    });
+  GetInStockToTransferToSecondBranch(selectOrders: SelectOrder) {
+    return this.http.post<any>(this.controler + 'GetInStockToTransferToSecondBranch', selectOrders);
   }
   TransferToSecondBranch(ids) {
     return this.http.put<any>(this.controler + 'TransferToSecondBranch', ids);
@@ -402,5 +396,5 @@ export class OrderService {
     return params;
   }
 
-  
+
 }
