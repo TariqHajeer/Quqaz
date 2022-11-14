@@ -24,6 +24,7 @@ import { TransferToSecondBranchComponent } from './transfer-to-second-branch/tra
 import { ViewNewOrderComponent } from './view-new-order/view-new-order.component';
 import { ViewOrdersComponent } from './view-orders/view-orders.component';
 import { GetOrdersReturnedToMyBranchComponent } from './get-orders-returned-to-my-branch/get-orders-returned-to-my-branch.component';
+import { PrintOrdersComponent } from './printPreview/print-orders/print-orders.component';
 
 const routes: Routes = [
   {
@@ -134,6 +135,11 @@ const routes: Routes = [
   {
     path: 'GetOrdersReturnedToMyBranch',
     component: GetOrdersReturnedToMyBranchComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder] }
+  },
+  {
+    path: 'printOrders',
+    component: PrintOrdersComponent, canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowOrder] }
   },
 ];

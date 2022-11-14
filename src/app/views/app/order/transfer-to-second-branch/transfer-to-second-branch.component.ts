@@ -4,15 +4,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import { OrderService } from 'src/app/services/order.service';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { UserService } from 'src/app/services/user.service';
-import { Paging } from 'src/app/Models/paging';
-import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { OrderPlacedStateService } from 'src/app/services/order-placed-state.service';
 import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
 import { CustomService } from 'src/app/services/custom.service';
-import { SelectOrder } from 'src/app/Models/order/select-order.model';
 @Component({
   selector: 'app-transfer-to-second-branch',
   templateUrl: './transfer-to-second-branch.component.html',
@@ -24,9 +21,6 @@ export class TransferToSecondBranchComponent implements OnInit {
     , 'client', 'cost', 'deliveryCost'];
   dataSource = new MatTableDataSource([]);
   orders: any[] = []
-  statu
-  paging: Paging
-  filtering: OrderFilter
   noDataFound: boolean = false
   getorders: any[] = []
   @Input() totalCount: number;
@@ -34,12 +28,8 @@ export class TransferToSecondBranchComponent implements OnInit {
   countries: any[] = []
   clients: Client[] = []
   cityapi: string = 'Country';
-  selectOrder: SelectOrder = new SelectOrder();
-  unSelectIds: number[] = [];
-  ordersIds: number[] = []
-  selectAll: boolean = true;
   constructor(
-    private orderservice: OrderService,
+    public orderservice: OrderService,
     public userService: UserService,
     private notifications: NotificationsService,
     public route: Router,
@@ -51,11 +41,12 @@ export class TransferToSecondBranchComponent implements OnInit {
   ngOnInit(): void {
     this.GetClient()
     this.getCities()
-    this.paging = new Paging
-    this.filtering = new OrderFilter
-    this.allFilter();
+    this.getAllOrders();
   }
 
+  selectAll: boolean = true;
+  ordersIds = [];
+  unSelectIds = [];
   isAllSelected() {
     return this.selectAll = !this.selectAll;
   }
@@ -110,6 +101,7 @@ export class TransferToSecondBranchComponent implements OnInit {
       }
     }
   }
+
   GetClient() {
     this.clientService.getClients().subscribe(res => {
       this.clients = res
@@ -121,13 +113,18 @@ export class TransferToSecondBranchComponent implements OnInit {
     });
   }
   switchPage(event: PageEvent) {
-    this.paging.allItemsLength = event.length
-    this.paging.RowCount = event.pageSize
-    this.paging.Page = event.pageIndex + 1
-    this.allFilter();
+    this.orderservice.selectOrder.Paging.allItemsLength = event.length;
+    this.orderservice.selectOrder.Paging.RowCount = event.pageSize;
+    this.orderservice.selectOrder.Paging.Page = event.pageIndex + 1;
+    this.getAllOrders();
   }
-  allFilter() {
-    this.orderservice.GetInStockToTransferToSecondBranch(this.selectOrder).subscribe(response => {
+  filtering() {
+    this.selection.clear();
+    this.isAllSelected();
+    this.getAllOrders();
+  }
+  getAllOrders() {
+    this.orderservice.GetInStockToTransferToSecondBranch().subscribe(response => {
       this.getorders = []
       if (response)
         if (response.data.length <= 0)
@@ -138,9 +135,8 @@ export class TransferToSecondBranchComponent implements OnInit {
         }
       this.dataSource = new MatTableDataSource(this.getorders)
       this.totalCount = response.total
-      this.selection.clear()
       this.dataSource.data.forEach(row => {
-        if (!this.selectAll) { this.selection.select(row) }
+        if (!this.selectAll||(this.selectAll&&this.ordersIds.find(d=>d==row.id))) { this.selection.select(row) }
       });
     },
       err => {
@@ -148,15 +144,14 @@ export class TransferToSecondBranchComponent implements OnInit {
       });
   }
   moveOrders() {
-    if (this.noDataFound == true || (this.ordersIds.length == 0 && this.selectAll)) {
+    this.orderservice.selectOrder.IsSelectedAll = !this.selectAll;
+    this.orderservice.selectOrder.SelectedIds = this.ordersIds;
+    this.orderservice.selectOrder.ExceptIds = this.unSelectIds;
+    if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedIds.length == 0 && this.selectAll)) {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    this.orderservice.TransferToSecondBranch(this.orders.map(order => order.id)).subscribe(res => {
-      this.notifications.success('success', 'تم نقل الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      this.selection.clear()
-      this.orders = []
-      this.allFilter()
-    })
+    else
+    this.route.navigate(['/app/order/printOrders']);
   }
 }

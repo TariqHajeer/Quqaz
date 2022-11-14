@@ -12,6 +12,7 @@ import { SelectOrder } from '../Models/order/select-order.model';
 })
 export class OrderService {
   controler = environment.baseUrl + 'api/Order/';
+  selectOrder: SelectOrder = new SelectOrder();
   constructor(public http: HttpClient) { }
   GetAll(filter: OrderFilter, paging: Paging) {
     let params = this.getHttpPramsFilteredForOrder(filter, paging);
@@ -306,11 +307,11 @@ export class OrderService {
     return this.http.get<any>(this.controler + 'GetCreatedByNames');
   }
 
-  GetInStockToTransferToSecondBranch(selectOrders: SelectOrder) {
-    return this.http.post<any>(this.controler + 'GetInStockToTransferToSecondBranch', selectOrders);
+  GetInStockToTransferToSecondBranch() {
+    return this.http.post<any>(this.controler + 'GetInStockToTransferToSecondBranch', this.selectOrder);
   }
-  TransferToSecondBranch(ids) {
-    return this.http.put<any>(this.controler + 'TransferToSecondBranch', ids);
+  TransferToSecondBranch() {
+    return this.http.put<any>(this.controler + 'TransferToSecondBranch', this.selectOrder);
   }
   GetReSendMultiple(code) {
     let params = new HttpParams();
