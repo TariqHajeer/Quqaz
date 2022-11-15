@@ -34,6 +34,8 @@ export class PrintOrdersComponent implements OnInit {
     this.getOrders();
   }
   getOrders() {
+    if (this.orderservice.selectOrder.SelectedIds.length == 0 && this.orderservice.selectOrder.IsSelectedAll == false)
+      this.router.navigate(['/app/order/transferToSecondBranch']);
     this.orderservice.GetInStockToTransferToSecondBranch().subscribe(response => {
       if (this.orderservice.selectOrder.Paging.Page == 1)
         this.orders = response.data;
@@ -45,8 +47,6 @@ export class PrintOrdersComponent implements OnInit {
         this.showSeeMore = true;
       else
         this.showSeeMore = false;
-      if (this.orderservice.selectOrder.SelectedIds.length==0&&this.orderservice.selectOrder.IsSelectedAll==false)
-        this.router.navigate(['/app/order/transferToSecondBranch']);
     });
   }
   seeMore() {
@@ -59,11 +59,11 @@ export class PrintOrdersComponent implements OnInit {
       this.spinner.hide();
       this.notifications.success('success', 'تم نقل الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.showPrintBtn = true;
-    },err=>{
+    }, err => {
       this.spinner.hide();
     })
   }
-  print(){
+  print() {
 
   }
 }
