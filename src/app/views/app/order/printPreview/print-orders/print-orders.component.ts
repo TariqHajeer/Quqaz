@@ -45,7 +45,7 @@ export class PrintOrdersComponent implements OnInit {
         this.showSeeMore = true;
       else
         this.showSeeMore = false;
-      if (this.orders.length == 0)
+      if (this.orderservice.selectOrder.SelectedIds.length==0&&this.orderservice.selectOrder.IsSelectedAll==false)
         this.router.navigate(['/app/order/transferToSecondBranch']);
     });
   }
