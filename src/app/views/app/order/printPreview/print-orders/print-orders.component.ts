@@ -47,6 +47,8 @@ export class PrintOrdersComponent implements OnInit {
         this.showSeeMore = true;
       else
         this.showSeeMore = false;
+        if(this.orders.length==0)
+        this.router.navigate(['/app/order/transferToSecondBranch']);
     });
   }
   seeMore() {
