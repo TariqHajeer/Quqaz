@@ -313,6 +313,9 @@ export class OrderService {
   TransferToSecondBranch() {
     return this.http.put<any>(this.controler + 'TransferToSecondBranch', this.selectOrder);
   }
+  PrintTransferToSecondBranch() {
+    return this.http.post<any>(this.controler + 'PrintTransferToSecondBranch', this.selectOrder);
+  }
   GetReSendMultiple(code) {
     let params = new HttpParams();
     if (code != undefined || code != null) params = params.append('Code', code);

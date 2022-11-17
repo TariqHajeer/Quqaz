@@ -6,7 +6,7 @@ import { UserLogin } from 'src/app/Models/userlogin.model';
 import { OrderService } from 'src/app/services/order.service';
 import { AuthService } from 'src/app/shared/auth.service';
 import { environment } from 'src/environments/environment';
-
+import { saveAs as importedSaveAs } from 'file-saver';
 @Component({
   selector: 'app-print-orders',
   templateUrl: './print-orders.component.html',
@@ -64,6 +64,13 @@ export class PrintOrdersComponent implements OnInit {
     })
   }
   print() {
-
+    this.orderservice.PrintTransferToSecondBranch().subscribe(res => {
+      this.spinner.hide();
+      importedSaveAs(res, new Date());
+      this.notifications.success('success', 'تمت الطباعة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.showPrintBtn = true;
+    }, err => {
+      this.spinner.hide();
+    })
   }
 }
