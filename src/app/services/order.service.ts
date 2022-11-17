@@ -316,7 +316,10 @@ export class OrderService {
     return this.http.put<any>(this.controler + 'TransferToSecondBranch', this.transferToSecondBranchDto);
   }
   PrintTransferToSecondBranch(printNumber) {
-    return this.http.get<any>(this.controler + 'PrintTransferToSecondBranch/' + printNumber);
+    const httpOptions = {
+      responseType: 'blob' as 'json'
+    };
+    return this.http.get<any>(this.controler + 'PrintTransferToSecondBranch/' + printNumber,httpOptions);
   }
   GetReSendMultiple(code) {
     let params = new HttpParams();
