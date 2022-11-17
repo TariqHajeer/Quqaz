@@ -5,7 +5,7 @@ import { OrderFilter } from '../Models/order-filter.model';
 import { DateFiter, Paging } from '../Models/paging';
 import { OrderClientDontDiliverdMoney } from '../Models/order/order-client-dont-diliverd-money.model';
 import { Resend } from '../Models/order/resend.model';
-import { SelectOrder } from '../Models/order/select-order.model';
+import { SelectOrder, TransferToSecondBranchDto } from '../Models/order/select-order.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +13,7 @@ import { SelectOrder } from '../Models/order/select-order.model';
 export class OrderService {
   controler = environment.baseUrl + 'api/Order/';
   selectOrder: SelectOrder = new SelectOrder();
+  transferToSecondBranchDto: TransferToSecondBranchDto = new TransferToSecondBranchDto();
   constructor(public http: HttpClient) { }
   GetAll(filter: OrderFilter, paging: Paging) {
     let params = this.getHttpPramsFilteredForOrder(filter, paging);
@@ -311,10 +312,11 @@ export class OrderService {
     return this.http.post<any>(this.controler + 'GetInStockToTransferToSecondBranch', this.selectOrder);
   }
   TransferToSecondBranch() {
-    return this.http.put<any>(this.controler + 'TransferToSecondBranch', this.selectOrder);
+    this.transferToSecondBranchDto.selectedOrdersWithFitlerDto = this.selectOrder;
+    return this.http.put<any>(this.controler + 'TransferToSecondBranch', this.transferToSecondBranchDto);
   }
-  PrintTransferToSecondBranch() {
-    return this.http.post<any>(this.controler + 'PrintTransferToSecondBranch', this.selectOrder);
+  PrintTransferToSecondBranch(printNumber) {
+    return this.http.get<any>(this.controler + 'PrintTransferToSecondBranch/' + printNumber);
   }
   GetReSendMultiple(code) {
     let params = new HttpParams();

@@ -19,12 +19,12 @@ export class PrintOrdersComponent implements OnInit {
     environment.companyPhones[0] + ' - ' + environment.companyPhones[1];
   dateOfPrint = new Date();
   user: UserLogin = this.authService.getUser();
-  printnumber: number;
+  printNumber: number;
   toBranch
   showSeeMore: boolean;
   showPrintBtn: boolean;
 
-  constructor(private orderservice: OrderService,
+  constructor(public orderservice: OrderService,
     private notifications: NotificationsService,
     private authService: AuthService,
     private router: Router,
@@ -59,12 +59,13 @@ export class PrintOrdersComponent implements OnInit {
       this.spinner.hide();
       this.notifications.success('success', 'تم نقل الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.showPrintBtn = true;
+      this.printNumber = res;
     }, err => {
       this.spinner.hide();
     })
   }
   print() {
-    this.orderservice.PrintTransferToSecondBranch().subscribe(res => {
+    this.orderservice.PrintTransferToSecondBranch(this.printNumber).subscribe(res => {
       this.spinner.hide();
       importedSaveAs(res, new Date());
       this.notifications.success('success', 'تمت الطباعة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });

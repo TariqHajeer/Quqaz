@@ -2,10 +2,15 @@
     <p style="color: white"> </p>
 </ngx-spinner>
 <div class="card">
-    <div class="card-body ">
+    <div class="card-body">
         <div class="row">
+            <div class="col-4" *ngIf="!showPrintBtn">
+                <label>اسم السائق</label>
+                <input type="text" class="form-control" [(ngModel)]="orderservice.transferToSecondBranchDto.DriverName"
+                    [ngModelOptions]="{standalone: true}" name="code"/>
+            </div>
             <div class="col-4">
-                <button class="btn btn-primary" (click)="moveOrders()" *ngIf="!showPrintBtn"> نقل الطلبات</button>
+                <button class="btn btn-primary mt-4" (click)="moveOrders()" *ngIf="!showPrintBtn" [disabled]="!orderservice.transferToSecondBranchDto.DriverName"> نقل الطلبات</button>
                 <button class="btn btn-primary" (click)="print()" *ngIf="showPrintBtn"> <svg
                         xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
                         class="bi bi-printer" viewBox="0 0 16 16">
@@ -15,6 +20,11 @@
                     </svg> &nbsp;طباعة</button>
             </div>
         </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body ">
+      
         <div class="row">
 
 
@@ -28,7 +38,7 @@
                         </td>
                         <td>
                             <div style="border: 1px black solid; padding: 7px; margin: 1px;height: 35px;">
-                                {{ printnumber }}
+                                {{ printNumber }}
                             </div>
                         </td>
                     </tr>
@@ -102,6 +112,18 @@
                         <td>
                             <div style="border: 1px black solid; padding: 7px; margin: 1px;height: 35px;">
                                 {{ toBranch}}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="border: 1px black solid; padding: 7px; margin: 1px">
+                               اسم السائق
+                            </div>
+                        </td>
+                        <td>
+                            <div style="border: 1px black solid; padding: 7px; margin: 1px;height: 35px;">
+                                {{ orderservice.transferToSecondBranchDto.DriverName}}
                             </div>
                         </td>
                     </tr>

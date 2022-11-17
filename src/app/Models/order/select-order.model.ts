@@ -15,3 +15,10 @@ export class SelectOrder {
     ExceptIds: number[];
     Paging: Paging;
 }
+export class TransferToSecondBranchDto {
+    constructor() {
+        this.selectedOrdersWithFitlerDto = new SelectOrder();
+    }
+    selectedOrdersWithFitlerDto: SelectOrder;
+    DriverName: string;
+}
