@@ -70,14 +70,12 @@ export class PrintOrdersComponent implements OnInit {
     this.spinner.show();
     this.orderservice.PrintTransferToSecondBranch(this.printNumber).subscribe(res => {
       let blob = new Blob([res], { type: 'application/pdf' });
-
       var downloadURL = window.URL.createObjectURL(blob);
       var link = document.createElement('a');
       link.href = downloadURL;
       link.download = "help.pdf";
       link.click();
       this.spinner.hide();
-      console.log("print");
       this.notifications.success('success', 'تمت الطباعة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.showPrintBtn = true;
     }, err => {
