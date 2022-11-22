@@ -44,6 +44,8 @@ import { ShowRecetptShipmentsComponent } from './show-recetpt-shipments/show-rec
 import { PrintReceiptShipmentComponent } from './printpreview/print-receipt-shipment/print-receipt-shipment.component';
 import { ShowTreasuryComponent } from './show-treasury/show-treasury.component';
 import { CashMovmentComponent } from './cash-movment/cash-movment.component';
+import { ViewsPrintTransferToSecondBranchComponent } from './views-print-transfer-to-second-branch/views-print-transfer-to-second-branch.component';
+import { ViewsPrintTransferToSecondBranchByIdComponent } from './views-print-transfer-to-second-branch-by-id/views-print-transfer-to-second-branch-by-id.component';
 @NgModule({
   declarations: [ShipmentInStockComponent,
     ClientOrderComponent,
@@ -73,7 +75,9 @@ import { CashMovmentComponent } from './cash-movment/cash-movment.component';
     ShowRecetptShipmentsComponent,
     PrintReceiptShipmentComponent,
     ShowTreasuryComponent,
-    CashMovmentComponent,],
+    CashMovmentComponent,
+    ViewsPrintTransferToSecondBranchComponent,
+    ViewsPrintTransferToSecondBranchByIdComponent,],
   imports: [
     CommonModule,
     ReportsRoutingModule,

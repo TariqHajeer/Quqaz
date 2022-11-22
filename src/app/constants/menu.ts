@@ -298,7 +298,12 @@ const data: IMenuItem[] = [
         to: `${adminRoot}/reports/showreceiptshipment`,
         permission: [UserPermission.ShowReports],
       },
-
+      {
+        icon: 'simple-icon-layers',
+        label: ' تقرير الشحنات المنقولة الى فرع اخر  ',
+        to: `${adminRoot}/reports/ViewsPrintTransferToSecondBranch`,
+        permission: [UserPermission.ShowReports],
+      },
       {
         icon: 'simple-icon-layers',
         label: ' أرباح الطلبات ',

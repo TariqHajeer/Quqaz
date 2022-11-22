@@ -319,7 +319,7 @@ export class OrderService {
     const httpOptions = {
       responseType: 'blob' as 'json'
     };
-    return this.http.get<any>(this.controler + 'PrintTransferToSecondBranch/' + printNumber,httpOptions);
+    return this.http.get<any>(this.controler + 'PrintTransferToSecondBranch/' + printNumber, httpOptions);
   }
   GetReSendMultiple(code) {
     let params = new HttpParams();
@@ -355,7 +355,27 @@ export class OrderService {
   ReceiveReturnedToMyBranch(ids: any[]) {
     return this.http.put<any>(this.controler + 'ReceiveReturnedToMyBranch', ids);
   }
-  getHttpPramsFilteredForOrder(filter: OrderFilter, paging?: Paging): HttpParams {
+  GetPrintsTransferToSecondBranch(paging: Paging, destinationBranchId: any) {
+    let params = new HttpParams();
+    if (paging && paging.Page)
+      params = params.append('Page', paging.Page);
+    if (paging && paging.RowCount)
+      params = params.append('RowCount', paging.RowCount);
+    if (destinationBranchId)
+      params = params.append('destinationBranchId', destinationBranchId);
+    return this.http.get<any>(this.controler + 'GetPrintsTransferToSecondBranch', { params: params });
+  }
+  GetPrintTransferToSecondBranchDetials(paging: Paging, id: any) {
+    let params = new HttpParams();
+    if (id)
+      params = params.append('id', id);
+    if (paging && paging.Page)
+      params = params.append('Page', paging.Page);
+    if (paging && paging.RowCount)
+      params = params.append('RowCount', paging.RowCount);
+    return this.http.get<any>(this.controler + 'GetPrintTransferToSecondBranchDetials', { params: params });
+  }
+  getHttpPramsFilteredForOrder(filter?: OrderFilter, paging?: Paging): HttpParams {
     let params = new HttpParams();
     if (filter.Code != undefined || filter.Code != null)
       params = params.append('Code', filter.Code);
