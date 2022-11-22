@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Paging } from 'src/app/Models/paging';
-import { UserLogin } from 'src/app/Models/userlogin.model';
 import { OrderService } from 'src/app/services/order.service';
 import { AuthService } from 'src/app/shared/auth.service';
 import { environment } from 'src/environments/environment';
@@ -17,37 +15,34 @@ export class ViewsPrintTransferToSecondBranchByIdComponent implements OnInit {
   address = environment.Address;
   companyPhone =
     environment.companyPhones[0] + ' - ' + environment.companyPhones[1];
-  dateOfPrint = new Date();
-  user: UserLogin = this.authService.getUser();
-  printNumber: number;
-  toBranch
+  dateOfPrint = this.orderservice.orderDetials.createdOnUtc;
+  user: string = this.orderservice.orderDetials.printerName;
+  printNumber: number = this.orderservice.orderDetials.id;
+  fromBranch: string = this.auth.getUser().branche.name;
+  toBranch: string = this.orderservice.orderDetials.destinationBranch;
   showSeeMore: boolean;
   paging: Paging = new Paging;
-
+  driverName: string = this.orderservice.orderDetials.driverName;
   constructor(public orderservice: OrderService,
     private notifications: NotificationsService,
-    private authService: AuthService,
-    private router: ActivatedRoute,
-    public spinner: NgxSpinnerService,) { }
+    public spinner: NgxSpinnerService,
+    private auth: AuthService) { }
 
   ngOnInit(): void {
     this.getOrders();
   }
   getOrders() {
-    this.router.params.subscribe(par => {
-      this.printNumber = par['id'] as any;
-      this.orderservice.GetPrintTransferToSecondBranchDetials(this.paging, this.printNumber).subscribe(response => {
-        if (this.paging.Page == 1)
-          this.orders = response.data;
-        else
-          response.data.forEach(element => {
-            this.orders.push(element);
-          });
-        if (this.orders.length < response.total)
-          this.showSeeMore = true;
-        else
-          this.showSeeMore = false;
-      });
+    this.orderservice.GetPrintTransferToSecondBranchDetials(this.paging).subscribe(response => {
+      if (this.paging.Page == 1)
+        this.orders = response.data;
+      else
+        response.data.forEach(element => {
+          this.orders.push(element);
+        });
+      if (this.orders.length < response.total)
+        this.showSeeMore = true;
+      else
+        this.showSeeMore = false;
     });
   }
   seeMore() {

@@ -43,7 +43,7 @@
                         </td>
                         <td>
                             <div style="border: 1px black solid; padding: 7px; margin: 1px">
-                                {{ user.name }}
+                                {{ user }}
                             </div>
                         </td>
                     </tr>
@@ -92,7 +92,7 @@
                         </td>
                         <td>
                             <div style="border: 1px black solid; padding: 7px; margin: 1px;height: 35px;">
-                                {{ user?.branche?.name }}
+                                {{ fromBranch }}
                             </div>
                         </td>
                     </tr>
@@ -116,7 +116,7 @@
                         </td>
                         <td>
                             <div style="border: 1px black solid; padding: 7px; margin: 1px;height: 35px;">
-                                {{ orderservice.transferToSecondBranchDto.DriverName}}
+                                {{driverName}}
                             </div>
                         </td>
                     </tr>
@@ -216,7 +216,7 @@
                           padding: 5px;
                           text-align: center;
                         ">
-                                {{ order.cost | number }}
+                                {{ order.total | number }}
                             </td>
                             <td style="
                           width: 15%;
@@ -224,7 +224,7 @@
                           padding: 5px;
                           text-align: center;
                         ">
-                                {{ order.date | date: "dd/MM/yyyy" }}
+                                {{ order.orderDate | date: "dd/MM/yyyy" }}
                             </td>
                             <td style="
                           width: 10%;
@@ -232,7 +232,7 @@
                           padding: 5px;
                           text-align: center;
                         ">
-                                {{ order.country.name }}
+                                {{ order.countryName }}
                             </td>
                             <td style="
                           width: 13%;
@@ -240,7 +240,7 @@
                           padding: 5px;
                           text-align: center;
                         ">
-                                {{ order.recipientPhones }}
+                                {{ order.phone }}
                             </td>
                             <td style="
                           width: 12%;
@@ -248,7 +248,7 @@
                           padding: 5px;
                           text-align: center;
                         ">
-                                {{ order.client.name }}
+                                {{ order.clientName }}
                             </td>
                             <td style="
                           width: 15%;

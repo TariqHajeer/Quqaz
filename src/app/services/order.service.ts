@@ -6,7 +6,7 @@ import { DateFiter, Paging } from '../Models/paging';
 import { OrderClientDontDiliverdMoney } from '../Models/order/order-client-dont-diliverd-money.model';
 import { Resend } from '../Models/order/resend.model';
 import { SelectOrder, TransferToSecondBranchDto } from '../Models/order/select-order.model';
-
+import { PrintTransferOrder } from 'src/app/Models/order/print-transfer-order.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -365,10 +365,11 @@ export class OrderService {
       params = params.append('destinationBranchId', destinationBranchId);
     return this.http.get<any>(this.controler + 'GetPrintsTransferToSecondBranch', { params: params });
   }
-  GetPrintTransferToSecondBranchDetials(paging: Paging, id: any) {
+  orderDetials: PrintTransferOrder = new PrintTransferOrder();
+  GetPrintTransferToSecondBranchDetials(paging: Paging) {
     let params = new HttpParams();
-    if (id)
-      params = params.append('id', id);
+    if (this.orderDetials.id)
+      params = params.append('id', this.orderDetials.id);
     if (paging && paging.Page)
       params = params.append('Page', paging.Page);
     if (paging && paging.RowCount)

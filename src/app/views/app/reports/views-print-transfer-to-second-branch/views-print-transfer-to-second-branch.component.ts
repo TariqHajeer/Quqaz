@@ -3,7 +3,9 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Paging } from 'src/app/Models/paging';
+import { BranchesService } from 'src/app/services/branches.service';
 import { OrderService } from 'src/app/services/order.service';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-views-print-transfer-to-second-branch',
@@ -19,11 +21,19 @@ export class ViewsPrintTransferToSecondBranchComponent implements OnInit {
   paging: Paging = new Paging();
   destinationBranchId: any;
   noDataFound: boolean = false;
+  branches: any[] = [];
   constructor(public orderService: OrderService,
-    private router: Router) { }
+    private router: Router,
+    private branchesService: BranchesService,
+    private authService:AuthService) { }
 
   ngOnInit(): void {
-    this.Get();
+    this.getBranches();
+  }
+  getBranches() {
+    this.branchesService.Get().subscribe(res => {
+      this.branches = res?.filter(data=>data.id!=this.authService.getUser().branche.id);
+    })
   }
   Get() {
     this.orderService.GetPrintsTransferToSecondBranch(this.paging, this.destinationBranchId).subscribe(res => {
@@ -37,7 +47,8 @@ export class ViewsPrintTransferToSecondBranchComponent implements OnInit {
     this.paging.Page = event.pageIndex + 1;
     this.Get();
   }
-  print(number) {
-    this.router.navigate(['/app/reports/ViewsPrintTransferToSecondBranch/', number])
+  print(order) {
+    this.orderService.orderDetials = order;
+    this.router.navigate(['/app/reports/ViewsPrintTransferToSecondBranch/', order.id])
   }
 }
