@@ -338,15 +338,19 @@ export class OrderService {
   ReceiveOrdersToMyBranch(ids: any[]) {
     return this.http.put<any>(this.controler + 'ReceiveOrdersToMyBranch', ids);
   }
-  GetOrderReturnedToSecondBranch(code) {
+  GetOrderReturnedToSecondBranch(paging: Paging, destinationBranchId: any) {
     let params = new HttpParams();
-    if (code) params = params.append('code', code);
-    return this.http.get<any>(this.controler + 'GetOrderReturnedToSecondBranch', {
-      params: params,
-    });
+    if (paging && paging.Page)
+      params = params.append('Page', paging.Page);
+    if (paging && paging.RowCount)
+      params = params.append('RowCount', paging.RowCount);
+    if (destinationBranchId)
+      params = params.append('destinationBranchId', destinationBranchId);
+    return this.http.get<any>(this.controler + 'GetOrdersReturnedToSecondBranch', { params: params });
   }
-  SendOrdersReturnedToSecondBranch(ids) {
-    return this.http.put<any>(this.controler + 'SendOrdersReturnedToSecondBranch', ids);
+  SendOrdersReturnedToSecondBranch() {
+    this.transferToSecondBranchDto.selectedOrdersWithFitlerDto = this.selectOrder;
+    return this.http.put<any>(this.controler + 'SendOrdersReturnedToSecondBranch', this.transferToSecondBranchDto);
   }
   GetOrdersReturnedToMyBranch(filter: OrderFilter, paging: Paging) {
     let params = this.getHttpPramsFilteredForOrder(filter, paging);

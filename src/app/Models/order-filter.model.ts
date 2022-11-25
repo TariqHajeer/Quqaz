@@ -22,4 +22,5 @@ export class OrderFilter {
   AgentPrintEndDate;
   CreatedBy;
   OrderState;
+  HaveScoundBranch;
 }

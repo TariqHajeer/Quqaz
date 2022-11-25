@@ -149,15 +149,14 @@ export class TransferToSecondBranchComponent implements OnInit {
       });
   }
   moveOrders() {
-    console.log(this.selectAll);
-    // this.orderservice.selectOrder.IsSelectedAll = !this.selectAll;
-    // this.orderservice.selectOrder.SelectedIds = this.ordersIds;
-    // this.orderservice.selectOrder.ExceptIds = this.unSelectIds;
-    // if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedIds.length == 0 && this.selectAll)) {
-    //   this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-    //   return
-    // }
-    // else
-    //   this.route.navigate(['/app/order/printOrders']);
+    this.orderservice.selectOrder.IsSelectedAll = !this.selectAll;
+    this.orderservice.selectOrder.SelectedIds = this.ordersIds;
+    this.orderservice.selectOrder.ExceptIds = this.unSelectIds;
+    if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedIds.length == 0 && this.selectAll)) {
+      this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      return
+    }
+    else
+      this.route.navigate(['/app/order/printOrders']);
   }
 }
