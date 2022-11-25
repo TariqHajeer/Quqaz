@@ -129,15 +129,13 @@
           <ng-option *ngFor="let branche of branches" [value]="branche.id">{{branche.name}}</ng-option>
         </ng-select>
       </div>
-      <div class="row">
-        <div class="col-md-8">
-          <label> ملاحظات</label>
-          <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Note"
-            (keyup.enter)="allFilter()">
-        </div>
-        <div class="col-md-4">
-          <button type="button" class="btn btn-primary" style="margin-top: 7%;" (click)="allFilter()">بحث</button>
-        </div>
+      <div class="col-md-8">
+        <label> ملاحظات</label>
+        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Note"
+          (keyup.enter)="allFilter()">
+      </div>
+      <div class="col-md-4">
+        <button type="button" class="btn btn-primary" style="margin-top: 7%;" (click)="allFilter()">بحث</button>
       </div>
     </div>
   </div>
