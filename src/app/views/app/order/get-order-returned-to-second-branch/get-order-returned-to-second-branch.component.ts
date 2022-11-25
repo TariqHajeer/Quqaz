@@ -46,7 +46,6 @@ export class GetOrderReturnedToSecondBranchComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBranches();
-    this.getAllOrders();
   }
 
   selectAll: boolean = true;
