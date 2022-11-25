@@ -418,6 +418,8 @@ export class OrderService {
       params = params.append('AgentPrintNumber', filter.AgentPrintNumber);
     if (filter.ClientPrintNumber != undefined || filter.ClientPrintNumber != null)
       params = params.append('ClientPrintNumber', filter.ClientPrintNumber);
+      if (filter.OriginalBranchId != undefined || filter.OriginalBranchId != null)
+      params = params.append('OriginalBranchId', filter.OriginalBranchId);
     if (filter.createdDateRangeFilter.start)
       params = params.append('CreatedDateRangeFilter.start', String(filter.createdDateRangeFilter.start));
     if (filter.createdDateRangeFilter.end)

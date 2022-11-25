@@ -22,5 +22,5 @@ export class OrderFilter {
   AgentPrintEndDate;
   CreatedBy;
   OrderState;
-  BranchId;
+  OriginalBranchId;
 }

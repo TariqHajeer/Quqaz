@@ -124,7 +124,7 @@
       </div>
       <div class="col-md-2">
         <label>الفرع</label>
-        <ng-select [(ngModel)]="filtering.BranchId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+        <ng-select [(ngModel)]="filtering.OriginalBranchId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
           (keyup.enter)="allFilter()">
           <ng-option *ngFor="let branche of branches" [value]="branche.id">{{branche.name}}</ng-option>
         </ng-select>
