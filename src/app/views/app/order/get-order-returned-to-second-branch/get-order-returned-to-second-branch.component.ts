@@ -20,7 +20,7 @@ import { BranchesService } from 'src/app/services/branches.service';
 })
 export class GetOrderReturnedToSecondBranchComponent implements OnInit {
   displayedColumns: string[] = ['select', 'index', 'code', 'country'
-    , 'client', 'cost', 'deliveryCost','note'];
+    , 'client', 'cost', 'deliveryCost', 'note'];
   dataSource = new MatTableDataSource([]);
   orders: any[] = []
   noDataFound: boolean = false
@@ -45,6 +45,7 @@ export class GetOrderReturnedToSecondBranchComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getBranches();
     this.getAllOrders();
   }
 
