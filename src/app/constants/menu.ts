@@ -70,7 +70,7 @@ const data: IMenuItem[] = [
       {
         icon: 'iconsminds-box-close',
         label: 'استلام حالة الشحنة',
-        to: `${adminRoot}/order/`,
+        to: `${adminRoot}/order/ReceiptfReceivingShipment`,
         permission: [UserPermission.ShowOrder],
         subs: [
           {

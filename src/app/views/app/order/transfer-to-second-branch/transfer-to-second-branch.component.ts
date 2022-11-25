@@ -28,6 +28,7 @@ export class TransferToSecondBranchComponent implements OnInit {
   countries: any[] = []
   clients: Client[] = []
   cityapi: string = 'Country';
+  countSelectOrder: number = 0;
   constructor(
     public orderservice: OrderService,
     public userService: UserService,
@@ -79,11 +80,13 @@ export class TransferToSecondBranchComponent implements OnInit {
           return
         else {
           this.ordersIds.push(row.id);
+          this.countSelectOrder = this.ordersIds.length;
         }
       }
       else {
         this.ordersIds = [];
         this.unSelectIds = this.unSelectIds.filter(o => o != row.id);
+        this.countSelectOrder = this.totalCount - this.unSelectIds.length;
       }
     }
     if (!this.selection.isSelected(row)) {
@@ -93,10 +96,12 @@ export class TransferToSecondBranchComponent implements OnInit {
         else {
           this.unSelectIds.push(row.id);
           this.ordersIds = [];
+          this.countSelectOrder = this.totalCount - this.unSelectIds.length;
         }
       }
       else {
         this.ordersIds = this.ordersIds.filter(o => o != row.id);
+        this.countSelectOrder = this.ordersIds.length;
         this.unSelectIds = [];
       }
     }
@@ -136,7 +141,7 @@ export class TransferToSecondBranchComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.getorders)
       this.totalCount = response.total
       this.dataSource.data.forEach(row => {
-        if (!this.selectAll||(this.selectAll&&this.ordersIds.find(d=>d==row.id))) { this.selection.select(row) }
+        if (!this.selectAll || (this.selectAll && this.ordersIds.find(d => d == row.id))) { this.selection.select(row) }
       });
     },
       err => {
@@ -144,14 +149,15 @@ export class TransferToSecondBranchComponent implements OnInit {
       });
   }
   moveOrders() {
-    this.orderservice.selectOrder.IsSelectedAll = !this.selectAll;
-    this.orderservice.selectOrder.SelectedIds = this.ordersIds;
-    this.orderservice.selectOrder.ExceptIds = this.unSelectIds;
-    if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedIds.length == 0 && this.selectAll)) {
-      this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      return
-    }
-    else
-    this.route.navigate(['/app/order/printOrders']);
+    console.log(this.selectAll);
+    // this.orderservice.selectOrder.IsSelectedAll = !this.selectAll;
+    // this.orderservice.selectOrder.SelectedIds = this.ordersIds;
+    // this.orderservice.selectOrder.ExceptIds = this.unSelectIds;
+    // if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedIds.length == 0 && this.selectAll)) {
+    //   this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    //   return
+    // }
+    // else
+    //   this.route.navigate(['/app/order/printOrders']);
   }
 }
