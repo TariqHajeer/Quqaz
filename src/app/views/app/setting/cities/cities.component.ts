@@ -154,10 +154,8 @@ export class CitiesComponent implements OnInit {
     if (this.cities.filter(c => c.name == this.editCity.name && c.id != this.editCity.id).length > 0) {
       this.notifications.create('', 'الاسم مكرر', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
       return
-    }
-    else if (!this.editCity.deliveryCost || this.editCity.deliveryCost <= 0) {
-
-      this.notifications.create('', 'خطأ في المبلغ', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
+    } else if (!this.editCity.name) {
+      this.notifications.create('', 'الاسم حقل مطلوب', NotificationType.Warn, { timeOut: 6000, showProgressBar: false });
       return
     }
     else {
