@@ -9,7 +9,7 @@
       </div>
       <div class="row w-100 mb-3 align-items-end">
         <div class="col-3">
-          <label>الاسم</label>
+          <label>الاسم <span class="text-danger text-one align-bottom mx-1">*</span></label>
           <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="city.name">
         </div>
         <div class="col-3">
@@ -20,12 +20,12 @@
         </div>
         <div class="col-3">
           <label>كلفة التوصيل</label>
-          <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="city.deliveryCost"
+          <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="city.deliveryCost"
             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '');">
         </div>
         <div class="col-3">
           <label>النقاط</label>
-          <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="city.points"
+          <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="city.points"
           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '');">
           <!-- <ng-select [(ngModel)]="city.points" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
             <ng-option *ngFor="let PointSetting of PointSettings" [value]="PointSetting.points">{{PointSetting.points}}</ng-option>

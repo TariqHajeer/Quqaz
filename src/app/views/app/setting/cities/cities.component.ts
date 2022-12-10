@@ -83,8 +83,8 @@ export class CitiesComponent implements OnInit {
       if (this.cities.filter(c => c.name == this.city.name).length != 0) {
         this.notifications.create("error", "الأسم موجود سابقاً", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       }
-      this.city.deliveryCost = Number(this.city.deliveryCost);
-      this.city.points = Number(this.city.points);
+      this.city.deliveryCost = this.city.deliveryCost ? Number(this.city.deliveryCost) * 1 : 0;
+      this.city.points = this.city.points ? Number(this.city.points) * 1 : 0;
       this.customService.addOrUpdate(this.apiName, this.city, 'add').subscribe(
         res => {
           this.notifications.create('success', 'تم اضافة مدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
@@ -139,7 +139,7 @@ export class CitiesComponent implements OnInit {
           this.notifications.create('', 'تم حذف المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
           this.getCities()
         })
-      } 
+      }
     } else if (!city.canDelete) {
       this.notifications.create('', 'لا يمكن الحذف', NotificationType.Error, { timeOut: 6000, showProgressBar: false });
     }
@@ -161,8 +161,8 @@ export class CitiesComponent implements OnInit {
       return
     }
     else {
-      this.editCity.deliveryCost = this.editCity.deliveryCost * 1
-      this.editCity.points = this.editCity.points * 1
+      this.editCity.deliveryCost = this.editCity.deliveryCost ? Number(this.editCity.deliveryCost) * 1 : 0;
+      this.editCity.points = this.editCity.points ? Number(this.editCity.points) * 1 : 0;
       this.customService.addOrUpdate(this.apiName, this.editCity, "update").subscribe(res => {
         this.notifications.create('', 'تم تعديل المدينة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
         this.editCity = new CreateCity
