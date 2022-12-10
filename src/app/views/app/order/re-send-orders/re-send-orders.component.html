@@ -4,13 +4,8 @@
     <div class="row">
       <div class="col-5">
         <label>كود الشحنة</label>
-        <input
-          type="text"
-          class="form-control"
-          [ngModelOptions]="{ standalone: true }"
-          [(ngModel)]="code"
-          (keyup.enter)="getResendOrderByCode()"
-        />
+        <input type="text" class="form-control" [ngModelOptions]="{ standalone: true }" [(ngModel)]="code"
+          (keyup.enter)="getResendOrderByCode()" />
         <br />
         <table class="table mat-elevation-z8" *ngIf="showTable">
           <thead>
@@ -26,35 +21,17 @@
               <td>{{ order.agent?.name }}</td>
               <td>
                 <!--chech icon -->
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  (click)="add(order)"
-                  style="cursor: pointer"
-                  class="bi bi-check2"
-                  viewBox="0 0 16 16"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" (click)="add(order)"
+                  style="cursor: pointer" class="bi bi-check2" viewBox="0 0 16 16">
                   <path
-                    d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
-                  />
+                    d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
                 </svg>
                 &nbsp;&nbsp;
                 <!--cansle icone-->
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  (click)="cancel(order)"
-                  style="cursor: pointer"
-                  class="bi bi-x"
-                  viewBox="0 0 16 16"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  (click)="cancel(order)" style="cursor: pointer" class="bi bi-x" viewBox="0 0 16 16">
                   <path
-                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
-                  />
+                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                 </svg>
               </td>
             </tr>
@@ -88,6 +65,9 @@
           <span class="text-danger text-one align-bottom mx-1">*</span>
         </th>
         <th>
+          ملاحظات
+        </th>
+        <th>
           <button class="btn btn-primary" (click)="save()">حفظ</button>
         </th>
       </thead>
@@ -100,58 +80,30 @@
             {{ order.client?.name }}
           </td>
           <td>
-            <ng-select
-              [(ngModel)]="order.CountryId"
-              (change)="changeCountryResend(order)"
-              [ngModelOptions]="{ standalone: true }"
-              [clearable]="false"
-              name="Country"
-            >
-              <ng-option
-                *ngFor="let citie of order.Countries"
-                [value]="citie.id"
-                >{{ citie.name }}</ng-option
-              >
+            <ng-select [(ngModel)]="order.CountryId" (change)="changeCountryResend(order)"
+              [ngModelOptions]="{ standalone: true }" [clearable]="false" name="Country">
+              <ng-option *ngFor="let citie of order.Countries" [value]="citie.id">{{ citie.name }}</ng-option>
             </ng-select>
           </td>
           <td>
-            <ng-select
-              [(ngModel)]="order.RegionId"
-              placeholder="اختر منطقة"
-              [ngModelOptions]="{ standalone: true }"
-              [clearable]="false"
-              name="Region"
-            >
-              <ng-option
-                *ngFor="let region of order.Regions"
-                [value]="region.id"
-                >{{ region.name }}</ng-option
-              >
+            <ng-select [(ngModel)]="order.RegionId" placeholder="اختر منطقة" [ngModelOptions]="{ standalone: true }"
+              [clearable]="false" name="Region">
+              <ng-option *ngFor="let region of order.Regions" [value]="region.id">{{ region.name }}</ng-option>
             </ng-select>
           </td>
           <td>
-            <ng-select
-              [(ngModel)]="order.AgnetId"
-              [ngModelOptions]="{ standalone: true }"
-              [clearable]="false"
-              name="Agent"
-              placeholder="اختر مندوب"
-            >
-              <ng-option
-                *ngFor="let Agent of order.Agents"
-                [value]="Agent.id"
-                >{{ Agent.name }}</ng-option
-              >
+            <ng-select [(ngModel)]="order.AgnetId" [ngModelOptions]="{ standalone: true }" [clearable]="false"
+              name="Agent" placeholder="اختر مندوب">
+              <ng-option *ngFor="let Agent of order.Agents" [value]="Agent.id">{{ Agent.name }}</ng-option>
             </ng-select>
           </td>
           <td>
-            <input
-              type="text"
-              class="form-control"
-              [ngModelOptions]="{ standalone: true }"
+            <input type="text" class="form-control" [ngModelOptions]="{ standalone: true }"
               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-              [(ngModel)]="order.DeliveryCost"
-            />
+              [(ngModel)]="order.DeliveryCost" />
+          </td>
+          <td>
+            {{order.note}}
           </td>
           <td>
             <button class="btn btn-danger" (click)="cancelOrder(order)">
