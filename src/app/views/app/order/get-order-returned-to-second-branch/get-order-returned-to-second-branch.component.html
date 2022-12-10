@@ -7,9 +7,9 @@
         <div class="row">
             <div class="col-md-3">
                 <label for="branche">الفرع</label>
-                <select class="form-control" (change)="filtering()" name="branche" [(ngModel)]="destinationBranchId">
-                    <option *ngFor="let branche of branches" [value]="branche.id">{{branche.name}}</option>
-                </select>
+                <ng-select  (change)="filtering()" name="branche" [(ngModel)]="destinationBranchId">
+                    <ng-option *ngFor="let branche of branches" [value]="branche.id">{{branche.name}}</ng-option>
+                </ng-select>
             </div>
             <div class="col-md-2">
                 <button (click)="moveOrders()" class="btn btn-primary" style="margin-top: 20px;"> اعادة الطلبات</button>
