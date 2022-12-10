@@ -489,7 +489,7 @@ const data: IMenuItem[] = [
         permission: [UserPermission.ShowOrderType, UserPermission.AddOrderType],
       },
       {
-        icon: 'simple-icon-layers',
+        icon: 'simple-icon-people',
         label: 'المجموعات',
         to: `${adminRoot}/setting/group`,
         permission: [UserPermission.ShowGroup, UserPermission.AddGroup],
