@@ -7,12 +7,11 @@ import { UserService } from 'src/app/services/user.service';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { Client } from '../../client/client.model';
-import { CustomService } from 'src/app/services/custom.service';
 import { OrderPlacedStateService } from 'src/app/services/order-placed-state.service';
-import { ClientService } from '../../client/client.service';
 import { Paging } from 'src/app/Models/paging';
 import { AuthService } from 'src/app/shared/auth.service';
 import { BranchesService } from 'src/app/services/branches.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-get-order-returned-to-second-branch',
   templateUrl: './get-order-returned-to-second-branch.component.html',
@@ -42,6 +41,8 @@ export class GetOrderReturnedToSecondBranchComponent implements OnInit {
     public orderplacedstate: OrderPlacedStateService,
     private authService: AuthService,
     private branchesService: BranchesService,
+    public spinner: NgxSpinnerService,
+
   ) { }
 
   ngOnInit(): void {
@@ -154,11 +155,15 @@ export class GetOrderReturnedToSecondBranchComponent implements OnInit {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    else
+    else {
+      this.spinner.show();
       this.orderservice.SendOrdersReturnedToSecondBranch().subscribe(res => {
-
+        this.spinner.hide();
+        this.getAllOrders();
+        this.notifications.create('Success', '  تمت اعادة الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       }, err => {
-
+        this.spinner.hide();
       })
+    }
   }
 }

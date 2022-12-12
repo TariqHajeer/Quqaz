@@ -21,7 +21,6 @@ import { Resend } from 'src/app/Models/order/resend.model';
 import { OrderStateEnum } from 'src/app/Models/Enums/OrderStateEnum';
 import orderPlaceds from 'src/app/data/orderPlaced';
 import moneyPlaceds from 'src/app/data/moneyPalced';
-import { Thickness } from '@syncfusion/ej2-angular-charts';
 import { BranchesService } from 'src/app/services/branches.service';
 
 @Component({
