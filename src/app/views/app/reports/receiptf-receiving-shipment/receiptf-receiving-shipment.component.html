@@ -180,7 +180,7 @@
           *ngIf="!element.canEditCount"
           [(ngModel)]="element.order.cost"
           style="width: 110px"
-          (blur)="sumCost()"
+          (keyup)="sumCost()"
           (ngModelChange)="changeCost(element, j)"
           (keypress)="keyPressNumbers($event, element.order.cost)"
         />

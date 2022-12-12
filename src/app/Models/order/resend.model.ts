@@ -9,4 +9,5 @@ export class Resend {
     Agents
     code:string="";
     client:any;
+    note
 }

@@ -28,10 +28,10 @@ import { ClientService } from '../../client/client.service';
 })
 export class OrdersTodayComponent implements OnInit {
 
-  displayedColumns: string[]= ['select', 'number', 'code', 'deliveryCost', 'cost', 'oldCost', 'recipientName',
-  'recipientPhones', 'client', 'clientPrintNumber', 'country'
-  , 'region', 'agent', 'agentPrintNumber', 'monePlaced', 'orderplaced', 'address'
-  , 'createdBy', 'date', 'diliveryDate', 'note'];
+  displayedColumns: string[] = ['select', 'number', 'code', 'deliveryCost', 'cost', 'oldCost', 'recipientName',
+    'recipientPhones', 'client', 'clientPrintNumber', 'country'
+    , 'region', 'agent', 'agentPrintNumber', 'monePlaced', 'orderplaced', 'address'
+    , 'createdBy', 'date', 'diliveryDate', 'note'];
   dataSource
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -71,50 +71,53 @@ export class OrdersTodayComponent implements OnInit {
   }
   selection = new SelectionModel<any>(true, []);
 
-  /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
-
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.orders = []
-    this.ids = []
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach(row => { this.selection.select(row) });
+    if (this.isAllSelected()) {
+      this.selection.clear()
+      this.dataSource.data.forEach(item => {
+        this.orders = this.orders.filter(order => order.id != item.id)
+      })
+    }
+    else {
+      this.dataSource.data.forEach(row => {
+        this.selection.select(row)
+      });
+    }
   }
-
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: any): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     this.checkboxId(row)
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row`;
   }
-  ids: any[] = []
   checkboxId(row) {
-    if (this.selection.isSelected(row))
-      if (this.ids.filter(d => d == row.id).length > 0)
+    if (this.selection.isSelected(row)) {
+      if (this.orders.filter(d => d.id == row.id).length > 0)
         return
-      else {
-        this.ids.push(row.id)
-        this.orders.push(row)
-      }
+      else this.orders.push(row)
+    }
     if (!this.selection.isSelected(row)) {
-      this.ids = this.ids.filter(i => i != row.id)
-      this.orders = this.orders.filter(o => o != row)
-
+      this.orders = this.orders.filter(o => o.id != row.id)
     }
   }
-  
 
+  switchPage(event: PageEvent) {
+    this.paging.allItemsLength = event.length;
+    this.paging.RowCount = event.pageSize;
+    this.paging.Page = event.pageIndex + 1;
+    this.allFilter();
+  }
   allFilter() {
     this.spinner.show()
-    this.orderservice.WithoutPaging(this.filtering).subscribe(response => {
+    this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
       this.spinner.hide()
       if (response.data.length == 0)
         this.noDataFound = true
@@ -129,9 +132,15 @@ export class OrdersTodayComponent implements OnInit {
           //  element.orderplaced = this.orderPlace.find(o => o.id == 4)
         }
       });
-      this.orders = response.data
+      // this.orders = response.data
       this.sumCost()
       this.dataSource = new MatTableDataSource(response.data)
+      this.selection.clear()
+      this.dataSource.data.forEach(row => {
+        if (this.orders.filter(d => d.id == row.id).length == 1) {
+          this.selection.select(row)
+        }
+      });
       this.totalCount = response.total
     },
       err => {
@@ -167,12 +176,12 @@ export class OrdersTodayComponent implements OnInit {
   GetRegion() {
     this.customerService.getAll(this.regionapi).subscribe(res => {
       this.Regions = res
-      this.tempRegions=res
+      this.tempRegions = res
     })
   }
   changeCountry() {
     this.Regions = []
-    this.filtering.RegionId =null
+    this.filtering.RegionId = null
     this.Regions = this.tempRegions.filter(r => r.country.id == this.filtering.CountryId)
     if (this.Regions.length != 0)
       this.filtering.RegionId = this.Regions[0].id
