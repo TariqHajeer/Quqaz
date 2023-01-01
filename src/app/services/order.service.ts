@@ -338,6 +338,10 @@ export class OrderService {
     this.transferToSecondBranchDto.selectedOrdersWithFitlerDto = this.selectOrder;
     return this.http.put<any>(this.controler + 'SendOrdersReturnedToSecondBranch', this.selectOrder);
   }
+  SetDisApproveOrdersReturnByBranchInStore() {
+    this.transferToSecondBranchDto.selectedOrdersWithFitlerDto = this.selectOrder;
+    return this.http.put<any>(this.controler + 'SetDisApproveOrdersReturnByBranchInStore', this.selectOrder);
+  }
   GetOrdersReturnedToMyBranch(filter: OrderFilter, paging: Paging) {
     let params = this.getHttpPramsFilteredForOrder(filter, paging);
     return this.http.get<any>(this.controler + 'GetOrdersReturnedToMyBranch', { params: params });
