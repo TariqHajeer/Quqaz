@@ -12,6 +12,7 @@ import { OrderPlacedStateService } from 'src/app/services/order-placed-state.ser
 import { CustomService } from 'src/app/services/custom.service';
 import { User } from 'src/app/Models/user/user.model';
 import { Region } from 'src/app/Models/Regions/region.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 export interface AgentOrdersIds {
   orderId: number
   agentId: number
@@ -48,6 +49,8 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     public route: Router,
     public orderplacedstate: OrderPlacedStateService,
     private customerService: CustomService,
+    public spinner: NgxSpinnerService,
+
   ) { }
 
   ngOnInit(): void {
@@ -178,11 +181,17 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     });
   }
   disapprove(element: any) {
-
+    this.spinner.show();
     this.orderservice.DisApproveOrderComeToMyBranch(element.id).subscribe(res => {
       this.dataSource.data = this.dataSource.data.filter(c => c.id != element.id);
       this.dataSource._updateChangeSubscription();
-    })
+      this.spinner.hide();
+      this.notifications.success('success', 'تم الرفض بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    },
+      err => {
+        this.spinner.hide();
+      }
+    )
   }
   regionArray(countryId) {
     return this.Regions.filter(

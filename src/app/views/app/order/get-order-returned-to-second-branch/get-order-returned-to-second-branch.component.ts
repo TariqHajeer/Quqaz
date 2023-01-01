@@ -156,16 +156,14 @@ export class GetOrderReturnedToSecondBranchComponent implements OnInit {
       return
     }
     else {
-      console.log(  this.orderservice.transferToSecondBranchDto);
-      
-      // this.spinner.show();
-      // this.orderservice.SendOrdersReturnedToSecondBranch().subscribe(res => {
-      //   this.spinner.hide();
-      //   this.getAllOrders();
-      //   this.notifications.create('Success', '  تمت اعادة الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      // }, err => {
-      //   this.spinner.hide();
-      // })
+      this.spinner.show();
+      this.orderservice.SendOrdersReturnedToSecondBranch().subscribe(res => {
+        this.spinner.hide();
+        this.getAllOrders();
+        this.notifications.create('Success', '  تمت اعادة الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      }, err => {
+        this.spinner.hide();
+      })
     }
   }
 }
