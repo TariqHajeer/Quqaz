@@ -11,9 +11,7 @@ import { OrderService } from 'src/app/services/order.service';
 })
 export class GetDisapprovedReturnedOrderByBranchComponent implements OnInit {
 
-  displayedColumns:string[]=[
-    "index","code","client","country"
-  ];
+  displayedColumns:string[]=['index','code','client','country'];
   dataSource = new MatTableDataSource([]);
   paging: Paging;
   totalCount:number;
