@@ -9,8 +9,6 @@ import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { OrderPlacedStateService } from 'src/app/services/order-placed-state.service';
-import { Client } from '../../client/client.model';
-import { ClientService } from '../../client/client.service';
 import { CustomService } from 'src/app/services/custom.service';
 import { User } from 'src/app/Models/user/user.model';
 import { Region } from 'src/app/Models/Regions/region.model';
@@ -28,7 +26,7 @@ export interface AgentOrdersIds {
 })
 export class GetOrdersComeToMyBranchComponent implements OnInit {
   displayedColumns: string[] = ['select', 'index', 'code'
-    , 'client', 'country', 'region', 'agent', 'cost', 'deliveryCost'];
+    , 'client', 'country', 'region', 'agent', 'cost', 'deliveryCost', "actions"];
   dataSource = new MatTableDataSource([]);
   orders: any[] = []
   paging: Paging
@@ -37,7 +35,6 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
   @Input() totalCount: number;
   selection = new SelectionModel<any>(true, []);
   countries: any[] = []
-  clients: Client[] = []
   cityapi: string = 'Country';
   regionapi: string = 'Region';
   Agents: User[] = []
@@ -50,12 +47,10 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     private notifications: NotificationsService,
     public route: Router,
     public orderplacedstate: OrderPlacedStateService,
-    private clientService: ClientService,
     private customerService: CustomService,
   ) { }
 
   ngOnInit(): void {
-    this.GetClient()
     this.getCities()
     this.getAgent();
     this.GetRegion();
@@ -64,7 +59,7 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     this.allFilter();
   }
 
-  isAllSelected() {
+  isAllSelected(): boolean {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
@@ -103,11 +98,6 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
       this.orders = this.orders.filter(o => o.id != rowid)
     }
   }
-  GetClient() {
-    this.clientService.getClients().subscribe(res => {
-      this.clients = res
-    })
-  }
   getCities() {
     this.customerService.getAll(this.cityapi).subscribe((res) => {
       this.countries = res;
@@ -129,7 +119,6 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
         }
       this.dataSource = new MatTableDataSource(response.data)
       this.totalCount = response.total
-      // this.selection.clear()
       this.dataSource.data.forEach(row => {
         if (this.orders.filter(d => d.id == row.id).length == 1) {
           this.selection.select(row.id)
@@ -187,6 +176,13 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     this.customerService.getAll(this.regionapi).subscribe((res) => {
       this.Regions = res;
     });
+  }
+  disapprove(element: any) {
+
+    this.orderservice.DisApproveOrderComeToMyBranch(element.id).subscribe(res => {
+      this.dataSource.data = this.dataSource.data.filter(c => c.id != element.id);
+      this.dataSource._updateChangeSubscription();
+    })
   }
   regionArray(countryId) {
     return this.Regions.filter(
