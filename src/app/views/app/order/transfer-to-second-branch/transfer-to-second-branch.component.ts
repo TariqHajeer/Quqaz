@@ -10,6 +10,7 @@ import { OrderPlacedStateService } from 'src/app/services/order-placed-state.ser
 import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
 import { CustomService } from 'src/app/services/custom.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-transfer-to-second-branch',
   templateUrl: './transfer-to-second-branch.component.html',
@@ -37,6 +38,7 @@ export class TransferToSecondBranchComponent implements OnInit {
     public orderplacedstate: OrderPlacedStateService,
     private clientService: ClientService,
     private customerService: CustomService,
+    public spinner: NgxSpinnerService,
   ) { }
 
   ngOnInit(): void {
@@ -129,6 +131,7 @@ export class TransferToSecondBranchComponent implements OnInit {
     this.getAllOrders();
   }
   getAllOrders() {
+    this.spinner.show();
     this.orderservice.GetInStockToTransferToSecondBranch().subscribe(response => {
       this.getorders = []
       if (response)
@@ -138,14 +141,15 @@ export class TransferToSecondBranchComponent implements OnInit {
           this.getorders = response.data;
           this.noDataFound = false
         }
-      this.dataSource = new MatTableDataSource(this.getorders)
+      this.dataSource = new MatTableDataSource(this.getorders);
+      this.spinner.hide();
       this.totalCount = response.total
       this.dataSource.data.forEach(row => {
         if (!this.selectAll || (this.selectAll && this.ordersIds.find(d => d == row.id))) { this.selection.select(row) }
       });
     },
       err => {
-
+        this.spinner.hide();
       });
   }
   moveOrders() {

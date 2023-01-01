@@ -100,12 +100,16 @@ export class GetDisapprovedReturnedOrderByBranchComponent implements OnInit {
     this.getData();
   }
   getData(): void {
+    this.spinner.show();
     this.orderSerivce.getDisApproveOrdersReturnByBranch(this.paging).subscribe(res => {
-      this.dataSource = new MatTableDataSource(res.data)
+      this.dataSource = new MatTableDataSource(res.data);
+      this.spinner.hide();
       this.totalCount = res.total;
       this.dataSource.data.forEach(row => {
         if (!this.selectAll || (this.selectAll && this.ordersIds.find(d => d == row.id))) { this.selection.select(row) }
       });
+    },err=>{
+      this.spinner.hide();
     });
   }
   moveOrders() {
