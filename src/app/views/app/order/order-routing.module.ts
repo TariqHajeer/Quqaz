@@ -144,7 +144,7 @@ const routes: Routes = [
     data: { roles: [UserPermission.ShowOrder] }
   },
   {
-    path:'getdisapprovedreturnedorderbybranchcomponent',
+    path:'getdisapprovedreturnedorderbybranch',
     component:GetDisapprovedReturnedOrderByBranchComponent,canActivate:[AuthGuard],
   }
 ];

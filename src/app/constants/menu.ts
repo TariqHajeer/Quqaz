@@ -124,6 +124,12 @@ const data: IMenuItem[] = [
             to: `${adminRoot}/order/GetOrdersReturnedToMyBranch`,
             permission: [UserPermission.ShowOrder],
           },
+          {
+            icon: 'iconsminds-box-close',
+            label: 'الشحنات المرفوضة من قبل الفرع',
+            to: `${adminRoot}/order/getdisapprovedreturnedorderbybranch`,
+            permission: [UserPermission.ShowOrder],
+          },
         ]
 
       },
