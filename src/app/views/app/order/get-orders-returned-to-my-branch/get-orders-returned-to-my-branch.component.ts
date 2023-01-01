@@ -13,6 +13,7 @@ import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
 import { CustomService } from 'src/app/services/custom.service';
 import { User } from 'src/app/Models/user/user.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-get-orders-returned-to-my-branch',
@@ -22,7 +23,7 @@ import { User } from 'src/app/Models/user/user.model';
 export class GetOrdersReturnedToMyBranchComponent implements OnInit {
 
   displayedColumns: string[] = ['select', 'index', 'code'
-    , 'client', 'country', 'region', 'agent', 'cost'];
+    , 'client', 'country', 'region', 'agent', 'cost', 'actions'];
   dataSource = new MatTableDataSource([]);
   orders: any[] = []
   paging: Paging
@@ -42,6 +43,7 @@ export class GetOrdersReturnedToMyBranchComponent implements OnInit {
     public orderplacedstate: OrderPlacedStateService,
     private clientService: ClientService,
     private customerService: CustomService,
+    public spinner: NgxSpinnerService,
   ) { }
 
   ngOnInit(): void {
@@ -114,14 +116,16 @@ export class GetOrdersReturnedToMyBranchComponent implements OnInit {
     this.allFilter();
   }
   allFilter() {
-    this.orderservice.GetOrdersReturnedToMyBranch(this.filtering, this.paging).subscribe(response => {
+    this.spinner.show();
+    this.orderservice.GetOrdersReturnedToMyBranch(this.paging).subscribe(response => {
       if (response)
         if (response.data.length <= 0)
           this.noDataFound = true
         else {
           this.noDataFound = false
         }
-      this.dataSource = new MatTableDataSource(response.data)
+      this.dataSource = new MatTableDataSource(response.data);
+      this.spinner.hide();
       this.totalCount = response.total
       // this.selection.clear()
       this.dataSource.data.forEach(row => {
@@ -132,7 +136,7 @@ export class GetOrdersReturnedToMyBranchComponent implements OnInit {
       });
     },
       err => {
-
+        this.spinner.hide();
       });
   }
   ReceiveOrders() {
@@ -140,14 +144,25 @@ export class GetOrdersReturnedToMyBranchComponent implements OnInit {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    
-    this.orderservice.ReceiveReturnedToMyBranch(this.orders.map(order=>order.id)).subscribe(res => {
+
+    this.orderservice.ReceiveReturnedToMyBranch(this.orders.map(order => order.id)).subscribe(res => {
       this.notifications.success('success', 'تم قبول الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.selection.clear()
       this.orders = [];
       this.allFilter()
     })
   }
-  
-
+  disapprove(element: any) {
+    this.spinner.show();
+    this.orderservice.DisApproveReturnedToMyBranch(element.id).subscribe(res => {
+      this.dataSource.data = this.dataSource.data.filter(c => c.id != element.id);
+      this.dataSource._updateChangeSubscription();
+      this.spinner.hide();
+      this.notifications.success('success', 'تم الرفض بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    },
+      err => {
+        this.spinner.hide();
+      }
+    )
+  }
 }

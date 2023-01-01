@@ -324,7 +324,7 @@ export class OrderService {
   DisApproveOrderComeToMyBranch(id: number) {
     return this.http.put(this.controler + 'DisApproveOrderComeToMyBranch', id);
   }
-  getDisApproveOrdersReturnByBranch(paging: Paging):any {
+  getDisApproveOrdersReturnByBranch(paging: Paging): any {
     let params = this.getHttpParmasByPaging(paging);
     return this.http.get<any>(this.controler + "GetDisApproveOrdersReturnByBranch", { params: params });
   }
@@ -342,9 +342,13 @@ export class OrderService {
     this.transferToSecondBranchDto.selectedOrdersWithFitlerDto = this.selectOrder;
     return this.http.post<any>(this.controler + 'SetDisApproveOrdersReturnByBranchInStore', this.selectOrder);
   }
-  GetOrdersReturnedToMyBranch(filter: OrderFilter, paging: Paging) {
-    let params = this.getHttpPramsFilteredForOrder(filter, paging);
+  GetOrdersReturnedToMyBranch(paging: Paging) {
+    let params = new HttpParams();
+    params = this.setPaging(params, paging)
     return this.http.get<any>(this.controler + 'GetOrdersReturnedToMyBranch', { params: params });
+  }
+  DisApproveReturnedToMyBranch(id: number) {
+    return this.http.put(this.controler + 'DisApproveReturnedToMyBranch', id);
   }
   ReceiveReturnedToMyBranch(ids: any[]) {
     return this.http.put<any>(this.controler + 'ReceiveReturnedToMyBranch', ids);
@@ -368,7 +372,7 @@ export class OrderService {
     this.setPaging(p, paging);
     return p;
   }
-  setPaging(params, paging?: Paging): void {
+  setPaging(params, paging?: Paging): HttpParams {
     if (paging && paging.Page)
       params = params.append('Page', paging.Page);
     if (paging && paging.RowCount)
