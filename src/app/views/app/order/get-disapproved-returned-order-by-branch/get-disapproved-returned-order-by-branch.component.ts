@@ -119,8 +119,8 @@ export class GetDisapprovedReturnedOrderByBranchComponent implements OnInit {
     else {
       this.spinner.show();
       this.orderSerivce.SetDisApproveOrdersReturnByBranchInStore().subscribe(res => {
-        this.spinner.hide();
         this.getData();
+        this.spinner.hide();
         this.notifications.create('Success', '  تمت نقل الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       }, err => {
         this.spinner.hide();
