@@ -14,6 +14,7 @@ import { ClientService } from '../../client/client.service';
 import { CustomService } from 'src/app/services/custom.service';
 import { User } from 'src/app/Models/user/user.model';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SelectOrder } from 'src/app/Models/order/select-order.model';
 
 @Component({
   selector: 'app-get-orders-returned-to-my-branch',
@@ -54,44 +55,66 @@ export class GetOrdersReturnedToMyBranchComponent implements OnInit {
     this.filtering = new OrderFilter
     this.allFilter();
   }
-
+  selectAll: boolean = true;
+  ordersIds = [];
+  unSelectIds = [];
+  countSelectOrder: number = 0;
   isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
+    return this.selectAll = !this.selectAll;
   }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
+    this.ordersIds = [];
+    this.unSelectIds = [];
     if (this.isAllSelected()) {
-      this.selection.clear()
-      this.dataSource.data.forEach(item => {
-        this.orders = this.orders.filter(order => order != item)
-      })
+      this.selection.clear();
     }
     else {
       this.dataSource.data.forEach(row => {
-        this.selection.select(row.id)
+        this.selection.select(row);
       });
     }
   }
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(rowid?: any, row?): string {
-    if (!rowid) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    }
-    this.checkboxId(rowid, row)
-    return `${this.selection.isSelected(rowid) ? 'deselect' : 'select'} row`;
+  checkboxLabelAll(): string {
+    return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
   }
-  checkboxId(rowid, row?) {
-    if (this.selection.isSelected(rowid)) {
-      if (this.orders.filter(d => d == row).length > 0)
-        return
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: any): string {
+    this.checkboxId(row)
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row`;
+  }
+  checkboxId(row) {
+    if (this.selection.isSelected(row)) {
+      if (this.selectAll) {
+        this.unSelectIds = [];
+        if (this.ordersIds.filter(d => d == row.id).length > 0)
+          return
+        else {
+          this.ordersIds.push(row.id);
+          this.countSelectOrder = this.ordersIds.length;
+        }
+      }
       else {
-        this.orders.push(row)
+        this.ordersIds = [];
+        this.unSelectIds = this.unSelectIds.filter(o => o != row.id);
+        this.countSelectOrder = this.totalCount - this.unSelectIds.length;
       }
     }
-    if (!this.selection.isSelected(rowid)) {
-      this.orders = this.orders.filter(o => o.id != rowid)
+    if (!this.selection.isSelected(row)) {
+      if (!this.selectAll) {
+        if (this.unSelectIds.filter(d => d == row.id).length > 0)
+          return
+        else {
+          this.unSelectIds.push(row.id);
+          this.ordersIds = [];
+          this.countSelectOrder = this.totalCount - this.unSelectIds.length;
+        }
+      }
+      else {
+        this.ordersIds = this.ordersIds.filter(o => o != row.id);
+        this.countSelectOrder = this.ordersIds.length;
+        this.unSelectIds = [];
+      }
     }
   }
   GetClient() {
@@ -140,17 +163,25 @@ export class GetOrdersReturnedToMyBranchComponent implements OnInit {
       });
   }
   ReceiveOrders() {
-    if (this.totalCount == 0 || this.orders.length == 0) {
-      this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    this.orderservice.selectOrder.IsSelectedAll = !this.selectAll;
+    this.orderservice.selectOrder.SelectedIds = this.ordersIds;
+    this.orderservice.selectOrder.ExceptIds = this.unSelectIds;
+    if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedIds.length == 0 && this.selectAll)) {
+      this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-
-    this.orderservice.ReceiveReturnedToMyBranch(this.orders.map(order => order.id)).subscribe(res => {
-      this.notifications.success('success', 'تم قبول الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      this.selection.clear()
-      this.orders = [];
-      this.allFilter()
-    })
+    else {
+      this.spinner.show();
+      this.orderservice.ReceiveReturnedToMyBranch().subscribe(res => {
+        this.spinner.hide();
+        this.allFilter();
+        this.notifications.create('Success', '  تمت اعادة الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+        this.countSelectOrder = 0;
+        this.orderservice.selectOrder = new SelectOrder();
+      }, err => {
+        this.spinner.hide();
+      })
+    }
   }
   disapprove(element: any) {
     this.spinner.show();

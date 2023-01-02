@@ -350,8 +350,11 @@ export class OrderService {
   DisApproveReturnedToMyBranch(id: number) {
     return this.http.put(this.controler + 'DisApproveReturnedToMyBranch', id);
   }
-  ReceiveReturnedToMyBranch(ids: any[]) {
-    return this.http.put<any>(this.controler + 'ReceiveReturnedToMyBranch', ids);
+  ReceiveReturnedToMyBranch() {
+    this.transferToSecondBranchDto.selectedOrdersWithFitlerDto = this.selectOrder;
+    let formdata = new FormData();
+    formdata = this.convertSelectOrderToFromData(formdata, this.selectOrder);
+    return this.http.patch<any>(this.controler + 'ReceiveReturnedToMyBranch', this.selectOrder);
   }
   GetPrintsTransferToSecondBranch(paging: Paging, destinationBranchId: any) {
     let params = this.getHttpParmasByPaging(paging);
@@ -427,6 +430,57 @@ export class OrderService {
 
     return params;
   }
-
+  convertSelectOrderToFromData(formdata: FormData, selectOrder: SelectOrder): FormData {
+    if (selectOrder.ExceptIds)
+      formdata.append('ExceptIds', selectOrder.ExceptIds);
+    if (selectOrder.IsSelectedAll)
+      formdata.append('IsSelectedAll', selectOrder.IsSelectedAll);
+    if (selectOrder.SelectedIds)
+      formdata.append('SelectedIds', selectOrder.SelectedIds);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.AgentId)
+      formdata.append('AgentId', selectOrder.OrderFilter.AgentId);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.AgentPrintEndDate)
+      formdata.append('AgentPrintEndDate', selectOrder.OrderFilter.AgentPrintEndDate);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.AgentPrintNumber)
+      formdata.append('AgentPrintNumber', selectOrder.OrderFilter.AgentPrintNumber);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.AgentPrintStartDate)
+      formdata.append('AgentPrintStartDate', selectOrder.OrderFilter.AgentPrintStartDate);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.ClientId)
+      formdata.append('ClientId', selectOrder.OrderFilter.ClientId);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.ClientPrintNumber)
+      formdata.append('ClientPrintNumber', selectOrder.OrderFilter.ClientPrintNumber);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.Code)
+      formdata.append('Code', selectOrder.OrderFilter.Code);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.CountryId)
+      formdata.append('CountryId', selectOrder.OrderFilter.CountryId);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.CreatedBy)
+      formdata.append('CreatedBy', selectOrder.OrderFilter.CreatedBy);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.CreatedDate)
+      formdata.append('CreatedDate', selectOrder.OrderFilter.CreatedDate);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.IsClientDiliverdMoney)
+      formdata.append('IsClientDiliverdMoney', selectOrder.OrderFilter.IsClientDiliverdMoney);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.MonePlacedId)
+      formdata.append('MonePlacedId', selectOrder.OrderFilter.MonePlacedId);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.Note)
+      formdata.append('Note', selectOrder.OrderFilter.Note);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.OrderState)
+      formdata.append('OrderState', selectOrder.OrderFilter.OrderState);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.OrderplacedId)
+      formdata.append('OrderplacedId', selectOrder.OrderFilter.OrderplacedId);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.OriginalBranchId)
+      formdata.append('OriginalBranchId', selectOrder.OrderFilter.OriginalBranchId);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.Phone)
+      formdata.append('Phone', selectOrder.OrderFilter.Phone);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.RecipientName)
+      formdata.append('RecipientName', selectOrder.OrderFilter.RecipientName);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.RegionId)
+      formdata.append('RegionId', selectOrder.OrderFilter.RegionId);
+    // formdata.append('createdDateRangeFilter',selectOrder.OrderFilter.createdDateRangeFilter);
+    if (selectOrder.Paging && selectOrder.Paging.Page)
+      formdata.append('Page', selectOrder.Paging.Page);
+    if (selectOrder.Paging && selectOrder.Paging.RowCount)
+      formdata.append('RowCount', selectOrder.Paging.RowCount);
+    return formdata;
+  }
 
 }
