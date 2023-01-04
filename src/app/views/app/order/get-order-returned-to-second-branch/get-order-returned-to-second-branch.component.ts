@@ -124,7 +124,7 @@ export class GetOrderReturnedToSecondBranchComponent implements OnInit {
   }
   filtering() {
     this.selection.clear();
-    this.isAllSelected();
+    // this.isAllSelected();
     this.getAllOrders();
   }
   getAllOrders() {
