@@ -1,0 +1,64 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="line-scale-party" [fullScreen]="true">
+    <p style="color: white"> </p>
+</ngx-spinner>
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-4">
+                <h3>الشحنات المرفوضة من قبل الفرع</h3>
+            </div>
+            <div class="col-md-2">
+                <button (click)="moveOrders()" class="btn btn-primary" style="margin-top: 20px;"> نقل الطلبات الى المخزن</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="example-container mat-elevation-z8">
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="isAllSelected()"
+                    [aria-label]="checkboxLabelAll()">
+                    <span>&nbsp;الطلبات المحددة&nbsp;</span>
+                    <span class="badge badge-primary">{{countSelectOrder}}</span>
+                </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row" (click)="$event.stopPropagation()">
+                <mat-checkbox (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                    [aria-label]="checkboxLabel(row)">
+                </mat-checkbox>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="index">
+            <th mat-header-cell *matHeaderCellDef> ترقيم </th>
+            <td mat-cell *matCellDef="let element;index as i"> {{i+1}}</td>
+        </ng-container>
+        <ng-container matColumnDef="code">
+            <th mat-header-cell *matHeaderCellDef> كود </th>
+            <td mat-cell *matCellDef="let element"> {{element.code}}</td>
+        </ng-container>
+        <ng-container matColumnDef="client">
+            <th mat-header-cell *matHeaderCellDef> العميل </th>
+            <td mat-cell *matCellDef="let element"> {{element.client?.name}}</td>
+        </ng-container>
+        <ng-container matColumnDef="country">
+            <th mat-header-cell *matHeaderCellDef> المدينة </th>
+            <td mat-cell *matCellDef="let element"> {{element.country?.name}}</td>
+        </ng-container>
+        <ng-container matColumnDef="cost">
+            <th mat-header-cell *matHeaderCellDef> المبلغ </th>
+            <td mat-cell *matCellDef="let element"> {{element.cost}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+        </tr>
+    </table>
+    <h5 style="padding-top: 20px; padding-right: 10px;" *ngIf="noDataFound()">لايوجد بيانات للعرض</h5>
+
+</div>
+
+<mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
+    [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
+<simple-notifications></simple-notifications>

@@ -30,6 +30,8 @@ import { ShipmentsOnWayComponent } from './shipments-on-way/shipments-on-way.com
 import { ShowRecetptShipmentsComponent } from './show-recetpt-shipments/show-recetpt-shipments.component';
 import { ShowTreasuryComponent } from './show-treasury/show-treasury.component';
 import { StatisticsComponent } from './statistics/statistics.component';
+import { ViewsPrintTransferToSecondBranchByIdComponent } from './views-print-transfer-to-second-branch-by-id/views-print-transfer-to-second-branch-by-id.component';
+import { ViewsPrintTransferToSecondBranchComponent } from './views-print-transfer-to-second-branch/views-print-transfer-to-second-branch.component';
 
 const routes: Routes = [
   {
@@ -204,6 +206,22 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
       roles: [UserPermission.ShowReports, UserPermission.TreasuryManagment],
+    },
+  },
+  {
+    path: 'ViewsPrintTransferToSecondBranch',
+    component: ViewsPrintTransferToSecondBranchComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: [UserPermission.ShowReports],
+    },
+  },
+  {
+    path: 'ViewsPrintTransferToSecondBranch/:id',
+    component: ViewsPrintTransferToSecondBranchByIdComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: [UserPermission.ShowReports],
     },
   },
 ];

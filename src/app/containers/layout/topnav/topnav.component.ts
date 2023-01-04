@@ -193,8 +193,9 @@ export class TopnavComponent implements OnInit, OnDestroy {
   selectBranche(item: NameAndIdDto) {
     this.user.branche = item;
     this.authService.setAuthenticatedUser(this.user);
-    setTimeout(() => {
-      window.location.reload();
-    }, 50);
+    this.router.navigate(['/app/HomePage/start'])
+      .then(() => {
+        window.location.reload();
+      });
   }
 }
