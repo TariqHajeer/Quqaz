@@ -10,9 +10,9 @@ export class SelectOrder {
         this.ExceptIds = [];
     }
     OrderFilter: OrderFilter;
-    IsSelectedAll: boolean;
-    SelectedIds: number[];
-    ExceptIds: number[];
+    IsSelectedAll: any;
+    SelectedIds: any;
+    ExceptIds: any;
     Paging: Paging;
 }
 export class TransferToSecondBranchDto {
