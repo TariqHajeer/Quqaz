@@ -26,127 +26,164 @@ const data: IMenuItem[] = [
     subs: [
       {
         icon: 'iconsminds-box-close',
-        label: 'الطلبات الجديدة',
-        to: `${adminRoot}/order/neworders`,
-        permission: [UserPermission.ShowOrder],
-        badge: true,
-      },
-      {
-        icon: 'iconsminds-box-close',
-        label: 'عرض الطلبات',
+        label: 'الطلبات ',
         to: `${adminRoot}/order/`,
         permission: [UserPermission.ShowOrder],
+        subs: [
+          {
+            icon: 'iconsminds-box-close',
+            label: 'الطلبات الجديدة',
+            to: `${adminRoot}/order/neworders`,
+            permission: [UserPermission.ShowOrder],
+            badge: true,
+          },
+          {
+            icon: 'iconsminds-box-close',
+            label: 'عرض الطلبات',
+            to: `${adminRoot}/order/`,
+            permission: [UserPermission.ShowOrder],
+          },
+          {
+            icon: 'iconsminds-box-close',
+            label: ' طلبات عند العميل ',
+            to: `${adminRoot}/order/orderswithclient`,
+            permission: [UserPermission.AddOrder],
+            badge: true,
+          },
+          {
+            icon: 'simple-icon-layers',
+            label: 'طلبات تعديل حالة الشحنة',
+            to: `${adminRoot}/reports/agentOrderstaterequests`,
+            badge: true,
+            permission: [UserPermission.ShowOrder],
+          },
+          {
+            icon: 'simple-icon-layers',
+            label: 'اعادة ارسال',
+            to: `${adminRoot}/order/resend`,
+            badge: true,
+            permission: [UserPermission.ShowOrder],
+          },
+        ]
       },
+
       {
         icon: 'iconsminds-box-close',
-        label: 'استلام حالة الشحنة المستلمة ',
-        to: `${adminRoot}/reports/ReceiptfReceivingShipment`,
-        permission: [UserPermission.ReceiptOfTheStatusOfTheDeliveredShipment],
-      },
-      {
-        icon: 'iconsminds-box-close',
-        label: 'استلام حالة الشحنة المرتجعة ',
-        to: `${adminRoot}/reports/rejectShipments`,
-        permission: [UserPermission.ReceiptOfTheStatusOfTheReturnedShipment],
-      },
-      // {
-      //   icon: 'iconsminds-box-close',
-      //   label: 'نقل الطلبات ',
-      //   to: `${adminRoot}/order/moveorder`,
-      //   permission: [UserPermission.AddOrder],
-      // },
-      {
-        icon: 'iconsminds-box-close',
-        label: 'نقل الطلبات الى مندوب آخر',
-        to: `${adminRoot}/reports/changeagentbyorders`,
+        label: 'استلام حالة الشحنة',
+        to: `${adminRoot}/order/ReceiptfReceivingShipment`,
         permission: [UserPermission.ShowOrder],
+        subs: [
+          {
+            icon: 'iconsminds-box-close',
+            label: 'استلام حالة الشحنة المستلمة ',
+            to: `${adminRoot}/reports/ReceiptfReceivingShipment`,
+            permission: [UserPermission.ReceiptOfTheStatusOfTheDeliveredShipment],
+          },
+          {
+            icon: 'iconsminds-box-close',
+            label: 'استلام حالة الشحنة المرتجعة ',
+            to: `${adminRoot}/reports/rejectShipments`,
+            permission: [UserPermission.ReceiptOfTheStatusOfTheReturnedShipment],
+          },
+        ]
       },
+
       {
         icon: 'iconsminds-box-close',
-        label: 'نقل الطلبات الى فرع آخر',
-        to: `${adminRoot}/order/transferToSecondBranch`,
+        label: 'نقل الطلبات ',
+        to: `${adminRoot}/order/moveorder`,
         permission: [UserPermission.ShowOrder],
+        subs: [
+          {
+            icon: 'iconsminds-box-close',
+            label: 'نقل الطلبات الى مندوب آخر',
+            to: `${adminRoot}/reports/changeagentbyorders`,
+            permission: [UserPermission.ShowOrder],
+          },
+          {
+            icon: 'iconsminds-box-close',
+            label: 'نقل الطلبات الى فرع آخر',
+            to: `${adminRoot}/order/transferToSecondBranch`,
+            permission: [UserPermission.ShowOrder],
+          },
+          {
+            icon: 'iconsminds-box-close',
+            label: 'الشحنات القادمة من فرع آخر',
+            to: `${adminRoot}/order/getOrdersComeToMyBranch`,
+            permission: [UserPermission.ShowOrder],
+          },
+          {
+            icon: 'iconsminds-box-close',
+            label: 'اعادة الطلبات المرتجعة',
+            to: `${adminRoot}/order/GetOrderReturnedToSecondBranch`,
+            permission: [UserPermission.ShowOrder],
+          },
+          {
+            icon: 'iconsminds-box-close',
+            label: 'استلام الطلبات المرتجعة من فرع اخر',
+            to: `${adminRoot}/order/GetOrdersReturnedToMyBranch`,
+            permission: [UserPermission.ShowOrder],
+          },
+          {
+            icon: 'iconsminds-box-close',
+            label: 'الشحنات المرفوضة من قبل الفرع',
+            to: `${adminRoot}/order/getdisapprovedreturnedorderbybranch`,
+            permission: [UserPermission.ShowOrder],
+          },
+        ]
+
       },
-      {
-        icon: 'iconsminds-box-close',
-        label: 'الشحنات القادمة من فرع آخر',
-        to: `${adminRoot}/order/getOrdersComeToMyBranch`,
-        permission: [UserPermission.ShowOrder],
-      },
-       {
-        icon: 'iconsminds-box-close',
-        label: 'اعادة الطلبات المرتجعة',
-        to: `${adminRoot}/order/GetOrderReturnedToSecondBranch`,
-        permission: [UserPermission.ShowOrder],
-      },
-      {
-        icon: 'iconsminds-box-close',
-        label: 'استلام الطلبات المرتجعة من فرع اخر',
-        to: `${adminRoot}/order/GetOrdersReturnedToMyBranch`,
-        permission: [UserPermission.ShowOrder],
-      },
-      {
-        icon: 'iconsminds-box-close',
-        label: ' طلبات عند العميل ',
-        to: `${adminRoot}/order/orderswithclient`,
-        permission: [UserPermission.AddOrder],
-        badge: true,
-      },
-      {
-        icon: 'simple-icon-layers',
-        label: 'طلبات تعديل حالة الشحنة',
-        to: `${adminRoot}/reports/agentOrderstaterequests`,
-        badge: true,
-        permission: [UserPermission.ShowOrder],
-      },
-      {
-        icon: 'simple-icon-layers',
-        label: 'اعادة ارسال',
-        to: `${adminRoot}/order/resend`,
-        badge: true,
-        permission: [UserPermission.ShowOrder],
-      },
+
+
       {
         icon: 'iconsminds-add',
         label: 'إضافة طلب',
         to: `${adminRoot}/order/addorder`,
         permission: [UserPermission.AddOrder],
-      },
-      {
-        icon: 'iconsminds-add',
-        label: 'إضافة طلبات متعددة ',
-        to: `${adminRoot}/order/addMulitpleOrders`,
-        permission: [UserPermission.AddOrder],
-      },
-      {
-        icon: 'iconsminds-add',
-        label: ' إضافة  طلبات متعددة مع المنطقة  ',
-        to: `${adminRoot}/order/addMulitpleOrdersWithRegion`,
-        permission: [UserPermission.AddOrder],
-      },
-      {
-        icon: 'iconsminds-add',
-        label: 'إضافة طلبات متعددة للعميل',
-        to: `${adminRoot}/order/addMulitpleOrdersfromClient`,
-        permission: [UserPermission.AddOrder],
-      },
-      {
-        icon: 'iconsminds-add',
-        label: 'إضافة طلبات متعددة للمندوب',
-        to: `${adminRoot}/order/addMulitpleOrdersfromAgent`,
-        permission: [UserPermission.AddOrder],
-      },
-      {
-        icon: 'iconsminds-add',
-        label: ' إضافة  متعددة للعميل والمندوب',
-        to: `${adminRoot}/order/addMulitpleOrdersfromClientandAgent`,
-        permission: [UserPermission.AddOrder],
-      },
-      {
-        icon: 'iconsminds-add',
-        label: ' إضافة  متعددة للمندوب و المنطقة',
-        to: `${adminRoot}/order/addMulitpleOrdersAgentWithRegion`,
-        permission: [UserPermission.AddOrder],
+        subs: [
+          {
+            icon: 'iconsminds-add',
+            label: 'إضافة طلب',
+            to: `${adminRoot}/order/addorder`,
+            permission: [UserPermission.AddOrder],
+          },
+          {
+            icon: 'iconsminds-add',
+            label: 'إضافة طلبات متعددة ',
+            to: `${adminRoot}/order/addMulitpleOrders`,
+            permission: [UserPermission.AddOrder],
+          },
+          {
+            icon: 'iconsminds-add',
+            label: ' إضافة  طلبات متعددة مع المنطقة  ',
+            to: `${adminRoot}/order/addMulitpleOrdersWithRegion`,
+            permission: [UserPermission.AddOrder],
+          },
+          {
+            icon: 'iconsminds-add',
+            label: 'إضافة طلبات متعددة للعميل',
+            to: `${adminRoot}/order/addMulitpleOrdersfromClient`,
+            permission: [UserPermission.AddOrder],
+          },
+          {
+            icon: 'iconsminds-add',
+            label: 'إضافة طلبات متعددة للمندوب',
+            to: `${adminRoot}/order/addMulitpleOrdersfromAgent`,
+            permission: [UserPermission.AddOrder],
+          },
+          {
+            icon: 'iconsminds-add',
+            label: ' إضافة  متعددة للعميل والمندوب',
+            to: `${adminRoot}/order/addMulitpleOrdersfromClientandAgent`,
+            permission: [UserPermission.AddOrder],
+          },
+          {
+            icon: 'iconsminds-add',
+            label: ' إضافة  متعددة للمندوب و المنطقة',
+            to: `${adminRoot}/order/addMulitpleOrdersAgentWithRegion`,
+            permission: [UserPermission.AddOrder],
+          },
+        ]
       },
     ],
   },
@@ -267,7 +304,12 @@ const data: IMenuItem[] = [
         to: `${adminRoot}/reports/showreceiptshipment`,
         permission: [UserPermission.ShowReports],
       },
-
+      {
+        icon: 'simple-icon-layers',
+        label: ' تقرير الشحنات المنقولة الى فرع اخر  ',
+        to: `${adminRoot}/reports/ViewsPrintTransferToSecondBranch`,
+        permission: [UserPermission.ShowReports],
+      },
       {
         icon: 'simple-icon-layers',
         label: ' أرباح الطلبات ',
@@ -453,7 +495,7 @@ const data: IMenuItem[] = [
         permission: [UserPermission.ShowOrderType, UserPermission.AddOrderType],
       },
       {
-        icon: 'simple-icon-layers',
+        icon: 'simple-icon-people',
         label: 'المجموعات',
         to: `${adminRoot}/setting/group`,
         permission: [UserPermission.ShowGroup, UserPermission.AddGroup],

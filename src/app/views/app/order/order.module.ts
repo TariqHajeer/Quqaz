@@ -1,6 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { OrderRoutingModule } from './order-routing.module';
 import { ViewOrdersComponent } from '../order/view-orders/view-orders.component'
 import { AddOrdersComponent } from '../order/add-orders/add-orders.component'
@@ -44,6 +43,8 @@ import { ReSendOrdersComponent } from './re-send-orders/re-send-orders.component
 import { GetOrdersComeToMyBranchComponent } from './get-orders-come-to-my-branch/get-orders-come-to-my-branch.component';
 import { GetOrderReturnedToSecondBranchComponent } from './get-order-returned-to-second-branch/get-order-returned-to-second-branch.component';
 import { GetOrdersReturnedToMyBranchComponent } from './get-orders-returned-to-my-branch/get-orders-returned-to-my-branch.component';
+import { PrintOrdersComponent } from './printPreview/print-orders/print-orders.component';
+import { GetDisapprovedReturnedOrderByBranchComponent } from './get-disapproved-returned-order-by-branch/get-disapproved-returned-order-by-branch.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,8 @@ import { GetOrdersReturnedToMyBranchComponent } from './get-orders-returned-to-m
     GetOrdersComeToMyBranchComponent,
     GetOrderReturnedToSecondBranchComponent,
     GetOrdersReturnedToMyBranchComponent,
+    PrintOrdersComponent,
+    GetDisapprovedReturnedOrderByBranchComponent,
   ],
   imports: [
     CommonModule,

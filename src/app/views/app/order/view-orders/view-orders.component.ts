@@ -21,6 +21,7 @@ import { Resend } from 'src/app/Models/order/resend.model';
 import { OrderStateEnum } from 'src/app/Models/Enums/OrderStateEnum';
 import orderPlaceds from 'src/app/data/orderPlaced';
 import moneyPlaceds from 'src/app/data/moneyPalced';
+import { BranchesService } from 'src/app/services/branches.service';
 
 @Component({
   selector: 'app-view-orders',
@@ -48,6 +49,7 @@ export class ViewOrdersComponent implements OnInit {
   regionapi = 'Region';
   users: string[] = [];
   checkOrderState: boolean;
+  branches: any[] = [];
   constructor(
     private orderservice: OrderService,
     private router: Router,
@@ -55,13 +57,15 @@ export class ViewOrdersComponent implements OnInit {
     private customerService: CustomService,
     private userService: UserService,
     public spinner: NgxSpinnerService,
-    private notifications: NotificationsService
+    private notifications: NotificationsService,
+    private branchesService: BranchesService
   ) { }
 
   ngOnInit(): void {
     this.paging = new Paging();
     this.filtering = new OrderFilter();
     this.get();
+    this.getBranches();
     this.GetMoenyPlaced();
     this.GetorderPlace();
     this.GetRegion();
@@ -226,7 +230,7 @@ export class ViewOrdersComponent implements OnInit {
   tempAgent;
 
   GetorderPlace() {
-      this.orderPlace =  [...orderPlaceds];
+    this.orderPlace = [...orderPlaceds];
   }
   completelyReturn(id) {
     this.spinner.show();
@@ -241,7 +245,7 @@ export class ViewOrdersComponent implements OnInit {
     );
   }
   GetMoenyPlaced() {
-      this.MoenyPlaced =  [...moneyPlaceds];
+    this.MoenyPlaced = [...moneyPlaceds];
   }
   GetClient() {
     this.clientService.getClients().subscribe((res) => {
@@ -262,5 +266,10 @@ export class ViewOrdersComponent implements OnInit {
       this.Regionsresend = res;
       this.tempRegions = res;
     });
+  }
+  getBranches() {
+    this.branchesService.Get().subscribe(res => {
+      this.branches = res;
+    })
   }
 }
