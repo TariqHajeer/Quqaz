@@ -63,6 +63,12 @@ const data: IMenuItem[] = [
       },
       {
         icon: 'iconsminds-box-close',
+        label: 'نقل الطلبات الى مندوب آخر بواسطة الكود',
+        to: `${adminRoot}/order/moveOrdersToAgentByCode`,
+        permission: [UserPermission.ShowOrder],
+      },
+      {
+        icon: 'iconsminds-box-close',
         label: ' طلبات عند العميل ',
         to: `${adminRoot}/order/orderswithclient`,
         permission: [UserPermission.AddOrder],

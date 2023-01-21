@@ -11,6 +11,7 @@ import { CreatemultipleOrderFromClientComponent } from './createmultiple-order-f
 import { CreatemultipulorderagentComponent } from './createmultipulorderagent/createmultipulorderagent.component';
 import { EditClientOrdersComponent } from './edit-client-orders/edit-client-orders.component';
 import { EditOrdersComponent } from './edit-orders/edit-orders.component';
+import { MoveOrdersToAgentByCodeComponent } from './move-orders-to-agent-by-code/move-orders-to-agent-by-code.component';
 import { MoveOrdersComponent } from './move-orders/move-orders.component';
 import { NewOrdersDontSendComponent } from './new-orders-dont-send/new-orders-dont-send.component';
 import { OrdersWithClientComponent } from './orders-with-client/orders-with-client.component';
@@ -111,6 +112,11 @@ const routes: Routes = [
   {
     path:'resend',
     component:ReSendOrdersComponent ,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder]}
+  },
+  {
+    path:'moveOrdersToAgentByCode',
+    component:MoveOrdersToAgentByCodeComponent ,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowOrder]}
   },
 ];
