@@ -45,7 +45,7 @@ const data: IMenuItem[] = [
       },
       {
         icon: 'iconsminds-box-close',
-        label: ' استلام حالة الشحنة المستلمة بواسطة المندوب ',
+        label: ' استلام حالة الشحنة المستلمة مندوب ',
         to: `${adminRoot}/order/shipmentReceivedByAgent`,
         permission: [UserPermission.ReceiptOfTheStatusOfTheDeliveredShipment],
       },

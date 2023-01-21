@@ -101,21 +101,29 @@ export class ShipmentReceivedByAgentComponent {
         var find = o.MoenyPlaced.find((m) => m.id == this.MoenyPlacedId.id);
         if (!find) o.order.monePlaced = o.MoenyPlaced[0];
         else o.order.monePlaced = find;
-        //داخل الشركة
-        if (
-          this.OrderplacedId.id == OrderplacedEnum.Delivered &&
-          this.MoenyPlacedId.id == MoneyPalcedEnum.InsideCompany
-        ) {
-          o.order.monePlaced = this.MoenyPlaced.find(
-            (m) => m.id == MoneyPalcedEnum.InsideCompany
-          );
-        }
-
-        if (
-          o.order.orderplaced.id == OrderplacedEnum.PartialReturned &&
-          o.order.isClientDiliverdMoney
-        ) {
-          o.order.monePlaced = o.MoenyPlaced[0];
+        if (o.order.orderplaced.id == OrderplacedEnum.PartialReturned) {
+          if (this.MoenyPlacedId.id == MoneyPalcedEnum.Delivered) {
+            if (o.order.isClientDiliverdMoney) {
+              o.order.monePlaced = {
+                ...this.MoenyPlaced.find(
+                  (m) => m.id == MoneyPalcedEnum.Delivered
+                )
+              };
+            } else {
+              o.order.monePlaced = {
+                ...this.MoenyPlaced.find(
+                  (m) => m.id == MoneyPalcedEnum.InsideCompany
+                )
+              };
+            }
+          }
+          if (this.MoenyPlacedId.id == MoneyPalcedEnum.WithAgent) {
+            o.order.monePlaced = {
+              ...this.MoenyPlaced.find(
+                (m) => m.id == MoneyPalcedEnum.WithAgent
+              )
+            }
+          }
         }
       });
     }
@@ -139,10 +147,11 @@ export class ShipmentReceivedByAgentComponent {
       this.MoenyPlacedId = null;
       this.getMoenyPlaced = this.orderplacedstate.ChangeOrderPlace(
         this.OrderplacedId.id,
-        this.MoenyPlaced
+        this.MoenyPlaced,
+        "WithAgent"
       );
-      if (this.OrderplacedId.id == OrderplacedEnum.Delivered)
-        this.MoenyPlaced = this.MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.InsideCompany || m.id == MoneyPalcedEnum.WithAgent)
+      // if (this.OrderplacedId.id == OrderplacedEnum.Delivered)
+      //   this.MoenyPlaced = this.MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.InsideCompany || m.id == MoneyPalcedEnum.WithAgent)
     }
   }
   getAgent() {
@@ -217,13 +226,14 @@ export class ShipmentReceivedByAgentComponent {
     this.getorder.MoenyPlaced = [...this.MoenyPlaced];
     this.getorder.OrderPlaced = [...this.orderPlace];
     this.getorder.canEditCount = true;
-    this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced);
-    this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced);
+    this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced,null,"WithAgent");
+    this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced,"WithAgent");
     this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced);
     this.orderplacedstate.unacceptable(this.getorder, this.MoenyPlaced);
     this.orderplacedstate.isClientDiliverdMoney(
       this.getorder,
-      this.MoenyPlaced
+      this.MoenyPlaced,
+      "WithAgent"
     );
     this.orderplacedstate.EditDeliveryCostAndAgentCost(
       this.getorder,
@@ -308,12 +318,13 @@ export class ShipmentReceivedByAgentComponent {
       this.orderplacedstate.canChangeCost(
         element,
         this.MoenyPlaced,
-        this.temporderscost[index]
+        this.temporderscost[index],
+        "WithAgent"
       );
-      this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced);
+      this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced,"WithAgent");
       this.orderplacedstate.onWay(element, this.MoenyPlaced);
       this.orderplacedstate.unacceptable(element, this.MoenyPlaced);
-      this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced);
+      this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced, "WithAgent");
       this.orderplacedstate.EditDeliveryCostAndAgentCost(
         element,
         this.tempdeliveryCost[index],
@@ -337,12 +348,13 @@ export class ShipmentReceivedByAgentComponent {
     this.orderplacedstate.canChangeCost(
       element,
       this.MoenyPlaced,
-      this.temporderscost[index]
+      this.temporderscost[index],
+      "WithAgent"
     );
-    this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced);
+    this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced,"WithAgent");
     this.orderplacedstate.onWay(element, this.MoenyPlaced);
     this.orderplacedstate.unacceptable(element, this.MoenyPlaced);
-    this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced);
+    this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced, "WithAgent");
     this.orderplacedstate.EditDeliveryCostAndAgentCost(
       element,
       this.tempdeliveryCost[index],
@@ -358,14 +370,16 @@ export class ShipmentReceivedByAgentComponent {
     this.orderplacedstate.canChangeCost(
       element,
       this.MoenyPlaced,
-      this.temporderscost[index]
+      this.temporderscost[index],
+      "WithAgent"
     );
   }
   changeDeliveryCost(element, index) {
     this.orderplacedstate.changeDeliveryCost(
       element,
       this.tempdeliveryCost[index],
-      this.MoenyPlaced
+      this.MoenyPlaced,
+      "WithAgent"
     );
   }
 
