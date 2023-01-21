@@ -44,6 +44,9 @@ import { AddMulitpleOrdersWithRegionComponent } from './add-mulitple-orders-with
 import { AddMultipulOrdersAgentWithRegionComponent } from './add-multipul-orders-agent-with-region/add-multipul-orders-agent-with-region.component';
 import { ReceiptOrderComponent } from './receipt-order/receipt-order.component';
 import { ReSendOrdersComponent } from './re-send-orders/re-send-orders.component';
+import { ShipmentReceivedByAgentComponent } from './shipment-received-by-agent/shipment-received-by-agent.component';
+import { ShipmentReceivedByDeliveredComponent } from './shipment-received-by-delivered/shipment-received-by-delivered.component';
+import { ShipmentReceivedByReturnedComponent } from './shipment-received-by-returned/shipment-received-by-returned.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +69,9 @@ import { ReSendOrdersComponent } from './re-send-orders/re-send-orders.component
     AddMultipulOrdersAgentWithRegionComponent,
     ReceiptOrderComponent,
     ReSendOrdersComponent,
+    ShipmentReceivedByAgentComponent,
+    ShipmentReceivedByDeliveredComponent,
+    ShipmentReceivedByReturnedComponent,
   ],
   imports: [
     CommonModule,

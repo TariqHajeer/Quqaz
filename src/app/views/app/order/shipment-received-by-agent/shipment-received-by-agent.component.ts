@@ -1,29 +1,26 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { SelectionModel } from '@angular/cdk/collections';
+import { Component, Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { OrderService } from 'src/app/services/order.service';
-import { NotificationsService, NotificationType } from 'angular2-notifications';
-import { UserService } from 'src/app/services/user.service';
-import {
-  GetOrder,
-  OrderPlacedStateService,
-} from 'src/app/services/order-placed-state.service';
-import { User } from 'src/app/Models/user/user.model';
-import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
-import { Paging } from 'src/app/Models/paging';
-import { OrderFilter } from 'src/app/Models/order-filter.model';
-import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import { OrderState } from 'src/app/Models/order/order.model';
+import { NotificationsService, NotificationType } from 'angular2-notifications';
+import { User } from 'firebase';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { MoneyPalcedEnum } from 'src/app/Models/Enums/MoneyPalcedEnum';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
+import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
+import { OrderFilter } from 'src/app/Models/order-filter.model';
+import { OrderState } from 'src/app/Models/order/order.model';
+import { Paging } from 'src/app/Models/paging';
+import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed-state.service';
+import { OrderService } from 'src/app/services/order.service';
+import { UserService } from 'src/app/services/user.service';
+import { SelectionModel } from '@angular/cdk/collections';
+
 @Component({
-  selector: 'app-receiptf-receiving-shipment',
-  templateUrl: './receiptf-receiving-shipment.component.html',
-  styleUrls: ['./receiptf-receiving-shipment.component.scss'],
+  selector: 'app-shipment-received-by-agent',
+  templateUrl: './shipment-received-by-agent.component.html',
+  styleUrls: ['./shipment-received-by-agent.component.scss']
 })
-export class ReceiptfReceivingShipmentComponent implements OnInit {
+export class ShipmentReceivedByAgentComponent {
   displayedColumns: string[] = [
     'index',
     'code',
@@ -57,7 +54,7 @@ export class ReceiptfReceivingShipmentComponent implements OnInit {
     public route: Router,
     public orderplacedstate: OrderPlacedStateService,
     private spinner: NgxSpinnerService
-  ) {}
+  ) { }
   AgentId;
 
   orderPlace: NameAndIdDto[] = [];
@@ -104,20 +101,14 @@ export class ReceiptfReceivingShipmentComponent implements OnInit {
         var find = o.MoenyPlaced.find((m) => m.id == this.MoenyPlacedId.id);
         if (!find) o.order.monePlaced = o.MoenyPlaced[0];
         else o.order.monePlaced = find;
-        //تم تسليمها/داخل الشركة
+        //داخل الشركة
         if (
           this.OrderplacedId.id == OrderplacedEnum.Delivered &&
-          this.MoenyPlacedId.id == MoneyPalcedEnum.Delivered
+          this.MoenyPlacedId.id == MoneyPalcedEnum.InsideCompany
         ) {
-          if (o.order.isClientDiliverdMoney) {
-            o.order.monePlaced = this.MoenyPlaced.find(
-              (m) => m.id == MoneyPalcedEnum.Delivered
-            );
-          } else {
-            o.order.monePlaced = this.MoenyPlaced.find(
-              (m) => m.id == MoneyPalcedEnum.InsideCompany
-            );
-          }
+          o.order.monePlaced = this.MoenyPlaced.find(
+            (m) => m.id == MoneyPalcedEnum.InsideCompany
+          );
         }
 
         if (
@@ -150,6 +141,8 @@ export class ReceiptfReceivingShipmentComponent implements OnInit {
         this.OrderplacedId.id,
         this.MoenyPlaced
       );
+      if (this.OrderplacedId.id == OrderplacedEnum.Delivered)
+        this.MoenyPlaced = this.MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.InsideCompany || m.id == MoneyPalcedEnum.WithAgent)
     }
   }
   getAgent() {
@@ -375,7 +368,7 @@ export class ReceiptfReceivingShipmentComponent implements OnInit {
       this.MoenyPlaced
     );
   }
- 
+
   count = 0;
   agentCost;
   deliveryCostCount;

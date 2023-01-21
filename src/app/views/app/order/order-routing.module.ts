@@ -18,6 +18,9 @@ import { ProfitsOfOrdersComponent } from './profits-of-orders/profits-of-orders.
 import { ReSendOrdersComponent } from './re-send-orders/re-send-orders.component';
 import { ReceiptNewOrdersComponent } from './receipt-new-orders/receipt-new-orders.component';
 import { ReceiptsNewOrdersComponent } from './receipts-new-orders/receipts-new-orders.component';
+import { ShipmentReceivedByAgentComponent } from './shipment-received-by-agent/shipment-received-by-agent.component';
+import { ShipmentReceivedByDeliveredComponent } from './shipment-received-by-delivered/shipment-received-by-delivered.component';
+import { ShipmentReceivedByReturnedComponent } from './shipment-received-by-returned/shipment-received-by-returned.component';
 import { ViewNewOrderComponent } from './view-new-order/view-new-order.component';
 import { ViewOrdersComponent } from './view-orders/view-orders.component';
 
@@ -111,6 +114,21 @@ const routes: Routes = [
   {
     path:'resend',
     component:ReSendOrdersComponent ,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder]}
+  },
+  {
+    path:'shipmentReceivedByAgent',
+    component:ShipmentReceivedByAgentComponent ,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder]}
+  },
+  {
+    path:'shipmentReceivedByDelivered',
+    component:ShipmentReceivedByDeliveredComponent ,canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder]}
+  },
+  {
+    path:'shipmentReceivedByReturned',
+    component:ShipmentReceivedByReturnedComponent ,canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowOrder]}
   },
 ];

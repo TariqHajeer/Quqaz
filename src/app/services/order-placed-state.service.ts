@@ -57,13 +57,14 @@ export class OrderPlacedStateService {
     return element
   }
   isClientDiliverdMoney(element, MoenyPlaced) {
-    if (element.order.isClientDiliverdMoney == true && (element.order.orderplaced.id == OrderplacedEnum.Delivered||
+    if (element.order.isClientDiliverdMoney == true && (element.order.orderplaced.id == OrderplacedEnum.Delivered ||
       element.order.orderplaced.id == OrderplacedEnum.PartialReturned)) {
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent || m.id == MoneyPalcedEnum.Delivered)]
       element.order.monePlaced = { ...element.MoenyPlaced[0] }
       element.messageCost = ""
       //element.order.orderplaced = element.OrderPlaced[1]
     }
+   
     if (element.order.isClientDiliverdMoney == true && (element.order.orderplaced.id == OrderplacedEnum.Unacceptable
       || element.order.orderplaced.id == OrderplacedEnum.CompletelyReturned)) {
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.InsideCompany)]
@@ -88,11 +89,11 @@ export class OrderPlacedStateService {
       //   }
     }
   }
-  Delayed (element, MoenyPlaced){
-  if ( element.order.orderplaced.id == OrderplacedEnum.Delayed){
-    element.MoenyPlaced = [...MoenyPlaced.filter(m =>  m.id == MoneyPalcedEnum.InsideCompany)]
-    element.order.monePlaced = { ...element.MoenyPlaced[0] }
-  }
+  Delayed(element, MoenyPlaced) {
+    if (element.order.orderplaced.id == OrderplacedEnum.Delayed) {
+      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.InsideCompany)]
+      element.order.monePlaced = { ...element.MoenyPlaced[0] }
+    }
   }
   changeDeliveryCost(element, tempdeliveryCost?, MoenyPlaced?) {
     if (tempdeliveryCost == element.order.deliveryCost) {
@@ -133,7 +134,7 @@ export class OrderPlacedStateService {
       MoneyPalcedArray = MoneyPalcedArray.filter(m => m.id == MoneyPalcedEnum.OutSideCompany)
     }
     else if (OrderplacedId == OrderplacedEnum.Delivered) {
-      MoneyPalcedArray = [{ id: 2, name: "مندوب" }, { id: 4, name: "تم تسليمها/داخل الشركة" }]
+      MoneyPalcedArray = MoneyPalcedArray.filter(m => m.id == MoneyPalcedEnum.Delivered || m.id == MoneyPalcedEnum.WithAgent)
     }
     else if (OrderplacedId == OrderplacedEnum.CompletelyReturned) {
       MoneyPalcedArray = MoneyPalcedArray.filter(m => m.id == MoneyPalcedEnum.InsideCompany)

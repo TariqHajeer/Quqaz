@@ -1,29 +1,25 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { SelectionModel } from '@angular/cdk/collections';
+import { Component, Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { OrderService } from 'src/app/services/order.service';
-import { NotificationsService, NotificationType } from 'angular2-notifications';
-import { UserService } from 'src/app/services/user.service';
-import {
-  GetOrder,
-  OrderPlacedStateService,
-} from 'src/app/services/order-placed-state.service';
-import { User } from 'src/app/Models/user/user.model';
-import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
-import { Paging } from 'src/app/Models/paging';
-import { OrderFilter } from 'src/app/Models/order-filter.model';
-import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import { OrderState } from 'src/app/Models/order/order.model';
+import { NotificationsService, NotificationType } from 'angular2-notifications';
+import { User } from 'firebase';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { MoneyPalcedEnum } from 'src/app/Models/Enums/MoneyPalcedEnum';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
+import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
+import { OrderFilter } from 'src/app/Models/order-filter.model';
+import { OrderState } from 'src/app/Models/order/order.model';
+import { Paging } from 'src/app/Models/paging';
+import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed-state.service';
+import { OrderService } from 'src/app/services/order.service';
+import { UserService } from 'src/app/services/user.service';
+import { SelectionModel } from '@angular/cdk/collections';
 @Component({
-  selector: 'reject-shipments',
-  templateUrl: './reject-shipments.component.html',
-  styleUrls: ['./reject-shipments.component.scss'],
+  selector: 'app-shipment-received-by-delivered',
+  templateUrl: './shipment-received-by-delivered.component.html',
+  styleUrls: ['./shipment-received-by-delivered.component.scss']
 })
-export class RejectShipmentsComponent implements OnInit {
+export class ShipmentReceivedByDeliveredComponent {
   displayedColumns: string[] = [
     'index',
     'code',
@@ -57,7 +53,7 @@ export class RejectShipmentsComponent implements OnInit {
     public route: Router,
     public orderplacedstate: OrderPlacedStateService,
     private spinner: NgxSpinnerService
-  ) {}
+  ) { }
   AgentId;
 
   orderPlace: NameAndIdDto[] = [];
@@ -95,7 +91,7 @@ export class RejectShipmentsComponent implements OnInit {
   }
   getmony() {
     this.orderservice.MoenyPlaced().subscribe((res) => {
-      this.MoenyPlaced = [...res];
+      this.MoenyPlaced = res;
     });
   }
   changeMoenyPlaced() {
@@ -104,20 +100,14 @@ export class RejectShipmentsComponent implements OnInit {
         var find = o.MoenyPlaced.find((m) => m.id == this.MoenyPlacedId.id);
         if (!find) o.order.monePlaced = o.MoenyPlaced[0];
         else o.order.monePlaced = find;
-        //تم تسليمها/داخل الشركة
+        //تم تسليمها
         if (
           this.OrderplacedId.id == OrderplacedEnum.Delivered &&
           this.MoenyPlacedId.id == MoneyPalcedEnum.Delivered
         ) {
-          if (o.order.isClientDiliverdMoney) {
-            o.order.monePlaced = this.MoenyPlaced.find(
-              (m) => m.id == MoneyPalcedEnum.Delivered
-            );
-          } else {
-            o.order.monePlaced = this.MoenyPlaced.find(
-              (m) => m.id == MoneyPalcedEnum.InsideCompany
-            );
-          }
+          o.order.monePlaced = this.MoenyPlaced.find(
+            (m) => m.id == MoneyPalcedEnum.Delivered
+          );
         }
 
         if (
@@ -134,9 +124,8 @@ export class RejectShipmentsComponent implements OnInit {
       this.orderPlace = res;
       this.orderPlace = this.orderPleacedFilters = this.orderPlace.filter(
         (o) =>
-          o.id == OrderplacedEnum.CompletelyReturned ||
-          o.id == OrderplacedEnum.Unacceptable ||
-          o.id == OrderplacedEnum.Delayed
+          o.id == OrderplacedEnum.PartialReturned ||
+          o.id == OrderplacedEnum.Delivered
       );
     });
   }
@@ -225,7 +214,6 @@ export class RejectShipmentsComponent implements OnInit {
     this.getorder.MoenyPlaced = [...this.MoenyPlaced];
     this.getorder.OrderPlaced = [...this.orderPlace];
     this.getorder.canEditCount = true;
-    this.disabledOrderPlaec(this.getorder.order.orderplaced);
     this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced);
     this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced);
     this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced);
@@ -265,6 +253,7 @@ export class RejectShipmentsComponent implements OnInit {
     }
     this.getorder.order.Cost = this.getorder.order.Cost * 1;
     this.getorder.order.index = this.getorders.length + 1;
+    this.disabledOrderPlaec(this.getorder.order.orderplaced);
     this.getorders.unshift({ ...this.getorder });
     this.sumCost();
     this.showcount = true;
@@ -292,10 +281,6 @@ export class RejectShipmentsComponent implements OnInit {
     );
     this.Code = '';
     this.getorder = new GetOrder();
-  }
-  disabledOrderPlaec(orderplaced) {
-    if (!this.getorder.OrderPlaced.find((o) => o.id == orderplaced.id))
-      this.getorder.OrderPlaced.push(orderplaced);
   }
   showTable: boolean = false;
   add(order) {
@@ -360,10 +345,12 @@ export class RejectShipmentsComponent implements OnInit {
       this.tempdeliveryCost[index],
       this.tempagentCost[index]
     );
-    this.orderplacedstate.Delayed(element, this.MoenyPlaced);
     this.sumCost();
   }
-
+  disabledOrderPlaec(orderplaced) {
+    if (!this.getorder.OrderPlaced.find((o) => o.id == orderplaced.id))
+      this.getorder.OrderPlaced.push({ ...orderplaced });
+  }
   changeCost(element, index) {
     this.orderplacedstate.canChangeCost(
       element,
@@ -411,29 +398,27 @@ export class RejectShipmentsComponent implements OnInit {
       this.orderstate = new OrderState();
     }
     this.spinner.show();
-    this.orderservice
-      .ReceiptOfTheStatusOfTheReturnedShipment(this.orderstates)
-      .subscribe(
-        (res) => {
-          this.spinner.hide();
-          this.orderstates = [];
-          this.dataSource = new MatTableDataSource([]);
-          this.getorders = [];
-          this.sumCost();
-          this.OrderplacedId = null;
-          this.MoenyPlacedId = null;
-          this.getMoenyPlaced = [];
-          this.notifications.create(
-            'success',
-            'تم تعديل الطلبيات  بنجاح',
-            NotificationType.Success,
-            { theClass: 'success', timeOut: 6000, showProgressBar: false }
-          );
-        },
-        (err) => {
-          this.spinner.hide();
-        }
-      );
+    this.orderservice.ReceiptOfTheStatusOfTheDeliveredShipment(this.orderstates).subscribe(
+      (res) => {
+        this.spinner.hide();
+        this.orderstates = [];
+        this.dataSource = new MatTableDataSource([]);
+        this.getorders = [];
+        this.sumCost();
+        this.OrderplacedId = null;
+        this.MoenyPlacedId = null;
+        this.getMoenyPlaced = [];
+        this.notifications.create(
+          'success',
+          'تم تعديل الطلبيات  بنجاح',
+          NotificationType.Success,
+          { theClass: 'success', timeOut: 6000, showProgressBar: false }
+        );
+      },
+      (err) => {
+        this.spinner.hide();
+      }
+    );
   }
   tempOrders: any[] = [];
   CancelOrder(order) {
