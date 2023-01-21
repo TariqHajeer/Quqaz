@@ -1,19 +1,18 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { OrderFilter } from '../Models/order-filter.model';
 import { DateFiter, Paging } from '../Models/paging';
 import { OrderClientDontDiliverdMoney } from '../Models/order/order-client-dont-diliverd-money.model';
 import { Resend } from '../Models/order/resend.model';
+import { GetOrdersByAgentRegionAndCode } from '../Models/order/get-orders-by-agent-region-and-code.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
   controler = environment.baseUrl + 'api/Order/';
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient) { }
   GetAll(filter: OrderFilter, paging: Paging) {
     let params = new HttpParams();
     if (filter.Code != undefined || filter.Code != null)
@@ -36,7 +35,7 @@ export class OrderService {
       params = params.append('MonePlacedId', filter.MonePlacedId);
     if (filter.OrderplacedId != undefined || filter.OrderplacedId != null)
       params = params.append('OrderplacedId', filter.OrderplacedId);
-      if (filter.OrderState != undefined || filter.OrderState != null)
+    if (filter.OrderState != undefined || filter.OrderState != null)
       params = params.append('OrderState', filter.OrderState);
     if (filter.CreatedBy != undefined || filter.CreatedBy != null)
       params = params.append('CreatedBy', filter.CreatedBy);
@@ -433,5 +432,17 @@ export class OrderService {
   }
   PutReSendMultiple(resendArr: Resend[]) {
     return this.http.put<any>(this.controler + 'ReSendMultiple', resendArr);
+  }
+  GetOrdersByAgentRegionAndCode(getOrdersByAgentRegionAndCode: GetOrdersByAgentRegionAndCode) {
+    let params = new HttpParams();
+    if (getOrdersByAgentRegionAndCode.AgentId)
+      params = params.append('AgentId', getOrdersByAgentRegionAndCode.AgentId);
+    if (getOrdersByAgentRegionAndCode.CountryId)
+      params = params.append('CountryId', getOrdersByAgentRegionAndCode.CountryId);
+    if (getOrdersByAgentRegionAndCode.Code)
+      params = params.append('Code', getOrdersByAgentRegionAndCode.Code);
+    return this.http.get<any>(this.controler + 'GetOrdersByAgentRegionAndCode', {
+      params: params,
+    });
   }
 }
