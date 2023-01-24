@@ -87,7 +87,7 @@ export class ShipmentReceivedByAgentComponent {
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe((res) => {
       this.MoenyPlaced = res;
-      this.getMoenyPlaced = [...res];
+      // this.getMoenyPlaced = [...res];
     });
   }
   getmony() {
@@ -144,15 +144,14 @@ export class ShipmentReceivedByAgentComponent {
         o.order.orderplaced = { ...this.OrderplacedId };
         this.ChangeAllOrderplacedId(o, this.getorders.indexOf(o));
       });
-      this.MoenyPlacedId = null;
-      this.getMoenyPlaced = this.orderplacedstate.ChangeOrderPlace(
-        this.OrderplacedId.id,
-        this.MoenyPlaced,
-        "WithAgent"
-      );
-      // if (this.OrderplacedId.id == OrderplacedEnum.Delivered)
-      //   this.MoenyPlaced = this.MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.InsideCompany || m.id == MoneyPalcedEnum.WithAgent)
-    }
+      }
+    this.MoenyPlacedId = null;
+    this.getMoenyPlaced = this.orderplacedstate.ChangeOrderPlace(
+      this.OrderplacedId.id,
+      this.MoenyPlaced,
+      "WithAgent"
+    );
+    this.MoenyPlacedId=this.getMoenyPlaced[0];
   }
   getAgent() {
     this.userService.ActiveAgent().subscribe((res) => {

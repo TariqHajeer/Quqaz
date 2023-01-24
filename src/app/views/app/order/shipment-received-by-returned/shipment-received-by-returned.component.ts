@@ -55,7 +55,7 @@ export class ShipmentReceivedByReturnedComponent {
     public route: Router,
     public orderplacedstate: OrderPlacedStateService,
     private spinner: NgxSpinnerService
-  ) {}
+  ) { }
   AgentId;
 
   orderPlace: NameAndIdDto[] = [];
@@ -88,7 +88,7 @@ export class ShipmentReceivedByReturnedComponent {
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe((res) => {
       this.MoenyPlaced = res;
-      this.getMoenyPlaced = [...res];
+      // this.getMoenyPlaced = [...res];
     });
   }
   getmony() {
@@ -144,12 +144,13 @@ export class ShipmentReceivedByReturnedComponent {
         o.order.orderplaced = { ...this.OrderplacedId };
         this.ChangeAllOrderplacedId(o, this.getorders.indexOf(o));
       });
-      this.MoenyPlacedId = null;
-      this.getMoenyPlaced = this.orderplacedstate.ChangeOrderPlace(
-        this.OrderplacedId.id,
-        this.MoenyPlaced
-      );
     }
+    this.MoenyPlacedId = null;
+    this.getMoenyPlaced = this.orderplacedstate.ChangeOrderPlace(
+      this.OrderplacedId.id,
+      this.MoenyPlaced
+    );
+    this.MoenyPlacedId=this.getMoenyPlaced[0];
   }
   getAgent() {
     this.userService.ActiveAgent().subscribe((res) => {
