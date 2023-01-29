@@ -41,7 +41,6 @@ export class TransferToSecondBranchComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBranches();
-    this.getAllOrders();
   }
 
   selectAll: boolean = true;
