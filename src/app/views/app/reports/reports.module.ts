@@ -12,7 +12,6 @@ import { NgxPrintModule } from 'ngx-print';
 import { ClientOrderComponent } from './client-order/client-order.component';
 import { ShipmentsOnWayComponent } from './shipments-on-way/shipments-on-way.component';
 import { ShipmentsNotBeenDeliveredComponent } from './shipments-not-been-delivered/shipments-not-been-delivered.component';
-import { ReceiptShipmentAgentComponent } from './receipt-shipment-agent/receipt-shipment-agent.component';
 import { ClientComponent } from './printpreview/client/client.component';
 import { AgentComponent } from './printpreview/agent/agent.component';
 import { SetPrintNumberComponent } from './printpreview/set-print-number/set-print-number.component';
@@ -37,8 +36,6 @@ import { OrdersTodayComponent } from './orders-today/orders-today.component';
 import { OrdersUnacceptableComponent } from './orders-unacceptable/orders-unacceptable.component';
 import { ChangeAgentByOrdersComponent } from './change-agent-by-orders/change-agent-by-orders.component';
 import { AgentOrderStateComponent } from './agent-order-state/agent-order-state.component';
-import { ReceiptfReceivingShipmentComponent } from './receiptf-receiving-shipment/receiptf-receiving-shipment.component';
-import { RejectShipmentsComponent } from './reject-shipments/reject-shipments.component';
 import { ClientReciptAndExchangeComponent } from './printpreview/client-recipt-and-exchange/client-recipt-and-exchange.component';
 import { ShowRecetptShipmentsComponent } from './show-recetpt-shipments/show-recetpt-shipments.component';
 import { PrintReceiptShipmentComponent } from './printpreview/print-receipt-shipment/print-receipt-shipment.component';
@@ -49,7 +46,6 @@ import { CashMovmentComponent } from './cash-movment/cash-movment.component';
     ClientOrderComponent,
     ShipmentsOnWayComponent,
     ShipmentsNotBeenDeliveredComponent,
-    ReceiptShipmentAgentComponent,
     ClientComponent, 
     AgentComponent,
     SetPrintNumberComponent,
@@ -67,8 +63,6 @@ import { CashMovmentComponent } from './cash-movment/cash-movment.component';
     OrdersUnacceptableComponent,
     ChangeAgentByOrdersComponent,
     AgentOrderStateComponent,
-    ReceiptfReceivingShipmentComponent,
-    RejectShipmentsComponent,
     ClientReciptAndExchangeComponent,
     ShowRecetptShipmentsComponent,
     PrintReceiptShipmentComponent,

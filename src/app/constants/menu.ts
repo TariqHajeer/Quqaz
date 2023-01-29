@@ -40,15 +40,21 @@ const data: IMenuItem[] = [
       {
         icon: 'iconsminds-box-close',
         label: 'استلام حالة الشحنة المستلمة ',
-        to: `${adminRoot}/reports/ReceiptfReceivingShipment`,
+        to: `${adminRoot}/order/shipmentReceivedByDelivered`,
+        permission: [UserPermission.ReceiptOfTheStatusOfTheDeliveredShipment],
+      },
+      {
+        icon: 'iconsminds-box-close',
+        label: ' استلام حالة الشحنة المستلمة مندوب ',
+        to: `${adminRoot}/order/shipmentReceivedByAgent`,
         permission: [UserPermission.ReceiptOfTheStatusOfTheDeliveredShipment],
       },
       {
         icon: 'iconsminds-box-close',
         label: 'استلام حالة الشحنة المرتجعة ',
-        to: `${adminRoot}/reports/rejectShipments`,
+        to: `${adminRoot}/order/shipmentReceivedByReturned`,
         permission: [UserPermission.ReceiptOfTheStatusOfTheReturnedShipment],
-      },
+      }, 
       {
         icon: 'iconsminds-box-close',
         label: 'نقل الطلبات ',

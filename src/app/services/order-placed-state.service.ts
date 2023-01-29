@@ -20,23 +20,38 @@ export class OrderPlacedStateService {
 
   }
   //تم التسليم و مرتجع جزئي
-  canChangeCost(element, MoenyPlaced, temporderscostindex?) {
-    if (element.order.orderplaced.id == OrderplacedEnum.PartialReturned
-      || element.order.orderplaced.id == OrderplacedEnum.Delivered) {
+  canChangeCost(element, MoenyPlaced, temporderscostindex?, page?) {
+    if (element.order.orderplaced.id == OrderplacedEnum.PartialReturned) {
       element.canEditCount = false
       element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent || m.id == MoneyPalcedEnum.InsideCompany)]
       if (element.MoenyPlaced.filter(o => o.id == element.order.monePlaced.id).length > 0)
         element.order.monePlaced = element.order.monePlaced
       else element.order.monePlaced = { ...element.MoenyPlaced[0] }
-    } else {
+    }
+    else if (element.order.orderplaced.id == OrderplacedEnum.Delivered) {
+      if (page == "WithAgent") {
+        element.canEditCount = false
+        element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent)]
+        if (element.MoenyPlaced.filter(o => o.id == element.order.monePlaced.id).length > 0)
+          element.order.monePlaced = element.order.monePlaced
+        else element.order.monePlaced = { ...element.MoenyPlaced[0] }
+      }
+      if (page == "Delivered") {
+        element.canEditCount = false
+        element.MoenyPlaced = [...MoenyPlaced.filter(m =>m.id == MoneyPalcedEnum.InsideCompany)]
+        if (element.MoenyPlaced.filter(o => o.id == element.order.monePlaced.id).length > 0)
+          element.order.monePlaced = element.order.monePlaced
+        else element.order.monePlaced = { ...element.MoenyPlaced[0] }
+      }
+    }
+    else {
       if (temporderscostindex) {
         element.order.cost = Object.assign(temporderscostindex, temporderscostindex);
-
       }
       element.canEditCount = true
     }
     if (temporderscostindex == element.order.cost) {
-      this.isClientDiliverdMoney(element, MoenyPlaced)
+      this.isClientDiliverdMoney(element, MoenyPlaced, page)
     }
   }
   rangeCost(element, temporderscostindex): boolean {
@@ -56,90 +71,97 @@ export class OrderPlacedStateService {
 
     return element
   }
-  isClientDiliverdMoney(element, MoenyPlaced) {
-    if (element.order.isClientDiliverdMoney == true && (element.order.orderplaced.id == OrderplacedEnum.Delivered||
-      element.order.orderplaced.id == OrderplacedEnum.PartialReturned)) {
-      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent || m.id == MoneyPalcedEnum.Delivered)]
-      element.order.monePlaced = { ...element.MoenyPlaced[0] }
-      element.messageCost = ""
-      //element.order.orderplaced = element.OrderPlaced[1]
-    }
-    if (element.order.isClientDiliverdMoney == true && (element.order.orderplaced.id == OrderplacedEnum.Unacceptable
-      || element.order.orderplaced.id == OrderplacedEnum.CompletelyReturned)) {
-      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.InsideCompany)]
-      element.order.monePlaced = { ...element.MoenyPlaced[0] }
-      element.messageCost = ""
+  isClientDiliverdMoney(element, MoenyPlaced, page?) {
+    if (element.order.isClientDiliverdMoney == true) {
+      if (element.order.orderplaced.id == OrderplacedEnum.Delivered) {
+        if (page == "WithAgent") {
+          element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent)]
+          element.order.monePlaced = { ...element.MoenyPlaced[0] }
+          element.messageCost = ""
+        }
+        if (page == "Delivered") {
+          element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.Delivered)]
+          element.order.monePlaced = { ...element.MoenyPlaced[0] }
+          element.messageCost = ""
+        }
+      }
+      if (
+        element.order.orderplaced.id == OrderplacedEnum.PartialReturned) {
+        element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent || m.id == MoneyPalcedEnum.Delivered)]
+        element.order.monePlaced = { ...element.MoenyPlaced[0] }
+        element.messageCost = ""
+      }
+
+      if (element.order.orderplaced.id == OrderplacedEnum.Unacceptable
+        || element.order.orderplaced.id == OrderplacedEnum.CompletelyReturned) {
+        element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.InsideCompany)]
+        element.order.monePlaced = { ...element.MoenyPlaced[0] }
+        element.messageCost = ""
+      }
     }
   }
   //تم التسليم
-  sentDeliveredHanded(element, MoenyPlaced, tempordersmonePlacedindex?, tempisClientDiliverdMoneyindex?) {
+  sentDeliveredHanded(element, MoenyPlaced, page?) {
     if (element.order.orderplaced.id == OrderplacedEnum.Delivered && element.order.isClientDiliverdMoney == false) {
-      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent || m.id == MoneyPalcedEnum.InsideCompany)]
-      element.order.monePlaced = { ...element.MoenyPlaced[0] }
-
-      element.messageCost = ""
-      //element.order.isClientDiliverdMoney = true
-      // }else{
-      //   if(tempordersmonePlacedindex&&tempisClientDiliverdMoneyindex){
-      //     element.MoenyPlaced = MoenyPlaced
-      //   //  element.order.monePlaced = Object.assign(tempordersmonePlacedindex, tempordersmonePlacedindex);
-      //   //  element.order.isClientDiliverdMoney = Object.assign(tempisClientDiliverdMoneyindex, tempisClientDiliverdMoneyindex);
-
-      //   }
+      if (page == "WithAgent") {
+        element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent)]
+        element.order.monePlaced = { ...element.MoenyPlaced[0] }
+        element.messageCost = ""
+      }
+      if (page == "Delivered") {
+        element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.InsideCompany)]
+        element.order.monePlaced = { ...element.MoenyPlaced[0] }
+        element.messageCost = ""
+      }
     }
   }
-  Delayed (element, MoenyPlaced){
-  if ( element.order.orderplaced.id == OrderplacedEnum.Delayed){
-    element.MoenyPlaced = [...MoenyPlaced.filter(m =>  m.id == MoneyPalcedEnum.InsideCompany)]
-    element.order.monePlaced = { ...element.MoenyPlaced[0] }
+  Delayed(element, MoenyPlaced) {
+    if (element.order.orderplaced.id == OrderplacedEnum.Delayed) {
+      element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.InsideCompany)]
+      element.order.monePlaced = { ...element.MoenyPlaced[0] }
+    }
   }
-  }
-  changeDeliveryCost(element, tempdeliveryCost?, MoenyPlaced?) {
+  changeDeliveryCost(element, tempdeliveryCost?, MoenyPlaced?, page?) {
     if (tempdeliveryCost == element.order.deliveryCost) {
-      this.isClientDiliverdMoney(element, MoenyPlaced)
+      this.isClientDiliverdMoney(element, MoenyPlaced, page)
     } else {
       if (element.order.orderplaced.id == OrderplacedEnum.Delivered) {
-        element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent || m.id == MoneyPalcedEnum.InsideCompany)]
-        // element.order.monePlaced = { ...element.MoenyPlaced[0] }
+        if (page == "WithAgent") {
+          element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.WithAgent)]
+        }
+        if (page == "Delivered") {
+          element.MoenyPlaced = [...MoenyPlaced.filter(m => m.id == MoneyPalcedEnum.InsideCompany)]
+        }
       }
     }
   }
   EditDeliveryCostAndAgentCost(element, tempdeliveryCost?, tempagentCost?) {
-
     if (element.order.orderplaced.id == OrderplacedEnum.Unacceptable || element.order.orderplaced.id == OrderplacedEnum.CompletelyReturned || element.order.orderplaced.id == OrderplacedEnum.Delayed) {
-      // if (element.order.orderplaced.id == 5) {
-      //   element.order.deliveryCost = 0
-      //   element.order.agentCost = 0
-      // } else {
-      //   element.order.deliveryCost = Object.assign(tempdeliveryCost, tempdeliveryCost);
-      //   element.order.agentCost = Object.assign(tempagentCost, tempagentCost);
-      // }
-      //////////
       element.order.deliveryCost = Object.assign(tempdeliveryCost, tempdeliveryCost);
       element.order.agentCost = Object.assign(tempagentCost, tempagentCost);
-      //////////
       element.canEditDeliveryCost = false
     } else {
       element.canEditDeliveryCost = true
-
       element.order.deliveryCost = Object.assign(tempdeliveryCost, tempdeliveryCost);
       element.order.agentCost = Object.assign(tempagentCost, tempagentCost);
-
     }
   }
   //monyPlaceArray
-  ChangeOrderPlace(OrderplacedId, MoneyPalcedArray) {
+  ChangeOrderPlace(OrderplacedId, MoneyPalcedArray, page?) {
     if (OrderplacedId == OrderplacedEnum.Way) {
       MoneyPalcedArray = MoneyPalcedArray.filter(m => m.id == MoneyPalcedEnum.OutSideCompany)
     }
-    else if (OrderplacedId == OrderplacedEnum.Delivered) {
-      MoneyPalcedArray = [{ id: 2, name: "مندوب" }, { id: 4, name: "تم تسليمها/داخل الشركة" }]
+    else if (OrderplacedId == OrderplacedEnum.Delivered && page == "Delivered") {
+      MoneyPalcedArray = [{ id: 4, name: "تم تسليمها/داخل الشركة" }]
+    }
+    else if (OrderplacedId == OrderplacedEnum.Delivered && page == "WithAgent") {
+      MoneyPalcedArray = MoneyPalcedArray.filter(m => m.id == MoneyPalcedEnum.WithAgent)
     }
     else if (OrderplacedId == OrderplacedEnum.CompletelyReturned) {
       MoneyPalcedArray = MoneyPalcedArray.filter(m => m.id == MoneyPalcedEnum.InsideCompany)
     }
     else if (OrderplacedId == OrderplacedEnum.PartialReturned) {
-      MoneyPalcedArray = MoneyPalcedArray.filter(m => m.id == MoneyPalcedEnum.InsideCompany || m.id == MoneyPalcedEnum.WithAgent)
+      MoneyPalcedArray = [{ id: 2, name: "مندوب" }, { id: 4, name: "تم تسليمها/داخل الشركة" }]
     }
     else if (OrderplacedId == OrderplacedEnum.Unacceptable) {
       MoneyPalcedArray = MoneyPalcedArray.filter(m => m.id == MoneyPalcedEnum.InsideCompany)
