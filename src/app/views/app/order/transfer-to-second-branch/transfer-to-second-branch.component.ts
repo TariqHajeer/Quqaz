@@ -8,7 +8,6 @@ import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { OrderPlacedStateService } from 'src/app/services/order-placed-state.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { BranchesService } from 'src/app/services/branches.service';
 import { AuthService } from 'src/app/shared/auth.service';
 @Component({
@@ -27,7 +26,6 @@ export class TransferToSecondBranchComponent implements OnInit {
   @Input() totalCount: number;
   selection = new SelectionModel<any>(true, []);
   countSelectOrder: number = 0;
-  orderFilter: OrderFilter = new OrderFilter();
   branches: any[] = [];
   constructor(
     public orderservice: OrderService,
@@ -43,6 +41,7 @@ export class TransferToSecondBranchComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBranches();
+    this.getAllOrders();
   }
 
   selectAll: boolean = true;
@@ -125,7 +124,7 @@ export class TransferToSecondBranchComponent implements OnInit {
   }
   getAllOrders() {
     this.spinner.show();
-    this.orderservice.GetInStockToTransferToSecondBranch(this.orderFilter).subscribe(response => {
+    this.orderservice.GetInStockToTransferToSecondBranch().subscribe(response => {
       this.getorders = []
       if (response)
         if (response.data.length <= 0)

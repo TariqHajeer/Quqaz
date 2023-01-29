@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-2">
                 <label>الفرع</label>
-                <ng-select  (change)="filtering()" name="branche" [(ngModel)]="orderFilter.nextBranchId">
+                <ng-select  (change)="filtering()" name="branche" [(ngModel)]="orderservice.selectOrder.OrderFilter.nextBranchId">
                     <ng-option *ngFor="let branche of branches" [value]="branche.id">{{branche.name}}</ng-option>
                 </ng-select>
             </div>
