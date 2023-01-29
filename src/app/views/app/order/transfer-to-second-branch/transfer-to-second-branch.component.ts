@@ -117,9 +117,15 @@ export class TransferToSecondBranchComponent implements OnInit {
     this.getAllOrders();
   }
   filtering() {
-    this.selection.clear();
-    // this.isAllSelected();
-    this.getAllOrders();
+    if (this.orderservice.selectOrder.OrderFilter.nextBranchId) {
+      this.selection.clear();
+      // this.isAllSelected();
+      this.getAllOrders();      
+    }
+    else{
+      this.dataSource = new MatTableDataSource([]);
+      this.selection = new SelectionModel<any>(true, []);
+    }
   }
   getAllOrders() {
     this.spinner.show();
@@ -131,12 +137,12 @@ export class TransferToSecondBranchComponent implements OnInit {
         else {
           this.getorders = response.data;
           this.noDataFound = false
-        }        
+        }
       this.dataSource = new MatTableDataSource(this.getorders);
       this.spinner.hide();
-      this.totalCount = response.total      
+      this.totalCount = response.total
       this.dataSource.data.forEach(row => {
-        if (!this.selectAll || 
+        if (!this.selectAll ||
           (this.selectAll && this.ordersIds.find(d => d == row.id))) { this.selection.select(row) }
       });
     },
