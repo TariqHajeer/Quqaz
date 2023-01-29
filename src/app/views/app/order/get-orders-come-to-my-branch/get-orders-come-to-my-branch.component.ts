@@ -140,7 +140,7 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
       return
     }
     this.agentOrdersIds = [];
-    if (this.orders.filter(order => !order.agent).length > 0) {
+    if (this.orders.filter(order => !order.agent&&order.targetBranchId==this.authService.getUser().branche.id).length > 0) {
       this.notifications.create('error', '  يجب اختيار مندوب', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
@@ -148,7 +148,7 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
       let order = this.dataSource.data.find(data => data.id == item.id)
       this.agentOrdersId = {
         orderId: order.id,
-        agentId: order.agent.id,
+        agentId: order.agent?.id,
         regionId: order.region?.id,
         deliveryCost: Number(order.deliveryCost),
         cost: Number(order.cost),
