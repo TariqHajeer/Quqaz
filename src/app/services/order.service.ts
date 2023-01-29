@@ -291,8 +291,8 @@ export class OrderService {
     return this.http.get<any>(this.controler + 'GetCreatedByNames');
   }
 
-  GetInStockToTransferToSecondBranch() {
-    return this.http.post<any>(this.controler + 'GetInStockToTransferToSecondBranch', this.selectOrder);
+  GetInStockToTransferToSecondBranch(orderFilter) {
+    return this.http.post<any>(this.controler + 'GetInStockToTransferToSecondBranch',{"orderFilter":orderFilter});
   }
   TransferToSecondBranch() {
     this.transferToSecondBranchDto.selectedOrdersWithFitlerDto = this.selectOrder;

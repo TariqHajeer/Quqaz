@@ -7,10 +7,10 @@ import { UserService } from 'src/app/services/user.service';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { OrderPlacedStateService } from 'src/app/services/order-placed-state.service';
-import { Client } from '../../client/client.model';
-import { ClientService } from '../../client/client.service';
-import { CustomService } from 'src/app/services/custom.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { OrderFilter } from 'src/app/Models/order-filter.model';
+import { BranchesService } from 'src/app/services/branches.service';
+import { AuthService } from 'src/app/shared/auth.service';
 @Component({
   selector: 'app-transfer-to-second-branch',
   templateUrl: './transfer-to-second-branch.component.html',
@@ -26,25 +26,23 @@ export class TransferToSecondBranchComponent implements OnInit {
   getorders: any[] = []
   @Input() totalCount: number;
   selection = new SelectionModel<any>(true, []);
-  countries: any[] = []
-  clients: Client[] = []
-  cityapi: string = 'Country';
   countSelectOrder: number = 0;
+  orderFilter: OrderFilter = new OrderFilter();
+  branches: any[] = [];
   constructor(
     public orderservice: OrderService,
     public userService: UserService,
     private notifications: NotificationsService,
     public route: Router,
     public orderplacedstate: OrderPlacedStateService,
-    private clientService: ClientService,
-    private customerService: CustomService,
     public spinner: NgxSpinnerService,
+    private branchesService: BranchesService,
+    private authService: AuthService,
+
   ) { }
 
   ngOnInit(): void {
-    this.GetClient()
-    this.getCities()
-    this.getAllOrders();
+    this.getBranches();
   }
 
   selectAll: boolean = true;
@@ -108,17 +106,12 @@ export class TransferToSecondBranchComponent implements OnInit {
       }
     }
   }
-
-  GetClient() {
-    this.clientService.getClients().subscribe(res => {
-      this.clients = res
+  getBranches() {
+    this.branchesService.Get().subscribe(res => {
+      this.branches = res?.filter(data => data.id != this.authService.getUser().branche.id);
     })
   }
-  getCities() {
-    this.customerService.getAll(this.cityapi).subscribe((res) => {
-      this.countries = res;
-    });
-  }
+
   switchPage(event: PageEvent) {
     this.orderservice.selectOrder.Paging.allItemsLength = event.length;
     this.orderservice.selectOrder.Paging.RowCount = event.pageSize;
@@ -132,7 +125,7 @@ export class TransferToSecondBranchComponent implements OnInit {
   }
   getAllOrders() {
     this.spinner.show();
-    this.orderservice.GetInStockToTransferToSecondBranch().subscribe(response => {
+    this.orderservice.GetInStockToTransferToSecondBranch(this.orderFilter).subscribe(response => {
       this.getorders = []
       if (response)
         if (response.data.length <= 0)

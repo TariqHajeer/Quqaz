@@ -102,7 +102,7 @@ const data: IMenuItem[] = [
           },
           {
             icon: 'iconsminds-box-close',
-            label: 'نقل الطلبات الى فرع آخر',
+            label: 'نقل الطلبات الى الفرع التالي',
             to: `${adminRoot}/order/transferToSecondBranch`,
             permission: [UserPermission.ShowOrder],
           },

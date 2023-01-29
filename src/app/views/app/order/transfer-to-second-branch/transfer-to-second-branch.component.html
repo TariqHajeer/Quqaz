@@ -3,26 +3,13 @@
 </ngx-spinner>
 <div class="card">
     <div class="card-body">
-        <h3>نقل الطلبات الى فرع آخر</h3>
+        <h3>نقل الطلبات الى الفرع التالي</h3>
         <h5>بحث على حسب</h5>
         <div class="row">
             <div class="col-md-2">
-                <label>الكود</label>
-                <input type="text" class="form-control" [(ngModel)]="orderservice.selectOrder.OrderFilter.Code"
-                    [ngModelOptions]="{standalone: true}" name="code" (keyup.enter)="filtering()" />
-            </div>
-            <div class="col-md-2">
-                <label>المدينة</label>
-                <ng-select [(ngModel)]="orderservice.selectOrder.OrderFilter.CountryId"
-                    [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Country" (change)="filtering()">
-                    <ng-option *ngFor="let Country of countries" [value]="Country.id">{{Country.name}}</ng-option>
-                </ng-select>
-            </div>
-            <div class="col-md-2">
-                <label>العميل</label>
-                <ng-select [(ngModel)]="orderservice.selectOrder.OrderFilter.ClientId"
-                    [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="client" (change)="filtering()">
-                    <ng-option *ngFor="let client of clients" [value]="client.id">{{client.name}}</ng-option>
+                <label>الفرع</label>
+                <ng-select  (change)="filtering()" name="branche" [(ngModel)]="orderFilter.nextBranchId">
+                    <ng-option *ngFor="let branche of branches" [value]="branche.id">{{branche.name}}</ng-option>
                 </ng-select>
             </div>
             <div class="col-md-4">
