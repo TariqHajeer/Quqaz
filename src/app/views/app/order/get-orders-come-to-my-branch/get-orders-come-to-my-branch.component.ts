@@ -13,6 +13,7 @@ import { CustomService } from 'src/app/services/custom.service';
 import { User } from 'src/app/Models/user/user.model';
 import { Region } from 'src/app/Models/Regions/region.model';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AuthService } from 'src/app/shared/auth.service';
 export interface AgentOrdersIds {
   orderId: number
   agentId: number
@@ -50,7 +51,7 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     public orderplacedstate: OrderPlacedStateService,
     private customerService: CustomService,
     public spinner: NgxSpinnerService,
-
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
