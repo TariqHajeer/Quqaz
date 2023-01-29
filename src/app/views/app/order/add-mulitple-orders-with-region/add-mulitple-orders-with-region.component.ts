@@ -236,7 +236,7 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
       !this.Order.ClientId ||
       !this.Order.CountryId ||
       !this.Order.RecipientPhones ||
-      !this.Order.AgentId ||
+      // !this.Order.AgentId ||
       this.showMessageCode
     ) {
       this.submitted = true;
@@ -244,17 +244,17 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
     } else this.submitted = false;
     if (this.checkLengthPhoneNumber(this.Order.RecipientPhones)) return;
     var country = this.cities.find((c) => c.id == this.Order.CountryId);
-    this.Order.CountryName = country.name;
+    this.Order.CountryName = country?.name;
     var region = this.regions.find((c) => c.id == this.Order.RegionId);
-    this.Order.RegionName = region.name;
+    this.Order.RegionName = region?.name;
     var orderplace = this.orderPlace.find(
       (c) => c.id == this.Order.OrderplacedId
     );
-    this.Order.OrderplacedName = orderplace.name;
+    this.Order.OrderplacedName = orderplace?.name;
     var client = this.clients.find((c) => c.id == this.Order.ClientId);
-    this.Order.ClientName = client.name;
+    this.Order.ClientName = client?.name;
     var agent = this.Agents.find((c) => c.id == this.Order.AgentId);
-    this.Order.AgentName = agent.name;
+    this.Order.AgentName = agent?.name;
     this.Order.Cost = this.Order.Cost * 1;
     this.Orders.push(this.Order);
     localStorage.setItem('refrshorder', JSON.stringify(this.Orders));
