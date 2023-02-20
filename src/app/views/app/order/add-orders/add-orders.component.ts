@@ -191,7 +191,7 @@ export class AddOrdersComponent implements OnInit {
     this.Region = [];
     this.Order.RegionId = null;
     this.countryService.RequiredAgent(this.Order.CountryId).subscribe(res => {
-      if (!res) {
+      if (res) {
         this.disabledAgent = false;
         this.Agents = this.GetAgents.filter(
           (a) =>
