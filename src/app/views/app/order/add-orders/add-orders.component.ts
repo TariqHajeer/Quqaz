@@ -21,7 +21,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 import IIndex from 'src/app/shared/interfaces/IIndex';
 import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
-
+import { CountryService } from '../../../../services/country.service';
 @Component({
   selector: 'app-add-orders',
   templateUrl: './add-orders.component.html',
@@ -36,7 +36,8 @@ export class AddOrdersComponent implements OnInit {
     public userService: UserService,
     private notifications: NotificationsService,
     public spinner: NgxSpinnerService,
-    private authService: AuthService
+    private authService: AuthService,
+    private countryService: CountryService
   ) { }
 
   Order: CreateOrdersFromEmployee;
@@ -130,12 +131,12 @@ export class AddOrdersComponent implements OnInit {
     );
   }
   GetorderPlace() {
-      this.orderPlace = [...orderPlaceds];
-      this.Order.OrderplacedId = this.orderPlace[1].id;
+    this.orderPlace = [...orderPlaceds];
+    this.Order.OrderplacedId = this.orderPlace[1].id;
   }
   GetMoenyPlaced() {
-      this.MoenyPlaced = [...moenyplaceds];
-      this.Order.MoenyPlacedId = this.MoenyPlaced[0].id;
+    this.MoenyPlaced = [...moenyplaceds];
+    this.Order.MoenyPlacedId = this.MoenyPlaced[0].id;
   }
   GetClient() {
     this.clientService.getClients().subscribe((res) => {
@@ -189,21 +190,23 @@ export class AddOrdersComponent implements OnInit {
   changeCountry() {
     this.Region = [];
     this.Order.RegionId = null;
+    this.countryService.RequiredAgent(this.Order.CountryId).subscribe(res => {
+      if (!res) {
+        this.disabledAgent = false;
+        this.Agents = this.GetAgents.filter(
+          (a) =>
+            a.countries
+              .map((c) => c.id)
+              .filter((co) => co == this.Order.CountryId).length > 0
+        );
+        if (this.Agents.length != 0) this.Order.AgentId = this.Agents[0].id;
+      }
+      else {
+        this.disabledAgent = true;
+        this.Order.AgentId = null;
+      }
+    })
     var city = this.cities.find((c) => c.id == this.Order.CountryId);
-    if ((city.branchesIds.length > 0 && city.branchesIds[0] == this.userLogin.branche.id)||city.branchesIds.length == 0) {
-      this.disabledAgent = false;
-      this.Agents = this.GetAgents.filter(
-        (a) =>
-          a.countries
-            .map((c) => c.id)
-            .filter((co) => co == this.Order.CountryId).length > 0
-      );
-      if (this.Agents.length != 0) this.Order.AgentId = this.Agents[0].id;
-    } 
-    else{
-      this.disabledAgent = true;
-      this.Order.AgentId = null;
-    }
     this.Order.DeliveryCost = city.deliveryCost;
     this.Region = this.Regions.filter(
       (r) => r.country.id == this.Order.CountryId
