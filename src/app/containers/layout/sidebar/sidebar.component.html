@@ -2,7 +2,7 @@
     <div class="main-menu">
         <perfect-scrollbar class="scroll" [config]="{suppressScrollX: true}">
             <ul class="list-unstyled">
-                <li *ngFor="let item of filteredMenuItems(menuItems)" class="text-center"
+                <li *ngFor="let item of filteredMenuItems(menuItems)" class="text-center" style="word-break: break-all;"
                     [ngClass]="{'active': (selectedParentMenu === item.to && viewingParentMenu === '') || viewingParentMenu === item.to}">
 
                             <!-- if the item go to new page -->
