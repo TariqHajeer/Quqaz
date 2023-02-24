@@ -43,17 +43,18 @@ export class TransferToSecondBranchComponent implements OnInit {
     this.getBranches();
   }
 
-  selectAll: boolean = true;
+  selectAll: boolean = false;
   ordersIds = [];
   unSelectIds = [];
   isAllSelected() {
-    return this.selectAll = !this.selectAll;
+    this.selectAll = !this.selectAll;
+    return this.selectAll;
   }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.ordersIds = [];
     this.unSelectIds = [];
-    if (this.isAllSelected()) {
+    if (!this.selectAll) {
       this.selection.clear();
     }
     else {
@@ -63,7 +64,7 @@ export class TransferToSecondBranchComponent implements OnInit {
     }
   }
   checkboxLabelAll(): string {
-    return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    return `${this.selectAll ? 'select' : 'deselect'} all`;
   }
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: any): string {
@@ -72,13 +73,15 @@ export class TransferToSecondBranchComponent implements OnInit {
   }
   checkboxId(row) {
     if (this.selection.isSelected(row)) {
-      if (this.selectAll) {
+      if (!this.selectAll) {
         this.unSelectIds = [];
         if (this.ordersIds.filter(d => d == row.id).length > 0)
           return
         else {
           this.ordersIds.push(row.id);
           this.countSelectOrder = this.ordersIds.length;
+          if (this.countSelectOrder == this.totalCount)
+            this.selectAll = true;
         }
       }
       else {
@@ -88,13 +91,14 @@ export class TransferToSecondBranchComponent implements OnInit {
       }
     }
     if (!this.selection.isSelected(row)) {
-      if (!this.selectAll) {
+      if (this.selectAll) {
         if (this.unSelectIds.filter(d => d == row.id).length > 0)
           return
         else {
           this.unSelectIds.push(row.id);
           this.ordersIds = [];
           this.countSelectOrder = this.totalCount - this.unSelectIds.length;
+          this.selectAll = false;
         }
       }
       else {
@@ -119,10 +123,9 @@ export class TransferToSecondBranchComponent implements OnInit {
   filtering() {
     if (this.orderservice.selectOrder.OrderFilter.nextBranchId) {
       this.selection.clear();
-      // this.isAllSelected();
-      this.getAllOrders();      
+      this.getAllOrders();
     }
-    else{
+    else {
       this.dataSource = new MatTableDataSource([]);
       this.selection = new SelectionModel<any>(true, []);
     }
@@ -142,8 +145,8 @@ export class TransferToSecondBranchComponent implements OnInit {
       this.spinner.hide();
       this.totalCount = response.total
       this.dataSource.data.forEach(row => {
-        if (!this.selectAll ||
-          (this.selectAll && this.ordersIds.find(d => d == row.id))) { this.selection.select(row) }
+        if (this.selectAll ||
+          (!this.selectAll && this.ordersIds.find(d => d == row.id))) { this.selection.select(row) }
       });
     },
       err => {
@@ -151,7 +154,7 @@ export class TransferToSecondBranchComponent implements OnInit {
       });
   }
   moveOrders() {
-    this.orderservice.selectOrder.IsSelectedAll = !this.selectAll;
+    this.orderservice.selectOrder.IsSelectedAll = this.selectAll;
     this.orderservice.selectOrder.SelectedIds = this.ordersIds;
     this.orderservice.selectOrder.ExceptIds = this.unSelectIds;
     if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedIds.length == 0 && this.selectAll)) {

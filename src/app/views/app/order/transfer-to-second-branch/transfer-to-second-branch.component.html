@@ -26,10 +26,10 @@
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef>
-                <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="isAllSelected()"
-                    [aria-label]="checkboxLabelAll()">
+                <mat-checkbox (change)="$event ? masterToggle() : null" 
+                    [aria-label]="checkboxLabelAll()" [(ngModel)]="selectAll">
                     <span>&nbsp;الطلبات المحددة&nbsp;</span>
-                    <span class="badge badge-primary">{{countSelectOrder}}</span>
+                    <span class="badge badge-primary" [innerText]="countSelectOrder"></span>
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let row" (click)="$event.stopPropagation()">
