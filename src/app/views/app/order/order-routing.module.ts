@@ -13,6 +13,7 @@ import { EditClientOrdersComponent } from './edit-client-orders/edit-client-orde
 import { EditOrdersComponent } from './edit-orders/edit-orders.component';
 import { GetOrdersComeToMyBranchComponent } from './get-orders-come-to-my-branch/get-orders-come-to-my-branch.component';
 import { GetOrderReturnedToSecondBranchComponent } from './get-order-returned-to-second-branch/get-order-returned-to-second-branch.component';
+import { MoveOrdersToAgentByCodeComponent } from './move-orders-to-agent-by-code/move-orders-to-agent-by-code.component';
 import { MoveOrdersComponent } from './move-orders/move-orders.component';
 import { NewOrdersDontSendComponent } from './new-orders-dont-send/new-orders-dont-send.component';
 import { OrdersWithClientComponent } from './orders-with-client/orders-with-client.component';
@@ -21,6 +22,9 @@ import { ReSendOrdersComponent } from './re-send-orders/re-send-orders.component
 import { ReceiptNewOrdersComponent } from './receipt-new-orders/receipt-new-orders.component';
 import { ReceiptsNewOrdersComponent } from './receipts-new-orders/receipts-new-orders.component';
 import { TransferToSecondBranchComponent } from './transfer-to-second-branch/transfer-to-second-branch.component';
+import { ShipmentReceivedByAgentComponent } from './shipment-received-by-agent/shipment-received-by-agent.component';
+import { ShipmentReceivedByDeliveredComponent } from './shipment-received-by-delivered/shipment-received-by-delivered.component';
+import { ShipmentReceivedByReturnedComponent } from './shipment-received-by-returned/shipment-received-by-returned.component';
 import { ViewNewOrderComponent } from './view-new-order/view-new-order.component';
 import { ViewOrdersComponent } from './view-orders/view-orders.component';
 import { GetOrdersReturnedToMyBranchComponent } from './get-orders-returned-to-my-branch/get-orders-returned-to-my-branch.component';
@@ -124,11 +128,30 @@ const routes: Routes = [
     data: { roles: [UserPermission.ShowOrder] }
   },
   {
+    path: 'shipmentReceivedByAgent',
+    component: ShipmentReceivedByAgentComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder] }
+  },
+  {
+    path: 'shipmentReceivedByDelivered',
+    component: ShipmentReceivedByDeliveredComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder] }
+  },
+  {
+    path: 'shipmentReceivedByReturned',
+    component: ShipmentReceivedByReturnedComponent, canActivate: [AuthGuard],
+  },
+  {
+    path: 'moveOrdersToAgentByCode',
+    component: MoveOrdersToAgentByCodeComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder] }
+  },
+  {
     path: "getOrdersComeToMyBranch",
     component: GetOrdersComeToMyBranchComponent, canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowOrder] }
   }
-  ,{
+  , {
     path: 'GetOrderReturnedToSecondBranch',
     component: GetOrderReturnedToSecondBranchComponent, canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowOrder] }
@@ -144,8 +167,8 @@ const routes: Routes = [
     data: { roles: [UserPermission.ShowOrder] }
   },
   {
-    path:'getdisapprovedreturnedorderbybranch',
-    component:GetDisapprovedReturnedOrderByBranchComponent,canActivate:[AuthGuard],
+    path: 'getdisapprovedreturnedorderbybranch',
+    component: GetDisapprovedReturnedOrderByBranchComponent, canActivate: [AuthGuard],
   }
 ];
 

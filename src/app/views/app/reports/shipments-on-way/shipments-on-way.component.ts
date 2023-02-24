@@ -162,7 +162,7 @@ export class ShipmentsOnWayComponent implements OnInit {
   }
   ChangeOrderplacedId(element, index) {
     this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
-    this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced, this.tempordersmonePlaced[index], this.tempisClientDiliverdMoney[index])
+    this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced)
     this.orderplacedstate.onWay(element, this.MoenyPlaced)
     this.orderplacedstate.unacceptable(element, this.MoenyPlaced)
     this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
