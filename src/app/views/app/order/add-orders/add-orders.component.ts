@@ -190,8 +190,9 @@ export class AddOrdersComponent implements OnInit {
     this.Region = [];
     this.Order.RegionId = null;
     var city = this.cities.find((c) => c.id == this.Order.CountryId);
-    if ((city.branchesIds.length > 0 && city.branchesIds[0] == this.userLogin.branche.id)||city.branchesIds.length == 0) {
-      this.disabledAgent = false;
+    // if ((city.branchesIds.length > 0 && city.branchesIds[0] == this.userLogin.branche.id)||city.branchesIds.length == 0) {
+  if(city.requiredAgent){
+    this.disabledAgent = false;
       this.Agents = this.GetAgents.filter(
         (a) =>
           a.countries

@@ -12,4 +12,5 @@ export class City {
     points
     agnets
     branchesIds:number[]
+    requiredAgent
 }
