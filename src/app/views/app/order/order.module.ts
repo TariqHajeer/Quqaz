@@ -45,6 +45,10 @@ import { GetOrderReturnedToSecondBranchComponent } from './get-order-returned-to
 import { GetOrdersReturnedToMyBranchComponent } from './get-orders-returned-to-my-branch/get-orders-returned-to-my-branch.component';
 import { PrintOrdersComponent } from './printPreview/print-orders/print-orders.component';
 import { GetDisapprovedReturnedOrderByBranchComponent } from './get-disapproved-returned-order-by-branch/get-disapproved-returned-order-by-branch.component';
+import { ShipmentReceivedByAgentComponent } from './shipment-received-by-agent/shipment-received-by-agent.component';
+import { ShipmentReceivedByDeliveredComponent } from './shipment-received-by-delivered/shipment-received-by-delivered.component';
+import { ShipmentReceivedByReturnedComponent } from './shipment-received-by-returned/shipment-received-by-returned.component';
+import { MoveOrdersToAgentByCodeComponent } from './move-orders-to-agent-by-code/move-orders-to-agent-by-code.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +77,10 @@ import { GetDisapprovedReturnedOrderByBranchComponent } from './get-disapproved-
     GetOrdersReturnedToMyBranchComponent,
     PrintOrdersComponent,
     GetDisapprovedReturnedOrderByBranchComponent,
+    ShipmentReceivedByAgentComponent,
+    ShipmentReceivedByDeliveredComponent,
+    ShipmentReceivedByReturnedComponent,
+    MoveOrdersToAgentByCodeComponent,
   ],
   imports: [
     CommonModule,

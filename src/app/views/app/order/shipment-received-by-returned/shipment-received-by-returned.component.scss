@@ -1,0 +1,35 @@
+td.mat-cell {
+    padding: 20px;
+    min-width: 80px;
+    box-sizing: border-box;
+  }
+  
+  .mat-header-cell {
+    text-align: right;
+    padding-right: 20px;
+    min-width: 80px;
+    box-sizing: border-box;
+  }
+  
+  .row {
+    padding: 5px;
+  }
+  
+  
+  .mat-header-row,
+  .mat-row {
+    min-width: 1920px;
+    /* 24 columns, 80px each */
+  }
+  
+  ng-select {
+    overflow: visible;
+  }
+  .disabledselect:disabled,
+  .disabledselect[disabled] {
+    background-color: rgb(173, 173, 173);
+    fill: rgb(173, 173, 173);
+  }
+  .example-container{
+    height: 800px;
+  }

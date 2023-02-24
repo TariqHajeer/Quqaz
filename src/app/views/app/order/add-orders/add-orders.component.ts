@@ -190,23 +190,22 @@ export class AddOrdersComponent implements OnInit {
   changeCountry() {
     this.Region = [];
     this.Order.RegionId = null;
-    this.countryService.RequiredAgent(this.Order.CountryId).subscribe(res => {
-      if (res) {
-        this.disabledAgent = false;
-        this.Agents = this.GetAgents.filter(
-          (a) =>
-            a.countries
-              .map((c) => c.id)
-              .filter((co) => co == this.Order.CountryId).length > 0
-        );
-        if (this.Agents.length != 0) this.Order.AgentId = this.Agents[0].id;
-      }
-      else {
-        this.disabledAgent = true;
-        this.Order.AgentId = null;
-      }
-    })
     var city = this.cities.find((c) => c.id == this.Order.CountryId);
+    // if ((city.branchesIds.length > 0 && city.branchesIds[0] == this.userLogin.branche.id)||city.branchesIds.length == 0) {
+  if(city.requiredAgent){
+    this.disabledAgent = false;
+      this.Agents = this.GetAgents.filter(
+        (a) =>
+          a.countries
+            .map((c) => c.id)
+            .filter((co) => co == this.Order.CountryId).length > 0
+      );
+      if (this.Agents.length != 0) this.Order.AgentId = this.Agents[0].id;
+    } 
+    else{
+      this.disabledAgent = true;
+      this.Order.AgentId = null;
+    }
     this.Order.DeliveryCost = city.deliveryCost;
     this.Region = this.Regions.filter(
       (r) => r.country.id == this.Order.CountryId

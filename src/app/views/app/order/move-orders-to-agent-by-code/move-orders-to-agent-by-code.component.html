@@ -1,0 +1,135 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="line-scale-party" [fullScreen]="true">
+    <p style="color: white"> </p>
+</ngx-spinner>
+<div class="card">
+    <div class="card-body">
+        <h3>نقل الطلبات الى مندوب اخر بواسطة كود الشحنة</h3>
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <label>المندوب الحالي</label>
+                <ng-select [(ngModel)]="ordersByAgentRegionAndCode.AgentId" [ngModelOptions]="{standalone: true}"
+                    [closeOnSelect]="true" name="Agent" (change)="ChangeAgentId()">
+                    <ng-option *ngFor="let Agent of agents" [value]="Agent.id">{{Agent.name}}</ng-option>
+                </ng-select>
+            </div>
+            <div class="col-md-3">
+                <label>المحافظة</label>
+                <ng-select appOnReturn (change)="ChangeCountry()" [(ngModel)]="ordersByAgentRegionAndCode.CountryId"
+                    [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Country">
+                    <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
+                </ng-select>
+            </div>
+            <div class="col-md-4">
+                <label>كود الشحنة</label>
+                <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                    [(ngModel)]="ordersByAgentRegionAndCode.Code" (keyup.enter)="getData()">
+                <br>
+                <table class="table mat-elevation-z8" *ngIf="showTable()">
+                    <thead>
+                        <th>الكود</th>
+                        <th>العميل</th>
+                        <th>المندوب</th>
+                        <th></th>
+
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let order of ordersfilter">
+                            <td>{{order.code}}</td>
+                            <td>{{order.client.name}}</td>
+                            <td>{{order.agent.name}}</td>
+                            <td>
+                                <!--chech icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    (click)="add(order)" style="cursor: pointer;" class="bi bi-check2"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+                                </svg>
+                                &nbsp;&nbsp;
+                                <!--cansle icone-->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    (click)="cancel(order)" style="cursor: pointer;" class="bi bi-x"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                </svg>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-2" style="padding-top: 25px;">
+                <button (click)="getData()" class="btn btn-primary"> عرض الشحنة</button>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+            </div>
+            <div class="col-md-4">
+                <label>المندوب الجديد</label>
+                <ng-select [(ngModel)]="newAgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+                    name="Agent">
+                    <ng-option *ngFor="let Agent of newAgents" [value]="Agent.id">{{Agent.name}}</ng-option>
+                </ng-select>
+            </div>
+            <div class="col-2" style="padding-top: 25px;">
+                <button (click)="moveOrders()" class="btn btn-primary"> نقل الطلبات</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="example-container mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="index">
+            <th mat-header-cell *matHeaderCellDef style="padding-right: 10px;"> ترقيم </th>
+            <td mat-cell *matCellDef="let element;index as i" style="padding-right: 10px;"> {{dataSource.data.length-i}}</td>
+        </ng-container>
+        <ng-container matColumnDef="code">
+            <th mat-header-cell *matHeaderCellDef style="padding-right: 10px;"> كود </th>
+            <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.code}}</td>
+        </ng-container>
+        <ng-container matColumnDef="client">
+            <th mat-header-cell *matHeaderCellDef style="padding-right: 10px;"> العميل </th>
+            <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.client?.name}}</td>
+        </ng-container>
+        <ng-container matColumnDef="country">
+            <th mat-header-cell *matHeaderCellDef> المدينة</th>
+            <td mat-cell *matCellDef="let element"> {{element.country!=null?element.country.name:null}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="note">
+            <th mat-header-cell *matHeaderCellDef> ملاحظات </th>
+            <td mat-cell *matCellDef="let element;index as i">
+                {{element.note}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef>
+
+
+            </th>
+            <td mat-cell *matCellDef="let element">
+                <svg (click)="removeOrderInsideTable(element)" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                    fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16" style="cursor: pointer;">
+                    <path
+                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                    <path fill-rule="evenodd"
+                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                </svg>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+    </table>
+
+    <h5 style="padding-top: 20px; padding-right: 10px;" *ngIf="noDataFound">لايوجد بيانات للعرض</h5>
+</div>
+
+<simple-notifications></simple-notifications>

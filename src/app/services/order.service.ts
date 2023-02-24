@@ -7,6 +7,8 @@ import { OrderClientDontDiliverdMoney } from '../Models/order/order-client-dont-
 import { Resend } from '../Models/order/resend.model';
 import { SelectOrder, TransferToSecondBranchDto } from '../Models/order/select-order.model';
 import { PrintTransferOrder } from 'src/app/Models/order/print-transfer-order.model';
+import { GetOrdersByAgentRegionAndCode } from '../Models/order/get-orders-by-agent-region-and-code.model';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -369,6 +371,18 @@ export class OrderService {
       params = params.append('id', this.orderDetials.id);
     this.setPaging(params, paging);
     return this.http.get<any>(this.controler + 'GetPrintTransferToSecondBranchDetials', { params: params });
+  }
+  GetOrdersByAgentRegionAndCode(getOrdersByAgentRegionAndCode: GetOrdersByAgentRegionAndCode) {
+    let params = new HttpParams();
+    if (getOrdersByAgentRegionAndCode.AgentId)
+      params = params.append('AgentId', getOrdersByAgentRegionAndCode.AgentId);
+    if (getOrdersByAgentRegionAndCode.CountryId)
+      params = params.append('CountryId', getOrdersByAgentRegionAndCode.CountryId);
+    if (getOrdersByAgentRegionAndCode.Code)
+      params = params.append('Code', getOrdersByAgentRegionAndCode.Code);
+    return this.http.get<any>(this.controler + 'GetOrdersByAgentRegionAndCode', {
+      params: params,
+    });
   }
   getHttpParmasByPaging(paging?: Paging): HttpParams {
     let p = new HttpParams;

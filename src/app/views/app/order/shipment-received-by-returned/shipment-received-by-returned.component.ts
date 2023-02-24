@@ -1,30 +1,29 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { SelectionModel } from '@angular/cdk/collections';
+import { Component, Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { OrderService } from 'src/app/services/order.service';
-import { NotificationsService, NotificationType } from 'angular2-notifications';
-import { UserService } from 'src/app/services/user.service';
-import {
-  GetOrder,
-  OrderPlacedStateService,
-} from 'src/app/services/order-placed-state.service';
-import { User } from 'src/app/Models/user/user.model';
-import { Paging } from 'src/app/Models/paging';
-import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { Router } from '@angular/router';
-import { OrderState } from 'src/app/Models/order/order.model';
+import { NotificationsService, NotificationType } from 'angular2-notifications';
+import { User } from 'firebase';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { MoneyPalcedEnum } from 'src/app/Models/Enums/MoneyPalcedEnum';
-import orderPlaceds from 'src/app/data/orderPlaced';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
+import { OrderFilter } from 'src/app/Models/order-filter.model';
+import { OrderState } from 'src/app/Models/order/order.model';
+import { Paging } from 'src/app/Models/paging';
+import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed-state.service';
+import { OrderService } from 'src/app/services/order.service';
+import { UserService } from 'src/app/services/user.service';
+import { SelectionModel } from '@angular/cdk/collections';
 import IIndex from 'src/app/shared/interfaces/IIndex';
 import moneyPlaceds from 'src/app/data/moneyPalced';
+import orderPlaceds from 'src/app/data/orderPlaced';
+
+
 @Component({
-  selector: 'reject-shipments',
-  templateUrl: './reject-shipments.component.html',
-  styleUrls: ['./reject-shipments.component.scss'],
+  selector: 'app-shipment-received-by-returned',
+  templateUrl: './shipment-received-by-returned.component.html',
+  styleUrls: ['./shipment-received-by-returned.component.scss']
 })
-export class RejectShipmentsComponent implements OnInit {
+export class ShipmentReceivedByReturnedComponent {
   displayedColumns: string[] = [
     'index',
     'code',
@@ -58,7 +57,7 @@ export class RejectShipmentsComponent implements OnInit {
     public route: Router,
     public orderplacedstate: OrderPlacedStateService,
     private spinner: NgxSpinnerService
-  ) {}
+  ) { }
   AgentId;
 
   orderPlace: IIndex[] = [];
@@ -140,12 +139,13 @@ export class RejectShipmentsComponent implements OnInit {
         o.order.orderplaced = { ...this.OrderplacedId };
         this.ChangeAllOrderplacedId(o, this.getorders.indexOf(o));
       });
-      this.MoenyPlacedId = null;
-      this.getMoenyPlaced = this.orderplacedstate.ChangeOrderPlace(
-        this.OrderplacedId.id,
-        this.MoenyPlaced
-      );
     }
+    this.MoenyPlacedId = null;
+    this.getMoenyPlaced = this.orderplacedstate.ChangeOrderPlace(
+      this.OrderplacedId.id,
+      this.MoenyPlaced
+    );
+    this.MoenyPlacedId=this.getMoenyPlaced[0];
   }
   getAgent() {
     this.userService.ActiveAgent().subscribe((res) => {
