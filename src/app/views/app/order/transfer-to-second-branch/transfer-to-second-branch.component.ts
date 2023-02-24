@@ -157,6 +157,7 @@ export class TransferToSecondBranchComponent implements OnInit {
     this.orderservice.selectOrder.IsSelectedAll = this.selectAll;
     this.orderservice.selectOrder.SelectedIds = this.ordersIds;
     this.orderservice.selectOrder.ExceptIds = this.unSelectIds;
+    this.orderservice.selectOrder.OrderFilter.nextBranchName=this.branches.find(b=>b.id==this.orderservice.selectOrder.OrderFilter.nextBranchId)?.name;
     if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedIds.length == 0 && !this.selectAll)) {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return

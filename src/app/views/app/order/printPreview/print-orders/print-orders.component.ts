@@ -19,7 +19,6 @@ export class PrintOrdersComponent implements OnInit {
   dateOfPrint = new Date();
   user: UserLogin = this.authService.getUser();
   printNumber: number;
-  toBranch
   showSeeMore: boolean;
   showPrintBtn: boolean;
 
@@ -30,7 +29,7 @@ export class PrintOrdersComponent implements OnInit {
     public spinner: NgxSpinnerService,) { }
 
   ngOnInit(): void {
-    this.getOrders();
+    this.getOrders();    
   }
   getOrders() {
     if (this.orderservice.selectOrder.SelectedIds.length == 0 && this.orderservice.selectOrder.IsSelectedAll == false)

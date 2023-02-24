@@ -24,4 +24,5 @@ export class OrderFilter {
   OrderState;
   OriginalBranchId;
   nextBranchId;
+  nextBranchName;
 }
