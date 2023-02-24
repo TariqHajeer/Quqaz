@@ -29,7 +29,7 @@ export class AddUserComponent implements OnInit, OnChanges {
     private notifications: NotificationsService,
     public spinner: NgxSpinnerService,
     private authService: AuthService
-  ) {}
+  ) { }
   @Input() currentUserId;
   @Input() editClicked;
   @Input() addClicked;
@@ -55,7 +55,7 @@ export class AddUserComponent implements OnInit, OnChanges {
   onTrackBy(index) {
     return index;
   }
-  ngOnChanges(changes: SimpleChanges): void {}
+  ngOnChanges(changes: SimpleChanges): void { }
   checkName() {
     if (
       this.UserService.users.filter((c) => c.name == this.CreateUser.Name)
@@ -156,7 +156,8 @@ export class AddUserComponent implements OnInit, OnChanges {
   getCountry() {
     this.customService.getAll('Country').subscribe((res) => {
       this.Countries = res;
-      this.Countries=this.Countries.filter(country=>country.branchesIds[0]==this.user.branche.id||country.branchesIds.length==0)
+      // this.Countries=this.Countries.filter(country=>country.branchesIds[0]==this.user.branche.id||country.branchesIds.length==0)
+      this.Countries = this.Countries.filter(country => country.requiredAgent == true);
     });
   }
   GetAllGroups() {
