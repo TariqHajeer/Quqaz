@@ -45,11 +45,11 @@
                         <ng-option *ngFor="let region of Region" [value]="region.id">{{region.name}}</ng-option>
                     </ng-select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3" *ngIf="!disabledAgent">
                     <label>المندوب<span class="text-danger text-one align-bottom mx-1">*</span></label>
                     <ng-select appOnReturn (change)="changeIndex(4)" [(ngModel)]="Order.AgentId"
                         [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Agent"
-                        *ngIf="!disabledAgent">
+                       >
                         <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                     </ng-select>
                     <select [ngModelOptions]="{standalone: true}" class="custom-select" [disabled]="true" *ngIf="disabledAgent">
