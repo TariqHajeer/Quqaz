@@ -16,7 +16,6 @@ import { ExportsTypesComponent } from './exports-types/exports-types.component';
 import { ShipmentsTypesComponent } from './shipments-types/shipments-types.component';
 import { RegionComponent } from './region/region.component';
 import { GroupsComponent } from './groups/groups.component';
-import { MainCityComponent } from './main-city/main-city.component';
 import { PointSettingComponent } from './point-setting/point-setting.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -28,7 +27,7 @@ import { BranchComponent } from './branch/branch.component';
 
 
 @NgModule({
-  declarations: [ CitiesComponent, ImportsTypesComponent, ExportsTypesComponent, ShipmentsTypesComponent, RegionComponent, GroupsComponent, MainCityComponent, PointSettingComponent, BranchComponent],
+  declarations: [ CitiesComponent, ImportsTypesComponent, ExportsTypesComponent, ShipmentsTypesComponent, RegionComponent, GroupsComponent, PointSettingComponent, BranchComponent],
   imports: [
     CommonModule,
     SettingRoutingModule,

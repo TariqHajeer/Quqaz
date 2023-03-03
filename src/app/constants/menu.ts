@@ -465,12 +465,6 @@ const data: IMenuItem[] = [
       },
       {
         icon: 'iconsminds-map2',
-        label: 'المدينة الرئيسية',
-        to: `${adminRoot}/setting/maincity`,
-        permission: [UserPermission.ShowCountry, UserPermission.AddCountry],
-      },
-      {
-        icon: 'iconsminds-map2',
         label: 'ادارة النقاط',
         to: `${adminRoot}/setting/pointsetting`,
         permission: [UserPermission.ShowCountry],
