@@ -127,7 +127,6 @@ export class CitiesComponent implements OnInit {
     var city = this.cities.find(c => c.id == data.id)
     this.editCity.id = city.id
     this.editCity.name = city.name
-    this.editCity.mediatorId = city.mediator ? city.mediator.id : null
     this.editCity.deliveryCost = city.deliveryCost
     this.editCity.regions = city.regions
     this.editCity.points = city.points

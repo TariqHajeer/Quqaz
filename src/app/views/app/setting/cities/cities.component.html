@@ -13,12 +13,6 @@
           <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="city.name">
         </div>
         <div class="col-3">
-          <label>المدينة الوسيطة</label>
-          <ng-select [(ngModel)]="city.mediatorId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
-            <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
-          </ng-select>
-        </div>
-        <div class="col-3">
           <label>كلفة التوصيل</label>
           <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="city.deliveryCost"
             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '');">
@@ -63,7 +57,6 @@
           <e-column field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter' width='50'
             [isPrimaryKey]='true'></e-column>
           <e-column field='name' textAlign="Center" headerText="الاسم" width='140'></e-column>
-          <e-column field='mediator.name' textAlign="Center" headerText="المدينة الوسيطة" width='140'></e-column>
           <e-column field='deliveryCost' textAlign="Center" headerText="كلفة التوصيل" width='140' editType='numericedit'
             [edit]='numericParams'></e-column>
             <e-column field='points' textAlign="Center" headerText="النقاط" width='140' editType='numericedit'
@@ -115,12 +108,6 @@ aria-labelledby="dialog-sizes-name1">
         <div class="col-3">
           <label>الاسم <span class="text-danger text-one align-bottom mx-1">*</span></label>
           <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="editCity.name">
-        </div>
-        <div class="col-3">
-          <label>المدينة الوسيطة</label>
-          <ng-select [(ngModel)]="editCity.mediatorId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
-            <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
-          </ng-select>
         </div>
         <div class="col-3">
           <label>كلفة التوصيل</label>
