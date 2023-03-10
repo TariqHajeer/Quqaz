@@ -48,11 +48,11 @@
                 <div class="col-md-3" *ngIf="!disabledAgent">
                     <label>المندوب<span class="text-danger text-one align-bottom mx-1">*</span></label>
                     <ng-select appOnReturn (change)="changeIndex(4)" [(ngModel)]="Order.AgentId"
-                        [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Agent"
-                       >
+                        [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Agent">
                         <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                     </ng-select>
-                    <select [ngModelOptions]="{standalone: true}" class="custom-select" [disabled]="true" *ngIf="disabledAgent">
+                    <select [ngModelOptions]="{standalone: true}" class="custom-select" [disabled]="true"
+                        *ngIf="disabledAgent">
                         <option></option>
                     </select>
                     <div *ngIf="!(Order.AgentId||disabledAgent) && submitted" class="invalid-tooltip">المندوب حقل مطلوب
@@ -61,11 +61,7 @@
             </div>
             <div class="row w-100 align-items-end mb-3">
                 <div class="col-md-3">
-                    <label>كلفة التوصيل</label>
-                    <input appOnReturn (change)="changeIndex(5)" type="text" class="form-control"
-                        [ngModelOptions]="{standalone: true}"
-                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                        [(ngModel)]="Order.DeliveryCost">
+                    <app-delivery-cost-input [value]="Order.DeliveryCost" [change]="changeIndex(5)"></app-delivery-cost-input>
                 </div>
 
                 <div class="col-md-3">

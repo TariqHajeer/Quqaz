@@ -1,0 +1,7 @@
+<div *ngIf="type=='number'">
+    <label>{{lable}}<span class="text-danger text-one align-bottom mx-1" *ngIf="required">*</span></label>
+    <input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="value"
+        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '');"
+        [ngClass]="[ className?className:'form-control']" [minlength]="minlengthInput" [maxlength]="maxlengthInput"
+        [disabled]="disabled" (change)="change" [name]="name">
+</div>

@@ -18,16 +18,16 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { CreatemultipleOrderFromClientComponent } from './createmultiple-order-from-client/createmultiple-order-from-client.component';
 import { ProfitsOfOrdersComponent } from './profits-of-orders/profits-of-orders.component';
 import { ChartModule } from '@syncfusion/ej2-angular-charts';
-import {CategoryService, DateTimeService, ScrollBarService, ColumnSeriesService, LineSeriesService,ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService, LegendService, TooltipService} from '@syncfusion/ej2-angular-charts';
+import { CategoryService, DateTimeService, ScrollBarService, ColumnSeriesService, LineSeriesService, ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService, LegendService, TooltipService } from '@syncfusion/ej2-angular-charts';
 import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CreateMultiOrderAgentAndClientComponent } from './create-multi-order-agent-and-client/create-multi-order-agent-and-client.component';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 import { CreatemultipulorderagentComponent } from './createmultipulorderagent/createmultipulorderagent.component';
 import { ReceiptNewOrdersComponent } from './receipt-new-orders/receipt-new-orders.component';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { EditClientOrdersComponent } from './edit-client-orders/edit-client-orders.component';
 import { MoveOrdersComponent } from './move-orders/move-orders.component';
@@ -49,6 +49,7 @@ import { ShipmentReceivedByAgentComponent } from './shipment-received-by-agent/s
 import { ShipmentReceivedByDeliveredComponent } from './shipment-received-by-delivered/shipment-received-by-delivered.component';
 import { ShipmentReceivedByReturnedComponent } from './shipment-received-by-returned/shipment-received-by-returned.component';
 import { MoveOrdersToAgentByCodeComponent } from './move-orders-to-agent-by-code/move-orders-to-agent-by-code.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -105,11 +106,9 @@ import { MoveOrdersToAgentByCodeComponent } from './move-orders-to-agent-by-code
     MatTabsModule,
     ModalModule.forRoot(),
     MatCheckboxModule,
-
-
-
+    SharedModule
   ], providers: [CategoryService, DateTimeService, ScrollBarService, LineSeriesService, ColumnSeriesService,
     ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService, LegendService, TooltipService,]
-  , schemas: [CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA]
+  , schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class OrderModule { }
