@@ -24,32 +24,32 @@ import { DatePickerModule, DateRangePickerModule } from '@syncfusion/ej2-angular
 import { NgxPrintModule } from 'ngx-print';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { BranchComponent } from './branch/branch.component';
+import { SharedModule } from "../../../shared/shared.module";
 
 
 @NgModule({
-  declarations: [ CitiesComponent, ImportsTypesComponent, ExportsTypesComponent, ShipmentsTypesComponent, RegionComponent, GroupsComponent, PointSettingComponent, BranchComponent],
-  imports: [
-    CommonModule,
-    SettingRoutingModule,
-    GridAllModule,
-    GridModule,
-    TranslateModule,
-    SimpleNotificationsModule.forRoot(),
-    BsDatepickerModule.forRoot(),
-    FormsModule,
-    ReactiveFormsModule,
-    NgSelectModule,
-    ModalModule.forRoot(),
-    MatTableModule,
-    MatCheckboxModule,
-    MatPaginatorModule,
-    NgxPrintModule,
-    DatePickerModule,
-    DateRangePickerModule,
-    NgxSpinnerModule,
-
-  ],
-  providers: [ToolbarService]
-
+    declarations: [CitiesComponent, ImportsTypesComponent, ExportsTypesComponent, ShipmentsTypesComponent, RegionComponent, GroupsComponent, PointSettingComponent, BranchComponent],
+    providers: [ToolbarService],
+    imports: [
+        CommonModule,
+        SettingRoutingModule,
+        GridAllModule,
+        GridModule,
+        TranslateModule,
+        SimpleNotificationsModule.forRoot(),
+        BsDatepickerModule.forRoot(),
+        FormsModule,
+        ReactiveFormsModule,
+        NgSelectModule,
+        ModalModule.forRoot(),
+        MatTableModule,
+        MatCheckboxModule,
+        MatPaginatorModule,
+        NgxPrintModule,
+        DatePickerModule,
+        DateRangePickerModule,
+        NgxSpinnerModule,
+        SharedModule
+    ]
 })
 export class SettingModule { }
