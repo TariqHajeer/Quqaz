@@ -90,11 +90,11 @@ export class CreateMulitpleOrderComponent implements OnInit {
   }
 
   GetorderPlace() {
-      this.orderPlace =  [...orderPlaceds];
-      this.Order.OrderplacedId = this.orderPlace[1].id;
-      this.orderPlace = this.orderPlace.filter(
-        (o) => o.id != OrderplacedEnum.Client
-      );
+    this.orderPlace = [...orderPlaceds];
+    this.Order.OrderplacedId = this.orderPlace[1].id;
+    this.orderPlace = this.orderPlace.filter(
+      (o) => o.id != OrderplacedEnum.Client
+    );
   }
 
   getAgent() {
@@ -122,10 +122,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
 
   changeCountry() {
     var city = this.cities.find((c) => c.id == this.Order.CountryId);
-    if (
-      (city.branchesIds.length > 0 &&
-        city.branchesIds[0] == this.userLogin.branche.id) || city.branchesIds.length == 0
-    ) {
+    if (city.requiredAgent) {
       this.disabledAddAgent = false;
       this.Agents = this.GetAgents.filter(
         (a) =>
@@ -144,10 +141,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
   }
   changeCountryEdit() {
     var city = this.cities.find((c) => c.id == this.EditOrder.CountryId);
-    if (
-      city.branchesIds.length > 0 &&
-      city.branchesIds[0] == this.userLogin.branche.id
-    ) {
+    if (city.requiredAgent) {
       this.disabledEditAgent = false;
       this.Agents = this.GetAgents.filter(
         (a) =>
@@ -271,6 +265,11 @@ export class CreateMulitpleOrderComponent implements OnInit {
     order.CanEdit = true;
     this.tempEdit = Object.assign({}, order);
     this.EditOrder = order;
+    var city = this.cities.find((c) => c.id == this.EditOrder.CountryId);
+    if (city.requiredAgent)
+      this.disabledEditAgent = false;
+    else
+      this.disabledEditAgent = true;
     this.Agents = this.GetAgents.filter(
       (a) =>
         a.countries
