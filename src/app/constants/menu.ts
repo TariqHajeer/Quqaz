@@ -25,37 +25,52 @@ const data: IMenuItem[] = [
     permission: [UserPermission.ShowOrder],
     subs: [
       {
-        icon: 'iconsminds-box-close',
-        label: 'الطلبات ',
-        to: `${adminRoot}/order/`,
-        permission: [UserPermission.ShowOrder],
+        icon: 'iconsminds-add',
+        label: 'إضافة طلبات',
+        to: `${adminRoot}/order/addorder`,
+        permission: [UserPermission.AddOrder],
         subs: [
           {
-            icon: 'iconsminds-box-close',
-            label: 'الطلبات الجديدة',
-            to: `${adminRoot}/order/neworders`,
-            permission: [UserPermission.ShowOrder],
-            badge: true,
-          },
-          {
-            icon: 'iconsminds-box-close',
-            label: 'عرض الطلبات',
-            to: `${adminRoot}/order/`,
-            permission: [UserPermission.ShowOrder],
-          },
-          {
-            icon: 'iconsminds-box-close',
-            label: ' طلبات عند العميل ',
-            to: `${adminRoot}/order/orderswithclient`,
+            icon: 'iconsminds-add',
+            label: 'إضافة طلب',
+            to: `${adminRoot}/order/addorder`,
             permission: [UserPermission.AddOrder],
-            badge: true,
           },
           {
-            icon: 'simple-icon-layers',
-            label: 'طلبات تعديل حالة الشحنة',
-            to: `${adminRoot}/reports/agentOrderstaterequests`,
-            badge: true,
-            permission: [UserPermission.ShowOrder],
+            icon: 'iconsminds-add',
+            label: 'إضافة طلبات متعددة ',
+            to: `${adminRoot}/order/addMulitpleOrders`,
+            permission: [UserPermission.AddOrder],
+          },
+          {
+            icon: 'iconsminds-add',
+            label: ' إضافة  طلبات متعددة مع المنطقة  ',
+            to: `${adminRoot}/order/addMulitpleOrdersWithRegion`,
+            permission: [UserPermission.AddOrder],
+          },
+          {
+            icon: 'iconsminds-add',
+            label: 'إضافة طلبات متعددة للعميل',
+            to: `${adminRoot}/order/addMulitpleOrdersfromClient`,
+            permission: [UserPermission.AddOrder],
+          },
+          {
+            icon: 'iconsminds-add',
+            label: 'إضافة طلبات متعددة للمندوب',
+            to: `${adminRoot}/order/addMulitpleOrdersfromAgent`,
+            permission: [UserPermission.AddOrder],
+          },
+          {
+            icon: 'iconsminds-add',
+            label: ' إضافة  متعددة للعميل والمندوب',
+            to: `${adminRoot}/order/addMulitpleOrdersfromClientandAgent`,
+            permission: [UserPermission.AddOrder],
+          },
+          {
+            icon: 'iconsminds-add',
+            label: ' إضافة  متعددة للمندوب و المنطقة',
+            to: `${adminRoot}/order/addMulitpleOrdersAgentWithRegion`,
+            permission: [UserPermission.AddOrder],
           },
           {
             icon: 'simple-icon-layers',
@@ -68,33 +83,43 @@ const data: IMenuItem[] = [
       },
       {
         icon: 'iconsminds-box-close',
-        label: 'استلام حالة الشحنة',
-        to: `${adminRoot}/order`,
+        label: 'حالات الطلبات ',
+        to: `${adminRoot}/order/`,
         permission: [UserPermission.ShowOrder],
         subs: [
           {
             icon: 'iconsminds-box-close',
-            label: 'استلام حالة الشحنة المستلمة ',
-            to: `${adminRoot}/order/shipmentReceivedByDelivered`,
-            permission: [UserPermission.ReceiptOfTheStatusOfTheDeliveredShipment],
+            label: 'عرض الطلبات',
+            to: `${adminRoot}/order/`,
+            permission: [UserPermission.ShowOrder],
           },
           {
             icon: 'iconsminds-box-close',
-            label: ' استلام حالة الشحنة المستلمة مندوب ',
-            to: `${adminRoot}/order/shipmentReceivedByAgent`,
-            permission: [UserPermission.ReceiptOfTheStatusOfTheDeliveredShipment],
+            label: 'الطلبات الجديدة',
+            to: `${adminRoot}/order/neworders`,
+            permission: [UserPermission.ShowOrder],
+            badge: true,
           },
           {
             icon: 'iconsminds-box-close',
-            label: 'استلام حالة الشحنة المرتجعة ',
-            to: `${adminRoot}/order/shipmentReceivedByReturned`,
-            permission: [UserPermission.ReceiptOfTheStatusOfTheReturnedShipment],
+            label: ' طلبات عند العميل ',
+            to: `${adminRoot}/order/orderswithclient`,
+            permission: [UserPermission.AddOrder],
+            badge: true,
+          },
+          {
+            icon: 'simple-icon-layers',
+            label: 'طلبات تعديل حالة الشحنة للمندوبين',
+            to: `${adminRoot}/reports/agentOrderstaterequests`,
+            badge: true,
+            permission: [UserPermission.ShowOrder],
           },
         ]
       },
+     
       {
         icon: 'iconsminds-box-close',
-        label: 'نقل الطلبات ',
+        label: 'نقل الطلبات واستلامها ',
         to: `${adminRoot}/order/moveorder`,
         permission: [UserPermission.ShowOrder],
         subs: [
@@ -141,60 +166,26 @@ const data: IMenuItem[] = [
             to: `${adminRoot}/order/getdisapprovedreturnedorderbybranch`,
             permission: [UserPermission.ShowOrder],
           },
-        ]
-
-      },
-
-
-      {
-        icon: 'iconsminds-add',
-        label: 'إضافة طلب',
-        to: `${adminRoot}/order/addorder`,
-        permission: [UserPermission.AddOrder],
-        subs: [
           {
-            icon: 'iconsminds-add',
-            label: 'إضافة طلب',
-            to: `${adminRoot}/order/addorder`,
-            permission: [UserPermission.AddOrder],
+            icon: 'iconsminds-box-close',
+            label: 'استلام حالة الشحنة المستلمة ',
+            to: `${adminRoot}/order/shipmentReceivedByDelivered`,
+            permission: [UserPermission.ReceiptOfTheStatusOfTheDeliveredShipment],
           },
           {
-            icon: 'iconsminds-add',
-            label: 'إضافة طلبات متعددة ',
-            to: `${adminRoot}/order/addMulitpleOrders`,
-            permission: [UserPermission.AddOrder],
+            icon: 'iconsminds-box-close',
+            label: ' استلام حالة الشحنة المستلمة مندوب ',
+            to: `${adminRoot}/order/shipmentReceivedByAgent`,
+            permission: [UserPermission.ReceiptOfTheStatusOfTheDeliveredShipment],
           },
           {
-            icon: 'iconsminds-add',
-            label: ' إضافة  طلبات متعددة مع المنطقة  ',
-            to: `${adminRoot}/order/addMulitpleOrdersWithRegion`,
-            permission: [UserPermission.AddOrder],
-          },
-          {
-            icon: 'iconsminds-add',
-            label: 'إضافة طلبات متعددة للعميل',
-            to: `${adminRoot}/order/addMulitpleOrdersfromClient`,
-            permission: [UserPermission.AddOrder],
-          },
-          {
-            icon: 'iconsminds-add',
-            label: 'إضافة طلبات متعددة للمندوب',
-            to: `${adminRoot}/order/addMulitpleOrdersfromAgent`,
-            permission: [UserPermission.AddOrder],
-          },
-          {
-            icon: 'iconsminds-add',
-            label: ' إضافة  متعددة للعميل والمندوب',
-            to: `${adminRoot}/order/addMulitpleOrdersfromClientandAgent`,
-            permission: [UserPermission.AddOrder],
-          },
-          {
-            icon: 'iconsminds-add',
-            label: ' إضافة  متعددة للمندوب و المنطقة',
-            to: `${adminRoot}/order/addMulitpleOrdersAgentWithRegion`,
-            permission: [UserPermission.AddOrder],
+            icon: 'iconsminds-box-close',
+            label: 'استلام حالة الشحنة المرتجعة ',
+            to: `${adminRoot}/order/shipmentReceivedByReturned`,
+            permission: [UserPermission.ReceiptOfTheStatusOfTheReturnedShipment],
           },
         ]
+
       },
     ],
   },
