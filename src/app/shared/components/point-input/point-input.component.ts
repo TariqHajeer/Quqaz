@@ -5,7 +5,7 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './point-input.component.html',
   styleUrls: ['./point-input.component.scss']
 })
-export class PointInputComponent implements OnInit {
+export class PointInputComponent{
   type = 'number';
   @Input() lable?: string = "النقاط";
   @Input() name:string='Points';
@@ -14,9 +14,5 @@ export class PointInputComponent implements OnInit {
   @Input() disabled?: boolean;
   @Input() change?: any;
   @Input() required: boolean;
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

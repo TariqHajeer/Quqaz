@@ -5,7 +5,7 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './custom-input.component.html',
   styleUrls: ['./custom-input.component.scss']
 })
-export class CustomInputComponent implements OnInit {
+export class CustomInputComponent {
   @Input() type: 'string' | 'text' | 'number' | 'date';
   @Input() minlengthInput?: number;
   @Input() maxlengthInput: number;
@@ -16,9 +16,5 @@ export class CustomInputComponent implements OnInit {
   @Input() disabled?: boolean;
   @Input() change?: any;
   @Input() required: boolean;
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

@@ -5,7 +5,7 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './delivery-cost-input.component.html',
   styleUrls: ['./delivery-cost-input.component.scss']
 })
-export class DeliveryCostInputComponent implements OnInit {
+export class DeliveryCostInputComponent {
 
   constructor() { }
   type = 'number';
@@ -16,7 +16,5 @@ export class DeliveryCostInputComponent implements OnInit {
   @Input() disabled?: boolean;
   @Input() change?: any;
   @Input() required: boolean;
-  ngOnInit(): void {
-  }
 
 }

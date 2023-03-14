@@ -6,10 +6,7 @@ import orderPlaceds from 'src/app/data/orderPlaced';
 import moenyplaceds from 'src/app/data/moneyPalced';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
-import {
-  CreateOrdersFromEmployee,
-  OrderItem,
-} from 'src/app/Models/order/create-orders-from-employee.model';
+import {CreateOrdersFromEmployee,OrderItem} from 'src/app/Models/order/create-orders-from-employee.model';
 import { OrderType } from 'src/app/Models/OrderTypes/order-type.model';
 import { Region } from 'src/app/Models/Regions/region.model';
 import { User } from 'src/app/Models/user/user.model';
@@ -82,7 +79,6 @@ export class AddOrdersComponent implements OnInit {
     this.Getcities();
     this.GetClient();
     this.ActiveAgent();
-    // this.getOrderTypes();
   }
   AddOrder() {
     if (this.tempPhone != '' && this.tempPhone != undefined) {
@@ -192,7 +188,6 @@ export class AddOrdersComponent implements OnInit {
     this.Order.RegionId = null;
     this.Order.AgentId = null;
     var city = this.cities.find((c) => c.id == this.Order.CountryId);
-    // if ((city.branchesIds.length > 0 && city.branchesIds[0] == this.userLogin.branche.id)||city.branchesIds.length == 0) {
   if(city.requiredAgent){
     this.disabledAgent = false;
       this.Agents = this.GetAgents.filter(
