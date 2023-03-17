@@ -296,21 +296,19 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
     this.EditOrder.CanEdit = false;
     var country = this.cities.find((c) => c.id == this.EditOrder.CountryId);
     this.EditOrder.CountryName = country.name;
-    var region = this.regions.find((c) => c.id == this.EditOrder.RegionId);
-    this.EditOrder.RecipientName = region.name;
+    var region = this.regions.find((c) => c.id == this.EditOrder?.RegionId);
+    this.EditOrder.RecipientName = region?.name;
     var orderplace = this.orderPlace.find(
       (c) => c.id == this.EditOrder.OrderplacedId
     );
     this.EditOrder.OrderplacedName = orderplace.name;
     var client = this.clients.find((c) => c.id == this.EditOrder.ClientId);
     this.EditOrder.ClientName = client.name;
-    var agent = this.Agents.find((c) => c.id == this.EditOrder.AgentId);
     this.EditOrder.DeliveryCost = this.EditOrder.DeliveryCost * 1;
     this.EditOrder.Cost = this.EditOrder.Cost * 1;
     order = Object.assign(order, this.EditOrder);
-    localStorage.setItem('refrshorder', JSON.stringify(this.Orders));
+    localStorage.setItem('refrshorder', JSON.stringify(this.Orders));    
   }
-
   CansleEdit(order: CreateMultipleOrder) {
     this.tempEdit.CanEdit = false;
     order.showEditMessageCode = false;
@@ -359,8 +357,8 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
       this.onEnter();
       return;
     }
-    const inputs = this.inputEl.nativeElement.querySelectorAll('input');
-    if (inputs.length > index + 1) {
+    const inputs = this.inputEl?.nativeElement?.querySelectorAll('input');
+    if (inputs?.length > index + 1) {
       inputs[index + 1].focus();
     }
   }
