@@ -15,8 +15,8 @@
         <div class="col-3">
           <app-delivery-cost-input [lable]="'كلفة التوصيل'" [(value)]="city.deliveryCost"></app-delivery-cost-input>
         </div>
-        <div class="col-3">
-          <app-point-input [lable]="'النقاط'" [value]="city.points"></app-point-input>
+        <div class="col-3"> 
+          <app-point-input [lable]="'النقاط'" [(value)]="city.points"></app-point-input>
         </div>
         <ng-container *ngFor="let item of city.regions;let i= index; trackBy: onTrackBy">
           <div class="col-2">
@@ -108,12 +108,7 @@ aria-labelledby="dialog-sizes-name1">
             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '');">
         </div>
         <div class="col-3">
-          <label>النقاط</label>
-          <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="editCity.points"
-          oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '');">
-          <!-- <ng-select [(ngModel)]="city.points" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
-            <ng-option *ngFor="let PointSetting of PointSettings" [value]="PointSetting.points">{{PointSetting.points}}</ng-option>
-          </ng-select> -->
+          <app-point-input [lable]="'النقاط'" [(value)]="editCity.points"></app-point-input>
         </div>
         <div class="col-12" *ngIf="editCity.regions.length!=0">
           <br>

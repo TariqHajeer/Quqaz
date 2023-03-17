@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-point-input',
@@ -11,8 +11,12 @@ export class PointInputComponent{
   @Input() name:string='Points';
   @Input() maxlength?: number = 3;
   @Input() value;
+  @Output() valueChange?= new EventEmitter<any>();
   @Input() disabled?: boolean;
   @Input() change?: any;
   @Input() required: boolean;
-
+  changeValue(event) {
+    this.value = event;
+    this.valueChange.emit(this.value);
+  }
 }
