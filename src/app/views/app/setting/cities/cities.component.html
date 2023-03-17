@@ -13,7 +13,7 @@
           <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="city.name">
         </div>
         <div class="col-3">
-          <app-delivery-cost-input [lable]="'كلفة التوصيل'" [value]="city.deliveryCost"></app-delivery-cost-input>
+          <app-delivery-cost-input [lable]="'كلفة التوصيل'" [(value)]="city.deliveryCost"></app-delivery-cost-input>
         </div>
         <div class="col-3">
           <app-point-input [lable]="'النقاط'" [value]="city.points"></app-point-input>
