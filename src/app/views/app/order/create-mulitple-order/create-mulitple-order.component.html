@@ -216,15 +216,14 @@
 
                     </td>
                     <td>
-                        <input (keydown.enter)="changed(disabledAddAgent?4:5)" type="text" class="form-control"
-                            [ngModelOptions]="{standalone: true}"
-                            oninput="this.value = this.value.replace(/[^0-9.]-/g, '').replace(/(\..*)\./g, '$1');"
-                            style="width: 100px;" [(ngModel)]="Order.Cost">
-
+                        <div style="width: 100px;">
+                            <app-custom-input [type]="'number'" [(value)]="Order.Cost" [lable]="''" [name]="'adcost'"
+                                (onEnter)="changed(disabledAddAgent?4:5)"></app-custom-input>
+                        </div>
                     </td>
                     <td>
                         <div class="w-100px">
-                            <app-delivery-cost-input [lable]="''"
+                            <app-delivery-cost-input [lable]="''" (onEnter)="changed(disabledAddAgent?5:6)"
                                 [(value)]="Order.DeliveryCost"></app-delivery-cost-input>
                         </div>
                     </td>

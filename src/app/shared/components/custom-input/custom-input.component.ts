@@ -15,8 +15,9 @@ export class CustomInputComponent {
   @Input() name: string;
   @Input() lable: string;
   @Input() disabled?: boolean;
-  @Input() change?: any;
+  @Output() change?= new EventEmitter<any>();
   @Input() required: boolean;
+  @Output() onEnter?= new EventEmitter<any>();
   errorMessage: string;
   changeValue(event) {
     this.value = event;

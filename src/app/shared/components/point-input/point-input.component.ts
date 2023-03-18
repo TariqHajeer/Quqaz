@@ -13,7 +13,7 @@ export class PointInputComponent{
   @Input() value;
   @Output() valueChange?= new EventEmitter<any>();
   @Input() disabled?: boolean;
-  @Input() change?: any;
+  @Output() change?= new EventEmitter<any>();
   @Input() required: boolean;
   changeValue(event) {
     this.value = event;

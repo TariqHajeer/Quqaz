@@ -15,9 +15,10 @@ export class DeliveryCostInputComponent {
   @Input() value;
   @Output() valueChange?= new EventEmitter<any>();
   @Input() disabled?: boolean;
-  @Input() change?: any;
+  @Output() change?= new EventEmitter<any>();
   @Input() required: boolean;
   @Input() className?: string;
+  @Output() onEnter?= new EventEmitter<any>();
   changeValue(event) {
     this.value = event;
     this.valueChange.emit(this.value);
