@@ -131,11 +131,6 @@ export class OrderService {
       params: params,
     });
   }
-  ShipmentsNotReimbursedToTheClient(clientid) {
-    return this.http.get<any>(
-      this.controler + 'ShipmentsNotReimbursedToTheClient/' + clientid
-    );
-  }
   ShortageOfCash(clientId) {
     let params = new HttpParams();
     params = params.append('clientId', clientId);
