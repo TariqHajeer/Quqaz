@@ -86,18 +86,9 @@ export class ShipmentInStockComponent implements OnInit {
     localStorage.removeItem('printordersagent')
     localStorage.removeItem('printagent')
     this.getAgent()
-    //this.GetorderPlace()
     this.paging = new Paging
     this.filtering = new OrderFilter
   }
-
-  // GetorderPlace() {
-  //   this.orderservice.orderPlace().subscribe(res => {
-  //     this.orderPlace = res
-  //     this.orderPlace = this.orderPlace.filter(o => o.id == 3 || o.id == 2)
-
-  //   })
-  // }
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
       this.Agents = res
