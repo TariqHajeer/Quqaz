@@ -191,13 +191,13 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
     if (this.checkLengthPhoneNumber(this.Order.RecipientPhones))
       return
     var country = this.cities.find(c => c.id == this.Order.CountryId)
-    this.Order.CountryName = country.name
+    this.Order.CountryName = country?.name
     var region = this.regions.find(r => r.id == this.Order.RegionId)
-    this.Order.RegionName = region.name
+    this.Order.RegionName = region?.name
     var client = this.clients.find(c => c.id == this.Order.ClientId)
-    this.Order.ClientName = client.name
+    this.Order.ClientName = client?.name
     var agent = this.Agents.find(c => c.id == this.Order.AgentId)
-    this.Order.AgentName = agent.name
+    this.Order.AgentName = agent?.name
     this.Order.Cost = this.Order.Cost * 1
     this.Orders.push(this.Order)
     localStorage.setItem('refrshorder', JSON.stringify(this.Orders))
@@ -239,15 +239,14 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
       return
     this.EditOrder.CanEdit = false
     var country = this.cities.find(c => c.id == this.EditOrder.CountryId)
-    this.EditOrder.CountryName = country.name
+    this.EditOrder.CountryName = country?.name
     var region = this.regions.find(c => c.id == this.EditOrder.RegionId)
-    this.EditOrder.RegionName = region.name
+    this.EditOrder.RegionName = region?.name
     var client = this.clients.find(c => c.id == this.EditOrder.ClientId)
-    this.EditOrder.ClientName = client.name
+    this.EditOrder.ClientName = client?.name
     var agent = this.Agents.find(c => c.id == this.EditOrder.AgentId)
     this.EditOrder.DeliveryCost = this.EditOrder.DeliveryCost * 1
     this.EditOrder.Cost = this.EditOrder.Cost * 1
-    //  this.EditOrder.AgentName = agent.name
     order = Object.assign(order, this.EditOrder);
     localStorage.setItem('refrshorder', JSON.stringify(this.Orders))
 

@@ -284,20 +284,17 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     if (this.checkLengthPhoneNumber(this.Order.RecipientPhones))
       return
     if (!this.Order.Code || !this.Order.ClientId ||
-      !this.Order.RecipientPhones
-      || !this.Order.AgentId || this.showMessageCode) {
+      !this.Order.RecipientPhones || this.showMessageCode) {
       this.submitted = true
       return
     } else this.submitted = false
-
-    // var country = this.cities.find(c => c.id == this.Order.CountryId)
-    this.Order.CountryName = this.Order.Country.name
+    this.Order.CountryName = this.Order.Country?.name
     var orderplace = this.orderPlace.find(c => c.id == this.Order.OrderplacedId)
-    this.Order.OrderplacedName = orderplace.name
+    this.Order.OrderplacedName = orderplace?.name
     var client = this.clients.find(c => c.id == this.Order.ClientId)
-    this.Order.ClientName = client.name
+    this.Order.ClientName = client?.name
     var agent = this.Agents.find(c => c.id == this.Order.AgentId)
-    this.Order.AgentName = agent.name
+    this.Order.AgentName = agent?.name
     this.Order.Cost = this.Order.Cost * 1
     this.Orders.push(this.Order)
     localStorage.setItem('refrshorderclient', JSON.stringify(this.Orders))
@@ -346,12 +343,12 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     this.EditOrder.CountryName = this.EditOrder.Country.name
     var orderplace = this.orderPlace.find(c => c.id == this.EditOrder.OrderplacedId)
     this.EditOrder.OrderplacedName = orderplace.name
-    var client = this.clients.find(c => c.id == this.EditOrder.ClientId)
-    this.EditOrder.ClientName = client.name
+    var client = this.clients.find(c => c.id == this.EditOrder?.ClientId)
+    this.EditOrder.ClientName = client?.name
     this.EditOrder.DeliveryCost = this.EditOrder.DeliveryCost * 1
     this.EditOrder.Cost = this.EditOrder.Cost * 1
-    var agent = this.Agents.find(c => c.id == this.EditOrder.AgentId)
-    this.EditOrder.AgentName = agent.name
+    var agent = this.Agents.find(c => c.id == this.EditOrder?.AgentId)
+    this.EditOrder.AgentName = agent?.name
     order = Object.assign(order, this.EditOrder);
     localStorage.setItem('refrshorderclient', JSON.stringify(this.Orders))
 

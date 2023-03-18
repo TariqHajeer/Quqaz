@@ -35,8 +35,7 @@ export class CreateMultiOrderAgentAndClientComponent implements OnInit {
     private notifications: NotificationsService,
     public spinner: NgxSpinnerService,
     public dialog: MatDialog
-  ) {}
-  //test
+  ) { }
   Order: CreateMultipleOrder;
   EditOrder: CreateMultipleOrder;
   submitted = false;
@@ -60,14 +59,10 @@ export class CreateMultiOrderAgentAndClientComponent implements OnInit {
   CountryId;
   ClientId;
   AgentId;
-  //tempPhone: string;
-  // EdittempPhone: string
-  //selectedOrder: any;
   cityapi = 'Country';
   regionapi = 'Region';
   ordertypeapi = 'OrderType';
   Orders: any[] = [];
-  //CanEdit: boolean[] = []
   ngOnInit(): void {
     this.Order = new CreateMultipleOrder();
     this.EditOrder = new CreateMultipleOrder();
@@ -121,17 +116,17 @@ export class CreateMultiOrderAgentAndClientComponent implements OnInit {
     }
   }
   GetorderPlace() {
-      this.orderPlace =  [...orderPlaceds];
-      this.Order.OrderplacedId = this.orderPlace[1].id;
-      this.orderPlace = this.orderPlace.filter(
-        (o) => o.id != OrderplacedEnum.Client
-      );
+    this.orderPlace = [...orderPlaceds];
+    this.Order.OrderplacedId = this.orderPlace[1].id;
+    this.orderPlace = this.orderPlace.filter(
+      (o) => o.id != OrderplacedEnum.Client
+    );
   }
 
   getAgent() {
     this.userService.ActiveAgent().subscribe((res) => {
       this.GetAgents = res;
-       });
+    });
   }
 
   GetClient() {
@@ -314,33 +309,41 @@ export class CreateMultiOrderAgentAndClientComponent implements OnInit {
     }
   }
   onEnter() {
-    this.addNewCountry();
-    console.log(this.AgentId);
-    this.Order.Country = this.cities.find((c) => c.id == this.CountryId);
-    this.Order.ClientId = this.ClientId;
-    if (this.checkLengthPhoneNumber(this.Order.RecipientPhones)) return;
-    if (
-      !this.Order.Code ||
-      !this.Order.RecipientPhones ||
-      this.showMessageCode
-    ) {
-      this.submitted = true;
+    if (this.ClientId && this.CountryId) {
+      this.addNewCountry();
+      this.Order.Country = this.cities.find((c) => c.id == this.CountryId);
+      this.Order.ClientId = this.ClientId;
+      if (this.checkLengthPhoneNumber(this.Order.RecipientPhones)) return;
+      if (
+        !this.Order.Code ||
+        !this.Order.RecipientPhones ||
+        this.showMessageCode
+      ) {
+        this.submitted = true;
+        return;
+      } else this.submitted = false;
+      this.Order.Cost = this.Order.Cost * 1;
+      this.Orders.push(this.Order);
+      localStorage.setItem(
+        'refrshorderclientandAgent',
+        JSON.stringify(this.Orders)
+      );
+      this.submitted = false;
+      this.Order = new CreateMultipleOrder();
+      setTimeout(() => {
+        this.codeElement.nativeElement.focus();
+      }, 0);
+      var country = this.cities.find((c) => c.id == this.CountryId);
+      this.Order.DeliveryCost = country.deliveryCost;
+    } else {
+      this.notifications.create(
+        'error',
+        'يجب التاكد من ادخال جميع الحقول',
+        NotificationType.Error,
+        { theClass: 'error', timeOut: 6000, showProgressBar: false }
+      );
       return;
-    } else this.submitted = false;
-    this.Order.Cost = this.Order.Cost * 1;
-    this.Orders.push(this.Order);
-    localStorage.setItem(
-      'refrshorderclientandAgent',
-      JSON.stringify(this.Orders)
-    );
-    this.submitted = false;
-    this.Order = new CreateMultipleOrder();
-    setTimeout(() => {
-      this.codeElement.nativeElement.focus();
-    }, 0);
-    var country = this.cities.find((c) => c.id == this.CountryId);
-    this.Order.DeliveryCost = country.deliveryCost;
-    // this.int()
+    }
   }
   tempEdit: CreateMultipleOrder;
   Edit(order: CreateMultipleOrder) {
@@ -400,7 +403,7 @@ export class CreateMultiOrderAgentAndClientComponent implements OnInit {
       if (this.submitted == true) return;
     }
 
-    if (!this.ClientId || this.Orders.length==0) {
+    if (!this.ClientId || this.Orders.length == 0) {
       this.submitedSave = true;
       return;
     }

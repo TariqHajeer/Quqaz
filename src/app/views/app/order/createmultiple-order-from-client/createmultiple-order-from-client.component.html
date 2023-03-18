@@ -3,14 +3,11 @@
         <div class="d-flex justify-content-between">
             <h3 class="card-title">اضافة طلبات متعددة للعميل</h3>
         </div>
-
         <div>
             <button type="submit" class="btn btn-primary" (click)="AddOrder()"> حفظ</button>
-
         </div>
     </div>
     <div class="row">
-
         <div class="col-md-4">
             <label>العميل</label>
             <ng-select appendTo="body" [(ngModel)]="ClientId" (ngModelChange)="changeClientId()" style="width: 150px;"
@@ -19,13 +16,8 @@
                 </ng-option>
             </ng-select>
             <div *ngIf="!ClientId && submitedSave" class="message">العميل حقل مطلوب</div>
-
-
-
-
         </div>
     </div>
-
     <br>
     <div class="example-container">
         <table class="table">
@@ -38,12 +30,9 @@
                 <th>كلفة التوصيل</th>
                 <th>ملاحظات</th>
                 <th></th>
-
             </thead>
             <tbody>
                 <tr *ngFor="let order of Orders">
-
-
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.Code}}</h4>
                         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
@@ -77,29 +66,6 @@
                             مطلوب</div>
 
                     </td>
-                    <!--
-                              <td (click)="Edit(order)">
-                            <h4 *ngIf="!order.CanEdit">{{order.CountryName}}</h4>
-                            <ng-select [(ngModel)]="EditOrder.CountryId" style="width: 100px;"
-                                (change)="changeCountry()" [ngModelOptions]="{standalone: true}"   [clearable]="false"
-                                *ngIf="order.CanEdit" name="Country">
-                                <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
-                            </ng-select>
-                            <div *ngIf="!EditOrder.CountryId && Editsubmitted" class="message">المدينة حقل مطلوب</div>
-
-                        </td>
-                      <td>
-                            <h4 *ngIf="!order.CanEdit">{{order.AgentName}}</h4>
-                            <ng-select [(ngModel)]="EditOrder.AgentId" [ngModelOptions]="{standalone: true}"
-                                *ngIf="order.CanEdit"   [clearable]="false" name="Agent" style="width: 100px;">
-                                <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
-                            </ng-select>
-                            <div *ngIf="!EditOrder.AgentId && Editsubmitted" class="message">المندوب حقل مطلوب</div>
-
-                        </td>
-                    -->
-
-
 
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.RecipientPhones}}</h4>
@@ -234,11 +200,11 @@
                             style="width: 100px;" [(ngModel)]="Order.Cost">
 
                     </td>
+                   <td>
                     <div class="w-100px">
-                        <app-delivery-cost-input [lable]="''"
-                            [(value)]="Order.DeliveryCost"></app-delivery-cost-input>
+                        <app-delivery-cost-input [lable]="''" [(value)]="Order.DeliveryCost"></app-delivery-cost-input>
                     </div>
-
+                   </td>
                     <td>
                         <input (keydown.enter)="changed(disabledAddAgent?5:6)" type="text" class="form-control"
                             [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.Note" style="width: 100px;">
@@ -323,19 +289,13 @@
                                         d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                                 </svg>
                             </td>
-
-
-
                         </tr>
-
                     </tbody>
                 </table>
-
             </div>
             <div class="modal-footer">
                 <button id="closeModalButton" [hidden]="true" type="button" class="btn btn-primary"
                     data-dismiss="modal">اغلاق</button>
-
             </div>
         </div>
     </div>

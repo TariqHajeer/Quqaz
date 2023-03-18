@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./custom-input.component.scss']
 })
 export class CustomInputComponent {
-  @Input() type: 'string' | 'text' | 'number' | 'date';
+  @Input() type: 'string' | 'text' | 'number' | 'date' | 'phone';
   @Input() minlengthInput?: number;
   @Input() maxlengthInput: number;
   @Input() className?: string;
@@ -17,8 +17,18 @@ export class CustomInputComponent {
   @Input() disabled?: boolean;
   @Input() change?: any;
   @Input() required: boolean;
+  errorMessage: string;
   changeValue(event) {
     this.value = event;
     this.valueChange.emit(this.value);
+  }
+  checkLengthPhoneNumber() {
+    if (this.value && this.value.length < 11) {
+      this.errorMessage = 'لايمكن لرقم الهاتف ان يكون اصغر من  11 رقم';
+      return true;
+    } else {
+      this.errorMessage = '';
+      return false;
+    }
   }
 }

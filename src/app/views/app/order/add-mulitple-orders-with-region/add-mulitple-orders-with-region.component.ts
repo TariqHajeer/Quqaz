@@ -295,15 +295,15 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
       return;
     this.EditOrder.CanEdit = false;
     var country = this.cities.find((c) => c.id == this.EditOrder.CountryId);
-    this.EditOrder.CountryName = country.name;
+    this.EditOrder.CountryName = country?.name;
     var region = this.regions.find((c) => c.id == this.EditOrder?.RegionId);
     this.EditOrder.RecipientName = region?.name;
     var orderplace = this.orderPlace.find(
       (c) => c.id == this.EditOrder.OrderplacedId
     );
-    this.EditOrder.OrderplacedName = orderplace.name;
+    this.EditOrder.OrderplacedName = orderplace?.name;
     var client = this.clients.find((c) => c.id == this.EditOrder.ClientId);
-    this.EditOrder.ClientName = client.name;
+    this.EditOrder.ClientName = client?.name;
     this.EditOrder.DeliveryCost = this.EditOrder.DeliveryCost * 1;
     this.EditOrder.Cost = this.EditOrder.Cost * 1;
     order = Object.assign(order, this.EditOrder);
