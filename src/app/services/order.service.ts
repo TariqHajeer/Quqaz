@@ -21,6 +21,10 @@ export class OrderService {
     let params = this.getHttpPramsFilteredForOrder(filter, paging);
     return this.http.get<any>(this.controler, { params: params });
   }
+  getInStockToTransferWithAgent(filter:OrderFilter, paging:Paging){
+    let params = this.getHttpPramsFilteredForOrder(filter, paging);
+    return this.http.get<any>(this.controler+"GetInStockToTransferWithAgent", { params: params });
+  }
   WithoutPaging(filter: OrderFilter) {
     let params = this.getHttpPramsFilteredForOrder(filter);
     return this.http.get<any>(this.controler + 'WithoutPaging', {

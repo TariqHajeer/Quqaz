@@ -120,7 +120,6 @@ export class ShipmentInStockComponent implements OnInit {
           this.noDataFound = true
         else this.noDataFound = false
       this.dataSource = new MatTableDataSource(response.data)
-      //this.dataSource.data = this.dataSource.data.filter(d => d.agent.id == this.AgentId)
       this.totalCount = response.total
     },
       err => {
