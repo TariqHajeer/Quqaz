@@ -42,7 +42,9 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
   Agents: User[] = []
   Regions: Region[] = [];
   agentOrdersId: AgentOrdersIds
-  agentOrdersIds: AgentOrdersIds[] = []
+  agentOrdersIds: AgentOrdersIds[] = [];
+  selectAll: boolean;
+  countSelectOrder: number = 0;
   constructor(
     private orderservice: OrderService,
     public userService: UserService,
@@ -62,15 +64,9 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     this.filtering = new OrderFilter
     this.allFilter();
   }
-
-  isAllSelected(): boolean {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    if (this.isAllSelected()) {
+    if (!this.selectAll) {
       this.selection.clear()
       this.dataSource.data.forEach(item => {
         this.orders = this.orders.filter(order => order != item)
@@ -82,24 +78,36 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
       });
     }
   }
+  checkboxLabelAll(): string {
+    return `${this.selectAll ? 'select' : 'deselect'} all`;
+  }
   /** The label for the checkbox on the passed row */
   checkboxLabel(rowid?: any, row?): string {
     if (!rowid) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+      return `${this.selectAll ? 'select' : 'deselect'} all`;
     }
     this.checkboxId(rowid, row)
     return `${this.selection.isSelected(rowid) ? 'deselect' : 'select'} row`;
   }
   checkboxId(rowid, row?) {
     if (this.selection.isSelected(rowid)) {
-      if (this.orders.filter(d => d == row).length > 0)
-        return
-      else {
-        this.orders.push(row)
+      if (!this.selectAll) {
+        if (this.orders.filter(d => d == row).length > 0)
+          return
+        else {
+          this.orders.push(row)
+          this.countSelectOrder = this.orders.length;
+          if (this.countSelectOrder == this.totalCount)
+            this.selectAll = true;
+        }
       }
+
     }
     if (!this.selection.isSelected(rowid)) {
-      this.orders = this.orders.filter(o => o.id != rowid)
+      if (this.selectAll) {
+        this.orders = this.orders.filter(o => o.id != rowid);
+        this.selectAll = false;
+      }
     }
   }
   getCities() {
@@ -140,7 +148,7 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
       return
     }
     this.agentOrdersIds = [];
-    if (this.orders.filter(order => !order.agent&&order.targetBranchId==this.authService.getUser().branche.id).length > 0) {
+    if (this.orders.filter(order => !order.agent && order.targetBranchId == this.authService.getUser().branche.id).length > 0) {
       this.notifications.create('error', '  يجب اختيار مندوب', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
