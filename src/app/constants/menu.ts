@@ -27,7 +27,7 @@ const data: IMenuItem[] = [
       {
         icon: 'iconsminds-add',
         label: 'إضافة طلبات',
-        to: `${adminRoot}/order/addorder`,
+        to: `addorder`,
         permission: [UserPermission.AddOrder],
         subs: [
           {
@@ -84,7 +84,7 @@ const data: IMenuItem[] = [
       {
         icon: 'iconsminds-box-close',
         label: 'حالات الطلبات ',
-        to: `${adminRoot}/order/`,
+        to: `orderstate`,
         permission: [UserPermission.ShowOrder],
         subs: [
           {
@@ -120,7 +120,7 @@ const data: IMenuItem[] = [
       {
         icon: 'iconsminds-box-close',
         label: 'نقل الطلبات واستلامها ',
-        to: `${adminRoot}/order/moveorder`,
+        to: `moveorder`,
         permission: [UserPermission.ShowOrder],
         subs: [
 
@@ -200,7 +200,7 @@ const data: IMenuItem[] = [
         //agent
         icon: 'simple-icon-layers',
         label: 'المندوب',
-        to: `${adminRoot}/reports/ShipmentInStock`,
+        to: `agents`,
         subs: [
           {
             icon: 'simple-icon-layers',
@@ -238,7 +238,7 @@ const data: IMenuItem[] = [
         //client
         icon: 'simple-icon-layers',
         label: 'العميل',
-        to: `${adminRoot}/reports/Shipmentonway`,
+        to: `clients`,
         permission: [UserPermission.ShowReports],
         subs: [
           {
@@ -277,7 +277,7 @@ const data: IMenuItem[] = [
       {
         icon: 'simple-icon-layers',
         label: '   ادارةالصناديق ',
-        to: `${adminRoot}/reports/showtreasury`,
+        to: `manage`,
         permission: [
           UserPermission.TreasuryManagment,
         ],
