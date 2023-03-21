@@ -110,11 +110,11 @@ export class ShipmentInStockComponent implements OnInit {
     this.paging.allItemsLength = event.length
     this.paging.RowCount = event.pageSize
     this.paging.Page = event.pageIndex + 1
-    //this.allFilter();
+    this.allFilter();
   }
   allFilter() {
     this.filtering.OrderplacedId = 2
-    this.orderservice.WithoutPaging(this.filtering).subscribe(response => {
+    this.orderservice.getInStockToTransferWithAgent(this.filtering, this.paging).subscribe(response => {
       if (response)
         if (response.data.length == 0)
           this.noDataFound = true
