@@ -46,10 +46,6 @@ export class TransferToSecondBranchComponent implements OnInit {
   selectAll: boolean = false;
   ordersIds = [];
   unSelectIds = [];
-  isAllSelected() {
-    this.selectAll = !this.selectAll;
-    return this.selectAll;
-  }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.ordersIds = [];
