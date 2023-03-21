@@ -80,15 +80,16 @@ export class ShipmentReceivedByDeliveredComponent {
     this.filtering = new OrderFilter();
     this.dataSource = new MatTableDataSource([]);
     this.getorder = new GetOrder();
-    this.getorder.order.index = 0;
+    if (this.getorder && this.getorder.order)
+      this.getorder.order.index = 0;
   }
 
   GetMoenyPlaced() {
-      this.MoenyPlaced =  [...moneyPlaceds];
-      this.getMoenyPlaced = [...moneyPlaceds];
+    this.MoenyPlaced = [...moneyPlaceds];
+    this.getMoenyPlaced = [...moneyPlaceds];
   }
   getmony() {
-      this.MoenyPlaced = [...moneyPlaceds];
+    this.MoenyPlaced = [...moneyPlaceds];
   }
   changeMoenyPlaced() {
     if (this.getorders.length != 0) {
@@ -116,12 +117,12 @@ export class ShipmentReceivedByDeliveredComponent {
     }
   }
   GetorderPlace() {
-      this.orderPlace =  [...orderPlaceds];
-      this.orderPlace = this.orderPlace.filter(
-        (o) =>
-          o.id == OrderplacedEnum.PartialReturned ||
-          o.id == OrderplacedEnum.Delivered
-      );
+    this.orderPlace = [...orderPlaceds];
+    this.orderPlace = this.orderPlace.filter(
+      (o) =>
+        o.id == OrderplacedEnum.PartialReturned ||
+        o.id == OrderplacedEnum.Delivered
+    );
   }
   changeOrderPlaced() {
     if (this.getorders.length != 0) {
@@ -136,7 +137,7 @@ export class ShipmentReceivedByDeliveredComponent {
       this.MoenyPlaced,
       "Delivered"
     );
-    this.MoenyPlacedId=this.getMoenyPlaced[0];
+    this.MoenyPlacedId = this.getMoenyPlaced[0];
   }
   getAgent() {
     this.userService.ActiveAgent().subscribe((res) => {
@@ -210,7 +211,7 @@ export class ShipmentReceivedByDeliveredComponent {
     this.getorder.MoenyPlaced = [...this.MoenyPlaced];
     this.getorder.OrderPlaced = [...this.orderPlace];
     this.getorder.canEditCount = true;
-    this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced,null,"Delivered");
+    this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced, null, "Delivered");
     this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced, "Delivered");
     this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced);
     this.orderplacedstate.unacceptable(this.getorder, this.MoenyPlaced);

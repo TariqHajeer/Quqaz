@@ -33,7 +33,7 @@
             <tr *ngFor="let order of Ordersfilter">
               <td>{{ order.code }}</td>
               <td>{{ order.client.name }}</td>
-              <td>{{ order.agent.name }}</td>
+              <td>{{ order.agent?.name }}</td>
               <td>
                 <!--chech icon -->
                 <svg
