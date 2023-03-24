@@ -163,6 +163,19 @@
         {{ element.order.client.name }}
       </td>
     </ng-container>
+    <ng-container matColumnDef="agent">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        
+        style="padding-right: 10px"
+      >
+        المندوب
+      </th>
+      <td mat-cell *matCellDef="let element" style="padding-right: 10px">
+        {{ element.order.agent.name }}
+      </td>
+    </ng-container>
     <ng-container matColumnDef="country">
       <th mat-header-cell *matHeaderCellDef >المدينة</th>
       <td mat-cell *matCellDef="let element">
@@ -179,7 +192,7 @@
           [ngModelOptions]="{ standalone: true }"
           *ngIf="!element.canEditCount"
           [(ngModel)]="element.order.cost"
-          style="width: 110px"
+          style="width: 100px"
           (keyup)="sumCost()"
           (ngModelChange)="changeCost(element, j)"
           (keypress)="keyPressNumbers($event, element.order.cost)"
@@ -233,6 +246,7 @@
           id="i*2"
           (ngModelChange)="ChangeOrderplacedId(element, i)"
           style="width: 120px; overflow: visible"
+          style="width: 90px;"
         >
           <ng-option
             *ngFor="let order of element.OrderPlaced"
@@ -243,7 +257,7 @@
       </td>
     </ng-container>
     <ng-container matColumnDef="monePlaced">
-      <th mat-header-cell *matHeaderCellDef >موقع المبلغ</th>
+      <th mat-header-cell *matHeaderCellDef>موقع المبلغ</th>
       <td mat-cell *matCellDef="let element; index as i">
         <ng-select
           appendTo="body"
@@ -254,6 +268,7 @@
           id="i*5"
           [disabled]="element.order.orderplaced.id == 3"
           class="disabledselect"
+          style="width: 100px;"
         >
           <ng-option
             *ngFor="let moenyPlaced of element.MoenyPlaced"
@@ -282,7 +297,7 @@
           (keyup)="sumCost()"
           [(ngModel)]="element.order.deliveryCost"
           (ngModelChange)="changeDeliveryCost(element, i)"
-          style="width: 110px"
+          style="width: 80px"
           [disabled]="element.order.orderplaced.id == 3"
         />
       </td>
@@ -296,7 +311,6 @@
           {{
             element.order.orderplaced.id == 5 ? "0" : element.order.agentCost
           }}
-          <!-- {{element.order.agentCost}} -->
         </h4>
         <input
           type="text"
@@ -306,7 +320,7 @@
           *ngIf="element.canEditDeliveryCost"
           (keyup)="sumCost()"
           [(ngModel)]="element.order.agentCost"
-          style="width: 110px"
+          style="width: 80px"
           [disabled]="element.order.orderplaced.id == 3"
         />
       </td>
@@ -365,19 +379,15 @@
       الإجمالي : {{ count }}
     </div>
     <div
-      class="col-2"
+      class="col-4"
       *ngIf="showcount"
-      style="font-size: 15px; text-align: left"
-    >
-      {{ deliveryCostCount }}
-    </div>
-    <div
-      class="col-2"
-      *ngIf="showcount"
-      style="font-size: 15px; text-align: left"
-    >
+      style="font-size: 15px; text-align: right;"
+    > &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
+      {{ deliveryCostCount }} 
+      &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       {{ agentCost }}
     </div>
+    
   </div>
   <!--
          <mat-paginator [length]="100"
