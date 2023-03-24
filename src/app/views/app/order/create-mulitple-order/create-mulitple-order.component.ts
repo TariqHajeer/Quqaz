@@ -90,11 +90,11 @@ export class CreateMulitpleOrderComponent implements OnInit {
   }
 
   GetorderPlace() {
-      this.orderPlace =  [...orderPlaceds];
-      this.Order.OrderplacedId = this.orderPlace[1].id;
-      this.orderPlace = this.orderPlace.filter(
-        (o) => o.id != OrderplacedEnum.Client
-      );
+    this.orderPlace = [...orderPlaceds];
+    this.Order.OrderplacedId = this.orderPlace[1].id;
+    this.orderPlace = this.orderPlace.filter(
+      (o) => o.id != OrderplacedEnum.Client
+    );
   }
 
   getAgent() {
@@ -122,10 +122,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
 
   changeCountry() {
     var city = this.cities.find((c) => c.id == this.Order.CountryId);
-    if (
-      (city.branchesIds.length > 0 &&
-        city.branchesIds[0] == this.userLogin.branche.id) || city.branchesIds.length == 0
-    ) {
+    if (city.requiredAgent) {
       this.disabledAddAgent = false;
       this.Agents = this.GetAgents.filter(
         (a) =>
@@ -144,10 +141,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
   }
   changeCountryEdit() {
     var city = this.cities.find((c) => c.id == this.EditOrder.CountryId);
-    if (
-      city.branchesIds.length > 0 &&
-      city.branchesIds[0] == this.userLogin.branche.id
-    ) {
+    if (city.requiredAgent) {
       this.disabledEditAgent = false;
       this.Agents = this.GetAgents.filter(
         (a) =>
@@ -243,13 +237,13 @@ export class CreateMulitpleOrderComponent implements OnInit {
     } else this.submitted = false;
     if (this.checkLengthPhoneNumber(this.Order.RecipientPhones)) return;
     var country = this.cities.find((c) => c.id == this.Order.CountryId);
-    this.Order.CountryName = country.name;
+    this.Order.CountryName = country?.name;
     var orderplace = this.orderPlace.find(
       (c) => c.id == this.Order.OrderplacedId
     );
-    this.Order.OrderplacedName = orderplace.name;
+    this.Order.OrderplacedName = orderplace?.name;
     var client = this.clients.find((c) => c.id == this.Order.ClientId);
-    this.Order.ClientName = client.name;
+    this.Order.ClientName = client?.name;
     var agent = this.Agents.find((c) => c.id == this.Order.AgentId);
     this.Order.AgentName = agent?.name;
     this.Order.Cost = this.Order.Cost * 1;
@@ -271,6 +265,11 @@ export class CreateMulitpleOrderComponent implements OnInit {
     order.CanEdit = true;
     this.tempEdit = Object.assign({}, order);
     this.EditOrder = order;
+    var city = this.cities.find((c) => c.id == this.EditOrder.CountryId);
+    if (city.requiredAgent)
+      this.disabledEditAgent = false;
+    else
+      this.disabledEditAgent = true;
     this.Agents = this.GetAgents.filter(
       (a) =>
         a.countries
@@ -293,17 +292,16 @@ export class CreateMulitpleOrderComponent implements OnInit {
       return;
     this.EditOrder.CanEdit = false;
     var country = this.cities.find((c) => c.id == this.EditOrder.CountryId);
-    this.EditOrder.CountryName = country.name;
+    this.EditOrder.CountryName = country?.name;
     var orderplace = this.orderPlace.find(
       (c) => c.id == this.EditOrder.OrderplacedId
     );
-    this.EditOrder.OrderplacedName = orderplace.name;
+    this.EditOrder.OrderplacedName = orderplace?.name;
     var client = this.clients.find((c) => c.id == this.EditOrder.ClientId);
-    this.EditOrder.ClientName = client.name;
+    this.EditOrder.ClientName = client?.name;
     var agent = this.Agents.find((c) => c.id == this.EditOrder.AgentId);
     this.EditOrder.DeliveryCost = this.EditOrder.DeliveryCost * 1;
     this.EditOrder.Cost = this.EditOrder.Cost * 1;
-    //  this.EditOrder.AgentName = agent.name
     order = Object.assign(order, this.EditOrder);
     localStorage.setItem('refrshorder', JSON.stringify(this.Orders));
   }

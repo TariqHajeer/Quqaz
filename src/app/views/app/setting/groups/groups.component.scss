@@ -1,0 +1,27 @@
+.scroll{
+    overflow: auto;
+    height: 100px;
+}
+.custom-control-input:focus~.custom-control-label::before {
+    border-color: rgb(10, 213, 132) !important;
+    box-shadow: 0 0 0 0.2rem rgba(208, 247, 190, 0.25) !important;
+  }
+  
+  .custom-control-input:checked~.custom-control-label::before {
+    border-color: rgb(10, 213, 132) !important;
+    background-color: rgb(10, 213, 132) !important;
+  }
+  
+  .custom-control-input:active~.custom-control-label::before {
+    background-color: rgb(10, 213, 132) !important;
+    border-color: rgb(10, 213, 132) !important;
+  }
+  
+  .custom-control-input:focus:not(:checked)~.custom-control-label::before {
+    border-color: rgb(10, 213, 132) !important;
+  }
+  
+  .custom-control-input-red:not(:disabled):active~.custom-control-label::before {
+    background-color: rgb(10, 213, 132) !important;
+    border-color: rgb(10, 213, 132) !important;
+  }

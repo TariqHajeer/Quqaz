@@ -27,6 +27,7 @@ export class ShipmentReceivedByAgentComponent {
     'index',
     'code',
     'client',
+    'agent',
     'country',
     'cost',
     'isClientDiliverdMoney',

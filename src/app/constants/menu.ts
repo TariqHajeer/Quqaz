@@ -25,131 +25,9 @@ const data: IMenuItem[] = [
     permission: [UserPermission.ShowOrder],
     subs: [
       {
-        icon: 'iconsminds-box-close',
-        label: 'الطلبات ',
-        to: `${adminRoot}/order/`,
-        permission: [UserPermission.ShowOrder],
-        subs: [
-          {
-            icon: 'iconsminds-box-close',
-            label: 'الطلبات الجديدة',
-            to: `${adminRoot}/order/neworders`,
-            permission: [UserPermission.ShowOrder],
-            badge: true,
-          },
-          {
-            icon: 'iconsminds-box-close',
-            label: 'عرض الطلبات',
-            to: `${adminRoot}/order/`,
-            permission: [UserPermission.ShowOrder],
-          },
-          {
-            icon: 'iconsminds-box-close',
-            label: ' طلبات عند العميل ',
-            to: `${adminRoot}/order/orderswithclient`,
-            permission: [UserPermission.AddOrder],
-            badge: true,
-          },
-          {
-            icon: 'simple-icon-layers',
-            label: 'طلبات تعديل حالة الشحنة',
-            to: `${adminRoot}/reports/agentOrderstaterequests`,
-            badge: true,
-            permission: [UserPermission.ShowOrder],
-          },
-          {
-            icon: 'simple-icon-layers',
-            label: 'اعادة ارسال',
-            to: `${adminRoot}/order/resend`,
-            badge: true,
-            permission: [UserPermission.ShowOrder],
-          },
-        ]
-      },
-      {
-        icon: 'iconsminds-box-close',
-        label: 'استلام حالة الشحنة',
-        to: `${adminRoot}/order`,
-        permission: [UserPermission.ShowOrder],
-        subs: [
-          {
-            icon: 'iconsminds-box-close',
-            label: 'استلام حالة الشحنة المستلمة ',
-            to: `${adminRoot}/order/shipmentReceivedByDelivered`,
-            permission: [UserPermission.ReceiptOfTheStatusOfTheDeliveredShipment],
-          },
-          {
-            icon: 'iconsminds-box-close',
-            label: ' استلام حالة الشحنة المستلمة مندوب ',
-            to: `${adminRoot}/order/shipmentReceivedByAgent`,
-            permission: [UserPermission.ReceiptOfTheStatusOfTheDeliveredShipment],
-          },
-          {
-            icon: 'iconsminds-box-close',
-            label: 'استلام حالة الشحنة المرتجعة ',
-            to: `${adminRoot}/order/shipmentReceivedByReturned`,
-            permission: [UserPermission.ReceiptOfTheStatusOfTheReturnedShipment],
-          },
-        ]
-      },
-      {
-        icon: 'iconsminds-box-close',
-        label: 'نقل الطلبات ',
-        to: `${adminRoot}/order/moveorder`,
-        permission: [UserPermission.ShowOrder],
-        subs: [
-
-          {
-            icon: 'iconsminds-box-close',
-            label: 'نقل الطلبات الى مندوب آخر',
-            to: `${adminRoot}/reports/changeagentbyorders`,
-            permission: [UserPermission.ShowOrder],
-          },
-          {
-            icon: 'iconsminds-box-close',
-            label: 'نقل الطلبات الى مندوب آخر بواسطة الكود',
-            to: `${adminRoot}/order/moveOrdersToAgentByCode`,
-            permission: [UserPermission.ShowOrder],
-          },
-          {
-            icon: 'iconsminds-box-close',
-            label: 'نقل الطلبات الى فرع آخر',
-            to: `${adminRoot}/order/transferToSecondBranch`,
-            permission: [UserPermission.ShowOrder],
-          },
-          {
-            icon: 'iconsminds-box-close',
-            label: 'الشحنات القادمة من فرع آخر',
-            to: `${adminRoot}/order/getOrdersComeToMyBranch`,
-            permission: [UserPermission.ShowOrder],
-          },
-          {
-            icon: 'iconsminds-box-close',
-            label: 'اعادة الطلبات المرتجعة',
-            to: `${adminRoot}/order/GetOrderReturnedToSecondBranch`,
-            permission: [UserPermission.ShowOrder],
-          },
-          {
-            icon: 'iconsminds-box-close',
-            label: 'استلام الطلبات المرتجعة من فرع اخر',
-            to: `${adminRoot}/order/GetOrdersReturnedToMyBranch`,
-            permission: [UserPermission.ShowOrder],
-          },
-          {
-            icon: 'iconsminds-box-close',
-            label: 'الشحنات المرفوضة من قبل الفرع',
-            to: `${adminRoot}/order/getdisapprovedreturnedorderbybranch`,
-            permission: [UserPermission.ShowOrder],
-          },
-        ]
-
-      },
-
-
-      {
         icon: 'iconsminds-add',
-        label: 'إضافة طلب',
-        to: `${adminRoot}/order/addorder`,
+        label: 'إضافة طلبات',
+        to: `addorder`,
         permission: [UserPermission.AddOrder],
         subs: [
           {
@@ -194,7 +72,120 @@ const data: IMenuItem[] = [
             to: `${adminRoot}/order/addMulitpleOrdersAgentWithRegion`,
             permission: [UserPermission.AddOrder],
           },
+          {
+            icon: 'simple-icon-layers',
+            label: 'اعادة ارسال',
+            to: `${adminRoot}/order/resend`,
+            badge: true,
+            permission: [UserPermission.ShowOrder],
+          },
         ]
+      },
+      {
+        icon: 'iconsminds-box-close',
+        label: 'حالات الطلبات ',
+        to: `orderstate`,
+        permission: [UserPermission.ShowOrder],
+        subs: [
+          {
+            icon: 'iconsminds-box-close',
+            label: 'عرض الطلبات',
+            to: `${adminRoot}/order/`,
+            permission: [UserPermission.ShowOrder],
+          },
+          {
+            icon: 'iconsminds-box-close',
+            label: 'الطلبات الجديدة',
+            to: `${adminRoot}/order/neworders`,
+            permission: [UserPermission.ShowOrder],
+            badge: true,
+          },
+          {
+            icon: 'iconsminds-box-close',
+            label: ' طلبات عند العميل ',
+            to: `${adminRoot}/order/orderswithclient`,
+            permission: [UserPermission.AddOrder],
+            badge: true,
+          },
+          {
+            icon: 'simple-icon-layers',
+            label: 'طلبات تعديل حالة الشحنة للمندوبين',
+            to: `${adminRoot}/reports/agentOrderstaterequests`,
+            badge: true,
+            permission: [UserPermission.ShowOrder],
+          },
+        ]
+      },
+     
+      {
+        icon: 'iconsminds-box-close',
+        label: 'نقل الطلبات واستلامها ',
+        to: `moveorder`,
+        permission: [UserPermission.ShowOrder],
+        subs: [
+
+          {
+            icon: 'iconsminds-box-close',
+            label: 'نقل الطلبات الى مندوب آخر',
+            to: `${adminRoot}/reports/changeagentbyorders`,
+            permission: [UserPermission.ShowOrder],
+          },
+          {
+            icon: 'iconsminds-box-close',
+            label: 'نقل الطلبات الى مندوب آخر بواسطة الكود',
+            to: `${adminRoot}/order/moveOrdersToAgentByCode`,
+            permission: [UserPermission.ShowOrder],
+          },
+          {
+            icon: 'iconsminds-box-close',
+            label: 'نقل الطلبات الى الفرع التالي',
+            to: `${adminRoot}/order/transferToSecondBranch`,
+            permission: [UserPermission.ShowOrder],
+          },
+          {
+            icon: 'iconsminds-box-close',
+            label: 'الشحنات القادمة من فرع آخر',
+            to: `${adminRoot}/order/getOrdersComeToMyBranch`,
+            permission: [UserPermission.ShowOrder],
+          },
+          {
+            icon: 'iconsminds-box-close',
+            label: 'اعادة الطلبات المرتجعة',
+            to: `${adminRoot}/order/GetOrderReturnedToSecondBranch`,
+            permission: [UserPermission.ShowOrder],
+          },
+          {
+            icon: 'iconsminds-box-close',
+            label: 'استلام الطلبات المرتجعة من فرع اخر',
+            to: `${adminRoot}/order/GetOrdersReturnedToMyBranch`,
+            permission: [UserPermission.ShowOrder],
+          },
+          {
+            icon: 'iconsminds-box-close',
+            label: 'الشحنات المرفوضة من قبل الفرع',
+            to: `${adminRoot}/order/getdisapprovedreturnedorderbybranch`,
+            permission: [UserPermission.ShowOrder],
+          },
+          {
+            icon: 'iconsminds-box-close',
+            label: 'استلام حالة الشحنة المستلمة ',
+            to: `${adminRoot}/order/shipmentReceivedByDelivered`,
+            permission: [UserPermission.ReceiptOfTheStatusOfTheDeliveredShipment],
+          },
+          {
+            icon: 'iconsminds-box-close',
+            label: ' استلام حالة الشحنة المستلمة مندوب ',
+            to: `${adminRoot}/order/shipmentReceivedByAgent`,
+            permission: [UserPermission.ReceiptOfTheStatusOfTheDeliveredShipment],
+          },
+          {
+            icon: 'iconsminds-box-close',
+            label: 'استلام حالة الشحنة المرتجعة ',
+            to: `${adminRoot}/order/shipmentReceivedByReturned`,
+            permission: [UserPermission.ReceiptOfTheStatusOfTheReturnedShipment],
+          },
+        ]
+
       },
     ],
   },
@@ -209,7 +200,7 @@ const data: IMenuItem[] = [
         //agent
         icon: 'simple-icon-layers',
         label: 'المندوب',
-        to: `${adminRoot}/reports/ShipmentInStock`,
+        to: `agents`,
         subs: [
           {
             icon: 'simple-icon-layers',
@@ -247,7 +238,7 @@ const data: IMenuItem[] = [
         //client
         icon: 'simple-icon-layers',
         label: 'العميل',
-        to: `${adminRoot}/reports/Shipmentonway`,
+        to: `clients`,
         permission: [UserPermission.ShowReports],
         subs: [
           {
@@ -286,7 +277,7 @@ const data: IMenuItem[] = [
       {
         icon: 'simple-icon-layers',
         label: '   ادارةالصناديق ',
-        to: `${adminRoot}/reports/showtreasury`,
+        to: `manage`,
         permission: [
           UserPermission.TreasuryManagment,
         ],
@@ -461,12 +452,6 @@ const data: IMenuItem[] = [
         icon: 'iconsminds-map2',
         label: 'menu.setting.cities',
         to: `${adminRoot}/setting/cities`,
-        permission: [UserPermission.ShowCountry, UserPermission.AddCountry],
-      },
-      {
-        icon: 'iconsminds-map2',
-        label: 'المدينة الرئيسية',
-        to: `${adminRoot}/setting/maincity`,
         permission: [UserPermission.ShowCountry, UserPermission.AddCountry],
       },
       {

@@ -159,7 +159,4 @@ export class CustomService {
   deletemessage(id): Observable<any> {
     return this.http.post(this.baseUrl + 'api' + '/deleteMessageFromMe/' + id, {});
   }
-  SetMain(api, id) {
-   return this.http.put(this.baseUrl+'api/'+api+"/SetMain/"+id,id)
-  }
 }

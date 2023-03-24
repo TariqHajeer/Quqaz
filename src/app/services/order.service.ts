@@ -21,6 +21,10 @@ export class OrderService {
     let params = this.getHttpPramsFilteredForOrder(filter, paging);
     return this.http.get<any>(this.controler, { params: params });
   }
+  getInStockToTransferWithAgent(filter: OrderFilter, paging: Paging) {
+    let params = this.getHttpPramsFilteredForOrder(filter, paging);
+    return this.http.get<any>(this.controler + "GetInStockToTransferWithAgent", { params: params });
+  }
   WithoutPaging(filter: OrderFilter) {
     let params = this.getHttpPramsFilteredForOrder(filter);
     return this.http.get<any>(this.controler + 'WithoutPaging', {
@@ -130,11 +134,6 @@ export class OrderService {
     return this.http.get<any>(this.controler + 'GetEarnings', {
       params: params,
     });
-  }
-  ShipmentsNotReimbursedToTheClient(clientid) {
-    return this.http.get<any>(
-      this.controler + 'ShipmentsNotReimbursedToTheClient/' + clientid
-    );
   }
   ShortageOfCash(clientId) {
     let params = new HttpParams();
@@ -390,6 +389,7 @@ export class OrderService {
     return p;
   }
   setPaging(params, paging?: Paging): HttpParams {
+    
     if (paging && paging.Page)
       params = params.append('Page', paging.Page);
     if (paging && paging.RowCount)
@@ -440,7 +440,7 @@ export class OrderService {
       params = params.append('CreatedDateRangeFilter.start', String(filter.createdDateRangeFilter.start));
     if (filter.createdDateRangeFilter.end)
       params = params.append('CreatedDateRangeFilter.end', String(filter.createdDateRangeFilter.end));
-    this.setPaging(params, paging);
+    params = this.setPaging(params, paging);
 
     return params;
   }

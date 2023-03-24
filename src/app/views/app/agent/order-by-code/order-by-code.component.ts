@@ -15,6 +15,7 @@ import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed
 import { UserService } from 'src/app/services/user.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AgentOrderService } from 'src/app/services/agent-order.service';
+import orderPlaceds from 'src/app/data/orderPlaced';
 
 
 @Component({
@@ -75,10 +76,8 @@ export class OrderByCodeComponent implements OnInit {
 
  
   GetorderPlace() {
-    this.agentService.orderPlace().subscribe(res => {
-      this.orderPlace = res
+      this.orderPlace = [...orderPlaceds]; 
       this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
-    })
   }
   changeOrderPlaced() {
     if (this.getorders.length != 0) {

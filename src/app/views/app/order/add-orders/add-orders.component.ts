@@ -6,10 +6,7 @@ import orderPlaceds from 'src/app/data/orderPlaced';
 import moenyplaceds from 'src/app/data/moneyPalced';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
-import {
-  CreateOrdersFromEmployee,
-  OrderItem,
-} from 'src/app/Models/order/create-orders-from-employee.model';
+import {CreateOrdersFromEmployee,OrderItem} from 'src/app/Models/order/create-orders-from-employee.model';
 import { OrderType } from 'src/app/Models/OrderTypes/order-type.model';
 import { Region } from 'src/app/Models/Regions/region.model';
 import { User } from 'src/app/Models/user/user.model';
@@ -21,7 +18,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 import IIndex from 'src/app/shared/interfaces/IIndex';
 import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
-
+import { CountryService } from '../../../../services/country.service';
 @Component({
   selector: 'app-add-orders',
   templateUrl: './add-orders.component.html',
@@ -36,7 +33,8 @@ export class AddOrdersComponent implements OnInit {
     public userService: UserService,
     private notifications: NotificationsService,
     public spinner: NgxSpinnerService,
-    private authService: AuthService
+    private authService: AuthService,
+    private countryService: CountryService
   ) { }
 
   Order: CreateOrdersFromEmployee;
@@ -81,7 +79,6 @@ export class AddOrdersComponent implements OnInit {
     this.Getcities();
     this.GetClient();
     this.ActiveAgent();
-    // this.getOrderTypes();
   }
   AddOrder() {
     if (this.tempPhone != '' && this.tempPhone != undefined) {
@@ -130,12 +127,12 @@ export class AddOrdersComponent implements OnInit {
     );
   }
   GetorderPlace() {
-      this.orderPlace = [...orderPlaceds];
-      this.Order.OrderplacedId = this.orderPlace[1].id;
+    this.orderPlace = [...orderPlaceds];
+    this.Order.OrderplacedId = this.orderPlace[1].id;
   }
   GetMoenyPlaced() {
-      this.MoenyPlaced = [...moenyplaceds];
-      this.Order.MoenyPlacedId = this.MoenyPlaced[0].id;
+    this.MoenyPlaced = [...moenyplaceds];
+    this.Order.MoenyPlacedId = this.MoenyPlaced[0].id;
   }
   GetClient() {
     this.clientService.getClients().subscribe((res) => {
@@ -189,8 +186,8 @@ export class AddOrdersComponent implements OnInit {
   changeCountry() {
     this.Region = [];
     this.Order.RegionId = null;
+    this.Order.AgentId = null;
     var city = this.cities.find((c) => c.id == this.Order.CountryId);
-    // if ((city.branchesIds.length > 0 && city.branchesIds[0] == this.userLogin.branche.id)||city.branchesIds.length == 0) {
   if(city.requiredAgent){
     this.disabledAgent = false;
       this.Agents = this.GetAgents.filter(

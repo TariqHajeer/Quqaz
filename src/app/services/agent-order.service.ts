@@ -51,9 +51,6 @@ export class AgentOrderService {
       params = params.append("printNumber", printNumber);
     return this.http.get<any>(this.controler + "Print", { params: params })
   }
-  orderPlace() {
-    return this.http.get<any>(this.controler + "GetOrderPlaced")
-  }
   SetOrderPlaced(orderstate) {
     return this.http.post<any>(this.controler + "SetOrderPlaced", orderstate)
   }

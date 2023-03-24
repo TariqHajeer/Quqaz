@@ -93,7 +93,7 @@
               country.name
               }}</ng-option>
           </ng-select>
-          <div *ngIf="!User.Countries" class="invalid-tooltip">
+          <div *ngIf="User.countries?.length==0" class="invalid-tooltip">
             المدينة حقل مطلوب
           </div>
         </div>

@@ -137,7 +137,6 @@ export class ChangeAgentByOrdersComponent implements OnInit {
     this.paging.allItemsLength = event.length;
     this.paging.RowCount = event.pageSize;
     this.paging.Page = event.pageIndex + 1;
-    //this.allFilter();
   }
   allFilter() {
     if (!this.filtering.AgentId || !this.filtering.CountryId) return;
@@ -148,14 +147,11 @@ export class ChangeAgentByOrdersComponent implements OnInit {
           if (response.data.length == 0) this.noDataFound = true;
           else this.noDataFound = false;
         this.dataSource = new MatTableDataSource(response.data);
-        //this.dataSource.data = this.dataSource.data.filter(d => d.agent.id == this.AgentId)
         this.totalCount = response.total;
       },
       (err) => {}
     );
   }
-  // agent = this.orders.map(o => o.agent)[0]
-  // orderplaced = this.orders.map(o => o.orderplaced)[0]
   moveOrder: {
     NewAgentId: number;
     Ids: number[];

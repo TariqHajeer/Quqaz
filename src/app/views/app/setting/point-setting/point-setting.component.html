@@ -4,9 +4,7 @@
       <h3>ادارة النقاط</h3>
     <div class="row">
         <div class="col-md-3">
-            <label>النقاط</label>
-            <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="PointSetting.Points"
-            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '');">
+            <app-point-input [lable]="'النقاط'" [(value)]="PointSetting.Points"></app-point-input>
         </div>
         <div class="col-md-3">
           <label>المبلغ</label>

@@ -7,10 +7,9 @@ import { UserService } from 'src/app/services/user.service';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { OrderPlacedStateService } from 'src/app/services/order-placed-state.service';
-import { Client } from '../../client/client.model';
-import { ClientService } from '../../client/client.service';
-import { CustomService } from 'src/app/services/custom.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { BranchesService } from 'src/app/services/branches.service';
+import { AuthService } from 'src/app/shared/auth.service';
 @Component({
   selector: 'app-transfer-to-second-branch',
   templateUrl: './transfer-to-second-branch.component.html',
@@ -26,38 +25,32 @@ export class TransferToSecondBranchComponent implements OnInit {
   getorders: any[] = []
   @Input() totalCount: number;
   selection = new SelectionModel<any>(true, []);
-  countries: any[] = []
-  clients: Client[] = []
-  cityapi: string = 'Country';
   countSelectOrder: number = 0;
+  branches: any[] = [];
   constructor(
     public orderservice: OrderService,
     public userService: UserService,
     private notifications: NotificationsService,
     public route: Router,
     public orderplacedstate: OrderPlacedStateService,
-    private clientService: ClientService,
-    private customerService: CustomService,
     public spinner: NgxSpinnerService,
+    private branchesService: BranchesService,
+    private authService: AuthService,
+
   ) { }
 
   ngOnInit(): void {
-    this.GetClient()
-    this.getCities()
-    this.getAllOrders();
+    this.getBranches();
   }
 
-  selectAll: boolean = true;
+  selectAll: boolean = false;
   ordersIds = [];
   unSelectIds = [];
-  isAllSelected() {
-    return this.selectAll = !this.selectAll;
-  }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.ordersIds = [];
     this.unSelectIds = [];
-    if (this.isAllSelected()) {
+    if (!this.selectAll) {
       this.selection.clear();
     }
     else {
@@ -67,7 +60,7 @@ export class TransferToSecondBranchComponent implements OnInit {
     }
   }
   checkboxLabelAll(): string {
-    return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    return `${this.selectAll ? 'select' : 'deselect'} all`;
   }
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: any): string {
@@ -76,13 +69,15 @@ export class TransferToSecondBranchComponent implements OnInit {
   }
   checkboxId(row) {
     if (this.selection.isSelected(row)) {
-      if (this.selectAll) {
+      if (!this.selectAll) {
         this.unSelectIds = [];
         if (this.ordersIds.filter(d => d == row.id).length > 0)
           return
         else {
           this.ordersIds.push(row.id);
           this.countSelectOrder = this.ordersIds.length;
+          if (this.countSelectOrder == this.totalCount)
+            this.selectAll = true;
         }
       }
       else {
@@ -92,13 +87,14 @@ export class TransferToSecondBranchComponent implements OnInit {
       }
     }
     if (!this.selection.isSelected(row)) {
-      if (!this.selectAll) {
+      if (this.selectAll) {
         if (this.unSelectIds.filter(d => d == row.id).length > 0)
           return
         else {
           this.unSelectIds.push(row.id);
           this.ordersIds = [];
           this.countSelectOrder = this.totalCount - this.unSelectIds.length;
+          this.selectAll = false;
         }
       }
       else {
@@ -108,17 +104,12 @@ export class TransferToSecondBranchComponent implements OnInit {
       }
     }
   }
-
-  GetClient() {
-    this.clientService.getClients().subscribe(res => {
-      this.clients = res
+  getBranches() {
+    this.branchesService.Get().subscribe(res => {
+      this.branches = res?.filter(data => data.id != this.authService.getUser().branche.id);
     })
   }
-  getCities() {
-    this.customerService.getAll(this.cityapi).subscribe((res) => {
-      this.countries = res;
-    });
-  }
+
   switchPage(event: PageEvent) {
     this.orderservice.selectOrder.Paging.allItemsLength = event.length;
     this.orderservice.selectOrder.Paging.RowCount = event.pageSize;
@@ -126,9 +117,14 @@ export class TransferToSecondBranchComponent implements OnInit {
     this.getAllOrders();
   }
   filtering() {
-    this.selection.clear();
-    this.isAllSelected();
-    this.getAllOrders();
+    if (this.orderservice.selectOrder.OrderFilter.nextBranchId) {
+      this.selection.clear();
+      this.getAllOrders();
+    }
+    else {
+      this.dataSource = new MatTableDataSource([]);
+      this.selection = new SelectionModel<any>(true, []);
+    }
   }
   getAllOrders() {
     this.spinner.show();
@@ -145,7 +141,8 @@ export class TransferToSecondBranchComponent implements OnInit {
       this.spinner.hide();
       this.totalCount = response.total
       this.dataSource.data.forEach(row => {
-        if (!this.selectAll || (this.selectAll && this.ordersIds.find(d => d == row.id))) { this.selection.select(row) }
+        if (this.selectAll ||
+          (!this.selectAll && this.ordersIds.find(d => d == row.id))) { this.selection.select(row) }
       });
     },
       err => {
@@ -153,10 +150,11 @@ export class TransferToSecondBranchComponent implements OnInit {
       });
   }
   moveOrders() {
-    this.orderservice.selectOrder.IsSelectedAll = !this.selectAll;
+    this.orderservice.selectOrder.IsSelectedAll = this.selectAll;
     this.orderservice.selectOrder.SelectedIds = this.ordersIds;
     this.orderservice.selectOrder.ExceptIds = this.unSelectIds;
-    if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedIds.length == 0 && this.selectAll)) {
+    this.orderservice.selectOrder.OrderFilter.nextBranchName=this.branches.find(b=>b.id==this.orderservice.selectOrder.OrderFilter.nextBranchId)?.name;
+    if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedIds.length == 0 && !this.selectAll)) {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }

@@ -105,12 +105,9 @@
                     </td>
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.DeliveryCost}}</h4>
-                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                            *ngIf="order.CanEdit" style="width: 100px;" [(ngModel)]="EditOrder.DeliveryCost">
-
+                        <app-delivery-cost-input *ngIf="order.CanEdit" [lable]="''"
+                            [(value)]="EditOrder.DeliveryCost"></app-delivery-cost-input>
                     </td>
-
 
 
                     <td (click)="Edit(order)">
@@ -219,17 +216,16 @@
 
                     </td>
                     <td>
-                        <input (keydown.enter)="changed(disabledAddAgent?4:5)" type="text" class="form-control"
-                            [ngModelOptions]="{standalone: true}"
-                            oninput="this.value = this.value.replace(/[^0-9.]-/g, '').replace(/(\..*)\./g, '$1');"
-                            style="width: 100px;" [(ngModel)]="Order.Cost">
-
+                        <div style="width: 100px;">
+                            <app-custom-input [type]="'number'" [(value)]="Order.Cost" [lable]="''" [name]="'adcost'"
+                                (onEnter)="changed(disabledAddAgent?4:5)"></app-custom-input>
+                        </div>
                     </td>
                     <td>
-                        <input (keydown.enter)="changed(disabledAddAgent?5:6)" type="text" class="form-control"
-                            [ngModelOptions]="{standalone: true}"
-                            oninput="this.value = this.value.replace(/[^0-9.]-/g, '').replace(/(\..*)\./g, '$1');"
-                            style="width: 100px;" [(ngModel)]="Order.DeliveryCost">
+                        <div class="w-100px">
+                            <app-delivery-cost-input [lable]="''" (onEnter)="changed(disabledAddAgent?5:6)"
+                                [(value)]="Order.DeliveryCost"></app-delivery-cost-input>
+                        </div>
                     </td>
 
 

@@ -1,6 +1,4 @@
-import { formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -9,13 +7,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { OrderState } from 'src/app/Models/order/order.model';
-import { Paging } from 'src/app/Models/paging';
-import { User } from 'src/app/Models/user/user.model';
 import { OrderPlacedStateService, GetOrder } from 'src/app/services/order-placed-state.service';
-import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
 import { AgentOrderService } from 'src/app/services/agent-order.service';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
+import orderPlaceds from 'src/app/data/orderPlaced';
 
 @Component({
   selector: 'app-orders-on-way',
@@ -53,11 +49,9 @@ export class OrdersOnWayComponent implements OnInit {
     this.GetorderPlace();
     this.allFilter()
   }
-  GetorderPlace() {
-    this.orderservice.orderPlace().subscribe(res => {
-      this.orderPlace = res
+  GetorderPlace() { 
+      this.orderPlace = [...orderPlaceds];
       this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
-    })
   }
   selection = new SelectionModel<any>(true, []);
 
@@ -110,16 +104,13 @@ export class OrdersOnWayComponent implements OnInit {
 
  
   allFilter() {
-    // console.log(this.filtering)
     this.orderservice.InWay().subscribe(response => {
-      // console.log(response)
       this.getorders = []
       this.temporder=response
       if (this.temporder)
         if (this.temporder.length == 0)
           this.noDataFound = true
         else this.noDataFound = false
-        // console.log(response)
         this.temporder.forEach(element => {
         this.getorder.order = element
         this.getorder.OrderPlaced = this.orderPlace
@@ -129,11 +120,7 @@ export class OrdersOnWayComponent implements OnInit {
         this.getorders.push(this.getorder)
         this.getorder = new GetOrder()
       });
-      // this.temporder = [...this.getorders.map(o=>o.order)]
-      // this.total()
-      // console.log(this.getorders)
       this.dataSource = new MatTableDataSource(this.getorders)
-      // this.getorders = response
       this.totalCount = response.length
     },
       err => {
@@ -178,10 +165,7 @@ export class OrdersOnWayComponent implements OnInit {
       this.orderstate = new OrderState
     }
     this.spinner.show();
-    // console.log(this.orderstates)
-    // console.log(this.orders)
     this.orderservice.SetOrderPlaced(this.orderstates).subscribe(res => {
-      // this.allFilter()
       this.spinner.hide()
       this.orderstates = []
       this.orders.forEach(o=>{
@@ -196,20 +180,5 @@ export class OrdersOnWayComponent implements OnInit {
   }
   totalCost: number = 0
   totalDelaveryCost: number = 0
-  endTotal: number = 0
-  // total() {
-  //   this.totalCost = 0
-  //   this.totalDelaveryCost = 0
-  //   this.endTotal = 0
-  //   this.getorders.forEach(d => {
-  //     if (d.order.orderplaced.id == 4 || d.order.orderplaced.id == 6)
-  //       this.totalCost += d.order.cost
-  //     if (d.order.orderplaced.id == 4 || d.order.orderplaced.id == 6 || d.order.orderplaced.id == 7)
-  //       this.totalDelaveryCost += d.order.deliveryCost
-  //   })
-  //   this.endTotal = this.totalCost - this.totalDelaveryCost
-  // }
-
-  
-  
+  endTotal: number = 0  
 }

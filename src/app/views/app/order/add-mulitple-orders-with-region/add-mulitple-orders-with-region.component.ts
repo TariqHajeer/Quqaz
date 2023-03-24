@@ -10,7 +10,6 @@ import { UserService } from 'src/app/services/user.service';
 import { OrderService } from 'src/app/services/order.service';
 import { ClientService } from '../../client/client.service';
 import { City } from 'src/app/Models/Cities/city.Model';
-import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { OrderItem } from 'src/app/Models/order/create-orders-from-employee.model';
 import { CreateMultipleOrder } from 'src/app/Models/order/create-multiple-order';
@@ -118,10 +117,7 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
 
   changeCountry() {
     var city = this.cities.find((c) => c.id == this.Order.CountryId);
-    if (
-      (city.branchesIds.length > 0 &&
-        city.branchesIds[0] == this.userLogin.branche.id) || city.branchesIds.length == 0
-    ) {
+    if (city.requiredAgent) {
       this.disabledAddAgent = false;
       this.Agents = this.GetAgents.filter(
         (a) =>
@@ -142,10 +138,7 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
   }
   changeCountryEdit() {
     var city = this.cities.find((c) => c.id == this.EditOrder.CountryId);
-    if (
-      (city.branchesIds.length > 0 &&
-        city.branchesIds[0] == this.userLogin.branche.id) || city.branchesIds.length == 0
-    ) {
+    if (city.requiredAgent) {
       this.disabledEditAgent = false;
       this.Agents = this.GetAgents.filter(
         (a) =>
@@ -236,7 +229,7 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
       !this.Order.ClientId ||
       !this.Order.CountryId ||
       !this.Order.RecipientPhones ||
-      !this.Order.AgentId ||
+      // !this.Order.AgentId ||
       this.showMessageCode
     ) {
       this.submitted = true;
@@ -244,17 +237,17 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
     } else this.submitted = false;
     if (this.checkLengthPhoneNumber(this.Order.RecipientPhones)) return;
     var country = this.cities.find((c) => c.id == this.Order.CountryId);
-    this.Order.CountryName = country.name;
+    this.Order.CountryName = country?.name;
     var region = this.regions.find((c) => c.id == this.Order.RegionId);
-    this.Order.RegionName = region.name;
+    this.Order.RegionName = region?.name;
     var orderplace = this.orderPlace.find(
       (c) => c.id == this.Order.OrderplacedId
     );
-    this.Order.OrderplacedName = orderplace.name;
+    this.Order.OrderplacedName = orderplace?.name;
     var client = this.clients.find((c) => c.id == this.Order.ClientId);
-    this.Order.ClientName = client.name;
+    this.Order.ClientName = client?.name;
     var agent = this.Agents.find((c) => c.id == this.Order.AgentId);
-    this.Order.AgentName = agent.name;
+    this.Order.AgentName = agent?.name;
     this.Order.Cost = this.Order.Cost * 1;
     this.Orders.push(this.Order);
     localStorage.setItem('refrshorder', JSON.stringify(this.Orders));
@@ -274,6 +267,11 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
     order.CanEdit = true;
     this.tempEdit = Object.assign({}, order);
     this.EditOrder = order;
+    var city = this.cities.find((c) => c.id == this.EditOrder.CountryId);
+    if (city.requiredAgent)
+      this.disabledEditAgent = false;
+    else
+      this.disabledEditAgent = true;
     this.Agents = this.GetAgents.filter(
       (a) =>
         a.countries
@@ -296,22 +294,20 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
       return;
     this.EditOrder.CanEdit = false;
     var country = this.cities.find((c) => c.id == this.EditOrder.CountryId);
-    this.EditOrder.CountryName = country.name;
-    var region = this.regions.find((c) => c.id == this.EditOrder.RegionId);
-    this.EditOrder.RecipientName = region.name;
+    this.EditOrder.CountryName = country?.name;
+    var region = this.regions.find((c) => c.id == this.EditOrder?.RegionId);
+    this.EditOrder.RecipientName = region?.name;
     var orderplace = this.orderPlace.find(
       (c) => c.id == this.EditOrder.OrderplacedId
     );
-    this.EditOrder.OrderplacedName = orderplace.name;
+    this.EditOrder.OrderplacedName = orderplace?.name;
     var client = this.clients.find((c) => c.id == this.EditOrder.ClientId);
-    this.EditOrder.ClientName = client.name;
-    var agent = this.Agents.find((c) => c.id == this.EditOrder.AgentId);
+    this.EditOrder.ClientName = client?.name;
     this.EditOrder.DeliveryCost = this.EditOrder.DeliveryCost * 1;
     this.EditOrder.Cost = this.EditOrder.Cost * 1;
     order = Object.assign(order, this.EditOrder);
-    localStorage.setItem('refrshorder', JSON.stringify(this.Orders));
+    localStorage.setItem('refrshorder', JSON.stringify(this.Orders));    
   }
-
   CansleEdit(order: CreateMultipleOrder) {
     this.tempEdit.CanEdit = false;
     order.showEditMessageCode = false;
@@ -360,8 +356,8 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
       this.onEnter();
       return;
     }
-    const inputs = this.inputEl.nativeElement.querySelectorAll('input');
-    if (inputs.length > index + 1) {
+    const inputs = this.inputEl?.nativeElement?.querySelectorAll('input');
+    if (inputs?.length > index + 1) {
       inputs[index + 1].focus();
     }
   }

@@ -87,6 +87,7 @@ export class ViewOrdersComponent implements OnInit {
       'recipientName',
       'recipientPhones',
       'client',
+      'CurrentBranch',
       'clientPrintNumber',
       'country',
       'region',
