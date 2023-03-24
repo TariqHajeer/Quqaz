@@ -21,4 +21,5 @@ export class TransferToSecondBranchDto {
     }
     selectedOrdersWithFitlerDto: SelectOrder;
     DriverName: string;
+    DriverId: any;
 }

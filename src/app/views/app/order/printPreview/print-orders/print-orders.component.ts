@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { OrderService } from 'src/app/services/order.service';
+import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/shared/auth.service';
 import { environment } from 'src/environments/environment';
 @Component({
@@ -21,16 +23,26 @@ export class PrintOrdersComponent implements OnInit {
   printNumber: number;
   showSeeMore: boolean;
   showPrintBtn: boolean;
-
+  drivers: NameAndIdDto[] = [];
+  driver: any;
   constructor(public orderservice: OrderService,
     private notifications: NotificationsService,
     private authService: AuthService,
     private router: Router,
-    public spinner: NgxSpinnerService,) { }
+    public spinner: NgxSpinnerService,
+    private userService: UserService) { }
 
   ngOnInit(): void {
-    this.getOrders();    
+    this.getDrivers();
+    this.getOrders();
   }
+  getDrivers() {
+    this.userService.Driver().subscribe(res => {
+      this.drivers = res;
+    })
+  }
+  addDriver = (term) => ({ id: term, name: term });
+
   getOrders() {
     if (this.orderservice.selectOrder.SelectedIds.length == 0 && this.orderservice.selectOrder.IsSelectedAll == false)
       this.router.navigate(['/app/order/transferToSecondBranch']);
@@ -54,6 +66,18 @@ export class PrintOrdersComponent implements OnInit {
     this.getOrders();
   }
   moveOrders() {
+    if (!this.driver.id && !this.driver.name) {
+      this.notifications.success('error', 'اسم السائق حقل مطلوب', NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
+      return
+    }
+    if (this.driver.id == this.driver.name) {
+      this.orderservice.transferToSecondBranchDto.DriverName = this.driver.name;
+      this.orderservice.transferToSecondBranchDto.DriverId = null;
+    } else {
+      this.orderservice.transferToSecondBranchDto.DriverId = this.driver.id;
+      this.orderservice.transferToSecondBranchDto.DriverName = null;
+    }
+   
     this.spinner.show();
     this.orderservice.TransferToSecondBranch().subscribe(res => {
       this.spinner.hide();

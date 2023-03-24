@@ -11,22 +11,22 @@ import { User } from '../Models/user/user.model';
 })
 export class UserService {
   controler = environment.baseUrl + "api/User/";
-  public users:User[]=[];
+  public users: User[] = [];
   constructor(public http: HttpClient) { }
-  GetAll() :void {
-    this.http.get<any>(this.controler).subscribe(res=>{
+  GetAll(): void {
+    this.http.get<any>(this.controler).subscribe(res => {
       let temp = res as User[];
-      for(let i =0 ; i<temp.length;i++){
-        if(temp[i].canWorkAsAgent){
-          temp[i].employeeType="مندوب";
-        }else{
-          temp[i].employeeType="موظف";
+      for (let i = 0; i < temp.length; i++) {
+        if (temp[i].canWorkAsAgent) {
+          temp[i].employeeType = "مندوب";
+        } else {
+          temp[i].employeeType = "موظف";
         }
       }
       this.users = res;
 
-      this.users.forEach(e=>{
-        e.phonesAsString = e.phones.map(c=>c.phone).join(',');
+      this.users.forEach(e => {
+        e.phonesAsString = e.phones.map(c => c.phone).join(',');
       })
     })
   }
@@ -39,7 +39,7 @@ export class UserService {
       )
     )
   }
-  ActiveAgent(){
+  ActiveAgent() {
     return this.http.get<any>(this.controler + "ActiveAgent")
   }
   Creat(item: CreateUser) {
@@ -49,23 +49,26 @@ export class UserService {
     return this.http.delete(this.controler + id)
   }
   Update(item) {
-    return this.http.patch(this.controler,item)
+    return this.http.patch(this.controler, item)
   }
   AddPhone(item) {
     return this.http.put(this.controler + "AddPhone", item)
   }
   deletePhone(id) {
-    return this.http.put(this.controler + "deletePhone/"+id, id)
+    return this.http.put(this.controler + "deletePhone/" + id, id)
 
   }
-  AddToGroup(userid,groupid) {
-    var  formData=new FormData();
-    formData.append("groupid",groupid);
-    return this.http.put(this.controler + "AddToGroup/"+userid,formData )
+  AddToGroup(userid, groupid) {
+    var formData = new FormData();
+    formData.append("groupid", groupid);
+    return this.http.put(this.controler + "AddToGroup/" + userid, formData)
   }
-  deleteGroup(userid,groupid) {
-    var  formData=new FormData();
-    formData.append("groupid",groupid);
-    return this.http.put(this.controler + "deleteGroup/"+userid,formData )
+  deleteGroup(userid, groupid) {
+    var formData = new FormData();
+    formData.append("groupid", groupid);
+    return this.http.put(this.controler + "deleteGroup/" + userid, formData)
+  }
+  Driver() {
+    return this.http.get<any>(this.controler + "Driver");
   }
 }
