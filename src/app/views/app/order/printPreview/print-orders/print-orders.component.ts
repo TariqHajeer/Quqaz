@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
@@ -28,8 +27,7 @@ export class PrintOrdersComponent implements OnInit {
     private notifications: NotificationsService,
     private authService: AuthService,
     private router: Router,
-    public spinner: NgxSpinnerService,
-    private userService: UserService) { }
+    public spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.getOrders();
