@@ -71,11 +71,9 @@ export class PrintOrdersComponent implements OnInit {
       return
     }
     if (this.driver.id == this.driver.name) {
-      this.orderservice.transferToSecondBranchDto.DriverName = this.driver.name;
-      this.orderservice.transferToSecondBranchDto.DriverId = null;
+      this.orderservice.transferToSecondBranchDto.Driver.driverName = this.driver.name;
     } else {
-      this.orderservice.transferToSecondBranchDto.DriverId = this.driver.id;
-      this.orderservice.transferToSecondBranchDto.DriverName = null;
+      this.orderservice.transferToSecondBranchDto.Driver.driverId = this.driver.id;
     }
    
     this.spinner.show();
