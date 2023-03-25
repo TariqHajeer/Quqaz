@@ -70,16 +70,12 @@ export class PrintOrdersComponent implements OnInit {
     this.getOrders();
   }
   moveOrders() {
-    console.log('driver', this.driver);
-    return;
-    if (!this.driver.id && !this.driver.name) {
+    if (!this.driver) {
       this.notifications.success('error', 'اسم السائق حقل مطلوب', NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       return
     }
     this.orderservice.transferToSecondBranchDto.Driver.driverName = this.driver.name;
     this.orderservice.transferToSecondBranchDto.Driver.driverId = this.driver.id;
-
-
     this.spinner.show();
     this.orderservice.TransferToSecondBranch().subscribe(res => {
       this.spinner.hide();
