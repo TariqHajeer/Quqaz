@@ -14,6 +14,14 @@
               [searchable]="true" [clearable]="true" [(ngModel)]="CreateGroup.PrivilegesId">
               <ng-option *ngFor="let Privilege of Privileges" [value]="Privilege.id">{{Privilege.name}}</ng-option>
             </ng-select>
+            <!-- 
+                <div class="col-md-3" *ngFor="let Privilege of Privileges;index as i">
+              <div class="custom-control custom-switch m-2">
+                <input type="checkbox" class="custom-control-input" [id]="i" [value]="Privilege.id">
+                <label class="custom-control-label" [for]="i">{{Privilege.name}}</label>
+              </div>
+            </div>
+             -->
           </div>
           <!--edit form-->
           <div class="col-3" [hidden]="hiddenbtnSave">

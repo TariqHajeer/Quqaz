@@ -24,10 +24,8 @@
          
       
         <div class="col-md-3">
-            <label>النقاط</label>
-          <input type="text" class="form-control"oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..-*)\./g, '$1');"
-          [ngModelOptions]="{standalone: true}" [(ngModel)]="GiveOrDiscountPointsDto.Points">
-        </div>
+          <app-point-input [lable]="'النقاط'" [(value)]="GiveOrDiscountPointsDto.Points"></app-point-input>
+        </div> 
       
         <div class="col-md-3" style="padding-top:15px;">
           <button (click)="GiveOrDiscountPoints()" class="btn  btn-primary"> 

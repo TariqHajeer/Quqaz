@@ -6,7 +6,6 @@ import { User } from 'firebase';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MoneyPalcedEnum } from 'src/app/Models/Enums/MoneyPalcedEnum';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
-import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { OrderState } from 'src/app/Models/order/order.model';
 import { Paging } from 'src/app/Models/paging';
@@ -14,6 +13,9 @@ import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
 import { SelectionModel } from '@angular/cdk/collections';
+import IIndex from 'src/app/shared/interfaces/IIndex';
+import moneyPlaceds from 'src/app/data/moneyPalced';
+import orderPlaceds from 'src/app/data/orderPlaced';
 
 
 @Component({
@@ -26,6 +28,7 @@ export class ShipmentReceivedByReturnedComponent {
     'index',
     'code',
     'client',
+    'agent',
     'country',
     'cost',
     'isClientDiliverdMoney',
@@ -45,7 +48,7 @@ export class ShipmentReceivedByReturnedComponent {
   getorder: GetOrder = new GetOrder();
   statu;
   MoenyPlacedId;
-  MoenyPlaced: any[] = [];
+  MoenyPlaced: IIndex[] = [];
   getMoenyPlaced: any[] = [];
   OrderplacedId;
   constructor(
@@ -58,8 +61,7 @@ export class ShipmentReceivedByReturnedComponent {
   ) { }
   AgentId;
 
-  orderPlace: NameAndIdDto[] = [];
-  orderPleacedFilters: NameAndIdDto[] = [];
+  orderPlace: IIndex[] = [];
   Agents: User[] = [];
   paging: Paging;
   filtering: OrderFilter;
@@ -86,15 +88,11 @@ export class ShipmentReceivedByReturnedComponent {
   }
 
   GetMoenyPlaced() {
-    this.orderservice.MoenyPlaced().subscribe((res) => {
-      this.MoenyPlaced = res;
-      // this.getMoenyPlaced = [...res];
-    });
+      this.MoenyPlaced =  [...moneyPlaceds];
+      this.getMoenyPlaced = [...moneyPlaceds];
   }
   getmony() {
-    this.orderservice.MoenyPlaced().subscribe((res) => {
-      this.MoenyPlaced = [...res];
-    });
+      this.MoenyPlaced = [...moneyPlaceds];
   }
   changeMoenyPlaced() {
     if (this.getorders.length != 0) {
@@ -128,15 +126,13 @@ export class ShipmentReceivedByReturnedComponent {
     }
   }
   GetorderPlace() {
-    this.orderservice.orderPlace().subscribe((res) => {
-      this.orderPlace = res;
-      this.orderPlace = this.orderPleacedFilters = this.orderPlace.filter(
+      this.orderPlace =  [...orderPlaceds];
+      this.orderPlace =  this.orderPlace.filter(
         (o) =>
           o.id == OrderplacedEnum.CompletelyReturned ||
           o.id == OrderplacedEnum.Unacceptable ||
           o.id == OrderplacedEnum.Delayed
       );
-    });
   }
   changeOrderPlaced() {
     if (this.getorders.length != 0) {

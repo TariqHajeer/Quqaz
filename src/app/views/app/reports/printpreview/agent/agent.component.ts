@@ -107,7 +107,7 @@ export class AgentComponent implements OnInit {
           NotificationType.Success,
           { theClass: 'success', timeOut: 6000, showProgressBar: false }
         );
-        this.printnumber = res.data;
+        this.printnumber = res;
         if (this.printnumber) this.showPrintnumber = true;
         else this.showPrintnumber = false;
         this.showPrintbtn = true;

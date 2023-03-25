@@ -5,15 +5,18 @@ import { OrderService } from 'src/app/services/order.service';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/Models/user/user.model';
-import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { Paging } from 'src/app/Models/paging';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { OrderState } from 'src/app/Models/order/order.model';
 import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed-state.service';
-import { DatePipe, formatDate } from '@angular/common';
+import { formatDate } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
+import orderPlaceds from 'src/app/data/orderPlaced';
+import IIndex from 'src/app/shared/interfaces/IIndex';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
+import moneyPlaceds from 'src/app/data/moneyPalced';
 @Component({
   selector: 'app-shipments-on-way',
   templateUrl: './shipments-on-way.component.html',
@@ -27,8 +30,8 @@ export class ShipmentsOnWayComponent implements OnInit {
   ids: any[] = []
   orders: any[] = []
   statu
-  MoenyPlacedId
-  MoenyPlaced: any[] = []
+  MoenyPlacedId;
+  MoenyPlaced: IIndex[]= [...moneyPlaceds];
   constructor(
     private orderservice: OrderService,
     public userService: UserService,
@@ -40,7 +43,7 @@ export class ShipmentsOnWayComponent implements OnInit {
   ) { }
   AgentId
   OrderplacedId
-  orderPlace: NameAndIdDto[] = []
+  orderPlace: IIndex[] = []
   Agents: User[] = []
   paging: Paging
   filtering: OrderFilter
@@ -54,10 +57,10 @@ export class ShipmentsOnWayComponent implements OnInit {
   orderstates: OrderState[] = []
   orderstate: OrderState = new OrderState()
   @Input() totalCount: number;
+  getMoenyPlaced: IIndex[]=[...moneyPlaceds];
   ngOnInit(): void {
     this.getAgent()
-    this.GetMoenyPlaced()
-    this.GetorderPlace()
+    this.orderplaced = [...orderPlaceds.filter(c => c.id != OrderplacedEnum.Client && c.id != OrderplacedEnum.Store)];
     this.paging = new Paging
     this.filtering = new OrderFilter
     localStorage.removeItem('printordersagent')
@@ -73,8 +76,8 @@ export class ShipmentsOnWayComponent implements OnInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.orders=[]
-    this.ids=[]
+    this.orders = []
+    this.ids = []
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => { this.selection.select(row) });
@@ -96,15 +99,15 @@ export class ShipmentsOnWayComponent implements OnInit {
       if (this.ids.filter(d => d == row.order.id).length > 0)
         return
       else {
-     
+
         this.ids.push(row.order.id)
         this.orders.push(row.order)
         localStorage.setItem('printordersagent', JSON.stringify(this.orders))
         if (this.OrderplacedId) {
           row.order.orderplaced = this.OrderplacedId
-          this.ChangeOrderplacedId(row,this.orders.indexOf(row))
+          this.ChangeOrderplacedId(row, this.orders.indexOf(row))
         }
-         if (this.MoenyPlacedId) {
+        if (this.MoenyPlacedId) {
           row.order.monePlaced = this.MoenyPlacedId
           if (this.OrderplacedId.id == 4 && this.MoenyPlacedId.id == 4) {
             if (row.order.isClientDiliverdMoney) {
@@ -115,49 +118,13 @@ export class ShipmentsOnWayComponent implements OnInit {
             }
           }
         }
-        // this.client = this.orders.map(o => o.order.client)[0]
-        //this.orderplaced = this.orders.map(o => o.order.orderplaced)[0]
       }
     if (!this.selection.isSelected(row)) {
       this.ids = this.ids.filter(i => i != row.order.id)
       this.orders = this.orders.filter(o => o != row.order)
     }
   }
-  GetMoenyPlaced() {
-    this.orderservice.MoenyPlaced().subscribe(res => {
-      this.MoenyPlaced = res
-      this.getMoenyPlaced = [...res]
 
-      // this.MoenyPlaced = this.MoenyPlaced.filter(o => o.id != 4)
-    })
-  }
-  GetorderPlace() {
-    this.orderservice.orderPlace().subscribe(res => {
-      this.orderPlace = res
-      this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
-    })
-  }
-  changeMoenyPlaced() {
-    // if (this.getorders.length != 0) {
-    //   this.getorders.forEach(o => {
-    //     o.order.monePlaced = this.MoenyPlaced.find(m => m.id == this.MoenyPlacedId.id)
-    //     if (this.OrderplacedId.id == 4 && this.MoenyPlacedId.id == 4) {
-    //       if (o.order.isClientDiliverdMoney) {
-    //         o.order.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
-    //       }
-    //       else {
-    //         o.order.monePlaced = this.MoenyPlaced.find(m => m.id == 3)
-    //       }
-    //     }
-
-
-    //   })
-
-    // }
-    this.total()
-  }
-
-  getMoenyPlaced
   changeOrderPlaced() {
     this.getMoenyPlaced = [...this.MoenyPlaced]
     this.MoenyPlacedId = null
@@ -179,17 +146,17 @@ export class ShipmentsOnWayComponent implements OnInit {
       console.log(res)
     })
   }
-  countriesAgent:[]=[]
+  countriesAgent: [] = []
   ChangeAgentId() {
     if (this.Agent) {
-      this.countriesAgent=[]
-      this.filtering.AgentId=this.Agent.id
-      this.countriesAgent=this.Agent.countries
-      this.filtering.OrderplacedId = 3
-      if( this.filtering.AgentPrintStartDate )
-      this.filtering.AgentPrintStartDate =  formatDate(this.filtering.AgentPrintStartDate , 'MM/dd/yyyy', 'en');
-      if( this.filtering.AgentPrintEndDate )
-      this.filtering.AgentPrintEndDate =  formatDate(this.filtering.AgentPrintEndDate , 'MM/dd/yyyy', 'en');
+      this.countriesAgent = []
+      this.filtering.AgentId = this.Agent.id
+      this.countriesAgent = this.Agent.countries
+      this.filtering.Orderplaced = OrderplacedEnum.Way;
+      if (this.filtering.AgentPrintStartDate)
+        this.filtering.AgentPrintStartDate = formatDate(this.filtering.AgentPrintStartDate, 'MM/dd/yyyy', 'en');
+      if (this.filtering.AgentPrintEndDate)
+        this.filtering.AgentPrintEndDate = formatDate(this.filtering.AgentPrintEndDate, 'MM/dd/yyyy', 'en');
       this.allFilter();
     }
   }
@@ -229,7 +196,6 @@ export class ShipmentsOnWayComponent implements OnInit {
       })
       this.getorders = [...this.getorders.filter(o => o.order.date >= this.todate &&
         o.order.date <= this.fordate)]
-      // console.log(this.getorders)
       this.dataSource = new MatTableDataSource(this.getorders)
     }
 
@@ -244,7 +210,6 @@ export class ShipmentsOnWayComponent implements OnInit {
   }
 
   allFilter() {
-    // console.log(this.filtering)
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
       this.getorders = []
       if (response)
@@ -279,9 +244,9 @@ export class ShipmentsOnWayComponent implements OnInit {
   saveEdit() {
     for (let i = 0; i < this.orders.length; i++) {
       this.orderstate.Id = this.orders[i].id
-      this.orderstate.Cost = this.orders[i].cost*1
-      this.orderstate.DeliveryCost = this.orders[i].deliveryCost*1
-      this.orderstate.AgentCost = this.orders[i].agentCost*1
+      this.orderstate.Cost = this.orders[i].cost * 1
+      this.orderstate.DeliveryCost = this.orders[i].deliveryCost * 1
+      this.orderstate.AgentCost = this.orders[i].agentCost * 1
       this.orderstate.Note = this.orders[i].note
       this.orderstate.MoenyPlacedId = this.orders[i].monePlaced.id
       this.orderstate.OrderplacedId = this.orders[i].orderplaced.id
@@ -303,8 +268,7 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    var agent=this.Agents.find(c => c.id == this.filtering.AgentId)
-    // console.log(agent)
+    var agent = this.Agents.find(c => c.id == this.filtering.AgentId)
     localStorage.setItem('printagent', JSON.stringify(agent))
     localStorage.setItem('printordersagent', JSON.stringify(this.orders))
     this.route.navigate(['app/reports/printagentpreview'])

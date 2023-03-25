@@ -143,9 +143,6 @@
           {{ phones }}
         </div>
         <br />
-        <!--   <div *ngIf="orderplaced!=null||orderplaced!=undefined">
-                        {{orderplaced.name}}
-                    </div>-->
         <svg
           style="color: rgb(153, 1, 1)"
           xmlns="http://www.w3.org/2000/svg"
@@ -284,7 +281,7 @@
               text-align: center;
             "
           >
-            {{ order.clientName ? order.clientName : "-" }}
+            {{ order.clientName ? order.clientName : "-" }}/{{order.brandName}}
           </td>
           <td
             style="

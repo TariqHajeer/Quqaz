@@ -10,6 +10,7 @@ import { Paging } from 'src/app/Models/paging';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 
 
 @Component({
@@ -86,18 +87,9 @@ export class ShipmentInStockComponent implements OnInit {
     localStorage.removeItem('printordersagent')
     localStorage.removeItem('printagent')
     this.getAgent()
-    //this.GetorderPlace()
     this.paging = new Paging
     this.filtering = new OrderFilter
   }
-
-  // GetorderPlace() {
-  //   this.orderservice.orderPlace().subscribe(res => {
-  //     this.orderPlace = res
-  //     this.orderPlace = this.orderPlace.filter(o => o.id == 3 || o.id == 2)
-
-  //   })
-  // }
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
       this.Agents = res
@@ -119,17 +111,16 @@ export class ShipmentInStockComponent implements OnInit {
     this.paging.allItemsLength = event.length
     this.paging.RowCount = event.pageSize
     this.paging.Page = event.pageIndex + 1
-    //this.allFilter();
+    this.allFilter();
   }
   allFilter() {
-    this.filtering.OrderplacedId = 2
-    this.orderservice.WithoutPaging(this.filtering).subscribe(response => {
+    this.filtering.Orderplaced = OrderplacedEnum.Store;
+    this.orderservice.getInStockToTransferWithAgent(this.filtering, this.paging).subscribe(response => {
       if (response)
         if (response.data.length == 0)
           this.noDataFound = true
         else this.noDataFound = false
       this.dataSource = new MatTableDataSource(response.data)
-      //this.dataSource.data = this.dataSource.data.filter(d => d.agent.id == this.AgentId)
       this.totalCount = response.total
     },
       err => {

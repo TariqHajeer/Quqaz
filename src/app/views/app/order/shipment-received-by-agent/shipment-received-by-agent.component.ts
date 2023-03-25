@@ -14,6 +14,8 @@ import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
 import { SelectionModel } from '@angular/cdk/collections';
+import orderPlaceds from 'src/app/data/orderPlaced';
+import moneyPlaceds from 'src/app/data/moneyPalced';
 
 @Component({
   selector: 'app-shipment-received-by-agent',
@@ -25,6 +27,7 @@ export class ShipmentReceivedByAgentComponent {
     'index',
     'code',
     'client',
+    'agent',
     'country',
     'cost',
     'isClientDiliverdMoney',
@@ -85,15 +88,10 @@ export class ShipmentReceivedByAgentComponent {
   }
 
   GetMoenyPlaced() {
-    this.orderservice.MoenyPlaced().subscribe((res) => {
-      this.MoenyPlaced = res;
-      // this.getMoenyPlaced = [...res];
-    });
+    this.MoenyPlaced = [...moneyPlaceds];
   }
   getmony() {
-    this.orderservice.MoenyPlaced().subscribe((res) => {
-      this.MoenyPlaced = res;
-    });
+    this.MoenyPlaced = [...moneyPlaceds];
   }
   changeMoenyPlaced() {
     if (this.getorders.length != 0) {
@@ -129,14 +127,13 @@ export class ShipmentReceivedByAgentComponent {
     }
   }
   GetorderPlace() {
-    this.orderservice.orderPlace().subscribe((res) => {
-      this.orderPlace = res;
+    this.orderPlace =  [...orderPlaceds];
       this.orderPlace = this.orderPleacedFilters = this.orderPlace.filter(
         (o) =>
           o.id == OrderplacedEnum.PartialReturned ||
           o.id == OrderplacedEnum.Delivered
       );
-    });
+   
   }
   changeOrderPlaced() {
     if (this.getorders.length != 0) {

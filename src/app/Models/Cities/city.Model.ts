@@ -3,7 +3,6 @@ import { Region } from "../Regions/region.model";
 export class City {
     id:number;
     name:string;
-    mediator:City
     deliveryCost:number;
     canDelete:boolean;
     canDeleteWithRegion:boolean
@@ -11,4 +10,6 @@ export class City {
     isMain:boolean
     points
     agnets
+    branchesIds:number[]
+    requiredAgent
 }

@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
-import { HomeService } from 'src/app/client-pages/service/home.service';
+import { HomeService } from 'src/app/services/home.service';
 import { Store } from 'src/app/Models/store/store.model';
 import { environment } from 'src/environments/environment';
 

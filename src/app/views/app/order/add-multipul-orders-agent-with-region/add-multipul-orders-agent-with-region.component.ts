@@ -16,6 +16,8 @@ import { Client } from '../../client/client.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import * as moment from 'moment';
+import { UserLogin } from 'src/app/Models/userlogin.model';
+import { AuthService } from 'src/app/shared/auth.service';
 @Component({
   selector: 'app-add-multipul-orders-agent-with-region',
   templateUrl: './add-multipul-orders-agent-with-region.component.html',
@@ -32,6 +34,7 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
     public userService: UserService,
     private notifications: NotificationsService,
     public spinner: NgxSpinnerService,
+    private authService: AuthService
 
   ) { }
 
@@ -60,8 +63,10 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
   regionapi = "Region"
   ordertypeapi = "OrderType";
   Orders: any[] = []
-  @ViewChild('code') codeElement: ElementRef;
-
+@ViewChild('code') codeElement: ElementRef;
+  disabledAddAgent: boolean = false;
+  disabledEditAgent: boolean = false;
+  userLogin: UserLogin = this.authService.getUser();
   ngOnInit(): void {
     this.Order = new CreateMultipleOrder();
     this.EditOrder = new CreateMultipleOrder();
@@ -186,13 +191,13 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
     if (this.checkLengthPhoneNumber(this.Order.RecipientPhones))
       return
     var country = this.cities.find(c => c.id == this.Order.CountryId)
-    this.Order.CountryName = country.name
+    this.Order.CountryName = country?.name
     var region = this.regions.find(r => r.id == this.Order.RegionId)
-    this.Order.RegionName = region.name
+    this.Order.RegionName = region?.name
     var client = this.clients.find(c => c.id == this.Order.ClientId)
-    this.Order.ClientName = client.name
+    this.Order.ClientName = client?.name
     var agent = this.Agents.find(c => c.id == this.Order.AgentId)
-    this.Order.AgentName = agent.name
+    this.Order.AgentName = agent?.name
     this.Order.Cost = this.Order.Cost * 1
     this.Orders.push(this.Order)
     localStorage.setItem('refrshorder', JSON.stringify(this.Orders))
@@ -214,15 +219,18 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
     order.CanEdit = true
     this.tempEdit = Object.assign({}, order);
     this.EditOrder = order
-    this.Agents = this.GetAgents.filter(a => a.countryId == this.EditOrder.CountryId)
-
+    this.Agents =this.GetAgents.filter(
+      (a) =>
+        a.countries
+          .map((c) => c.id)
+          .filter((co) => co == this.EditOrder.CountryId).length > 0
+    );
   }
   Save(order: CreateMultipleOrder) {
     this.EditOrder.AgentId = this.AgentId;
     this.EditOrder.CountryId = this.CountryId;
     if (!this.EditOrder.Code || !this.EditOrder.ClientId ||
       !this.EditOrder.CountryId || !this.EditOrder.RecipientPhones
-      || !this.EditOrder.AgentId
       || order.showEditMessageCode) {
       this.Editsubmitted = true
       return
@@ -231,15 +239,14 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
       return
     this.EditOrder.CanEdit = false
     var country = this.cities.find(c => c.id == this.EditOrder.CountryId)
-    this.EditOrder.CountryName = country.name
+    this.EditOrder.CountryName = country?.name
     var region = this.regions.find(c => c.id == this.EditOrder.RegionId)
-    this.EditOrder.RegionName = region.name
+    this.EditOrder.RegionName = region?.name
     var client = this.clients.find(c => c.id == this.EditOrder.ClientId)
-    this.EditOrder.ClientName = client.name
+    this.EditOrder.ClientName = client?.name
     var agent = this.Agents.find(c => c.id == this.EditOrder.AgentId)
     this.EditOrder.DeliveryCost = this.EditOrder.DeliveryCost * 1
     this.EditOrder.Cost = this.EditOrder.Cost * 1
-    //  this.EditOrder.AgentName = agent.name
     order = Object.assign(order, this.EditOrder);
     localStorage.setItem('refrshorder', JSON.stringify(this.Orders))
 
@@ -263,7 +270,7 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
       if (this.submitted == true)
         return
     }
-    if (this.Orders == []) {
+    if (this.Orders.length==0) {
       //this.submitedSave=true
       return
     }

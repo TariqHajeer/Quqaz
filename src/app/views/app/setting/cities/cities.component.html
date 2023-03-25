@@ -13,23 +13,10 @@
           <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="city.name">
         </div>
         <div class="col-3">
-          <label>المدينة الوسيطة</label>
-          <ng-select [(ngModel)]="city.mediatorId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
-            <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
-          </ng-select>
+          <app-delivery-cost-input [lable]="'كلفة التوصيل'" [(value)]="city.deliveryCost"></app-delivery-cost-input>
         </div>
-        <div class="col-3">
-          <label>كلفة التوصيل</label>
-          <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="city.deliveryCost"
-            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '');">
-        </div>
-        <div class="col-3">
-          <label>النقاط</label>
-          <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="city.points"
-          oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '');">
-          <!-- <ng-select [(ngModel)]="city.points" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
-            <ng-option *ngFor="let PointSetting of PointSettings" [value]="PointSetting.points">{{PointSetting.points}}</ng-option>
-          </ng-select> -->
+        <div class="col-3"> 
+          <app-point-input [lable]="'النقاط'" [(value)]="city.points"></app-point-input>
         </div>
         <ng-container *ngFor="let item of city.regions;let i= index; trackBy: onTrackBy">
           <div class="col-2">
@@ -63,7 +50,6 @@
           <e-column field='id' textAlign="Center" [visible]='false' headerText='#' [filter]='filter' width='50'
             [isPrimaryKey]='true'></e-column>
           <e-column field='name' textAlign="Center" headerText="الاسم" width='140'></e-column>
-          <e-column field='mediator.name' textAlign="Center" headerText="المدينة الوسيطة" width='140'></e-column>
           <e-column field='deliveryCost' textAlign="Center" headerText="كلفة التوصيل" width='140' editType='numericedit'
             [edit]='numericParams'></e-column>
             <e-column field='points' textAlign="Center" headerText="النقاط" width='140' editType='numericedit'
@@ -117,23 +103,12 @@ aria-labelledby="dialog-sizes-name1">
           <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="editCity.name">
         </div>
         <div class="col-3">
-          <label>المدينة الوسيطة</label>
-          <ng-select [(ngModel)]="editCity.mediatorId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
-            <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
-          </ng-select>
-        </div>
-        <div class="col-3">
           <label>كلفة التوصيل</label>
           <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="editCity.deliveryCost"
             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '');">
         </div>
         <div class="col-3">
-          <label>النقاط</label>
-          <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="editCity.points"
-          oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '');">
-          <!-- <ng-select [(ngModel)]="city.points" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
-            <ng-option *ngFor="let PointSetting of PointSettings" [value]="PointSetting.points">{{PointSetting.points}}</ng-option>
-          </ng-select> -->
+          <app-point-input [lable]="'النقاط'" [(value)]="editCity.points"></app-point-input>
         </div>
         <div class="col-12" *ngIf="editCity.regions.length!=0">
           <br>

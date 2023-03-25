@@ -1,6 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { OrderRoutingModule } from './order-routing.module';
 import { ViewOrdersComponent } from '../order/view-orders/view-orders.component'
 import { AddOrdersComponent } from '../order/add-orders/add-orders.component'
@@ -19,20 +18,16 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { CreatemultipleOrderFromClientComponent } from './createmultiple-order-from-client/createmultiple-order-from-client.component';
 import { ProfitsOfOrdersComponent } from './profits-of-orders/profits-of-orders.component';
 import { ChartModule } from '@syncfusion/ej2-angular-charts';
-import { DateFormatOptions } from '@syncfusion/ej2-base'
-import {
-  CategoryService, DateTimeService, ScrollBarService, ColumnSeriesService, LineSeriesService,
-  ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService, LegendService, TooltipService
-} from '@syncfusion/ej2-angular-charts';
+import { CategoryService, DateTimeService, ScrollBarService, ColumnSeriesService, LineSeriesService, ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService, LegendService, TooltipService } from '@syncfusion/ej2-angular-charts';
 import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CreateMultiOrderAgentAndClientComponent } from './create-multi-order-agent-and-client/create-multi-order-agent-and-client.component';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 import { CreatemultipulorderagentComponent } from './createmultipulorderagent/createmultipulorderagent.component';
 import { ReceiptNewOrdersComponent } from './receipt-new-orders/receipt-new-orders.component';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { EditClientOrdersComponent } from './edit-client-orders/edit-client-orders.component';
 import { MoveOrdersComponent } from './move-orders/move-orders.component';
@@ -43,11 +38,18 @@ import { ReceiptsNewOrdersComponent } from './receipts-new-orders/receipts-new-o
 import { AddMulitpleOrdersWithRegionComponent } from './add-mulitple-orders-with-region/add-mulitple-orders-with-region.component';
 import { AddMultipulOrdersAgentWithRegionComponent } from './add-multipul-orders-agent-with-region/add-multipul-orders-agent-with-region.component';
 import { ReceiptOrderComponent } from './receipt-order/receipt-order.component';
+import { TransferToSecondBranchComponent } from './transfer-to-second-branch/transfer-to-second-branch.component';
 import { ReSendOrdersComponent } from './re-send-orders/re-send-orders.component';
+import { GetOrdersComeToMyBranchComponent } from './get-orders-come-to-my-branch/get-orders-come-to-my-branch.component';
+import { GetOrderReturnedToSecondBranchComponent } from './get-order-returned-to-second-branch/get-order-returned-to-second-branch.component';
+import { GetOrdersReturnedToMyBranchComponent } from './get-orders-returned-to-my-branch/get-orders-returned-to-my-branch.component';
+import { PrintOrdersComponent } from './printPreview/print-orders/print-orders.component';
+import { GetDisapprovedReturnedOrderByBranchComponent } from './get-disapproved-returned-order-by-branch/get-disapproved-returned-order-by-branch.component';
 import { ShipmentReceivedByAgentComponent } from './shipment-received-by-agent/shipment-received-by-agent.component';
 import { ShipmentReceivedByDeliveredComponent } from './shipment-received-by-delivered/shipment-received-by-delivered.component';
 import { ShipmentReceivedByReturnedComponent } from './shipment-received-by-returned/shipment-received-by-returned.component';
 import { MoveOrdersToAgentByCodeComponent } from './move-orders-to-agent-by-code/move-orders-to-agent-by-code.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,13 @@ import { MoveOrdersToAgentByCodeComponent } from './move-orders-to-agent-by-code
     AddMulitpleOrdersWithRegionComponent,
     AddMultipulOrdersAgentWithRegionComponent,
     ReceiptOrderComponent,
+    TransferToSecondBranchComponent,
     ReSendOrdersComponent,
+    GetOrdersComeToMyBranchComponent,
+    GetOrderReturnedToSecondBranchComponent,
+    GetOrdersReturnedToMyBranchComponent,
+    PrintOrdersComponent,
+    GetDisapprovedReturnedOrderByBranchComponent,
     ShipmentReceivedByAgentComponent,
     ShipmentReceivedByDeliveredComponent,
     ShipmentReceivedByReturnedComponent,
@@ -98,11 +106,9 @@ import { MoveOrdersToAgentByCodeComponent } from './move-orders-to-agent-by-code
     MatTabsModule,
     ModalModule.forRoot(),
     MatCheckboxModule,
-
-
-
+    SharedModule
   ], providers: [CategoryService, DateTimeService, ScrollBarService, LineSeriesService, ColumnSeriesService,
     ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService, LegendService, TooltipService,]
-  , schemas: [CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA]
+  , schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class OrderModule { }

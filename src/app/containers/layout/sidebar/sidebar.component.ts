@@ -322,6 +322,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   openSubMenu(event: { stopPropagation: () => void }, menuItem: IMenuItem) {
+    this.closedCollapseList=[]
     if (event) {
       event.stopPropagation();
     }
@@ -404,7 +405,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleCollapse(id: string) {
+  toggleCollapse(id: string) {    
     if (this.closedCollapseList.includes(id)) {
       this.closedCollapseList = this.closedCollapseList.filter((x) => x !== id);
     } else {

@@ -3,7 +3,6 @@ import { NotificationsService, NotificationType } from 'angular2-notifications';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { City } from 'src/app/Models/Cities/city.Model';
-import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { CreateMultipleOrder } from 'src/app/Models/order/create-multiple-order';
 import { OrderItem } from 'src/app/Models/order/create-orders-from-employee.model';
@@ -13,6 +12,8 @@ import { User } from 'src/app/Models/user/user.model';
 import { CustomService } from 'src/app/services/custom.service';
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/shared/auth.service';
+import IIndex from 'src/app/shared/interfaces/IIndex';
 import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
 
@@ -27,7 +28,7 @@ export class CreatemultipulorderagentComponent implements OnInit {
     e.target.blur();
   }
   constructor(private orderservice: OrderService,
-
+    private authService: AuthService,
     private clientService: ClientService
     , private customerService: CustomService,
     public userService: UserService,
@@ -40,8 +41,8 @@ export class CreatemultipulorderagentComponent implements OnInit {
   EditOrder: CreateMultipleOrder
   submitted = false;
   Editsubmitted = false
-  orderPlace: NameAndIdDto[] = []
-  MoenyPlaced: NameAndIdDto[] = []
+  orderPlace: IIndex[] = []
+  MoenyPlaced: IIndex[] = []
   clients: Client[] = []
   cities: City[] = []
   Region: Region[] = []
@@ -66,8 +67,7 @@ export class CreatemultipulorderagentComponent implements OnInit {
   ordertypeapi = "OrderType";
   Orders: any[] = []
   //CanEdit: boolean[] = []
-  @ViewChild('code') codeElement: ElementRef;
-
+@ViewChild('code') codeElement: ElementRef;
   ngOnInit(): void {
     this.Order = new CreateMultipleOrder();
     this.EditOrder = new CreateMultipleOrder();
@@ -197,11 +197,11 @@ export class CreatemultipulorderagentComponent implements OnInit {
     if (this.checkLengthPhoneNumber(this.Order.RecipientPhones))
       return
     var country = this.cities.find(c => c.id == this.Order.CountryId)
-    this.Order.CountryName = country.name
+    this.Order.CountryName = country?.name
     var client = this.clients.find(c => c.id == this.Order.ClientId)
-    this.Order.ClientName = client.name
+    this.Order.ClientName = client?.name
     var agent = this.Agents.find(c => c.id == this.Order.AgentId)
-    this.Order.AgentName = agent.name
+    this.Order.AgentName = agent?.name
     this.Order.Cost = this.Order.Cost * 1
     this.Orders.push(this.Order)
     localStorage.setItem('refrshorder', JSON.stringify(this.Orders))
@@ -223,13 +223,17 @@ export class CreatemultipulorderagentComponent implements OnInit {
     order.CanEdit = true
     this.tempEdit = Object.assign({}, order);
     this.EditOrder = order
-    this.Agents = this.GetAgents.filter(a => a.countryId == this.EditOrder.CountryId)
+    this.Agents =this.GetAgents.filter(
+      (a) =>
+        a.countries
+          .map((c) => c.id)
+          .filter((co) => co == this.EditOrder.CountryId).length > 0
+    );
 
   }
   Save(order: CreateMultipleOrder) {
     if (!this.EditOrder.Code || !this.EditOrder.ClientId ||
       !this.EditOrder.CountryId || !this.EditOrder.RecipientPhones
-      || !this.EditOrder.AgentId 
       || order.showEditMessageCode) {
       this.Editsubmitted = true
       return
@@ -238,13 +242,11 @@ export class CreatemultipulorderagentComponent implements OnInit {
       return
     this.EditOrder.CanEdit = false
     var country = this.cities.find(c => c.id == this.EditOrder.CountryId)
-    this.EditOrder.CountryName = country.name
+    this.EditOrder.CountryName = country?.name
     var client = this.clients.find(c => c.id == this.EditOrder.ClientId)
-    this.EditOrder.ClientName = client.name
-    var agent = this.Agents.find(c => c.id == this.EditOrder.AgentId)
+    this.EditOrder.ClientName = client?.name
     this.EditOrder.DeliveryCost = this.EditOrder.DeliveryCost * 1
     this.EditOrder.Cost = this.EditOrder.Cost * 1
-    //  this.EditOrder.AgentName = agent.name
     order = Object.assign(order, this.EditOrder);
     localStorage.setItem('refrshorder', JSON.stringify(this.Orders))
 
@@ -268,7 +270,7 @@ export class CreatemultipulorderagentComponent implements OnInit {
       if (this.submitted == true)
         return
     }
-    if (this.Orders == []) {
+    if (this.Orders.length==0) {
       //this.submitedSave=true
       return
     }

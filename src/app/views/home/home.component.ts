@@ -8,7 +8,7 @@ import {
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
-import { HomeService } from "src/app/client-pages/service/home.service";
+import { HomeService } from "src/app/services/home.service";
 import { Store } from "src/app/Models/store/store.model";
 import { environment } from 'src/environments/environment';
 

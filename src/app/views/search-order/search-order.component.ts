@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
-import { HomeService } from 'src/app/client-pages/service/home.service';
+import { HomeService } from 'src/app/services/home.service';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { environment } from 'src/environments/environment';
 

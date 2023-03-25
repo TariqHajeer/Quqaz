@@ -1,21 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  EditSettingsModel,
-  GridComponent,
-  SaveEventArgs,
-  ToolbarItems,
-} from '@syncfusion/ej2-angular-grids';
+import {EditSettingsModel,GridComponent,SaveEventArgs} from '@syncfusion/ej2-angular-grids';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
-import { CustomService } from 'src/app/services/custom.service';
 import { User, UserStatics } from 'src/app/Models/user/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { CreateUser } from 'src/app/Models/user/create-user';
 import { Phone } from 'src/app/Models/phone.model';
-import data from 'src/app/constants/menu';
 import { UserPermission } from 'src/app/shared/auth.roles';
-import { UserLogin } from 'src/app/Models/userlogin.model';
 import { AuthService } from 'src/app/shared/auth.service';
+import { UserLogin } from 'src/app/Models/userlogin.model';
 
 @Component({
   selector: 'app-view-user',

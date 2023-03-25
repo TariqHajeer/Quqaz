@@ -1,0 +1,282 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-pulse" [fullScreen]="true">
+    <p style="color: white"> </p>
+</ngx-spinner>
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-4">
+                <button class="btn btn-primary" (click)="print()"> <svg xmlns="http://www.w3.org/2000/svg" width="17"
+                        height="17" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+                        <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+                        <path
+                            d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
+                    </svg> &nbsp;طباعة</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body ">
+
+        <div class="row">
+
+
+            <div class="col-4" style="text-align: center;">
+                <table style="width:100%;">
+                    <tr>
+                        <td>
+                            <div style="border: 1px black solid; padding: 7px; margin: 1px">
+                                رقم الطباعة
+                            </div>
+                        </td>
+                        <td>
+                            <div style="border: 1px black solid; padding: 7px; margin: 1px;height: 35px;">
+                                {{ printNumber }}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="border: 1px black solid; padding: 7px; margin: 1px">
+                                مستخدم الطابعة
+                            </div>
+                        </td>
+                        <td>
+                            <div style="border: 1px black solid; padding: 7px; margin: 1px">
+                                {{ user }}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="border: 1px black solid; padding: 7px; margin: 1px">
+                                تاريخ الطباعة
+                            </div>
+                        </td>
+                        <td>
+                            <div style="border: 1px black solid; padding: 7px; margin: 1px">
+                                {{ dateOfPrint| date:"dd/MM/yyyy"}}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="border: 1px black solid; padding: 7px; margin: 1px">
+                                وقت الطباعة
+                            </div>
+                        </td>
+                        <td>
+                            <div style="border: 1px black solid; padding: 7px; margin: 1px">
+                                {{ dateOfPrint| date:'shortTime'}}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="col-4" style="text-align: center;">
+                <div style="padding-top: 0px; padding-right:25%;">
+                    <img src="/assets/logos/logo.PNG" width="150px" height="100px" />
+                    <br />
+                    <br />
+                    <h2 style="font-weight: bolder;padding-right:19%;"> نقل الطلبات</h2>
+                </div>
+            </div>
+            <div class="col-4">
+                <table>
+                    <tr>
+                        <td>
+                            <div style="border: 1px black solid; padding: 7px; margin: 1px;">
+                                من فرع
+                            </div>
+                        </td>
+                        <td>
+                            <div style="border: 1px black solid; padding: 7px; margin: 1px;height: 35px;">
+                                {{ fromBranch }}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="border: 1px black solid; padding: 7px; margin: 1px">
+                                الى فرع
+                            </div>
+                        </td>
+                        <td>
+                            <div style="border: 1px black solid; padding: 7px; margin: 1px;height: 35px;">
+                                {{ toBranch}}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="border: 1px black solid; padding: 7px; margin: 1px">
+                                اسم السائق
+                            </div>
+                        </td>
+                        <td>
+                            <div style="border: 1px black solid; padding: 7px; margin: 1px;height: 35px;">
+                                {{driverName}}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div style="border: 1px black solid; padding: 7px; margin: 1px">
+                                <svg style="color: rgb(153, 1, 1)" xmlns="http://www.w3.org/2000/svg" width="16"
+                                    height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+                                </svg>
+                                اربيل - قرب تقاطع كوك ايه
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div style="border: 1px black solid; padding: 7px; margin: 1px">
+                                <svg style="color: rgb(153, 1, 1)" xmlns="http://www.w3.org/2000/svg" width="16"
+                                    height="16" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
+                                    <path
+                                        d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                                </svg>
+                                07514550880 - 07700890880
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table style="width:100%;size: auto;">
+                    <thead style="
+                      border: 1px black solid;
+                      padding: 5px;
+                      text-align: center;
+                      font-size: 16px;
+                    ">
+                        <th style="border: 1px black solid; padding: 5px; text-align: center">
+                            ترقيم
+                        </th>
+                        <th style="border: 1px black solid; padding: 5px; text-align: center">
+                            كود
+                        </th>
+                        <th style="border: 1px black solid; padding: 5px; text-align: center">
+                            الإجمالي
+                        </th>
+                        <th style="border: 1px black solid; padding: 5px; text-align: center">
+                            التاريخ
+                        </th>
+                        <th style="border: 1px black solid; padding: 5px; text-align: center">
+                            المحافظة
+                        </th>
+                        <th style="border: 1px black solid; padding: 5px; text-align: center">
+                            الهاتف
+                        </th>
+                        <th style="border: 1px black solid; padding: 5px; text-align: center">
+                            اسم العميل
+                        </th>
+                        <th style="border: 1px black solid; padding: 5px; text-align: center">
+                            ملاحظات العميل
+                        </th>
+                        <th style="border: 1px black solid; padding: 5px; text-align: center">
+                            مـلاحظـــــات
+                        </th>
+                    </thead>
+                    <tbody style="margin-bottom: 20%">
+                        <tr style="
+                        border: 1px black solid;
+                        padding: 5px;
+                        text-align: center;
+                        margin-bottom: 20%;
+                        overflow: auto;
+                      " *ngFor="let order of orders;index as i">
+                            <td style="
+                          width: 3%;
+                          border: 1px black solid;
+                          padding: 5px;
+                          text-align: center;
+                        ">
+                                {{ i + 1 }}
+                            </td>
+                            <td style="
+                          width: 5%;
+                          border: 1px black solid;
+                          padding: 5px;
+                          text-align: center;
+                        ">
+                                {{ order.code }}
+                            </td>
+
+                            <td style="
+                          width: 15%;
+                          border: 1px black solid;
+                          padding: 5px;
+                          text-align: center;
+                        ">
+                                {{ order.total | number }}
+                            </td>
+                            <td style="
+                          width: 15%;
+                          border: 1px black solid;
+                          padding: 5px;
+                          text-align: center;
+                        ">
+                                {{ order.orderDate | date: "dd/MM/yyyy" }}
+                            </td>
+                            <td style="
+                          width: 10%;
+                          border: 1px black solid;
+                          padding: 5px;
+                          text-align: center;
+                        ">
+                                {{ order.countryName }}
+                            </td>
+                            <td style="
+                          width: 13%;
+                          border: 1px black solid;
+                          padding: 5px;
+                          text-align: center;
+                        ">
+                                {{ order.phone }}
+                            </td>
+                            <td style="
+                          width: 12%;
+                          border: 1px black solid;
+                          padding: 5px;
+                          text-align: center;
+                        ">
+                                {{ order.clientName }}
+                            </td>
+                            <td style="
+                          width: 15%;
+                          border: 1px black solid;
+                          padding: 5px;
+                          text-align: center;
+                        ">
+                                {{ order.clientNote }}
+                            </td>
+                            <td style="
+                          width: 40%;
+                          border: 1px black solid;
+                          padding: 5px;
+                          text-align: center;
+                        ">
+                                {{ order.note }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button class="btn btn-primary" (click)="seeMore()" *ngIf="showSeeMore"> عرض المزيد من
+                                    الطلبات </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<simple-notifications></simple-notifications>
