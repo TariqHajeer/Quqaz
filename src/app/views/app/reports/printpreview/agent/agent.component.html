@@ -10,6 +10,9 @@
 <div class="card">
   <div class="card-body">
     <div class="row">
+      <div class="col-md-3">
+        <app-select-driver [(driver)]="driver"></app-select-driver>
+      </div>
       <div class="col-md-3" style="padding-top: 25px" *ngIf="!showPrintbtn">
         <button (click)="afterPrint()" class="btn btn-primary">
           نقل الى الطريق

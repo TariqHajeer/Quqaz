@@ -43,6 +43,7 @@ import { ShowTreasuryComponent } from './show-treasury/show-treasury.component';
 import { CashMovmentComponent } from './cash-movment/cash-movment.component';
 import { ViewsPrintTransferToSecondBranchComponent } from './views-print-transfer-to-second-branch/views-print-transfer-to-second-branch.component';
 import { ViewsPrintTransferToSecondBranchByIdComponent } from './views-print-transfer-to-second-branch-by-id/views-print-transfer-to-second-branch-by-id.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 @NgModule({
   declarations: [ShipmentInStockComponent,
     ClientOrderComponent,
@@ -86,8 +87,7 @@ import { ViewsPrintTransferToSecondBranchByIdComponent } from './views-print-tra
     DatePickerModule,
     DateRangePickerModule,
     NgxSpinnerModule,
-
-
+    SharedModule
   ]
   , providers: [CategoryService, DateTimeService, ScrollBarService, LineSeriesService, ColumnSeriesService,
     ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService, LegendService, TooltipService,], schemas: [CUSTOM_ELEMENTS_SCHEMA]

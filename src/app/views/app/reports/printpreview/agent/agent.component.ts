@@ -9,7 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { environment } from 'src/environments/environment.prod';
 import { AuthService } from 'src/app/shared/auth.service';
-
+import Driver from 'src/app/Models/common/Driver';
 @Component({
   selector: 'app-agent',
   templateUrl: './agent.component.html',
@@ -35,6 +35,7 @@ export class AgentComponent implements OnInit {
     'ملاحظات العميل',
     'مـلاحظـــــات',
   ];
+  driver:Driver;
   orders: any[] = [];
   count:number = 0;
   agent;
@@ -68,8 +69,6 @@ export class AgentComponent implements OnInit {
           }
         }
     }
-
-    // this.getPrintnumber()
   }
 
   sumCost() {
@@ -150,7 +149,6 @@ export class AgentComponent implements OnInit {
     newWin?.document.close();
     setTimeout(function () {
       newWin?.close();
-      // location.reload();
     }, 1000);
   }
 }
