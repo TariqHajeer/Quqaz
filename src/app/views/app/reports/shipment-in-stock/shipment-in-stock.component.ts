@@ -10,6 +10,7 @@ import { Paging } from 'src/app/Models/paging';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 
 
 @Component({
@@ -113,7 +114,7 @@ export class ShipmentInStockComponent implements OnInit {
     this.allFilter();
   }
   allFilter() {
-    this.filtering.OrderplacedId = 2
+    this.filtering.Orderplaced = OrderplacedEnum.Store;
     this.orderservice.getInStockToTransferWithAgent(this.filtering, this.paging).subscribe(response => {
       if (response)
         if (response.data.length == 0)

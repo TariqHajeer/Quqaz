@@ -3,26 +3,26 @@ export class OrderFilter {
   constructor() {
     this.createdDateRangeFilter = new DateRangeFilter();
   }
-  Code;
-  Phone;
-  CountryId;
-  RegionId;
-  ClientId;
-  RecipientName;
-  MonePlacedId;
-  OrderplacedId;
-  AgentId;
-  IsClientDiliverdMoney;
-  AgentPrintNumber;
-  ClientPrintNumber;
+  Code:string;
+  Phone:string;
+  CountryId:number;
+  RegionId:number;
+  ClientId:number;
+  RecipientName:string;
+  MoneyPalced:number;
+  Orderplaced:number;
+  AgentId:number;
+  IsClientDiliverdMoney:boolean;
+  AgentPrintNumber:number;
+  ClientPrintNumber:number;
   CreatedDate;
   createdDateRangeFilter: DateRangeFilter;
-  Note;
+  Note:string;
   AgentPrintStartDate;
   AgentPrintEndDate;
-  CreatedBy;
-  OrderState;
-  OriginalBranchId;
-  nextBranchId;
-  nextBranchName;
+  CreatedBy:string;
+  OrderState:number;
+  OriginalBranchId:number;
+  nextBranchId:number;
+  nextBranchName:string;
 }

@@ -39,8 +39,8 @@ export class ViewOrdersComponent implements OnInit {
   filtering: OrderFilter;
   orders: Order[] = [];
   noDataFound: boolean = false;
-  orderPlace: NameAndIdDto[] = [];
-  MoenyPlaced: NameAndIdDto[] = [];
+  orderPlace: NameAndIdDto[] = [...orderPlaceds];
+  MoenyPlaced: NameAndIdDto[] = [...moneyPlaceds];
   clients: Client[] = [];
   cities: City[] = [];
   Region: Region[] = [];
@@ -66,14 +66,12 @@ export class ViewOrdersComponent implements OnInit {
     this.filtering = new OrderFilter();
     this.get();
     this.getBranches();
-    this.GetMoenyPlaced();
-    this.GetorderPlace();
     this.GetRegion();
     this.Getcities();
     this.GetClient();
     this.getAgent();
     this.getUser();
-    this.allFilter();
+    this.getOrders();
   }
   get() {
     this.dataSource = new MatTableDataSource(this.orders);
@@ -114,7 +112,7 @@ export class ViewOrdersComponent implements OnInit {
     this.paging.RowCount = event.pageSize;
     this.paging.Page = event.pageIndex + 1;
 
-    this.allFilter();
+    this.getOrders();
   }
   orderResend: Resend = new Resend();
   fillResend(order) {
@@ -136,7 +134,7 @@ export class ViewOrdersComponent implements OnInit {
   Resend() {
     this.orderResend.DeliveryCost = this.orderResend.DeliveryCost * 1;
     this.orderservice.ReSend(this.orderResend).subscribe((res) => {
-      this.allFilter();
+      this.getOrders();
     });
   }
   changeCountryResend() {
@@ -159,20 +157,13 @@ export class ViewOrdersComponent implements OnInit {
       this.orderResend.RegionId = this.Regionsresend[0].id;
     else this.orderResend.RegionId = null;
   }
-  allFilter() {
+  getOrders() {
     this.spinner.show();
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(
       (response) => {
         this.spinner.hide();
         if (response && response.data && response.data.length == 0) this.noDataFound = true;
         else this.noDataFound = false;
-        response.data.forEach((element) => {
-          if (element.orderStateId == OrderStateEnum.ShortageOfCash) {
-            element.monePlaced.name = 'لديك مبلغ مع العميل';
-            element.orderplaced.name = 'لديك مبلغ مع العميل';
-          } else if (element.orderStateId == OrderStateEnum.Finished) {
-          }
-        });
         this.dataSource = new MatTableDataSource(response.data);
         this.totalCount = response.total;
       },
@@ -185,7 +176,7 @@ export class ViewOrdersComponent implements OnInit {
     if (this.checkOrderState)
       this.filtering.OrderState = OrderStateEnum.ShortageOfCash
     else this.filtering.OrderState = null
-    this.allFilter()
+    this.getOrders()
   }
   getUser() {
     this.orderservice.GetCreatedByNames().subscribe((res) => {
@@ -203,7 +194,7 @@ export class ViewOrdersComponent implements OnInit {
         NotificationType.Success,
         { theClass: 'success', timeOut: 6000, showProgressBar: false }
       );
-      this.allFilter();
+      this.getOrders();
     });
   }
   element;
@@ -212,7 +203,6 @@ export class ViewOrdersComponent implements OnInit {
   }
   Edit(element) {
     this.router.navigate(['/app/order/editorder', element.id]);
-    // localStorage.setItem('editorder', JSON.stringify(element))
   }
   getAgent() {
     this.userService.ActiveAgent().subscribe((res) => {
@@ -229,24 +219,17 @@ export class ViewOrdersComponent implements OnInit {
   }
   tempRegions;
   tempAgent;
-
-  GetorderPlace() {
-    this.orderPlace = [...orderPlaceds];
-  }
   completelyReturn(id) {
     this.spinner.show();
     this.orderservice.MakeStoreOrderCompletelyReturned(id).subscribe(
       (res) => {
-        this.allFilter();
+        this.getOrders();
         this.spinner.hide();
       },
       (err) => {
         this.spinner.hide();
       }
     );
-  }
-  GetMoenyPlaced() {
-    this.MoenyPlaced = [...moneyPlaceds];
   }
   GetClient() {
     this.clientService.getClients().subscribe((res) => {

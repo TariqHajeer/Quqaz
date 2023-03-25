@@ -11,6 +11,7 @@ import { User } from 'src/app/Models/user/user.model';
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
 import { CustomService } from 'src/app/services/custom.service';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 
 @Component({
   selector: 'app-change-agent-by-orders',
@@ -140,7 +141,7 @@ export class ChangeAgentByOrdersComponent implements OnInit {
   }
   allFilter() {
     if (!this.filtering.AgentId || !this.filtering.CountryId) return;
-    this.filtering.OrderplacedId = 2;
+    this.filtering.Orderplaced = OrderplacedEnum.Store;
     this.orderservice.WithoutPaging(this.filtering).subscribe(
       (response) => {
         if (response)

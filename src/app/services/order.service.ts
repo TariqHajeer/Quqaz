@@ -398,50 +398,50 @@ export class OrderService {
   }
   getHttpPramsFilteredForOrder(filter?: OrderFilter, paging?: Paging): HttpParams {
     let params = new HttpParams();
-    if (filter.Code != undefined || filter.Code != null)
+    if (filter?.Code)
       params = params.append('Code', filter.Code);
-    if (filter.AgentId != undefined || filter.AgentId != null)
-      params = params.append('AgentId', filter.AgentId);
-    if (filter.Phone != undefined || filter.Phone != null)
+    if (filter?.AgentId)
+      params = params.append('AgentId', filter.AgentId.toString());
+    if (filter?.Phone)
       params = params.append('Phone', filter.Phone);
-    if (filter.CountryId != undefined || filter.CountryId != null)
-      params = params.append('CountryId', filter.CountryId);
-    if (filter.RegionId != undefined || filter.RegionId != null)
-      params = params.append('RegionId', filter.RegionId);
-    if (filter.ClientId != undefined || filter.ClientId != null)
-      params = params.append('ClientId', filter.ClientId);
-    if (filter.Note != undefined || filter.Note != null)
+    if (filter?.CountryId)
+      params = params.append('CountryId', filter.CountryId.toString());
+    if (filter?.RegionId)
+      params = params.append('RegionId', filter.RegionId.toString());
+    if (filter?.ClientId)
+      params = params.append('ClientId', filter.ClientId.toString());
+    if (filter?.Note)
       params = params.append('Note', filter.Note);
-    if (filter.RecipientName != undefined || filter.RecipientName != null)
+    if (filter?.RecipientName)
       params = params.append('RecipientName', filter.RecipientName);
-    if (filter.MonePlacedId != undefined || filter.MonePlacedId != null)
-      params = params.append('MonePlacedId', filter.MonePlacedId);
-    if (filter.OrderplacedId != undefined || filter.OrderplacedId != null)
-      params = params.append('OrderplacedId', filter.OrderplacedId);
-    if (filter.CreatedBy != undefined || filter.CreatedBy != null)
+    if (filter?.MoneyPalced)
+      params = params.append('MoneyPalced', filter.MoneyPalced.toString());
+    if (filter?.Orderplaced)
+      params = params.append('Orderplaced', filter.Orderplaced.toString());
+    if (filter?.CreatedBy)
       params = params.append('CreatedBy', filter.CreatedBy);
-    if (filter.IsClientDiliverdMoney != undefined || filter.IsClientDiliverdMoney != null)
-      params = params.append('IsClientDiliverdMoney', filter.IsClientDiliverdMoney);
-    if (filter.CreatedDate != undefined || filter.CreatedDate != null)
-      params = params.append('CreatedDate', filter.CreatedDate);
-    if (filter.OrderState != undefined || filter.OrderState != null)
-      params = params.append('OrderState', filter.OrderState);
-    if (filter.AgentPrintStartDate != undefined || filter.AgentPrintStartDate != null)
-      params = params.append('AgentPrintStartDate', filter.AgentPrintStartDate);
-    if (filter.AgentPrintEndDate != undefined || filter.AgentPrintEndDate != null)
-      params = params.append('AgentPrintEndDate', filter.AgentPrintEndDate);
-    if (filter.AgentPrintNumber != undefined || filter.AgentPrintNumber != null)
-      params = params.append('AgentPrintNumber', filter.AgentPrintNumber);
-    if (filter.ClientPrintNumber != undefined || filter.ClientPrintNumber != null)
-      params = params.append('ClientPrintNumber', filter.ClientPrintNumber);
-    if (filter.OriginalBranchId != undefined || filter.OriginalBranchId != null)
-      params = params.append('OriginalBranchId', filter.OriginalBranchId);
-    if (filter.createdDateRangeFilter.start)
-      params = params.append('CreatedDateRangeFilter.start', String(filter.createdDateRangeFilter.start));
-    if (filter.createdDateRangeFilter.end)
-      params = params.append('CreatedDateRangeFilter.end', String(filter.createdDateRangeFilter.end));
+    if (filter?.IsClientDiliverdMoney)
+      params = params.append('IsClientDiliverdMoney', filter.IsClientDiliverdMoney.toString());
+    if (filter?.CreatedDate)
+      params = params.append('CreatedDate', filter.CreatedDate.toISOString());
+    if (filter?.OrderState)
+      params = params.append('OrderState', filter.OrderState.toString());
+    if (filter?.AgentPrintStartDate)
+      params = params.append('AgentPrintStartDate', filter.AgentPrintStartDate.toISOString());
+    if (filter?.AgentPrintEndDate)
+      params = params.append('AgentPrintEndDate', filter.AgentPrintEndDate.toISOString());
+    if (filter?.AgentPrintNumber)
+      params = params.append('AgentPrintNumber', filter.AgentPrintNumber.toString());
+    if (filter?.ClientPrintNumber)
+      params = params.append('ClientPrintNumber', filter.ClientPrintNumber.toString());
+    if (filter?.OriginalBranchId)
+      params = params.append('OriginalBranchId', filter.OriginalBranchId.toString());
+    if (filter?.createdDateRangeFilter.start)
+      params = params.append('createdDateRangeFilter.start', filter.createdDateRangeFilter.start.toISOString());
+    if (filter?.createdDateRangeFilter.end)
+      params = params.append('createdDateRangeFilter.end', filter.createdDateRangeFilter.end.toISOString());
     params = this.setPaging(params, paging);
-
+  
     return params;
   }
   convertSelectOrderToFromData(formdata: FormData, selectOrder: SelectOrder): FormData {
@@ -452,44 +452,43 @@ export class OrderService {
     if (selectOrder.SelectedIds)
       formdata.append('SelectedIds', selectOrder.SelectedIds);
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.AgentId)
-      formdata.append('AgentId', selectOrder.OrderFilter.AgentId);
+      formdata.append('AgentId', selectOrder.OrderFilter.AgentId.toString());
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.AgentPrintEndDate)
       formdata.append('AgentPrintEndDate', selectOrder.OrderFilter.AgentPrintEndDate);
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.AgentPrintNumber)
-      formdata.append('AgentPrintNumber', selectOrder.OrderFilter.AgentPrintNumber);
+      formdata.append('AgentPrintNumber', selectOrder.OrderFilter.AgentPrintNumber.toString());
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.AgentPrintStartDate)
       formdata.append('AgentPrintStartDate', selectOrder.OrderFilter.AgentPrintStartDate);
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.ClientId)
-      formdata.append('ClientId', selectOrder.OrderFilter.ClientId);
+      formdata.append('ClientId', selectOrder.OrderFilter.ClientId.toString());
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.ClientPrintNumber)
-      formdata.append('ClientPrintNumber', selectOrder.OrderFilter.ClientPrintNumber);
+      formdata.append('ClientPrintNumber', selectOrder.OrderFilter.ClientPrintNumber.toString());
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.Code)
       formdata.append('Code', selectOrder.OrderFilter.Code);
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.CountryId)
-      formdata.append('CountryId', selectOrder.OrderFilter.CountryId);
+      formdata.append('CountryId', selectOrder.OrderFilter.CountryId.toString());
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.CreatedBy)
       formdata.append('CreatedBy', selectOrder.OrderFilter.CreatedBy);
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.CreatedDate)
       formdata.append('CreatedDate', selectOrder.OrderFilter.CreatedDate);
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.IsClientDiliverdMoney)
-      formdata.append('IsClientDiliverdMoney', selectOrder.OrderFilter.IsClientDiliverdMoney);
-    if (selectOrder.OrderFilter && selectOrder.OrderFilter.MonePlacedId)
-      formdata.append('MonePlacedId', selectOrder.OrderFilter.MonePlacedId);
+      formdata.append('IsClientDiliverdMoney',`${selectOrder.OrderFilter.IsClientDiliverdMoney}`);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.MoneyPalced)
+      formdata.append('MonePlaced', selectOrder.OrderFilter.MoneyPalced.toString());
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.Note)
       formdata.append('Note', selectOrder.OrderFilter.Note);
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.OrderState)
-      formdata.append('OrderState', selectOrder.OrderFilter.OrderState);
-    if (selectOrder.OrderFilter && selectOrder.OrderFilter.OrderplacedId)
-      formdata.append('OrderplacedId', selectOrder.OrderFilter.OrderplacedId);
+      formdata.append('OrderState', selectOrder.OrderFilter.OrderState.toString());
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.Orderplaced)
+      formdata.append('Orderplaced', selectOrder.OrderFilter.Orderplaced.toString());
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.OriginalBranchId)
-      formdata.append('OriginalBranchId', selectOrder.OrderFilter.OriginalBranchId);
+      formdata.append('OriginalBranchId', selectOrder.OrderFilter.OriginalBranchId.toString());
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.Phone)
       formdata.append('Phone', selectOrder.OrderFilter.Phone);
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.RecipientName)
       formdata.append('RecipientName', selectOrder.OrderFilter.RecipientName);
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.RegionId)
-      formdata.append('RegionId', selectOrder.OrderFilter.RegionId);
-    // formdata.append('createdDateRangeFilter',selectOrder.OrderFilter.createdDateRangeFilter);
+      formdata.append('RegionId', selectOrder.OrderFilter.RegionId.toString());
     if (selectOrder.Paging && selectOrder.Paging.Page)
       formdata.append('Page', selectOrder.Paging.Page);
     if (selectOrder.Paging && selectOrder.Paging.RowCount)

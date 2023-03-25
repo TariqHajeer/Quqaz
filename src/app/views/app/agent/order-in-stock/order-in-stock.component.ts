@@ -10,6 +10,7 @@ import { Paging } from 'src/app/Models/paging';
 import { User } from 'src/app/Models/user/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { AgentOrderService } from 'src/app/services/agent-order.service';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 
 @Component({
   selector: 'app-order-in-stock',
@@ -111,7 +112,7 @@ switchPage(event: PageEvent) {
   this.paging.Page = event.pageIndex + 1
 }
 allFilter() {
-  this.filtering.OrderplacedId = 2
+  this.filtering.Orderplaced =OrderplacedEnum.Store;
   this.orderservice.InStock().subscribe(response => {
     this.dataSource = new MatTableDataSource(response)
     this.totalCount = response.length

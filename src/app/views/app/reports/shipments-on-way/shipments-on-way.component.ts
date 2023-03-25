@@ -152,7 +152,7 @@ export class ShipmentsOnWayComponent implements OnInit {
       this.countriesAgent = []
       this.filtering.AgentId = this.Agent.id
       this.countriesAgent = this.Agent.countries
-      this.filtering.OrderplacedId = 3
+      this.filtering.Orderplaced = OrderplacedEnum.Way;
       if (this.filtering.AgentPrintStartDate)
         this.filtering.AgentPrintStartDate = formatDate(this.filtering.AgentPrintStartDate, 'MM/dd/yyyy', 'en');
       if (this.filtering.AgentPrintEndDate)
