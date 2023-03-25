@@ -41,7 +41,11 @@ export class PrintOrdersComponent implements OnInit {
       this.drivers = res;
     })
   }
-  addDriver = (term) => ({ id: term, name: term });
+  addDriver = (term: string) => {
+    if (term.length <= 50)
+      return { id: null, name: term };
+    return null;
+  };
 
   getOrders() {
     if (this.orderservice.selectOrder.SelectedIds.length == 0 && this.orderservice.selectOrder.IsSelectedAll == false)
@@ -66,16 +70,16 @@ export class PrintOrdersComponent implements OnInit {
     this.getOrders();
   }
   moveOrders() {
+    console.log('driver', this.driver);
+    return;
     if (!this.driver.id && !this.driver.name) {
       this.notifications.success('error', 'اسم السائق حقل مطلوب', NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       return
     }
-    if (this.driver.id == this.driver.name) {
-      this.orderservice.transferToSecondBranchDto.Driver.driverName = this.driver.name;
-    } else {
-      this.orderservice.transferToSecondBranchDto.Driver.driverId = this.driver.id;
-    }
-   
+    this.orderservice.transferToSecondBranchDto.Driver.driverName = this.driver.name;
+    this.orderservice.transferToSecondBranchDto.Driver.driverId = this.driver.id;
+
+
     this.spinner.show();
     this.orderservice.TransferToSecondBranch().subscribe(res => {
       this.spinner.hide();
