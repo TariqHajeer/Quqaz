@@ -9,13 +9,16 @@ import { CustomInputComponent } from './components/custom-input/custom-input.com
 import { DeliveryCostInputComponent } from './components/delivery-cost-input/delivery-cost-input.component';
 import { PointInputComponent } from './components/point-input/point-input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SelectDriverComponent } from './components/select-driver/select-driver.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 @NgModule({
   declarations: [
     ErrorComponent,
     UnauthorizedComponent,
     CustomInputComponent,
     DeliveryCostInputComponent,
-    PointInputComponent],
+    PointInputComponent,
+    SelectDriverComponent],
   imports: [
     RouterModule,
     CommonModule,
@@ -23,6 +26,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     PerfectScrollbarModule,
     FormsModule,
     ReactiveFormsModule,
+    NgSelectModule,
   ],
   exports: [
     PerfectScrollbarModule,
@@ -33,7 +37,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     CustomInputComponent,
     DeliveryCostInputComponent,
-    PointInputComponent
+    PointInputComponent,
+    SelectDriverComponent
   ],
 })
 export class SharedModule { }

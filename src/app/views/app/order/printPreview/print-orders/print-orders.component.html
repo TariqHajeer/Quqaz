@@ -11,17 +11,7 @@
   <div class="card-body">
     <div class="row">
       <div class="col-4" *ngIf="!showPrintBtn">
-        <label>اسم السائق</label>
-
-        <ng-select
-          [items]="drivers"
-          bindLabel="name"
-          [addTag]="addDriver"
-          [multiple]="false"
-          placeholder="اختر اسم السائق او قم باضافة اسم الى القائمة"
-          [(ngModel)]="driver"
-        >
-        </ng-select>
+        <app-select-driver [(driver)]="driver"></app-select-driver>
       </div>
       <div class="col-4">
         <button

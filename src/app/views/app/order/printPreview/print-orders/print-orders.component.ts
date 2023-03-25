@@ -23,7 +23,6 @@ export class PrintOrdersComponent implements OnInit {
   printNumber: number;
   showSeeMore: boolean;
   showPrintBtn: boolean;
-  drivers: NameAndIdDto[] = [];
   driver: any;
   constructor(public orderservice: OrderService,
     private notifications: NotificationsService,
@@ -33,19 +32,9 @@ export class PrintOrdersComponent implements OnInit {
     private userService: UserService) { }
 
   ngOnInit(): void {
-    this.getDrivers();
     this.getOrders();
   }
-  getDrivers() {
-    this.userService.Driver().subscribe(res => {
-      this.drivers = res;
-    })
-  }
-  addDriver = (term: string) => {
-    if (term.length <= 50)
-      return { id: null, name: term };
-    return null;
-  };
+  
 
   getOrders() {
     if (this.orderservice.selectOrder.SelectedIds.length == 0 && this.orderservice.selectOrder.IsSelectedAll == false)
