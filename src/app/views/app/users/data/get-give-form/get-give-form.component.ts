@@ -60,6 +60,7 @@ export class GetGiveFormComponent implements OnInit {
     }
   }
   GiveMoney() {
+    console.log(this.createTreasury.Amount);
     if (!this.validation()) return;
     else {
       this.createTreasury.UserId = this.id;
