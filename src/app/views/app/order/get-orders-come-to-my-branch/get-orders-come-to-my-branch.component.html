@@ -9,17 +9,17 @@
             <div class="col-md-2">
                 <label>الكود</label>
                 <input type="text" class="form-control" [(ngModel)]="filtering.Code"
-                    [ngModelOptions]="{standalone: true}" name="code" (keyup.enter)="allFilter()" />
+                    [ngModelOptions]="{standalone: true}" name="code" (keyup.enter)="getOrders()" />
             </div>
             <div class="col-md-2">
                 <label>المحافظة</label>
                 <ng-select [(ngModel)]="filtering.CountryId" [ngModelOptions]="{standalone: true}"
-                    [closeOnSelect]="true" name="Country" (change)="allFilter()">
+                    [closeOnSelect]="true" name="Country" (change)="getOrders()">
                     <ng-option *ngFor="let Country of countries" [value]="Country.id">{{Country.name}}</ng-option>
                 </ng-select>
             </div>
             <div class="col-md-6">
-                <button (click)="allFilter()" class="btn btn-primary" style="margin-top: 20px;"> بحث</button>
+                <button (click)="getOrders()" class="btn btn-primary" style="margin-top: 20px;"> بحث</button>
             </div>
             <div class="col-md-2">
                 <button (click)="ReceiveOrders()" class="btn btn-primary" style="margin-top: 20px;"> قبول

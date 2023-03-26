@@ -62,7 +62,7 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     this.GetRegion();
     this.paging = new Paging
     this.filtering = new OrderFilter
-    this.allFilter();
+    this.getOrders();
   }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
@@ -119,9 +119,9 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     this.paging.allItemsLength = event.length
     this.paging.RowCount = event.pageSize
     this.paging.Page = event.pageIndex + 1
-    this.allFilter();
+    this.getOrders();
   }
-  allFilter() {
+  getOrders() {
     this.orderservice.GetOrdersComeToMyBranch(this.filtering, this.paging).subscribe(response => {
       if (response)
         if (response.data.length <= 0)
@@ -168,7 +168,7 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
       this.selection.clear()
       this.orders = [];
       this.agentOrdersIds = [];
-      this.allFilter()
+      this.getOrders()
     })
   }
   getAgent(): void {
