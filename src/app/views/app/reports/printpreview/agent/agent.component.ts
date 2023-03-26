@@ -10,6 +10,7 @@ import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { environment } from 'src/environments/environment.prod';
 import { AuthService } from 'src/app/shared/auth.service';
 import Driver from 'src/app/Models/common/Driver';
+import {IMakeOrderInWay} from 'src/app/Models/order/IMakeOrderInWay';
 @Component({
   selector: 'app-agent',
   templateUrl: './agent.component.html',
@@ -35,7 +36,7 @@ export class AgentComponent implements OnInit {
     'ملاحظات العميل',
     'مـلاحظـــــات',
   ];
-  driver:Driver;
+  driver:Driver=new Driver();
   orders: any[] = [];
   count:number = 0;
   agent;
@@ -90,14 +91,15 @@ export class AgentComponent implements OnInit {
       this.showPrintbtn = true;
     }
   }
-  dateWithIds;
+  ordersIdsWithDriver:IMakeOrderInWay;
 
   afterPrint() {
     this.spinner.show();
-    this.dateWithIds = {
-      Ids: this.orders.map((o) => o.id),
-    };
-    this.orderservice.MakeOrderInWay(this.dateWithIds.Ids).subscribe(
+    this.ordersIdsWithDriver = {
+      ids: this.orders.map((o) => o.id),
+      driver:this.driver
+    }; 
+    this.orderservice.MakeOrderInWay(this.ordersIdsWithDriver).subscribe(
       (res) => {
         this.notifications.create(
           'success',

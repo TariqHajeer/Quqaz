@@ -1,5 +1,5 @@
 import Driver from '../../Models/common/Driver';
-interface IMakeOrderInWay{
+export interface IMakeOrderInWay{
     ids:number[];
     driver:Driver
 }

@@ -17,8 +17,9 @@ export class SelectDriverComponent implements OnInit {
   }
   @Input() driver?: Driver;
   @Output() driverChange?= new EventEmitter<Driver>();
-  changeValue(event) {
-    this.driver = event;
+  changeValue(event) { 
+    this.driver.driverId = event.id;
+    this.driver.driverName = event.name;
     this.driverChange.emit(this.driver);
   }
   getDrivers() {
