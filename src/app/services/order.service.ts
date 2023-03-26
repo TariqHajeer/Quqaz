@@ -449,8 +449,8 @@ export class OrderService {
       formdata.append('ExceptIds', selectOrder.ExceptIds);
     if (selectOrder.IsSelectedAll)
       formdata.append('IsSelectedAll', selectOrder.IsSelectedAll);
-    if (selectOrder.SelectedIds)
-      formdata.append('SelectedIds', selectOrder.SelectedIds);
+    if (selectOrder.SelectedItems)
+      formdata.append('SelectedItems', selectOrder.SelectedItems);
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.AgentId)
       formdata.append('AgentId', selectOrder.OrderFilter.AgentId.toString());
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.AgentPrintEndDate)

@@ -6,12 +6,12 @@ export class SelectOrder {
         this.IsSelectedAll = false;
         this.OrderFilter = new OrderFilter();
         this.Paging = new Paging();
-        this.SelectedIds = [];
+        this.SelectedItems = [];
         this.ExceptIds = [];
     }
     OrderFilter: OrderFilter;
     IsSelectedAll: any;
-    SelectedIds: any;
+    SelectedItems: any;
     ExceptIds: any;
     Paging: Paging;
 }
