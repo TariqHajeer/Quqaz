@@ -47,7 +47,8 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
   selectAll: boolean;
   countSelectOrder: number = 0;
   branches: any[] = [];
-
+  regionId:number;
+  agentId:number;
   constructor(
     private orderservice: OrderService,
     public userService: UserService,

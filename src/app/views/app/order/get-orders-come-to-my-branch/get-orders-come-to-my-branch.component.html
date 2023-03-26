@@ -43,16 +43,16 @@
             <div class="col-3"></div>
             <div class="col-md-2">
                 <label>المنطقة</label>
-                <ng-select [(ngModel)]="filtering.RegionId" [ngModelOptions]="{standalone: true}"
+                <ng-select [(ngModel)]="regionId" [ngModelOptions]="{standalone: true}"
                     [closeOnSelect]="true" name="RegionId" (change)="getOrders()">
-                    <ng-option *ngFor="let Country of countries" [value]="Country.id">{{Country.name}}</ng-option>
+                    <ng-option *ngFor="let region of regionArray(filtering.CountryId)" [value]="region.id">{{region.name}}</ng-option>
                 </ng-select>
             </div>
             <div class="col-md-2">
                 <label>المندوب</label>
-                <ng-select [(ngModel)]="filtering.AgentId" [ngModelOptions]="{standalone: true}"
+                <ng-select [(ngModel)]="agentId" [ngModelOptions]="{standalone: true}"
                     [closeOnSelect]="true" name="AgentId" (change)="getOrders()">
-                    <ng-option *ngFor="let Country of countries" [value]="Country.id">{{Country.name}}</ng-option>
+                    <ng-option *ngFor="let agent of agentArray(filtering.CountryId)" [value]="agent.id">{{agent.name}}</ng-option>
                 </ng-select>
             </div>
         </div>
@@ -65,8 +65,6 @@
             <th mat-header-cell *matHeaderCellDef (click)="$event.stopPropagation()">
                 <mat-checkbox (change)="$event ? masterToggle() : null" [aria-label]="checkboxLabelAll()"
                     [(ngModel)]="selectAll">
-                    <!-- <span>&nbsp;الطلبات المحددة&nbsp;</span>
-                    <span class="badge badge-primary" [innerText]="countSelectOrder"></span> -->
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let row" (click)="$event.stopPropagation()">
