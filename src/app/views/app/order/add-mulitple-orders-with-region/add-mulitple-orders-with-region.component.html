@@ -211,7 +211,7 @@
 
                     <td>
 
-                        <ng-select (keydown.enter)="changed(4)" [(ngModel)]="Order.AgentId"
+                        <ng-select (keydown.enter)="changed(disabledAddAgent?-1:4)"  [(ngModel)]="Order.AgentId"
                             [ngModelOptions]="{standalone: true}" [clearable]="false" name="Agent" style="width: 100px;"
                             placeholder="اختر مندوب" [disabled]="disabledAddAgent">
                             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
