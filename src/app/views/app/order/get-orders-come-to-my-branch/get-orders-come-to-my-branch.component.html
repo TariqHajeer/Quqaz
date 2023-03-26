@@ -9,17 +9,17 @@
             <div class="col-md-2">
                 <label>الكود</label>
                 <input type="text" class="form-control" [(ngModel)]="filtering.Code"
-                    [ngModelOptions]="{standalone: true}" name="code" (keyup.enter)="allFilter()" />
+                    [ngModelOptions]="{standalone: true}" name="code" (keyup.enter)="getOrders()" />
             </div>
             <div class="col-md-2">
                 <label>رقم الهاتف</label>
                 <input type="text" class="form-control" [(ngModel)]="filtering.Phone"
-                    [ngModelOptions]="{standalone: true}" name="Phone" (keyup.enter)="allFilter()" />
+                    [ngModelOptions]="{standalone: true}" name="Phone" (keyup.enter)="getOrders()" />
             </div>
             <div class="col-md-2">
                 <label>الفرع</label>
                 <ng-select [(ngModel)]="filtering.OriginalBranchId" [ngModelOptions]="{standalone: true}"
-                    [closeOnSelect]="true" name="OriginalBranch" (change)="allFilter()">
+                    [closeOnSelect]="true" name="OriginalBranch" (change)="getOrders()">
                     <ng-option *ngFor="let branche of branches" [value]="branche.id">{{branche.name}}</ng-option>
                 </ng-select>
             </div>
@@ -32,7 +32,7 @@
             </div>
            
             <div class="col-md-2">
-                <button (click)="allFilter()" class="btn btn-primary" style="margin-top: 20px;"> بحث</button>
+                <button (click)="getOrders()" class="btn btn-primary" style="margin-top: 20px;"> بحث</button>
             </div>
             <div class="col-md-2">
                 <button (click)="ReceiveOrders()" class="btn btn-primary" style="margin-top: 20px;"> قبول
@@ -44,14 +44,14 @@
             <div class="col-md-2">
                 <label>المنطقة</label>
                 <ng-select [(ngModel)]="filtering.RegionId" [ngModelOptions]="{standalone: true}"
-                    [closeOnSelect]="true" name="RegionId" (change)="allFilter()">
+                    [closeOnSelect]="true" name="RegionId" (change)="getOrders()">
                     <ng-option *ngFor="let Country of countries" [value]="Country.id">{{Country.name}}</ng-option>
                 </ng-select>
             </div>
             <div class="col-md-2">
                 <label>المندوب</label>
                 <ng-select [(ngModel)]="filtering.AgentId" [ngModelOptions]="{standalone: true}"
-                    [closeOnSelect]="true" name="AgentId" (change)="allFilter()">
+                    [closeOnSelect]="true" name="AgentId" (change)="getOrders()">
                     <ng-option *ngFor="let Country of countries" [value]="Country.id">{{Country.name}}</ng-option>
                 </ng-select>
             </div>
