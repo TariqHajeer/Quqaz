@@ -14,6 +14,7 @@ import { User } from 'src/app/Models/user/user.model';
 import { Region } from 'src/app/Models/Regions/region.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/shared/auth.service';
+import { BranchesService } from 'src/app/services/branches.service';
 export interface AgentOrdersIds {
   orderId: number
   agentId: number
@@ -45,6 +46,8 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
   agentOrdersIds: AgentOrdersIds[] = [];
   selectAll: boolean;
   countSelectOrder: number = 0;
+  branches: any[] = [];
+
   constructor(
     private orderservice: OrderService,
     public userService: UserService,
@@ -54,12 +57,14 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     private customerService: CustomService,
     public spinner: NgxSpinnerService,
     private authService: AuthService,
+    private branchesService: BranchesService
   ) { }
 
   ngOnInit(): void {
     this.getCities()
     this.getAgent();
     this.GetRegion();
+    this.getBranches();
     this.paging = new Paging
     this.filtering = new OrderFilter
     this.allFilter();
@@ -175,6 +180,11 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     this.userService.ActiveAgent().subscribe(res => {
       this.Agents = res as User[];
     });
+  }
+  getBranches() {
+    this.branchesService.Get().subscribe(res => {
+      this.branches = res;
+    })
   }
   agentArray(countryId) {
     return this.Agents.filter(
