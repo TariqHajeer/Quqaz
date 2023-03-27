@@ -26,7 +26,7 @@
             <div class="col-md-2">
                 <label>المحافظة</label>
                 <ng-select [(ngModel)]="filtering.CountryId" [ngModelOptions]="{standalone: true}"
-                    [closeOnSelect]="true" name="Country" (change)="changeCountry()">
+                    [closeOnSelect]="true" name="Country" (change)="getOrders()">
                     <ng-option *ngFor="let Country of countries" [value]="Country.id">{{Country.name}}</ng-option>
                 </ng-select>
             </div>
@@ -43,16 +43,16 @@
             <div class="col-3"></div>
             <div class="col-md-2">
                 <label>المنطقة</label>
-                <ng-select [(ngModel)]="regionId" [ngModelOptions]="{standalone: true}"
-                    [closeOnSelect]="true" name="RegionId" (change)="getOrders()">
-                    <ng-option *ngFor="let region of regionArray(filtering.CountryId)" [value]="region.id">{{region.name}}</ng-option>
+                <ng-select [(ngModel)]="region" [ngModelOptions]="{standalone: true}"
+                    [closeOnSelect]="true" name="RegionId" (ngModelChange)="changeAllRegions()">
+                    <ng-option *ngFor="let region of regionArray(filtering.CountryId)" [value]="region">{{region.name}}</ng-option>
                 </ng-select>
             </div>
             <div class="col-md-2">
                 <label>المندوب</label>
-                <ng-select [(ngModel)]="agentId" [ngModelOptions]="{standalone: true}"
-                    [closeOnSelect]="true" name="AgentId" (change)="getOrders()">
-                    <ng-option *ngFor="let agent of agentArray(filtering.CountryId)" [value]="agent.id">{{agent.name}}</ng-option>
+                <ng-select [(ngModel)]="agent" [ngModelOptions]="{standalone: true}"
+                    [closeOnSelect]="true" name="AgentId" (ngModelChange)="changeAllAgents()">
+                    <ng-option *ngFor="let agent of agentArray(filtering.CountryId)" [value]="agent">{{agent.name}}</ng-option>
                 </ng-select>
             </div>
         </div>

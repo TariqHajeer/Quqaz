@@ -149,9 +149,9 @@ export class GetOrderReturnedToSecondBranchComponent implements OnInit {
   }
   moveOrders() {
     this.orderservice.selectOrder.IsSelectedAll = !this.selectAll;
-    this.orderservice.selectOrder.SelectedItems = this.ordersIds;
+    this.orderservice.selectOrder.selectedIds = this.ordersIds;
     this.orderservice.selectOrder.ExceptIds = this.unSelectIds;
-    if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedItems.length == 0 && this.selectAll)) {
+    if (this.noDataFound == true || (this.orderservice.selectOrder.selectedIds.length == 0 && this.selectAll)) {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }

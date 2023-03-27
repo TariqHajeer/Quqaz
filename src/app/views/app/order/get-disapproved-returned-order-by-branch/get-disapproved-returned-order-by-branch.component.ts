@@ -114,9 +114,9 @@ export class GetDisapprovedReturnedOrderByBranchComponent implements OnInit {
   }
   moveOrders() {
     this.orderSerivce.selectOrder.IsSelectedAll = !this.selectAll;
-    this.orderSerivce.selectOrder.SelectedItems = this.ordersIds;
+    this.orderSerivce.selectOrder.selectedIds = this.ordersIds;
     this.orderSerivce.selectOrder.ExceptIds = this.unSelectIds;
-    if (this.noDataFound() == true || (this.orderSerivce.selectOrder.SelectedItems.length == 0 && this.selectAll)) {
+    if (this.noDataFound() == true || (this.orderSerivce.selectOrder.selectedIds.length == 0 && this.selectAll)) {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
