@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { OrderService } from 'src/app/services/order.service';
@@ -30,13 +30,13 @@ export class TransferToSecondBranchComponent implements OnInit {
   constructor(
     public orderservice: OrderService,
     public userService: UserService,
-    private notifications: NotificationsService,
     public route: Router,
+    private notifications: NotificationsService,
     public orderplacedstate: OrderPlacedStateService,
     public spinner: NgxSpinnerService,
     private branchesService: BranchesService,
     private authService: AuthService,
-
+    private ref: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -46,81 +46,81 @@ export class TransferToSecondBranchComponent implements OnInit {
   selectAll: boolean = false;
   ordersIds = [];
   unSelectIds = [];
+  setIsAllSelected(isAllSelected: boolean): void {
+    this.selectAll = isAllSelected;
+    if (this.selectAll) {
+      this.originalAllSelected = true;
+    }
+    this.ref.detectChanges();
+    this.setHeaderChekclable();
+  }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
+  originalAllSelected: boolean = false;
   masterToggle() {
+    console.log("masterToggle", this.selectAll);
     this.ordersIds = [];
     this.unSelectIds = [];
     if (!this.selectAll) {
       this.selection.clear();
+      this.originalAllSelected = false;
+      this.setCountSelectOrder(0);
+      return;
     }
-    else {
-      this.dataSource.data.forEach(row => {
-        this.selection.select(row);
-      });
-    }
+    this.dataSource.data.forEach(row => {
+      this.selection.select(row);
+    });
+    this.originalAllSelected = true;
+    this.setCountSelectOrder(this.totalCount);
   }
   indeterminate: boolean = false;
-  setIndeterminate(): void {
-    if (this.selectAll && this.unSelectIds.length > 0) {
-      this.indeterminate = true;
-      return;
+  headerChekclable: string = "deselect all";
+  setHeaderChekclable(): void {
+    if (this.selectAll) {
+      this.headerChekclable = "select all";
+    } else {
+      this.headerChekclable = "deselect all";
     }
-    if (this.ordersIds.length > 0) {
-      this.indeterminate = true;
-      return;
-    }
-    this.indeterminate = false;
-
+    this.ref.detectChanges();
   }
-  checkboxLabelAll(): string {
-    return `${this.selectAll ? 'select' : 'deselect'} all`;
+  setCountSelectOrder(number: number): void {
+    if (this.countSelectOrder !== number) {
+      this.countSelectOrder = number;
+      this.ref.detectChanges();
+    }
   }
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: any): string {
-    this.checkboxId(row)
+  rowCheckChange(row: any) {
+    this.selection.toggle(row);
+    this.checkboxId(row);
+  }
+  checkboxRowLabel(row?: any): string {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row`;
   }
   checkboxId(row) {
-
-    if (!this.selectAll) {
-      this.unSelectIds = [];
+    if (this.selection.isSelected(row)) {
+      this.setCountSelectOrder(this.countSelectOrder + 1);
+      if (this.originalAllSelected) {
+        this.unSelectIds = this.unSelectIds.filter(c => c != row.id);
+      }
+      else {
+        this.ordersIds.push(row.id);
+      }
+      if (this.countSelectOrder == this.totalCount) {
+        this.setIsAllSelected(true);
+      }
     }
     else {
-      this.ordersIds = [];
-    }
-    
-    if (this.selection.isSelected(row)) {
-      if (!this.selectAll) {
-        if (!(this.ordersIds.filter(d => d == row.id).length > 0)) {
-          this.ordersIds.push(row.id);
-          this.countSelectOrder = this.ordersIds.length;
-          if (this.countSelectOrder == this.totalCount)
-            this.selectAll = true;
+      this.setIsAllSelected(false);
+      if (this.originalAllSelected) {
+        this.unSelectIds.push(row.id);
+        if (this.unSelectIds.length == this.totalCount) {
+          this.originalAllSelected = false;
         }
+      } else {
+        this.ordersIds = this.ordersIds.filter(c => c != row.id);
       }
-      else {
-
-        this.unSelectIds = this.unSelectIds.filter(o => o != row.id);
-        this.countSelectOrder = this.totalCount - this.unSelectIds.length;
-      }
+      this.setCountSelectOrder(this.countSelectOrder - 1);
     }
-
-
-    if (!this.selection.isSelected(row)) {
-
-      if (this.selectAll) {
-
-        if (!(this.unSelectIds.filter(d => d == row.id).length > 0)) {
-          this.unSelectIds.push(row.id);
-          this.countSelectOrder = this.totalCount - this.unSelectIds.length;
-        }
-      }
-      else {
-        this.ordersIds = this.ordersIds.filter(o => o != row.id);
-        this.countSelectOrder = this.ordersIds.length;
-      }
-    }
-    this.setIndeterminate();
   }
   getBranches() {
     this.branchesService.Get().subscribe(res => {
@@ -168,16 +168,16 @@ export class TransferToSecondBranchComponent implements OnInit {
       });
   }
   moveOrders() {
-    this.orderservice.selectOrder.IsSelectedAll = this.selectAll;
+    this.orderservice.selectOrder.IsSelectedAll = this.originalAllSelected;
     this.orderservice.selectOrder.SelectedItems = this.ordersIds;
     this.orderservice.selectOrder.ExceptIds = this.unSelectIds;
     this.orderservice.selectOrder.OrderFilter.nextBranchName = this.branches.find(b => b.id == this.orderservice.selectOrder.OrderFilter.nextBranchId)?.name;
-    console.log("selectOrder", this.orderservice.selectOrder);
-    //   if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedItems.length == 0 && !this.selectAll)) {ئ
-    //     this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-    //     return
-    //   }
-    //   else
-    //     this.route.navigate(['/app/order/printOrders']);
+    if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedItems.length == 0 && !this.orderservice.selectOrder.IsSelectedAll)) {
+
+      this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      return
+    }
+    else
+      this.route.navigate(['/app/order/printOrders']);
   }
 }
