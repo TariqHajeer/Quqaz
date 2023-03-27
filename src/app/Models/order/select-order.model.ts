@@ -6,12 +6,12 @@ export class SelectOrder {
         this.IsSelectedAll = false;
         this.OrderFilter = new OrderFilter();
         this.Paging = new Paging();
-        this.SelectedItems = [];
+        this.selectedIds = [];
         this.ExceptIds = [];
     }
     OrderFilter: OrderFilter;
     IsSelectedAll: any;
-    SelectedItems: any;
+    selectedIds: any;
     ExceptIds: any;
     Paging: Paging;
 }
@@ -24,4 +24,12 @@ export class TransferToSecondBranchDto {
     DriverName: string;
     DriverId: any;
     Driver: Driver;
+}
+export class ReceiveOrdersToMyBranchDto{
+    constructor() {
+        this.selectedOrdersWithFitlerDto = new SelectOrder();
+    }
+    AgentId?:number;
+    RegionId?:number;
+    selectedOrdersWithFitlerDto:SelectOrder;
 }

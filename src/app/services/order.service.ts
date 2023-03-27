@@ -5,7 +5,7 @@ import { OrderFilter } from '../Models/order-filter.model';
 import { DateFiter, Paging } from '../Models/paging';
 import { OrderClientDontDiliverdMoney } from '../Models/order/order-client-dont-diliverd-money.model';
 import { Resend } from '../Models/order/resend.model';
-import { SelectOrder, TransferToSecondBranchDto } from '../Models/order/select-order.model';
+import { ReceiveOrdersToMyBranchDto, SelectOrder, TransferToSecondBranchDto } from '../Models/order/select-order.model';
 import { PrintTransferOrder } from 'src/app/Models/order/print-transfer-order.model';
 import { GetOrdersByAgentRegionAndCode } from '../Models/order/get-orders-by-agent-region-and-code.model';
 
@@ -319,8 +319,8 @@ export class OrderService {
     let params = this.getHttpPramsFilteredForOrder(filter, paging);
     return this.http.get<any>(this.controler + 'GetOrdersComeToMyBranch', { params: params });
   }
-  ReceiveOrdersToMyBranch(ids: any[]) {
-    return this.http.put<any>(this.controler + 'ReceiveOrdersToMyBranch', ids);
+  ReceiveOrdersToMyBranch(receiveOrdersToMyBranch: ReceiveOrdersToMyBranchDto) {
+    return this.http.put<any>(this.controler + 'ReceiveOrdersToMyBranch', receiveOrdersToMyBranch);
   }
   DisApproveOrderComeToMyBranch(id: number) {
     return this.http.put(this.controler + 'DisApproveOrderComeToMyBranch', id);
@@ -449,8 +449,8 @@ export class OrderService {
       formdata.append('ExceptIds', selectOrder.ExceptIds);
     if (selectOrder.IsSelectedAll)
       formdata.append('IsSelectedAll', selectOrder.IsSelectedAll);
-    if (selectOrder.SelectedItems)
-      formdata.append('SelectedItems', selectOrder.SelectedItems);
+    if (selectOrder.selectedIds)
+      formdata.append('selectedIds', selectOrder.selectedIds);
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.AgentId)
       formdata.append('AgentId', selectOrder.OrderFilter.AgentId.toString());
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.AgentPrintEndDate)

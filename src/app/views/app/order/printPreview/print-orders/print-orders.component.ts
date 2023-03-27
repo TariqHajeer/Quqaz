@@ -35,7 +35,7 @@ export class PrintOrdersComponent implements OnInit {
   
 
   getOrders() {
-    if (this.orderservice.selectOrder.SelectedItems.length == 0 && this.orderservice.selectOrder.IsSelectedAll == false)
+    if (this.orderservice.selectOrder.selectedIds.length == 0 && this.orderservice.selectOrder.IsSelectedAll == false)
       this.router.navigate(['/app/order/transferToSecondBranch']);
     this.orderservice.GetInStockToTransferToSecondBranch().subscribe(response => {
       if (this.orderservice.selectOrder.Paging.Page == 1)
