@@ -24,9 +24,16 @@ export class TransferToSecondBranchComponent implements OnInit {
   noDataFound: boolean = false
   getorders: any[] = []
   @Input() totalCount: number;
-  selection = new SelectionModel<any>(true, []);
-  countSelectOrder: number = 0;
   branches: any[] = [];
+  /* select all prob*/
+  selection = new SelectionModel<any>(true, []);
+  selectAll: boolean = false;
+  ordersIds = [];
+  unSelectIds = [];
+  countSelectOrder: number = 0;
+  indeterminate: boolean = false;
+  headerChekclable: string = "deselect all";
+  lastMasterSelectionChoise: boolean = false;
   constructor(
     public orderservice: OrderService,
     public userService: UserService,
@@ -43,9 +50,7 @@ export class TransferToSecondBranchComponent implements OnInit {
     this.getBranches();
   }
 
-  selectAll: boolean = false;
-  ordersIds = [];
-  unSelectIds = [];
+
   setIsAllSelected(isAllSelected: boolean): void {
     this.selectAll = isAllSelected;
     if (this.selectAll) {
@@ -55,7 +60,6 @@ export class TransferToSecondBranchComponent implements OnInit {
     this.setHeaderChekclable();
   }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
-  lastMasterSelectionChoise: boolean = false;
   masterToggle() {
     this.ordersIds = [];
     this.unSelectIds = [];
@@ -71,8 +75,6 @@ export class TransferToSecondBranchComponent implements OnInit {
     this.lastMasterSelectionChoise = true;
     this.setCountSelectOrder(this.totalCount);
   }
-  indeterminate: boolean = false;
-  headerChekclable: string = "deselect all";
   setHeaderChekclable(): void {
     if (this.selectAll) {
       this.headerChekclable = "select all";
@@ -182,13 +184,11 @@ export class TransferToSecondBranchComponent implements OnInit {
     this.orderservice.selectOrder.SelectedIds = this.ordersIds;
     this.orderservice.selectOrder.ExceptIds = this.unSelectIds;
     this.orderservice.selectOrder.OrderFilter.nextBranchName = this.branches.find(b => b.id == this.orderservice.selectOrder.OrderFilter.nextBranchId)?.name;
-    console.log(this.orderservice.selectOrder);
-    // if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedItems.length == 0 && !this.orderservice.selectOrder.IsSelectedAll)) {
-
-    //   this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-    //   return
-    // }
-    // else
-    //   this.route.navigate(['/app/order/printOrders']);
+    if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedIds.length == 0 && !this.orderservice.selectOrder.IsSelectedAll)) {
+      this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      return
+    }
+    else
+      this.route.navigate(['/app/order/printOrders']);
   }
 }

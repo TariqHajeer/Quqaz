@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { OrderService } from 'src/app/services/order.service';
@@ -31,7 +31,6 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
   filtering: OrderFilter
   noDataFound: boolean = false
   @Input() totalCount: number;
-  selection = new SelectionModel<any>(true, []);
   countries: any[] = []
   cityapi: string = 'Country';
   regionapi: string = 'Region';
@@ -39,12 +38,20 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
   regions: Region[] = [];
   customOrderAgent: CustomOrderAgent
   customOrdersAgent: CustomOrderAgent[] = [];
-  selectAll: boolean;
-  countSelectOrder: number = 0;
   branches: any[] = [];
   region: Region = new Region();
   agent: User = new User();
   receiveOrdersToMyBranch: ReceiveOrdersToMyBranchDto = new ReceiveOrdersToMyBranchDto();
+
+    /* select all prob*/
+    selection = new SelectionModel<any>(true, []);
+    selectAll: boolean = false;
+    ordersIds = [];
+    unSelectIds = [];
+    countSelectOrder: number = 0;
+    indeterminate: boolean = false;
+    headerChekclable: string = "deselect all";
+    lastMasterSelectionChoise: boolean = false;
   constructor(
     private orderservice: OrderService,
     public userService: UserService,
@@ -54,7 +61,8 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     private customerService: CustomService,
     public spinner: NgxSpinnerService,
     private authService: AuthService,
-    private branchesService: BranchesService
+    private branchesService: BranchesService,
+    private ref: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -66,50 +74,74 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     this.filtering = new OrderFilter
     this.getOrders();
   }
+ 
+  setIsAllSelected(isAllSelected: boolean): void {
+    this.selectAll = isAllSelected;
+    if (this.selectAll) {
+      this.lastMasterSelectionChoise = true;
+    }
+    this.ref.detectChanges();
+    this.setHeaderChekclable();
+  }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
+    this.ordersIds = [];
+    this.unSelectIds = [];
     if (!this.selectAll) {
-      this.selection.clear()
-      this.dataSource.data.forEach(item => {
-        this.orders = this.orders.filter(order => order != item)
-      })
+      this.selection.clear();
+      this.lastMasterSelectionChoise = false;
+      this.setCountSelectOrder(0);
+      return;
     }
-    else {
-      this.dataSource.data.forEach(row => {
-        this.selection.select(row.id)
-      });
-    }
+    this.dataSource.data.forEach(row => {
+      this.selection.select(row);
+    });
+    this.lastMasterSelectionChoise = true;
+    this.setCountSelectOrder(this.totalCount);
   }
-  checkboxLabelAll(): string {
-    return `${this.selectAll ? 'select' : 'deselect'} all`;
+  setHeaderChekclable(): void {
+    if (this.selectAll) {
+      this.headerChekclable = "select all";
+    } else {
+      this.headerChekclable = "deselect all";
+    }
+    this.ref.detectChanges();
+  }
+  setCountSelectOrder(number: number): void {
+    if (this.countSelectOrder !== number) {
+      this.countSelectOrder = number;
+      this.ref.detectChanges();
+    }
   }
   /** The label for the checkbox on the passed row */
-  checkboxLabel(rowid?: any, row?): string {
-    if (!rowid) {
-      return `${this.selectAll ? 'select' : 'deselect'} all`;
-    }
-    this.checkboxId(rowid, row)
-    return `${this.selection.isSelected(rowid) ? 'deselect' : 'select'} row`;
+  rowCheckChange(row: any) {
+    this.selection.toggle(row);
+    this.checkboxId(row);
   }
-  checkboxId(rowid, row?) {
-    if (this.selection.isSelected(rowid)) {
-      if (!this.selectAll) {
-        if (this.orders.filter(d => d == row).length > 0)
-          return
-        else {
-          this.orders.push(row)
-          this.countSelectOrder = this.orders.length;
-          if (this.countSelectOrder == this.totalCount)
-            this.selectAll = true;
-        }
+  checkboxId(row) {
+    if (this.selection.isSelected(row)) {
+      this.setCountSelectOrder(this.countSelectOrder + 1);
+      if (this.lastMasterSelectionChoise) {
+        this.unSelectIds = this.unSelectIds.filter(c => c != row.id);
       }
-
+      else {
+        this.ordersIds.push(row.id);
+      }
+      if (this.countSelectOrder == this.totalCount) {
+        this.setIsAllSelected(true);
+      }
     }
-    if (!this.selection.isSelected(rowid)) {
-      if (this.selectAll) {
-        this.orders = this.orders.filter(o => o.id != rowid);
-        this.selectAll = false;
+    else {
+      this.setIsAllSelected(false);
+      if (this.lastMasterSelectionChoise) {
+        this.unSelectIds.push(row.id);
+        if (this.unSelectIds.length == this.totalCount) {
+          this.lastMasterSelectionChoise = false;
+        }
+      } else {
+        this.ordersIds = this.ordersIds.filter(c => c != row.id);
       }
+      this.setCountSelectOrder(this.countSelectOrder - 1);
     }
   }
   getCities() {
@@ -167,6 +199,7 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
         }
       this.dataSource = new MatTableDataSource(response.data)
       this.totalCount = response.total
+      
       this.dataSource.data.forEach(row => {
         if (this.orders.filter(d => d.id == row.id).length == 1) {
           this.selection.select(row.id)
@@ -208,9 +241,9 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     this.receiveOrdersToMyBranch.AgentId = this.agent.id;
     this.receiveOrdersToMyBranch.RegionId = this.region.id;
     this.receiveOrdersToMyBranch.CustomOrderAgent = this.customOrdersAgent;
-    this.receiveOrdersToMyBranch.SelectedIds = this.customOrdersAgent;
-    this.receiveOrdersToMyBranch.ExceptIds = this.customOrdersAgent;
-    this.receiveOrdersToMyBranch.IsSelectedAll = this.customOrdersAgent;
+    this.receiveOrdersToMyBranch.SelectedIds = this.ordersIds;
+    this.receiveOrdersToMyBranch.ExceptIds = this.unSelectIds;
+    this.receiveOrdersToMyBranch.IsSelectedAll = this.lastMasterSelectionChoise;
     this.receiveOrdersToMyBranch.OrderFilter = this.filtering;
     this.receiveOrdersToMyBranch.Paging = this.paging;
 
