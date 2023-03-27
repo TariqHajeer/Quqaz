@@ -27,7 +27,8 @@
         <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox (change)="$event ? masterToggle() : null" 
-                    [aria-label]="checkboxLabelAll()" [(ngModel)]="selectAll">
+                    [aria-label]="checkboxLabelAll()" [(ngModel)]="selectAll"
+                    [(indeterminate)]="indeterminate">
                     <span>&nbsp;الطلبات المحددة&nbsp;</span>
                     <span class="badge badge-primary" [innerText]="countSelectOrder"></span>
                 </mat-checkbox>

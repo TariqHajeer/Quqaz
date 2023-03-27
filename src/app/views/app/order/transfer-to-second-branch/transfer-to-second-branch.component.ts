@@ -59,6 +59,19 @@ export class TransferToSecondBranchComponent implements OnInit {
       });
     }
   }
+  indeterminate: boolean = false;
+  setIndeterminate(): void {
+    if (this.selectAll && this.unSelectIds.length > 0) {
+      this.indeterminate = true;
+      return;
+    }
+    if (this.ordersIds.length > 0) {
+      this.indeterminate = true;
+      return;
+    }
+    this.indeterminate = false;
+
+  }
   checkboxLabelAll(): string {
     return `${this.selectAll ? 'select' : 'deselect'} all`;
   }
@@ -68,12 +81,17 @@ export class TransferToSecondBranchComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row`;
   }
   checkboxId(row) {
+
+    if (!this.selectAll) {
+      this.unSelectIds = [];
+    }
+    else {
+      this.ordersIds = [];
+    }
+    
     if (this.selection.isSelected(row)) {
       if (!this.selectAll) {
-        this.unSelectIds = [];
-        if (this.ordersIds.filter(d => d == row.id).length > 0)
-          return
-        else {
+        if (!(this.ordersIds.filter(d => d == row.id).length > 0)) {
           this.ordersIds.push(row.id);
           this.countSelectOrder = this.ordersIds.length;
           if (this.countSelectOrder == this.totalCount)
@@ -81,28 +99,28 @@ export class TransferToSecondBranchComponent implements OnInit {
         }
       }
       else {
-        this.ordersIds = [];
+
         this.unSelectIds = this.unSelectIds.filter(o => o != row.id);
         this.countSelectOrder = this.totalCount - this.unSelectIds.length;
       }
     }
+
+
     if (!this.selection.isSelected(row)) {
+
       if (this.selectAll) {
-        if (this.unSelectIds.filter(d => d == row.id).length > 0)
-          return
-        else {
+
+        if (!(this.unSelectIds.filter(d => d == row.id).length > 0)) {
           this.unSelectIds.push(row.id);
-          this.ordersIds = [];
           this.countSelectOrder = this.totalCount - this.unSelectIds.length;
-          this.selectAll = false;
         }
       }
       else {
         this.ordersIds = this.ordersIds.filter(o => o != row.id);
         this.countSelectOrder = this.ordersIds.length;
-        this.unSelectIds = [];
       }
     }
+    this.setIndeterminate();
   }
   getBranches() {
     this.branchesService.Get().subscribe(res => {
@@ -153,12 +171,13 @@ export class TransferToSecondBranchComponent implements OnInit {
     this.orderservice.selectOrder.IsSelectedAll = this.selectAll;
     this.orderservice.selectOrder.SelectedItems = this.ordersIds;
     this.orderservice.selectOrder.ExceptIds = this.unSelectIds;
-    this.orderservice.selectOrder.OrderFilter.nextBranchName=this.branches.find(b=>b.id==this.orderservice.selectOrder.OrderFilter.nextBranchId)?.name;
-    if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedItems.length == 0 && !this.selectAll)) {
-      this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      return
-    }
-    else
-      this.route.navigate(['/app/order/printOrders']);
+    this.orderservice.selectOrder.OrderFilter.nextBranchName = this.branches.find(b => b.id == this.orderservice.selectOrder.OrderFilter.nextBranchId)?.name;
+    console.log("selectOrder", this.orderservice.selectOrder);
+    //   if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedItems.length == 0 && !this.selectAll)) {ئ
+    //     this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    //     return
+    //   }
+    //   else
+    //     this.route.navigate(['/app/order/printOrders']);
   }
 }
