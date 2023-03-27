@@ -16,7 +16,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/shared/auth.service';
 import { BranchesService } from 'src/app/services/branches.service';
 import { ReceiveOrdersToMyBranchDto } from 'src/app/Models/order/select-order.model';
-import { AgentOrdersIds } from 'src/app/shared/interfaces/Orders';
+import { CustomOrderAgent } from 'src/app/shared/interfaces/Orders';
 @Component({
   selector: 'app-get-orders-come-to-my-branch',
   templateUrl: './get-orders-come-to-my-branch.component.html',
@@ -37,8 +37,8 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
   regionapi: string = 'Region';
   agents: User[] = []
   regions: Region[] = [];
-  agentOrdersId: AgentOrdersIds
-  agentOrdersIds: AgentOrdersIds[] = [];
+  customOrderAgent: CustomOrderAgent
+  customOrdersAgent: CustomOrderAgent[] = [];
   selectAll: boolean;
   countSelectOrder: number = 0;
   branches: any[] = [];
@@ -189,35 +189,36 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    this.agentOrdersIds = [];
+    this.customOrdersAgent = [];
     if (this.orders.filter(order => !order.agent && order.targetBranchId == this.authService.getUser().branche.id).length > 0) {
       this.notifications.create('error', '  يجب اختيار مندوب', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
     this.orders.forEach(item => {
       let order = this.dataSource.data.find(data => data.id == item.id)
-      this.agentOrdersId = {
+      this.customOrderAgent = {
         orderId: order.id,
         agentId: order.agent?.id,
         regionId: order.region?.id,
         deliveryCost: Number(order.deliveryCost),
         cost: Number(order.cost),
       }
-      this.agentOrdersIds.push(this.agentOrdersId);
+      this.customOrdersAgent.push(this.customOrderAgent);
     })
     this.receiveOrdersToMyBranch.AgentId = this.agent.id;
     this.receiveOrdersToMyBranch.RegionId = this.region.id;
-    this.receiveOrdersToMyBranch.selectedOrdersWithFitlerDto.selectedIds = this.agentOrdersIds;
-    this.receiveOrdersToMyBranch.selectedOrdersWithFitlerDto.ExceptIds = this.agentOrdersIds;
-    this.receiveOrdersToMyBranch.selectedOrdersWithFitlerDto.IsSelectedAll = this.agentOrdersIds;
-    this.receiveOrdersToMyBranch.selectedOrdersWithFitlerDto.OrderFilter = this.filtering;
-    this.receiveOrdersToMyBranch.selectedOrdersWithFitlerDto.Paging = this.paging;
+    this.receiveOrdersToMyBranch.CustomOrderAgent = this.customOrdersAgent;
+    this.receiveOrdersToMyBranch.SelectedIds = this.customOrdersAgent;
+    this.receiveOrdersToMyBranch.ExceptIds = this.customOrdersAgent;
+    this.receiveOrdersToMyBranch.IsSelectedAll = this.customOrdersAgent;
+    this.receiveOrdersToMyBranch.OrderFilter = this.filtering;
+    this.receiveOrdersToMyBranch.Paging = this.paging;
 
     this.orderservice.ReceiveOrdersToMyBranch(this.receiveOrdersToMyBranch).subscribe(res => {
       this.notifications.success('success', 'تم نقل الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.selection.clear()
       this.orders = [];
-      this.agentOrdersIds = [];
+      this.customOrdersAgent = [];
       this.getOrders()
     })
   }
