@@ -179,7 +179,7 @@ export class TransferToSecondBranchComponent implements OnInit {
   }
   moveOrders() {
     this.orderservice.selectOrder.IsSelectedAll = this.lastMasterSelectionChoise;
-    this.orderservice.selectOrder.SelectedItems = this.ordersIds;
+    this.orderservice.selectOrder.selectedIds = this.ordersIds;
     this.orderservice.selectOrder.ExceptIds = this.unSelectIds;
     this.orderservice.selectOrder.OrderFilter.nextBranchName = this.branches.find(b => b.id == this.orderservice.selectOrder.OrderFilter.nextBranchId)?.name;
     console.log(this.orderservice.selectOrder);

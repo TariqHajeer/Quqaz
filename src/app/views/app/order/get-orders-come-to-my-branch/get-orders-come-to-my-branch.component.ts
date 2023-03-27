@@ -15,13 +15,8 @@ import { Region } from 'src/app/Models/Regions/region.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/shared/auth.service';
 import { BranchesService } from 'src/app/services/branches.service';
-export interface AgentOrdersIds {
-  orderId: number
-  agentId: number
-  regionId?: number
-  cost: number
-  deliveryCost: number
-}
+import { ReceiveOrdersToMyBranchDto } from 'src/app/Models/order/select-order.model';
+import { AgentOrdersIds } from 'src/app/shared/interfaces/Orders';
 @Component({
   selector: 'app-get-orders-come-to-my-branch',
   templateUrl: './get-orders-come-to-my-branch.component.html',
@@ -40,15 +35,16 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
   countries: any[] = []
   cityapi: string = 'Country';
   regionapi: string = 'Region';
-  Agents: User[] = []
-  Regions: Region[] = [];
+  agents: User[] = []
+  regions: Region[] = [];
   agentOrdersId: AgentOrdersIds
   agentOrdersIds: AgentOrdersIds[] = [];
   selectAll: boolean;
   countSelectOrder: number = 0;
   branches: any[] = [];
-  regionId:number;
-  agentId:number;
+  region: Region = new Region();
+  agent: User = new User();
+  receiveOrdersToMyBranch: ReceiveOrdersToMyBranchDto = new ReceiveOrdersToMyBranchDto();
   constructor(
     private orderservice: OrderService,
     public userService: UserService,
@@ -64,7 +60,7 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
   ngOnInit(): void {
     this.getCities()
     this.getAgent();
-    this.GetRegion();
+    this.getRegion();
     this.getBranches();
     this.paging = new Paging
     this.filtering = new OrderFilter
@@ -121,11 +117,45 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
       this.countries = res;
     });
   }
-  switchPage(event: PageEvent) {
-    this.paging.allItemsLength = event.length
-    this.paging.RowCount = event.pageSize
-    this.paging.Page = event.pageIndex + 1
-    this.getOrders();
+  getBranches() {
+    this.branchesService.Get().subscribe(res => {
+      this.branches = res;
+    })
+  }
+  getAgent(): void {
+    this.userService.ActiveAgent().subscribe(res => {
+      this.agents = res as User[];
+    });
+  }
+  agentArray(countryId) {
+    return this.agents.filter(
+      (a) =>
+        a.countries
+          .map((c) => c.id)
+          .filter((co) => co == countryId).length > 0
+    );
+  }
+  changeAllAgents() {
+    let array = this.dataSource.data;
+    array.forEach(item => {
+      item.agent = this.agent;
+    })
+  }
+  getRegion() {
+    this.customerService.getAll(this.regionapi).subscribe((res) => {
+      this.regions = res;
+    });
+  }
+  regionArray(countryId) {
+    return this.regions.filter(
+      (r) => r.country.id == countryId
+    );
+  }
+  changeAllRegions() {
+    let array = this.dataSource.data;
+    array.forEach(item => {
+      item.region = this.region;
+    })
   }
   getOrders() {
     this.orderservice.GetOrdersComeToMyBranch(this.filtering, this.paging).subscribe(response => {
@@ -148,6 +178,12 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
 
       });
   }
+  switchPage(event: PageEvent) {
+    this.paging.allItemsLength = event.length
+    this.paging.RowCount = event.pageSize
+    this.paging.Page = event.pageIndex + 1
+    this.getOrders();
+  }
   ReceiveOrders() {
     if (this.totalCount == 0 || this.orders.length == 0) {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
@@ -169,7 +205,15 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
       }
       this.agentOrdersIds.push(this.agentOrdersId);
     })
-    this.orderservice.ReceiveOrdersToMyBranch(this.agentOrdersIds).subscribe(res => {
+    this.receiveOrdersToMyBranch.AgentId = this.agent.id;
+    this.receiveOrdersToMyBranch.RegionId = this.region.id;
+    this.receiveOrdersToMyBranch.selectedOrdersWithFitlerDto.selectedIds = this.agentOrdersIds;
+    this.receiveOrdersToMyBranch.selectedOrdersWithFitlerDto.ExceptIds = this.agentOrdersIds;
+    this.receiveOrdersToMyBranch.selectedOrdersWithFitlerDto.IsSelectedAll = this.agentOrdersIds;
+    this.receiveOrdersToMyBranch.selectedOrdersWithFitlerDto.OrderFilter = this.filtering;
+    this.receiveOrdersToMyBranch.selectedOrdersWithFitlerDto.Paging = this.paging;
+
+    this.orderservice.ReceiveOrdersToMyBranch(this.receiveOrdersToMyBranch).subscribe(res => {
       this.notifications.success('success', 'تم نقل الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.selection.clear()
       this.orders = [];
@@ -177,32 +221,7 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
       this.getOrders()
     })
   }
-  getAgent(): void {
-    this.userService.ActiveAgent().subscribe(res => {
-      this.Agents = res as User[];
-    });
-  }
-  getBranches() {
-    this.branchesService.Get().subscribe(res => {
-      this.branches = res;
-    })
-  }
-  agentArray(countryId) {
-    return this.Agents.filter(
-      (a) =>
-        a.countries
-          .map((c) => c.id)
-          .filter((co) => co == countryId).length > 0
-    );
-  }
-  GetRegion() {
-    this.customerService.getAll(this.regionapi).subscribe((res) => {
-      this.Regions = res;
-    });
-  }
-  changeCountry(){
-    this.getOrders();
-  }
+
   disapprove(element: any) {
     this.spinner.show();
     this.orderservice.DisApproveOrderComeToMyBranch(element.id).subscribe(res => {
@@ -216,9 +235,5 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
       }
     )
   }
-  regionArray(countryId) {
-    return this.Regions.filter(
-      (r) => r.country.id == countryId
-    );
-  }
+
 }
