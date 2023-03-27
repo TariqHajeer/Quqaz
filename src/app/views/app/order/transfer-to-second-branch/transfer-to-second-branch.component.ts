@@ -49,27 +49,26 @@ export class TransferToSecondBranchComponent implements OnInit {
   setIsAllSelected(isAllSelected: boolean): void {
     this.selectAll = isAllSelected;
     if (this.selectAll) {
-      this.originalAllSelected = true;
+      this.lastMasterSelectionChoise = true;
     }
     this.ref.detectChanges();
     this.setHeaderChekclable();
   }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
-  originalAllSelected: boolean = false;
+  lastMasterSelectionChoise: boolean = false;
   masterToggle() {
-    console.log("masterToggle", this.selectAll);
     this.ordersIds = [];
     this.unSelectIds = [];
     if (!this.selectAll) {
       this.selection.clear();
-      this.originalAllSelected = false;
+      this.lastMasterSelectionChoise = false;
       this.setCountSelectOrder(0);
       return;
     }
     this.dataSource.data.forEach(row => {
       this.selection.select(row);
     });
-    this.originalAllSelected = true;
+    this.lastMasterSelectionChoise = true;
     this.setCountSelectOrder(this.totalCount);
   }
   indeterminate: boolean = false;
@@ -93,13 +92,10 @@ export class TransferToSecondBranchComponent implements OnInit {
     this.selection.toggle(row);
     this.checkboxId(row);
   }
-  checkboxRowLabel(row?: any): string {
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row`;
-  }
   checkboxId(row) {
     if (this.selection.isSelected(row)) {
       this.setCountSelectOrder(this.countSelectOrder + 1);
-      if (this.originalAllSelected) {
+      if (this.lastMasterSelectionChoise) {
         this.unSelectIds = this.unSelectIds.filter(c => c != row.id);
       }
       else {
@@ -111,10 +107,10 @@ export class TransferToSecondBranchComponent implements OnInit {
     }
     else {
       this.setIsAllSelected(false);
-      if (this.originalAllSelected) {
+      if (this.lastMasterSelectionChoise) {
         this.unSelectIds.push(row.id);
         if (this.unSelectIds.length == this.totalCount) {
-          this.originalAllSelected = false;
+          this.lastMasterSelectionChoise = false;
         }
       } else {
         this.ordersIds = this.ordersIds.filter(c => c != row.id);
@@ -127,7 +123,12 @@ export class TransferToSecondBranchComponent implements OnInit {
       this.branches = res?.filter(data => data.id != this.authService.getUser().branche.id);
     })
   }
-
+  getItemIndex(i: number): number {
+    if (this.orderservice.selectOrder.Paging.Page == 1) {
+      return i;
+    }
+    return i + (this.orderservice.selectOrder.Paging.RowCount * (this.orderservice.selectOrder.Paging.Page - 1));
+  }
   switchPage(event: PageEvent) {
     this.orderservice.selectOrder.Paging.allItemsLength = event.length;
     this.orderservice.selectOrder.Paging.RowCount = event.pageSize;
@@ -157,27 +158,37 @@ export class TransferToSecondBranchComponent implements OnInit {
         }
       this.dataSource = new MatTableDataSource(this.getorders);
       this.spinner.hide();
-      this.totalCount = response.total
-      this.dataSource.data.forEach(row => {
-        if (this.selectAll ||
-          (!this.selectAll && this.ordersIds.find(d => d == row.id))) { this.selection.select(row) }
-      });
+      this.totalCount = response.total;
+      if (this.selectAll) {
+        this.dataSource.data.forEach(row => this.selection.select(row));
+      }
+      else
+        if (this.lastMasterSelectionChoise) {
+
+          this.dataSource.data.filter(row => this.unSelectIds.indexOf(row.id) == -1)
+            .forEach(row => this.selection.select(row));
+        }
+        else {
+          this.dataSource.data.filter(row => this.ordersIds.indexOf(row.id) >= 0)
+            .forEach(row => this.selection.select(row));
+        }
     },
       err => {
         this.spinner.hide();
       });
   }
   moveOrders() {
-    this.orderservice.selectOrder.IsSelectedAll = this.originalAllSelected;
+    this.orderservice.selectOrder.IsSelectedAll = this.lastMasterSelectionChoise;
     this.orderservice.selectOrder.SelectedItems = this.ordersIds;
     this.orderservice.selectOrder.ExceptIds = this.unSelectIds;
     this.orderservice.selectOrder.OrderFilter.nextBranchName = this.branches.find(b => b.id == this.orderservice.selectOrder.OrderFilter.nextBranchId)?.name;
-    if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedItems.length == 0 && !this.orderservice.selectOrder.IsSelectedAll)) {
+    console.log(this.orderservice.selectOrder);
+    // if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedItems.length == 0 && !this.orderservice.selectOrder.IsSelectedAll)) {
 
-      this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      return
-    }
-    else
-      this.route.navigate(['/app/order/printOrders']);
+    //   this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+    //   return
+    // }
+    // else
+    //   this.route.navigate(['/app/order/printOrders']);
   }
 }
