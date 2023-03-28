@@ -251,7 +251,7 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     this.getAllOrders();
   }
   ReceiveOrders() {
-    if (this.totalCount == 0 ||( this.orders.length == 0 &&!this.lastMasterSelectionChoise)) {
+    if (this.totalCount == 0 || (this.orders.length == 0 && !this.lastMasterSelectionChoise)) {
       this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
@@ -296,6 +296,7 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
       this.dataSource._updateChangeSubscription();
       this.spinner.hide();
       this.notifications.success('success', 'تم الرفض بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.totalCount -= 1;
     },
       err => {
         this.spinner.hide();
