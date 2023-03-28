@@ -28,7 +28,7 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
   dataSource = new MatTableDataSource([]);
   orders: any[] = []
   paging: Paging = new Paging();
-  filtering: OrderFilter = new OrderFilter();
+  filter: OrderFilter = new OrderFilter();
   noDataFound: boolean = false
   @Input() totalCount: number;
   countries: any[] = []
@@ -70,7 +70,7 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     this.getAgent();
     this.getRegion();
     this.getBranches();
-    this.getOrders();
+    this.getAllOrders();
   }
 
   setIsAllSelected(isAllSelected: boolean): void {
@@ -173,7 +173,7 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     array.forEach(item => {
       item.agent = this.agent;
     });
-    this.tempOrders = JSON.parse( JSON.stringify(array));
+    this.tempOrders = JSON.parse(JSON.stringify(array));
   }
   getRegion() {
     this.customerService.getAll(this.regionapi).subscribe((res) => {
@@ -190,29 +190,19 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     array.forEach(item => {
       item.region = this.region;
     })
-    this.tempOrders =JSON.parse( JSON.stringify(array));
+    this.tempOrders = JSON.parse(JSON.stringify(array));
   }
   changeOrderSelectedValues(selectOrder) {
-    console.log(this.tempOrders);
-
     let order = this.orders.find(o => o.id == selectOrder.id);
     let tempOrder = this.tempOrders.find(o => o.id == selectOrder.id);
-    console.log("selectOrder", selectOrder);
-
-    console.log("tempOrder", tempOrder);
-
-    if (tempOrder.region.id == selectOrder.region.id ||
-      tempOrder.agent.id == selectOrder.agent.id ||
-      tempOrder.cost == selectOrder.cost ||
-      tempOrder.deliveryCost == selectOrder.deliveryCost) {
-      console.log("true");
-
-      if (order && this.lastMasterSelectionChoise)
-        this.orders = this.orders.filter(o => o.id != order.id);
+    if (tempOrder.region?.id == selectOrder.region?.id &&
+      tempOrder.agent?.id == selectOrder.agent?.id &&
+      tempOrder.cost == selectOrder.cost &&
+      tempOrder.deliveryCost == selectOrder.deliveryCost &&
+      order && this.lastMasterSelectionChoise) {
+      this.orders = this.orders.filter(o => o.id != order.id);
       return
     }
-    console.log("false");
-
     if (this.lastMasterSelectionChoise && !order) {
       this.orders.push(selectOrder);
     }
@@ -221,9 +211,19 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
       this.orders[index] = selectOrder;
     }
   }
-
-  getOrders() {
-    this.orderservice.GetOrdersComeToMyBranch(this.filtering, this.paging).subscribe(response => {
+  filtering() {
+    this.dataSource = new MatTableDataSource([]);
+    this.selection = new SelectionModel<any>(true, []);
+    this.ordersIds = [];
+    this.unSelectIds = [];
+    this.lastMasterSelectionChoise = false;
+    this.setIsAllSelected(false);
+    this.setCountSelectOrder(0);
+    this.selection.clear();
+    this.getAllOrders();
+  }
+  getAllOrders() {
+    this.orderservice.GetOrdersComeToMyBranch(this.filter, this.paging).subscribe(response => {
       if (response)
         if (response.data.length <= 0)
           this.noDataFound = true;
@@ -232,7 +232,7 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
         }
       this.dataSource = new MatTableDataSource(response.data);
       this.totalCount = response.total;
-      this.tempOrders =JSON.parse( JSON.stringify(response.data));
+      this.tempOrders = JSON.parse(JSON.stringify(response.data));
       this.dataSource.data.forEach(row => {
         if (this.orders.filter(d => d.id == row.id).length == 1) {
           this.selection.select(row.id);
@@ -248,47 +248,45 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     this.paging.allItemsLength = event.length;
     this.paging.RowCount = event.pageSize;
     this.paging.Page = event.pageIndex + 1;
-    this.getOrders();
+    this.getAllOrders();
   }
   ReceiveOrders() {
-    console.log(this.orders);
+    if (this.totalCount == 0 ||( this.orders.length == 0 &&!this.lastMasterSelectionChoise)) {
+      this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      return
+    }
+    this.customOrdersAgent = [];
+    if (this.orders.filter(order => !order.agent && order.targetBranchId == this.authService.getUser().branche.id).length > 0) {
+      this.notifications.create('error', '  يجب اختيار مندوب', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      return
+    }
+    this.orders.forEach(item => {
+      let order = this.dataSource.data.find(data => data.id == item.id)
+      this.customOrderAgent = {
+        orderId: order.id,
+        agentId: order.agent?.id,
+        regionId: order.region?.id,
+        deliveryCost: Number(order.deliveryCost),
+        cost: Number(order.cost),
+      }
+      this.customOrdersAgent.push(this.customOrderAgent);
+    })
+    this.receiveOrdersToMyBranch.AgentId = this.agent.id;
+    this.receiveOrdersToMyBranch.RegionId = this.region.id;
+    this.receiveOrdersToMyBranch.CustomOrderAgent = this.customOrdersAgent;
+    this.receiveOrdersToMyBranch.SelectedIds = this.ordersIds;
+    this.receiveOrdersToMyBranch.ExceptIds = this.unSelectIds;
+    this.receiveOrdersToMyBranch.IsSelectedAll = this.lastMasterSelectionChoise;
+    this.receiveOrdersToMyBranch.OrderFilter = this.filter;
+    this.receiveOrdersToMyBranch.Paging = this.paging;
 
-    // if (this.totalCount == 0 || this.orders.length == 0) {
-    //   this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-    //   return
-    // }
-    // this.customOrdersAgent = [];
-    // if (this.orders.filter(order => !order.agent && order.targetBranchId == this.authService.getUser().branche.id).length > 0) {
-    //   this.notifications.create('error', '  يجب اختيار مندوب', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-    //   return
-    // }
-    // this.orders.forEach(item => {
-    //   let order = this.dataSource.data.find(data => data.id == item.id)
-    //   this.customOrderAgent = {
-    //     orderId: order.id,
-    //     agentId: order.agent?.id,
-    //     regionId: order.region?.id,
-    //     deliveryCost: Number(order.deliveryCost),
-    //     cost: Number(order.cost),
-    //   }
-    //   this.customOrdersAgent.push(this.customOrderAgent);
-    // })
-    // this.receiveOrdersToMyBranch.AgentId = this.agent.id;
-    // this.receiveOrdersToMyBranch.RegionId = this.region.id;
-    // this.receiveOrdersToMyBranch.CustomOrderAgent = this.customOrdersAgent;
-    // this.receiveOrdersToMyBranch.SelectedIds = this.ordersIds;
-    // this.receiveOrdersToMyBranch.ExceptIds = this.unSelectIds;
-    // this.receiveOrdersToMyBranch.IsSelectedAll = this.lastMasterSelectionChoise;
-    // this.receiveOrdersToMyBranch.OrderFilter = this.filtering;
-    // this.receiveOrdersToMyBranch.Paging = this.paging;
-
-    // this.orderservice.ReceiveOrdersToMyBranch(this.receiveOrdersToMyBranch).subscribe(res => {
-    //   this.notifications.success('success', 'تم نقل الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-    //   this.selection.clear()
-    //   this.orders = [];
-    //   this.customOrdersAgent = [];
-    //   this.getOrders()
-    // })
+    this.orderservice.ReceiveOrdersToMyBranch(this.receiveOrdersToMyBranch).subscribe(res => {
+      this.notifications.success('success', 'تم نقل الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.selection.clear()
+      this.orders = [];
+      this.customOrdersAgent = [];
+      this.getAllOrders()
+    })
   }
 
   disapprove(element: any) {
