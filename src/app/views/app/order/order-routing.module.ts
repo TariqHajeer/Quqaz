@@ -30,6 +30,7 @@ import { ViewOrdersComponent } from './view-orders/view-orders.component';
 import { GetOrdersReturnedToMyBranchComponent } from './get-orders-returned-to-my-branch/get-orders-returned-to-my-branch.component';
 import { PrintOrdersComponent } from './printPreview/print-orders/print-orders.component';
 import { GetDisapprovedReturnedOrderByBranchComponent } from './get-disapproved-returned-order-by-branch/get-disapproved-returned-order-by-branch.component';
+import { CreateMultipleComponent } from './create-multiple/create-multiple.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,11 @@ const routes: Routes = [
     path: 'addMulitpleOrders',
     component: CreateMulitpleOrderComponent, canActivate: [AuthGuard],
     data: { roles: [UserPermission.AddOrder] }
+  },
+  {
+    path: 'create-multiple',
+    component: CreateMultipleComponent, canActivate: [AuthGuard],
+    data: { role: [UserPermission.AddOrder] }
   },
   {
     path: 'addMulitpleOrdersWithRegion',

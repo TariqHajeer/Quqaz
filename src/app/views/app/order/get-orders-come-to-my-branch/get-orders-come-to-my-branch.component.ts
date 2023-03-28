@@ -173,7 +173,7 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     array.forEach(item => {
       item.agent = this.agent;
     });
-    this.tempOrders = [...array];
+    this.tempOrders = JSON.parse( JSON.stringify(array));
   }
   getRegion() {
     this.customerService.getAll(this.regionapi).subscribe((res) => {
@@ -190,29 +190,29 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     array.forEach(item => {
       item.region = this.region;
     })
-    this.tempOrders = [...array];
+    this.tempOrders =JSON.parse( JSON.stringify(array));
   }
   changeOrderSelectedValues(selectOrder) {
     console.log(this.tempOrders);
-    
+
     let order = this.orders.find(o => o.id == selectOrder.id);
     let tempOrder = this.tempOrders.find(o => o.id == selectOrder.id);
-    console.log("selectOrder",selectOrder);
-    
-    console.log("tempOrder",tempOrder);
-    
+    console.log("selectOrder", selectOrder);
+
+    console.log("tempOrder", tempOrder);
+
     if (tempOrder.region.id == selectOrder.region.id ||
       tempOrder.agent.id == selectOrder.agent.id ||
       tempOrder.cost == selectOrder.cost ||
       tempOrder.deliveryCost == selectOrder.deliveryCost) {
-        console.log("true");
-        
+      console.log("true");
+
       if (order && this.lastMasterSelectionChoise)
         this.orders = this.orders.filter(o => o.id != order.id);
       return
     }
     console.log("false");
-    
+
     if (this.lastMasterSelectionChoise && !order) {
       this.orders.push(selectOrder);
     }
@@ -232,7 +232,7 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
         }
       this.dataSource = new MatTableDataSource(response.data);
       this.totalCount = response.total;
-      this.tempOrders = [...response.data];
+      this.tempOrders =JSON.parse( JSON.stringify(response.data));
       this.dataSource.data.forEach(row => {
         if (this.orders.filter(d => d.id == row.id).length == 1) {
           this.selection.select(row.id);

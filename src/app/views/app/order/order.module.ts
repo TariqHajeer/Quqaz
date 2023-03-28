@@ -50,6 +50,7 @@ import { ShipmentReceivedByDeliveredComponent } from './shipment-received-by-del
 import { ShipmentReceivedByReturnedComponent } from './shipment-received-by-returned/shipment-received-by-returned.component';
 import { MoveOrdersToAgentByCodeComponent } from './move-orders-to-agent-by-code/move-orders-to-agent-by-code.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { CreateMultipleComponent } from './create-multiple/create-multiple.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     ShipmentReceivedByDeliveredComponent,
     ShipmentReceivedByReturnedComponent,
     MoveOrdersToAgentByCodeComponent,
+    CreateMultipleComponent,
   ],
   imports: [
     CommonModule,
