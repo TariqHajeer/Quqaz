@@ -248,8 +248,11 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
         }
 
       if (this.orders.length > 0) {
-        this.dataSource.data.filter(row => this.orders.indexOf(row) >= 0)
-          .forEach(row => row = this.orders[this.orders.indexOf(row)]);
+        this.dataSource.data.forEach(row => {
+          if (this.orders.filter(o => o.id == row.id).length > 0) {
+            row = this.orders.find(o => row.id == o.id)
+          }
+        })
       }
     },
       err => {
