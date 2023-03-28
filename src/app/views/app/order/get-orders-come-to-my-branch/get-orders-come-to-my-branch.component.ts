@@ -290,6 +290,23 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
   }
 
   disapprove(element: any) {
+    this.totalCount -= 1;
+    if (this.selectAll) {
+      this.setCountSelectOrder(this.countSelectOrder - 1);
+    }
+    else if(this.selection.isSelected(element)) {
+      
+      if (!this.lastMasterSelectionChoise) {
+        this.ordersIds = this.ordersIds.filter(c => c != element.id);
+        this.orders = this.orders.filter(c => c != element);
+      }
+      this.setCountSelectOrder(this.countSelectOrder - 1);
+    }
+    if (this.countSelectOrder == this.totalCount) {
+      this.setIsAllSelected(true);
+      this.lastMasterSelectionChoise = true;
+    }
+
     this.spinner.show();
     this.orderservice.DisApproveOrderComeToMyBranch(element.id).subscribe(res => {
       this.dataSource.data = this.dataSource.data.filter(c => c.id != element.id);
