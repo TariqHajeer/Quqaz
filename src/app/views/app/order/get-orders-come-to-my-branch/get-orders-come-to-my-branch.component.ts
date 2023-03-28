@@ -233,12 +233,24 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
       this.dataSource = new MatTableDataSource(response.data);
       this.totalCount = response.total;
       this.tempOrders = JSON.parse(JSON.stringify(response.data));
-      this.dataSource.data.forEach(row => {
-        if (this.orders.filter(d => d.id == row.id).length == 1) {
-          this.selection.select(row.id);
-          row.agent = this.orders.find(order => order.id == row.id).agent;
+      if (this.selectAll) {
+        this.dataSource.data.forEach(row => this.selection.select(row));
+      }
+      else
+        if (this.lastMasterSelectionChoise) {
+
+          this.dataSource.data.filter(row => this.unSelectIds.indexOf(row.id) == -1)
+            .forEach(row => this.selection.select(row));
         }
-      });
+        else {
+          this.dataSource.data.filter(row => this.ordersIds.indexOf(row.id) >= 0)
+            .forEach(row => this.selection.select(row));
+        }
+
+      if (this.orders.length > 0) {
+        this.dataSource.data.filter(row => this.orders.indexOf(row) >= 0)
+          .forEach(row => row = this.orders[this.orders.indexOf(row)]);
+      }
     },
       err => {
 
