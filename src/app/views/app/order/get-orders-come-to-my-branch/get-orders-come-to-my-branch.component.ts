@@ -303,5 +303,11 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
       }
     )
   }
+  getItemIndex(i: number): number {
+    if (this.paging.Page == 1) {
+      return i;
+    }
+    return i + (this.paging.RowCount * (this.paging.Page - 1));
+  }
 
 }
