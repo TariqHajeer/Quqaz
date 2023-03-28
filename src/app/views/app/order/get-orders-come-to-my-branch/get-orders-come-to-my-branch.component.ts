@@ -232,7 +232,7 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
         }
       this.dataSource = new MatTableDataSource(response.data);
       this.totalCount = response.total;
-      this.tempOrders = response;
+      this.tempOrders = [...response.data];
       this.dataSource.data.forEach(row => {
         if (this.orders.filter(d => d.id == row.id).length == 1) {
           this.selection.select(row.id);
