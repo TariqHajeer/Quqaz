@@ -138,13 +138,16 @@ export class TransferToSecondBranchComponent implements OnInit {
     this.getAllOrders();
   }
   filtering() {
+    this.dataSource = new MatTableDataSource([]);
+    this.selection = new SelectionModel<any>(true, []);
+    this.ordersIds = [];
+    this.unSelectIds = [];
+    this.lastMasterSelectionChoise = false;
+    this.setIsAllSelected(false);
+    this.setCountSelectOrder(0);
+    this.selection.clear();
     if (this.orderservice.selectOrder.OrderFilter.nextBranchId) {
-      this.selection.clear();
       this.getAllOrders();
-    }
-    else {
-      this.dataSource = new MatTableDataSource([]);
-      this.selection = new SelectionModel<any>(true, []);
     }
   }
   getAllOrders() {

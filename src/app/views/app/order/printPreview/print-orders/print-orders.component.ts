@@ -32,7 +32,7 @@ export class PrintOrdersComponent implements OnInit {
   ngOnInit(): void {
     this.getOrders();
   }
-  
+
 
   getOrders() {
     if (this.orderservice.selectOrder.SelectedIds.length == 0 && this.orderservice.selectOrder.IsSelectedAll == false)
@@ -53,7 +53,7 @@ export class PrintOrdersComponent implements OnInit {
     });
   }
   seeMore() {
-    this.orderservice.selectOrder.Paging.Page += this.orderservice.selectOrder.Paging.Page;
+    this.orderservice.selectOrder.Paging.Page += 1;
     this.getOrders();
   }
   moveOrders() {
