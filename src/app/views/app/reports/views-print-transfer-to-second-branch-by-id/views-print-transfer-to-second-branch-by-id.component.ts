@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Paging } from 'src/app/Models/paging';
@@ -23,16 +24,22 @@ export class ViewsPrintTransferToSecondBranchByIdComponent implements OnInit {
   showSeeMore: boolean;
   paging: Paging = new Paging;
   driverName: string = this.orderservice.orderDetials.driverName;
+  id:any;
   constructor(public orderservice: OrderService,
     private notifications: NotificationsService,
     public spinner: NgxSpinnerService,
-    private auth: AuthService) { }
+    private auth: AuthService,
+    public getroute: ActivatedRoute
+    ) { }
 
   ngOnInit(): void {
     this.getOrders();
   }
   getOrders() {
-    this.orderservice.GetPrintTransferToSecondBranchDetials(this.paging).subscribe(response => {
+    this.getroute.params.subscribe(par => {
+      this.id = par['id'] as any
+    });
+    this.orderservice.GetPrintTransferToSecondBranchDetials(this.paging,this.id).subscribe(response => {
       if (this.paging.Page == 1)
         this.orders = response.data;
       else

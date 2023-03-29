@@ -364,10 +364,10 @@ export class OrderService {
     return this.http.get<any>(this.controler + 'GetPrintsTransferToSecondBranch', { params: params });
   }
   orderDetials: PrintTransferOrder = new PrintTransferOrder();
-  GetPrintTransferToSecondBranchDetials(paging: Paging) {
+  GetPrintTransferToSecondBranchDetials(paging: Paging,id) {
     let params = new HttpParams();
-    if (this.orderDetials.id)
-      params = params.append('id', this.orderDetials.id);
+    if (id)
+      params = params.append('id', id);
       params=  this.setPaging(params, paging);
     return this.http.get<any>(this.controler + 'GetPrintTransferToSecondBranchDetials', { params: params });
   }
