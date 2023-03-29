@@ -368,7 +368,7 @@ export class OrderService {
     let params = new HttpParams();
     if (this.orderDetials.id)
       params = params.append('id', this.orderDetials.id);
-    this.setPaging(params, paging);
+      params=  this.setPaging(params, paging);
     return this.http.get<any>(this.controler + 'GetPrintTransferToSecondBranchDetials', { params: params });
   }
   GetOrdersByAgentRegionAndCode(getOrdersByAgentRegionAndCode: GetOrdersByAgentRegionAndCode) {
