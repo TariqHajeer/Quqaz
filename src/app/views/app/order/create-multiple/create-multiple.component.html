@@ -13,6 +13,7 @@
     <div class="example-container">
         <table class="table">
             <thead>
+                <th>#</th>
                 <th>كود الشحنة</th>
                 <th>اسم العميل</th>
                 <th>المحافظة</th>
@@ -25,8 +26,14 @@
                 <th></th>
             </thead>
             <tbody>
-                <tr>
-                    
+                <tr *ngFor="let order of orders;index as i">
+                    <td>{{i}}</td>
+                    <td>
+                        <h4 *ngIf="!order.CanEdit">{{order.Code}}</h4> 
+                    </td>
+                    <td>
+                        
+                    </td>
                 </tr>
             </tbody>
         </table>

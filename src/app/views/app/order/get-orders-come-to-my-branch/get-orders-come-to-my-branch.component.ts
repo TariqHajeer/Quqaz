@@ -193,6 +193,9 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     this.tempOrders = JSON.parse(JSON.stringify(array));
   }
   changeOrderSelectedValues(selectOrder) {
+    if (!this.selection.isSelected(selectOrder)) {
+      return;
+    }
     let order = this.orders.find(o => o.id == selectOrder.id);
     let tempOrder = this.tempOrders.find(o => o.id == selectOrder.id);
     if (tempOrder.region?.id == selectOrder.region?.id &&
@@ -222,6 +225,19 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     this.selection.clear();
     this.getAllOrders();
   }
+  setAgentAndRegion(order): void {
+    console.log("setAgentAndRegion");
+    if (this.orders.some(o => o.id == order.id)) {
+      console.log("returing");
+      return;
+    }
+    if (this.agent) {
+      order.agent = this.agent;
+    }
+    if (this.region) {
+      order.region = this.region;
+    }
+  }
   getAllOrders() {
     this.orderservice.GetOrdersComeToMyBranch(this.filter, this.paging).subscribe(response => {
       if (response)
@@ -233,24 +249,37 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
       this.dataSource = new MatTableDataSource(response.data);
       this.totalCount = response.total;
       this.tempOrders = JSON.parse(JSON.stringify(response.data));
+      this.dataSource.data.forEach(row=>{
+        this.setAgentAndRegion(row);
+      });
       if (this.selectAll) {
-        this.dataSource.data.forEach(row => this.selection.select(row));
+        this.dataSource.data.forEach(row => {
+          this.selection.select(row);
+        });
       }
       else
         if (this.lastMasterSelectionChoise) {
 
           this.dataSource.data.filter(row => this.unSelectIds.indexOf(row.id) == -1)
-            .forEach(row => this.selection.select(row));
+            .forEach(row => {
+              this.selection.select(row);
+            });
         }
         else {
           this.dataSource.data.filter(row => this.ordersIds.indexOf(row.id) >= 0)
-            .forEach(row => this.selection.select(row));
+            .forEach(row => {
+              this.selection.select(row);
+            });
         }
 
       if (this.orders.length > 0) {
         this.dataSource.data.forEach(row => {
-          if (this.orders.filter(o => o.id == row.id).length > 0) {
-            row = this.orders.find(o => row.id == o.id)
+          let o = this.orders.find(o => o.id === row.id);
+          if (o) {
+            row.cost = Number(o.cost);
+            row.deliveryCost = Number(o.deliveryCost);
+            row.agent = o.agent;
+            row.region = o.region;
           }
         })
       }
@@ -309,8 +338,8 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     if (this.selectAll) {
       this.setCountSelectOrder(this.countSelectOrder - 1);
     }
-    else if(this.selection.isSelected(element)) {
-      
+    else if (this.selection.isSelected(element)) {
+
       if (!this.lastMasterSelectionChoise) {
         this.ordersIds = this.ordersIds.filter(c => c != element.id);
         this.orders = this.orders.filter(c => c != element);
