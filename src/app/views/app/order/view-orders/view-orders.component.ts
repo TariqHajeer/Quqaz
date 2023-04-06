@@ -19,10 +19,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { Resend } from 'src/app/Models/order/resend.model';
 import { OrderStateEnum } from 'src/app/Models/Enums/OrderStateEnum';
+import { IndexesTypeEnum } from 'src/app/Models/Enums/IndexesTypeEnum';
 import orderPlaceds from 'src/app/data/orderPlaced';
 import moneyPlaceds from 'src/app/data/moneyPalced';
 import { BranchesService } from 'src/app/services/branches.service';
-
+import { IndexesService } from 'src/app/services/indexes.service';
 @Component({
   selector: 'app-view-orders',
   templateUrl: './view-orders.component.html',
@@ -58,7 +59,8 @@ export class ViewOrdersComponent implements OnInit {
     private userService: UserService,
     public spinner: NgxSpinnerService,
     private notifications: NotificationsService,
-    private branchesService: BranchesService
+    private branchesService: BranchesService,
+    private indexesService: IndexesService
   ) { }
 
   ngOnInit(): void {
@@ -72,6 +74,7 @@ export class ViewOrdersComponent implements OnInit {
     this.getAgent();
     this.getUser();
     this.getOrders();
+    this.getIndexes();
   }
   get() {
     this.dataSource = new MatTableDataSource(this.orders);
@@ -102,6 +105,11 @@ export class ViewOrdersComponent implements OnInit {
       'Edit',
       'Delete',
     ];
+  }
+  getIndexes() {
+    this.indexesService.getIndexes([IndexesTypeEnum.Countries, IndexesTypeEnum.Clients, IndexesTypeEnum.Branches]).subscribe(res => {
+      console.log(res);
+    })
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -157,6 +165,7 @@ export class ViewOrdersComponent implements OnInit {
       this.orderResend.RegionId = this.Regionsresend[0].id;
     else this.orderResend.RegionId = null;
   }
+
   getOrders() {
     this.spinner.show();
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(
