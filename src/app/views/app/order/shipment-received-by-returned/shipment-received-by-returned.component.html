@@ -369,32 +369,22 @@
       (click)="selection.toggle(row)"
     ></tr>
   </table>
-  <div class="row">
-    <div class="col-4"></div>
-    <div
-      class="col-4"
-      *ngIf="showcount"
-      style="font-size: 15px; text-align: right"
-    >
-      الإجمالي : {{ count }}
+  <div class="row" *ngIf="showcount" style="font-size: 15px; text-align: center;">
+    <div class="col-4"> الإجمالي :</div>
+    <div class="col-4">
+      {{ count }}
     </div>
-    <div
-      class="col-4"
-      *ngIf="showcount"
-      style="font-size: 15px; text-align: right;"
-    > &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
-      {{ deliveryCostCount }} 
-      &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="col-1">
+      {{ deliveryCostCount }}
+    </div>
+    <div class="col-1">
       {{ agentCost }}
     </div>
-    
+    <div class="col-2">
+      المجموع : {{totalCost}}
+    </div>
+
   </div>
-  <!--
-         <mat-paginator [length]="100"
-        [pageSize]="10"
-        [pageSizeOptions]="[ 10, 25,50, 100]">
-      </mat-paginator>
-       -->
   <h5 style="padding-top: 20px; padding-right: 10px" *ngIf="noDataFound">
     لايوجد بيانات للعرض
   </h5>

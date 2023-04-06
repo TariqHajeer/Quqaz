@@ -369,18 +369,21 @@ export class ShipmentReceivedByDeliveredComponent {
     );
   }
 
-  count = 0;
-  agentCost;
-  deliveryCostCount;
+  count: number = 0;
+  agentCost: number = 0;
+  deliveryCostCount: number = 0;
+  totalCost: number = 0
   sumCost() {
     this.count = 0;
     this.deliveryCostCount = 0;
     this.agentCost = 0;
+    this.totalCost = 0;
     if (this.getorders)
       this.getorders.forEach((o) => {
         this.count += o.order.cost * 1;
         this.deliveryCostCount += o.order.deliveryCost * 1;
         this.agentCost += o.order.agentCost * 1;
+        this.totalCost += (o.order.cost - o.order.agentCost) * 1;
       });
     return this.count;
   }
