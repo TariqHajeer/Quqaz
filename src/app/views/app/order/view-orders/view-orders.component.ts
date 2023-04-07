@@ -11,7 +11,6 @@ import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { Client } from '../../client/client.model';
 import { Region } from 'src/app/Models/Regions/region.model';
-import { ClientService } from '../../client/client.service';
 import { CustomService } from 'src/app/services/custom.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/Models/user/user.model';
@@ -22,7 +21,6 @@ import { OrderStateEnum } from 'src/app/Models/Enums/OrderStateEnum';
 import { IndexesTypeEnum } from 'src/app/Models/Enums/IndexesTypeEnum';
 import orderPlaceds from 'src/app/data/orderPlaced';
 import moneyPlaceds from 'src/app/data/moneyPalced';
-import { BranchesService } from 'src/app/services/branches.service';
 import { IndexesService } from 'src/app/services/indexes.service';
 @Component({
   selector: 'app-view-orders',
@@ -37,44 +35,42 @@ export class ViewOrdersComponent implements OnInit {
   @Input() totalCount: number;
   pageEvent: PageEvent;
   paging: Paging;
-  filtering: OrderFilter;
+  filter: OrderFilter;
   orders: Order[] = [];
   noDataFound: boolean = false;
   orderPlace: NameAndIdDto[] = [...orderPlaceds];
   MoenyPlaced: NameAndIdDto[] = [...moneyPlaceds];
   clients: Client[] = [];
-  cities: City[] = [];
-  Region: Region[] = [];
-  Agents: User[] = [];
+  countries: City[] = [];
+  country: City = new City();
+  regions: Region[] = [];
+  agents: User[] = [];
   cityapi = 'Country';
   regionapi = 'Region';
   users: string[] = [];
   checkOrderState: boolean;
   branches: any[] = [];
+  tempRegions;
+  tempAgent;
+  agentsResend: User[] = [];
+  regionsResend: Region[] = [];
+  orderResend: Resend = new Resend();
+  countryResend: City = new City();
+
   constructor(
     private orderservice: OrderService,
     private router: Router,
-    private clientService: ClientService,
     private customerService: CustomService,
     private userService: UserService,
     public spinner: NgxSpinnerService,
     private notifications: NotificationsService,
-    private branchesService: BranchesService,
     private indexesService: IndexesService
   ) { }
 
   ngOnInit(): void {
     this.paging = new Paging();
-    this.filtering = new OrderFilter();
+    this.filter = new OrderFilter();
     this.get();
-    this.getBranches();
-    this.GetRegion();
-    this.Getcities();
-    this.GetClient();
-    this.getAgent();
-    this.getUser();
-    this.getOrders();
-    this.getIndexes();
   }
   get() {
     this.dataSource = new MatTableDataSource(this.orders);
@@ -105,70 +101,36 @@ export class ViewOrdersComponent implements OnInit {
       'Edit',
       'Delete',
     ];
-  }
-  getIndexes() {
-    this.indexesService.getIndexes([IndexesTypeEnum.Countries, IndexesTypeEnum.Clients, IndexesTypeEnum.Branches]).subscribe(res => {
-      console.log(res);
-    })
-  }
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-  switchPage(event: PageEvent) {
-    this.paging.allItemsLength = event.length;
-    this.paging.RowCount = event.pageSize;
-    this.paging.Page = event.pageIndex + 1;
-
+    this.getIndexes();
+    this.getUser();
     this.getOrders();
   }
-  orderResend: Resend = new Resend();
-  fillResend(order) {
-    this.orderResend.Id = order.id;
-    this.orderResend.AgnetId = order.agent.id;
-    this.orderResend.CountryId = order.country.id;
-    this.orderResend.RegionId = order.region ? order.region.id : null;
-    this.orderResend.DeliveryCost = order.country.deliveryCost * 1;
-    this.Regionsresend = this.Region.filter(
-      (r) => r.country.id == this.orderResend.CountryId
-    );
-    this.Agentsresend = this.tempAgent.filter(
-      (a) =>
-        a.countries
-          .map((c) => c.id)
-          .filter((co) => co == this.orderResend.CountryId).length > 0
-    );
+  getIndexes() {
+    this.indexesService.getIndexes([IndexesTypeEnum.Countries, IndexesTypeEnum.Clients, IndexesTypeEnum.Branches]).subscribe(response => {
+      this.countries = response.countries;
+      this.branches = response.benaches;
+      this.clients = response.clients;
+    })
   }
-  Resend() {
-    this.orderResend.DeliveryCost = this.orderResend.DeliveryCost * 1;
-    this.orderservice.ReSend(this.orderResend).subscribe((res) => {
-      this.getOrders();
+  changeCountry() {
+    this.regions = [];
+    this.agents = [];
+    this.filter.CountryId = this.country?.id;
+    this.regions = this.country?.regions;
+    this.agents = this.country?.agnets;
+  }
+
+
+  getUser() {
+    this.orderservice.GetCreatedByNames().subscribe((res) => {
+      this.users = res;
     });
   }
-  changeCountryResend() {
-    var city = this.cities.find((c) => c.id == this.orderResend.CountryId);
-    this.orderResend.DeliveryCost = city.deliveryCost;
-    this.orderResend.RegionId = null;
-    this.Regionsresend = this.tempRegions.filter(
-      (r) => r.country.id == this.orderResend.CountryId
-    );
-    this.Agentsresend = this.tempAgent.filter(
-      (a) =>
-        a.countries
-          .map((c) => c.id)
-          .filter((co) => co == this.orderResend.CountryId).length > 0
-    );
-    if (this.Agentsresend.length == 1)
-      this.orderResend.AgnetId = this.Agentsresend[0].id;
-    else this.orderResend.AgnetId = null;
-    if (this.Regionsresend.length == 1)
-      this.orderResend.RegionId = this.Regionsresend[0].id;
-    else this.orderResend.RegionId = null;
-  }
+
 
   getOrders() {
     this.spinner.show();
-    this.orderservice.GetAll(this.filtering, this.paging).subscribe(
+    this.orderservice.GetAll(this.filter, this.paging).subscribe(
       (response) => {
         this.spinner.hide();
         if (response && response.data && response.data.length == 0) this.noDataFound = true;
@@ -181,19 +143,28 @@ export class ViewOrdersComponent implements OnInit {
       }
     );
   }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+  switchPage(event: PageEvent) {
+    this.paging.allItemsLength = event.length;
+    this.paging.RowCount = event.pageSize;
+    this.paging.Page = event.pageIndex + 1;
+    this.getOrders();
+  }
   changeOrderState() {
     if (this.checkOrderState)
-      this.filtering.OrderState = OrderStateEnum.ShortageOfCash
-    else this.filtering.OrderState = null
+      this.filter.OrderState = OrderStateEnum.ShortageOfCash
+    else this.filter.OrderState = null
     this.getOrders()
   }
-  getUser() {
-    this.orderservice.GetCreatedByNames().subscribe((res) => {
-      this.users = res;
-    });
-  }
+
   AddOrder() {
     this.router.navigate(['/app/order/addorder']);
+  }
+  Edit(element) {
+    this.router.navigate(['/app/order/editorder', element.id]);
   }
   delete() {
     this.orderservice.Delete(this.element.id).subscribe((res) => {
@@ -210,24 +181,6 @@ export class ViewOrdersComponent implements OnInit {
   getElement(element) {
     this.element = element;
   }
-  Edit(element) {
-    this.router.navigate(['/app/order/editorder', element.id]);
-  }
-  getAgent() {
-    this.userService.ActiveAgent().subscribe((res) => {
-      this.Agents = res;
-      this.Agentsresend = res;
-      this.tempAgent = res;
-      this.Agentsresend = this.tempAgent.filter(
-        (a) =>
-          a.countries
-            .map((c) => c.id)
-            .filter((co) => co == this.orderResend.CountryId).length > 0
-      );
-    });
-  }
-  tempRegions;
-  tempAgent;
   completelyReturn(id) {
     this.spinner.show();
     this.orderservice.MakeStoreOrderCompletelyReturned(id).subscribe(
@@ -240,29 +193,34 @@ export class ViewOrdersComponent implements OnInit {
       }
     );
   }
-  GetClient() {
-    this.clientService.getClients().subscribe((res) => {
-      this.clients = res;
-    });
+  fillResend(order) {
+    this.orderResend.Id = order.id;
+    this.orderResend.AgnetId = order.agent.id;
+    this.orderResend.CountryId = order.country.id;
+    this.orderResend.RegionId = order.region ? order.region.id : null;
+    this.countryResend = this.countries.find(country => country.id == order.country.id);
+    this.orderResend.DeliveryCost = this.countryResend.deliveryCost * 1;
+    this.regionsResend = this.countryResend.regions;
+    this.agentsResend = this.countryResend.agnets;
   }
-  Getcities() {
-    this.customerService.getAll(this.cityapi).subscribe((res) => {
-      this.cities = res;
-    });
+  changeCountryResend() {
+    this.orderResend.CountryId = this.countryResend.id;
+    this.orderResend.DeliveryCost = this.countryResend.deliveryCost;
+    this.orderResend.RegionId = null;
+    this.orderResend.AgnetId = null;
+    this.regionsResend = this.countryResend.regions;
+    this.agentsResend = this.countryResend.agnets;
+    if (this.agentsResend.length == 1)
+      this.orderResend.AgnetId = this.agentsResend[0].id;
+    else this.orderResend.AgnetId = null;
+    if (this.regionsResend.length == 1)
+      this.orderResend.RegionId = this.regionsResend[0].id;
+    else this.orderResend.RegionId = null;
   }
-  Agentsresend: User[] = [];
-  Regionsresend: Region[] = [];
-
-  GetRegion() {
-    this.customerService.getAll(this.regionapi).subscribe((res) => {
-      this.Region = res;
-      this.Regionsresend = res;
-      this.tempRegions = res;
+  Resend() {
+    this.orderResend.DeliveryCost = this.orderResend.DeliveryCost * 1;
+    this.orderservice.ReSend(this.orderResend).subscribe((res) => {
+      this.getOrders();
     });
-  }
-  getBranches() {
-    this.branchesService.Get().subscribe(res => {
-      this.branches = res;
-    })
   }
 }

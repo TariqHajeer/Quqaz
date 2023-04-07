@@ -15,6 +15,6 @@ export class IndexesService {
     indexesTypes.forEach((indexesType, index) => {
       params = params.append(`indexesTypes[${index}]`, String(indexesType));
     })
-    return this.http.get<IIndexes[]>(this.controler, { params: params });
+    return this.http.get<IIndexes>(this.controler, { params: params });
   }
 }

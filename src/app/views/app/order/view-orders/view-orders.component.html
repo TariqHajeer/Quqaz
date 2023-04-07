@@ -13,44 +13,40 @@
     <div class="row">
       <div class="col-md-2">
         <label> المدينة</label>
-        <ng-select [(ngModel)]="filtering.CountryId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-          (keyup.enter)="getOrders()">
-          <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}
+        <ng-select [(ngModel)]="country" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+          (keyup.enter)="getOrders()" (ngModelChange)="changeCountry()">
+          <ng-option *ngFor="let citie of countries" [value]="citie">{{citie.name}}
           </ng-option>
         </ng-select>
       </div>
       <div class="col-md-2">
         <label>المنطقة</label>
-        <ng-select [(ngModel)]="filtering.RegionId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+        <ng-select [(ngModel)]="filter.RegionId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
           (keyup.enter)="getOrders()">
-          <ng-option *ngFor="let region of Region" [value]="region.id">{{region.name}}</ng-option>
+          <ng-option *ngFor="let region of regions" [value]="region.id">{{region.name}}</ng-option>
         </ng-select>
 
       </div>
+      
+      <div class="col-md-2">
+        <label> المندوب</label>
+        <ng-select [(ngModel)]="filter.AgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+          (keyup.enter)="getOrders()">
+          <ng-option *ngFor="let Agent of agents" [value]="Agent.id">{{Agent.name}}
+          </ng-option>
+        </ng-select>
+      </div>
       <div class="col-md-2">
         <label> العميل</label>
-        <ng-select [(ngModel)]="filtering.ClientId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+        <ng-select [(ngModel)]="filter.ClientId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
           (keyup.enter)="getOrders()">
           <ng-option *ngFor="let client of clients" [value]="client.id">{{client.name}}
           </ng-option>
         </ng-select>
-
-
       </div>
-      <div class="col-md-2">
-        <label> المندوب</label>
-        <ng-select [(ngModel)]="filtering.AgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-          (keyup.enter)="getOrders()">
-          <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}
-          </ng-option>
-        </ng-select>
-
-
-      </div>
-
       <div class="col-md-2">
         <label>حالة الشحنة</label>
-        <ng-select [(ngModel)]="filtering.Orderplaced" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+        <ng-select [(ngModel)]="filter.Orderplaced" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
           (keyup.enter)="getOrders()">
           <ng-option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}
           </ng-option>
@@ -58,7 +54,7 @@
       </div>
       <div class="col-md-2">
         <label> موقع المبلغ</label>
-        <ng-select [(ngModel)]="filtering.MoneyPalced" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+        <ng-select [(ngModel)]="filter.MoneyPalced" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
           (keyup.enter)="getOrders()">
           <ng-option *ngFor="let moenyPlaced of MoenyPlaced" [value]="moenyPlaced.id">{{moenyPlaced.name}}
           </ng-option>
@@ -69,34 +65,34 @@
     <div class="row">
       <div class="col-md-2">
         <label>كود</label>
-        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Code"
+        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filter.Code"
           (keyup.enter)="getOrders()">
       </div>
       <div class="col-md-2">
         <label>الهاتف</label>
 
-        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Phone"
+        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filter.Phone"
           (keyup.enter)="getOrders()">
       </div>
       <div class="col-md-2">
         <label>اسم المستلم</label>
         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-          [(ngModel)]="filtering.RecipientName" (keyup.enter)="getOrders()">
+          [(ngModel)]="filter.RecipientName" (keyup.enter)="getOrders()">
 
       </div>
       <div class="col-md-2">
         <label>اخر رقم طباعة للمندوب</label>
         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-          [(ngModel)]="filtering.AgentPrintNumber" (keyup.enter)="getOrders()">
+          [(ngModel)]="filter.AgentPrintNumber" (keyup.enter)="getOrders()">
       </div>
       <div class="col-md-2">
         <label>اخر رقم طباعة للعميل</label>
         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-          [(ngModel)]="filtering.ClientPrintNumber" (keyup.enter)="getOrders()">
+          [(ngModel)]="filter.ClientPrintNumber" (keyup.enter)="getOrders()">
       </div>
       <div class="col-md-2">
         <label>بواسطة</label>
-        <ng-select [(ngModel)]="filtering.CreatedBy" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+        <ng-select [(ngModel)]="filter.CreatedBy" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
           (keyup.enter)="getOrders()">
           <ng-option *ngFor="let user of users" [value]="user">{{user}}</ng-option>
         </ng-select>
@@ -114,24 +110,24 @@
       </div>
       <div class="col-md-4">
         <label>من تاريخ</label>
-        <input type="date" class="form-control" [(ngModel)]="filtering.createdDateRangeFilter.start"
+        <input type="date" class="form-control" [(ngModel)]="filter.createdDateRangeFilter.start"
           (change)="getOrders()">
       </div>
       <div class="col-md-4">
         <label>إلى تاريخ</label>
-        <input type="date" class="form-control" [(ngModel)]="filtering.createdDateRangeFilter.end"
+        <input type="date" class="form-control" [(ngModel)]="filter.createdDateRangeFilter.end"
           (change)="getOrders()">
       </div>
       <div class="col-md-2">
         <label>الفرع</label>
-        <ng-select [(ngModel)]="filtering.OriginalBranchId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+        <ng-select [(ngModel)]="filter.OriginalBranchId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
           (keyup.enter)="getOrders()">
           <ng-option *ngFor="let branche of branches" [value]="branche.id">{{branche.name}}</ng-option>
         </ng-select>
       </div>
       <div class="col-md-8">
         <label> ملاحظات</label>
-        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filtering.Note"
+        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filter.Note"
           (keyup.enter)="getOrders()">
       </div>
       <div class="col-md-4">
@@ -276,9 +272,9 @@
                   <div class="row ">
                     <div class="col-md-3">
                       <label>المدينة<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                      <ng-select [(ngModel)]="orderResend.CountryId" (change)="changeCountryResend()"
+                      <ng-select [(ngModel)]="countryResend" (ngModelChange)="changeCountryResend()"
                         [ngModelOptions]="{standalone: true}" [clearable]="false" name="Country">
-                        <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
+                        <ng-option *ngFor="let citie of countries" [value]="citie">{{citie.name}}</ng-option>
                       </ng-select>
                     </div>
 
@@ -287,14 +283,14 @@
                       <label>المنطقة</label>
                       <ng-select [(ngModel)]="orderResend.RegionId" placeholder="اختر منطقة"
                         [ngModelOptions]="{standalone: true}" [clearable]="false" name="Region" [addTag]="true">
-                        <ng-option *ngFor="let region of Regionsresend" [value]="region.id">{{region.name}}</ng-option>
+                        <ng-option *ngFor="let region of regionsResend" [value]="region.id">{{region.name}}</ng-option>
                       </ng-select>
                     </div>
                     <div class="col-md-3">
                       <label>المندوب<span class="text-danger text-one align-bottom mx-1">*</span></label>
                       <ng-select [(ngModel)]="orderResend.AgnetId" [ngModelOptions]="{standalone: true}"
                         [clearable]="false" name="Agent" placeholder="اختر مندوب">
-                        <ng-option *ngFor="let Agent of Agentsresend" [value]="Agent.id">{{Agent.name}}</ng-option>
+                        <ng-option *ngFor="let Agent of agentsResend" [value]="Agent.id">{{Agent.name}}</ng-option>
                       </ng-select>
                     </div>
                     <div class="col-md-3">
