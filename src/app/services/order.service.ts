@@ -423,13 +423,13 @@ export class OrderService {
     if (filter?.IsClientDiliverdMoney)
       params = params.append('IsClientDiliverdMoney', filter.IsClientDiliverdMoney.toString());
     if (filter?.CreatedDate)
-      params = params.append('CreatedDate', filter.CreatedDate.toISOString());
+      params = params.append('CreatedDate', filter.CreatedDate);
     if (filter?.OrderState)
       params = params.append('OrderState', filter.OrderState.toString());
     if (filter?.AgentPrintStartDate)
-      params = params.append('AgentPrintStartDate', filter.AgentPrintStartDate.toISOString());
+      params = params.append('AgentPrintStartDate', filter.AgentPrintStartDate);
     if (filter?.AgentPrintEndDate)
-      params = params.append('AgentPrintEndDate', filter.AgentPrintEndDate.toISOString());
+      params = params.append('AgentPrintEndDate', filter.AgentPrintEndDate);
     if (filter?.AgentPrintNumber)
       params = params.append('AgentPrintNumber', filter.AgentPrintNumber.toString());
     if (filter?.ClientPrintNumber)
@@ -437,9 +437,9 @@ export class OrderService {
     if (filter?.OriginalBranchId)
       params = params.append('OriginalBranchId', filter.OriginalBranchId.toString());
     if (filter?.createdDateRangeFilter.start)
-      params = params.append('createdDateRangeFilter.start', filter.createdDateRangeFilter.start.toISOString());
+      params = params.append('createdDateRangeFilter.start', filter.createdDateRangeFilter.start.toString());
     if (filter?.createdDateRangeFilter.end)
-      params = params.append('createdDateRangeFilter.end', filter.createdDateRangeFilter.end.toISOString());
+      params = params.append('createdDateRangeFilter.end', filter.createdDateRangeFilter.end.toString());
     params = this.setPaging(params, paging);
   
     return params;
