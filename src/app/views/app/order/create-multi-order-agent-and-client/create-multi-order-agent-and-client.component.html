@@ -187,7 +187,7 @@
                     </td>
                     <td>
                         <div class="w-100px">
-                            <app-delivery-cost-input [lable]="''"
+                            <app-delivery-cost-input [lable]="''" (onEnter)="changed(3)"
                                 [(value)]="Order.DeliveryCost"></app-delivery-cost-input>
                         </div>
                     </td>

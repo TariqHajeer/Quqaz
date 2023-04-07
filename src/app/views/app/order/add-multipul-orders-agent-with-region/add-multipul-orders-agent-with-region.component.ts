@@ -63,7 +63,7 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
   regionapi = "Region"
   ordertypeapi = "OrderType";
   Orders: any[] = []
-@ViewChild('code') codeElement: ElementRef;
+  @ViewChild('code') codeElement: ElementRef;
   disabledAddAgent: boolean = false;
   disabledEditAgent: boolean = false;
   userLogin: UserLogin = this.authService.getUser();
@@ -125,7 +125,7 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
     this.customService.getAll('Region').subscribe(
       res => {
         this.regions = res;
-        this.regions=this.regions.filter(a=>a.country.id==this.CountryId)
+        this.regions = this.regions.filter(a => a.country.id == this.CountryId)
       }
     )
   }
@@ -219,7 +219,7 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
     order.CanEdit = true
     this.tempEdit = Object.assign({}, order);
     this.EditOrder = order
-    this.Agents =this.GetAgents.filter(
+    this.Agents = this.GetAgents.filter(
       (a) =>
         a.countries
           .map((c) => c.id)
@@ -270,7 +270,7 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
       if (this.submitted == true)
         return
     }
-    if (this.Orders.length==0) {
+    if (this.Orders.length == 0) {
       //this.submitedSave=true
       return
     }
@@ -297,15 +297,10 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
     if (index == 6) { this.onEnter(); return }
     const inputs = this.inputEl.nativeElement.querySelectorAll('input');
     if (inputs.length > index + 1) {
-      inputs[index + 1].focus();
+      if (inputs[index + 1].disabled)
+        inputs[index + 2].focus();
+      else
+        inputs[index + 1].focus();
     }
   }
-  @ViewChild('TrFor') inputEle: ElementRef;
-  changedngFor(index) {
-    const inputs = this.inputEle.nativeElement.querySelectorAll('input');
-    if (inputs.length > index + 1) {
-      inputs[index + 1].focus();
-    }
-  }
-
 }

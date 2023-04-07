@@ -306,7 +306,7 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
     this.EditOrder.DeliveryCost = this.EditOrder.DeliveryCost * 1;
     this.EditOrder.Cost = this.EditOrder.Cost * 1;
     order = Object.assign(order, this.EditOrder);
-    localStorage.setItem('refrshorder', JSON.stringify(this.Orders));    
+    localStorage.setItem('refrshorder', JSON.stringify(this.Orders));
   }
   CansleEdit(order: CreateMultipleOrder) {
     this.tempEdit.CanEdit = false;
@@ -358,14 +358,10 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
     }
     const inputs = this.inputEl?.nativeElement?.querySelectorAll('input');
     if (inputs?.length > index + 1) {
-      inputs[index + 1].focus();
-    }
-  }
-  @ViewChild('TrFor') inputEle: ElementRef;
-  changedngFor(index) {
-    const inputs = this.inputEle.nativeElement.querySelectorAll('input');
-    if (inputs.length > index + 1) {
-      inputs[index + 1].focus();
+      if (inputs[index + 1].disabled)
+        inputs[index + 2].focus();
+      else
+        inputs[index + 1].focus();
     }
   }
 }

@@ -34,7 +34,7 @@ export class CreatemultipulorderagentComponent implements OnInit {
     public userService: UserService,
     private notifications: NotificationsService,
     public spinner: NgxSpinnerService,
-   
+
   ) { }
 
   Order: CreateMultipleOrder
@@ -67,7 +67,7 @@ export class CreatemultipulorderagentComponent implements OnInit {
   ordertypeapi = "OrderType";
   Orders: any[] = []
   //CanEdit: boolean[] = []
-@ViewChild('code') codeElement: ElementRef;
+  @ViewChild('code') codeElement: ElementRef;
   ngOnInit(): void {
     this.Order = new CreateMultipleOrder();
     this.EditOrder = new CreateMultipleOrder();
@@ -77,7 +77,7 @@ export class CreatemultipulorderagentComponent implements OnInit {
     if (order && order.length != 0) {
       this.Orders = order
     }
-  
+
   }
 
   int() {
@@ -87,25 +87,25 @@ export class CreatemultipulorderagentComponent implements OnInit {
   }
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
-      this.Agents = res  
+      this.Agents = res
       var agent = JSON.parse(localStorage.getItem('agentid'))
-      if (agent ) {
+      if (agent) {
         this.AgentId = agent
-        var find=this.Agents.find(a=>a.id==this.AgentId)
-        this.cities=find.countries
-        this.Order.CountryId=this.cities[0].id
-      }   
+        var find = this.Agents.find(a => a.id == this.AgentId)
+        this.cities = find.countries
+        this.Order.CountryId = this.cities[0].id
+      }
     })
   }
   // disabldAgentId=false
-  changeAgentId(){
+  changeAgentId() {
     // if(this.Orders.length>0)
     // this.disabldAgentId=true
     // else
     // this.disabldAgentId=false
-    localStorage.setItem('agentid',this.AgentId)
-  var find=this.Agents.find(a=>a.id==this.AgentId)
-  this.cities=find.countries
+    localStorage.setItem('agentid', this.AgentId)
+    var find = this.Agents.find(a => a.id == this.AgentId)
+    this.cities = find.countries
   }
   GetClient() {
     this.clientService.getClients().subscribe(res => {
@@ -118,12 +118,12 @@ export class CreatemultipulorderagentComponent implements OnInit {
     //     this.cities = res
     //     this.cities=this.cities.filter(c=>c.agnets.filter(a=>a.id==this.AgentId))
     //   }
-    
+
     // //  console.log (this.cities)
     // })
-    if(this.AgentId){
-    var find=this.Agents.find(a=>a.id==this.AgentId)
-    this.cities=find.countries
+    if (this.AgentId) {
+      var find = this.Agents.find(a => a.id == this.AgentId)
+      this.cities = find.countries
     }
   }
 
@@ -184,13 +184,13 @@ export class CreatemultipulorderagentComponent implements OnInit {
       return false
     }
   }
-  
+
   onEnter() {
-    this.Order.AgentId=this.AgentId
+    this.Order.AgentId = this.AgentId
     if (!this.Order.Code || !this.Order.ClientId ||
       !this.Order.CountryId || !this.Order.RecipientPhones
       || !this.Order.AgentId || this.showMessageCode) {
-        console.log("fff")
+      console.log("fff")
       this.submitted = true
       return
     } else this.submitted = false
@@ -223,7 +223,7 @@ export class CreatemultipulorderagentComponent implements OnInit {
     order.CanEdit = true
     this.tempEdit = Object.assign({}, order);
     this.EditOrder = order
-    this.Agents =this.GetAgents.filter(
+    this.Agents = this.GetAgents.filter(
       (a) =>
         a.countries
           .map((c) => c.id)
@@ -270,14 +270,14 @@ export class CreatemultipulorderagentComponent implements OnInit {
       if (this.submitted == true)
         return
     }
-    if (this.Orders.length==0) {
+    if (this.Orders.length == 0) {
       //this.submitedSave=true
       return
     }
     this.Orders.forEach(o => {
       o.Cost = o.Cost * 1
       o.DeliveryCost = o.DeliveryCost * 1
-      o.Date=moment().format()
+      o.Date = moment().format()
 
     })
     this.spinner.show()
@@ -292,19 +292,22 @@ export class CreatemultipulorderagentComponent implements OnInit {
     })
 
   }
-  @ViewChild('myTr') inputEl:ElementRef;
+  @ViewChild('myTr') inputEl: ElementRef;
   changed(index) {
-    if(index==6){this.onEnter(); return}
+    if (index == 6) { this.onEnter(); return }
     const inputs = this.inputEl.nativeElement.querySelectorAll('input');
     if (inputs.length > index + 1) {
       inputs[index + 1].focus();
     }
   }
-  @ViewChild('TrFor') inputEle:ElementRef;
+  @ViewChild('TrFor') inputEle: ElementRef;
   changedngFor(index) {
     const inputs = this.inputEle.nativeElement.querySelectorAll('input');
     if (inputs.length > index + 1) {
-      inputs[index + 1].focus();
+      if (inputs[index + 1].disabled)
+        inputs[index + 2].focus();
+      else
+        inputs[index + 1].focus();
     }
   }
 }

@@ -192,7 +192,7 @@
 
                     <td>
 
-                        <ng-select (keydown.enter)="changed(disabledAddAgent?-1:3)" [(ngModel)]="Order.AgentId"
+                        <ng-select (keydown.enter)="changed(3)" [(ngModel)]="Order.AgentId"
                             [ngModelOptions]="{standalone: true}" [clearable]="false" name="Agent" style="width: 100px;"
                             placeholder="اختر مندوب" [disabled]="disabledAddAgent">
                             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
@@ -201,7 +201,7 @@
 
                     </td>
                     <td>
-                        <input (keydown.enter)="changed(disabledAddAgent?3:4)" type="text" maxlength="11"
+                        <input (keydown.enter)="changed(4)" type="text" maxlength="11"
                             name="phoneadd"
                             oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
                             style="width: 100px;" class="form-control" [ngModelOptions]="{standalone: true}"
@@ -218,19 +218,19 @@
                     <td>
                         <div style="width: 100px;">
                             <app-custom-input [type]="'number'" [(value)]="Order.Cost" [lable]="''" [name]="'adcost'"
-                                (onEnter)="changed(disabledAddAgent?4:5)"></app-custom-input>
+                                (onEnter)="changed(5)"></app-custom-input>
                         </div>
                     </td>
                     <td>
                         <div class="w-100px">
-                            <app-delivery-cost-input [lable]="''" (onEnter)="changed(disabledAddAgent?5:6)"
+                            <app-delivery-cost-input [lable]="''" (onEnter)="changed(6)"
                                 [(value)]="Order.DeliveryCost"></app-delivery-cost-input>
                         </div>
                     </td>
 
 
                     <td>
-                        <input (keydown.enter)="changed(disabledAddAgent?6:7)" type="text" class="form-control"
+                        <input (keydown.enter)="changed(7)" type="text" class="form-control"
                             [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.Note" style="width: 100px;">
 
                     </td>

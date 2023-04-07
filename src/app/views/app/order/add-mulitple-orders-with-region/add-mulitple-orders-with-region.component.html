@@ -211,7 +211,7 @@
 
                     <td>
 
-                        <ng-select (keydown.enter)="changed(disabledAddAgent?-1:4)"  [(ngModel)]="Order.AgentId"
+                        <ng-select (keydown.enter)="changed(4)"  [(ngModel)]="Order.AgentId"
                             [ngModelOptions]="{standalone: true}" [clearable]="false" name="Agent" style="width: 100px;"
                             placeholder="اختر مندوب" [disabled]="disabledAddAgent">
                             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
@@ -220,8 +220,8 @@
 
                     </td>
                     <td>
-                        <input (keydown.enter)="changed(disabledAddAgent?4:5)" type="text" maxlength="11"
-                            name="phoneadd"
+                        <input (keydown.enter)="changed(5)" type="text" maxlength="11"
+                            name="phoneadd" id="RecipientPhones"
                             oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
                             style="width: 100px;" class="form-control" [ngModelOptions]="{standalone: true}"
                             [(ngModel)]="Order.RecipientPhones" (keyup)="checkLengthPhoneNumber(Order.RecipientPhones)">
@@ -235,7 +235,7 @@
 
                     </td>
                     <td>
-                        <input (keydown.enter)="changed(disabledAddAgent?5:6)" type="text" class="form-control"
+                        <input (keydown.enter)="changed(6)" type="text" class="form-control"
                             [ngModelOptions]="{standalone: true}"
                             oninput="this.value = this.value.replace(/[^0-9.]-/g, '').replace(/(\..*)\./g, '$1');"
                             style="width: 100px;" [(ngModel)]="Order.Cost">
@@ -244,14 +244,14 @@
                     <td>
 
                         <div class="w-100px">
-                            <app-delivery-cost-input [lable]="''"
+                            <app-delivery-cost-input [lable]="''" (onEnter)="changed(7)"
                                 [(value)]="Order.DeliveryCost"></app-delivery-cost-input>
                         </div>
                     </td>
 
 
                     <td>
-                        <input (keydown.enter)="changed(disabledAddAgent?7:8)" type="text" class="form-control"
+                        <input (keydown.enter)="changed(8)" type="text" class="form-control"
                             [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.Note" style="width: 100px;">
 
                     </td>

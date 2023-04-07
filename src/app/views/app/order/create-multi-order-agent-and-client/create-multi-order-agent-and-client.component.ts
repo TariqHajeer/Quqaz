@@ -453,7 +453,10 @@ export class CreateMultiOrderAgentAndClientComponent implements OnInit {
     }
     const inputs = this.inputEl.nativeElement.querySelectorAll('input');
     if (inputs.length > index + 1) {
-      inputs[index + 1].focus();
+      if (inputs[index + 1].disabled)
+        inputs[index + 2].focus();
+      else
+        inputs[index + 1].focus();
     }
   }
 }
