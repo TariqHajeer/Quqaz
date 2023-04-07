@@ -11,6 +11,7 @@ import { PointInputComponent } from './components/point-input/point-input.compon
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectDriverComponent } from './components/select-driver/select-driver.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NumericalInputComponent } from './numerical-input/numerical-input.component';
 @NgModule({
   declarations: [
     ErrorComponent,
@@ -18,7 +19,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     CustomInputComponent,
     DeliveryCostInputComponent,
     PointInputComponent,
-    SelectDriverComponent],
+    SelectDriverComponent,
+    NumericalInputComponent],
   imports: [
     RouterModule,
     CommonModule,
@@ -38,7 +40,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     CustomInputComponent,
     DeliveryCostInputComponent,
     PointInputComponent,
-    SelectDriverComponent
+    SelectDriverComponent,
+    NumericalInputComponent
   ],
 })
 export class SharedModule { }
