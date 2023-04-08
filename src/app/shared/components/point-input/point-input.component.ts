@@ -6,7 +6,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./point-input.component.scss']
 })
 export class PointInputComponent{
-  type = 'number';
   @Input() lable?: string = "النقاط";
   @Input() name:string='Points';
   @Input() maxlength?: number = 3;

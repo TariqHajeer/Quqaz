@@ -8,7 +8,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class DeliveryCostInputComponent {
 
   constructor() { }
-  type = 'number';
   @Input() lable?: string = "كلفة التوصيل ";
   @Input() name?: string = 'DeliveryCost';
   @Input() placeholder?: string;
