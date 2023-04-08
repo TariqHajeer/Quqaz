@@ -247,6 +247,7 @@ export class CreateMulitpleOrderComponent implements OnInit {
     var agent = this.Agents.find((c) => c.id == this.Order.AgentId);
     this.Order.AgentName = agent?.name;
     this.Order.Cost = this.Order.Cost * 1;
+    this.Order.DeliveryCost = this.Order.DeliveryCost * 1;
     this.Orders.push(this.Order);
     localStorage.setItem('refrshorder', JSON.stringify(this.Orders));
     this.submitted = false;

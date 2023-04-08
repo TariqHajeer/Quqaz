@@ -13,4 +13,5 @@
 [ngClass]="[ className ? className : 'form-control' ]"
 (keydown.enter)="onEnter.emit()"
 (blur)="onBlur.emit()"
-[placeholder]="placeholder">
+[placeholder]="placeholder"
+(ngModelChange)="changeValue($event)">
