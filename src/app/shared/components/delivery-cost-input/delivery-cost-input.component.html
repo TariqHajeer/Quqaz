@@ -1,4 +1,4 @@
-<app-custom-input [type]="type" [maxlengthInput]="maxlength" [value]="value" (valueChange)="changeValue($event)"
+<app-numerical-input [maxlengthInput]="maxlength" [value]="value" (valueChange)="changeValue($event)"
 [lable]="lable"[disabled]="disabled" (change)="change.emit()"
-[name]="name" [required]="required" [className]="className"
-(onEnter)="onEnter.emit()"></app-custom-input>
+[required]="required" [className]="className"
+(onEnter)="onEnter.emit()" [placeholder]="placeholder"></app-numerical-input>

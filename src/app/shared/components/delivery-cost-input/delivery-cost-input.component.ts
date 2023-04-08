@@ -11,6 +11,7 @@ export class DeliveryCostInputComponent {
   type = 'number';
   @Input() lable?: string = "كلفة التوصيل ";
   @Input() name?: string = 'DeliveryCost';
+  @Input() placeholder?: string;
   maxlength: number = 6;
   @Input() value;
   @Output() valueChange?= new EventEmitter<any>();
