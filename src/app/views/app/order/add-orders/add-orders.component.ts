@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -18,7 +18,6 @@ import { AuthService } from 'src/app/shared/auth.service';
 import IIndex from 'src/app/shared/interfaces/IIndex';
 import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
-import { CountryService } from '../../../../services/country.service';
 @Component({
   selector: 'app-add-orders',
   templateUrl: './add-orders.component.html',
@@ -27,14 +26,12 @@ import { CountryService } from '../../../../services/country.service';
 export class AddOrdersComponent implements OnInit {
   constructor(
     private orderservice: OrderService,
-    private elementRef: ElementRef,
     private clientService: ClientService,
     private customerService: CustomService,
     public userService: UserService,
     private notifications: NotificationsService,
     public spinner: NgxSpinnerService,
     private authService: AuthService,
-    private countryService: CountryService
   ) { }
 
   Order: CreateOrdersFromEmployee;

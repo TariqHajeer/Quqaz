@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./cost-input.component.scss']
 })
 export class CostInputComponent {
-  @Input() lable?: string = "الكلفة";
+  @Input() lable?: string = "الكلفة الكلية";
   @Input() name?: string = 'Cost';
   @Input() placeholder?: string;
   maxlength: number;

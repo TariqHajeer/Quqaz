@@ -61,15 +61,13 @@
             </div>
             <div class="row w-100 align-items-end mb-3">
                 <div class="col-md-3">
-                    <app-delivery-cost-input [(value)]="Order.DeliveryCost" [change]="changeIndex(5)"></app-delivery-cost-input>
+                    <app-delivery-cost-input [(value)]="Order.DeliveryCost"
+                        [change]="changeIndex(5)"></app-delivery-cost-input>
                 </div>
 
                 <div class="col-md-3">
-                    <label>الكلفة الكلية<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                    <input appOnReturn (change)="changeIndex(6)" type="text" class="form-control"
-                        [ngModelOptions]="{standalone: true}"
-                        oninput="this.value = this.value.replace(/[^0-9.]-/g, '').replace(/(\..-*)\./g, '$1');"
-                        [(ngModel)]="Order.Cost">
+                    <app-cost-input (onEnter)="changeIndex(6)" [(value)]="Order.Cost"
+                        [required]="true"></app-cost-input>
                     <div *ngIf="!Order.Cost && submitted" class="invalid-tooltip">الكلفة حقل مطلوب</div>
                 </div>
                 <div class="col-md-3">
@@ -106,7 +104,7 @@
                         [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.RecipientName">
                 </div>
             </div>
-          
+
             <div class="row w-100 align-items-end mb-3">
                 <!--add phones-->
                 <div *ngFor="let phone of Order.RecipientPhones;let i=index;trackBy: onTrackBy" class="col-md-3">

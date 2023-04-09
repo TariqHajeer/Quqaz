@@ -142,17 +142,12 @@
           </div>
           <div class="row w-100 align-items-end mb-3">
             <div class="col-md-3">
-              <label>كلفة التوصيل</label>
-              <input type="text" class="form-control" [ngModelOptions]="{ standalone: true }"
-                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                [(ngModel)]="Order.DeliveryCost" />
+              <app-delivery-cost-input [(value)]="Order.DeliveryCost"></app-delivery-cost-input>
             </div>
 
             <div class="col-md-3">
-              <label>الكلفة الكلية<span class="text-danger text-one align-bottom mx-1">*</span></label>
-              <input type="text" class="form-control" [ngModelOptions]="{ standalone: true }"
-                oninput="this.value = this.value.replace(/[^0-9.]-/g, '').replace(/(\..*)\./g, '$1');"
-                [(ngModel)]="Order.Cost" />
+              <app-cost-input [(value)]="Order.Cost"
+              [required]="true"></app-cost-input>
               <div *ngIf="!Order.Cost && submitted" class="invalid-tooltip">
                 الكلفة حقل مطلوب
               </div>
