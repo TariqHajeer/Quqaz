@@ -1,3 +1,7 @@
+<label *ngIf="lable">
+{{lable}}
+<span class="text-danger text-one align-bottom mx-1"*ngIf="required">*</span>
+</label>
 <input type="text"
 [(ngModel)]="value"
 (keypress)="numberOnly($event)"
@@ -9,4 +13,5 @@
 [ngClass]="[ className ? className : 'form-control' ]"
 (keydown.enter)="onEnter.emit()"
 (blur)="onBlur.emit()"
-[placeholder]="placeholder">
+[placeholder]="placeholder"
+(ngModelChange)="changeValue($event)">

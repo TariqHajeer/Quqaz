@@ -1,17 +1,15 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-delivery-cost-input',
-  templateUrl: './delivery-cost-input.component.html',
-  styleUrls: ['./delivery-cost-input.component.scss']
+  selector: 'app-cost-input',
+  templateUrl: './cost-input.component.html',
+  styleUrls: ['./cost-input.component.scss']
 })
-export class DeliveryCostInputComponent {
-
-  constructor() { }
-  @Input() lable?: string = "كلفة التوصيل ";
-  @Input() name?: string = 'DeliveryCost';
+export class CostInputComponent {
+  @Input() lable?: string = "الكلفة";
+  @Input() name?: string = 'Cost';
   @Input() placeholder?: string;
-  maxlength: number = 6;
+  maxlength: number;
   @Input() value;
   @Output() valueChange?= new EventEmitter<any>();
   @Input() disabled?: boolean;
@@ -23,4 +21,5 @@ export class DeliveryCostInputComponent {
     this.value = event;
     this.valueChange.emit(this.value);
   }
+
 }

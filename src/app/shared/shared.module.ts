@@ -5,22 +5,23 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { UnauthorizedComponent } from '../views/unauthorized/unauthorized.component';
-import { CustomInputComponent } from './components/custom-input/custom-input.component';
 import { DeliveryCostInputComponent } from './components/delivery-cost-input/delivery-cost-input.component';
 import { PointInputComponent } from './components/point-input/point-input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectDriverComponent } from './components/select-driver/select-driver.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { NumericalInputComponent } from './numerical-input/numerical-input.component';
+import { NumericalInputComponent } from './components/numerical-input/numerical-input.component';
+import { CostInputComponent } from './components/cost-input/cost-input.component';
 @NgModule({
   declarations: [
     ErrorComponent,
     UnauthorizedComponent,
-    CustomInputComponent,
     DeliveryCostInputComponent,
     PointInputComponent,
     SelectDriverComponent,
-    NumericalInputComponent],
+    NumericalInputComponent,
+    CostInputComponent
+  ],
   imports: [
     RouterModule,
     CommonModule,
@@ -37,11 +38,10 @@ import { NumericalInputComponent } from './numerical-input/numerical-input.compo
     UnauthorizedComponent,
     TranslateModule,
     CommonModule,
-    CustomInputComponent,
     DeliveryCostInputComponent,
     PointInputComponent,
     SelectDriverComponent,
-    NumericalInputComponent
+    CostInputComponent
   ],
 })
 export class SharedModule { }

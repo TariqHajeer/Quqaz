@@ -16,11 +16,13 @@ export class NumericalInputComponent implements OnInit {
   }
   @Input() value: string;
   @Input() disabled: boolean;
-  @Input() minlengthInput: number;
-  @Input() maxlengthInput: number;
-  @Input() className: string;
-  @Input() placeholder: string;
-  @Output() valueChange: EventEmitter<number> = new EventEmitter<number>();
+  @Input() required: boolean;
+  @Input() minlengthInput?: number;
+  @Input() maxlengthInput?: number;
+  @Input() className?: string;
+  @Input() placeholder?: string;
+  @Input() lable?: string;
+  @Output() valueChange: EventEmitter<any> = new EventEmitter<any>();
   @Output() onEnter: EventEmitter<void> = new EventEmitter<void>();
   @Output() onBlur: EventEmitter<void> = new EventEmitter<void>();
   numberOnly(event): boolean {
@@ -46,8 +48,12 @@ export class NumericalInputComponent implements OnInit {
   }
   keydownHandling(event): void {
     const charCode = event.which ? event.which : event.keyCode;
-    if (this.value.length <=1 && charCode == 8) {
+    if (this.value.length <= 1 && charCode == 8) {
       this.value = '0';
     }
+  }
+  changeValue(event) {
+    this.value = event;
+    this.valueChange.emit(this.value);
   }
 }
