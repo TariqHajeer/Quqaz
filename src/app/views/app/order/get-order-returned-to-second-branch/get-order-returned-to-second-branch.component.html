@@ -50,10 +50,7 @@
             <td mat-cell *matCellDef="let element" style="padding-right: 10px;">
                 {{element.client?element.client.name:null}}</td>
         </ng-container>
-        <ng-container matColumnDef="cost">
-            <th mat-header-cell *matHeaderCellDef> كلفة الطلب</th>
-            <td mat-cell *matCellDef="let element;index as i">{{element.cost}}</td>
-        </ng-container>
+        
         <ng-container matColumnDef="deliveryCost">
             <th mat-header-cell *matHeaderCellDef> كلفة التوصيل</th>
             <td mat-cell *matCellDef="let element">
