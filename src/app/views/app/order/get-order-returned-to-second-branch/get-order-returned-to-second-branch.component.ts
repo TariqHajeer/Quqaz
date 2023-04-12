@@ -19,7 +19,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class GetOrderReturnedToSecondBranchComponent implements OnInit {
   displayedColumns: string[] = ['select', 'index', 'code', 'country'
-    , 'client', 'cost', 'deliveryCost', 'note'];
+    , 'client', 'deliveryCost', 'note'];
   dataSource = new MatTableDataSource([]);
   orders: any[] = []
   noDataFound: boolean = false
