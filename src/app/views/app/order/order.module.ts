@@ -51,6 +51,7 @@ import { ShipmentReceivedByReturnedComponent } from './shipment-received-by-retu
 import { MoveOrdersToAgentByCodeComponent } from './move-orders-to-agent-by-code/move-orders-to-agent-by-code.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CreateMultipleComponent } from './create-multiple/create-multiple.component';
+import { PrintOrderReturnedToSecondBranchComponent } from './printPreview/print-order-returned-to-second-branch/print-order-returned-to-second-branch.component';
 
 @NgModule({
   declarations: [
@@ -84,6 +85,7 @@ import { CreateMultipleComponent } from './create-multiple/create-multiple.compo
     ShipmentReceivedByReturnedComponent,
     MoveOrdersToAgentByCodeComponent,
     CreateMultipleComponent,
+    PrintOrderReturnedToSecondBranchComponent,
   ],
   imports: [
     CommonModule,

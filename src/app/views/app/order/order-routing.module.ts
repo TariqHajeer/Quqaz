@@ -31,6 +31,7 @@ import { GetOrdersReturnedToMyBranchComponent } from './get-orders-returned-to-m
 import { PrintOrdersComponent } from './printPreview/print-orders/print-orders.component';
 import { GetDisapprovedReturnedOrderByBranchComponent } from './get-disapproved-returned-order-by-branch/get-disapproved-returned-order-by-branch.component';
 import { CreateMultipleComponent } from './create-multiple/create-multiple.component';
+import { PrintOrderReturnedToSecondBranchComponent } from './printPreview/print-order-returned-to-second-branch/print-order-returned-to-second-branch.component';
 
 const routes: Routes = [
   {
@@ -170,6 +171,11 @@ const routes: Routes = [
   {
     path: 'printOrders',
     component: PrintOrdersComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder] }
+  },
+  {
+    path: 'printOrderReturnedToSecondBranch',
+    component: PrintOrderReturnedToSecondBranchComponent, canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowOrder] }
   },
   {

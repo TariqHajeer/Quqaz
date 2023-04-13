@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { OrderService } from 'src/app/services/order.service';
@@ -25,14 +25,21 @@ export class GetOrderReturnedToSecondBranchComponent implements OnInit {
   noDataFound: boolean = false
   getorders: any[] = []
   @Input() totalCount: number;
-  selection = new SelectionModel<any>(true, []);
   countries: any[] = []
   clients: Client[] = []
   cityapi: string = 'Country';
-  countSelectOrder: number = 0;
   paging: Paging = new Paging();
   destinationBranchId: any;
   branches: any[] = [];
+  /* select all prob*/
+  selection = new SelectionModel<any>(true, []);
+  selectAll: boolean = false;
+  ordersIds = [];
+  unSelectIds = [];
+  countSelectOrder: number = 0;
+  indeterminate: boolean = false;
+  headerChekclable: string = "deselect all";
+  lastMasterSelectionChoise: boolean = false;
   constructor(
     public orderservice: OrderService,
     public userService: UserService,
@@ -42,72 +49,80 @@ export class GetOrderReturnedToSecondBranchComponent implements OnInit {
     private authService: AuthService,
     private branchesService: BranchesService,
     public spinner: NgxSpinnerService,
-
+    private ref: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
     this.getBranches();
   }
 
-  selectAll: boolean = true;
-  ordersIds = [];
-  unSelectIds = [];
-  isAllSelected() {
-    return this.selectAll = !this.selectAll;
+  setIsAllSelected(isAllSelected: boolean): void {
+    this.selectAll = isAllSelected;
+    if (this.selectAll) {
+      this.lastMasterSelectionChoise = true;
+    }
+    this.ref.detectChanges();
+    this.setHeaderChekclable();
   }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.ordersIds = [];
     this.unSelectIds = [];
-    if (this.isAllSelected()) {
+    if (!this.selectAll) {
       this.selection.clear();
+      this.lastMasterSelectionChoise = false;
+      this.setCountSelectOrder(0);
+      return;
     }
-    else {
-      this.dataSource.data.forEach(row => {
-        this.selection.select(row);
-      });
-    }
+    this.dataSource.data.forEach(row => {
+      this.selection.select(row);
+    });
+    this.lastMasterSelectionChoise = true;
+    this.setCountSelectOrder(this.totalCount);
   }
-  checkboxLabelAll(): string {
-    return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+  setHeaderChekclable(): void {
+    if (this.selectAll) {
+      this.headerChekclable = "select all";
+    } else {
+      this.headerChekclable = "deselect all";
+    }
+    this.ref.detectChanges();
+  }
+  setCountSelectOrder(number: number): void {
+    if (this.countSelectOrder !== number) {
+      this.countSelectOrder = number;
+      this.ref.detectChanges();
+    }
   }
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: any): string {
-    this.checkboxId(row)
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row`;
+  rowCheckChange(row: any) {
+    this.selection.toggle(row);
+    this.checkboxId(row);
   }
   checkboxId(row) {
     if (this.selection.isSelected(row)) {
-      if (this.selectAll) {
-        this.unSelectIds = [];
-        if (this.ordersIds.filter(d => d == row.id).length > 0)
-          return
-        else {
-          this.ordersIds.push(row.id);
-          this.countSelectOrder = this.ordersIds.length;
-        }
+      this.setCountSelectOrder(this.countSelectOrder + 1);
+      if (this.lastMasterSelectionChoise) {
+        this.unSelectIds = this.unSelectIds.filter(c => c != row.id);
       }
       else {
-        this.ordersIds = [];
-        this.unSelectIds = this.unSelectIds.filter(o => o != row.id);
-        this.countSelectOrder = this.totalCount - this.unSelectIds.length;
+        this.ordersIds.push(row.id);
+      }
+      if (this.countSelectOrder == this.totalCount) {
+        this.setIsAllSelected(true);
       }
     }
-    if (!this.selection.isSelected(row)) {
-      if (!this.selectAll) {
-        if (this.unSelectIds.filter(d => d == row.id).length > 0)
-          return
-        else {
-          this.unSelectIds.push(row.id);
-          this.ordersIds = [];
-          this.countSelectOrder = this.totalCount - this.unSelectIds.length;
+    else {
+      this.setIsAllSelected(false);
+      if (this.lastMasterSelectionChoise) {
+        this.unSelectIds.push(row.id);
+        if (this.unSelectIds.length == this.totalCount) {
+          this.lastMasterSelectionChoise = false;
         }
+      } else {
+        this.ordersIds = this.ordersIds.filter(c => c != row.id);
       }
-      else {
-        this.ordersIds = this.ordersIds.filter(o => o != row.id);
-        this.countSelectOrder = this.ordersIds.length;
-        this.unSelectIds = [];
-      }
+      this.setCountSelectOrder(this.countSelectOrder - 1);
     }
   }
   getBranches() {
@@ -123,12 +138,20 @@ export class GetOrderReturnedToSecondBranchComponent implements OnInit {
     this.getAllOrders();
   }
   filtering() {
+    this.dataSource = new MatTableDataSource([]);
+    this.selection = new SelectionModel<any>(true, []);
+    this.ordersIds = [];
+    this.unSelectIds = [];
+    this.lastMasterSelectionChoise = false;
+    this.setIsAllSelected(false);
+    this.setCountSelectOrder(0);
     this.selection.clear();
-    // this.isAllSelected();
-    this.getAllOrders();
+    if (this.orderservice.selectOrder.OrderFilter.nextBranchId) {
+      this.getAllOrders();
+    }
   }
   getAllOrders() {
-    this.orderservice.GetOrderReturnedToSecondBranch(this.orderservice.selectOrder.Paging, this.destinationBranchId).subscribe(response => {
+    this.orderservice.GetOrderReturnedToSecondBranch().subscribe(response => {
       this.getorders = []
       if (response)
         if (response.data.length <= 0)
@@ -139,31 +162,35 @@ export class GetOrderReturnedToSecondBranchComponent implements OnInit {
         }
       this.dataSource = new MatTableDataSource(this.getorders)
       this.totalCount = response.total
-      this.dataSource.data.forEach(row => {
-        if (!this.selectAll || (this.selectAll && this.ordersIds.find(d => d == row.id))) { this.selection.select(row) }
-      });
+      if (this.selectAll) {
+        this.dataSource.data.forEach(row => this.selection.select(row));
+      }
+      else
+        if (this.lastMasterSelectionChoise) {
+
+          this.dataSource.data.filter(row => this.unSelectIds.indexOf(row.id) == -1)
+            .forEach(row => this.selection.select(row));
+        }
+        else {
+          this.dataSource.data.filter(row => this.ordersIds.indexOf(row.id) >= 0)
+            .forEach(row => this.selection.select(row));
+        }
     },
       err => {
 
       });
   }
   moveOrders() {
-    this.orderservice.selectOrder.IsSelectedAll = !this.selectAll;
+    this.orderservice.selectOrder.IsSelectedAll = this.lastMasterSelectionChoise;
     this.orderservice.selectOrder.SelectedIds = this.ordersIds;
     this.orderservice.selectOrder.ExceptIds = this.unSelectIds;
-    if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedIds.length == 0 && this.selectAll)) {
+    this.orderservice.selectOrder.OrderFilter.nextBranchName = this.branches.find(b => b.id == this.orderservice.selectOrder.OrderFilter.nextBranchId)?.name;
+    if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedIds.length == 0 && !this.orderservice.selectOrder.IsSelectedAll)) {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    else {
-      this.spinner.show();
-      this.orderservice.SendOrdersReturnedToSecondBranch().subscribe(res => {
-        this.spinner.hide();
-        this.getAllOrders();
-        this.notifications.create('Success', '  تمت اعادة الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      }, err => {
-        this.spinner.hide();
-      })
-    }
+    else
+      this.route.navigate(['/app/order/printOrderReturnedToSecondBranch']);
   }
+
 }

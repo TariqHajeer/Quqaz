@@ -7,11 +7,11 @@ import { OrderService } from 'src/app/services/order.service';
 import { AuthService } from 'src/app/shared/auth.service';
 import { environment } from 'src/environments/environment';
 @Component({
-  selector: 'app-print-orders',
-  templateUrl: './print-orders.component.html',
-  styleUrls: ['./print-orders.component.scss']
+  selector: 'app-print-order-returned-to-second-branch',
+  templateUrl: './print-order-returned-to-second-branch.component.html',
+  styleUrls: ['./print-order-returned-to-second-branch.component.scss']
 })
-export class PrintOrdersComponent implements OnInit {
+export class PrintOrderReturnedToSecondBranchComponent implements OnInit {
   orders: any[] = [];
   address = environment.Address;
   companyPhone =
@@ -35,8 +35,8 @@ export class PrintOrdersComponent implements OnInit {
 
   getOrders() {
     if (this.orderservice.selectOrder.SelectedIds.length == 0 && this.orderservice.selectOrder.IsSelectedAll == false)
-      this.router.navigate(['/app/order/transferToSecondBranch']);
-    this.orderservice.GetInStockToTransferToSecondBranch().subscribe(response => {
+      this.router.navigate(['/app/order/GetOrderReturnedToSecondBranch']);
+    this.orderservice.GetOrderReturnedToSecondBranch().subscribe(response => {
       if (this.orderservice.selectOrder.Paging.Page == 1)
         this.orders = response.data;
       else
@@ -48,7 +48,7 @@ export class PrintOrdersComponent implements OnInit {
       else
         this.showSeeMore = false;
       if (this.orders.length == 0)
-        this.router.navigate(['/app/order/transferToSecondBranch']);
+        this.router.navigate(['/app/order/GetOrderReturnedToSecondBranch']);
     });
   }
   seeMore() {
@@ -63,7 +63,7 @@ export class PrintOrdersComponent implements OnInit {
     this.orderservice.transferToSecondBranchDto.Driver.driverName = this.driver.name;
     this.orderservice.transferToSecondBranchDto.Driver.driverId = this.driver.id;
     this.spinner.show();
-    this.orderservice.TransferToSecondBranch().subscribe(res => {
+    this.orderservice.SendOrdersReturnedToSecondBranch().subscribe(res => {
       this.spinner.hide();
       this.notifications.success('success', 'تم نقل الطلبات بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.showPrintBtn = true;
@@ -74,7 +74,7 @@ export class PrintOrdersComponent implements OnInit {
   }
   print() {
     this.spinner.show();
-    this.orderservice.PrintTransferToSecondBranch(this.printNumber).subscribe(res => {
+    this.orderservice.PrintOrdersReturnedToSecondBranch(this.printNumber).subscribe(res => {
       let blob = new Blob([res], { type: 'application/pdf' });
       var downloadURL = window.URL.createObjectURL(blob);
       var link = document.createElement('a');

@@ -329,15 +329,18 @@ export class OrderService {
     let params = this.getHttpParmasByPaging(paging);
     return this.http.get<any>(this.controler + "GetDisApproveOrdersReturnByBranch", { params: params });
   }
-  GetOrderReturnedToSecondBranch(paging: Paging, destinationBranchId: any) {
-    let params = this.getHttpParmasByPaging(paging);
-    if (destinationBranchId)
-      params = params.append('destinationBranchId', destinationBranchId);
-    return this.http.get<any>(this.controler + 'GetOrdersReturnedToSecondBranch', { params: params });
+  GetOrderReturnedToSecondBranch() {
+    return this.http.post<any>(this.controler + 'GetOrdersReturnedToSecondBranch', this.selectOrder);
   }
   SendOrdersReturnedToSecondBranch() {
     this.transferToSecondBranchDto.selectedOrdersWithFitlerDto = this.selectOrder;
-    return this.http.put<any>(this.controler + 'SendOrdersReturnedToSecondBranch', this.selectOrder);
+    return this.http.put<any>(this.controler + 'SendOrdersReturnedToSecondBranch', this.transferToSecondBranchDto);
+  }
+  PrintOrdersReturnedToSecondBranch(printNumber) {
+    const httpOptions = {
+      responseType: 'blob' as 'json'
+    };
+    return this.http.get<any>(this.controler + 'PrintOrdersReturnedToSecondBranch/' + printNumber, httpOptions);
   }
   SetDisApproveOrdersReturnByBranchInStore() {
     this.transferToSecondBranchDto.selectedOrdersWithFitlerDto = this.selectOrder;
