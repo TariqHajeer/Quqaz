@@ -5,7 +5,7 @@ import { OrderFilter } from '../Models/order-filter.model';
 import { DateFiter, Paging } from '../Models/paging';
 import { OrderClientDontDiliverdMoney } from '../Models/order/order-client-dont-diliverd-money.model';
 import { Resend } from '../Models/order/resend.model';
-import { ReceiveOrdersToMyBranchDto, SelectOrder, TransferToSecondBranchDto } from '../Models/order/select-order.model';
+import { ReceiveOrdersToMyBranchDto, ReturnOrderToMainBranchDto, SelectOrder, TransferToSecondBranchDto } from '../Models/order/select-order.model';
 import { PrintTransferOrder } from 'src/app/Models/order/print-transfer-order.model';
 import { GetOrdersByAgentRegionAndCode } from '../Models/order/get-orders-by-agent-region-and-code.model';
 
@@ -16,6 +16,7 @@ export class OrderService {
   controler = environment.baseUrl + 'api/Order/';
   selectOrder: SelectOrder = new SelectOrder();
   transferToSecondBranchDto: TransferToSecondBranchDto = new TransferToSecondBranchDto();
+  returnOrderToMainBranchDto: ReturnOrderToMainBranchDto = new ReturnOrderToMainBranchDto();
   constructor(public http: HttpClient) { }
   GetAll(filter: OrderFilter, paging: Paging) {
     let params = this.getHttpPramsFilteredForOrder(filter, paging);
@@ -333,8 +334,12 @@ export class OrderService {
     return this.http.post<any>(this.controler + 'GetOrdersReturnedToSecondBranch', this.selectOrder);
   }
   SendOrdersReturnedToSecondBranch() {
-    this.transferToSecondBranchDto.selectedOrdersWithFitlerDto = this.selectOrder;
-    return this.http.put<any>(this.controler + 'SendOrdersReturnedToSecondBranch', this.transferToSecondBranchDto);
+    this.returnOrderToMainBranchDto.ExceptIds = this.selectOrder.ExceptIds;
+    this.returnOrderToMainBranchDto.IsSelectedAll = this.selectOrder.IsSelectedAll;
+    this.returnOrderToMainBranchDto.OrderFilter = this.selectOrder.OrderFilter;
+    this.returnOrderToMainBranchDto.Paging = this.selectOrder.Paging;
+    this.returnOrderToMainBranchDto.SelectedIds = this.selectOrder.SelectedIds;
+    return this.http.put<any>(this.controler + 'SendOrdersReturnedToSecondBranch', this.returnOrderToMainBranchDto);
   }
   PrintSendOrdersReturnedToSecondBranchReport(printNumber) {
     const httpOptions = {
@@ -367,11 +372,11 @@ export class OrderService {
     return this.http.get<any>(this.controler + 'GetPrintsTransferToSecondBranch', { params: params });
   }
   orderDetials: PrintTransferOrder = new PrintTransferOrder();
-  GetPrintTransferToSecondBranchDetials(paging: Paging,id) {
+  GetPrintTransferToSecondBranchDetials(paging: Paging, id) {
     let params = new HttpParams();
     if (id)
       params = params.append('id', id);
-      params=  this.setPaging(params, paging);
+    params = this.setPaging(params, paging);
     return this.http.get<any>(this.controler + 'GetPrintTransferToSecondBranchDetials', { params: params });
   }
   GetOrdersByAgentRegionAndCode(getOrdersByAgentRegionAndCode: GetOrdersByAgentRegionAndCode) {
@@ -392,7 +397,7 @@ export class OrderService {
     return p;
   }
   setPaging(params, paging?: Paging): HttpParams {
-    
+
     if (paging && paging.Page)
       params = params.append('Page', paging.Page);
     if (paging && paging.RowCount)
@@ -444,7 +449,7 @@ export class OrderService {
     if (filter?.createdDateRangeFilter.end)
       params = params.append('createdDateRangeFilter.end', filter.createdDateRangeFilter.end.toString());
     params = this.setPaging(params, paging);
-  
+
     return params;
   }
   convertSelectOrderToFromData(formdata: FormData, selectOrder: SelectOrder): FormData {
@@ -475,7 +480,7 @@ export class OrderService {
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.CreatedDate)
       formdata.append('CreatedDate', selectOrder.OrderFilter.CreatedDate);
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.IsClientDiliverdMoney)
-      formdata.append('IsClientDiliverdMoney',`${selectOrder.OrderFilter.IsClientDiliverdMoney}`);
+      formdata.append('IsClientDiliverdMoney', `${selectOrder.OrderFilter.IsClientDiliverdMoney}`);
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.MoneyPalced)
       formdata.append('MonePlaced', selectOrder.OrderFilter.MoneyPalced.toString());
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.Note)

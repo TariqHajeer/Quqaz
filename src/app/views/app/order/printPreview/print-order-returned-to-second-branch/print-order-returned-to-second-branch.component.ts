@@ -60,8 +60,8 @@ export class PrintOrderReturnedToSecondBranchComponent implements OnInit {
       this.notifications.success('error', 'اسم السائق حقل مطلوب', NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
       return
     }
-    this.orderservice.transferToSecondBranchDto.Driver.driverName = this.driver.name;
-    this.orderservice.transferToSecondBranchDto.Driver.driverId = this.driver.id;
+    this.orderservice.returnOrderToMainBranchDto.Driver.driverName = this.driver.name;
+    this.orderservice.returnOrderToMainBranchDto.Driver.driverId = this.driver.id;
     this.spinner.show();
     this.orderservice.SendOrdersReturnedToSecondBranch().subscribe(res => {
       this.spinner.hide();

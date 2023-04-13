@@ -146,9 +146,7 @@ export class GetOrderReturnedToSecondBranchComponent implements OnInit {
     this.setIsAllSelected(false);
     this.setCountSelectOrder(0);
     this.selection.clear();
-    if (this.orderservice.selectOrder.OrderFilter.nextBranchId) {
-      this.getAllOrders();
-    }
+    this.getAllOrders();
   }
   getAllOrders() {
     this.orderservice.GetOrderReturnedToSecondBranch().subscribe(response => {
@@ -184,7 +182,7 @@ export class GetOrderReturnedToSecondBranchComponent implements OnInit {
     this.orderservice.selectOrder.IsSelectedAll = this.lastMasterSelectionChoise;
     this.orderservice.selectOrder.SelectedIds = this.ordersIds;
     this.orderservice.selectOrder.ExceptIds = this.unSelectIds;
-    this.orderservice.selectOrder.OrderFilter.nextBranchName = this.branches.find(b => b.id == this.orderservice.selectOrder.OrderFilter.nextBranchId)?.name;
+    this.orderservice.selectOrder.OrderFilter.nextBranchName = this.branches.find(b => b.id == this.orderservice.selectOrder.OrderFilter.OriginalBranchId)?.name;
     if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedIds.length == 0 && !this.orderservice.selectOrder.IsSelectedAll)) {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return

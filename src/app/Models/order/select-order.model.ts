@@ -26,6 +26,9 @@ export class TransferToSecondBranchDto {
     DriverId: any;
     Driver: Driver;
 }
+export class ReturnOrderToMainBranchDto extends SelectOrder {
+    Driver: Driver= new Driver();
+}
 export class ReceiveOrdersToMyBranchDto extends SelectOrder {
     AgentId?: number;
     RegionId?: number;
