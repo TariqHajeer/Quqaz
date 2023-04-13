@@ -74,7 +74,7 @@ export class PrintOrderReturnedToSecondBranchComponent implements OnInit {
   }
   print() {
     this.spinner.show();
-    this.orderservice.PrintOrdersReturnedToSecondBranch(this.printNumber).subscribe(res => {
+    this.orderservice.PrintSendOrdersReturnedToSecondBranchReport(this.printNumber).subscribe(res => {
       let blob = new Blob([res], { type: 'application/pdf' });
       var downloadURL = window.URL.createObjectURL(blob);
       var link = document.createElement('a');
