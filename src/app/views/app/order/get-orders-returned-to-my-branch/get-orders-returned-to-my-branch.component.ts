@@ -38,7 +38,7 @@ export class GetOrdersReturnedToMyBranchComponent implements OnInit {
   headerChekclable: string = "deselect all";
   lastMasterSelectionChoise: boolean = false;
   constructor(
-    private orderservice: OrderService,
+    public orderservice: OrderService,
     public userService: UserService,
     private notifications: NotificationsService,
     public route: Router,
