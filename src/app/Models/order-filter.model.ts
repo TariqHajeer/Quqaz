@@ -25,4 +25,5 @@ export class OrderFilter {
   OriginalBranchId:number;
   nextBranchId:number;
   nextBranchName:string;
+  currentBranchId:number;
 }

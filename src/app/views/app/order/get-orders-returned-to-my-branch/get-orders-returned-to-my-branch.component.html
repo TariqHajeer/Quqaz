@@ -4,15 +4,25 @@
 <div class="card">
     <div class="card-body">
         <div class="row">
-            <div class="col-6">
+            <div class="col-12">
                 <h3>استلام الطلبات المرتجعة من فرع اخر</h3>
+            </div>
+            <div class="col-md-2">
+                <label>الفرع</label>
+                <ng-select (change)="filtering()" name="branche"
+                    [(ngModel)]="orderservice.selectOrder.OrderFilter.currentBranchId">
+                    <ng-option *ngFor="let branche of branches" [value]="branche.id">{{branche.name}}</ng-option>
+                </ng-select>
+            </div>
+            <div class="col-md-4">
+                <button (click)="filtering()" class="btn btn-primary" style="margin-top: 20px;"> بحث</button>
             </div>
             <div class="col-md-2">
                 <button (click)="ReceiveOrders()" class="btn btn-primary" style="margin-top: 20px;"> قبول
                     الطلبات</button>
             </div>
         </div>
-    </div>
+    </div> 
 </div>
 <div class="example-container mat-elevation-z8">
 

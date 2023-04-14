@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 import { OrderPlacedStateService } from 'src/app/services/order-placed-state.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SelectOrder } from 'src/app/Models/order/select-order.model';
+import { AuthService } from 'src/app/shared/auth.service';
+import { BranchesService } from 'src/app/services/branches.service';
 
 @Component({
   selector: 'app-get-orders-returned-to-my-branch',
@@ -25,6 +27,7 @@ export class GetOrdersReturnedToMyBranchComponent implements OnInit {
   paging: Paging
   noDataFound: boolean = false
   @Input() totalCount: number;
+  branches: any[] = [];
   /* select all prob*/
   selection = new SelectionModel<any>(true, []);
   selectAll: boolean = false;
@@ -41,12 +44,14 @@ export class GetOrdersReturnedToMyBranchComponent implements OnInit {
     public route: Router,
     public orderplacedstate: OrderPlacedStateService,
     public spinner: NgxSpinnerService,
+    private branchesService: BranchesService,
+    private authService: AuthService,
     private ref: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
-    this.paging = new Paging
-    this.getAllOrders();
+    this.paging = new Paging();
+    this.getBranches();
   }
   setIsAllSelected(isAllSelected: boolean): void {
     this.selectAll = isAllSelected;
@@ -139,7 +144,7 @@ export class GetOrdersReturnedToMyBranchComponent implements OnInit {
   }
   getAllOrders() {
     this.spinner.show();
-    this.orderservice.GetOrdersReturnedToMyBranch(this.paging).subscribe(response => {
+    this.orderservice.GetOrdersReturnedToMyBranch(this.paging, this.orderservice.selectOrder.OrderFilter.currentBranchId).subscribe(response => {
       if (response)
         if (response.data.length <= 0)
           this.noDataFound = true
@@ -176,7 +181,7 @@ export class GetOrdersReturnedToMyBranchComponent implements OnInit {
   ReceiveOrders() {
     this.orderservice.selectOrder.IsSelectedAll = this.lastMasterSelectionChoise;
     this.orderservice.selectOrder.SelectedIds = this.ordersIds;
-    this.orderservice.selectOrder.ExceptIds = this.unSelectIds;    
+    this.orderservice.selectOrder.ExceptIds = this.unSelectIds;
     if (this.noDataFound == true || (this.orderservice.selectOrder.SelectedIds.length == 0 && !this.orderservice.selectOrder.IsSelectedAll)) {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return;
@@ -206,5 +211,10 @@ export class GetOrdersReturnedToMyBranchComponent implements OnInit {
         this.spinner.hide();
       }
     )
+  }
+  getBranches() {
+    this.branchesService.Get().subscribe(res => {
+      this.branches = res?.filter(data => data.id != this.authService.getUser().branche.id);
+    })
   }
 }
