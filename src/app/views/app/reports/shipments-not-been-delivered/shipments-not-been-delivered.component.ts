@@ -53,8 +53,8 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     this.isAllSelected()
       ? this.selection.clear()
       : this.dataSource.data.forEach((row) => {
-          this.selection.select(row);
-        });
+        this.selection.select(row);
+      });
     this.orders = [];
     this.ids = [];
   }
@@ -65,9 +65,8 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     this.checkboxId(row);
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.position + 1
-    }`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1
+      }`;
   }
   ids: any[] = [];
   orders: any[] = [];
@@ -89,8 +88,8 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     private notifications: NotificationsService,
     public route: Router,
     private pointSettingService: PointSettingsService,
-    private authService:AuthService
-  ) {}
+    private authService: AuthService
+  ) { }
   ClientId;
   OrderplacedId;
   orderPlace: any[] = [
@@ -109,17 +108,19 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   @Input() totalCount: number;
 
   ngOnInit(): void {
-    localStorage.removeItem('reloadPage');
-    localStorage.removeItem('printordersclient');
-    localStorage.removeItem('printclient');
-    localStorage.removeItem('printclientorderplaced');
     this.getClients();
     this.paging = new Paging();
     this.filtering = new OrderFilter();
     this.order = new OrderClientDontDiliverdMoney();
     this.showOrderPlaceds();
+    this.resetLocalStorage();
   }
-
+  resetLocalStorage() {
+    localStorage.removeItem('reloadPage');
+    localStorage.removeItem('printordersclient');
+    localStorage.removeItem('printclient');
+    localStorage.removeItem('printclientorderplaced');
+  }
   getClients() {
     this.clientService.getClients().subscribe((res) => {
       this.Clients = res;
@@ -139,6 +140,10 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   order: OrderClientDontDiliverdMoney;
   orderplace;
   allFilter() {
+    this.orders = [];
+    this.ids = [];
+    this.resetLocalStorage();
+    this.selection.clear();
     this.order.ClientId = this.ClientId;
     this.order.IsClientDeleviredMoney = this.IsClientDeleviredMoney;
     this.order.ClientDoNotDeleviredMoney = this.ClientDoNotDeleviredMoney;
@@ -160,11 +165,12 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
           this.dataSource = new MatTableDataSource(x);
           this.totalCount = response.length;
         },
-        (err) => {}
+        (err) => { }
       );
     } else this.dataSource = new MatTableDataSource([]);
   }
   print() {
+    this.resetLocalStorage();
     if (this.noDataFound == true || this.orders.length == 0) {
       this.notifications.create(
         'error',
@@ -237,6 +243,6 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     this.orderPlace = this.orderPlace.filter(
       (op) => this.authService.hasPermission(op.permission) == true
     );
-    return  this.orderPlace;
+    return this.orderPlace;
   }
 }
