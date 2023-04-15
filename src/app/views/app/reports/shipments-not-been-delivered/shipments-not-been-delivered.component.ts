@@ -155,7 +155,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       this.orderPlace.filter((o) => o.checked == true).length > 0 &&
       (this.IsClientDeleviredMoney || this.ClientDoNotDeleviredMoney)
     ) {
-      this.orderservice.ClientDontDiliverdMoney(this.order).subscribe(
+      this.orderservice.OrdersDontFinished(this.order, this.paging).subscribe(
         (response) => {
           if (response)
             if (response.length == 0) this.noDataFound = true;

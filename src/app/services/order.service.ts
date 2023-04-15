@@ -179,9 +179,8 @@ export class OrderService {
       params: params,
     });
   }
-  ClientDontDiliverdMoney(item: OrderClientDontDiliverdMoney) {
-    let params = new HttpParams();
-
+  OrdersDontFinished(item: OrderClientDontDiliverdMoney, paging: Paging) {
+    let params = this.getHttpParmasByPaging(paging);
     if (item.ClientId != undefined || item.ClientId != null)
       params = params.append('ClientId', item.ClientId);
     if (item.ClientDoNotDeleviredMoney != undefined || item.ClientDoNotDeleviredMoney != null)
@@ -394,8 +393,7 @@ export class OrderService {
   }
   getHttpParmasByPaging(paging?: Paging): HttpParams {
     let p = new HttpParams;
-    this.setPaging(p, paging);
-    return p;
+    return p = this.setPaging(p, paging);
   }
   setPaging(params, paging?: Paging): HttpParams {
 
