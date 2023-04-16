@@ -3,7 +3,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { OrderService } from 'src/app/services/order.service';
-import * as jspdf from 'jspdf';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ReciptService } from 'src/app/services/recipt.service';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
@@ -22,16 +21,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./print-orders-dont-finished.component.scss']
 })
 export class PrintOrdersDontFinishedComponent implements OnInit {
-
-  constructor(
-    private orderservice: OrderService,
-    private notifications: NotificationsService,
-    public sanitizer: DomSanitizer,
-    private spinner: NgxSpinnerService,
-    private recepitservce: ReciptService,
-    private authService: AuthService,
-  ) { }
-  // 'موقع المبلغ', 'حالة الشحنة '
   heads = [
     'ترقيم',
     'كود',
@@ -55,18 +44,45 @@ export class PrintOrdersDontFinishedComponent implements OnInit {
     environment.companyPhones[0] + ' - ' + environment.companyPhones[1];
   reports: any[] = [];
   points: PointSetting = new PointSetting();
-  reloadPage;
-  reloadPrintNumber;
-  ngOnInit(): void {
-    // this.orders = this.orderservice.deleiverMoneyForClientDto;
-    // this.orders = this.orders.sort((a, b) => a.code - b.code);
-    this.client = this.orderservice.deleiverMoneyForClientDto.Filter.Client;
-    this.orderplaced = this.orderservice.deleiverMoneyForClientDto.Filter.OrderPlaced;
-    this.pointid = this.orderservice.deleiverMoneyForClientDto.PointsSettingId;
-    this.points = this.orderservice.deleiverMoneyForClientDto.point;
-    this.reciptClient();
-    this.sumCost();
+  clientCalc: number = 0;
+  reportstotal: number;
+  showPrintbtn: boolean = false;
+  dateWithIds: DateWithId<number[]>;
+  DeleiverMoneyForClientDto: DeleiverMoneyForClientDto =
+    new DeleiverMoneyForClientDto();
+  pointid = null;
+  showSeeMore: boolean;
+  constructor(
+    private orderservice: OrderService,
+    private notifications: NotificationsService,
+    public sanitizer: DomSanitizer,
+    private spinner: NgxSpinnerService,
+    private recepitservce: ReciptService,
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
+
+  ngOnInit(): void {
+    this.getOrders();
+  }
+  reciptClient() {
+    if (
+      this.orderplaced.filter(
+        (o) =>
+          o.id == OrderplacedEnum.Way ||
+          o.id == OrderplacedEnum.PartialReturned ||
+          o.id == OrderplacedEnum.Delivered
+      ).length > 0
+    ) {
+      this.recepitservce.UnPaidRecipt(this.client.id).subscribe((res) => {
+        this.reports = res;
+        this.reportstotal = 0;
+        this.reports.forEach((r) => {
+          this.reportstotal += r.amount;
+        });
+      });
+    } else return;
   }
   sumCost() {
     this.count = 0;
@@ -81,12 +97,39 @@ export class PrintOrdersDontFinishedComponent implements OnInit {
 
     return this.count;
   }
+  getOrders() {
+    this.client = this.orderservice.deleiverMoneyForClientDto.Filter.Client;
+    this.orderplaced = this.orderservice.deleiverMoneyForClientDto.Filter.OrderPlaced;
+    this.pointid = this.orderservice.deleiverMoneyForClientDto.PointsSettingId;
+    this.points = this.orderservice.deleiverMoneyForClientDto.point;
 
-  showPrintbtn = false;
-  dateWithIds: DateWithId<number[]>;
-  DeleiverMoneyForClientDto: DeleiverMoneyForClientDto =
-    new DeleiverMoneyForClientDto();
-  pointid = null;
+    if (this.orderservice.orderClientDontDiliverdMoney.tableSelection.selectedIds.length == 0
+      && this.orderservice.orderClientDontDiliverdMoney.tableSelection.isSelectedAll == false) {
+      this.router.navigate(['/app/reports/Shipmentsnotbeendelivered']);
+      return;
+    }
+    this.orderservice.OrdersDontFinished().subscribe(response => {
+
+      if (this.orderservice.orderClientDontDiliverdMoney.paging.Page == 1)
+        this.orders = response.data;
+      else
+        response.data.forEach(element => {
+          this.orders.push(element);
+        });
+      if (this.orders.length < response.total)
+        this.showSeeMore = true;
+      else
+        this.showSeeMore = false;
+      if (this.orders.length == 0)
+        this.router.navigate(['/app/reports/Shipmentsnotbeendelivered']);
+      this.reciptClient();
+      this.sumCost();
+    });
+  }
+  seeMore() {
+    this.orderservice.orderClientDontDiliverdMoney.paging.Page += 1;
+    this.getOrders();
+  }
   changeDeleiverMoneyForClient() {
     this.spinner.show();
     this.orderservice
@@ -102,7 +145,6 @@ export class PrintOrdersDontFinishedComponent implements OnInit {
           this.showPrintbtn = true;
           this.spinner.hide();
           this.printnumber = res.printNumber;
-          // this.router.navigate(['/app/reports/clientprintnumber/', this.printnumber]);
         },
         (err) => {
           this.spinner.hide();
@@ -118,59 +160,26 @@ export class PrintOrdersDontFinishedComponent implements OnInit {
   @HostListener('window:keydown', ['$event'])
   onKeyPress($event: KeyboardEvent) {
     if (($event.ctrlKey || $event.metaKey) && $event.keyCode == 80) {
-      this.convetToPDF();
+      this.print();
       return false;
     }
   }
-  public convetToPDF() {
-    const elementToPrint = document.getElementById('contentToConvert'); //The html element to become a pdf
-    const pdf = new jspdf('l', 'in', 'a4');
-    pdf.internal.scaleFactor = 30;
-    pdf.addHTML(elementToPrint, () => {
-      pdf.save(this.dateOfPrint + '.pdf');
-    });
-  }
   print() {
-    var divToPrint = document.getElementById('contentToConvert');
-    var css =
-      '@page { size: A4 landscape;color-adjust: exact;-webkit-print-color-adjust: exact; }',
-      style = document.createElement('style');
-    style.type = 'text/css';
-    style.media = 'print';
-    style.appendChild(document.createTextNode(css));
-    divToPrint.appendChild(style);
-    var newWin = window.open('', 'Print-Window');
-    newWin?.document.open();
-    newWin?.document.write(
-      '<html dir="rtl"><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"><link rel="stylesheet/less" type="text/css" href="app/reports/printpreview/agent/agent.component.less" /></head><body onload="window.print()">' +
-      divToPrint?.innerHTML +
-      '</body></html>'
-    );
-    newWin?.document.close();
-    setTimeout(function () {
-      newWin?.close();
-    }, 1000);
+    this.spinner.show();
+    this.orderservice.PrintSendOrdersReturnedToSecondBranchReport(this.printnumber).subscribe(res => {
+      let blob = new Blob([res], { type: 'application/pdf' });
+      var downloadURL = window.URL.createObjectURL(blob);
+      var link = document.createElement('a');
+      link.href = downloadURL;
+      link.download = "help.pdf";
+      link.click();
+      this.spinner.hide();
+      this.notifications.success('success', 'تمت الطباعة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.showPrintbtn = true;
+    }, err => {
+      this.spinner.hide();
+    })
   }
-  clientCalc = 0;
-  reportstotal;
 
-  reciptClient() {
-    if (
-      this.orderplaced.filter(
-        (o) =>
-          o.id == OrderplacedEnum.Way ||
-          o.id == OrderplacedEnum.PartialReturned ||
-          o.id == OrderplacedEnum.Delivered
-      ).length > 0
-    ) {
-      this.recepitservce.UnPaidRecipt(this.client.id).subscribe((res) => {
-        this.reports = res;
-        console.log(res);
-        this.reportstotal = 0;
-        this.reports.forEach((r) => {
-          this.reportstotal += r.amount;
-        });
-      });
-    } else return;
-  }
+
 }

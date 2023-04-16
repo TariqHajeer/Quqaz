@@ -19,6 +19,7 @@ export class OrderService {
   transferToSecondBranchDto: TransferToSecondBranchDto = new TransferToSecondBranchDto();
   returnOrderToMainBranchDto: ReturnOrderToMainBranchDto = new ReturnOrderToMainBranchDto();
   deleiverMoneyForClientDto: DeleiverMoneyForClientDto = new DeleiverMoneyForClientDto();
+  orderClientDontDiliverdMoney: OrderClientDontDiliverdMoney = new OrderClientDontDiliverdMoney();
   constructor(public http: HttpClient) { }
   GetAll(filter: OrderFilter, paging: Paging) {
     let params = this.getHttpPramsFilteredForOrder(filter, paging);
@@ -184,25 +185,9 @@ export class OrderService {
       params: params,
     });
   }
-  OrdersDontFinished(item: OrderClientDontDiliverdMoney, paging: Paging) {
-    let params = this.getHttpParmasByPaging(paging);
-    if (item.ClientId != undefined || item.ClientId != null)
-      params = params.append('ClientId', item.ClientId);
-    if (item.ClientDoNotDeleviredMoney != undefined || item.ClientDoNotDeleviredMoney != null)
-      params = params.append('ClientDoNotDeleviredMoney', item.ClientDoNotDeleviredMoney);
-    if (item.IsClientDeleviredMoney != undefined || item.IsClientDeleviredMoney != null)
-      params = params.append('IsClientDeleviredMoney', item.IsClientDeleviredMoney);
-    if (item.OrderPlacedId.length != 0) {
-      let index = 0;
-      item.OrderPlacedId.forEach((element) => {
-        var key = 'OrderPlacedId[' + index + ']';
-        params = params.append(key, element);
-        index++;
-      });
-    }
-    return this.http.get<any>(this.controler + 'OrdersDontFinished', {
-      params: params,
-    });
+  OrdersDontFinished() {
+    this.deleiverMoneyForClientDto.Filter=this.orderClientDontDiliverdMoney;
+    return this.http.post<any>(this.controler + 'OrdersDontFinished', this.orderClientDontDiliverdMoney);
   }
   OrderVicdanAgent(AgentId) {
     return this.http.get(this.controler + 'OrderVicdanAgent/' + AgentId);

@@ -9,7 +9,6 @@ import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { ClientService } from '../../client/client.service';
 import { Client } from '../../client/client.model';
-import { OrderClientDontDiliverdMoney } from 'src/app/Models/order/order-client-dont-diliverd-money.model';
 import { PointSettingsService } from 'src/app/services/point-settings.service';
 import { AuthService } from 'src/app/shared/auth.service';
 @Component({
@@ -55,7 +54,6 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   isClientDeleviredMoney: boolean = false;
   clientDoNotDeleviredMoney: boolean = false;
   @Input() totalCount: number;
-  order: OrderClientDontDiliverdMoney = new OrderClientDontDiliverdMoney();
   points: any[] = [];
   pointId: number = 0;
   /* select all prob*/
@@ -199,20 +197,20 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   }
 
   getOrders() {
-    this.order.ClientId = this.clientId;
-    this.order.Client = this.client;
-    this.order.IsClientDeleviredMoney = this.isClientDeleviredMoney;
-    this.order.ClientDoNotDeleviredMoney = this.clientDoNotDeleviredMoney;
+    this.orderservice.orderClientDontDiliverdMoney.ClientId = this.clientId;
+    this.orderservice.orderClientDontDiliverdMoney.Client = this.client;
+    this.orderservice.orderClientDontDiliverdMoney.IsClientDeleviredMoney = this.isClientDeleviredMoney;
+    this.orderservice.orderClientDontDiliverdMoney.ClientDoNotDeleviredMoney = this.clientDoNotDeleviredMoney;
     var orderPlace = this.orderPlace.filter((o) => o.checked == true);
     this.tempOrderplace = this.orderPlace.filter((o) => o.checked == true);
-    this.order.OrderPlacedId = orderPlace.map((o) => o.id);
-    this.order.OrderPlaced = orderPlace;
+    this.orderservice.orderClientDontDiliverdMoney.OrderPlacedId = orderPlace.map((o) => o.id);
+    this.orderservice.orderClientDontDiliverdMoney.OrderPlaced = orderPlace;
     if (
       this.clientId &&
       this.orderPlace.filter((o) => o.checked == true).length > 0 &&
       (this.isClientDeleviredMoney || this.clientDoNotDeleviredMoney)
     ) {
-      this.orderservice.OrdersDontFinished(this.order, this.paging).subscribe(
+      this.orderservice.OrdersDontFinished().subscribe(
         (response) => {
           if (response)
             if (response.data.length == 0) this.noDataFound = true;
@@ -240,23 +238,22 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     } else this.dataSource = new MatTableDataSource([]);
   }
   switchPage(event: PageEvent) {
-    this.paging.allItemsLength = event.length;
-    this.paging.RowCount = event.pageSize;
-    this.paging.Page = event.pageIndex + 1;
+    this.orderservice.orderClientDontDiliverdMoney.paging.allItemsLength = event.length;
+    this.orderservice.orderClientDontDiliverdMoney.paging.RowCount = event.pageSize;
+    this.orderservice.orderClientDontDiliverdMoney.paging.Page = event.pageIndex + 1;
     this.getOrders();
   }
 
   print() {
-    this.orderservice.deleiverMoneyForClientDto.ExceptIds = this.unSelectIds;
-    this.orderservice.deleiverMoneyForClientDto.SelectedIds = this.ordersIds;
-    this.orderservice.deleiverMoneyForClientDto.IsSelectedAll = this.selectAll;
-    this.orderservice.deleiverMoneyForClientDto.Filter = this.order;
+    this.orderservice.orderClientDontDiliverdMoney.tableSelection.exceptIds= this.unSelectIds;
+    this.orderservice.orderClientDontDiliverdMoney.tableSelection.selectedIds= this.ordersIds;
+    this.orderservice.orderClientDontDiliverdMoney.tableSelection.isSelectedAll= this.selectAll;
     if (this.pointId == 0)
       this.orderservice.deleiverMoneyForClientDto.PointsSettingId = null;
     else
       this.orderservice.deleiverMoneyForClientDto.PointsSettingId = this.pointId;
     this.orderservice.deleiverMoneyForClientDto.point = this.points.find(p => p.id == this.pointId);
-    if (this.noDataFound == true || (this.orderservice.deleiverMoneyForClientDto.SelectedIds.length == 0 && !this.orderservice.deleiverMoneyForClientDto.IsSelectedAll)) {
+    if (this.noDataFound == true || (this.orderservice.orderClientDontDiliverdMoney.tableSelection.selectedIds.length == 0 && !this.orderservice.deleiverMoneyForClientDto.IsSelectedAll)) {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return;
     } else

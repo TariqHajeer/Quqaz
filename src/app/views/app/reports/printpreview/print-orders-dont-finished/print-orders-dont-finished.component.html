@@ -447,7 +447,7 @@
             </div>
           </td>
         </tr>
-
+      
         <tr style="font-size: 16px; background-color: rgb(218, 218, 219)">
           <td>
             <div
@@ -523,6 +523,13 @@
             </div>
           </td>
           <td colspan="4"></td>
+        </tr>
+        <tr>
+          <td>
+            <button class="btn btn-primary" (click)="seeMore()" *ngIf="showSeeMore">
+              عرض المزيد من الطلبات
+            </button>
+          </td>
         </tr>
         <tr
           style="font-size: 16px; background-color: rgb(205, 205, 255)"
