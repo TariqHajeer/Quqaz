@@ -8,6 +8,7 @@ import { Resend } from '../Models/order/resend.model';
 import { ReceiveOrdersToMyBranchDto, ReturnOrderToMainBranchDto, SelectOrder, TransferToSecondBranchDto } from '../Models/order/select-order.model';
 import { PrintTransferOrder } from 'src/app/Models/order/print-transfer-order.model';
 import { GetOrdersByAgentRegionAndCode } from '../Models/order/get-orders-by-agent-region-and-code.model';
+import { DeleiverMoneyForClientDto } from '../Models/order/deleiver-money-for-client-dto.model';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,7 @@ export class OrderService {
   selectOrder: SelectOrder = new SelectOrder();
   transferToSecondBranchDto: TransferToSecondBranchDto = new TransferToSecondBranchDto();
   returnOrderToMainBranchDto: ReturnOrderToMainBranchDto = new ReturnOrderToMainBranchDto();
+  deleiverMoneyForClientDto: DeleiverMoneyForClientDto = new DeleiverMoneyForClientDto();
   constructor(public http: HttpClient) { }
   GetAll(filter: OrderFilter, paging: Paging) {
     let params = this.getHttpPramsFilteredForOrder(filter, paging);
@@ -109,6 +111,9 @@ export class OrderService {
   }
   DeleiverMoneyForClient(ids) {
     return this.http.put<any>(this.controler + 'DeleiverMoneyForClient', ids);
+  }
+  DeleiverMoneyForClient2() {
+    return this.http.put<any>(this.controler + 'DeleiverMoneyForClient', this.deleiverMoneyForClientDto);
   }
   OrdersUnacceptable(filter, paging) {
     let params = new HttpParams();

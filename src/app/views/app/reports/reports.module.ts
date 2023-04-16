@@ -44,6 +44,7 @@ import { CashMovmentComponent } from './cash-movment/cash-movment.component';
 import { ViewsPrintTransferToSecondBranchComponent } from './views-print-transfer-to-second-branch/views-print-transfer-to-second-branch.component';
 import { ViewsPrintTransferToSecondBranchByIdComponent } from './views-print-transfer-to-second-branch-by-id/views-print-transfer-to-second-branch-by-id.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { PrintOrdersDontFinishedComponent } from './printpreview/print-orders-dont-finished/print-orders-dont-finished.component';
 @NgModule({
   declarations: [ShipmentInStockComponent,
     ClientOrderComponent,
@@ -72,7 +73,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     ShowTreasuryComponent,
     CashMovmentComponent,
     ViewsPrintTransferToSecondBranchComponent,
-    ViewsPrintTransferToSecondBranchByIdComponent,],
+    ViewsPrintTransferToSecondBranchByIdComponent,
+    PrintOrdersDontFinishedComponent,],
   imports: [
     CommonModule,
     ReportsRoutingModule,

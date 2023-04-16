@@ -30,6 +30,7 @@ import { ShowTreasuryComponent } from './show-treasury/show-treasury.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { ViewsPrintTransferToSecondBranchByIdComponent } from './views-print-transfer-to-second-branch-by-id/views-print-transfer-to-second-branch-by-id.component';
 import { ViewsPrintTransferToSecondBranchComponent } from './views-print-transfer-to-second-branch/views-print-transfer-to-second-branch.component';
+import { PrintOrdersDontFinishedComponent } from './printpreview/print-orders-dont-finished/print-orders-dont-finished.component';
 
 const routes: Routes = [
   {
@@ -205,6 +206,14 @@ const routes: Routes = [
   {
     path: 'ViewsPrintTransferToSecondBranch/:id',
     component: ViewsPrintTransferToSecondBranchByIdComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: [UserPermission.ShowReports],
+    },
+  },
+  {
+    path: 'PrintOrdersDontFinished',
+    component: PrintOrdersDontFinishedComponent,
     canActivate: [AuthGuard],
     data: {
       roles: [UserPermission.ShowReports],

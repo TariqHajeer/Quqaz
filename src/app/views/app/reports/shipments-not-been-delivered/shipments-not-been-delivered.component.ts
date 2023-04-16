@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { OrderService } from 'src/app/services/order.service';
@@ -12,7 +12,6 @@ import { Client } from '../../client/client.model';
 import { OrderClientDontDiliverdMoney } from 'src/app/Models/order/order-client-dont-diliverd-money.model';
 import { PointSettingsService } from 'src/app/services/point-settings.service';
 import { AuthService } from 'src/app/shared/auth.service';
-
 @Component({
   selector: 'app-shipments-not-been-delivered',
   templateUrl: './shipments-not-been-delivered.component.html',
@@ -39,59 +38,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     'isClientDiliverdMoney',
   ];
   dataSource = new MatTableDataSource([]);
-  selection = new SelectionModel<any>(true, []);
-
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.forEach((row) => {
-        this.selection.select(row);
-      });
-    this.orders = [];
-    this.ids = [];
-  }
-
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: any): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    }
-    this.checkboxId(row);
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1
-      }`;
-  }
-  ids: any[] = [];
-  orders: any[] = [];
-  checkboxId(row) {
-    if (this.selection.isSelected(row))
-      if (this.ids.filter((d) => d == row.id).length > 0) return;
-      else {
-        this.ids.push(row.id);
-        this.orders.push(row);
-      }
-    if (!this.selection.isSelected(row)) {
-      this.ids = this.ids.filter((i) => i != row.id);
-      this.orders = this.orders.filter((o) => o != row);
-    }
-  }
-  constructor(
-    private orderservice: OrderService,
-    public clientService: ClientService,
-    private notifications: NotificationsService,
-    public route: Router,
-    private pointSettingService: PointSettingsService,
-    private authService: AuthService
-  ) { }
-  ClientId;
-  OrderplacedId;
+  clientId: number;
   orderPlace: any[] = [
     { id: 3, name: 'في الطريق', permission: 'PayInWay' },
     { id: 4, name: 'تم التسليم', permission: 'PayCompletelyReturned' },
@@ -99,137 +46,130 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     { id: 6, name: 'مرتجع جزئي', permission: 'PayDelivered' },
     { id: 7, name: 'مرفوض', permission: 'PayUnacceptable' },
   ];
-  Clients: Client[] = [];
-  paging: Paging;
-  filtering: OrderFilter;
+  tempOrderplace: any[] = [];
+  clients: Client[] = [];
+  client: Client = new Client();
+  paging: Paging = new Paging();
+  filter: OrderFilter = new OrderFilter();
   noDataFound: boolean = false;
-  IsClientDeleviredMoney: boolean = false;
-  ClientDoNotDeleviredMoney: boolean = false;
+  isClientDeleviredMoney: boolean = false;
+  clientDoNotDeleviredMoney: boolean = false;
   @Input() totalCount: number;
+  order: OrderClientDontDiliverdMoney = new OrderClientDontDiliverdMoney();
+  points: any[] = [];
+  pointId: number = 0;
+  /* select all prob*/
+  selection = new SelectionModel<any>(true, []);
+  selectAll: boolean = false;
+  ordersIds = [];
+  orders: any[] = [];
+  unSelectIds = [];
+  countSelectOrder: number = 0;
+  indeterminate: boolean = false;
+  headerChekclable: string = "deselect all";
+  lastMasterSelectionChoise: boolean = false;
+  constructor(
+    private orderservice: OrderService,
+    public clientService: ClientService,
+    private notifications: NotificationsService,
+    public route: Router,
+    private pointSettingService: PointSettingsService,
+    private authService: AuthService,
+    private ref: ChangeDetectorRef,
+  ) { }
 
   ngOnInit(): void {
     this.getClients();
-    this.paging = new Paging();
-    this.filtering = new OrderFilter();
-    this.order = new OrderClientDontDiliverdMoney();
     this.showOrderPlaceds();
-    this.resetLocalStorage();
   }
-  resetLocalStorage() {
-    localStorage.removeItem('reloadPage');
-    localStorage.removeItem('printordersclient');
-    localStorage.removeItem('printclient');
-    localStorage.removeItem('printclientorderplaced');
+  setIsAllSelected(isAllSelected: boolean): void {
+    this.selectAll = isAllSelected;
+    if (this.selectAll) {
+      this.lastMasterSelectionChoise = true;
+    }
+    this.ref.detectChanges();
+    this.setHeaderChekclable();
   }
-  getClients() {
-    this.clientService.getClients().subscribe((res) => {
-      this.Clients = res;
-    });
-  }
-  ChangeClientId() {
-    if (this.ClientId) {
-      this.GetSettingLessThanPoint();
-    } else this.points = [];
-  }
-  switchPage(event: PageEvent) {
-    this.paging.allItemsLength = event.length;
-    this.paging.RowCount = event.pageSize;
-    this.paging.Page = event.pageIndex + 1;
-    this.allFilter();
-  }
-  order: OrderClientDontDiliverdMoney;
-  orderplace;
-  allFilter() {
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.ordersIds = [];
     this.orders = [];
-    this.ids = [];
-    this.resetLocalStorage();
-    this.selection.clear();
-    this.order.ClientId = this.ClientId;
-    this.order.IsClientDeleviredMoney = this.IsClientDeleviredMoney;
-    this.order.ClientDoNotDeleviredMoney = this.ClientDoNotDeleviredMoney;
-    var orderPlace = this.orderPlace.filter((o) => o.checked == true);
-    this.orderplace = this.orderPlace.filter((o) => o.checked == true);
-    this.order.OrderPlacedId = orderPlace.map((o) => o.id);
-    if (
-      this.ClientId &&
-      this.orderPlace.filter((o) => o.checked == true).length > 0 &&
-      (this.IsClientDeleviredMoney || this.ClientDoNotDeleviredMoney)
-    ) {
-      this.orderservice.OrdersDontFinished(this.order, this.paging).subscribe(
-        (response) => {
-          if (response)
-            if (response.length == 0) this.noDataFound = true;
-            else this.noDataFound = false;
-          var x = response.sort((a, b) => a.code - b.code * 1);
-          this.orderFilter = response;
-          this.dataSource = new MatTableDataSource(x);
-          this.totalCount = response.length;
-        },
-        (err) => { }
-      );
-    } else this.dataSource = new MatTableDataSource([]);
-  }
-  print() {
-    this.resetLocalStorage();
-    if (this.noDataFound == true || this.orders.length == 0) {
-      this.notifications.create(
-        'error',
-        '   لم يتم اختيار طلبات ',
-        NotificationType.Error,
-        { theClass: 'success', timeOut: 6000, showProgressBar: false }
-      );
+    this.unSelectIds = [];
+    if (!this.selectAll) {
+      this.selection.clear();
+      this.lastMasterSelectionChoise = false;
+      this.setCountSelectOrder(0);
       return;
     }
-    this.orderplace = this.orderplace.filter(
-      (op) => this.orders.filter((o) => o.orderplaced.id == op.id).length > 0
-    );
-    localStorage.setItem(
-      'printclientorderplaced',
-      JSON.stringify(this.orderplace)
-    );
-    localStorage.setItem('printordersclient', JSON.stringify(this.orders));
-    localStorage.setItem(
-      'printclient',
-      JSON.stringify(this.Clients.find((c) => c.id == this.ClientId))
-    );
-    if (this.PointId == 0) {
-      localStorage.setItem('point', JSON.stringify(null));
-    } else
-      localStorage.setItem(
-        'point',
-        JSON.stringify(this.points.find((p) => p.id == this.PointId))
-      );
-    this.route.navigate(['app/reports/printclientpreview']);
+    this.dataSource.data.forEach(row => {
+      this.selection.select(row);
+    });
+    this.lastMasterSelectionChoise = true;
+    this.setCountSelectOrder(this.totalCount);
+  }
+  setHeaderChekclable(): void {
+    if (this.selectAll) {
+      this.headerChekclable = "select all";
+    } else {
+      this.headerChekclable = "deselect all";
+    }
+    this.ref.detectChanges();
+  }
+  setCountSelectOrder(number: number): void {
+    if (this.countSelectOrder !== number) {
+      this.countSelectOrder = number;
+      this.ref.detectChanges();
+    }
+  }
+  /** The label for the checkbox on the passed row */
+  rowCheckChange(row: any) {
+    this.selection.toggle(row);
+    this.checkboxId(row);
+  }
+  checkboxId(row) {
+    if (this.selection.isSelected(row)) {
+      this.setCountSelectOrder(this.countSelectOrder + 1);
+      if (this.lastMasterSelectionChoise) {
+        this.unSelectIds = this.unSelectIds.filter(c => c != row.id);
+      }
+      else {
+        this.ordersIds.push(row.id);
+        this.orders.push(row);
+      }
+      if (this.countSelectOrder == this.totalCount) {
+        this.setIsAllSelected(true);
+      }
+    }
+    else {
+      this.setIsAllSelected(false);
+      if (this.lastMasterSelectionChoise) {
+        this.unSelectIds.push(row.id);
+        if (this.unSelectIds.length == this.totalCount) {
+          this.lastMasterSelectionChoise = false;
+        }
+      } else {
+        this.ordersIds = this.ordersIds.filter(c => c != row.id);
+        this.orders = this.orders.filter(o => o.id != row.id);
+      }
+      this.setCountSelectOrder(this.countSelectOrder - 1);
+    }
   }
 
-  changeDeleiverMoneyForClient() {
-    this.orderservice
-      .DeleiverMoneyForClient(this.orders.map((o) => o.id))
-      .subscribe((res) => {
-        this.notifications.create(
-          'success',
-          'تم تعديل الطلبيات  بنجاح',
-          NotificationType.Success,
-          { theClass: 'success', timeOut: 6000, showProgressBar: false }
-        );
-        this.allFilter();
-      });
+  getClients() {
+    this.clientService.getClients().subscribe((res) => {
+      this.clients = res;
+    });
   }
-  code;
-  orderFilter;
-  codeFillter() {
-    this.dataSource.data = this.orderFilter;
-    if (this.code)
-      if (this.dataSource.data.length != 0)
-        this.dataSource.data = this.dataSource.data.filter((d) =>
-          d.code.includes(this.code)
-        );
+  changeClientId() {
+    this.clientId = this.client?.id;
+    if (this.clientId) {
+      this.getSettingLessThanPoint();
+    } else this.points = [];
+    this.getOrders();
   }
-  points: any[] = [];
-  PointId = 0;
-  GetSettingLessThanPoint() {
-    if (this.ClientId) {
-      var client = this.Clients.find((c) => c.id == this.ClientId);
+  getSettingLessThanPoint() {
+    if (this.clientId) {
+      var client = this.clients.find((c) => c.id == this.clientId);
       this.pointSettingService
         .GetSettingLessThanPoint(client.points)
         .subscribe((res) => {
@@ -244,5 +184,103 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
       (op) => this.authService.hasPermission(op.permission) == true
     );
     return this.orderPlace;
+  }
+  filtering() {
+    this.dataSource = new MatTableDataSource([]);
+    this.selection = new SelectionModel<any>(true, []);
+    this.ordersIds = [];
+    this.orders = [];
+    this.unSelectIds = [];
+    this.lastMasterSelectionChoise = false;
+    this.setIsAllSelected(false);
+    this.setCountSelectOrder(0);
+    this.selection.clear();
+    this.getOrders();
+  }
+
+  getOrders() {
+    this.order.ClientId = this.clientId;
+    this.order.Client = this.client;
+    this.order.IsClientDeleviredMoney = this.isClientDeleviredMoney;
+    this.order.ClientDoNotDeleviredMoney = this.clientDoNotDeleviredMoney;
+    var orderPlace = this.orderPlace.filter((o) => o.checked == true);
+    this.tempOrderplace = this.orderPlace.filter((o) => o.checked == true);
+    this.order.OrderPlacedId = orderPlace.map((o) => o.id);
+    this.order.OrderPlaced = orderPlace;
+    if (
+      this.clientId &&
+      this.orderPlace.filter((o) => o.checked == true).length > 0 &&
+      (this.isClientDeleviredMoney || this.clientDoNotDeleviredMoney)
+    ) {
+      this.orderservice.OrdersDontFinished(this.order, this.paging).subscribe(
+        (response) => {
+          if (response)
+            if (response.data.length == 0) this.noDataFound = true;
+            else this.noDataFound = false;
+          var x = response.data.sort((a, b) => a.code - b.code * 1);
+          this.orderFilter = response.data;
+          this.dataSource = new MatTableDataSource(x);
+          this.totalCount = response.total;
+          if (this.selectAll) {
+            this.dataSource.data.forEach(row => this.selection.select(row));
+          }
+          else
+            if (this.lastMasterSelectionChoise) {
+
+              this.dataSource.data.filter(row => this.unSelectIds.indexOf(row.id) == -1)
+                .forEach(row => this.selection.select(row));
+            }
+            else {
+              this.dataSource.data.filter(row => this.ordersIds.indexOf(row.id) >= 0)
+                .forEach(row => this.selection.select(row));
+            }
+        },
+        (err) => { }
+      );
+    } else this.dataSource = new MatTableDataSource([]);
+  }
+  switchPage(event: PageEvent) {
+    this.paging.allItemsLength = event.length;
+    this.paging.RowCount = event.pageSize;
+    this.paging.Page = event.pageIndex + 1;
+    this.getOrders();
+  }
+
+  print() {
+    this.orderservice.deleiverMoneyForClientDto.ExceptIds = this.unSelectIds;
+    this.orderservice.deleiverMoneyForClientDto.SelectedIds = this.ordersIds;
+    this.orderservice.deleiverMoneyForClientDto.IsSelectedAll = this.selectAll;
+    this.orderservice.deleiverMoneyForClientDto.Filter = this.order;
+    this.orderservice.deleiverMoneyForClientDto.PointsSettingId = this.pointId;
+    this.orderservice.deleiverMoneyForClientDto.point = this.points.find(p => p.id == this.pointId);
+    if (this.noDataFound == true || (this.orderservice.deleiverMoneyForClientDto.SelectedIds.length == 0 && !this.orderservice.deleiverMoneyForClientDto.IsSelectedAll)) {
+      this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      return;
+    } else
+      this.route.navigate(['app/reports/PrintOrdersDontFinished']);
+  }
+
+  changeDeleiverMoneyForClient() {
+    this.orderservice
+      .DeleiverMoneyForClient(this.orders.map((o) => o.id))
+      .subscribe((res) => {
+        this.notifications.create(
+          'success',
+          'تم تعديل الطلبيات  بنجاح',
+          NotificationType.Success,
+          { theClass: 'success', timeOut: 6000, showProgressBar: false }
+        );
+        this.filtering();
+      });
+  }
+  code;
+  orderFilter;
+  codeFillter() {
+    this.dataSource.data = this.orderFilter;
+    if (this.code)
+      if (this.dataSource.data.length != 0)
+        this.dataSource.data = this.dataSource.data.filter((d) =>
+          d.code.includes(this.code)
+        );
   }
 }
