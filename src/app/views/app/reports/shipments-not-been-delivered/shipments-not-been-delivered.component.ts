@@ -251,7 +251,10 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     this.orderservice.deleiverMoneyForClientDto.SelectedIds = this.ordersIds;
     this.orderservice.deleiverMoneyForClientDto.IsSelectedAll = this.selectAll;
     this.orderservice.deleiverMoneyForClientDto.Filter = this.order;
-    this.orderservice.deleiverMoneyForClientDto.PointsSettingId = this.pointId;
+    if (this.pointId == 0)
+      this.orderservice.deleiverMoneyForClientDto.PointsSettingId = null;
+    else
+      this.orderservice.deleiverMoneyForClientDto.PointsSettingId = this.pointId;
     this.orderservice.deleiverMoneyForClientDto.point = this.points.find(p => p.id == this.pointId);
     if (this.noDataFound == true || (this.orderservice.deleiverMoneyForClientDto.SelectedIds.length == 0 && !this.orderservice.deleiverMoneyForClientDto.IsSelectedAll)) {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
