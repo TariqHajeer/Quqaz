@@ -103,7 +103,7 @@
               [(ngModel)]="order.DeliveryCost" />
           </td>
           <td>
-            {{order.note}}
+            <input type="text" class="form-control" [ngModelOptions]="{ standalone: true }" [(ngModel)]="order.note" />
           </td>
           <td>
             <button class="btn btn-danger" (click)="cancelOrder(order)">

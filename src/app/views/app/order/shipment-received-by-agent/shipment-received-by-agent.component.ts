@@ -1,29 +1,26 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { SelectionModel } from '@angular/cdk/collections';
+import { Component, Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { OrderService } from 'src/app/services/order.service';
-import { NotificationsService, NotificationType } from 'angular2-notifications';
-import { UserService } from 'src/app/services/user.service';
-import {
-  GetOrder,
-  OrderPlacedStateService,
-} from 'src/app/services/order-placed-state.service';
-import { User } from 'src/app/Models/user/user.model';
-import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
-import { Paging } from 'src/app/Models/paging';
-import { OrderFilter } from 'src/app/Models/order-filter.model';
-import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import { OrderState } from 'src/app/Models/order/order.model';
+import { NotificationsService, NotificationType } from 'angular2-notifications';
+import { User } from 'firebase';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { MoneyPalcedEnum } from 'src/app/Models/Enums/MoneyPalcedEnum';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
+import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
+import { OrderFilter } from 'src/app/Models/order-filter.model';
+import { OrderState } from 'src/app/Models/order/order.model';
+import { Paging } from 'src/app/Models/paging';
+import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed-state.service';
+import { OrderService } from 'src/app/services/order.service';
+import { UserService } from 'src/app/services/user.service';
+import { SelectionModel } from '@angular/cdk/collections';
+
 @Component({
-  selector: 'app-receiptf-receiving-shipment',
-  templateUrl: './receiptf-receiving-shipment.component.html',
-  styleUrls: ['./receiptf-receiving-shipment.component.scss'],
+  selector: 'app-shipment-received-by-agent',
+  templateUrl: './shipment-received-by-agent.component.html',
+  styleUrls: ['./shipment-received-by-agent.component.scss']
 })
-export class ReceiptfReceivingShipmentComponent implements OnInit {
+export class ShipmentReceivedByAgentComponent {
   displayedColumns: string[] = [
     'index',
     'code',
@@ -57,7 +54,7 @@ export class ReceiptfReceivingShipmentComponent implements OnInit {
     public route: Router,
     public orderplacedstate: OrderPlacedStateService,
     private spinner: NgxSpinnerService
-  ) {}
+  ) { }
   AgentId;
 
   orderPlace: NameAndIdDto[] = [];
@@ -90,7 +87,7 @@ export class ReceiptfReceivingShipmentComponent implements OnInit {
   GetMoenyPlaced() {
     this.orderservice.MoenyPlaced().subscribe((res) => {
       this.MoenyPlaced = res;
-      this.getMoenyPlaced = [...res];
+      // this.getMoenyPlaced = [...res];
     });
   }
   getmony() {
@@ -104,27 +101,29 @@ export class ReceiptfReceivingShipmentComponent implements OnInit {
         var find = o.MoenyPlaced.find((m) => m.id == this.MoenyPlacedId.id);
         if (!find) o.order.monePlaced = o.MoenyPlaced[0];
         else o.order.monePlaced = find;
-        //تم تسليمها/داخل الشركة
-        if (
-          this.OrderplacedId.id == OrderplacedEnum.Delivered &&
-          this.MoenyPlacedId.id == MoneyPalcedEnum.Delivered
-        ) {
-          if (o.order.isClientDiliverdMoney) {
-            o.order.monePlaced = this.MoenyPlaced.find(
-              (m) => m.id == MoneyPalcedEnum.Delivered
-            );
-          } else {
-            o.order.monePlaced = this.MoenyPlaced.find(
-              (m) => m.id == MoneyPalcedEnum.InsideCompany
-            );
+        if (o.order.orderplaced.id == OrderplacedEnum.PartialReturned) {
+          if (this.MoenyPlacedId.id == MoneyPalcedEnum.Delivered) {
+            if (o.order.isClientDiliverdMoney) {
+              o.order.monePlaced = {
+                ...this.MoenyPlaced.find(
+                  (m) => m.id == MoneyPalcedEnum.Delivered
+                )
+              };
+            } else {
+              o.order.monePlaced = {
+                ...this.MoenyPlaced.find(
+                  (m) => m.id == MoneyPalcedEnum.InsideCompany
+                )
+              };
+            }
           }
-        }
-
-        if (
-          o.order.orderplaced.id == OrderplacedEnum.PartialReturned &&
-          o.order.isClientDiliverdMoney
-        ) {
-          o.order.monePlaced = o.MoenyPlaced[0];
+          if (this.MoenyPlacedId.id == MoneyPalcedEnum.WithAgent) {
+            o.order.monePlaced = {
+              ...this.MoenyPlaced.find(
+                (m) => m.id == MoneyPalcedEnum.WithAgent
+              )
+            }
+          }
         }
       });
     }
@@ -145,12 +144,14 @@ export class ReceiptfReceivingShipmentComponent implements OnInit {
         o.order.orderplaced = { ...this.OrderplacedId };
         this.ChangeAllOrderplacedId(o, this.getorders.indexOf(o));
       });
-      this.MoenyPlacedId = null;
-      this.getMoenyPlaced = this.orderplacedstate.ChangeOrderPlace(
-        this.OrderplacedId.id,
-        this.MoenyPlaced
-      );
-    }
+      }
+    this.MoenyPlacedId = null;
+    this.getMoenyPlaced = this.orderplacedstate.ChangeOrderPlace(
+      this.OrderplacedId.id,
+      this.MoenyPlaced,
+      "WithAgent"
+    );
+    this.MoenyPlacedId=this.getMoenyPlaced[0];
   }
   getAgent() {
     this.userService.ActiveAgent().subscribe((res) => {
@@ -224,13 +225,14 @@ export class ReceiptfReceivingShipmentComponent implements OnInit {
     this.getorder.MoenyPlaced = [...this.MoenyPlaced];
     this.getorder.OrderPlaced = [...this.orderPlace];
     this.getorder.canEditCount = true;
-    this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced);
-    this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced);
+    this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced,null,"WithAgent");
+    this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced,"WithAgent");
     this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced);
     this.orderplacedstate.unacceptable(this.getorder, this.MoenyPlaced);
     this.orderplacedstate.isClientDiliverdMoney(
       this.getorder,
-      this.MoenyPlaced
+      this.MoenyPlaced,
+      "WithAgent"
     );
     this.orderplacedstate.EditDeliveryCostAndAgentCost(
       this.getorder,
@@ -315,12 +317,13 @@ export class ReceiptfReceivingShipmentComponent implements OnInit {
       this.orderplacedstate.canChangeCost(
         element,
         this.MoenyPlaced,
-        this.temporderscost[index]
+        this.temporderscost[index],
+        "WithAgent"
       );
-      this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced);
+      this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced,"WithAgent");
       this.orderplacedstate.onWay(element, this.MoenyPlaced);
       this.orderplacedstate.unacceptable(element, this.MoenyPlaced);
-      this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced);
+      this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced, "WithAgent");
       this.orderplacedstate.EditDeliveryCostAndAgentCost(
         element,
         this.tempdeliveryCost[index],
@@ -344,12 +347,13 @@ export class ReceiptfReceivingShipmentComponent implements OnInit {
     this.orderplacedstate.canChangeCost(
       element,
       this.MoenyPlaced,
-      this.temporderscost[index]
+      this.temporderscost[index],
+      "WithAgent"
     );
-    this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced);
+    this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced,"WithAgent");
     this.orderplacedstate.onWay(element, this.MoenyPlaced);
     this.orderplacedstate.unacceptable(element, this.MoenyPlaced);
-    this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced);
+    this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced, "WithAgent");
     this.orderplacedstate.EditDeliveryCostAndAgentCost(
       element,
       this.tempdeliveryCost[index],
@@ -365,17 +369,19 @@ export class ReceiptfReceivingShipmentComponent implements OnInit {
     this.orderplacedstate.canChangeCost(
       element,
       this.MoenyPlaced,
-      this.temporderscost[index]
+      this.temporderscost[index],
+      "WithAgent"
     );
   }
   changeDeliveryCost(element, index) {
     this.orderplacedstate.changeDeliveryCost(
       element,
       this.tempdeliveryCost[index],
-      this.MoenyPlaced
+      this.MoenyPlaced,
+      "WithAgent"
     );
   }
- 
+
   count = 0;
   agentCost;
   deliveryCostCount;
