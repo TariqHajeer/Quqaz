@@ -45,6 +45,8 @@ import { ViewsPrintTransferToSecondBranchComponent } from './views-print-transfe
 import { ViewsPrintTransferToSecondBranchByIdComponent } from './views-print-transfer-to-second-branch-by-id/views-print-transfer-to-second-branch-by-id.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PrintOrdersDontFinishedComponent } from './printpreview/print-orders-dont-finished/print-orders-dont-finished.component';
+import { ViewPrintOrdersDontFinishedComponent } from './view-print-orders-dont-finished/view-print-orders-dont-finished.component';
+import { ViewPrintOrdersDontFinishedDetilsComponent } from './view-print-orders-dont-finished-detils/view-print-orders-dont-finished-detils.component';
 @NgModule({
   declarations: [ShipmentInStockComponent,
     ClientOrderComponent,
@@ -74,7 +76,9 @@ import { PrintOrdersDontFinishedComponent } from './printpreview/print-orders-do
     CashMovmentComponent,
     ViewsPrintTransferToSecondBranchComponent,
     ViewsPrintTransferToSecondBranchByIdComponent,
-    PrintOrdersDontFinishedComponent,],
+    PrintOrdersDontFinishedComponent,
+    ViewPrintOrdersDontFinishedComponent,
+    ViewPrintOrdersDontFinishedDetilsComponent,],
   imports: [
     CommonModule,
     ReportsRoutingModule,
