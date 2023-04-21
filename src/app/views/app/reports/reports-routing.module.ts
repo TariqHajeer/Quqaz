@@ -31,6 +31,8 @@ import { StatisticsComponent } from './statistics/statistics.component';
 import { ViewsPrintTransferToSecondBranchByIdComponent } from './views-print-transfer-to-second-branch-by-id/views-print-transfer-to-second-branch-by-id.component';
 import { ViewsPrintTransferToSecondBranchComponent } from './views-print-transfer-to-second-branch/views-print-transfer-to-second-branch.component';
 import { PrintOrdersDontFinishedComponent } from './printpreview/print-orders-dont-finished/print-orders-dont-finished.component';
+import { ViewPrintOrdersDontFinishedComponent } from './view-print-orders-dont-finished/view-print-orders-dont-finished.component';
+import { ViewPrintOrdersDontFinishedDetilsComponent } from './view-print-orders-dont-finished-detils/view-print-orders-dont-finished-detils.component';
 
 const routes: Routes = [
   {
@@ -214,6 +216,22 @@ const routes: Routes = [
   {
     path: 'PrintOrdersDontFinished',
     component: PrintOrdersDontFinishedComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: [UserPermission.ShowReports],
+    },
+  },
+  {
+    path: 'viewPrintOrdersDontFinished', 
+    component: ViewPrintOrdersDontFinishedComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: [UserPermission.ShowReports],
+    },
+  },
+  {
+    path: 'viewPrintOrdersDontFinishedDetils/:id',
+    component: ViewPrintOrdersDontFinishedDetilsComponent,
     canActivate: [AuthGuard],
     data: {
       roles: [UserPermission.ShowReports],

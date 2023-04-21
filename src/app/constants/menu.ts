@@ -256,6 +256,12 @@ const data: IMenuItem[] = [
           },
           {
             icon: 'simple-icon-layers',
+            label: 'تقرير تسديد العميل',
+            to: `${adminRoot}/reports/viewPrintOrdersDontFinished`,
+            permission: [UserPermission.ShowReports],
+          },
+          {
+            icon: 'simple-icon-layers',
             label: 'تسديد الشركات ',
             to: `${adminRoot}/reports/orderincompany`,
             permission: [UserPermission.Pay],
