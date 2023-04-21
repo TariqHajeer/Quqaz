@@ -254,12 +254,12 @@ const data: IMenuItem[] = [
               UserPermission.PayUnacceptable,
             ],
           },
-          {
-            icon: 'simple-icon-layers',
-            label: 'تقرير تسديد العميل',
-            to: `${adminRoot}/reports/viewPrintOrdersDontFinished`,
-            permission: [UserPermission.ShowReports],
-          },
+          // {
+          //   icon: 'simple-icon-layers',
+          //   label: 'تقرير تسديد العميل',
+          //   to: `${adminRoot}/reports/viewPrintOrdersDontFinished`,
+          //   permission: [UserPermission.ShowReports],
+          // },
           {
             icon: 'simple-icon-layers',
             label: 'تسديد الشركات ',
