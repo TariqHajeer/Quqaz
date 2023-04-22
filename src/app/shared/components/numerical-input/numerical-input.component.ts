@@ -45,15 +45,12 @@ export class NumericalInputComponent implements OnInit {
       this.value = '0';
     }
     this.value = Number(this.value).toString();
+    this.valueChange.emit(this.value);
   }
   keydownHandling(event): void {
     const charCode = event.which ? event.which : event.keyCode;
     if (this.value.length <= 1 && charCode == 8) {
       this.value = '0';
     }
-  }
-  changeValue(event) {
-    this.value = event;
-    this.valueChange.emit(this.value);
   }
 }
