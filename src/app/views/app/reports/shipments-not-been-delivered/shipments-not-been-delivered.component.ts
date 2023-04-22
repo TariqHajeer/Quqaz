@@ -11,6 +11,7 @@ import { ClientService } from '../../client/client.service';
 import { Client } from '../../client/client.model';
 import { PointSettingsService } from 'src/app/services/point-settings.service';
 import { AuthService } from 'src/app/shared/auth.service';
+import { OrderClientDontDiliverdMoney } from 'src/app/Models/order/order-client-dont-diliverd-money.model';
 @Component({
   selector: 'app-shipments-not-been-delivered',
   templateUrl: './shipments-not-been-delivered.component.html',
@@ -53,7 +54,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   noDataFound: boolean = false;
   isClientDeleviredMoney: boolean = false;
   clientDoNotDeleviredMoney: boolean = false;
-  @Input() totalCount: number;
+  @Input() totalCount: number = 0;
   points: any[] = [];
   pointId: number = 0;
   /* select all prob*/
@@ -79,6 +80,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   ngOnInit(): void {
     this.getClients();
     this.showOrderPlaceds();
+    this.orderservice.orderClientDontDiliverdMoney = new OrderClientDontDiliverdMoney();
   }
   setIsAllSelected(isAllSelected: boolean): void {
     this.selectAll = isAllSelected;
@@ -186,6 +188,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   filtering() {
     this.dataSource = new MatTableDataSource([]);
     this.selection = new SelectionModel<any>(true, []);
+    this.orderservice.orderClientDontDiliverdMoney = new OrderClientDontDiliverdMoney();
     this.ordersIds = [];
     this.orders = [];
     this.unSelectIds = [];
@@ -245,9 +248,9 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
   }
 
   print() {
-    this.orderservice.orderClientDontDiliverdMoney.tableSelection.exceptIds= this.unSelectIds;
-    this.orderservice.orderClientDontDiliverdMoney.tableSelection.selectedIds= this.ordersIds;
-    this.orderservice.orderClientDontDiliverdMoney.tableSelection.isSelectedAll= this.lastMasterSelectionChoise; 
+    this.orderservice.orderClientDontDiliverdMoney.tableSelection.exceptIds = this.unSelectIds;
+    this.orderservice.orderClientDontDiliverdMoney.tableSelection.selectedIds = this.ordersIds;
+    this.orderservice.orderClientDontDiliverdMoney.tableSelection.isSelectedAll = this.lastMasterSelectionChoise;
     if (this.pointId == 0)
       this.orderservice.deleiverMoneyForClientDto.PointsSettingId = null;
     else
