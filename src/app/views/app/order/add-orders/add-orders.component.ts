@@ -6,7 +6,7 @@ import orderPlaceds from 'src/app/data/orderPlaced';
 import moenyplaceds from 'src/app/data/moneyPalced';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
-import {CreateOrdersFromEmployee,OrderItem} from 'src/app/Models/order/create-orders-from-employee.model';
+import { CreateOrdersFromEmployee, OrderItem } from 'src/app/Models/order/create-orders-from-employee.model';
 import { OrderType } from 'src/app/Models/OrderTypes/order-type.model';
 import { Region } from 'src/app/Models/Regions/region.model';
 import { User } from 'src/app/Models/user/user.model';
@@ -18,6 +18,8 @@ import { AuthService } from 'src/app/shared/auth.service';
 import IIndex from 'src/app/shared/interfaces/IIndex';
 import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
+import { IndexesTypeEnum } from 'src/app/Models/Enums/IndexesTypeEnum';
+import { IndexesService } from 'src/app/services/indexes.service';
 @Component({
   selector: 'app-add-orders',
   templateUrl: './add-orders.component.html',
@@ -32,6 +34,7 @@ export class AddOrdersComponent implements OnInit {
     private notifications: NotificationsService,
     public spinner: NgxSpinnerService,
     private authService: AuthService,
+    private indexesService: IndexesService
   ) { }
 
   Order: CreateOrdersFromEmployee;
@@ -39,7 +42,7 @@ export class AddOrdersComponent implements OnInit {
   orderPlace: IIndex[] = [];
   MoenyPlaced: IIndex[] = [];
   clients: Client[] = [];
-  cities: City[] = [];
+  countries: City[] = [];
   Region: Region[] = [];
   Regions: Region[] = [];
   Agents: User[] = [];
@@ -72,10 +75,13 @@ export class AddOrdersComponent implements OnInit {
     this.submitted = false;
     this.GetMoenyPlaced();
     this.GetorderPlace();
-    this.GetRegion();
-    this.Getcities();
-    this.GetClient();
-    this.ActiveAgent();
+    this.getIndexes();
+  }
+  getIndexes() {
+    this.indexesService.getIndexes([IndexesTypeEnum.Countries, IndexesTypeEnum.Clients]).subscribe(response => {
+      this.countries = response.countries;
+      this.clients = response.clients;
+    })
   }
   AddOrder() {
     if (this.tempPhone != '' && this.tempPhone != undefined) {
@@ -131,26 +137,8 @@ export class AddOrdersComponent implements OnInit {
     this.MoenyPlaced = [...moenyplaceds];
     this.Order.MoenyPlacedId = this.MoenyPlaced[0].id;
   }
-  GetClient() {
-    this.clientService.getClients().subscribe((res) => {
-      this.clients = res;
-    });
-  }
-  Getcities() {
-    this.customerService.getAll(this.cityapi).subscribe((res) => {
-      this.cities = res;
-    });
-  }
-  GetRegion() {
-    this.customerService.getAll(this.regionapi).subscribe((res) => {
-      this.Regions = res;
-    });
-  }
-  ActiveAgent() {
-    this.userService.ActiveAgent().subscribe((res) => {
-      this.GetAgents = res;
-    });
-  }
+
+
   AllorderTypes: any[] = [];
   getOrderTypes() {
     this.customerService.getAll(this.ordertypeapi).subscribe((res) => {
@@ -184,25 +172,18 @@ export class AddOrdersComponent implements OnInit {
     this.Region = [];
     this.Order.RegionId = null;
     this.Order.AgentId = null;
-    var city = this.cities.find((c) => c.id == this.Order.CountryId);
-  if(city.requiredAgent){
-    this.disabledAgent = false;
-      this.Agents = this.GetAgents.filter(
-        (a) =>
-          a.countries
-            .map((c) => c.id)
-            .filter((co) => co == this.Order.CountryId).length > 0
-      );
+    var city = this.countries.find((c) => c.id == this.Order.CountryId);
+    if (city.requiredAgent) {
+      this.disabledAgent = false;
+      this.Agents = city.agnets;
       if (this.Agents.length != 0) this.Order.AgentId = this.Agents[0].id;
-    } 
-    else{
+    }
+    else {
       this.disabledAgent = true;
       this.Order.AgentId = null;
     }
     this.Order.DeliveryCost = city.deliveryCost;
-    this.Region = this.Regions.filter(
-      (r) => r.country.id == this.Order.CountryId
-    );
+    this.Region = city.regions;
     if (this.Region.length != 0) this.Order.RegionId = this.Region[0].id;
   }
   showMessageCode: boolean = false;

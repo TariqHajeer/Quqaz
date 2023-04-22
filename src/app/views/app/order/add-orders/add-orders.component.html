@@ -32,7 +32,7 @@
                     <ng-select appOnReturn (change)="changeIndex(2)" [(ngModel)]="Order.CountryId"
                         (change)="changeCountry()" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
                         name="Country">
-                        <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
+                        <ng-option *ngFor="let citie of countries" [value]="citie.id">{{citie.name}}</ng-option>
                     </ng-select>
                     <div *ngIf="!Order.CountryId && submitted" class="invalid-tooltip">المدينة حقل مطلوب</div>
                 </div>
