@@ -58,7 +58,7 @@
                         <ng-select appendTo="body" [(ngModel)]="EditOrder.CountryId" style="width: 100px;"
                             (change)="changeCountryEdit()" [ngModelOptions]="{standalone: true}" [clearable]="false"
                             *ngIf="order.CanEdit" name="Country">
-                            <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
+                            <ng-option *ngFor="let citie of countries" [value]="citie.id">{{citie.name}}</ng-option>
                         </ng-select>
                         <div *ngIf="!EditOrder.CountryId && Editsubmitted&&order.CanEdit" class="message">المحافظة حقل
                             مطلوب</div>
@@ -179,7 +179,7 @@
                         <ng-select appendTo="body" (keydown.enter)="changed(2)" [(ngModel)]="Order.CountryId"
                             style="width: 100px;" (change)="changeCountry()" [ngModelOptions]="{standalone: true}"
                             [clearable]="false" name="Country">
-                            <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
+                            <ng-option *ngFor="let citie of countries" [value]="citie.id">{{citie.name}}</ng-option>
                         </ng-select>
                         <div *ngIf="!Order.CountryId && submitted" class="message">المحافظة حقل مطلوب</div>
 
