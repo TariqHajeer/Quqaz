@@ -351,9 +351,7 @@ export class OrderService {
   }
   ReceiveReturnedToMyBranch() {
     this.transferToSecondBranchDto.selectedOrdersWithFitlerDto = this.selectOrder;
-    let formdata = new FormData();
-    formdata = this.convertSelectOrderToFromData(formdata, this.selectOrder);
-    return this.http.patch<any>(this.controler + 'ReceiveReturnedToMyBranch', this.selectOrder);
+    return this.http.post<any>(this.controler + 'ReceiveReturnedToMyBranch',this.selectOrder);
   }
   GetPrintsTransferToSecondBranch(paging: Paging, destinationBranchId: any) {
     let params = this.getHttpParmasByPaging(paging);
@@ -442,12 +440,19 @@ export class OrderService {
     return params;
   }
   convertSelectOrderToFromData(formdata: FormData, selectOrder: SelectOrder): FormData {
-    if (selectOrder.ExceptIds)
-      formdata.append('ExceptIds', selectOrder.ExceptIds);
+    if (selectOrder.ExceptIds){
+      selectOrder.ExceptIds.forEach(s=>{
+        formdata.append('ExceptIds[]', s);
+      });
+    }
     if (selectOrder.IsSelectedAll)
       formdata.append('IsSelectedAll', selectOrder.IsSelectedAll);
-    if (selectOrder.SelectedIds)
-      formdata.append('selectedIds', selectOrder.SelectedIds);
+
+    if (selectOrder.SelectedIds){
+      selectOrder.SelectedIds.forEach(s=>{
+        formdata.append('selectedIds[]', s);
+      })
+    }
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.AgentId)
       formdata.append('AgentId', selectOrder.OrderFilter.AgentId.toString());
     if (selectOrder.OrderFilter && selectOrder.OrderFilter.AgentPrintEndDate)
