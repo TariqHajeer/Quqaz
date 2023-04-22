@@ -1,24 +1,20 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
-import { CustomService } from 'src/app/services/custom.service';
 import { UserService } from 'src/app/services/user.service';
 import { OrderService } from 'src/app/services/order.service';
-import { ClientService } from '../../client/client.service';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { OrderItem } from 'src/app/Models/order/create-orders-from-employee.model';
 import { CreateMultipleOrder } from 'src/app/Models/order/create-multiple-order';
 import { OrderType } from 'src/app/Models/OrderTypes/order-type.model';
-import { Region } from 'src/app/Models/Regions/region.model';
 import { User } from 'src/app/Models/user/user.model';
 import { Client } from '../../client/client.model';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import * as moment from 'moment';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { AuthService } from 'src/app/shared/auth.service';
-import orderPlaceds from 'src/app/data/orderPlaced';
-import IIndex from 'src/app/shared/interfaces/IIndex';
+import { IndexesTypeEnum } from 'src/app/Models/Enums/IndexesTypeEnum';
+import { IndexesService } from 'src/app/services/indexes.service';
 
 @Component({
   selector: 'app-createmultiple-order-from-client',
@@ -29,11 +25,11 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
 
   constructor(private orderservice: OrderService,
     private authService: AuthService,
-    private clientService: ClientService
-    , private customerService: CustomService,
     public userService: UserService,
     private notifications: NotificationsService,
-    public spinner: NgxSpinnerService) {
+    public spinner: NgxSpinnerService,
+    private indexesService: IndexesService,
+  ) {
 
   }
 
@@ -41,14 +37,9 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   EditOrder: CreateMultipleOrder
   submitted = false;
   Editsubmitted = false
-  orderPlace: IIndex[] = []
-  MoenyPlaced: IIndex[] = []
   clients: Client[] = []
-  cities: City[] = []
-  Region: Region[] = []
-  Regions: Region[] = []
+  countries: City[] = []
   Agents: User[] = []
-  GetAgents: User[] = []
   orderTypes: OrderType[] = []
   orderType: OrderType
   OrderItem: OrderItem
@@ -59,15 +50,12 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
   filter: OrderFilter
   CountryId
   ClientId
-  cityapi = "Country"
-  regionapi = "Region"
-  ordertypeapi = "OrderType";
   Orders: any[] = []
   ngOnInit(): void {
     this.Order = new CreateMultipleOrder();
     this.EditOrder = new CreateMultipleOrder();
     this.submitted = false;
-    this.int()
+    this.getIndexes()
     var clientid = JSON.parse(localStorage.getItem('ClientId'))
     if (clientid) {
       this.ClientId = clientid
@@ -79,66 +67,18 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     }
 
   }
-  int() {
-    this.GetorderPlace()
-    this.Getcities()
-    this.GetClient()
-    this.getAgent()
-  }
-
-  addNewCountry() {
-    this.Order.Country = this.cities.find(c => c.id == this.Order.CountryId)
-    var find = this.cities.find(c => c.name == this.Order.Country.name)
-    if (!find) {
-      this.customerService.Create(this.cityapi, this.Order.Country).subscribe(res => {
-        this.Order.Country = res
-        this.Getcities()
-
-      })
-    }
-
-  }
-  editNewCountry() {
-    if (!this.cities.find(c => c.name == this.EditOrder.Country.name)) {
-      this.customerService.Create(this.cityapi, this.EditOrder.Country).subscribe(res => {
-        this.EditOrder.Country = res
-        this.Getcities()
-      })
-    }
-
-  }
-  GetorderPlace() {
-    this.orderPlace = [...orderPlaceds]
-    this.Order.OrderplacedId = this.orderPlace[1].id
-    this.orderPlace = this.orderPlace.filter(o => o.id != OrderplacedEnum.Client)
-  }
-
-  getAgent() {
-    this.userService.ActiveAgent().subscribe(res => {
-      this.GetAgents = res
-      this.Agents = this.GetAgents.filter(a => a.countryId == this.Order.CountryId
-      )
-    })
-  }
-
-
-  GetClient() {
-    this.clientService.getClients().subscribe(res => {
-      this.clients = res
-    })
-  }
-  Getcities() {
-    this.customerService.getAll(this.cityapi).subscribe(res => {
-      this.cities = res
-      this.Order.Country = this.cities.find(c => c.id == this.Order.CountryId)
+  getIndexes() {
+    this.indexesService.getIndexes([IndexesTypeEnum.Countries, IndexesTypeEnum.Clients]).subscribe(response => {
+      this.countries = response.countries;
+      this.clients = response.clients;
     })
   }
 
   changeCountry() {
-    var city = this.cities.find(c => c.id == this.Order.CountryId)
+    var city = this.countries.find(c => c.id == this.Order.CountryId)
     if (city.requiredAgent) {
       this.disabledAddAgent = false;
-      this.Agents = this.GetAgents.filter(a => a.countries.map(c => c.id).filter(co => co == this.Order.CountryId).length > 0)
+      this.Agents = city.agnets;
       if (this.Agents.length != 0 && this.Agents.length == 1)
         this.Order.AgentId = this.Agents[0].id
       else this.Order.AgentId = null
@@ -150,10 +90,10 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
 
   }
   changeCountryEdit() {
-    var city = this.cities.find(c => c.id == this.EditOrder.CountryId)
+    var city = this.countries.find(c => c.id == this.EditOrder.CountryId)
     if (city.requiredAgent) {
       this.disabledEditAgent = false;
-      this.Agents = this.GetAgents.filter(a => a.countries.map(c => c.id).filter(co => co == this.EditOrder.CountryId).length > 0)
+      this.Agents = city.agnets;
       if (this.Agents.length != 0 && this.Agents.length == 1)
         this.EditOrder.AgentId = this.Agents[0].id
       else this.EditOrder.AgentId = null
@@ -278,8 +218,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     }
   }
   onEnter() {
-    this.addNewCountry()
-    this.Order.Country = this.cities.find(c => c.id == this.Order.CountryId)
+    this.Order.Country = this.countries.find(c => c.id == this.Order.CountryId)
     this.Order.ClientId = this.ClientId
     if (this.checkLengthPhoneNumber(this.Order.RecipientPhones))
       return
@@ -289,8 +228,6 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
       return
     } else this.submitted = false
     this.Order.CountryName = this.Order.Country?.name
-    var orderplace = this.orderPlace.find(c => c.id == this.Order.OrderplacedId)
-    this.Order.OrderplacedName = orderplace?.name
     var client = this.clients.find(c => c.id == this.Order.ClientId)
     this.Order.ClientName = client?.name
     var agent = this.Agents.find(c => c.id == this.Order.AgentId)
@@ -303,7 +240,6 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     setTimeout(() => {
       this.codeElement.nativeElement.focus();
     }, 0);
-    this.int()
   }
   tempEdit: CreateMultipleOrder
   Edit(order: CreateMultipleOrder) {
@@ -316,20 +252,14 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     order.CanEdit = true
     this.tempEdit = Object.assign({}, order);
     this.EditOrder = order;
-    var city = this.cities.find(c => c.id == this.EditOrder.CountryId)
+    var city = this.countries.find(c => c.id == this.EditOrder.CountryId)
     if (city.requiredAgent)
       this.disabledEditAgent = false;
     else
       this.disabledEditAgent = true;
-    this.Agents = this.GetAgents.filter(
-      (a) =>
-        a.countries
-          .map((c) => c.id)
-          .filter((co) => co == this.EditOrder.CountryId).length > 0
-    );
+    this.Agents = city.agnets;
   }
   Save(order: CreateMultipleOrder) {
-    this.editNewCountry()
     if (!this.EditOrder.Code || !this.EditOrder.ClientId ||
       !this.EditOrder.RecipientPhones
       || order.showEditMessageCode) {
@@ -341,8 +271,6 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     this.EditOrder.CanEdit = false
     this.EditOrder.CountryId = this.EditOrder.Country.id
     this.EditOrder.CountryName = this.EditOrder.Country.name
-    var orderplace = this.orderPlace.find(c => c.id == this.EditOrder.OrderplacedId)
-    this.EditOrder.OrderplacedName = orderplace.name
     var client = this.clients.find(c => c.id == this.EditOrder?.ClientId)
     this.EditOrder.ClientName = client?.name
     this.EditOrder.DeliveryCost = this.EditOrder.DeliveryCost * 1
