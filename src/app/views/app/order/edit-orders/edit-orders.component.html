@@ -270,24 +270,24 @@
             <div class="col-md-12">
               <label>ملاحظات العميل</label>
               <input type="text" class="form-control" [ngModelOptions]="{ standalone: true }"
-                [(ngModel)]="Order.clientNote" [disabled]="true" />
+                [(ngModel)]="editorder.clientNote" [disabled]="true" />
             </div>
             <div class="col-md-4">
               
               <label>الموظف صاحب آخر تعديل</label>
               <input type="text" class="form-control" [ngModelOptions]="{ standalone: true }"
-                [(ngModel)]="Order.updatedBy" [disabled]="true" />
+                [(ngModel)]="editorder.updatedBy" [disabled]="true" />
             </div>
             <div class="col-md-4">
               <label>وقت آخر تعديل</label>
               <input type="text" class="form-control" [ngModelOptions]="{ standalone: true }"
-                [(ngModel)]="Order.updatedDate" [disabled]="true" />
+                [(ngModel)]="editorder.updatedDate" [disabled]="true" />
             </div>
           </div>
           <div class="col-md-4">
             <label>ملاحظات النظام</label>
             <input type="text" class="form-control" [ngModelOptions]="{ standalone: true }"
-              [(ngModel)]="Order.systemNote" [disabled]="true" />
+              [(ngModel)]="editorder.systemNote" [disabled]="true" />
           </div>
         </div>
           <div class="row w-100">
