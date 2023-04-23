@@ -281,7 +281,7 @@
             <div class="col-md-4">
               <label>وقت آخر تعديل</label>
               <input type="text" class="form-control" [ngModelOptions]="{ standalone: true }"
-                [(ngModel)]="editorder.updatedDate" [disabled]="true" />
+                [value]='editorder.updatedDate| date: "yyyy/MM/dd"' [disabled]="true" />
             </div>
           </div>
           <div class="col-md-4">
@@ -517,13 +517,13 @@
     </div>
   </mat-tab>
   <mat-tab label="عمليات طباعة المندوب  ">
-    <app-receipt-order [ordersPrint]="editorder.agentPrint" [type]="'agentPrint'"></app-receipt-order>
+    <app-receipt-order [ordersPrint]="editorder?.agentPrint" [type]="'agentPrint'"></app-receipt-order>
   </mat-tab>
   <mat-tab label="عمليات طباعة العميل  ">
-    <app-receipt-order [ordersPrint]="editorder.clientPrint" [type]="'clientPrint'"></app-receipt-order>
+    <app-receipt-order [ordersPrint]="editorder?.clientPrint" [type]="'clientPrint'"></app-receipt-order>
   </mat-tab>
   <mat-tab label="استلام حالة الشحنة">
-    <app-receipt-order [ordersPrint]="editorder.receiptOfTheOrderStatusDetalis"
+    <app-receipt-order [ordersPrint]="editorder?.receiptOfTheOrderStatusDetalis"
       [type]="'receiptPrint'"></app-receipt-order>
   </mat-tab>
 </mat-tab-group>

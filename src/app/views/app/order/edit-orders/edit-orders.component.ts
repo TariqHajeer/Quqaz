@@ -146,33 +146,33 @@ export class EditOrdersComponent implements OnInit {
       else
         this.showRsendButton = false
       this.orderResend.Id = this.editorder.id
-      this.orderResend.AgnetId = this.editorder.agent.id
-      this.orderResend.CountryId = this.editorder.country.id
+      this.orderResend.AgnetId = this.editorder?.agent?.id
+      this.orderResend.CountryId = this.editorder.country?.id
       this.orderResend.RegionId = this.editorder.region != null ? this.editorder.region.Id : null
       this.Regionsresend = this.Regions.filter(r => r.country.id == this.orderResend.CountryId)
       this.Agentsresend = this.Agents.filter(r => r.countryId == this.orderResend.CountryId)
       this.Order.Id = this.editorder.id
       this.Order.Address = this.editorder.address
-      this.Order.ClientId = this.editorder.client.id
-      this.Order.AgentId = this.editorder.agent.id
+      this.Order.ClientId = this.editorder.client?.id
+      this.Order.AgentId = this.editorder.agent?.id
       this.Order.Code = this.editorder.code
       this.tempOrdercode = this.editorder.code
       this.Order.Cost = this.editorder.cost
-      this.Order.CountryId = this.editorder.country.id
+      this.Order.CountryId = this.editorder.country?.id
       this.Order.Date = this.editorder.date
       this.Order.DiliveryDate = this.editorder.diliveryDate
       this.Order.DeliveryCost = this.editorder.deliveryCost
-      this.Order.MoenyPlacedId = this.editorder.monePlaced.id
+      this.Order.MoenyPlacedId = this.editorder.monePlaced?.id
       this.Order.Note = this.editorder.note
       this.Order.OrderTypeDtos = this.editorder.orderItems
-      this.Order.OrderplacedId = this.editorder.orderplaced.id
+      this.Order.OrderplacedId = this.editorder.orderplaced?.id
       this.Order.RecipientName = this.editorder.recipientName
       this.Order.RecipientPhones = this.editorder.recipientPhones
       this.Order.OldCost = this.editorder.oldCost
       this.Order.orderLogs = this.editorder.orderLogs
       this.Order.printedTimes = this.editorder.printedTimes
       this.dataSource = new MatTableDataSource(this.Order.orderLogs)
-      this.Order.RegionId = this.editorder.region != null ? this.editorder.region.Id : null
+      this.Order.RegionId = this.editorder.region ? this.editorder.region?.Id : null
     }, err => {
       this.spinner.hide()
 
@@ -252,7 +252,7 @@ export class EditOrdersComponent implements OnInit {
     this.customerService.getAll(this.cityapi).subscribe(res => {
       this.cities = res
       var country = this.cities.find(c => c.id == this.Order.CountryId)
-      this.orderResend.DeliveryCost = country.deliveryCost ? country.deliveryCost : 0
+      this.orderResend.DeliveryCost = country?.deliveryCost ? country.deliveryCost : 0
       if (this.tempRegions)
         this.Regionsresend = this.tempRegions.filter(r => r.country.id == this.orderResend.CountryId)
       if (this.tempAgent)
