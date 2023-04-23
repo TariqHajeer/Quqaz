@@ -27,7 +27,7 @@
         </ng-select>
 
       </div>
-      
+
       <div class="col-md-2">
         <label> المندوب</label>
         <ng-select [(ngModel)]="filter.AgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
@@ -76,8 +76,8 @@
       </div>
       <div class="col-md-2">
         <label>اسم المستلم</label>
-        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-          [(ngModel)]="filter.RecipientName" (keyup.enter)="getOrders()">
+        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="filter.RecipientName"
+          (keyup.enter)="getOrders()">
 
       </div>
       <div class="col-md-2">
@@ -115,8 +115,7 @@
       </div>
       <div class="col-md-4">
         <label>إلى تاريخ</label>
-        <input type="date" class="form-control" [(ngModel)]="filter.createdDateRangeFilter.end"
-          (change)="getOrders()">
+        <input type="date" class="form-control" [(ngModel)]="filter.createdDateRangeFilter.end" (change)="getOrders()">
       </div>
       <div class="col-md-2">
         <label>الفرع</label>
@@ -174,7 +173,8 @@
       </ng-container>
       <ng-container matColumnDef="CurrentBranch">
         <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> الفرع الحالي</th>
-        <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.currentBrnach !=null?element.currentBrnach.name:null}}
+        <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.currentBrnach
+          !=null?element.currentBrnach.name:null}}
         </td>
       </ng-container>
 
@@ -260,9 +260,8 @@
               </div>
             </div>
           </div>
-          <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#resend"
-            *ngIf="element.orderplaced.id==5||element.orderplaced.id==7||element.orderplaced.id==8"
-            (click)="fillResend(element)">اعادة ارسال </button>
+          <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#resend" *ngIf="(element.orderplaced.id==5||element.orderplaced.id==7||element.orderplaced.id==8)
+            && element.currentBrnach.id==currentUser.branche.id" (click)="fillResend(element)">اعادة ارسال </button>
 
           <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="resend"
             aria-labelledby="myLargeModalLabel" aria-hidden="true">

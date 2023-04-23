@@ -11,8 +11,6 @@ import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { Client } from '../../client/client.model';
 import { Region } from 'src/app/Models/Regions/region.model';
-import { CustomService } from 'src/app/services/custom.service';
-import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/Models/user/user.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
@@ -22,6 +20,8 @@ import { IndexesTypeEnum } from 'src/app/Models/Enums/IndexesTypeEnum';
 import orderPlaceds from 'src/app/data/orderPlaced';
 import moneyPlaceds from 'src/app/data/moneyPalced';
 import { IndexesService } from 'src/app/services/indexes.service';
+import { AuthService } from 'src/app/shared/auth.service';
+import { UserLogin } from 'src/app/Models/userlogin.model';
 @Component({
   selector: 'app-view-orders',
   templateUrl: './view-orders.component.html',
@@ -56,15 +56,14 @@ export class ViewOrdersComponent implements OnInit {
   regionsResend: Region[] = [];
   orderResend: Resend = new Resend();
   countryResend: City = new City();
-
+  currentUser: UserLogin = new UserLogin();
   constructor(
     private orderservice: OrderService,
     private router: Router,
-    private customerService: CustomService,
-    private userService: UserService,
     public spinner: NgxSpinnerService,
     private notifications: NotificationsService,
-    private indexesService: IndexesService
+    private indexesService: IndexesService,
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -73,6 +72,7 @@ export class ViewOrdersComponent implements OnInit {
     this.get();
   }
   get() {
+    this.currentUser = this.authService.getUser();
     this.dataSource = new MatTableDataSource(this.orders);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
