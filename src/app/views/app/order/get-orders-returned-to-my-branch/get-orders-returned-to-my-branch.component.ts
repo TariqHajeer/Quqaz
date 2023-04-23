@@ -12,7 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { SelectOrder } from 'src/app/Models/order/select-order.model';
 import { AuthService } from 'src/app/shared/auth.service';
 import { BranchesService } from 'src/app/services/branches.service';
-
+import { IIdWithNote } from 'src/app/shared/interfaces/IIdWithNote';
 @Component({
   selector: 'app-get-orders-returned-to-my-branch',
   templateUrl: './get-orders-returned-to-my-branch.component.html',
@@ -37,6 +37,7 @@ export class GetOrdersReturnedToMyBranchComponent implements OnInit {
   indeterminate: boolean = false;
   headerChekclable: string = "deselect all";
   lastMasterSelectionChoise: boolean = false;
+  idWithNote: IIdWithNote;
   constructor(
     public orderservice: OrderService,
     public userService: UserService,
@@ -51,6 +52,10 @@ export class GetOrdersReturnedToMyBranchComponent implements OnInit {
 
   ngOnInit(): void {
     this.paging = new Paging();
+    this.idWithNote = {
+      orderId: 0,
+      note: ''
+    }
     this.getBranches();
   }
   setIsAllSelected(isAllSelected: boolean): void {
@@ -200,11 +205,16 @@ export class GetOrdersReturnedToMyBranchComponent implements OnInit {
     }
   }
   disapprove(element: any) {
+    this.idWithNote.orderId = element.id;
     this.spinner.show();
-    this.orderservice.DisApproveReturnedToMyBranch(element.id).subscribe(res => {
+    this.orderservice.DisApproveReturnedToMyBranch(this.idWithNote).subscribe(res => {
       this.dataSource.data = this.dataSource.data.filter(c => c.id != element.id);
       this.dataSource._updateChangeSubscription();
       this.spinner.hide();
+      this.idWithNote = {
+        orderId: 0,
+        note: ''
+      }
       this.notifications.success('success', 'تم الرفض بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
     },
       err => {

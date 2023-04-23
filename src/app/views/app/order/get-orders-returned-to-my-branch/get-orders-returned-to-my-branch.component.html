@@ -22,7 +22,7 @@
                     الطلبات</button>
             </div>
         </div>
-    </div> 
+    </div>
 </div>
 <div class="example-container mat-elevation-z8">
 
@@ -78,7 +78,30 @@
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef> خيارات</th>
             <td mat-cell *matCellDef="let element">
-                <button class="btn btn-danger" (click)="disapprove(element)">رفض</button>
+                <button class="btn btn-danger"
+                data-toggle="modal" data-target="#resend">رفض</button>
+                <div class="modal fade" id="resend" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">الرجاء ادخال ملاحظات</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <label>ملاحظات</label>
+                                <input type="text" class="form-control" [ngModelOptions]="{ standalone: true }"
+                                    [(ngModel)]="idWithNote.note" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="disapprove(element)">رفض</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

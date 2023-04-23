@@ -9,6 +9,7 @@ import { ReceiveOrdersToMyBranchDto, ReturnOrderToMainBranchDto, SelectOrder, Tr
 import { PrintTransferOrder } from 'src/app/Models/order/print-transfer-order.model';
 import { GetOrdersByAgentRegionAndCode } from '../Models/order/get-orders-by-agent-region-and-code.model';
 import { DeleiverMoneyForClientDto } from '../Models/order/deleiver-money-for-client-dto.model';
+import { IIdWithNote } from '../shared/interfaces/IIdWithNote';
 
 @Injectable({
   providedIn: 'root',
@@ -186,7 +187,7 @@ export class OrderService {
     });
   }
   OrdersDontFinished() {
-    this.deleiverMoneyForClientDto.Filter=this.orderClientDontDiliverdMoney;
+    this.deleiverMoneyForClientDto.Filter = this.orderClientDontDiliverdMoney;
     return this.http.post<any>(this.controler + 'OrdersDontFinished', this.orderClientDontDiliverdMoney);
   }
   OrderVicdanAgent(AgentId) {
@@ -346,12 +347,12 @@ export class OrderService {
     params = params.append('currentBranchId', String(currentBranchId));
     return this.http.get<any>(this.controler + 'GetOrdersReturnedToMyBranch', { params: params });
   }
-  DisApproveReturnedToMyBranch(id: number) {
-    return this.http.put(this.controler + 'DisApproveReturnedToMyBranch', id);
+  DisApproveReturnedToMyBranch(idWithNote: IIdWithNote) {
+    return this.http.put(this.controler + 'DisApproveReturnedToMyBranch', idWithNote);
   }
   ReceiveReturnedToMyBranch() {
     this.transferToSecondBranchDto.selectedOrdersWithFitlerDto = this.selectOrder;
-    return this.http.post<any>(this.controler + 'ReceiveReturnedToMyBranch',this.selectOrder);
+    return this.http.post<any>(this.controler + 'ReceiveReturnedToMyBranch', this.selectOrder);
   }
   GetPrintsTransferToSecondBranch(paging: Paging, destinationBranchId: any) {
     let params = this.getHttpParmasByPaging(paging);
@@ -440,16 +441,16 @@ export class OrderService {
     return params;
   }
   convertSelectOrderToFromData(formdata: FormData, selectOrder: SelectOrder): FormData {
-    if (selectOrder.ExceptIds){
-      selectOrder.ExceptIds.forEach(s=>{
+    if (selectOrder.ExceptIds) {
+      selectOrder.ExceptIds.forEach(s => {
         formdata.append('ExceptIds[]', s);
       });
     }
     if (selectOrder.IsSelectedAll)
       formdata.append('IsSelectedAll', selectOrder.IsSelectedAll);
 
-    if (selectOrder.SelectedIds){
-      selectOrder.SelectedIds.forEach(s=>{
+    if (selectOrder.SelectedIds) {
+      selectOrder.SelectedIds.forEach(s => {
         formdata.append('selectedIds[]', s);
       })
     }
