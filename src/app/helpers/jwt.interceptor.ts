@@ -70,10 +70,10 @@ export class JwtInterceptor implements HttpInterceptor {
                   this.router.navigate(['/unauthorized']);
                   break;
                 }
-                case 404: {
-                  this.router.navigate(['/error']);
-                  break;
-                }
+                // case 404: {
+                //   this.router.navigate(['/error']);
+                //   break;
+                // }
                 case 400:
                   this.notifications.error(
                     'error',

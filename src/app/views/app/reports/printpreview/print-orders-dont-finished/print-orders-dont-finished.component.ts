@@ -144,7 +144,7 @@ export class PrintOrdersDontFinishedComponent implements OnInit {
           );
           this.showPrintbtn = true;
           this.spinner.hide();
-          this.printnumber = res.printNumber;
+          this.printnumber = res;
         },
         (err) => {
           this.spinner.hide();
