@@ -218,7 +218,7 @@ export class EditOrdersComponent implements OnInit {
     }
 
     if (isNaN(this.Order.RegionId)) {
-      this.Order.RegionName = this.Order.RegionId.label;
+      this.Order.RegionName = this.Order?.RegionId?.label;
       this.Order.RegionId = null;
     }
     this.Order.DeliveryCost = Number(this.Order.DeliveryCost)
