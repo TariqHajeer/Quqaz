@@ -18,6 +18,7 @@ import { NgxPrintModule } from 'ngx-print';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ClientPointComponent } from './client-point/client-point.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -38,9 +39,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     NgxPrintModule,
     NgxSpinnerModule,
     MatCheckboxModule,
-
+    SharedModule
 
   ],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ClientModule { }
