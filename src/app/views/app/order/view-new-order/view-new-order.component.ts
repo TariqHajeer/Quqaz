@@ -131,8 +131,8 @@ export class ViewNewOrderComponent implements OnInit {
   Ids: IdsDto[] = [];
   MultiAgent(order) {
     this.order = order;
-    // console.log(order)
-    if (order.country.agnets.length == 1) {
+    console.log(order)
+    if (order.country?.agnets?.length == 1) {
       this.AgentId = order.country.agnets[0].id;
       this.Accept();
     } else {
@@ -141,13 +141,11 @@ export class ViewNewOrderComponent implements OnInit {
     }
   }
   Accept() {
-    // console.log( this.order)
     this.IdsDto.OrderId = this.order.id;
     this.IdsDto.AgentId = this.AgentId;
     if (!this.AgentId) return;
     else
       this.OrderService.Accept(this.IdsDto).subscribe((res) => {
-        // this.print(i)
         this.signalRService.AdminNotification.newOrdersCount--;
         this.IdsDto = new IdsDto();
         this.AgentId = null;
