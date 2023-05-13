@@ -84,7 +84,7 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
     var city = this.countries.find((c) => c.id == this.Order.CountryId);
     if (city.requiredAgent) {
       this.disabledAddAgent = false;
-      this.Agents = city.agnets
+      this.Agents = city.agents
       if (this.Agents.length == 1) this.Order.AgentId = this.Agents[0].id;
       else this.Order.AgentId = null;
     } else {
@@ -100,7 +100,7 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
     var city = this.countries.find((c) => c.id == this.EditOrder.CountryId);
     if (city.requiredAgent) {
       this.disabledEditAgent = false;
-      this.Agents = city.agnets;
+      this.Agents = city.agents;
       if (this.Agents.length != 0 && this.Agents.length == 1)
         this.EditOrder.AgentId = this.Agents[0].id;
       else this.EditOrder.AgentId = null;
@@ -197,7 +197,7 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
     this.Order.RegionName = region?.name;
     var client = this.clients.find((c) => c.id == this.Order.ClientId);
     this.Order.ClientName = client?.name;
-    var agent = country.agnets.find((c) => c.id == this.Order.AgentId);
+    var agent = country.agents.find((c) => c.id == this.Order.AgentId);
     this.Order.AgentName = agent?.name;
     this.Order.Cost = this.Order.Cost * 1;
     this.Orders.push(this.Order);
@@ -222,7 +222,7 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
       this.disabledEditAgent = false;
     else
       this.disabledEditAgent = true;
-    this.Agents = city.agnets;
+    this.Agents = city.agents;
     this.regions = city.regions;
   }
   Save(order: CreateMultipleOrder) {
@@ -245,7 +245,7 @@ export class AddMulitpleOrdersWithRegionComponent implements OnInit {
     this.EditOrder.RegionName = region?.name;
     var client = this.clients.find((c) => c.id == this.EditOrder.ClientId);
     this.EditOrder.ClientName = client?.name;
-    var agent = country.agnets.find((c) => c.id == this.Order.AgentId);
+    var agent = country.agents.find((c) => c.id == this.Order.AgentId);
     this.EditOrder.AgentName = agent?.name;
     this.EditOrder.DeliveryCost = this.EditOrder.DeliveryCost * 1;
     this.EditOrder.Cost = this.EditOrder.Cost * 1;

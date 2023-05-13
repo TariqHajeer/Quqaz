@@ -175,7 +175,7 @@ export class AddOrdersComponent implements OnInit {
     var city = this.countries.find((c) => c.id == this.Order.CountryId);
     if (city.requiredAgent) {
       this.disabledAgent = false;
-      this.Agents = city.agnets;
+      this.Agents = city.agents;
       if (this.Agents.length != 0) this.Order.AgentId = this.Agents[0].id;
     }
     else {

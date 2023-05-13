@@ -78,7 +78,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     var city = this.countries.find(c => c.id == this.Order.CountryId)
     if (city.requiredAgent) {
       this.disabledAddAgent = false;
-      this.Agents = city.agnets;
+      this.Agents = city.agents;
       if (this.Agents.length != 0 && this.Agents.length == 1)
         this.Order.AgentId = this.Agents[0].id
       else this.Order.AgentId = null
@@ -93,7 +93,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
     var city = this.countries.find(c => c.id == this.EditOrder.CountryId)
     if (city.requiredAgent) {
       this.disabledEditAgent = false;
-      this.Agents = city.agnets;
+      this.Agents = city.agents;
       if (this.Agents.length != 0 && this.Agents.length == 1)
         this.EditOrder.AgentId = this.Agents[0].id
       else this.EditOrder.AgentId = null
@@ -257,7 +257,7 @@ export class CreatemultipleOrderFromClientComponent implements OnInit {
       this.disabledEditAgent = false;
     else
       this.disabledEditAgent = true;
-    this.Agents = city.agnets;
+    this.Agents = city.agents;
   }
   Save(order: CreateMultipleOrder) {
     if (!this.EditOrder.Code || !this.EditOrder.ClientId ||

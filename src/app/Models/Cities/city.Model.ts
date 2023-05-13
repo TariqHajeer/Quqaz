@@ -9,7 +9,7 @@ export class City {
     regions:Region[] =[];
     isMain:boolean
     points
-    agnets
+    agents
     branchesIds:number[]
     requiredAgent
 }
