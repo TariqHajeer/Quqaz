@@ -167,14 +167,25 @@ export class ViewNewOrderComponent implements OnInit {
       );
       return;
     }
-    this.selectOrders.forEach(order=>{
-      order.country.agents=this.countries.find(c=>c.id==order.country.id).agents
+    this.selectOrders.forEach(order => {
+      order.country = this.countries.find(c => c.id == order.country.id)
     })
+
     this.selectOrders = this.selectOrders.filter(
-      (o) => o.country.agents.length == 1
+      (o) => (o.country.agents && o.country.agents.length == 1) || o.country.requiredAgent == false
     );
+
+    if (this.selectOrders?.length == 0) {
+      this.notifications.create(
+        'error',
+        '  يجب اختيار مندوب',
+        NotificationType.Error,
+        { theClass: 'success', timeOut: 6000, showProgressBar: false }
+      );
+      return;
+    }
     this.selectOrders.forEach((item) => {
-      this.IdsDto.AgentId = item.country.agents[0].id;
+      this.IdsDto.AgentId = item.country.agents.length > 0 ? item.country.agents[0].id : null;
       this.IdsDto.OrderId = item.id;
       this.Ids.push(this.IdsDto);
       this.IdsDto = new IdsDto();
