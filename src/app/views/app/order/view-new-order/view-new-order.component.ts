@@ -185,7 +185,7 @@ export class ViewNewOrderComponent implements OnInit {
       return;
     }
     this.selectOrders.forEach((item) => {
-      this.IdsDto.AgentId = item.country.agents.length > 0 ? item.country.agents[0].id : null;
+      this.IdsDto.AgentId = item.country.agents.length > 0 && item.country.requiredAgent ? item.country.agents[0].id : null;
       this.IdsDto.OrderId = item.id;
       this.Ids.push(this.IdsDto);
       this.IdsDto = new IdsDto();
