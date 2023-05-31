@@ -178,10 +178,11 @@ export class OrderService {
       params: params,
     });
   }
-  GetAgentPrint(paging, number, agent) {
+  GetAgentPrint(paging, number, agent,code) {
     let params = this.getHttpParmasByPaging(paging);
     if (number) params = params.append('number', number);
     if (agent) params = params.append('agnetName', agent);
+    if (code) params = params.append('code', code);
     return this.http.get<any>(this.controler + 'GetAgentPrint', {
       params: params,
     });
