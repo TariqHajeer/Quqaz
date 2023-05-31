@@ -198,10 +198,10 @@ export class ViewOrdersComponent implements OnInit {
     this.orderResend.AgnetId = order.agent.id;
     this.orderResend.CountryId = order.country.id;
     this.orderResend.RegionId = order.region ? order.region.id : null;
-    this.countryResend = this.countries.find(country => country.id == order.country.id);
-    this.orderResend.DeliveryCost = this.countryResend.deliveryCost * 1;
-    this.regionsResend = this.countryResend.regions;
-    this.agentsResend = this.countryResend.agents;
+    this.countryResend = this.countries.find(country => country.id == order.country.id);    
+    this.orderResend.DeliveryCost = this.countryResend?.deliveryCost * 1;
+    this.regionsResend = this.countryResend?.regions;
+    this.agentsResend = this.countryResend?.agents;
   }
   changeCountryResend() {
     this.orderResend.CountryId = this.countryResend.id;
