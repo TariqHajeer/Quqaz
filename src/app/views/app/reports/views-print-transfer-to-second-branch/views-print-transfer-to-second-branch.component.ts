@@ -22,17 +22,19 @@ export class ViewsPrintTransferToSecondBranchComponent implements OnInit {
   destinationBranchId: any;
   noDataFound: boolean = false;
   branches: any[] = [];
+  code: number;
+  moveNumber:number;
   constructor(public orderService: OrderService,
     private router: Router,
     private branchesService: BranchesService,
-    private authService:AuthService) { }
+    private authService: AuthService) { }
 
   ngOnInit(): void {
     this.getBranches();
   }
   getBranches() {
     this.branchesService.Get().subscribe(res => {
-      this.branches = res?.filter(data=>data.id!=this.authService.getUser().branche.id);
+      this.branches = res?.filter(data => data.id != this.authService.getUser().branche.id);
     })
   }
   Get() {

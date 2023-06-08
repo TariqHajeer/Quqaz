@@ -128,13 +128,13 @@ export class ProfitsOfOrdersComponent implements OnInit {
     orders: Order[] = []
     noDataFound: boolean = false
     totalEarinig
-    GetEarning: any[] = []
+    getEarning: any[] = []
+    fromDate
+    toDate
     ngOnInit(): void {
-        this.paging = new Paging
-        this.filtering = new DateFiter
-        this.get()
-        this.allfiltering()
-
+        this.paging = new Paging;
+        this.filtering = new DateFiter;
+        this.get();
     }
     get() {
         this.dataSource = new MatTableDataSource(this.orders);
@@ -142,44 +142,39 @@ export class ProfitsOfOrdersComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.displayedColumns = ['code', 'orderplaced', 'cost', 'oldCost', 'deliveryCost',
             'agentCost', 'Earinig'];
+        this.getProfitsOrders()
     }
     switchPage(event: PageEvent) {
-
         this.paging.allItemsLength = event.length
         this.paging.RowCount = event.pageSize
         this.paging.Page = event.pageIndex + 1
-        this.allfiltering()
+        this.getProfitsOrders()
     }
-    showcount = false
-    allfiltering() {
+    getProfitsOrders() {
         this.orderservice.GetEarning(this.paging, this.filtering).subscribe(res => {
-            this.GetEarning = []
-            if (res.orders && res.orders.length == 0)
-                this.noDataFound = true
-            else this.noDataFound = false
-            this.dataSource = new MatTableDataSource(res.orders)
-            this.totalCount = res.totalRecord
-            if (res.totalEarinig) {
-                this.totalEarinig = res.data.totalEarinig
-                this.showcount = true
-            } else
-                this.showcount = false
-            res.orders.forEach(element => {
-                var er = element.deliveryCost - element.agentCost
-                this.GetEarning.push(er)
-            });
+            this.getEarning = [];
+            if (res.orders && res.orders.length != 0) {
+                this.noDataFound = false;
+                this.dataSource = new MatTableDataSource(res.orders);
+                res.orders.forEach(element => {
+                    var er = element.deliveryCost - element.agentCost;
+                    this.getEarning.push(er);
+                });
+            }
+            else this.noDataFound = true;
+            this.totalCount = res?.totalRecord;
+            this.totalEarinig = res?.totalEarinig;
         })
     }
-    FromDate
-    ToDate
+
     changeRange() {
-        this.filtering.FromDate = this.FromDate
-        this.filtering.ToDate = this.ToDate
+        this.filtering.FromDate = this.fromDate
+        this.filtering.ToDate = this.toDate
         if (this.filtering.FromDate != undefined || this.filtering.FromDate != null)
             this.filtering.FromDate = formatDate(this.filtering.FromDate, 'yyyy-MM-dd', 'en-US');
         if (this.filtering.ToDate != undefined || this.filtering.ToDate != null)
             this.filtering.ToDate = formatDate(this.filtering.ToDate, 'yyyy-MM-dd', 'en-US');
 
-        this.allfiltering()
+        this.getProfitsOrders()
     }
 }
