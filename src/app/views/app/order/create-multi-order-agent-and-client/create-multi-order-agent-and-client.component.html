@@ -37,7 +37,7 @@
                 [disabled]="disabledAddAgent">
                 <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
             </ng-select>
-            <div *ngIf="!AgentId && submitted" class="message">المندوب حقل مطلوب</div>
+            <div *ngIf="!AgentId && submitted&&!disabledAddAgent" class="message">المندوب حقل مطلوب</div>
 
         </div>
 

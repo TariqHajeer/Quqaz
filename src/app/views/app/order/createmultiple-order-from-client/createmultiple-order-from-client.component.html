@@ -169,7 +169,7 @@
                             style="width: 100px;" [clearable]="false" name="Agent" [disabled]="disabledAddAgent">
                             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                         </ng-select>
-                        <div *ngIf="!Order.AgentId && submitted" class="message">المندوب حقل مطلوب</div>
+                        <div *ngIf="!Order.AgentId && submitted&&!disabledAddAgent" class="message">المندوب حقل مطلوب</div>
 
                     </td>
 
