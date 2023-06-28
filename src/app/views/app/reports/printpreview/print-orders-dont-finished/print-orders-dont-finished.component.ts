@@ -102,9 +102,10 @@ export class PrintOrdersDontFinishedComponent implements OnInit {
     this.orderplaced = this.orderservice.deleiverMoneyForClientDto.Filter.OrderPlaced;
     this.pointid = this.orderservice.deleiverMoneyForClientDto.PointsSettingId;
     this.points = this.orderservice.deleiverMoneyForClientDto.point;
+    let tableSelection = this.orderservice.orderClientDontDiliverdMoney.tableSelection;
+    console.log(tableSelection);
 
-    if (this.orderservice.orderClientDontDiliverdMoney.tableSelection.selectedIds.length == 0
-      && this.orderservice.orderClientDontDiliverdMoney.tableSelection.isSelectedAll == false) {
+    if (tableSelection.selectedIds?.length == 0 && !tableSelection.isSelectedAll) {
       this.router.navigate(['/app/reports/Shipmentsnotbeendelivered']);
       return;
     }
