@@ -215,9 +215,9 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     ) {
       this.orderservice.OrdersDontFinished().subscribe(
         (response) => {
-          if (response)
-            if (response.data.length == 0) this.noDataFound = true;
-            else this.noDataFound = false;
+            if (!response||!response.data||response.data.length == 0) this.noDataFound = true;
+            else {
+              this.noDataFound = false;
           var x = response.data.sort((a, b) => a.code - b.code * 1);
           this.orderFilter = response.data;
           this.dataSource = new MatTableDataSource(x);
@@ -234,6 +234,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
             else {
               this.dataSource.data.filter(row => this.ordersIds.indexOf(row.id) >= 0)
                 .forEach(row => this.selection.select(row));
+            }
             }
         },
         (err) => { }
