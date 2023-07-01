@@ -171,7 +171,8 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
   changeAllAgents() {
     let array = this.dataSource.data;
     array.forEach(item => {
-      item.agent = this.agent;
+      if (this.selection.isSelected(item))
+        item.agent = this.agent;
     });
     this.tempOrders = JSON.parse(JSON.stringify(array));
   }
@@ -188,7 +189,8 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
   changeAllRegions() {
     let array = this.dataSource.data;
     array.forEach(item => {
-      item.region = this.region;
+      if (this.selection.isSelected(item))
+        item.region = this.region;
     })
     this.tempOrders = JSON.parse(JSON.stringify(array));
   }
@@ -214,6 +216,10 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
       this.orders[index] = selectOrder;
     }
   }
+  searching() {
+    this.dataSource = new MatTableDataSource([]);
+    this.getAllOrders();
+  }
   filtering() {
     this.dataSource = new MatTableDataSource([]);
     this.selection = new SelectionModel<any>(true, []);
@@ -226,16 +232,16 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
     this.getAllOrders();
   }
   setAgentAndRegion(order): void {
-    console.log("setAgentAndRegion");
     if (this.orders.some(o => o.id == order.id)) {
-      console.log("returing");
       return;
     }
-    if (this.agent) {
-      order.agent = this.agent;
-    }
-    if (this.region) {
-      order.region = this.region;
+    if (this.selection.isSelected(order)) {
+      if (this.agent) {
+        order.agent = this.agent;
+      }
+      if (this.region) {
+        order.region = this.region;
+      }
     }
   }
   getAllOrders() {
@@ -247,11 +253,10 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
           this.noDataFound = false;
         }
       this.dataSource = new MatTableDataSource(response.data);
-      this.totalCount = response.total;
+      if (!this.filter.Phone && !this.filter.Code)
+        this.totalCount = response.total;
       this.tempOrders = JSON.parse(JSON.stringify(response.data));
-      this.dataSource.data.forEach(row=>{
-        this.setAgentAndRegion(row);
-      });
+
       if (this.selectAll) {
         this.dataSource.data.forEach(row => {
           this.selection.select(row);
@@ -283,6 +288,9 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
           }
         })
       }
+      this.dataSource.data.forEach(row => {
+        this.setAgentAndRegion(row);
+      });
     },
       err => {
 

@@ -9,12 +9,12 @@
             <div class="col-md-2">
                 <label>الكود</label>
                 <input type="text" class="form-control" [(ngModel)]="filter.Code"
-                    [ngModelOptions]="{standalone: true}" name="code" (keyup.enter)="filtering()" />
+                    [ngModelOptions]="{standalone: true}" name="code" (keyup.enter)="searching()" />
             </div>
             <div class="col-md-2">
                 <label>رقم الهاتف</label>
                 <input type="text" class="form-control" [(ngModel)]="filter.Phone"
-                    [ngModelOptions]="{standalone: true}" name="Phone" (keyup.enter)="filtering()" />
+                    [ngModelOptions]="{standalone: true}" name="Phone" (keyup.enter)="searching()" />
             </div>
             <div class="col-md-2">
                 <label>الفرع</label>
