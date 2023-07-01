@@ -4,7 +4,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
-import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { Paging } from 'src/app/Models/paging';
 import { User } from 'src/app/Models/user/user.model';
@@ -111,7 +110,8 @@ export class ChangeAgentByOrdersComponent implements OnInit {
       var city = this.cities.find((a) => a.id == this.filtering.CountryId);
       this.newAgents = [];
       this.newAgentId = null;
-      this.newAgents = city.agnets.filter(
+      console.log(city);
+      this.newAgents = city.agents.filter(
         (a) => a.id != this.filtering.AgentId
       );
       this.allFilter();
