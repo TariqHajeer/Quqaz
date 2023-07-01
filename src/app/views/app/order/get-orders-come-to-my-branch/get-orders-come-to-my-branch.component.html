@@ -17,6 +17,12 @@
                     [ngModelOptions]="{standalone: true}" name="Phone" (keyup.enter)="searching()" />
             </div>
             <div class="col-md-2">
+                <button (click)="filtering()" class="btn btn-primary" style="margin-top: 20px;"> بحث</button>
+            </div>
+           
+        </div>
+        <div class="row">
+            <div class="col-md-2">
                 <label>الفرع</label>
                 <ng-select [(ngModel)]="filter.OriginalBranchId" [ngModelOptions]="{standalone: true}"
                     [closeOnSelect]="true" name="OriginalBranch" (change)="filtering()">
@@ -30,30 +36,23 @@
                     <ng-option *ngFor="let Country of countries" [value]="Country.id">{{Country.name}}</ng-option>
                 </ng-select>
             </div>
-           
-            <div class="col-md-2">
-                <button (click)="filtering()" class="btn btn-primary" style="margin-top: 20px;"> بحث</button>
-            </div>
-            <div class="col-md-2">
-                <button (click)="ReceiveOrders()" class="btn btn-primary" style="margin-top: 20px;"> قبول
-                    الطلبات</button>
-            </div>
-        </div>
-        <div class="row" *ngIf="filter.CountryId">
-            <div class="col-3"></div>
-            <div class="col-md-2">
+            <div class="col-md-2"  *ngIf="filter.CountryId">
                 <label>المنطقة</label>
                 <ng-select [(ngModel)]="region" [ngModelOptions]="{standalone: true}"
                     [closeOnSelect]="true" name="RegionId" (ngModelChange)="changeAllRegions()">
                     <ng-option *ngFor="let region of regionArray(filter.CountryId)" [value]="region">{{region.name}}</ng-option>
                 </ng-select>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2"  *ngIf="filter.CountryId">
                 <label>المندوب</label>
                 <ng-select [(ngModel)]="agent" [ngModelOptions]="{standalone: true}"
                     [closeOnSelect]="true" name="AgentId" (ngModelChange)="changeAllAgents()">
                     <ng-option *ngFor="let agent of agentArray(filter.CountryId)" [value]="agent">{{agent.name}}</ng-option>
                 </ng-select>
+            </div>
+            <div class="col-md-2" [ngClass]="{'offset-md-2':filter.CountryId,'offset-md-6':!filter.CountryId}">
+                <button (click)="ReceiveOrders()" class="btn btn-primary" style="margin-top: 20px;"> قبول
+                    الطلبات</button>
             </div>
         </div>
     </div>
