@@ -84,26 +84,13 @@ export class PrintOrdersDontFinishedComponent implements OnInit {
       });
     } else return;
   }
-  sumCost() {
-    this.count = 0;
-    this.deliveryCostCount = 0;
-    this.clientCalc = 0;
-    if (this.orders)
-      this.orders.forEach((o) => {
-        this.count += o.cost;
-        this.deliveryCostCount += o.deliveryCost;
-        this.clientCalc += o.payForClient;
-      });
 
-    return this.count;
-  }
   getOrders() {
     this.client = this.orderservice.deleiverMoneyForClientDto.Filter.Client;
     this.orderplaced = this.orderservice.deleiverMoneyForClientDto.Filter.OrderPlaced;
     this.pointid = this.orderservice.deleiverMoneyForClientDto.PointsSettingId;
     this.points = this.orderservice.deleiverMoneyForClientDto.point;
     let tableSelection = this.orderservice.orderClientDontDiliverdMoney.tableSelection;
-    console.log(tableSelection);
 
     if (tableSelection.selectedIds?.length == 0 && !tableSelection.isSelectedAll) {
       this.router.navigate(['/app/reports/Shipmentsnotbeendelivered']);
@@ -112,19 +99,21 @@ export class PrintOrdersDontFinishedComponent implements OnInit {
     this.orderservice.OrdersDontFinished().subscribe(response => {
 
       if (this.orderservice.orderClientDontDiliverdMoney.paging.Page == 1)
-        this.orders = response.data;
+        this.orders = response.data.data;
       else
-        response.data.forEach(element => {
+        response.data.data.forEach(element => {
           this.orders.push(element);
         });
-      if (this.orders.length < response.total)
+      if (this.orders.length < response.data.total)
         this.showSeeMore = true;
       else
         this.showSeeMore = false;
       if (this.orders.length == 0)
         this.router.navigate(['/app/reports/Shipmentsnotbeendelivered']);
       this.reciptClient();
-      this.sumCost();
+      this.count = response.orderTotal;
+      this.deliveryCostCount = response.deliveryTotal;
+      this.clientCalc = this.count - this.deliveryCostCount;
     });
   }
   seeMore() {
