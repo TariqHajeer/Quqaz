@@ -337,7 +337,8 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
       this.selection.clear()
       this.orders = [];
       this.customOrdersAgent = [];
-      this.getAllOrders()
+      this.filter=new OrderFilter();
+      this.filtering()
     })
   }
 
