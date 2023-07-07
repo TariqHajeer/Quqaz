@@ -16,10 +16,14 @@ let routes = [
     loadChildren: () => import('./app/app.module').then((m) => m.AppModule),
      canActivate: [AuthGuard],
   },
+    // {
+    //   path: 'home',
+    //   component: HomeComponent,
+    //   pathMatch: 'full',
+    // },
     {
       path: 'home',
-      component: HomeComponent,
-      pathMatch: 'full',
+      loadChildren: () => import('./home-pages/home-pages.module').then((m) => m.HomePagesModule),
     },
     {
       path: 'searchOrder',

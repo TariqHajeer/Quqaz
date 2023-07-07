@@ -46,7 +46,7 @@ $Vien-Angular-theme: mat-light-theme((
 @import '~dhtmlx-scheduler/codebase/dhtmlxscheduler.css';
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0;}
 .mat-sort-header {
   color: black;
   text-align: center;
@@ -109,10 +109,13 @@ ng-select{
   overflow: visible;
 }
 @font-face {
-  font-family: 'a-jannat-lt';
-  src: local("a-jannat-lt"), url(/src/assets/fonts/a-jannat-lt.ttf) format("truetype");
+  font-family: Droid-Arabic-Kufi-Regular;
+  src: url('assets/fonts/Droid-Arabic-Kufi-Regular/Droid-Arabic-Kufi-Regular.ttf') format('ttf');
   font-weight: normal;
   font-style: normal;
+}
+body{
+  font-family: Droid-Arabic-Kufi-Regular !important;
 }
 .w-100px {
   width: 100px;
