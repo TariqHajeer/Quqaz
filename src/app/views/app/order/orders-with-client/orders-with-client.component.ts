@@ -11,6 +11,10 @@ import { User } from 'src/app/Models/user/user.model';
 import { OrderService } from 'src/app/services/order.service';
 import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
+import { alignFrozenEditForm } from '@syncfusion/ej2-angular-grids';
+import { IndexesService } from 'src/app/services/indexes.service';
+import { City } from 'src/app/Models/Cities/city.Model';
+import { IndexesTypeEnum } from 'src/app/Models/Enums/IndexesTypeEnum';
 
 @Component({
   selector: 'app-orders-with-client',
@@ -24,16 +28,24 @@ export class OrdersWithClientComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   orders: Order[] = []
-  noDataFound: boolean = false
-  clients: Client[] = []
+  noDataFound: boolean = false;
+  countires: City[];
+  clients: Client[] = [];
 
   constructor(private OrderService: OrderService,
-    private clientService: ClientService) { }
+    private clientService: ClientService, private indexesService: IndexesService) { }
   @ViewChild('infoModal') public infoModal: ModalDirective;
   filtering: OrderFilter = new OrderFilter()
   ngOnInit(): void {
     this.GetClient()
     this.get()
+    this.getCountires();
+
+  }
+  getCountires(): void {
+    this.indexesService.getIndexes([IndexesTypeEnum.Countries]).toPromise().then(res => {
+      this.countires = res.countries;
+    });
   }
   GetClient() {
     this.clientService.getClients().subscribe(res => {
@@ -42,7 +54,6 @@ export class OrdersWithClientComponent implements OnInit {
   }
   get() {
     this.OrderService.OrderAtClient(this.filtering).subscribe(res => {
-      // console.log(res)
       this.orders = res
       this.orders.forEach(res => {
         res.recipientPhones = res.recipientPhones.split(',')
@@ -65,29 +76,33 @@ export class OrdersWithClientComponent implements OnInit {
   Agents: User[] = []
   IdsDto: IdsDto = new IdsDto
   MultiAgent(order) {
+
     this.order = order
-    // console.log(order)
-    if (order.country.agnets.length == 1) {
-      this.AgentId = order.country.agnets[0].id
-      this.Accept()
+    let country = this.countires.filter(c => c.id == this.order.country.id)[0];
+    if (country.requiredAgent) {
+      if (country.agents.length == 1) {
+        this.AgentId = country.agents[0].Id;
+      } else {
+        this.Agents = country.agents;
+        this.infoModal.show()
+      }
     } else {
-      this.Agents = order.country.agnets
-      this.infoModal.show()
+      console.log("else");
+      this.AgentId = null;
+      this.Accept()
     }
   }
   Accept() {
-    // console.log( this.order)
+
     this.IdsDto.OrderId = this.order.id
     this.IdsDto.AgentId = this.AgentId
-    if (!this.AgentId) return
-    else
-      this.OrderService.Accept(this.IdsDto).subscribe(res => {
-        // this.print(i)
-        this.IdsDto = new IdsDto
-        this.AgentId = null
-        this.get()
-        this.infoModal.hide()
-      })
+    this.OrderService.Accept(this.IdsDto).subscribe(res => {
+      // this.print(i)
+      this.IdsDto = new IdsDto
+      this.AgentId = null
+      this.get()
+      this.infoModal.hide()
+    })
   }
   dateWithId: DateWithIds<number>
   DisAccept(elementid) {
