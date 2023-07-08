@@ -123,10 +123,10 @@
                 </ng-option>
               </ng-select>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3" *ngIf="!disabledAgent"> 
               <label>المندوب<span class="text-danger text-one align-bottom mx-1">*</span></label>
               <ng-select [(ngModel)]="Order.AgentId" [ngModelOptions]="{ standalone: true }" [closeOnSelect]="true"
-                name="Agent" placeholder="اختر مندوب" (change)="changeAgentOrClient()" [disabled]="disabledAgent">
+                name="Agent" placeholder="اختر مندوب" (change)="changeAgentOrClient()">
                 <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{
                   Agent.name
                   }}</ng-option>
