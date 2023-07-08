@@ -9,7 +9,7 @@ export const environment = {
 
   appNameAR: "شركة القوقز للتوصيل السريع",
   appNameEN: "Quqaz",
-  baseUrl: "http://api.golden-w.com/",
+  baseUrl: "https://backend.quqaz.com/",
   clientApp: "https://client.quqaz.com",
   Address: "اربيل - قرب تقاطع كوك ايه",
   companyPhones:["07514550880 "," 07700890880"],
