@@ -34,7 +34,7 @@
         <label>المدينة</label>
         <ng-select appOnReturn [(ngModel)]="filtering.CountryId" (ngModelChange)="allFilter()"
           (change)="changeCountry()" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Country">
-          <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
+          <ng-option *ngFor="let citie of countries" [value]="citie.id">{{citie.name}}</ng-option>
         </ng-select>
       </div>
 
