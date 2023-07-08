@@ -15,10 +15,10 @@
           <div class="row w-100 align-items-end mb-3">
             <div class="col-md-9"></div>
             <div class="col-md-3">
-              <button type="button" class="btn btn-primary" data-toggle="modal" *ngIf="showRsendButton"
+              <!-- <button type="button" class="btn btn-primary" data-toggle="modal" *ngIf="showRsendButton"
                 data-target="#exampleModal">
                 اعادة ارسال
-              </button>
+              </button> -->
 
               <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="exampleModal"
                 aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -126,7 +126,7 @@
             <div class="col-md-3">
               <label>المندوب<span class="text-danger text-one align-bottom mx-1">*</span></label>
               <ng-select [(ngModel)]="Order.AgentId" [ngModelOptions]="{ standalone: true }" [closeOnSelect]="true"
-                name="Agent" placeholder="اختر مندوب" (change)="changeAgentOrClient()">
+                name="Agent" placeholder="اختر مندوب" (change)="changeAgentOrClient()" [disabled]="disabledAgent">
                 <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{
                   Agent.name
                   }}</ng-option>
