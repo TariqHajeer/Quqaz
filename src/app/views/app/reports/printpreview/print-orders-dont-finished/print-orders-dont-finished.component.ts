@@ -15,6 +15,7 @@ import { Client } from '../../../client/client.model';
 import { environment } from 'src/environments/environment.prod';
 import { AuthService } from 'src/app/shared/auth.service';
 import { Router } from '@angular/router';
+import { Paging } from 'src/app/Models/paging';
 @Component({
   selector: 'app-print-orders-dont-finished',
   templateUrl: './print-orders-dont-finished.component.html',
@@ -84,7 +85,27 @@ export class PrintOrdersDontFinishedComponent implements OnInit {
       });
     } else return;
   }
+  getOrdersDontFinished(){
+  this.orderservice.OrdersDontFinished().subscribe(response => {
 
+    if (this.orderservice.orderClientDontDiliverdMoney.paging.Page == 1)
+      this.orders = response.data.data;
+    else
+      response.data.data.forEach(element => {
+        this.orders.push(element);
+      });
+    if (this.orders.length < response.data.total)
+      this.showSeeMore = true;
+    else
+      this.showSeeMore = false;
+    if (this.orders.length == 0)
+      this.router.navigate(['/app/reports/Shipmentsnotbeendelivered']);
+    this.reciptClient();
+    this.count = response.orderTotal;
+    this.deliveryCostCount = response.deliveryTotal;
+    this.clientCalc = this.count - this.deliveryCostCount;
+  });
+}
   getOrders() {
     this.client = this.orderservice.deleiverMoneyForClientDto.Filter.Client;
     this.orderplaced = this.orderservice.deleiverMoneyForClientDto.Filter.OrderPlaced;
@@ -96,29 +117,13 @@ export class PrintOrdersDontFinishedComponent implements OnInit {
       this.router.navigate(['/app/reports/Shipmentsnotbeendelivered']);
       return;
     }
-    this.orderservice.OrdersDontFinished().subscribe(response => {
-
-      if (this.orderservice.orderClientDontDiliverdMoney.paging.Page == 1)
-        this.orders = response.data.data;
-      else
-        response.data.data.forEach(element => {
-          this.orders.push(element);
-        });
-      if (this.orders.length < response.data.total)
-        this.showSeeMore = true;
-      else
-        this.showSeeMore = false;
-      if (this.orders.length == 0)
-        this.router.navigate(['/app/reports/Shipmentsnotbeendelivered']);
-      this.reciptClient();
-      this.count = response.orderTotal;
-      this.deliveryCostCount = response.deliveryTotal;
-      this.clientCalc = this.count - this.deliveryCostCount;
-    });
+    this.orderservice.orderClientDontDiliverdMoney.paging = new Paging();
+    this.getOrdersDontFinished();
+   
   }
   seeMore() {
     this.orderservice.orderClientDontDiliverdMoney.paging.Page += 1;
-    this.getOrders();
+    this.getOrdersDontFinished();
   }
   changeDeleiverMoneyForClient() {
     this.spinner.show();
