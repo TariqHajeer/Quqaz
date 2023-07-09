@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Paging } from 'src/app/Models/paging';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { OrderService } from 'src/app/services/order.service';
 import { AuthService } from 'src/app/shared/auth.service';
@@ -32,10 +33,7 @@ export class PrintOrdersComponent implements OnInit {
     this.getOrders();
   }
 
-
-  getOrders() {
-    if (this.orderservice.selectOrder.SelectedIds.length == 0 && this.orderservice.selectOrder.IsSelectedAll == false)
-      this.router.navigate(['/app/order/transferToSecondBranch']);
+  getInStockToTransferToSecondBranch(){
     this.orderservice.GetInStockToTransferToSecondBranch().subscribe(response => {
       if (this.orderservice.selectOrder.Paging.Page == 1)
         this.orders = response.data;
@@ -51,9 +49,15 @@ export class PrintOrdersComponent implements OnInit {
         this.router.navigate(['/app/order/transferToSecondBranch']);
     });
   }
+  getOrders() {
+    if (this.orderservice.selectOrder.SelectedIds.length == 0 && this.orderservice.selectOrder.IsSelectedAll == false)
+      this.router.navigate(['/app/order/transferToSecondBranch']);
+      this.orderservice.selectOrder.Paging=new Paging();
+      this.getInStockToTransferToSecondBranch();
+  }
   seeMore() {
     this.orderservice.selectOrder.Paging.Page += 1;
-    this.getOrders();
+    this.getInStockToTransferToSecondBranch();
   }
   moveOrders() {
     if (!this.driver) {

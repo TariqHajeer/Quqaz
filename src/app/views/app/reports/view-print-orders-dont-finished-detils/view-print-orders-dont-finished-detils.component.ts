@@ -13,6 +13,7 @@ import { ReciptService } from 'src/app/services/recipt.service';
 import { AuthService } from 'src/app/shared/auth.service';
 import { environment } from 'src/environments/environment';
 import { Client } from '../../client/client.model';
+import { Paging } from 'src/app/Models/paging';
 
 @Component({
   selector: 'app-view-print-orders-dont-finished-detils',
@@ -96,17 +97,7 @@ export class ViewPrintOrdersDontFinishedDetilsComponent implements OnInit {
 
     return this.count;
   }
-  getOrders() {
-    this.client = this.orderservice.deleiverMoneyForClientDto.Filter.Client;
-    this.orderplaced = this.orderservice.deleiverMoneyForClientDto.Filter.OrderPlaced;
-    this.pointid = this.orderservice.deleiverMoneyForClientDto.PointsSettingId;
-    this.points = this.orderservice.deleiverMoneyForClientDto.point;
-
-    if (this.orderservice.orderClientDontDiliverdMoney.tableSelection.selectedIds.length == 0
-      && this.orderservice.orderClientDontDiliverdMoney.tableSelection.isSelectedAll == false) {
-      this.router.navigate(['/app/reports/Shipmentsnotbeendelivered']);
-      return;
-    }
+  getOrdersDontFinished() {
     this.orderservice.OrdersDontFinished().subscribe(response => {
 
       if (this.orderservice.orderClientDontDiliverdMoney.paging.Page == 1)
@@ -125,11 +116,26 @@ export class ViewPrintOrdersDontFinishedDetilsComponent implements OnInit {
       this.sumCost();
     });
   }
+  getOrders() {
+    this.client = this.orderservice.deleiverMoneyForClientDto.Filter.Client;
+    this.orderplaced = this.orderservice.deleiverMoneyForClientDto.Filter.OrderPlaced;
+    this.pointid = this.orderservice.deleiverMoneyForClientDto.PointsSettingId;
+    this.points = this.orderservice.deleiverMoneyForClientDto.point;
+
+    if (this.orderservice.orderClientDontDiliverdMoney.tableSelection.selectedIds.length == 0
+      && this.orderservice.orderClientDontDiliverdMoney.tableSelection.isSelectedAll == false) {
+      this.router.navigate(['/app/reports/Shipmentsnotbeendelivered']);
+      return;
+    }
+    this.orderservice.orderClientDontDiliverdMoney.paging = new Paging();
+    this.getOrdersDontFinished();
+
+  }
   seeMore() {
     this.orderservice.orderClientDontDiliverdMoney.paging.Page += 1;
-    this.getOrders();
+    this.getOrdersDontFinished();
   }
- 
+
   @HostListener('window:keydown', ['$event'])
   onKeyPress($event: KeyboardEvent) {
     if (($event.ctrlKey || $event.metaKey) && $event.keyCode == 80) {
