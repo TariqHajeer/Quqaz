@@ -338,6 +338,12 @@ export class OrderService {
     };
     return this.http.get<any>(this.controler + 'PrintSendOrdersReturnedToSecondBranchReport/' + printNumber, httpOptions);
   }
+  PrintDeleiverMoneyForClient(printNumber) {
+    const httpOptions = {
+      responseType: 'blob' as 'json'
+    };
+    return this.http.get<any>(this.controler + 'PrintDeleiverMoneyForClient/' + printNumber, httpOptions);
+  }
   SetDisApproveOrdersReturnByBranchInStore() {
     this.transferToSecondBranchDto.selectedOrdersWithFitlerDto = this.selectOrder;
     return this.http.post<any>(this.controler + 'SetDisApproveOrdersReturnByBranchInStore', this.selectOrder);

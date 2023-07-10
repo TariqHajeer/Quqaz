@@ -161,7 +161,7 @@ export class PrintOrdersDontFinishedComponent implements OnInit {
   }
   print() {
     this.spinner.show();
-    this.orderservice.PrintSendOrdersReturnedToSecondBranchReport(this.printnumber).subscribe(res => {
+    this.orderservice.PrintDeleiverMoneyForClient(this.printnumber).subscribe(res => {
       let blob = new Blob([res], { type: 'application/pdf' });
       var downloadURL = window.URL.createObjectURL(blob);
       var link = document.createElement('a');
