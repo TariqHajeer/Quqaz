@@ -34,7 +34,9 @@ export class NumericalInputComponent implements OnInit {
     if (charCode === 45) {
       if (this.value == '0')
         return false;
-      this.value = (Number(this.value) * -1).toString();
+      if (isNaN(Number(this.value))) this.value = '0';
+      else
+        this.value = (Number(this.value) * -1).toString();
       return false;
     }
     return true;
