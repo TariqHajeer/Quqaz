@@ -229,7 +229,22 @@ export class EditOrdersComponent implements OnInit {
     }
   }
   AddOrder() {
-
+    if (
+      this.showMessageCode ||
+      this.Order.RecipientPhones.length == 0 ||
+      !this.Order.Cost ||
+      !this.Order.Code ||
+      !this.Order.ClientId ||
+      (!(!this.disabledAgent == !!this.Order.AgentId)) ||
+      !this.Order.CountryId ||
+      !this.Order.OrderplacedId ||
+      !this.Order.MoenyPlacedId ||
+      this.RecipientPhoneslengthEdit != null ||
+      this.RecipientPhoneslength != null
+    ) {
+      this.submitted = true;
+      return;
+    } else this.submitted = false;
     this.submitted = true;
     if (this.tempPhone != '' && this.tempPhone != undefined) {
       this.Order.RecipientPhones.push(this.tempPhone);
