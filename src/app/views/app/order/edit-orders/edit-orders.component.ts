@@ -131,14 +131,9 @@ export class EditOrdersComponent implements OnInit {
       if (city.requiredAgent) {
         this.disabledAgent = false;
         this.Agents = city.agents;
-        if (this.Agents.length == 1)
-        this.Order.AgentId = this.Agents[0].id
-      else
-        this.Order.AgentId = null
       }
       else {
         this.disabledAgent = true;
-        this.Order.AgentId = null;
       }
     })
   }
