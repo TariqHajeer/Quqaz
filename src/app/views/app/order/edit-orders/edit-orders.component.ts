@@ -24,6 +24,8 @@ import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
 import { IndexesTypeEnum } from 'src/app/Models/Enums/IndexesTypeEnum';
 import { IndexesService } from 'src/app/services/indexes.service';
+import { AuthService } from 'src/app/shared/auth.service';
+import { MoneyPalcedEnum } from 'src/app/Models/Enums/MoneyPalcedEnum';
 @Component({
   selector: 'app-edit-orders',
   templateUrl: './edit-orders.component.html',
@@ -41,7 +43,8 @@ export class EditOrdersComponent implements OnInit {
     public spinner: NgxSpinnerService,
     private orderService: OrderService,
     private getroute: ActivatedRoute,
-    private indexesService: IndexesService
+    private indexesService: IndexesService,
+    private authService: AuthService
   ) { }
 
   Order: CreateOrdersFromEmployee
@@ -110,11 +113,7 @@ export class EditOrdersComponent implements OnInit {
     this.submitted = false;
     this.GetMoenyPlaced()
     this.GetorderPlace()
-    // this.GetRegion()
-    // this.GetClient()
-    // this.getAgent()
     this.getOrderTypes()
-    // this.Getcities()
     this.displayedColumns = ['code', 'deliveryCost', 'cost', 'oldCost', 'recipientName',
       'recipientPhones', 'client', 'country', 'region'
       , 'agent', 'monePlaced', 'orderplaced', 'address'
@@ -123,17 +122,22 @@ export class EditOrdersComponent implements OnInit {
 
   }
   getIndexes() {
-    this.indexesService.getIndexes([IndexesTypeEnum.Countries, IndexesTypeEnum.Clients]).subscribe(response => {
+    if (!this.hasDisabledNotEqualBranchId())
+      var index = [IndexesTypeEnum.Countries, IndexesTypeEnum.Clients];
+    else
+      index = [IndexesTypeEnum.Countries];
+    this.indexesService.getIndexes(index).subscribe(response => {
+      if (!this.hasDisabledNotEqualBranchId())
+        this.clients = response.clients;
       this.cities = response.countries;
-      this.clients = response.clients;
-      let city=this.cities.find(c=>c.id==this.Order.CountryId)
-      this.Regions =city.regions;
+      let city = this.cities.find(c => c.id == this.Order.CountryId)
+      this.Regions = city.regions;
       if (city.requiredAgent) {
-        this.disabledAgent = false;
+        this.hideAgent = false;
         this.Agents = city.agents;
       }
       else {
-        this.disabledAgent = true;
+        this.hideAgent = true;
       }
     })
   }
@@ -169,13 +173,14 @@ export class EditOrdersComponent implements OnInit {
       this.Agentsresend = this.Agents.filter(r => r.countryId == this.orderResend.CountryId)
       this.Order.Id = this.editorder.id
       this.Order.Address = this.editorder.address
-      this.Order.ClientId = this.editorder.client?.id 
       this.Order.AgentId = this.editorder.agent?.id
       this.Order.Code = this.editorder.code
       this.tempOrdercode = this.editorder.code
       this.Order.Cost = this.editorder.cost
       this.Order.CountryId = this.editorder.country?.id;
-      this.getIndexes();
+      this.Order.Country = this.editorder.country;
+      this.Order.Client = this.editorder.client;
+      this.Order.ClientId = this.editorder.client?.id
       this.Order.Date = this.editorder.date
       this.Order.DiliveryDate = this.editorder.diliveryDate
       this.Order.DeliveryCost = this.editorder.deliveryCost
@@ -190,13 +195,25 @@ export class EditOrdersComponent implements OnInit {
       this.Order.printedTimes = this.editorder.printedTimes
       this.dataSource = new MatTableDataSource(this.Order.orderLogs)
       this.Order.RegionId = this.editorder.region ? this.editorder.region?.Id : null;
+      this.Order.branchId = res.branchId;
+      this.Order.currentBranchId = res.currentBranchId;
+      if (this.Order.currentBranchId == this.authService.getUser().branche.id
+        && this.Order.MoenyPlacedId == MoneyPalcedEnum.OutSideCompany
+        && this.Order.OrderplacedId == OrderplacedEnum.Store)
+        this.disabledAgent = false;
+      else
+        this.disabledAgent = true;
+      this.getIndexes();
     }, err => {
       this.spinner.hide()
 
     })
-
-
-
+  }
+  hasDisabledNotEqualBranchId(): boolean {
+    if (this.Order.branchId != this.authService.getUser().branche.id) {
+      return true;
+    }
+    else return false;
   }
   onTrackBy(index) {
     return index;
@@ -230,7 +247,7 @@ export class EditOrdersComponent implements OnInit {
       !this.Order.Cost ||
       !this.Order.Code ||
       !this.Order.ClientId ||
-      (!(!this.disabledAgent == !!this.Order.AgentId)) ||
+      (!(!this.hideAgent == !!this.Order.AgentId)) ||
       !this.Order.CountryId ||
       !this.Order.OrderplacedId ||
       !this.Order.MoenyPlacedId ||
@@ -273,7 +290,7 @@ export class EditOrdersComponent implements OnInit {
     this.orderPlace = [...orderPlaceds]
   }
   GetMoenyPlaced() {
-      this.MoenyPlaced = [...moneyPlaceds]
+    this.MoenyPlaced = [...moneyPlaceds]
   }
   GetClient() {
     this.clientService.getClients().subscribe(res => {
@@ -344,7 +361,8 @@ export class EditOrdersComponent implements OnInit {
 
   }
   disabledselect = false
-  disabledAgent:boolean;
+  hideAgent: boolean;
+  disabledAgent: boolean;
   changeCountry() {
     this.Region = []
     this.Order.RegionId = null
@@ -352,15 +370,15 @@ export class EditOrdersComponent implements OnInit {
     this.Order.DeliveryCost = city.deliveryCost
     this.Regions = city.regions;
     if (city.requiredAgent) {
-      this.disabledAgent = false;
+      this.hideAgent = false;
       this.Agents = city.agents;
       if (this.Agents.length == 1)
-      this.Order.AgentId = this.Agents[0].id
-    else
-      this.Order.AgentId = null
+        this.Order.AgentId = this.Agents[0].id
+      else
+        this.Order.AgentId = null
     }
     else {
-      this.disabledAgent = true;
+      this.hideAgent = true;
       this.Order.AgentId = null;
     }
     if (this.Region.length == 1)

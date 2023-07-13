@@ -86,7 +86,7 @@
                 كود الشحنة حقل مطلوب
               </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3" *ngIf="!hasDisabledNotEqualBranchId()">
               <label>العميل<span class="text-danger text-one align-bottom mx-1">*</span></label>
               <ng-select [(ngModel)]="Order.ClientId" (change)="CheckCode()" [ngModelOptions]="{ standalone: true }"
                 [closeOnSelect]="true" name="Client">
@@ -100,9 +100,16 @@
                 يوجد شحنة مسبقا لهذا العميل بنفس الكود
               </div>
             </div>
+            <div class="col-md-3" *ngIf="hasDisabledNotEqualBranchId()">
+              <label>العميل<span class="text-danger text-one align-bottom mx-1">*</span></label>
+              <select [(ngModel)]="Order.Client" [ngModelOptions]="{ standalone: true }" class="custom-select"
+                style="font-size: 16px" [disabled]="true">
+                <option [value]="Order.Client">{{Order.Client.name}}</option>
+              </select>
+            </div>
           </div>
           <div class="row w-100 align-items-end mb-3">
-            <div class="col-md-3">
+            <div class="col-md-3" *ngIf="!hasDisabledNotEqualBranchId()">
               <label>المدينة<span class="text-danger text-one align-bottom mx-1">*</span></label>
               <ng-select [(ngModel)]="Order.CountryId" (change)="changeCountry()"
                 [ngModelOptions]="{ standalone: true }" [closeOnSelect]="true" name="Country">
@@ -114,7 +121,13 @@
                 المدينة حقل مطلوب
               </div>
             </div>
-
+            <div class="col-md-3" *ngIf="hasDisabledNotEqualBranchId()">
+              <label>المدينة<span class="text-danger text-one align-bottom mx-1">*</span></label>
+              <select [(ngModel)]="Order.Country" [ngModelOptions]="{ standalone: true }" class="custom-select"
+                style="font-size: 16px" [disabled]="true">
+                <option [value]="Order.Country">{{Order.Country.name}}</option>
+              </select>
+            </div>
             <div class="col-md-3">
               <label>المنطقة</label>
               <ng-select [(ngModel)]="Order.RegionId" placeholder="اختر منطقة" [ngModelOptions]="{ standalone: true }"
@@ -123,13 +136,11 @@
                 </ng-option>
               </ng-select>
             </div>
-            <div class="col-md-3" *ngIf="!disabledAgent"> 
+            <div class="col-md-3" *ngIf="!hideAgent">
               <label>المندوب<span class="text-danger text-one align-bottom mx-1">*</span></label>
               <ng-select [(ngModel)]="Order.AgentId" [ngModelOptions]="{ standalone: true }" [closeOnSelect]="true"
-                name="Agent" placeholder="اختر مندوب" (change)="changeAgentOrClient()">
-                <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{
-                  Agent.name
-                  }}</ng-option>
+                name="Agent" placeholder="اختر مندوب" (change)="changeAgentOrClient()" [disabled]="disabledAgent">
+                <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
               </ng-select>
               <div *ngIf="!Order.AgentId && submitted" class="invalid-tooltip">
                 المندوب حقل مطلوب
@@ -146,8 +157,7 @@
             </div>
 
             <div class="col-md-3">
-              <app-cost-input [(value)]="Order.Cost"
-              [required]="true"></app-cost-input>
+              <app-cost-input [(value)]="Order.Cost" [required]="true"></app-cost-input>
               <div *ngIf="!Order.Cost && submitted" class="invalid-tooltip">
                 الكلفة حقل مطلوب
               </div>
@@ -273,7 +283,7 @@
                 [(ngModel)]="editorder.clientNote" [disabled]="true" />
             </div>
             <div class="col-md-4">
-              
+
               <label>الموظف صاحب آخر تعديل</label>
               <input type="text" class="form-control" [ngModelOptions]="{ standalone: true }"
                 [(ngModel)]="editorder.updatedBy" [disabled]="true" />
@@ -290,12 +300,12 @@
               [(ngModel)]="editorder.systemNote" [disabled]="true" />
           </div>
         </div>
-          <div class="row w-100">
-            <div class="col-3">
-              <button type="submit" class="btn btn-primary">حفظ</button>
-            </div>
+        <div class="row w-100">
+          <div class="col-3">
+            <button type="submit" class="btn btn-primary">حفظ</button>
           </div>
         </div>
+      </div>
       <simple-notifications></simple-notifications>
     </form>
 

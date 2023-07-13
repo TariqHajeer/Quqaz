@@ -1,4 +1,6 @@
+import { Client } from 'src/app/views/app/client/client.model';
 import { OrderLog } from './order-log.model'
+import { City } from '../Cities/city.Model';
 export class CreateOrdersFromEmployee {
     /**
      *
@@ -11,7 +13,9 @@ export class CreateOrdersFromEmployee {
     Id: number
     Code: string
     ClientId: number
+    Client: Client = new Client();
     CountryId: number
+    Country: City = new City();
     RegionId: any
     RegionName: string
     Address: string
@@ -31,6 +35,8 @@ export class CreateOrdersFromEmployee {
     OldCost
     orderLogs: OrderLog[]
     printedTimes
+    branchId: number;
+    currentBranchId:number;
 }
 export class OrderItem {
     OrderTypeName: string
