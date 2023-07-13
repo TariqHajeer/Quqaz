@@ -139,9 +139,13 @@
             <div class="col-md-3" *ngIf="!hideAgent">
               <label>المندوب<span class="text-danger text-one align-bottom mx-1">*</span></label>
               <ng-select [(ngModel)]="Order.AgentId" [ngModelOptions]="{ standalone: true }" [closeOnSelect]="true"
-                name="Agent" placeholder="اختر مندوب" (change)="changeAgentOrClient()" [disabled]="disabledAgent">
+                name="Agent" placeholder="اختر مندوب" (change)="changeAgentOrClient()" *ngIf="!disabledAgent">
                 <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
               </ng-select>
+              <select [(ngModel)]="Order.Agent" [ngModelOptions]="{ standalone: true }" class="custom-select"
+                style="font-size: 16px" [disabled]="true" *ngIf="disabledAgent">
+                <option [value]="Order.Agent">{{Order.Agent.name}}</option>
+              </select>
               <div *ngIf="!Order.AgentId && submitted" class="invalid-tooltip">
                 المندوب حقل مطلوب
               </div>

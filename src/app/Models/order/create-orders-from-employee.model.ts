@@ -1,6 +1,7 @@
 import { Client } from 'src/app/views/app/client/client.model';
 import { OrderLog } from './order-log.model'
 import { City } from '../Cities/city.Model';
+import { User } from '../user/user.model';
 export class CreateOrdersFromEmployee {
     /**
      *
@@ -20,6 +21,7 @@ export class CreateOrdersFromEmployee {
     RegionName: string
     Address: string
     AgentId: number
+    Agent:User
     OrderplacedId: number
     MoenyPlacedId: number
     Cost: number = 0

@@ -135,6 +135,8 @@ export class EditOrdersComponent implements OnInit {
       if (city.requiredAgent) {
         this.hideAgent = false;
         this.Agents = city.agents;
+        console.log(this.Agents);
+
       }
       else {
         this.hideAgent = true;
@@ -174,6 +176,7 @@ export class EditOrdersComponent implements OnInit {
       this.Order.Id = this.editorder.id
       this.Order.Address = this.editorder.address
       this.Order.AgentId = this.editorder.agent?.id
+      this.Order.Agent = this.editorder.agent
       this.Order.Code = this.editorder.code
       this.tempOrdercode = this.editorder.code
       this.Order.Cost = this.editorder.cost
@@ -241,13 +244,16 @@ export class EditOrdersComponent implements OnInit {
     }
   }
   AddOrder() {
+    if (!this.hideAgent) {
+      if (!this.Order.AgentId)
+        return;
+    }
     if (
       this.showMessageCode ||
       this.Order.RecipientPhones.length == 0 ||
       !this.Order.Cost ||
       !this.Order.Code ||
       !this.Order.ClientId ||
-      (!(!this.hideAgent == !!this.Order.AgentId)) ||
       !this.Order.CountryId ||
       !this.Order.OrderplacedId ||
       !this.Order.MoenyPlacedId ||
