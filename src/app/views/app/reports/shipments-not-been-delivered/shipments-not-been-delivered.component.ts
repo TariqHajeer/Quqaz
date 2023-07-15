@@ -12,6 +12,7 @@ import { Client } from '../../client/client.model';
 import { PointSettingsService } from 'src/app/services/point-settings.service';
 import { AuthService } from 'src/app/shared/auth.service';
 import { OrderClientDontDiliverdMoney } from 'src/app/Models/order/order-client-dont-diliverd-money.model';
+import { DeleiverMoneyForClientDto } from 'src/app/Models/order/deleiver-money-for-client-dto.model';
 @Component({
   selector: 'app-shipments-not-been-delivered',
   templateUrl: './shipments-not-been-delivered.component.html',
@@ -81,6 +82,7 @@ export class ShipmentsNotBeenDeliveredComponent implements OnInit {
     this.getClients();
     this.showOrderPlaceds();
     this.orderservice.orderClientDontDiliverdMoney = new OrderClientDontDiliverdMoney();
+    this.orderservice.deleiverMoneyForClientDto=new DeleiverMoneyForClientDto();    
   }
   setIsAllSelected(isAllSelected: boolean): void {
     this.selectAll = isAllSelected;
