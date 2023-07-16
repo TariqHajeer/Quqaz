@@ -144,7 +144,7 @@
               </ng-select>
               <select [(ngModel)]="Order.Agent" [ngModelOptions]="{ standalone: true }" class="custom-select"
                 style="font-size: 16px" [disabled]="true" *ngIf="disabledAgent">
-                <option [value]="Order.Agent">{{Order.Agent.name}}</option>
+                <option [value]="Order.Agent">{{Order.Agent?.name}}</option>
               </select>
               <div *ngIf="!Order.AgentId && submitted" class="invalid-tooltip">
                 المندوب حقل مطلوب
