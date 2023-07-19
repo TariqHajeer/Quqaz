@@ -31,5 +31,8 @@ export class IndexesService {
     }
     return Array.from(map.values());
   }
-
+  
+  getCountriesByAgentId(countries: City[], agentId: number) {
+    return countries.filter(country => country.agents.map(c => c.id).indexOf(agentId) > -1);
+  }
 }
