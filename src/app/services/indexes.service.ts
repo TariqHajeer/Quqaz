@@ -22,7 +22,7 @@ export class IndexesService {
     var agents = countries.map(c => c.agents);
     return this.getDistinctById(agents);
   }
-  getDistinctById(arr) {
+  getDistinctById(arr: any[]) {
     const map = new Map();
     for (const item of arr) {
       if (!map.has(item.id)) {
