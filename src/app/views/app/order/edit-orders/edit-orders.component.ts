@@ -212,11 +212,8 @@ export class EditOrdersComponent implements OnInit {
 
     })
   }
-  hasDisabledNotEqualBranchId(): boolean {
-    if (this.Order.branchId != this.authService.getUser().branche.id) {
-      return true;
-    }
-    else return false;
+  hasDisabledNotEqualBranchId(): boolean {    
+    return !(this.Order.branchId == this.authService.getUser().branche.id);
   }
   onTrackBy(index) {
     return index;

@@ -272,7 +272,8 @@
                     <div class="col-md-3">
                       <label>المدينة<span class="text-danger text-one align-bottom mx-1">*</span></label>
                       <ng-select [(ngModel)]="countryResend" (ngModelChange)="changeCountryResend()"
-                        [ngModelOptions]="{standalone: true}" [clearable]="false" name="Country"[disabled]="currentUser.branche.id!=element.branchId">
+                        [ngModelOptions]="{standalone: true}" [clearable]="false" name="Country"
+                        [disabled]="currentUser.branche.id!=element.branchId">
                         <ng-option *ngFor="let citie of countries" [value]="citie">{{citie.name}}</ng-option>
                       </ng-select>
                     </div>
@@ -294,9 +295,9 @@
                     </div>
                     <div class="col-md-3">
                       <label>كلفة التوصيل</label>
-                      <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                        [(ngModel)]="orderResend.DeliveryCost">
+                      <div>
+                        {{orderResend.DeliveryCost}}
+                      </div>
                     </div>
                   </div>
 

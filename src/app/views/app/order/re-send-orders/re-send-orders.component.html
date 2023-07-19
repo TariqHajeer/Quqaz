@@ -98,9 +98,7 @@
             </ng-select>
           </td>
           <td>
-            <input type="text" class="form-control" [ngModelOptions]="{ standalone: true }"
-              oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-              [(ngModel)]="order.DeliveryCost" />
+           {{order.DeliveryCost}}
           </td>
           <td>
             <input type="text" class="form-control" [ngModelOptions]="{ standalone: true }" [(ngModel)]="order.note" />

@@ -89,7 +89,7 @@ export class ReSendOrdersComponent implements OnInit {
     this.orderResend.CountryId = order.country?.id;
     this.orderResend.RegionId = order.region ? order.region.id : null;
     let country=this.cities.find(c=>c.id==this.orderResend.CountryId);
-    this.orderResend.DeliveryCost = country.deliveryCost;
+    this.orderResend.DeliveryCost = order.oldDeliveryCost;
     this.orderResend.Id = order.id;
     this.orderResend.Countries = [...this.cities];
     this.orderResend.Agents = [

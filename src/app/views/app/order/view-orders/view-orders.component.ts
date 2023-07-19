@@ -199,13 +199,12 @@ export class ViewOrdersComponent implements OnInit {
     this.orderResend.CountryId = order.country.id;
     this.orderResend.RegionId = order.region ? order.region.id : null;
     this.countryResend = this.countries.find(country => country.id == order.country.id);    
-    this.orderResend.DeliveryCost = this.countryResend?.deliveryCost * 1;
+    this.orderResend.DeliveryCost =order.oldDeliveryCost * 1;
     this.regionsResend = this.countryResend?.regions;
     this.agentsResend = this.countryResend?.agents;
   }
   changeCountryResend() {
     this.orderResend.CountryId = this.countryResend.id;
-    this.orderResend.DeliveryCost = this.countryResend.deliveryCost;
     this.orderResend.RegionId = null;
     this.orderResend.AgnetId = null;
     this.regionsResend = this.countryResend.regions;
@@ -218,7 +217,6 @@ export class ViewOrdersComponent implements OnInit {
     else this.orderResend.RegionId = null;
   }
   Resend() {
-    this.orderResend.DeliveryCost = this.orderResend.DeliveryCost * 1;
     this.orderservice.ReSend(this.orderResend).subscribe((res) => {
       this.getOrders();
     });
