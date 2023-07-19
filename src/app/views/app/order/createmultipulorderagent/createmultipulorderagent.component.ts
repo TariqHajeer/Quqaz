@@ -9,13 +9,12 @@ import { OrderItem } from 'src/app/Models/order/create-orders-from-employee.mode
 import { OrderType } from 'src/app/Models/OrderTypes/order-type.model';
 import { Region } from 'src/app/Models/Regions/region.model';
 import { User } from 'src/app/Models/user/user.model';
-import { CustomService } from 'src/app/services/custom.service';
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
-import { AuthService } from 'src/app/shared/auth.service';
 import IIndex from 'src/app/shared/interfaces/IIndex';
 import { Client } from '../../client/client.model';
-import { ClientService } from '../../client/client.service';
+import { IndexesTypeEnum } from 'src/app/Models/Enums/IndexesTypeEnum';
+import { IndexesService } from 'src/app/services/indexes.service';
 
 @Component({
   selector: 'app-createmultipulorderagent',
@@ -28,13 +27,10 @@ export class CreatemultipulorderagentComponent implements OnInit {
     e.target.blur();
   }
   constructor(private orderservice: OrderService,
-    private authService: AuthService,
-    private clientService: ClientService
-    , private customerService: CustomService,
     public userService: UserService,
     private notifications: NotificationsService,
     public spinner: NgxSpinnerService,
-
+    private indexesService: IndexesService,
   ) { }
 
   Order: CreateMultipleOrder
@@ -59,20 +55,16 @@ export class CreatemultipulorderagentComponent implements OnInit {
   filter: OrderFilter
   CountryId
   AgentId
-  //tempPhone: string;
-  // EdittempPhone: string
-  //selectedOrder: any;
   cityapi = "Country"
   regionapi = "Region"
   ordertypeapi = "OrderType";
   Orders: any[] = []
-  //CanEdit: boolean[] = []
   @ViewChild('code') codeElement: ElementRef;
   ngOnInit(): void {
     this.Order = new CreateMultipleOrder();
     this.EditOrder = new CreateMultipleOrder();
     this.submitted = false;
-    this.int()
+    this.getIndexes()
     var order = JSON.parse(localStorage.getItem('refrshorder'))
     if (order && order.length != 0) {
       this.Orders = order
@@ -80,52 +72,21 @@ export class CreatemultipulorderagentComponent implements OnInit {
 
   }
 
-  int() {
-    this.Getcities()
-    this.GetClient()
-    this.getAgent()
-  }
-  getAgent() {
-    this.userService.ActiveAgent().subscribe(res => {
-      this.Agents = res
-      var agent = JSON.parse(localStorage.getItem('agentid'))
-      if (agent) {
-        this.AgentId = agent
-        var find = this.Agents.find(a => a.id == this.AgentId)
-        this.cities = find.countries
-        this.Order.CountryId = this.cities[0].id
-      }
+  getIndexes() {
+    this.indexesService.getIndexes([IndexesTypeEnum.Countries, IndexesTypeEnum.Clients]).subscribe(response => {
+      this.Agents = this.indexesService.getAllAgents(response.countries);
+      console.log(this.Agents);
+      console.log(this.indexesService.getAllAgents(response.countries));
+      
+      this.clients = response.clients;
     })
   }
-  // disabldAgentId=false
   changeAgentId() {
-    // if(this.Orders.length>0)
-    // this.disabldAgentId=true
-    // else
-    // this.disabldAgentId=false
     localStorage.setItem('agentid', this.AgentId)
     var find = this.Agents.find(a => a.id == this.AgentId)
     this.cities = find.countries
   }
-  GetClient() {
-    this.clientService.getClients().subscribe(res => {
-      this.clients = res
-    })
-  }
-  Getcities() {
-    // this.customerService.getAll(this.cityapi).subscribe(res => {
-    //   if(this.AgentId){
-    //     this.cities = res
-    //     this.cities=this.cities.filter(c=>c.agnets.filter(a=>a.id==this.AgentId))
-    //   }
 
-    // //  console.log (this.cities)
-    // })
-    if (this.AgentId) {
-      var find = this.Agents.find(a => a.id == this.AgentId)
-      this.cities = find.countries
-    }
-  }
 
   changeCountry() {
     var city = this.cities.find(c => c.id == this.Order.CountryId)
@@ -210,7 +171,6 @@ export class CreatemultipulorderagentComponent implements OnInit {
     setTimeout(() => {
       this.codeElement.nativeElement.focus();
     }, 0);
-    this.int()
   }
   tempEdit: CreateMultipleOrder
   Edit(order: CreateMultipleOrder) {
