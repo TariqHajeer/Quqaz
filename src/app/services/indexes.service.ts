@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { IIndexes } from '../store/index/interfaces/iindexes';
 import { City } from '../Models/Cities/city.Model';
+import { ConstantPool } from '@angular/compiler';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,7 +20,10 @@ export class IndexesService {
     return this.http.get<IIndexes>(this.controler, { params: params });
   }
   getAllAgents(countries: City[]) {
-    var agents = countries.map(c => c.agents);
+    console.log("countires", countries);
+    let agents = countries.map(c => c.agents);
+    agents = agents.reduce((acc, val) => acc.concat(val), []);
+    console.log("agents", agents);
     return this.getDistinctById(agents);
   }
   getDistinctById(arr: any[]) {
@@ -31,7 +35,7 @@ export class IndexesService {
     }
     return Array.from(map.values());
   }
-  
+
   getCountriesByAgentId(countries: City[], agentId: number) {
     return countries.filter(country => country.agents.map(c => c.id).indexOf(agentId) > -1);
   }
