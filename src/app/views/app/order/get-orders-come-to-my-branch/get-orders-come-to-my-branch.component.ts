@@ -324,7 +324,7 @@ export class GetOrdersComeToMyBranchComponent implements OnInit {
       this.customOrdersAgent.push(this.customOrderAgent);
     })
     this.receiveOrdersToMyBranch.AgentId = this.agent.id;
-    this.receiveOrdersToMyBranch.RegionId = this.region.id;
+    this.receiveOrdersToMyBranch.RegionId = this.region?.id;
     this.receiveOrdersToMyBranch.CustomOrderAgent = this.customOrdersAgent;
     this.receiveOrdersToMyBranch.SelectedIds = this.ordersIds;
     this.receiveOrdersToMyBranch.ExceptIds = this.unSelectIds;
