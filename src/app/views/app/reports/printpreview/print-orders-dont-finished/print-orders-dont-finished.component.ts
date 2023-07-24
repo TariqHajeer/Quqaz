@@ -66,6 +66,7 @@ export class PrintOrdersDontFinishedComponent implements OnInit {
 
   ngOnInit(): void {
     this.getOrders();
+    this.orderservice.orderClientDontDiliverdMoney.paging.RowCount = 50;
   }
   reciptClient() {
     if (
@@ -85,27 +86,27 @@ export class PrintOrdersDontFinishedComponent implements OnInit {
       });
     } else return;
   }
-  getOrdersDontFinished(){
-  this.orderservice.OrdersDontFinished().subscribe(response => {
+  getOrdersDontFinished() {
+    this.orderservice.OrdersDontFinished().subscribe(response => {
 
-    if (this.orderservice.orderClientDontDiliverdMoney.paging.Page == 1)
-      this.orders = response.data.data;
-    else
-      response.data.data.forEach(element => {
-        this.orders.push(element);
-      });
-    if (this.orders.length < response.data.total)
-      this.showSeeMore = true;
-    else
-      this.showSeeMore = false;
-    if (this.orders.length == 0)
-      this.router.navigate(['/app/reports/Shipmentsnotbeendelivered']);
-    this.reciptClient();
-    this.count = response.orderTotal;
-    this.deliveryCostCount = response.deliveryTotal;
-    this.clientCalc = this.count - this.deliveryCostCount;
-  });
-}
+      if (this.orderservice.orderClientDontDiliverdMoney.paging.Page == 1)
+        this.orders = response.data.data;
+      else
+        response.data.data.forEach(element => {
+          this.orders.push(element);
+        });
+      if (this.orders.length < response.data.total)
+        this.showSeeMore = true;
+      else
+        this.showSeeMore = false;
+      if (this.orders.length == 0)
+        this.router.navigate(['/app/reports/Shipmentsnotbeendelivered']);
+      this.reciptClient();
+      this.count = response.orderTotal;
+      this.deliveryCostCount = response.deliveryTotal;
+      this.clientCalc = this.count - this.deliveryCostCount;
+    });
+  }
   getOrders() {
     this.client = this.orderservice.deleiverMoneyForClientDto.Filter.Client;
     this.orderplaced = this.orderservice.deleiverMoneyForClientDto.Filter.OrderPlaced;
@@ -119,7 +120,7 @@ export class PrintOrdersDontFinishedComponent implements OnInit {
     }
     this.orderservice.orderClientDontDiliverdMoney.paging = new Paging();
     this.getOrdersDontFinished();
-   
+
   }
   seeMore() {
     this.orderservice.orderClientDontDiliverdMoney.paging.Page += 1;
@@ -166,7 +167,7 @@ export class PrintOrdersDontFinishedComponent implements OnInit {
       var downloadURL = window.URL.createObjectURL(blob);
       var link = document.createElement('a');
       link.href = downloadURL;
-      link.download = "تسديد العميل"+".pdf";
+      link.download = "تسديد العميل" + ".pdf";
       link.click();
       this.spinner.hide();
       this.notifications.success('success', 'تمت الطباعة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
