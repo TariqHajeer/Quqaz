@@ -220,6 +220,9 @@ export class ViewOrdersComponent implements OnInit {
     if (this.regionsResend.length == 1)
       this.orderResend.RegionId = this.regionsResend[0].id;
     else this.orderResend.RegionId = null;
+    if (this.countryResend.requiredAgent)
+      this.orderResend.disabledAgent = false;
+    else this.orderResend.disabledAgent = true;
   }
   Resend() {
     this.orderservice.ReSend(this.orderResend).subscribe((res) => {
