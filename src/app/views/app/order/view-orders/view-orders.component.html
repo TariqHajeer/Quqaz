@@ -273,7 +273,7 @@
                       <label>المدينة<span class="text-danger text-one align-bottom mx-1">*</span></label>
                       <ng-select [(ngModel)]="countryResend" (ngModelChange)="changeCountryResend()"
                         [ngModelOptions]="{standalone: true}" [clearable]="false" name="Country"
-                        [disabled]="currentUser.branche.id!=element.branchId">
+                        [disabled]="currentUser.branche.id!=orderResend.branchId">
                         <ng-option *ngFor="let citie of countries" [value]="citie">{{citie.name}}</ng-option>
                       </ng-select>
                     </div>

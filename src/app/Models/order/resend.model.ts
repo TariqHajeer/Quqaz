@@ -11,4 +11,5 @@ export class Resend {
     client:any;
     note
     disabledAgent:boolean;
+    branchId
 }

@@ -194,6 +194,8 @@ export class ViewOrdersComponent implements OnInit {
     );
   }
   fillResend(order) {
+    this.orderResend = new Resend();
+    this.orderResend.branchId = order.branchId;
     this.orderResend.Id = order.id;
     this.orderResend.AgnetId = order.agent.id;
     this.orderResend.CountryId = order.country.id;
