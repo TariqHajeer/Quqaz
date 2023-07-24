@@ -134,7 +134,7 @@ export class OrderService {
   }
   GetEarning(paging: Paging, datefilter: DateFiter) {
     let params = new HttpParams();
-    this.setPaging(params, paging);
+    params = this.setPaging(params, paging);
     if (datefilter.FromDate != undefined || datefilter.FromDate != null)
       params = params.append('FromDate', datefilter.FromDate);
     if (datefilter.ToDate != undefined || datefilter.ToDate != null)
@@ -178,7 +178,7 @@ export class OrderService {
       params: params,
     });
   }
-  GetAgentPrint(paging, number, agent,code) {
+  GetAgentPrint(paging, number, agent, code) {
     let params = this.getHttpParmasByPaging(paging);
     if (number) params = params.append('number', number);
     if (agent) params = params.append('agnetName', agent);
