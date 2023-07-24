@@ -81,7 +81,7 @@
           </td>
           <td>
             <ng-select [(ngModel)]="order.CountryId" (change)="changeCountryResend(order)"
-              [ngModelOptions]="{ standalone: true }" [clearable]="false" name="Country">
+              [ngModelOptions]="{ standalone: true }" [clearable]="false" name="Country"  [disabled]="currentUser.branche.id!=order.branchId">
               <ng-option *ngFor="let citie of order.Countries" [value]="citie.id">{{ citie.name }}</ng-option>
             </ng-select>
           </td>

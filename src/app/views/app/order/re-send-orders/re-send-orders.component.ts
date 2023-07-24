@@ -5,8 +5,10 @@ import { IndexesTypeEnum } from 'src/app/Models/Enums/IndexesTypeEnum';
 import { Resend } from 'src/app/Models/order/resend.model';
 import { Region } from 'src/app/Models/Regions/region.model';
 import { User } from 'src/app/Models/user/user.model';
+import { UserLogin } from 'src/app/Models/userlogin.model';
 import { IndexesService } from 'src/app/services/indexes.service';
 import { OrderService } from 'src/app/services/order.service';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-re-send-orders',
@@ -17,7 +19,9 @@ export class ReSendOrdersComponent implements OnInit {
   constructor(
     private orderService: OrderService,
     private notifications: NotificationsService,
-    private indexesService: IndexesService
+    private indexesService: IndexesService,
+    private authService: AuthService,
+
   ) { }
   orderResend: Resend = new Resend();
   ordersResend: Resend[] = [];
@@ -29,9 +33,11 @@ export class ReSendOrdersComponent implements OnInit {
   code: any;
   showTable: boolean = false;
   Ordersfilter: any[] = [];
+  currentUser: UserLogin = new UserLogin();
+
   ngOnInit(): void {
     this.getIndexes();
-
+    this.currentUser = this.authService.getUser();
   }
   getIndexes() {
     this.indexesService.getIndexes([IndexesTypeEnum.Countries]).subscribe(response => {
