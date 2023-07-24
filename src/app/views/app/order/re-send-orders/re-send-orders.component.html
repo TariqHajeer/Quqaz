@@ -93,7 +93,7 @@
           </td>
           <td>
             <ng-select [(ngModel)]="order.AgnetId" [ngModelOptions]="{ standalone: true }" [clearable]="false"
-              name="Agent" placeholder="اختر مندوب">
+              name="Agent" placeholder="اختر مندوب" *ngIf="!order.disabledAgent">
               <ng-option *ngFor="let Agent of order.Agents" [value]="Agent.id">{{ Agent.name }}</ng-option>
             </ng-select>
           </td>

@@ -289,7 +289,7 @@
                     <div class="col-md-3">
                       <label>المندوب<span class="text-danger text-one align-bottom mx-1">*</span></label>
                       <ng-select [(ngModel)]="orderResend.AgnetId" [ngModelOptions]="{standalone: true}"
-                        [clearable]="false" name="Agent" placeholder="اختر مندوب">
+                        [clearable]="false" name="Agent" placeholder="اختر مندوب" *ngIf="!orderResend.disabledAgent">
                         <ng-option *ngFor="let Agent of agentsResend" [value]="Agent.id">{{Agent.name}}</ng-option>
                       </ng-select>
                     </div>

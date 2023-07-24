@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { City } from 'src/app/Models/Cities/city.Model';
+import { IndexesTypeEnum } from 'src/app/Models/Enums/IndexesTypeEnum';
 import { Resend } from 'src/app/Models/order/resend.model';
 import { Region } from 'src/app/Models/Regions/region.model';
 import { User } from 'src/app/Models/user/user.model';
-import { CustomService } from 'src/app/services/custom.service';
+import { IndexesService } from 'src/app/services/indexes.service';
 import { OrderService } from 'src/app/services/order.service';
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-re-send-orders',
@@ -15,11 +15,10 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ReSendOrdersComponent implements OnInit {
   constructor(
-    private customerService: CustomService,
-    private userService: UserService,
     private orderService: OrderService,
-    private notifications: NotificationsService
-  ) {}
+    private notifications: NotificationsService,
+    private indexesService: IndexesService
+  ) { }
   orderResend: Resend = new Resend();
   ordersResend: Resend[] = [];
   cities: City[] = [];
@@ -31,30 +30,16 @@ export class ReSendOrdersComponent implements OnInit {
   showTable: boolean = false;
   Ordersfilter: any[] = [];
   ngOnInit(): void {
-    this.getAgent();
-    this.GetRegion();
-    this.Getcities();
-  }
+    this.getIndexes();
 
-  GetRegion() {
-    this.customerService.getAll(this.regionapi).subscribe((res) => {
-      this.Region = res;
-    });
   }
-  Getcities() {
-    this.customerService.getAll(this.cityapi).subscribe((res) => {
-      this.cities = res;
-    });
-  }
-  getAgent() {
-    this.userService.ActiveAgent().subscribe((res) => {
-      this.Agents = res;
-    });
+  getIndexes() {
+    this.indexesService.getIndexes([IndexesTypeEnum.Countries]).subscribe(response => {
+      this.cities = response.countries;
+    })
   }
   getResendOrderByCode() {
     this.orderService.GetReSendMultiple(this.code).subscribe((res) => {
-      console.log(res);
-      
       if (res.length < 1) {
         this.notifications.error(
           'error',
@@ -64,7 +49,6 @@ export class ReSendOrdersComponent implements OnInit {
         );
         return;
       }
-
       if (res.length > 1) {
         this.showTable = true;
         this.Ordersfilter = res;
@@ -73,7 +57,7 @@ export class ReSendOrdersComponent implements OnInit {
         this.add(res[0]);
         this.code = '';
       }
-    },err=>{
+    }, err => {
       this.notifications.error(
         'error',
         'حدث خطأ ما يرحى المحاولة لاحقا',
@@ -85,21 +69,20 @@ export class ReSendOrdersComponent implements OnInit {
   add(order) {
     this.orderResend.code = order.code;
     this.orderResend.client = order.client;
-    this.orderResend.AgnetId = order.agent?.id;
     this.orderResend.CountryId = order.country?.id;
     this.orderResend.RegionId = order.region ? order.region.id : null;
-    let country=this.cities.find(c=>c.id==this.orderResend.CountryId);
+    let country = this.cities.find(c => c.id == this.orderResend.CountryId);
+    if (country.requiredAgent) {
+      this.orderResend.Agents = country.agents
+      this.orderResend.AgnetId = order.agent?.id;
+      this.orderResend.disabledAgent = false;
+    }
+    else {
+      this.orderResend.disabledAgent = true;
+    }
     this.orderResend.DeliveryCost = order.oldDeliveryCost;
     this.orderResend.Id = order.id;
     this.orderResend.Countries = [...this.cities];
-    this.orderResend.Agents = [
-      ...this.Agents.filter(
-        (a) =>
-          a.countries
-            .map((c) => c.id)
-            .filter((co) => co == this.orderResend.CountryId).length > 0
-      ),
-    ];
     this.orderResend.Regions = [
       ...this.Region.filter((r) => r.country.id == this.orderResend.CountryId),
     ];
@@ -129,30 +112,26 @@ export class ReSendOrdersComponent implements OnInit {
   }
   changeCountryResend(order) {
     var city = this.cities.find((c) => c.id == order.CountryId);
-    order.DeliveryCost = city.deliveryCost;
-    order.RegionId = null;
-    order.Regions = [
-      ...this.Region.filter((r) => r.country.id == order.CountryId),
-    ];
-    order.Agents = [
-      ...this.Agents.filter(
-        (a) =>
-          a.countries.map((c) => c.id).filter((co) => co == order.CountryId)
-            .length > 0
-      ),
-    ];
-    if (order.Agents.length == 1) order.AgnetId = order.Agents[0].id;
-    else order.AgnetId = null;
+    order.Regions = city.regions;
+    order.Agents = city.agents;
+    if (city.requiredAgent) {
+      order.disabledAgent = false;
+      if (order.Agents.length == 1) order.AgnetId = order.Agents[0].id;
+      else order.AgnetId = null;
+    }
+    else {
+      order.disabledAgent = true;
+      order.AgnetId = null;
+    }
+
     if (order.Regions.length == 1) order.RegionId = order.Regions[0].id;
     else order.RegionId = null;
   }
   save() {
-
     this.ordersResend.forEach((item) => {
       item.DeliveryCost = Number(item.DeliveryCost);
     });
-    if(this.ordersResend.filter(item=>!item.AgnetId||!item.CountryId||!item.DeliveryCost).length>0)
-    {
+    if (this.ordersResend.filter(item => !item.AgnetId || !item.CountryId || !item.DeliveryCost).length > 0) {
       this.notifications.error(
         'error',
         'يجب التأكد من ملئ جميع الحقول االمطلوبة',
@@ -173,7 +152,7 @@ export class ReSendOrdersComponent implements OnInit {
           );
           this.ordersResend = [];
           this.code = null;
-        },err=>{
+        }, err => {
           this.notifications.error(
             'error',
             'حدث خطأ ما يرحى المحاولة لاحقا',
