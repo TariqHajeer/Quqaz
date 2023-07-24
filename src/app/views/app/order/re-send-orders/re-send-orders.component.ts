@@ -138,7 +138,7 @@ export class ReSendOrdersComponent implements OnInit {
     this.ordersResend.forEach((item) => {
       item.DeliveryCost = Number(item.DeliveryCost);
     });
-    if (this.ordersResend.filter(item => !item.AgnetId || !item.CountryId || !item.DeliveryCost).length > 0) {
+    if (this.ordersResend.filter(item => (!item.disabledAgent&&!item.AgnetId) || !item.CountryId || !item.DeliveryCost).length > 0) {
       this.notifications.error(
         'error',
         'يجب التأكد من ملئ جميع الحقول االمطلوبة',
