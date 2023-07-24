@@ -41,6 +41,7 @@ export class CreatemultipulorderagentComponent implements OnInit {
   MoenyPlaced: IIndex[] = []
   clients: Client[] = []
   cities: City[] = []
+  allCountires: City[] = [];
   Region: Region[] = []
   Regions: Region[] = []
   Agents: User[] = []
@@ -74,17 +75,15 @@ export class CreatemultipulorderagentComponent implements OnInit {
 
   getIndexes() {
     this.indexesService.getIndexes([IndexesTypeEnum.Countries, IndexesTypeEnum.Clients]).subscribe(response => {
-      this.Agents = this.indexesService.getAllAgents(response.countries);
-      console.log(this.Agents);
-      console.log(this.indexesService.getAllAgents(response.countries));
-      
+      this.allCountires = response.countries;
+      console.log(this.allCountires);
+      this.Agents = this.indexesService.getAllAgents(this.allCountires);
       this.clients = response.clients;
     })
   }
   changeAgentId() {
-    localStorage.setItem('agentid', this.AgentId)
-    var find = this.Agents.find(a => a.id == this.AgentId)
-    this.cities = find.countries
+
+    this.cities = this.indexesService.getCountriesByAgentId(this.allCountires, this.AgentId);
   }
 
 
