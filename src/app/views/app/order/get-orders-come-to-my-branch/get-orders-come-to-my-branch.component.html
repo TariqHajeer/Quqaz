@@ -57,9 +57,9 @@
         </div>
     </div>
 </div>
-<div class="example-container mat-elevation-z8">
+<!-- <div class="example-container">  -->
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox (change)="$event ? masterToggle() : null" [aria-label]="headerChekclable"
@@ -94,6 +94,7 @@
             <th mat-header-cell *matHeaderCellDef style="padding-right: 10px;"> المنطقة </th>
             <td mat-cell *matCellDef="let element" style="padding-right: 10px;"(click)="$event.stopPropagation()">
                 <ng-select appOnReturn [(ngModel)]="element.region" [ngModelOptions]="{standalone: true}"
+                class="ng-select-bottom"
                   (ngModelChange)="changeOrderSelectedValues(element)"  [closeOnSelect]="true" name="Region" [addTag]="true" style="width: 100px;"
                     *ngIf="element.targetBranchId==authService.getUser().branche.id">
                     <ng-option *ngFor="let region of  regionArray(element.country.id)" [value]="region">{{region.name}}
@@ -144,7 +145,7 @@
     </table>
     <h5 style="padding-top: 20px; padding-right: 10px;" *ngIf="noDataFound">لايوجد بيانات للعرض</h5>
 
-</div>
+<!-- </div> -->
 
 <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
     [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
