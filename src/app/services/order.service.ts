@@ -506,7 +506,7 @@ export class OrderService {
     return formdata;
   }
   GetOrderInAllBranches(code:string){
-    
+    return this.http.get<any>(this.controler + 'GetOrderInAllBranches', {});
   }  
 
 }
