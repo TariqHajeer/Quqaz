@@ -52,6 +52,7 @@ import { MoveOrdersToAgentByCodeComponent } from './move-orders-to-agent-by-code
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CreateMultipleComponent } from './create-multiple/create-multiple.component';
 import { PrintOrderReturnedToSecondBranchComponent } from './printPreview/print-order-returned-to-second-branch/print-order-returned-to-second-branch.component';
+import { ViewOrdersWithoutBranchFilterComponent } from './view-orders-without-branch-filter/view-orders-without-branch-filter.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { PrintOrderReturnedToSecondBranchComponent } from './printPreview/print-
     MoveOrdersToAgentByCodeComponent,
     CreateMultipleComponent,
     PrintOrderReturnedToSecondBranchComponent,
+    ViewOrdersWithoutBranchFilterComponent,
   ],
   imports: [
     CommonModule,

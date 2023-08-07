@@ -104,7 +104,7 @@ export class PrintOrdersDontFinishedComponent implements OnInit {
       this.reciptClient();
       this.count = response.orderTotal;
       this.deliveryCostCount = response.deliveryTotal;
-      this.clientCalc = this.count - this.deliveryCostCount;
+      this.clientCalc = response.payForCientTotal;
     });
   }
   getOrders() {

@@ -59,14 +59,11 @@ export class UserService {
 
   }
   AddToGroup(userid, groupid) {
-    var formData = new FormData();
-    formData.append("groupid", groupid);
-    return this.http.put(this.controler + "AddToGroup/" + userid, formData)
+
+    return this.http.put(this.controler + "AddToGroup/" + userid, groupid)
   }
   deleteGroup(userid, groupid) {
-    var formData = new FormData();
-    formData.append("groupid", groupid);
-    return this.http.put(this.controler + "deleteGroup/" + userid, formData)
+    return this.http.put(this.controler + "deleteGroup/" + userid, groupid)
   }
   Driver() {
     return this.http.get<any>(this.controler + "Driver");

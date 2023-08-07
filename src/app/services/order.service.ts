@@ -505,5 +505,8 @@ export class OrderService {
       formdata.append('RowCount', selectOrder.Paging.RowCount);
     return formdata;
   }
+  GetOrderInAllBranches(code:string){
+    
+  }  
 
 }

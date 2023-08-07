@@ -100,6 +100,7 @@ const data: IMenuItem[] = [
             permission: [UserPermission.ShowOrder],
             badge: true,
           },
+          
           {
             icon: 'iconsminds-box-close',
             label: ' طلبات عند العميل ',
@@ -114,6 +115,13 @@ const data: IMenuItem[] = [
             badge: true,
             permission: [UserPermission.ShowOrder],
           },
+          {
+            icon: 'simple-icon-layers',
+            label: 'بحث الطلب بكل الأفرع',
+            to: `${adminRoot}/order/ordersWithoutBranchFilter`,
+            badge: true,
+            permission: [UserPermission.ShowOrder],
+        },
         ]
       },
      

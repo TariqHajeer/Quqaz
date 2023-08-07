@@ -32,6 +32,7 @@ import { PrintOrdersComponent } from './printPreview/print-orders/print-orders.c
 import { GetDisapprovedReturnedOrderByBranchComponent } from './get-disapproved-returned-order-by-branch/get-disapproved-returned-order-by-branch.component';
 import { CreateMultipleComponent } from './create-multiple/create-multiple.component';
 import { PrintOrderReturnedToSecondBranchComponent } from './printPreview/print-order-returned-to-second-branch/print-order-returned-to-second-branch.component';
+import { ViewOrdersWithoutBranchFilterComponent } from './view-orders-without-branch-filter/view-orders-without-branch-filter.component';
 
 const routes: Routes = [
   {
@@ -87,6 +88,12 @@ const routes: Routes = [
   {
     path: 'neworders',
     component: ViewNewOrderComponent, canActivate: [AuthGuard],
+    data: { roles: [UserPermission.ShowOrder] }
+  },
+  {
+    path: 'ordersWithoutBranchFilter',
+    component: ViewOrdersWithoutBranchFilterComponent,
+    canActivate: [AuthGuard],
     data: { roles: [UserPermission.ShowOrder] }
   },
   {

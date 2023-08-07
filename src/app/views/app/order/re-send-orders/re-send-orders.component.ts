@@ -46,6 +46,7 @@ export class ReSendOrdersComponent implements OnInit {
   }
   getResendOrderByCode() {
     this.orderService.GetReSendMultiple(this.code).subscribe((res) => {
+      console.log(res);
       if (res.length < 1) {
         this.notifications.error(
           'error',
@@ -87,7 +88,12 @@ export class ReSendOrdersComponent implements OnInit {
     else {
       this.orderResend.disabledAgent = true;
     }
+    console.log(order);
+    if(order.oldDeliveryCost){
     this.orderResend.DeliveryCost = order.oldDeliveryCost;
+    }else{
+      this.orderResend.DeliveryCost = order.deliveryCost
+    }
     this.orderResend.Id = order.id;
     this.orderResend.Countries = [...this.cities];
     this.orderResend.Regions = [
@@ -135,9 +141,13 @@ export class ReSendOrdersComponent implements OnInit {
     else order.RegionId = null;
   }
   save() {
+
     this.ordersResend.forEach((item) => {
+      console.log(item.DeliveryCost)
       item.DeliveryCost = Number(item.DeliveryCost);
+      console.log(item.DeliveryCost)
     });
+    console.log(this.ordersResend);
     if (this.ordersResend.filter(item => (!item.disabledAgent&&!item.AgnetId) || !item.CountryId || !item.DeliveryCost).length > 0) {
       this.notifications.error(
         'error',
