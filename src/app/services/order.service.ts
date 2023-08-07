@@ -505,8 +505,11 @@ export class OrderService {
       formdata.append('RowCount', selectOrder.Paging.RowCount);
     return formdata;
   }
-  GetOrderInAllBranches(code:string){
-    return this.http.get<any>(this.controler + 'GetOrderInAllBranches', {});
-  }  
+  GetOrderInAllBranches(code: string) {
+    let params = new HttpParams();
+    if (code)
+      params = params.append('code', code);
+    return this.http.get<any>(this.controler + 'GetOrderInAllBranches', { params: params });
+  }
 
 }
