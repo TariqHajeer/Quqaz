@@ -43,6 +43,9 @@ export class OrderService {
   Creat(item) {
     return this.http.post(this.controler, item);
   }
+  createOrderWithBranch(order) {
+    return this.http.post(this.controler + "CreateOrderWithBranch", order);
+  }
   createMultiple(item) {
     return this.http.post(this.controler + 'createMultiple', item);
   }

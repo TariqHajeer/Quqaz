@@ -263,7 +263,7 @@ export class AddOrderWithBranchComponent implements OnInit {
     this.Order.DeliveryCost = Number(this.Order.DeliveryCost);
     this.Order.Cost = Number(this.Order.Cost);
     this.Order.Date = moment().format();
-    this.orderservice.Creat(this.Order).subscribe(
+    this.orderservice.createOrderWithBranch(this.Order).subscribe(
       (res) => {
         this.notifications.create(
           'success',
