@@ -249,7 +249,7 @@ export class AddOrderWithBranchComponent implements OnInit {
       !this.Order.MoenyPlacedId ||
       this.RecipientPhoneslengthEdit != null ||
       this.RecipientPhoneslength != null ||
-      this.Order.branchId
+      !this.Order.branchId
     ) {
       this.submitted = true;
       return;
