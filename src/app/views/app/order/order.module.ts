@@ -53,6 +53,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CreateMultipleComponent } from './create-multiple/create-multiple.component';
 import { PrintOrderReturnedToSecondBranchComponent } from './printPreview/print-order-returned-to-second-branch/print-order-returned-to-second-branch.component';
 import { ViewOrdersWithoutBranchFilterComponent } from './view-orders-without-branch-filter/view-orders-without-branch-filter.component';
+import { AddOrderWithBranchComponent } from './add-order-with-branch/add-order-with-branch.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { ViewOrdersWithoutBranchFilterComponent } from './view-orders-without-br
     CreateMultipleComponent,
     PrintOrderReturnedToSecondBranchComponent,
     ViewOrdersWithoutBranchFilterComponent,
+    AddOrderWithBranchComponent,
   ],
   imports: [
     CommonModule,

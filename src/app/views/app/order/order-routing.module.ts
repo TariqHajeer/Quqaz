@@ -33,6 +33,7 @@ import { GetDisapprovedReturnedOrderByBranchComponent } from './get-disapproved-
 import { CreateMultipleComponent } from './create-multiple/create-multiple.component';
 import { PrintOrderReturnedToSecondBranchComponent } from './printPreview/print-order-returned-to-second-branch/print-order-returned-to-second-branch.component';
 import { ViewOrdersWithoutBranchFilterComponent } from './view-orders-without-branch-filter/view-orders-without-branch-filter.component';
+import { AddOrderWithBranchComponent } from './add-order-with-branch/add-order-with-branch.component';
 
 const routes: Routes = [
   {
@@ -188,6 +189,10 @@ const routes: Routes = [
   {
     path: 'getdisapprovedreturnedorderbybranch',
     component: GetDisapprovedReturnedOrderByBranchComponent, canActivate: [AuthGuard],
+  },
+  {
+    path: 'addOrderWithBranch',
+    component: AddOrderWithBranchComponent, canActivate: [AuthGuard],
   }
 ];
 

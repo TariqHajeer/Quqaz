@@ -38,6 +38,12 @@ const data: IMenuItem[] = [
           },
           {
             icon: 'iconsminds-add',
+            label: ' إضافة طلب مع الفرع',
+            to: `${adminRoot}/order/addOrderWithBranch`,
+            permission: [UserPermission.AddOrder],
+          },
+          {
+            icon: 'iconsminds-add',
             label: 'إضافة طلبات متعددة ',
             to: `${adminRoot}/order/addMulitpleOrders`,
             permission: [UserPermission.AddOrder],
