@@ -11,7 +11,6 @@ import { User } from 'src/app/Models/user/user.model';
 import { OrderService } from 'src/app/services/order.service';
 import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
-import { alignFrozenEditForm } from '@syncfusion/ej2-angular-grids';
 import { IndexesService } from 'src/app/services/indexes.service';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { IndexesTypeEnum } from 'src/app/Models/Enums/IndexesTypeEnum';

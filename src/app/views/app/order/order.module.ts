@@ -54,6 +54,7 @@ import { CreateMultipleComponent } from './create-multiple/create-multiple.compo
 import { PrintOrderReturnedToSecondBranchComponent } from './printPreview/print-order-returned-to-second-branch/print-order-returned-to-second-branch.component';
 import { ViewOrdersWithoutBranchFilterComponent } from './view-orders-without-branch-filter/view-orders-without-branch-filter.component';
 import { AddOrderWithBranchComponent } from './add-order-with-branch/add-order-with-branch.component';
+import { GetOrdersForzenInWayComponent } from './get-orders-forzen-in-way/get-orders-forzen-in-way.component';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { AddOrderWithBranchComponent } from './add-order-with-branch/add-order-w
     PrintOrderReturnedToSecondBranchComponent,
     ViewOrdersWithoutBranchFilterComponent,
     AddOrderWithBranchComponent,
+    GetOrdersForzenInWayComponent,
   ],
   imports: [
     CommonModule,

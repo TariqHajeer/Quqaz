@@ -450,6 +450,15 @@ export class OrderService {
 
     return params;
   }
+  forzenInWay(order) {
+    return this.http.post<any>(this.controler + 'ForzenInWay', order);
+  }
+  GetOrderInAllBranches(code: string) {
+    let params = new HttpParams();
+    if (code)
+      params = params.append('code', code);
+    return this.http.get<any>(this.controler + 'GetOrderInAllBranches', { params: params });
+  }
   convertSelectOrderToFromData(formdata: FormData, selectOrder: SelectOrder): FormData {
     if (selectOrder.ExceptIds) {
       selectOrder.ExceptIds.forEach(s => {
@@ -508,11 +517,6 @@ export class OrderService {
       formdata.append('RowCount', selectOrder.Paging.RowCount);
     return formdata;
   }
-  GetOrderInAllBranches(code: string) {
-    let params = new HttpParams();
-    if (code)
-      params = params.append('code', code);
-    return this.http.get<any>(this.controler + 'GetOrderInAllBranches', { params: params });
-  }
+
 
 }

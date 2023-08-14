@@ -128,6 +128,13 @@ const data: IMenuItem[] = [
             badge: true,
             permission: [UserPermission.ShowOrder],
         },
+        {
+          icon: 'simple-icon-layers',
+          label: 'طلبات المعلقة',
+          to: `${adminRoot}/order/GetOrdersForzenInWay`,
+          badge: true,
+          permission: [UserPermission.ShowOrder],
+      },
         ]
       },
      
