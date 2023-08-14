@@ -13,7 +13,11 @@
                     [closeOnSelect]="true" name="branch">
                     <ng-option *ngFor="let branch of branches" [value]="branch.id">{{branch.name}}</ng-option>
                 </ng-select>
-                <div *ngIf="!Order.branchId && submitted" class="invalid-tooltip">الفرع حقل مطلوب</div>
+                <div *ngIf="!Order.branchId && submitted" class="invalid-tooltip" >الفرع حقل مطلوب</div>
+            </div>
+            <div class="col-md-3">
+                <label>رقم طباعة الناقل</label>
+                <input type="number" [(ngModel)]="Order.transferToOtherBranchNumber" name="transferToOtherBranchNumber" calss="form-control"/>
             </div>
            </div>
             <div class="row w-100 align-items-end mb-3">
@@ -142,6 +146,7 @@
                         [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.Note">
                 </div>
             </div>
+
             <div class="row w-100">
                 <div class="col-3">
                     <button type="submit" class="btn btn-primary"> حفظ</button>

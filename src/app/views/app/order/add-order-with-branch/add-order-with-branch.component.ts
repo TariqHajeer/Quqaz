@@ -85,7 +85,7 @@ export class AddOrderWithBranchComponent implements OnInit {
   }
   getIndexes() {
     this.indexesService.getIndexes([IndexesTypeEnum.Branches]).subscribe(response => {
-      this.branches = response.benaches;
+      this.branches = response.benaches.filter(b => b.id != this.userLogin.branche.id);
     })
   }
 

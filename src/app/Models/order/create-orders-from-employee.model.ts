@@ -39,6 +39,7 @@ export class CreateOrdersFromEmployee {
     printedTimes
     branchId: number;
     currentBranchId:number;
+    transferToOtherBranchNumber:number;
 }
 export class OrderItem {
     OrderTypeName: string
