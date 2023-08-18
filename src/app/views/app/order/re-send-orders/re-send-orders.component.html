@@ -80,9 +80,9 @@
             {{ order.client?.name }}
           </td>
           <td>
-            <ng-select [(ngModel)]="order.CountryId" (change)="changeCountryResend(order)"
-              [ngModelOptions]="{ standalone: true }" [clearable]="false" name="Country"  [disabled]="currentUser.branche.id!=order.branchId">
-              <ng-option *ngFor="let citie of order.Countries" [value]="citie.id">{{ citie.name }}</ng-option>
+            <ng-select  [(ngModel)]="order.CountryId" (change)="changeCountryResend(order)"
+              [ngModelOptions]="{ standalone: true }" [clearable]="false" name="Country">
+              <ng-option *ngFor="let citie of getCounries(order)" [value]="citie.id">{{ citie.name }}</ng-option>
             </ng-select>
           </td>
           <td>
@@ -98,7 +98,7 @@
             </ng-select>
           </td>
           <td>
-           {{order.DeliveryCost}}
+            {{order.DeliveryCost}}
           </td>
           <td>
             <input type="text" class="form-control" [ngModelOptions]="{ standalone: true }" [(ngModel)]="order.note" />

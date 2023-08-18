@@ -46,7 +46,6 @@ export class ReSendOrdersComponent implements OnInit {
   }
   getResendOrderByCode() {
     this.orderService.GetReSendMultiple(this.code).subscribe((res) => {
-      console.log(res);
       if (res.length < 1) {
         this.notifications.error(
           'error',
@@ -88,7 +87,6 @@ export class ReSendOrdersComponent implements OnInit {
     else {
       this.orderResend.disabledAgent = true;
     }
-    console.log(order);
     if(order.oldDeliveryCost){
     this.orderResend.DeliveryCost = order.oldDeliveryCost;
     }else{
@@ -143,11 +141,8 @@ export class ReSendOrdersComponent implements OnInit {
   save() {
 
     this.ordersResend.forEach((item) => {
-      console.log(item.DeliveryCost)
       item.DeliveryCost = Number(item.DeliveryCost);
-      console.log(item.DeliveryCost)
     });
-    console.log(this.ordersResend);
     if (this.ordersResend.filter(item => (!item.disabledAgent&&!item.AgnetId) || !item.CountryId || !item.DeliveryCost).length > 0) {
       this.notifications.error(
         'error',
@@ -181,5 +176,11 @@ export class ReSendOrdersComponent implements OnInit {
   }
   cancelOrder(order) {
     this.ordersResend = this.ordersResend.filter((item) => item != order);
+  }
+  getCounries(order){
+    if(this.currentUser.branche.id!=order.branchId){
+      return order.Countries.filter(c=>c.id!=order.branchId)
+    }
+    return order.Countries
   }
 }
