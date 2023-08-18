@@ -37,7 +37,7 @@ export class GetOrdersForzenInWayComponent implements OnInit {
     })
   }
   getForzenInWay() {
-    if (this.hour && this.agentId && this.currentDate) {
+    if (this.hour && this.currentDate) {
       this.orderService.forzenInWay({ Hour: this.hour * 24, AgentId: this.agentId, CurrentDate: this.currentDate }).subscribe(res => {
         if (res) {
           this.noDataFound = false;
