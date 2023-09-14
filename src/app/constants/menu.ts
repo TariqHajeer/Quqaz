@@ -85,7 +85,7 @@ const data: IMenuItem[] = [
             badge: true,
             permission: [UserPermission.ShowOrder],
           },
-        ]
+        ],
       },
       {
         icon: 'iconsminds-box-close',
@@ -106,7 +106,7 @@ const data: IMenuItem[] = [
             permission: [UserPermission.ShowOrder],
             badge: true,
           },
-          
+
           {
             icon: 'iconsminds-box-close',
             label: ' طلبات عند العميل ',
@@ -127,24 +127,30 @@ const data: IMenuItem[] = [
             to: `${adminRoot}/order/ordersWithoutBranchFilter`,
             badge: true,
             permission: [UserPermission.ShowOrder],
-        },
-        {
-          icon: 'simple-icon-layers',
-          label: 'طلبات المعلقة',
-          to: `${adminRoot}/order/GetOrdersForzenInWay`,
-          badge: true,
-          permission: [UserPermission.ShowOrder],
+          },
+          {
+            icon: 'simple-icon-layers',
+            label: 'طلبات المعلقة',
+            to: `${adminRoot}/order/GetOrdersForzenInWay`,
+            badge: true,
+            permission: [UserPermission.ShowOrder],
+          },
+          {
+            icon: 'simple-icon-layers',
+            label: 'طلبات تنبيه بالسالب',
+            to: `${adminRoot}/order/GetNegativeAlert`,
+            badge: true,
+            permission: [UserPermission.ShowOrder],
+          },
+        ],
       },
-        ]
-      },
-     
+
       {
         icon: 'iconsminds-box-close',
         label: 'نقل الطلبات واستلامها ',
         to: `moveorder`,
         permission: [UserPermission.ShowOrder],
         subs: [
-
           {
             icon: 'iconsminds-box-close',
             label: 'نقل الطلبات الى مندوب آخر',
@@ -191,22 +197,27 @@ const data: IMenuItem[] = [
             icon: 'iconsminds-box-close',
             label: 'استلام حالة الشحنة المستلمة ',
             to: `${adminRoot}/order/shipmentReceivedByDelivered`,
-            permission: [UserPermission.ReceiptOfTheStatusOfTheDeliveredShipment],
+            permission: [
+              UserPermission.ReceiptOfTheStatusOfTheDeliveredShipment,
+            ],
           },
           {
             icon: 'iconsminds-box-close',
             label: ' استلام حالة الشحنة المستلمة مندوب ',
             to: `${adminRoot}/order/shipmentReceivedByAgent`,
-            permission: [UserPermission.ReceiptOfTheStatusOfTheDeliveredShipment],
+            permission: [
+              UserPermission.ReceiptOfTheStatusOfTheDeliveredShipment,
+            ],
           },
           {
             icon: 'iconsminds-box-close',
             label: 'استلام حالة الشحنة المرتجعة ',
             to: `${adminRoot}/order/shipmentReceivedByReturned`,
-            permission: [UserPermission.ReceiptOfTheStatusOfTheReturnedShipment],
+            permission: [
+              UserPermission.ReceiptOfTheStatusOfTheReturnedShipment,
+            ],
           },
-        ]
-
+        ],
       },
     ],
   },
@@ -305,25 +316,19 @@ const data: IMenuItem[] = [
         icon: 'simple-icon-layers',
         label: '   ادارةالصناديق ',
         to: `manage`,
-        permission: [
-          UserPermission.TreasuryManagment,
-        ],
+        permission: [UserPermission.TreasuryManagment],
         subs: [
           {
             icon: 'simple-icon-layers',
             label: '  الصناديق ',
             to: `${adminRoot}/reports/showtreasury`,
-            permission: [
-              UserPermission.TreasuryManagment,
-            ],
+            permission: [UserPermission.TreasuryManagment],
           },
           {
             icon: 'simple-icon-layers',
             label: 'الأخذ والاعطاء',
             to: `${adminRoot}/reports/cashMovment`,
-            permission: [
-              UserPermission.TreasuryManagment,
-            ],
+            permission: [UserPermission.TreasuryManagment],
           },
         ],
       },

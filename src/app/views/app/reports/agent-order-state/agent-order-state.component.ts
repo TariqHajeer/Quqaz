@@ -68,7 +68,6 @@ export class AgentOrderStateComponent implements OnInit {
 
   Get() {
     this.orderService.OrderRequestEditState().subscribe(res => {
-      // console.log(res)
       this.payments = res
       this.dataSource = new MatTableDataSource(this.payments);
       this.dataSource.sort = this.sort;
