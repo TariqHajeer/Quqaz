@@ -320,9 +320,12 @@ export class OrderService {
   DisApproveOrderComeToMyBranch(id: number) {
     return this.http.put(this.controler + 'DisApproveOrderComeToMyBranch', id);
   }
-  getNegativeAlert(paging:Paging):any{
+  getNegativeAlert(paging: Paging): any {
     let params = this.getHttpParmasByPaging(paging);
     return this.http.get<any>(this.controler + "GetNegativeAlert", { params: params });
+  }
+  deleteNegativeAlert(id: number) {
+    return this.http.post<any>(this.controler + 'DeleteNegativeAlert', id);
   }
   getDisApproveOrdersReturnByBranch(paging: Paging): any {
     let params = this.getHttpParmasByPaging(paging);
