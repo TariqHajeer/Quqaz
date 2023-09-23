@@ -139,7 +139,7 @@ export class GetOrdersForzenInWayComponent implements OnInit {
     this.getForzenInWay();
   }
   getForzenInWay() {
-    if (this.hour && this.currentDate) {
+    if (this.hour && this.currentDate && (this.isInStock || this.isInWay || this.isWithAgent)) {
       this.orderService.forzenInWay({
         hour: this.hour * 24,
         agentId: this.agentId,
