@@ -152,8 +152,27 @@ export class GetOrdersForzenInWayComponent implements OnInit {
       }, this.paging).subscribe(res => {
         if (res) {
           this.noDataFound = false;
-          this.dataSource = new MatTableDataSource(res);
-          // this.totalCount = res.total;
+          this.dataSource = new MatTableDataSource(res.data);
+          this.totalCount = res.total;
+          if (this.selectAll) {
+            this.dataSource.data.forEach(row => {
+              this.selection.select(row);
+            });
+          }
+          else
+            if (this.lastMasterSelectionChoise) {
+
+              this.dataSource.data.filter(row => this.unSelectIds.indexOf(row.id) == -1)
+                .forEach(row => {
+                  this.selection.select(row);
+                });
+            }
+            else {
+              this.dataSource.data.filter(row => this.ordersIds.indexOf(row.id) >= 0)
+                .forEach(row => {
+                  this.selection.select(row);
+                });
+            }
         }
         else
           this.noDataFound = true;
