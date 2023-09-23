@@ -457,8 +457,8 @@ export class OrderService {
 
     return params;
   }
-  forzenInWay(order) {
-    return this.http.post<any>(this.controler + 'ForzenInWay', order);
+  forzenInWay(order, paging: Paging) {
+    return this.http.post<any>(this.controler + 'ForzenInWay?RowCount=' + paging.RowCount + '&Page=' + paging.Page, order);
   }
   GetOrderInAllBranches(code: string) {
     let params = new HttpParams();
