@@ -10,6 +10,7 @@ import { Client } from '../../client/client.model';
 import { CustomService } from 'src/app/services/custom.service';
 import { City } from 'src/app/Models/Cities/city.Model';
 import { SelectionModel } from '@angular/cdk/collections';
+import { NotificationType } from 'angular2-notifications';
 
 @Component({
   selector: 'app-get-orders-forzen-in-way',
@@ -185,5 +186,29 @@ export class GetOrdersForzenInWayComponent implements OnInit {
     this.paging.Page = event.pageIndex + 1
     this.getForzenInWay();
   }
-
+  printForzenInWay() {
+    this.orderService.printFrozenInWay({
+      filter: {
+        hour: this.hour * 24,
+        agentId: this.agentId,
+        clientId: this.clientId,
+        countryId: this.countryId,
+        currentDate: this.currentDate,
+        isInStock: this.isInStock,
+        isInWay: this.isInWay,
+        isWithAgent: this.isWithAgent
+      },
+      isSelectedAll: this.lastMasterSelectionChoise,
+      selectedIds: this.ordersIds,
+      exceptIds: this.unSelectIds
+    }).subscribe(res => {
+      let blob = new Blob([res], { type: 'application/pdf' });
+      var downloadURL = window.URL.createObjectURL(blob);
+      var link = document.createElement('a');
+      link.href = downloadURL;
+      link.download = "help.pdf";
+      link.click();
+    }, err => {
+    })
+  }
 }

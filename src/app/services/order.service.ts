@@ -460,6 +460,12 @@ export class OrderService {
   forzenInWay(order, paging: Paging) {
     return this.http.post<any>(this.controler + 'ForzenInWay?RowCount=' + paging.RowCount + '&Page=' + paging.Page, order);
   }
+  printFrozenInWay(filter) {
+    const httpOptions = {
+      responseType: 'blob' as 'json'
+    };
+    return this.http.post<any>(this.controler + 'PrintFrozenInWay', filter, httpOptions);
+  }
   GetOrderInAllBranches(code: string) {
     let params = new HttpParams();
     if (code)
