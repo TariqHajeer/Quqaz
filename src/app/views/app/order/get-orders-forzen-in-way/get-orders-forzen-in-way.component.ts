@@ -35,7 +35,8 @@ export class GetOrdersForzenInWayComponent implements OnInit {
   dataSource = new MatTableDataSource([]);
   totalCount: number;
   noDataFound: boolean;
-  countries: City[] = []
+  countries: City[] = [];
+  tempCountries: City[] = [];
   paging: Paging = new Paging();
   /* select all prob*/
   selection = new SelectionModel<any>(true, []);
@@ -61,6 +62,9 @@ export class GetOrdersForzenInWayComponent implements OnInit {
     });
     this.userService.ActiveAgent().subscribe((res) => {
       this.agents = res;
+    });
+    this.customerService.getAll('Country').subscribe(res => {
+      this.tempCountries = res;
     });
   }
   setIsAllSelected(isAllSelected: boolean): void {
@@ -136,11 +140,12 @@ export class GetOrdersForzenInWayComponent implements OnInit {
     }
   }
   ChangeAgentId() {
-    var agent = this.agents.find((a) => a.id == this.agentId);
-    this.countries = [];
-    this.countries = agent.countries;
-    this.countryId = null;
-    this.dataSource = new MatTableDataSource([]);
+    if (this.agentId) {
+      this.countryId = null;
+      this.countries = [];
+      this.countries = this.tempCountries.filter(c => c.agents.find(a => a.id == this.agentId));
+      this.getForzenInWay();
+    }
   }
 
   getForzenInWay() {

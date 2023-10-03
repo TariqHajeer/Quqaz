@@ -45,7 +45,8 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
   orderPlace: NameAndIdDto[] = []
   MoenyPlaced: NameAndIdDto[] = []
   clients: Client[] = []
-  cities: City[] = []
+  countries: City[] = [];
+  tempCountries: City[] = [];
   regions: Region[] = []
   Agents: User[] = []
   GetAgents: User[] = []
@@ -57,8 +58,8 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
   Editcount
   count
   filter: OrderFilter
-  CountryId
-  AgentId
+  countryId
+  agentId
   cityapi = "Country"
   regionapi = "Region"
   ordertypeapi = "OrderType";
@@ -71,6 +72,9 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
     this.Order = new CreateMultipleOrder();
     this.EditOrder = new CreateMultipleOrder();
     this.submitted = false;
+    this.customService.getAll('Country').subscribe(res => {
+      this.tempCountries = res;
+    });
     this.int()
     var order = JSON.parse(localStorage.getItem('refrshorder'))
     if (order && order.length != 0) {
@@ -93,13 +97,12 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
       this.Agents = res
       var agent = JSON.parse(localStorage.getItem('agentid'))
       if (agent) {
-        this.AgentId = agent
-        var find = this.Agents.find(a => a.id == this.AgentId)
-        this.cities = find.countries
+        this.agentId = agent
+        this.countries = this.tempCountries.filter(c => c.agents.find(a => a.id == this.agentId));
         var country = JSON.parse(localStorage.getItem('countryid'))
         if (country) {
-          this.CountryId = country
-          var findcountry = this.cities.find(c => c.id == this.CountryId)
+          this.countryId = country
+          var findcountry = this.countries.find(c => c.id == this.countryId)
           if (findcountry) {
             this.Order.DeliveryCost = findcountry.deliveryCost
             this.getRegions()
@@ -110,14 +113,16 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
     })
   }
   changeAgentId() {
-    localStorage.setItem('agentid', this.AgentId)
-    var find = this.Agents.find(a => a.id == this.AgentId)
-    this.cities = find.countries
-    this.CountryId = null;
+    if (this.agentId) {
+      localStorage.setItem('agentid', this.agentId)
+      this.countryId = null;
+      this.countries = [];
+      this.countries = this.tempCountries.filter(c => c.agents.find(a => a.id == this.agentId));
+    }
   }
   changeCountryId() {
-    localStorage.setItem('countryid', this.CountryId)
-    var city = this.cities.find(c => c.id == this.CountryId)
+    localStorage.setItem('countryid', this.countryId)
+    var city = this.countries.find(c => c.id == this.countryId)
     this.Order.DeliveryCost = city.deliveryCost
     this.getRegions()
   }
@@ -125,7 +130,7 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
     this.customService.getAll('Region').subscribe(
       res => {
         this.regions = res;
-        this.regions = this.regions.filter(a => a.country.id == this.CountryId)
+        this.regions = this.regions.filter(a => a.country.id == this.countryId)
       }
     )
   }
@@ -180,8 +185,8 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
   }
 
   onEnter() {
-    this.Order.AgentId = this.AgentId
-    this.Order.CountryId = this.CountryId
+    this.Order.AgentId = this.agentId
+    this.Order.CountryId = this.countryId
     if (!this.Order.Code || !this.Order.ClientId ||
       !this.Order.CountryId || !this.Order.RecipientPhones
       || !this.Order.AgentId || this.showMessageCode) {
@@ -190,7 +195,7 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
     } else this.submitted = false
     if (this.checkLengthPhoneNumber(this.Order.RecipientPhones))
       return
-    var country = this.cities.find(c => c.id == this.Order.CountryId)
+    var country = this.countries.find(c => c.id == this.Order.CountryId)
     this.Order.CountryName = country?.name
     var region = this.regions.find(r => r.id == this.Order.RegionId)
     this.Order.RegionName = region?.name
@@ -227,8 +232,8 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
     );
   }
   Save(order: CreateMultipleOrder) {
-    this.EditOrder.AgentId = this.AgentId;
-    this.EditOrder.CountryId = this.CountryId;
+    this.EditOrder.AgentId = this.agentId;
+    this.EditOrder.CountryId = this.countryId;
     if (!this.EditOrder.Code || !this.EditOrder.ClientId ||
       !this.EditOrder.CountryId || !this.EditOrder.RecipientPhones
       || order.showEditMessageCode) {
@@ -238,7 +243,7 @@ export class AddMultipulOrdersAgentWithRegionComponent implements OnInit {
     if (this.checkLengthPhoneNumberForEdit(this.EditOrder.RecipientPhones))
       return
     this.EditOrder.CanEdit = false
-    var country = this.cities.find(c => c.id == this.EditOrder.CountryId)
+    var country = this.countries.find(c => c.id == this.EditOrder.CountryId)
     this.EditOrder.CountryName = country?.name
     var region = this.regions.find(c => c.id == this.EditOrder.RegionId)
     this.EditOrder.RegionName = region?.name
