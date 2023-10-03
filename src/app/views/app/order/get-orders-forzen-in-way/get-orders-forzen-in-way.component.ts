@@ -213,10 +213,14 @@ export class GetOrdersForzenInWayComponent implements OnInit {
     }).subscribe(res => {
       let blob = new Blob([res], { type: 'application/pdf' });
       var downloadURL = window.URL.createObjectURL(blob);
-      var link = document.createElement('a');
-      link.href = downloadURL;
-      link.download = "help.pdf";
-      link.click();
+      window.open(downloadURL, '_blank');
+
+      // download pdf file 
+
+      // var link = document.createElement('a');
+      // link.href = downloadURL;
+      // link.download = "help.pdf";
+      // link.click();
     }, err => {
     })
   }
