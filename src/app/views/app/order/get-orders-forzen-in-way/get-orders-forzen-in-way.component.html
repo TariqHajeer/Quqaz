@@ -41,28 +41,28 @@
         />
       </div>
       <div class="col-md-2">
-        <label> المحافظة</label>
-        <ng-select
-          [(ngModel)]="countryId"
-          [ngModelOptions]="{ standalone: true }"
-          [closeOnSelect]="true"
-          (ngModelChange)="getAgent()"
-        >
-          <ng-option *ngFor="let country of countries" [value]="country.id"
-            >{{ country.name }}
-          </ng-option>
-        </ng-select>
-      </div>
-      <div class="col-md-2">
         <label> المندوب</label>
         <ng-select
           [(ngModel)]="agentId"
           [ngModelOptions]="{ standalone: true }"
           [closeOnSelect]="true"
-          (ngModelChange)="getForzenInWay()"
+          (ngModelChange)="ChangeAgentId()"
         >
           <ng-option *ngFor="let agent of agents" [value]="agent.id"
             >{{ agent.name }}
+          </ng-option>
+        </ng-select>
+      </div>
+      <div class="col-md-2">
+        <label> المحافظة</label>
+        <ng-select
+          [(ngModel)]="countryId"
+          [ngModelOptions]="{ standalone: true }"
+          [closeOnSelect]="true"
+          (ngModelChange)="getForzenInWay()"
+        >
+          <ng-option *ngFor="let country of countries" [value]="country.id"
+            >{{ country.name }}
           </ng-option>
         </ng-select>
       </div>

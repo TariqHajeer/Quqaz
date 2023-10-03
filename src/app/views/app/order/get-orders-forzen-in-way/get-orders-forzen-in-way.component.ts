@@ -59,9 +59,9 @@ export class GetOrdersForzenInWayComponent implements OnInit {
     this.clientService.getClients().subscribe(res => {
       this.clients = res;
     });
-    this.customerService.getAll('Country').subscribe(res => {
-      this.countries = res;
-    })
+    this.userService.ActiveAgent().subscribe((res) => {
+      this.agents = res;
+    });
   }
   setIsAllSelected(isAllSelected: boolean): void {
     this.selectAll = isAllSelected;
@@ -135,10 +135,14 @@ export class GetOrdersForzenInWayComponent implements OnInit {
       this.setCountSelectOrder(this.countSelectOrder - 1);
     }
   }
-  getAgent() {
-    this.agents = this.countries.find(c => c.id == this.countryId).agents;
-    this.getForzenInWay();
+  ChangeAgentId() {
+    var agent = this.agents.find((a) => a.id == this.agentId);
+    this.countries = [];
+    this.countries = agent.countries;
+    this.countryId = null;
+    this.dataSource = new MatTableDataSource([]);
   }
+
   getForzenInWay() {
     if (this.hour && this.currentDate && (this.isInStock || this.isInWay || this.isWithAgent)) {
       this.orderService.forzenInWay({
