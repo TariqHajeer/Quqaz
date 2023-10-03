@@ -167,12 +167,12 @@ export class PrintOrdersDontFinishedComponent implements OnInit {
       var downloadURL = window.URL.createObjectURL(blob);
       window.open(downloadURL, '_blank');
 
-      // var link = document.createElement('a');
-      // link.href = downloadURL;
-      // link.download = "تسديد العميل" + ".pdf";
-      // link.click();
+      var link = document.createElement('a');
+      link.href = downloadURL;
+      link.download = "تسديد العميل" + ".pdf";
+      link.click();
       this.spinner.hide();
-      // this.notifications.success('success', 'تمت الطباعة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.notifications.success('success', 'تمت الطباعة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       this.showPrintbtn = true;
     }, err => {
       this.spinner.hide();
