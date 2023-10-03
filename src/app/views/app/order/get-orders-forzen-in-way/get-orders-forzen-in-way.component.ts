@@ -218,7 +218,7 @@ export class GetOrdersForzenInWayComponent implements OnInit {
       // download pdf file 
       var link = document.createElement('a');
       link.href = downloadURL;
-      link.download = "help.pdf";
+      link.download = "الطلبات المعلقة.pdf";
       link.click();
     }, err => {
     })
