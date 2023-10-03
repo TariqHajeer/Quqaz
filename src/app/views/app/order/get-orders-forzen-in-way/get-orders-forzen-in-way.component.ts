@@ -216,7 +216,6 @@ export class GetOrdersForzenInWayComponent implements OnInit {
       window.open(downloadURL, '_blank');
 
       // download pdf file 
-
       // var link = document.createElement('a');
       // link.href = downloadURL;
       // link.download = "help.pdf";
