@@ -86,19 +86,15 @@ export class PrintOrdersDontFinishedComponent implements OnInit {
       });
     } else return;
   }
+
   getOrdersDontFinished() {
     this.orderservice.OrdersDontFinished().subscribe(response => {
 
       if (this.orderservice.orderClientDontDiliverdMoney.paging.Page == 1)
         this.orders = response.data.data;
-      else
-        response.data.data.forEach(element => {
-          this.orders.push(element);
-        });
-      if (this.orders.length < response.data.total)
-        this.showSeeMore = true;
-      else
-        this.showSeeMore = false;
+      else {
+        this.orders = [...this.orders, ...response.data.data];
+      }
       if (this.orders.length == 0)
         this.router.navigate(['/app/reports/Shipmentsnotbeendelivered']);
       this.reciptClient();
@@ -121,6 +117,12 @@ export class PrintOrdersDontFinishedComponent implements OnInit {
     this.orderservice.orderClientDontDiliverdMoney.paging = new Paging();
     this.getOrdersDontFinished();
 
+  }
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event: any) {
+    if (window.pageYOffset + document.body.offsetHeight + 1 >= document.documentElement.scrollHeight) {
+      this.seeMore()
+    }
   }
   seeMore() {
     this.orderservice.orderClientDontDiliverdMoney.paging.Page += 1;
