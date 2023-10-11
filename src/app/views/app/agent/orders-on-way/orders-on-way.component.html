@@ -1,48 +1,90 @@
-<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="line-scale-party" [fullScreen]="true">
-  <p style="color: white"> </p>
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="line-scale-party"
+  [fullScreen]="true"
+>
+  <p style="color: white"></p>
 </ngx-spinner>
 <div class="card">
   <div class="card-body">
-    <h3> طلبات التي في الطريق </h3>
+    <h3>طلبات التي في الطريق</h3>
     <div class="row">
       <div class="col-md-2">
         <label> رقم طباعة شحنات المندوب </label>
-        <input type="text" class="form-control" (keyup.enter)="fillter()" [ngModelOptions]="{standalone: true}"
-          [(ngModel)]="filtering.AgentPrintNumber">
+        <input
+          type="text"
+          class="form-control"
+          (keyup.enter)="fillter()"
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="filtering.AgentPrintNumber"
+        />
       </div>
       <div class="col-md-2">
         <label>كود</label>
-        <input type="text" class="form-control" (keyup.enter)="fillter()" [ngModelOptions]="{standalone: true}"
-          [(ngModel)]="filtering.Code">
+        <input
+          type="text"
+          class="form-control"
+          (keyup.enter)="fillter()"
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="filtering.Code"
+        />
+      </div>
+      <div class="col-md-2">
+        <label>هاتف المستلم</label>
+        <input
+          type="text"
+          class="form-control"
+          (keyup.enter)="fillter()"
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="filtering.Phone"
+        />
       </div>
       <div class="col-md-2">
         <label> من تاريخ</label>
-        <ejs-datepicker name="FromDate" [(ngModel)]='filtering.AgentPrintStartDate' id="fromdate"
-          placeholder='اختر تاريخ' (change)="fillter()">
+        <ejs-datepicker
+          name="FromDate"
+          [(ngModel)]="filtering.AgentPrintStartDate"
+          id="fromdate"
+          placeholder="اختر تاريخ"
+          (change)="fillter()"
+        >
         </ejs-datepicker>
       </div>
       <div class="col-md-2">
         <label> الى تاريخ</label>
-        <ejs-datepicker name="FromDate" [(ngModel)]='filtering.AgentPrintEndDate' id="fromdate" placeholder='اختر تاريخ'
-          (change)="fillter()">
+        <ejs-datepicker
+          name="FromDate"
+          [(ngModel)]="filtering.AgentPrintEndDate"
+          id="fromdate"
+          placeholder="اختر تاريخ"
+          (change)="fillter()"
+        >
         </ejs-datepicker>
       </div>
-
-      <div class="col-md-3">
-        <button (click)="saveEdit()" class="btn btn-primary"> تم التسليم</button>&nbsp;
-
+      <div class="col-md-2 pt-4">
+        <button (click)="saveEdit()" class="btn btn-primary">تم التسليم</button
+        >&nbsp;
       </div>
     </div>
     <div class="row">
-      <div class="col-9">
-
-      </div>
+      <div class="col-9"></div>
 
       <div class="col-2">
         <label>حالة الشحنة</label>
-        <ng-select appendTo="body" [(ngModel)]="OrderplacedId" [ngModelOptions]="{standalone: true}" [clearable]="false"
-          name="Orderplaced" style="width: 120px; overflow: visible;" (change)="ChengeOrderplaced()">
-          <ng-option *ngFor="let order of orderPlace " [value]="order">{{order.name}}</ng-option>
+        <ng-select
+          appendTo="body"
+          [(ngModel)]="OrderplacedId"
+          [ngModelOptions]="{ standalone: true }"
+          [clearable]="false"
+          name="Orderplaced"
+          style="width: 120px; overflow: visible"
+          (change)="ChengeOrderplaced()"
+        >
+          <ng-option *ngFor="let order of orderPlace" [value]="order">{{
+            order.name
+          }}</ng-option>
         </ng-select>
       </div>
       <!-- <div class="col-2">
@@ -53,104 +95,170 @@
             </ng-option>
           </ng-select>
         </div> -->
-      <div class="col-3">
-
-      </div>
+      <div class="col-3"></div>
     </div>
-
   </div>
 </div>
 <div class="example-container mat-elevation-z8">
-
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>
-        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
-           [aria-label]="checkboxLabel()">
+        <mat-checkbox
+          (change)="$event ? masterToggle() : null"
+          [checked]="selection.hasValue() && isAllSelected()"
+          [aria-label]="checkboxLabel()"
+        >
         </mat-checkbox>
         <!-- [indeterminate]="selection.hasValue() && !isAllSelected()" -->
       </th>
       <td mat-cell *matCellDef="let row">
-        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row.order.id) : null"
-          [checked]="selection.isSelected(row.order.id)" [aria-label]="checkboxLabel(row.order.id)">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="$event ? selection.toggle(row.order.id) : null"
+          [checked]="selection.isSelected(row.order.id)"
+          [aria-label]="checkboxLabel(row.order.id)"
+        >
         </mat-checkbox>
       </td>
     </ng-container>
     <ng-container matColumnDef="index">
-      <th mat-header-cell *matHeaderCellDef style="padding-right: 10px;"> ترقيم </th>
-      <td mat-cell *matCellDef="let element;index as i" style="padding-right: 10px;"> {{i+1}}</td>
-    </ng-container>
-    <ng-container matColumnDef="code">
-      <th mat-header-cell *matHeaderCellDef style="padding-right: 10px;"> كود </th>
-      <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.order.code}}</td>
-    </ng-container>
-    <ng-container matColumnDef="client">
-      <th mat-header-cell *matHeaderCellDef style="padding-right: 10px;"> العميل </th>
-      <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.order.client.name}}</td>
-    </ng-container>
-    <ng-container matColumnDef="country">
-      <th mat-header-cell *matHeaderCellDef> المدينة</th>
-      <td mat-cell *matCellDef="let element"> {{element.order.country!=null?element.order.country.name:null}}</td>
-    </ng-container>
-    <ng-container matColumnDef="region">
-      <th mat-header-cell *matHeaderCellDef> المنطقة</th>
-      <td mat-cell *matCellDef="let element"> {{element.order.region!=null?element.order.region.name:null}}</td>
-    </ng-container>
-    <ng-container matColumnDef="agentCost">
-      <th mat-header-cell *matHeaderCellDef style="padding-right: 10px;"> كلفة توصيل المندوب </th>
-      <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.order.agentCost}}</td>
-    </ng-container>
-    <ng-container matColumnDef="cost">
-      <th mat-header-cell *matHeaderCellDef> كلفة الطلب</th>
-      <td mat-cell *matCellDef="let element;index as i">
-        <h4 *ngIf="!element.order.canEditCount||element.order.orderplaced.id==7">{{element.order.cost}}</h4>
-        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-          *ngIf="element.order.canEditCount&&element.order.orderplaced.id!=7"
-          oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-          [(ngModel)]="element.order.cost"  style="width: 110px;">
-        <h5 style="color: red;"> {{element.order.messageCost}}</h5>
+      <th mat-header-cell *matHeaderCellDef style="padding-right: 10px">
+        ترقيم
+      </th>
+      <td
+        mat-cell
+        *matCellDef="let element; index as i"
+        style="padding-right: 10px"
+      >
+        {{ i + 1 }}
       </td>
     </ng-container>
-    <ng-container matColumnDef="deliveryCost">
-      <th mat-header-cell *matHeaderCellDef> كلفة التوصيل</th>
-      <td mat-cell *matCellDef="let element"> {{element.order.deliveryCost}} </td>
+    <ng-container matColumnDef="code">
+      <th mat-header-cell *matHeaderCellDef style="padding-right: 10px">كود</th>
+      <td mat-cell *matCellDef="let element" style="padding-right: 10px">
+        {{ element.order.code }}
+      </td>
     </ng-container>
+    <ng-container matColumnDef="client">
+      <th mat-header-cell *matHeaderCellDef style="padding-right: 10px">
+        العميل
+      </th>
+      <td mat-cell *matCellDef="let element" style="padding-right: 10px">
+        {{ element.order.client.name }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="country">
+      <th mat-header-cell *matHeaderCellDef>المدينة</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.order.country != null ? element.order.country.name : null }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="region">
+      <th mat-header-cell *matHeaderCellDef>المنطقة</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.order.region != null ? element.order.region.name : null }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="agentCost">
+      <th mat-header-cell *matHeaderCellDef style="padding-right: 10px">
+        كلفة توصيل المندوب
+      </th>
+      <td mat-cell *matCellDef="let element" style="padding-right: 10px">
+        {{ element.order.agentCost }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="cost">
+      <th mat-header-cell *matHeaderCellDef>كلفة الطلب</th>
+      <td mat-cell *matCellDef="let element; index as i">
+        <h4
+          *ngIf="
+            !element.order.canEditCount || element.order.orderplaced.id == 7
+          "
+        >
+          {{ element.order.cost }}
+        </h4>
+        <input
+          type="text"
+          class="form-control"
+          [ngModelOptions]="{ standalone: true }"
+          *ngIf="
+            element.order.canEditCount && element.order.orderplaced.id != 7
+          "
+          oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+          [(ngModel)]="element.order.cost"
+          style="width: 110px"
+        />
+        <h5 style="color: red">{{ element.order.messageCost }}</h5>
+      </td>
+    </ng-container>
+
     <ng-container matColumnDef="orderplaced">
-      <th mat-header-cell *matHeaderCellDef> حالة الشحنة</th>
-      <td mat-cell *matCellDef="let element;index as i"> 
-      <a *ngIf="!element.order.canEditCount"> {{element.order.orderplaced.name}}</a> 
-        <ng-select appendTo="body" [(ngModel)]="element.order.orderplaced.id" [ngModelOptions]="{standalone: true}"
-          [clearable]="false" id="i*2" name="Orderplaced" 
-          style="width: 120px; overflow: visible;" *ngIf="element.order.canEditCount">
-          <ng-option *ngFor="let order of element.OrderPlaced" [value]="order.id">{{order.name}}</ng-option>
+      <th mat-header-cell *matHeaderCellDef>حالة الشحنة</th>
+      <td mat-cell *matCellDef="let element; index as i">
+        <a *ngIf="!element.order.canEditCount">
+          {{ element.order.orderplaced.name }}</a
+        >
+        <ng-select
+          appendTo="body"
+          [(ngModel)]="element.order.orderplaced.id"
+          [ngModelOptions]="{ standalone: true }"
+          [clearable]="false"
+          id="i*2"
+          name="Orderplaced"
+          style="width: 120px; overflow: visible"
+          *ngIf="element.order.canEditCount"
+        >
+          <ng-option
+            *ngFor="let order of element.OrderPlaced"
+            [value]="order.id"
+            >{{ order.name }}</ng-option
+          >
         </ng-select>
       </td>
     </ng-container>
     <ng-container matColumnDef="agentRequestStatus">
-      <th mat-header-cell *matHeaderCellDef> تم الارسال مسبقا</th>
+      <th mat-header-cell *matHeaderCellDef>تم الارسال مسبقا</th>
       <td mat-cell *matCellDef="let element">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-        class="bi bi-check2" viewBox="0 0 16 16" *ngIf="element.order.agentRequestStatus>0">
-        <path
-            d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
-    </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-check2"
+          viewBox="0 0 16 16"
+          *ngIf="element.order.agentRequestStatus > 0"
+        >
+          <path
+            d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
+          />
+        </svg>
 
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-        class="bi bi-x" viewBox="0 0 16 16" *ngIf="element.order.agentRequestStatus==0">
-        <path
-            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-    </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-x"
+          viewBox="0 0 16 16"
+          *ngIf="element.order.agentRequestStatus == 0"
+        >
+          <path
+            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
+          />
+        </svg>
       </td>
     </ng-container>
     <ng-container matColumnDef="agentPrintNumber">
-      <th mat-header-cell *matHeaderCellDef style="padding:10px;"> اخر رقم طباعة للمندوب</th>
-      <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.order.agentPrintNumber}}</td>
+      <th mat-header-cell *matHeaderCellDef style="padding: 10px">
+        اخر رقم طباعة للمندوب
+      </th>
+      <td mat-cell *matCellDef="let element" style="padding: 10px">
+        {{ element.order.agentPrintNumber }}
+      </td>
     </ng-container>
 
-
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-    </tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
   <!--
          <mat-paginator [length]="100"
@@ -158,12 +266,18 @@
         [pageSizeOptions]="[ 10, 25,50, 100]">
       </mat-paginator>
        -->
-  <h5 style="padding-top: 20px; padding-right: 10px;" *ngIf="noDataFound">لايوجد بيانات للعرض</h5>
-
+  <h5 style="padding-top: 20px; padding-right: 10px" *ngIf="noDataFound">
+    لايوجد بيانات للعرض
+  </h5>
 </div>
 
-<!-- <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
-  [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator> -->
+<mat-paginator
+  showFirstLastButtons
+  [length]="totalCount"
+  [pageSize]="paging.RowCount"
+  [pageSizeOptions]="paging.selectItemsPerPage"
+  (page)="switchPage($event)"
+></mat-paginator>
 <!-- <div class="row" style=" background-color: white;font-size: 15px;text-align: center;">
       <div class="col-3">
         الإجمالي

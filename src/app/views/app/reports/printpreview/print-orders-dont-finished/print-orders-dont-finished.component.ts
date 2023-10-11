@@ -53,6 +53,7 @@ export class PrintOrdersDontFinishedComponent implements OnInit {
     new DeleiverMoneyForClientDto();
   pointid = null;
   showSeeMore: boolean;
+  ordersCounts: number;
   constructor(
     private orderservice: OrderService,
     private notifications: NotificationsService,
@@ -66,7 +67,6 @@ export class PrintOrdersDontFinishedComponent implements OnInit {
 
   ngOnInit(): void {
     this.getOrders();
-    this.orderservice.orderClientDontDiliverdMoney.paging.RowCount = 50;
   }
   reciptClient() {
     if (
@@ -88,20 +88,26 @@ export class PrintOrdersDontFinishedComponent implements OnInit {
   }
 
   getOrdersDontFinished() {
+    if (this.orders.length < this.ordersCounts)
+      this.spinner.show();
     this.orderservice.OrdersDontFinished().subscribe(response => {
-
+      this.spinner.hide();
       if (this.orderservice.orderClientDontDiliverdMoney.paging.Page == 1)
         this.orders = response.data.data;
       else {
         this.orders = [...this.orders, ...response.data.data];
       }
+      this.ordersCounts = response.data.total;
       if (this.orders.length == 0)
         this.router.navigate(['/app/reports/Shipmentsnotbeendelivered']);
       this.reciptClient();
       this.count = response.orderTotal;
       this.deliveryCostCount = response.deliveryTotal;
       this.clientCalc = response.payForCientTotal;
+    }, err => {
+      this.spinner.hide();
     });
+
   }
   getOrders() {
     this.client = this.orderservice.deleiverMoneyForClientDto.Filter.Client;
