@@ -109,22 +109,29 @@ export class OrdersOnWayComponent implements OnInit {
   allFilter() {
     this.orderservice.InWay(this.filtering, this.paging).subscribe(response => {
       this.getorders = []
-      this.temporder = response
+      this.temporder = response.data
       if (this.temporder)
         if (this.temporder.length == 0)
           this.noDataFound = true
         else this.noDataFound = false
       this.temporder.forEach(element => {
-        this.getorder.order = element
-        this.getorder.OrderPlaced = this.orderPlace
+        this.getorder.order = element;
+        this.getorder.OrderPlaced = this.orderPlace;
+        this.getorder.order.date = this.getorder.order.date.split('T')[0];
+        this.getorder.order.date = new Date(this.getorder.order.date);
         this.getorder.canEditCount = false
-        this.getorder.order.date = this.getorder.order.date.split('T')[0]
-        this.getorder.order.date = new Date(this.getorder.order.date)
-        this.getorders.push(this.getorder)
-        this.getorder = new GetOrder()
+        if (this.ids.find(id => id == element.id)) {
+          this.getorder.order.canEditCount = true;
+        }
+        else {
+          this.getorder.order.canEditCount = false;
+        }
+        this.getorders.push(this.getorder);
+        this.getorder = new GetOrder();
       });
       this.dataSource = new MatTableDataSource(this.getorders)
-      this.totalCount = response.length
+      this.totalCount = response.total
+
     },
       err => {
 
