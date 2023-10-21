@@ -48,7 +48,7 @@ export class AgentPrintComponent implements OnInit {
     this.count = 0
     if (this.orders)
       this.orders.forEach(o => {
-        this.count += o.cost
+        this.count += o.cost - o.agentCost
       })
     return this.count
   }
