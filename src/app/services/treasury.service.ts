@@ -53,4 +53,17 @@ export class TreasuryService {
   CashMovmentId(id) {
     return this.http.get<any>(this.controler + 'CashMovment/' + id);
   }
+  getTreasuryReport(fromDate, Todate, treasuryId) {
+
+    let params = new HttpParams();
+    if (fromDate)
+      params = params.append('Start', fromDate);
+    if (Todate)
+      params = params.append('End', Todate);
+    if (treasuryId)
+      params = params.append('TreasuryId', treasuryId);
+    return this.http.get<any>(this.controler + 'GetTreasuryReport', {
+      params: params,
+    });
+  }
 }

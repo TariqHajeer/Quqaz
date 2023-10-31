@@ -22,12 +22,16 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { GetGiveFormComponent } from './data/get-give-form/get-give-form.component';
 import { TreasuryTableComponent } from './data/treasury-table/treasury-table.component';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatListModule} from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
 import { ShowReciptAndExchangeComponent } from './data/show-recipt-and-exchange/show-recipt-and-exchange.component';
+import { TreasuryStatictisComponent } from './data/treasury-statictis/treasury-statictis.component';
+import { CategoryService, ChartModule, DataLabelService, LegendService, LineSeriesService, TooltipService } from '@syncfusion/ej2-angular-charts';
+import { DatePickerModule, DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
+
 
 @NgModule({
-  declarations: [AddUserComponent, ViewUserComponent, EditUserComponent, ShowAgentComponent, UserTreasuryComponent, UserProfileComponent, GetGiveFormComponent, TreasuryTableComponent, ShowReciptAndExchangeComponent],
+  declarations: [AddUserComponent, ViewUserComponent, EditUserComponent, ShowAgentComponent, UserTreasuryComponent, UserProfileComponent, GetGiveFormComponent, TreasuryTableComponent, ShowReciptAndExchangeComponent, TreasuryStatictisComponent],
   imports: [
     CommonModule,
     UsersRoutingModule,
@@ -46,7 +50,11 @@ import { ShowReciptAndExchangeComponent } from './data/show-recipt-and-exchange/
     MatPaginatorModule,
     MatTabsModule,
     MatDividerModule,
-    MatListModule
-  ]
+    MatListModule,
+    ChartModule,
+    DatePickerModule,
+    DateRangePickerModule
+  ],
+  providers: [CategoryService, LegendService, TooltipService, DataLabelService, LineSeriesService]
 })
 export class UsersModule { }

@@ -56,6 +56,7 @@ import { ViewOrdersWithoutBranchFilterComponent } from './view-orders-without-br
 import { AddOrderWithBranchComponent } from './add-order-with-branch/add-order-with-branch.component';
 import { GetOrdersForzenInWayComponent } from './get-orders-forzen-in-way/get-orders-forzen-in-way.component';
 import { OrderNegativeAlertComponent } from './order-negative-alert/order-negative-alert.component';
+import { PrintOrdersForzenInWayComponent } from './printPreview/print-orders-forzen-in-way/print-orders-forzen-in-way.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { OrderNegativeAlertComponent } from './order-negative-alert/order-negati
     AddOrderWithBranchComponent,
     GetOrdersForzenInWayComponent,
     OrderNegativeAlertComponent,
+    PrintOrdersForzenInWayComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,44 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <label> من تاريخ</label>
+        <input
+          type="date"
+          class="form-control"
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="fromDate"
+          (ngModelChange)="getReport()"
+        />
+      </div>
+      <div class="col-md-6">
+        <label> الى تاريخ</label>
+        <input
+          type="date"
+          class="form-control"
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="toDate"
+          (ngModelChange)="getReport()"
+        />
+      </div>
+      <div class="col-12 d-flex justify-content-center">
+        <ejs-chart
+          id="chart-container"
+          [primaryXAxis]="primaryXAxis"
+          [primaryYAxis]="primaryYAxis"
+          [title]="title"
+        >
+          <e-series-collection>
+            <e-series
+              [dataSource]="chartData"
+              type="Column"
+              xName="country"
+              yName="gold"
+              name="Gold"
+            ></e-series>
+          </e-series-collection>
+        </ejs-chart>
+      </div>
+    </div>
+  </div>
+</div>

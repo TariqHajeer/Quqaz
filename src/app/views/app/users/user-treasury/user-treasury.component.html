@@ -1,3 +1,10 @@
-<app-get-give-form [id]="id"></app-get-give-form>
-<br />
-<app-treasury-table [id]="id"[isActive]="false"></app-treasury-table>
+<mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4">
+  <mat-tab label="الصندوق ">
+    <app-get-give-form [id]="id"></app-get-give-form>
+    <br />
+    <app-treasury-table [id]="id" [isActive]="false"></app-treasury-table>
+  </mat-tab>
+  <mat-tab label="الاحصائيات ">
+    <app-treasury-statictis [id]="treasuryId"></app-treasury-statictis>
+  </mat-tab>
+</mat-tab-group>

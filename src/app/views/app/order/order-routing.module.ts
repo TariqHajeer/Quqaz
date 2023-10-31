@@ -36,6 +36,7 @@ import { ViewOrdersWithoutBranchFilterComponent } from './view-orders-without-br
 import { AddOrderWithBranchComponent } from './add-order-with-branch/add-order-with-branch.component';
 import { GetOrdersForzenInWayComponent } from './get-orders-forzen-in-way/get-orders-forzen-in-way.component';
 import { OrderNegativeAlertComponent } from './order-negative-alert/order-negative-alert.component';
+import { PrintOrdersForzenInWayComponent } from './printPreview/print-orders-forzen-in-way/print-orders-forzen-in-way.component';
 
 const routes: Routes = [
   {
@@ -233,6 +234,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'PrintOrdersForzenInWay',
+    component: PrintOrdersForzenInWayComponent,
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'GetNegativeAlert',
     component: OrderNegativeAlertComponent,
     canActivate: [AuthGuard],
@@ -243,4 +249,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class OrderRoutingModule {}
+export class OrderRoutingModule { }

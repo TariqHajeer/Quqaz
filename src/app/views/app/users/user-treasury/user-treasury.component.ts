@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { TreasuryService } from 'src/app/services/treasury.service';
 @Component({
   selector: 'app-user-treasury',
   templateUrl: './user-treasury.component.html',
@@ -7,9 +8,11 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class UserTreasuryComponent implements OnInit {
   constructor(
-    private getroute: ActivatedRoute
-  ) {}
+    private getroute: ActivatedRoute,
+    private treasuryService: TreasuryService
+  ) { }
   id: number;
+  treasuryId: number;
   ngOnInit(): void {
     this.GetUserById();
   }
@@ -17,6 +20,11 @@ export class UserTreasuryComponent implements OnInit {
     this.getroute.params.subscribe((par) => {
       this.id = par['id'] as number;
     });
+    this.treasuryService.getByUserId(this.id).subscribe(res => {
+      if (res) {
+        this.treasuryId = res.id;
+      }
+    })
   }
- 
+
 }
