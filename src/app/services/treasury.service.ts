@@ -57,9 +57,9 @@ export class TreasuryService {
 
     let params = new HttpParams();
     if (fromDate)
-      params = params.append('Start', fromDate);
+      params = params.append('DateRangeFilter.Start', fromDate);
     if (Todate)
-      params = params.append('End', Todate);
+      params = params.append('DateRangeFilter.End', Todate);
     if (treasuryId)
       params = params.append('TreasuryId', treasuryId);
     return this.http.get<any>(this.controler + 'GetTreasuryReport', {
