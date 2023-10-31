@@ -12,7 +12,7 @@ import { TreasuryService } from 'src/app/services/treasury.service';
 })
 export class TreasuryStatictisComponent implements OnChanges {
   @Input() id;
-  treasuryReport: TreasuryReportResponseDto = new TreasuryReportResponseDto();
+  treasuryReport: TreasuryReportResponseDto;
   fromDate;
   toDate;
   public primaryXAxis?: Object;
@@ -26,15 +26,6 @@ export class TreasuryStatictisComponent implements OnChanges {
   ) { }
 
   ngOnChanges(): void {
-
-    this.primaryXAxis = {
-      valueType: 'Category',
-      title: ''
-    };
-    this.primaryYAxis = {
-      minimum: 0,
-      interval: 10, title: '',
-    };
   }
   getReport() {
     if (this.fromDate && this.toDate) {
@@ -57,14 +48,23 @@ export class TreasuryStatictisComponent implements OnChanges {
         this.spinner.hide();
         if (res) {
           this.treasuryReport = res;
+          this.primaryXAxis = {
+            valueType: 'Category',
+            title: ''
+          };
+          this.primaryYAxis = {
+            minimum: 0, maximum: 1000,
+            interval: 10, title: '',
+          };
+
           this.chartData = [
-            { state: "يدفع للعمبل", amount: this.treasuryReport.clientPayment?.amount, count: this.treasuryReport.clientPayment?.count },
-            { state: "يجلب", amount: this.treasuryReport.getReceipt?.amount, count: this.treasuryReport.getReceipt?.count },
-            { state: "يعطي", amount: this.treasuryReport.give?.amount, count: this.treasuryReport.give?.count },
-            { state: "الواردات", amount: this.treasuryReport.income?.amount, count: this.treasuryReport.income?.count },
-            { state: "الصادرات", amount: this.treasuryReport.outCome?.amount, count: this.treasuryReport.outCome?.count },
-            { state: "يدفع", amount: this.treasuryReport.payReceipt?.amount, count: this.treasuryReport.payReceipt?.count },
-            { state: "يأخذ", amount: this.treasuryReport.take?.amount, count: this.treasuryReport.take?.count },
+            { state: "يدفع للعمبل", amount: this.treasuryReport?.clientPayment?.amount, count: this.treasuryReport?.clientPayment?.count },
+            { state: "يجلب", amount: this.treasuryReport?.getReceipt?.amount, count: this.treasuryReport?.getReceipt?.count },
+            { state: "يعطي", amount: this.treasuryReport?.give?.amount, count: this.treasuryReport?.give?.count },
+            { state: "الواردات", amount: this.treasuryReport?.income?.amount, count: this.treasuryReport?.income?.count },
+            { state: "الصادرات", amount: this.treasuryReport?.outCome?.amount, count: this.treasuryReport?.outCome?.count },
+            { state: "يدفع", amount: this.treasuryReport?.payReceipt?.amount, count: this.treasuryReport?.payReceipt?.count },
+            { state: "يأخذ", amount: this.treasuryReport?.take?.amount, count: this.treasuryReport?.take?.count },
           ];
         }
       }, err => {

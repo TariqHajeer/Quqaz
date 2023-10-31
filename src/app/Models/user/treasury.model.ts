@@ -19,7 +19,7 @@ export class TreasuryHistory {
   incomeId: number;
   outcomeId: number;
 }
-export class TreasuryReportResponseDto {
+export interface TreasuryReportResponseDto {
   clientPayment: TreasuryReportItemResponseDto
   income: TreasuryReportItemResponseDto
   outCome: TreasuryReportItemResponseDto
