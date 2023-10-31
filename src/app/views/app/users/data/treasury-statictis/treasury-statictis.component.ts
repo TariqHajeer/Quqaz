@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import * as moment from 'moment';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { TreasuryReportResponseDto } from 'src/app/Models/user/treasury.model';
 import { TreasuryService } from 'src/app/services/treasury.service';
 
@@ -12,60 +13,64 @@ import { TreasuryService } from 'src/app/services/treasury.service';
 export class TreasuryStatictisComponent implements OnChanges {
   @Input() id;
   treasuryReport: TreasuryReportResponseDto = new TreasuryReportResponseDto();
-  fromDate: Date = new Date();
-  toDate: Date = new Date();
+  fromDate;
+  toDate;
   public primaryXAxis?: Object;
-  public chartData?: Object[];
+  public chartData?: Object[] = [];
   public title?: string;
   public primaryYAxis?: Object;
+  public palette?: string[] = ["#E94649", "#F6B53F", "#6FAAB0", "#C4C24A"];
+
   constructor(private treasuryService: TreasuryService,
+    public spinner: NgxSpinnerService,
   ) { }
 
   ngOnChanges(): void {
-    this.chartData = [
-      { country: "USA", gold: 50 },
-      { country: "China", gold: 40 },
-      { country: "Japan", gold: 70 },
-      { country: "Australia", gold: 60 },
-      { country: "France", gold: 50 },
-      { country: "Germany", gold: 40 },
-      { country: "Italy", gold: 40 },
-      { country: "Sweden", gold: 30, silver: 25 }
-    ];
+
     this.primaryXAxis = {
       valueType: 'Category',
-      title: 'Countries'
+      title: ''
     };
     this.primaryYAxis = {
-      minimum: 0, maximum: 80,
-      interval: 20, title: 'Medals'
+      minimum: 0,
+      interval: 10, title: '',
     };
-    // this.title = 'Olympic Medals';
-    console.log(this.fromDate);
-
-    if (this.id)
-      this.getReport();
   }
   getReport() {
-    let fromDate = new Date(this.fromDate);
+    if (this.fromDate && this.toDate) {
+      let fromDate = new Date(this.fromDate);
 
-    fromDate.setHours(0);
-    fromDate.setMinutes(0);
-    fromDate.setSeconds(0);
+      fromDate.setHours(0);
+      fromDate.setMinutes(0);
+      fromDate.setSeconds(0);
 
-    let toDate = new Date(this.toDate);
-    toDate.setHours(0);
-    toDate.setMinutes(0);
-    toDate.setSeconds(0);
-    toDate.setDate(toDate.getDate() + 1);
+      let toDate = new Date(this.toDate);
+      toDate.setHours(0);
+      toDate.setMinutes(0);
+      toDate.setSeconds(0);
+      toDate.setDate(toDate.getDate() + 1);
 
-    let fromDateUtc = this.getTimeUTC(fromDate);
-    let toDateUtc = this.getTimeUTC(toDate);
-
-    this.treasuryService.getTreasuryReport(fromDateUtc, toDateUtc, this.id).subscribe(res => {
-      if (res)
-        this.treasuryReport = res;
-    })
+      let fromDateUtc = this.getTimeUTC(fromDate);
+      let toDateUtc = this.getTimeUTC(toDate);
+      this.spinner.show();
+      this.treasuryService.getTreasuryReport(fromDateUtc, toDateUtc, this.id).subscribe(res => {
+        this.spinner.hide();
+        if (res) {
+          this.treasuryReport = res;
+          this.chartData = [
+            { state: "يدفع للعمبل", amount: this.treasuryReport.clientPayment?.amount, count: this.treasuryReport.clientPayment?.count },
+            { state: "يجلب", amount: this.treasuryReport.getReceipt?.amount, count: this.treasuryReport.getReceipt?.count },
+            { state: "يعطي", amount: this.treasuryReport.give?.amount, count: this.treasuryReport.give?.count },
+            { state: "الواردات", amount: this.treasuryReport.income?.amount, count: this.treasuryReport.income?.count },
+            { state: "الصادرات", amount: this.treasuryReport.outCome?.amount, count: this.treasuryReport.outCome?.count },
+            { state: "يدفع", amount: this.treasuryReport.payReceipt?.amount, count: this.treasuryReport.payReceipt?.count },
+            { state: "يأخذ", amount: this.treasuryReport.take?.amount, count: this.treasuryReport.take?.count },
+          ];
+        }
+      }, err => {
+        this.spinner.hide();
+      })
+    }
   }
   getTimeUTC(date) {
     return moment.utc(date).format();

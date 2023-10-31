@@ -1,3 +1,12 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-pulse"
+  [fullScreen]="true"
+>
+  <p style="color: white"></p>
+</ngx-spinner>
 <div class="card">
   <div class="card-body">
     <div class="row">
@@ -27,14 +36,22 @@
           [primaryXAxis]="primaryXAxis"
           [primaryYAxis]="primaryYAxis"
           [title]="title"
+          [palettes]="palette"
         >
           <e-series-collection>
             <e-series
               [dataSource]="chartData"
               type="Column"
-              xName="country"
-              yName="gold"
-              name="Gold"
+              xName="state"
+              yName="amount"
+              name="المبلغ"
+            ></e-series>
+            <e-series
+              [dataSource]="chartData"
+              type="Column"
+              xName="state"
+              yName="count"
+              name="الاجمالي"
             ></e-series>
           </e-series-collection>
         </ejs-chart>
