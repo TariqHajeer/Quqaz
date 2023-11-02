@@ -42,8 +42,10 @@
           [primaryYAxis]="primaryYAxis"
           [title]="title"
           [palettes]="palette"
-          style="height: 100%; width: 100%"
+          style="height: 100%; width: 70%"
           [tooltip]="tooltip"
+          (chartMouseClick)="chartMouseClick($event)"
+          #chart
         >
           <e-series-collection>
             <e-series
@@ -54,7 +56,7 @@
               name="المبلغ"
             ></e-series>
             <e-series
-              [dataSource]="chartData"
+              [dataSource]="chartDataCount"
               type="Column"
               xName="state"
               yName="count"
