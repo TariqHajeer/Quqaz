@@ -154,17 +154,19 @@ export class GetOrdersForzenInWayComponent implements OnInit {
   getForzenInWay() {
     if (this.hour && this.currentDate && (this.isInStock || this.isInWay || this.isWithAgent)) {
       this.orderService.orderForzenInWayFilter = {
-        hour: this.hour * 24,
-        agentId: this.agentId,
-        clientId: this.clientId,
-        countryId: this.countryId,
-        currentDate: this.currentDate,
-        isInStock: this.isInStock,
-        isInWay: this.isInWay,
-        isWithAgent: this.isWithAgent,
-        exceptIds: this.unSelectIds,
-        selectedIds: this.ordersIds,
-        isSelectedAll: this.lastMasterSelectionChoise
+        filter: {
+          hour: this.hour * 24,
+          agentId: this.agentId,
+          clientId: this.clientId,
+          countryId: this.countryId,
+          currentDate: this.currentDate,
+          isInStock: this.isInStock,
+          isInWay: this.isInWay,
+          isWithAgent: this.isWithAgent,
+        },
+        exceptIds: [],
+        selectedIds: [],
+        isSelectedAll: false
       }
       this.orderService.forzenInWay(this.paging).subscribe(res => {
         if (res) {

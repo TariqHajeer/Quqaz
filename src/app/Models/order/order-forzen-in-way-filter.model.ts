@@ -1,4 +1,10 @@
 export class OrderForzenInWayFilter {
+    filter: ForzenInWayFilter
+    isSelectedAll: boolean;
+    selectedIds: number[] = [];
+    exceptIds: number[] = [];
+}
+export interface ForzenInWayFilter {
     hour
     agentId
     clientId
@@ -7,7 +13,4 @@ export class OrderForzenInWayFilter {
     isInStock
     isInWay
     isWithAgent
-    isSelectedAll: boolean;
-    selectedIds: number[] = [];
-    exceptIds: number[] = [];
 }
