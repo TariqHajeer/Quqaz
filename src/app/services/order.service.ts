@@ -10,7 +10,7 @@ import { PrintTransferOrder } from 'src/app/Models/order/print-transfer-order.mo
 import { GetOrdersByAgentRegionAndCode } from '../Models/order/get-orders-by-agent-region-and-code.model';
 import { DeleiverMoneyForClientDto } from '../Models/order/deleiver-money-for-client-dto.model';
 import { IIdWithNote } from '../shared/interfaces/IIdWithNote';
-
+import { OrderForzenInWayFilter } from '../Models/order/order-forzen-in-way-filter.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -21,6 +21,7 @@ export class OrderService {
   returnOrderToMainBranchDto: ReturnOrderToMainBranchDto = new ReturnOrderToMainBranchDto();
   deleiverMoneyForClientDto: DeleiverMoneyForClientDto = new DeleiverMoneyForClientDto();
   orderClientDontDiliverdMoney: OrderClientDontDiliverdMoney = new OrderClientDontDiliverdMoney();
+  orderForzenInWayFilter: OrderForzenInWayFilter = new OrderForzenInWayFilter();
   constructor(public http: HttpClient) { }
   GetAll(filter: OrderFilter, paging: Paging) {
     let params = this.getHttpPramsFilteredForOrder(filter, paging);
@@ -457,14 +458,14 @@ export class OrderService {
 
     return params;
   }
-  forzenInWay(order, paging: Paging) {
-    return this.http.post<any>(this.controler + 'ForzenInWay?RowCount=' + paging.RowCount + '&Page=' + paging.Page, order);
+  forzenInWay(paging: Paging) {
+    return this.http.post<any>(this.controler + 'ForzenInWay?RowCount=' + paging.RowCount + '&Page=' + paging.Page, this.orderForzenInWayFilter);
   }
-  printFrozenInWay(filter) {
+  printFrozenInWay() {
     const httpOptions = {
       responseType: 'blob' as 'json'
     };
-    return this.http.post<any>(this.controler + 'PrintFrozenInWay', filter, httpOptions);
+    return this.http.post<any>(this.controler + 'PrintFrozenInWay', this.orderForzenInWayFilter, httpOptions);
   }
   GetOrderInAllBranches(code: string) {
     let params = new HttpParams();

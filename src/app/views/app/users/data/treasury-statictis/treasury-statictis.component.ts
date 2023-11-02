@@ -3,6 +3,10 @@ import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TreasuryReportResponseDto } from 'src/app/Models/user/treasury.model';
 import { TreasuryService } from 'src/app/services/treasury.service';
+import { enableRtl } from '@syncfusion/ej2-base';
+
+enableRtl(true);
+
 
 @Component({
   selector: 'app-treasury-statictis',
@@ -20,7 +24,7 @@ export class TreasuryStatictisComponent implements OnChanges {
   public title?: string;
   public primaryYAxis?: Object;
   public palette?: string[] = ["#E94649", "#F6B53F", "#6FAAB0", "#C4C24A"];
-
+  tooltip
   constructor(private treasuryService: TreasuryService,
     public spinner: NgxSpinnerService,
   ) { }
@@ -53,12 +57,16 @@ export class TreasuryStatictisComponent implements OnChanges {
             title: ''
           };
           this.primaryYAxis = {
-            minimum: 0, maximum: 1000,
-            interval: 10, title: '',
+            minimum: 0,
+            title: '',
           };
+          this.tooltip = {
+            enable: true,
+            format: '<b> ${point.x} : ${point.y}</b> ',
+          }
 
           this.chartData = [
-            { state: "يدفع للعمبل", amount: this.treasuryReport?.clientPayment?.amount, count: this.treasuryReport?.clientPayment?.count },
+            { state: "العميل", amount: this.treasuryReport?.clientPayment?.amount, count: this.treasuryReport?.clientPayment?.count },
             { state: "يجلب", amount: this.treasuryReport?.getReceipt?.amount, count: this.treasuryReport?.getReceipt?.count },
             { state: "يعطي", amount: this.treasuryReport?.give?.amount, count: this.treasuryReport?.give?.count },
             { state: "الواردات", amount: this.treasuryReport?.income?.amount, count: this.treasuryReport?.income?.count },
@@ -66,6 +74,7 @@ export class TreasuryStatictisComponent implements OnChanges {
             { state: "يدفع", amount: this.treasuryReport?.payReceipt?.amount, count: this.treasuryReport?.payReceipt?.count },
             { state: "يأخذ", amount: this.treasuryReport?.take?.amount, count: this.treasuryReport?.take?.count },
           ];
+
         }
       }, err => {
         this.spinner.hide();

@@ -30,13 +30,20 @@
           (ngModelChange)="getReport()"
         />
       </div>
-      <div class="col-12 d-flex justify-content-center" *ngIf="treasuryReport">
+
+      <div
+        class="col-12 d-flex justify-content-center"
+        *ngIf="treasuryReport"
+        style="height: 700px"
+      >
         <ejs-chart
           id="chart-container"
           [primaryXAxis]="primaryXAxis"
           [primaryYAxis]="primaryYAxis"
           [title]="title"
           [palettes]="palette"
+          style="height: 100%; width: 100%"
+          [tooltip]="tooltip"
         >
           <e-series-collection>
             <e-series
@@ -51,7 +58,7 @@
               type="Column"
               xName="state"
               yName="count"
-              name="الاجمالي"
+              name="العدد"
             ></e-series>
           </e-series-collection>
         </ejs-chart>

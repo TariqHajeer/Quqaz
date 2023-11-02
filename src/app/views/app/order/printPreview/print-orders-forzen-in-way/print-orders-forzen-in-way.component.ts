@@ -21,106 +21,57 @@ import { Client } from '../../../client/client.model';
   styleUrls: ['./print-orders-forzen-in-way.component.scss']
 })
 export class PrintOrdersForzenInWayComponent implements OnInit {
-
-  heads = [
-    'ترقيم',
-    'كود',
-    'الإجمالي',
-    'الرسوم',
-    ' يدفع للعميل',
-    'المحافظة ',
-    'الهاتف',
-    'ملاحظات',
-  ];
   orders: any[] = [];
-  count: number = 0;
-  deliveryCostCount: number = 0;
   client: Client = new Client();
   dateOfPrint = new Date();
   userName: UserLogin = this.authService.getUser();
-  printnumber: number;
-  orderplaced;
   address = environment.Address;
   companyPhone =
     environment.companyPhones[0] + ' - ' + environment.companyPhones[1];
-  reports: any[] = [];
-  points: PointSetting = new PointSetting();
-  clientCalc: number = 0;
-  reportstotal: number;
   showPrintbtn: boolean = false;
-  dateWithIds: DateWithId<number[]>;
-  DeleiverMoneyForClientDto: DeleiverMoneyForClientDto =
-    new DeleiverMoneyForClientDto();
-  pointid = null;
   showSeeMore: boolean;
   ordersCounts: number;
+  paging: Paging = new Paging();
   constructor(
     private orderservice: OrderService,
     private notifications: NotificationsService,
     public sanitizer: DomSanitizer,
     private spinner: NgxSpinnerService,
-    private recepitservce: ReciptService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private orderService: OrderService
   ) { }
 
 
   ngOnInit(): void {
     this.getOrders();
   }
-  reciptClient() {
-    if (
-      this.orderplaced.filter(
-        (o) =>
-          o.id == OrderplacedEnum.Way ||
-          o.id == OrderplacedEnum.PartialReturned ||
-          o.id == OrderplacedEnum.Delivered
-      ).length > 0
-    ) {
-      this.recepitservce.UnPaidRecipt(this.client.id).subscribe((res) => {
-        this.reports = res;
-        this.reportstotal = 0;
-        this.reports.forEach((r) => {
-          this.reportstotal += r.amount;
-        });
-      });
-    } else return;
-  }
+
 
   getOrdersDontFinished() {
     if (this.orders.length < this.ordersCounts)
       this.spinner.show();
-    this.orderservice.OrdersDontFinished().subscribe(response => {
+    this.orderservice.forzenInWay(this.paging).subscribe(response => {
       this.spinner.hide();
-      if (this.orderservice.orderClientDontDiliverdMoney.paging.Page == 1)
-        this.orders = response.data.data;
+      if (this.paging.Page == 1)
+        this.orders = response.data;
       else {
-        this.orders = [...this.orders, ...response.data.data];
+        this.orders = [...this.orders, ...response.data];
       }
-      this.ordersCounts = response.data.total;
+      this.ordersCounts = response.total;
       if (this.orders.length == 0)
-        this.router.navigate(['/app/reports/Shipmentsnotbeendelivered']);
-      this.reciptClient();
-      this.count = response.orderTotal;
-      this.deliveryCostCount = response.deliveryTotal;
-      this.clientCalc = response.payForCientTotal;
+        this.router.navigate(['/app/reports/GetOrdersForzenInWay']);
     }, err => {
       this.spinner.hide();
     });
 
   }
   getOrders() {
-    this.client = this.orderservice.deleiverMoneyForClientDto.Filter.Client;
-    this.orderplaced = this.orderservice.deleiverMoneyForClientDto.Filter.OrderPlaced;
-    this.pointid = this.orderservice.deleiverMoneyForClientDto.PointsSettingId;
-    this.points = this.orderservice.deleiverMoneyForClientDto.point;
-    let tableSelection = this.orderservice.orderClientDontDiliverdMoney.tableSelection;
-
-    if (tableSelection.selectedIds?.length == 0 && !tableSelection.isSelectedAll) {
+    if (this.orderservice.orderForzenInWayFilter.selectedIds?.length == 0 && !this.orderservice.orderForzenInWayFilter.isSelectedAll) {
       this.router.navigate(['/app/order/GetOrdersForzenInWay']);
       return;
     }
-    this.orderservice.orderClientDontDiliverdMoney.paging = new Paging();
+    this.paging = new Paging();
     this.getOrdersDontFinished();
 
   }
@@ -131,59 +82,21 @@ export class PrintOrdersForzenInWayComponent implements OnInit {
     }
   }
   seeMore() {
-    this.orderservice.orderClientDontDiliverdMoney.paging.Page += 1;
+    this.paging.Page += 1;
     this.getOrdersDontFinished();
   }
-  changeDeleiverMoneyForClient() {
-    this.spinner.show();
-    this.orderservice
-      .DeleiverMoneyForClient2()
-      .subscribe(
-        (res) => {
-          this.notifications.create(
-            'success',
-            'تم تسليم  المبلغ  بنجاح',
-            NotificationType.Success,
-            { theClass: 'success', timeOut: 6000, showProgressBar: false }
-          );
-          this.showPrintbtn = true;
-          this.spinner.hide();
-          this.printnumber = res;
-        },
-        (err) => {
-          this.spinner.hide();
-          this.notifications.create(
-            'error',
-            'حدث خطأ ما يرجى المحاولة مجددا',
-            NotificationType.Error,
-            { theClass: 'error', timeOut: 6000, showProgressBar: false }
-          );
-        }
-      );
-  }
-  @HostListener('window:keydown', ['$event'])
-  onKeyPress($event: KeyboardEvent) {
-    if (($event.ctrlKey || $event.metaKey) && $event.keyCode == 80) {
-      this.print();
-      return false;
-    }
-  }
   print() {
-    this.spinner.show();
-    this.orderservice.PrintDeleiverMoneyForClient(this.printnumber).subscribe(res => {
+    this.orderService.printFrozenInWay().subscribe(res => {
       let blob = new Blob([res], { type: 'application/pdf' });
       var downloadURL = window.URL.createObjectURL(blob);
       window.open(downloadURL, '_blank');
 
+      // download pdf file 
       var link = document.createElement('a');
       link.href = downloadURL;
-      link.download = "تسديد العميل" + ".pdf";
+      link.download = "الطلبات المعلقة.pdf";
       link.click();
-      this.spinner.hide();
-      this.notifications.success('success', 'تمت الطباعة بنجاح', NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-      this.showPrintbtn = true;
     }, err => {
-      this.spinner.hide();
     })
   }
 

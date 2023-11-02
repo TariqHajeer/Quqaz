@@ -153,7 +153,7 @@ export class GetOrdersForzenInWayComponent implements OnInit {
 
   getForzenInWay() {
     if (this.hour && this.currentDate && (this.isInStock || this.isInWay || this.isWithAgent)) {
-      this.orderService.forzenInWay({
+      this.orderService.orderForzenInWayFilter = {
         hour: this.hour * 24,
         agentId: this.agentId,
         clientId: this.clientId,
@@ -161,8 +161,12 @@ export class GetOrdersForzenInWayComponent implements OnInit {
         currentDate: this.currentDate,
         isInStock: this.isInStock,
         isInWay: this.isInWay,
-        isWithAgent: this.isWithAgent
-      }, this.paging).subscribe(res => {
+        isWithAgent: this.isWithAgent,
+        exceptIds: this.unSelectIds,
+        selectedIds: this.ordersIds,
+        isSelectedAll: this.lastMasterSelectionChoise
+      }
+      this.orderService.forzenInWay(this.paging).subscribe(res => {
         if (res) {
           this.noDataFound = false;
           this.dataSource = new MatTableDataSource(res.data);
@@ -199,10 +203,10 @@ export class GetOrdersForzenInWayComponent implements OnInit {
     this.getForzenInWay();
   }
   printForzenInWay() {
-    this.orderService.orderClientDontDiliverdMoney.tableSelection.exceptIds = this.unSelectIds;
-    this.orderService.orderClientDontDiliverdMoney.tableSelection.selectedIds = this.ordersIds;
-    this.orderService.orderClientDontDiliverdMoney.tableSelection.isSelectedAll = this.lastMasterSelectionChoise;
-    if (this.noDataFound == true || (this.orderService.orderClientDontDiliverdMoney.tableSelection.selectedIds.length == 0 && !this.orderService.orderClientDontDiliverdMoney.tableSelection.isSelectedAll)) {
+    this.orderService.orderForzenInWayFilter.exceptIds = this.unSelectIds;
+    this.orderService.orderForzenInWayFilter.selectedIds = this.ordersIds;
+    this.orderService.orderForzenInWayFilter.isSelectedAll = this.lastMasterSelectionChoise;
+    if (this.noDataFound == true || (this.orderService.orderForzenInWayFilter.selectedIds.length == 0 && !this.orderService.orderForzenInWayFilter.isSelectedAll)) {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return;
     }

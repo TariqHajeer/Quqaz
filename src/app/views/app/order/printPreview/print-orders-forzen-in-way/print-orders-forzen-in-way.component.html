@@ -10,16 +10,7 @@
 <div class="card">
   <div class="card-body">
     <div class="row">
-      <div class="col-md-3" *ngIf="!showPrintbtn">
-        <button
-          (click)="changeDeleiverMoneyForClient()"
-          class="btn btn-primary"
-        >
-          تسليم المبلغ
-        </button>
-      </div>
-
-      <div class="col-md-3" *ngIf="showPrintbtn">
+      <div class="col-md-3">
         <button class="btn btn-primary" (click)="print()">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -36,13 +27,6 @@
           </svg>
           &nbsp;طباعة</button
         >&nbsp;
-        <app-receipt-client
-          id="printpage"
-          [orders]="orders"
-          [client]="client"
-          [printnumber]="printnumber"
-          [hidden]="true"
-        ></app-receipt-client>
       </div>
     </div>
   </div>
@@ -53,18 +37,6 @@
     <div class="row" style="margin-bottom: 2%">
       <div class="col-3" style="text-align: right; direction: rtl">
         <table>
-          <tr>
-            <td>
-              <div style="border: 1px black solid; padding: 7px; margin: 1px">
-                رقم الطباعة
-              </div>
-            </td>
-            <td>
-              <div style="border: 1px black solid; padding: 7px; margin: 1px">
-                {{ printnumber }}
-              </div>
-            </td>
-          </tr>
           <tr>
             <td>
               <div style="border: 1px black solid; padding: 7px; margin: 1px">
@@ -89,18 +61,6 @@
               </div>
             </td>
           </tr>
-          <tr>
-            <td>
-              <div style="border: 1px black solid; padding: 7px; margin: 1px">
-                وقت الطباعة
-              </div>
-            </td>
-            <td>
-              <div style="border: 1px black solid; padding: 7px; margin: 1px">
-                {{ dateOfPrint | date : "shortTime" }}
-              </div>
-            </td>
-          </tr>
         </table>
       </div>
       <div class="col-6" style="text-align: center">
@@ -110,782 +70,185 @@
           height="125px"
         />
         <br />
-        <br />
-
-        <svg
-          style="color: rgb(153, 1, 1)"
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          class="bi bi-geo-alt-fill"
-          viewBox="0 0 16 16"
-        >
-          <path
-            d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"
-          />
-        </svg>
-        {{ address }}
-
-        <svg
-          style="color: rgb(153, 1, 1)"
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          class="bi bi-telephone"
-          viewBox="0 0 16 16"
-        >
-          <path
-            d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"
-          />
-        </svg>
-        {{ companyPhone }}
+        المعلقات
       </div>
-      <div
-        class="col-3"
-        style="text-align: right; font-size: 16px; margin-top: 3%"
-      >
-        <div style="text-align: right; font-size: 16px; margin-bottom: 10px">
-          <h4 style="text-align: center">كشف حساب</h4>
-          <svg
-            style="color: rgb(153, 1, 1)"
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-person"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"
-            />
-          </svg>
-          {{ client != null || client != undefined ? client.name : null }}
-
-          <br />
-        </div>
-        <div *ngFor="let phone of client?.phones">
-          <svg
-            style="color: rgb(153, 1, 1)"
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-telephone"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"
-            />
-          </svg>
-          {{ phone.phone }}
-        </div>
-        <br />
-        <div style="border: 1px black solid; text-align: center; padding: 5px">
-          <a *ngFor="let order of orderplaced">
-            {{ order.name }}{{ orderplaced.length == 1 ? "" : " |" }}
-          </a>
-        </div>
+      <div class="col-3" style="text-align: right; font-size: 16px">
+        <table>
+          <tr>
+            <td>
+              <div style="border: 1px black solid; padding: 7px; margin: 1px">
+                <svg
+                  style="color: rgb(153, 1, 1)"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-geo-alt-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"
+                  />
+                </svg>
+                {{ address }}
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div style="border: 1px black solid; padding: 7px; margin: 1px">
+                <svg
+                  style="color: rgb(153, 1, 1)"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-telephone"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"
+                  />
+                </svg>
+                {{ companyPhone }}
+              </div>
+            </td>
+          </tr>
+        </table>
       </div>
+      <table style="font-size: 16px; width: 100%">
+        <thead style="font-size: 14px; background-color: rgb(218, 218, 219)">
+          <th>
+            <div
+              style="
+                margin: 1px;
+                border: 1px black solid;
+                padding: 5px;
+                text-align: center;
+              "
+            >
+              ترقيم
+            </div>
+          </th>
+          <th>
+            <div
+              style="
+                margin: 1px;
+                border: 1px black solid;
+                padding: 5px;
+                text-align: center;
+              "
+            >
+              كود
+            </div>
+          </th>
+          <th>
+            <div
+              style="
+                margin: 1px;
+                border: 1px black solid;
+                padding: 5px;
+                text-align: center;
+              "
+            >
+              التاريخ
+            </div>
+          </th>
+          <th>
+            <div
+              style="
+                margin: 1px;
+                border: 1px black solid;
+                padding: 5px;
+                text-align: center;
+              "
+            >
+              المحافظة
+            </div>
+          </th>
+          <th>
+            <div
+              style="
+                margin: 1px;
+                border: 1px black solid;
+                padding: 5px;
+                text-align: center;
+              "
+            >
+              اسم المندوب
+            </div>
+          </th>
+          <!--<th style="border: 1px black solid;padding: 5px;text-align: center;" *ngFor="let head of heads" style="font-size: 20px;">{{head}}</th>-->
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders; index as i">
+            <td>
+              <div
+                style="
+                  margin: 1px;
+                  border: 1px black solid;
+                  padding: 5px;
+                  text-align: center;
+                "
+              >
+                {{ i + 1 }}
+              </div>
+            </td>
+            <td>
+              <div
+                style="
+                  margin: 1px;
+                  border: 1px black solid;
+                  padding: 5px;
+                  text-align: center;
+                "
+              >
+                {{ order.code }}
+              </div>
+            </td>
+            <td>
+              <div
+                style="
+                  margin: 1px;
+                  border: 1px black solid;
+                  padding: 5px;
+                  text-align: center;
+                "
+              >
+                {{ order.date | date : "yyyy/MM/dd"
+                }}{{ order.date ? null : "-" }}
+              </div>
+            </td>
+            <td>
+              <div
+                style="
+                  margin: 1px;
+                  border: 1px black solid;
+                  padding: 5px;
+                  text-align: center;
+                "
+              >
+                {{ order.country ? order.country.name : "-" }}
+              </div>
+            </td>
+
+            <td>
+              <div
+                style="
+                  margin: 1px;
+                  border: 1px black solid;
+                  padding: 5px;
+                  text-align: center;
+                "
+              >
+                {{ order.agent ? order.agent?.name : "" }}
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <table style="font-size: 16px; width: 100%">
-      <thead style="font-size: 14px; background-color: rgb(218, 218, 219)">
-        <th>
-          <div
-            style="
-              margin: 1px;
-              border: 1px black solid;
-              padding: 5px;
-              text-align: center;
-            "
-          >
-            ترقيم
-          </div>
-        </th>
-        <th>
-          <div
-            style="
-              margin: 1px;
-              border: 1px black solid;
-              padding: 5px;
-              text-align: center;
-            "
-          >
-            رقم الوصل
-          </div>
-        </th>
-        <th>
-          <div
-            style="
-              margin: 1px;
-              border: 1px black solid;
-              padding: 5px;
-              text-align: center;
-            "
-          >
-            المحافظة
-          </div>
-        </th>
-
-        <th>
-          <div
-            style="
-              margin: 1px;
-              border: 1px black solid;
-              padding: 5px;
-              text-align: center;
-            "
-          >
-            تاريخ الطلب
-          </div>
-        </th>
-        <th>
-          <div
-            style="
-              margin: 1px;
-              border: 1px black solid;
-              padding: 5px;
-              text-align: center;
-            "
-          >
-            الإجمالي
-          </div>
-        </th>
-        <th>
-          <div
-            style="
-              margin: 1px;
-              border: 1px black solid;
-              padding: 5px;
-              text-align: center;
-            "
-          >
-            الرسوم
-          </div>
-        </th>
-        <th>
-          <div
-            style="
-              margin: 1px;
-              border: 1px black solid;
-              padding: 5px;
-              text-align: center;
-            "
-          >
-            يدفع للعميل
-          </div>
-        </th>
-
-        <th>
-          <div
-            style="
-              margin: 1px;
-              border: 1px black solid;
-              padding: 5px;
-              text-align: center;
-            "
-          >
-            المبلغ القديم
-          </div>
-        </th>
-        <th>
-          <div
-            style="
-              margin: 1px;
-              border: 1px black solid;
-              padding: 5px;
-              text-align: center;
-            "
-          >
-            هاتف المستلم
-          </div>
-        </th>
-        <th>
-          <div
-            style="
-              margin: 1px;
-              border: 1px black solid;
-              padding: 5px;
-              text-align: center;
-            "
-          >
-            ملاحظات العميل
-          </div>
-        </th>
-        <th>
-          <div
-            style="
-              margin: 1px;
-              border: 1px black solid;
-              padding: 5px;
-              text-align: center;
-            "
-          >
-            مـلاحظـــــات
-          </div>
-        </th>
-        <!--<th style="border: 1px black solid;padding: 5px;text-align: center;" *ngFor="let head of heads" style="font-size: 20px;">{{head}}</th>-->
-      </thead>
-      <tbody>
-        <tr *ngFor="let order of orders; index as i">
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ i + 1 }}
-            </div>
-          </td>
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ order.code }}
-            </div>
-          </td>
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ order.country ? order.country.name : "-" }}
-            </div>
-          </td>
-
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ order.date | date : "yyyy/MM/dd"
-              }}{{ order.date ? null : "-" }}
-            </div>
-          </td>
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ order.cost | number }}
-            </div>
-          </td>
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ order.deliveryCost | number }}
-            </div>
-          </td>
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ order.payForClient | number }}
-            </div>
-          </td>
-
-          <!--   <td>
-                        {{order.monePlaced.name}}
-                    </td>
-                    <td>
-                        {{order.orderplaced.name}}
-                    </td>-->
-
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ order.oldCost | number }}{{ order.oldCost ? null : "-" }}
-            </div>
-          </td>
-          <td style="width: 10%">
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ order.recipientPhones ? order.recipientPhones : "-" }}
-            </div>
-          </td>
-          <td style="width: 15%">
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ order.clientNote ? order.clientNote : "-" }}
-            </div>
-          </td>
-          <td style="width: 20%">
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ order.note ? order.note : "-" }}
-            </div>
-          </td>
-        </tr>
-
-        <tr style="font-size: 16px; background-color: rgb(218, 218, 219)">
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ ordersCounts }}
-            </div>
-          </td>
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              العدد
-            </div>
-          </td>
-
-          <td colspan="2">
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              اجمالي كلفة الطلبات
-            </div>
-          </td>
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ count | number }}
-            </div>
-          </td>
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ deliveryCostCount | number }}
-            </div>
-          </td>
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ clientCalc | number }}
-            </div>
-          </td>
-          <td colspan="4"></td>
-        </tr>
-        <tr
-          style="font-size: 16px; background-color: rgb(205, 205, 255)"
-          *ngIf="points"
-        >
-          <td></td>
-
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              النقاط
-            </div>
-          </td>
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ points.points }}
-            </div>
-          </td>
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              المبلغ
-            </div>
-          </td>
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ points.money | number }}
-            </div>
-          </td>
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              يدفع للعميل
-            </div>
-          </td>
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ points.money + clientCalc | number }}
-            </div>
-          </td>
-          <td colspan="3"></td>
-        </tr>
-        <tr
-          *ngIf="reports.length != 0"
-          style="
-            text-align: center;
-            background-color: rgba(144, 177, 240, 0.877);
-          "
-        >
-          <td colspan="10" style="text-align: center; font-size: 18px">
-            السندات
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <table style="font-size: 16px; width: 100%" *ngIf="reports.length != 0">
-      <thead style="font-size: 16px; background-color: rgb(218, 218, 219)">
-        <th>
-          <div
-            style="
-              margin: 1px;
-              border: 1px black solid;
-              padding: 5px;
-              text-align: center;
-            "
-          >
-            ترقيم
-          </div>
-        </th>
-        <th>
-          <div
-            style="
-              margin: 1px;
-              border: 1px black solid;
-              padding: 5px;
-              text-align: center;
-            "
-          >
-            رقم السند
-          </div>
-        </th>
-        <th>
-          <div
-            style="
-              margin: 1px;
-              border: 1px black solid;
-              padding: 5px;
-              text-align: center;
-            "
-          >
-            تاريخ
-          </div>
-        </th>
-        <th>
-          <div
-            style="
-              margin: 1px;
-              border: 1px black solid;
-              padding: 5px;
-              text-align: center;
-            "
-          >
-            حالة السند
-          </div>
-        </th>
-        <th>
-          <div
-            style="
-              margin: 1px;
-              border: 1px black solid;
-              padding: 5px;
-              text-align: center;
-            "
-          >
-            كلفة السند
-          </div>
-        </th>
-
-        <th>
-          <div
-            style="
-              margin: 1px;
-              border: 1px black solid;
-              padding: 5px;
-              text-align: center;
-            "
-          >
-            وذلك عن
-          </div>
-        </th>
-        <th>
-          <div
-            style="
-              margin: 1px;
-              border: 1px black solid;
-              padding: 5px;
-              text-align: center;
-            "
-          >
-            ملاحظات
-          </div>
-        </th>
-      </thead>
-      <tbody>
-        <tr
-          class="tr"
-          *ngFor="let report of reports; index as i"
-          style="margin-bottom: 10%"
-        >
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ i + 1 }}
-            </div>
-          </td>
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ report.id }}
-            </div>
-          </td>
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ report.date | date : "yyyy/MM/dd" }}
-            </div>
-          </td>
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ report.isPay ? "صرف" : "قبض" }}
-            </div>
-          </td>
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ report.amount | number }}
-            </div>
-          </td>
-
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ report.about ? report.about : "-" }}
-            </div>
-          </td>
-          <td style="width: 25%">
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ report.note ? report.note : "-" }}
-            </div>
-          </td>
-        </tr>
-        <tr
-          *ngIf="reports.length != 0"
-          style="font-size: 16px; background-color: rgb(224, 221, 221)"
-        >
-          <td colspan="4">
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              اجمالي كلفة السندات
-            </div>
-          </td>
-
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ reportstotal | number }}
-            </div>
-          </td>
-          <td colspan="4"></td>
-        </tr>
-        <tr
-          *ngIf="reports.length != 0"
-          style="font-size: 16px; background-color: rgb(224, 221, 221)"
-        >
-          <td colspan="4">
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              المبلغ النهائي
-            </div>
-          </td>
-          <td>
-            <div
-              style="
-                margin: 1px;
-                border: 1px black solid;
-                padding: 5px;
-                text-align: center;
-              "
-            >
-              {{ clientCalc + reportstotal | number }}
-            </div>
-          </td>
-          <td colspan="4"></td>
-        </tr>
-      </tbody>
-    </table>
   </div>
-</div>
 
-<simple-notifications></simple-notifications>
+  <simple-notifications></simple-notifications>
+</div>
