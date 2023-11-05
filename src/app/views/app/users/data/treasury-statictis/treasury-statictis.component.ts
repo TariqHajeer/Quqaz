@@ -77,13 +77,13 @@ export class TreasuryStatictisComponent implements OnChanges {
             { state: "يأخذ", amount: this.treasuryReport?.take?.amount },
           ];
           this.chartDataCount = [
-            { state: "العميل", count: this.treasuryReport?.clientPayment?.count },
-            { state: "يجلب", count: this.treasuryReport?.getReceipt?.count },
-            { state: "يعطي", count: this.treasuryReport?.give?.count },
+            { state: "تسديد العميل", count: this.treasuryReport?.clientPayment?.count },
+            { state: "سند قبض ", count: this.treasuryReport?.getReceipt?.count },
+            { state: "اعطاء", count: this.treasuryReport?.give?.count },
             { state: "الواردات", count: this.treasuryReport?.income?.count },
             { state: "الصادرات", count: this.treasuryReport?.outCome?.count },
-            { state: "يدفع", count: this.treasuryReport?.payReceipt?.count },
-            { state: "يأخذ", count: this.treasuryReport?.take?.count },
+            { state: "سند دفع", count: this.treasuryReport?.payReceipt?.count },
+            { state: "أخذ", count: this.treasuryReport?.take?.count },
           ];
 
         }
