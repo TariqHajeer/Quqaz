@@ -18,7 +18,7 @@
                 *matCellDef="let element"
                 style="padding-right: 10px"
               >
-                {{ element.code }}
+                <img [src]="element.logo" />
               </td>
             </ng-container>
 
@@ -27,32 +27,44 @@
                 اسم المرسل
               </th>
               <td mat-cell *matCellDef="let element" style="padding: 10px">
-                {{ element.cost }}
+                {{ element.name }}
               </td>
             </ng-container>
             <ng-container matColumnDef="message">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>الرسالة</th>
               <td mat-cell *matCellDef="let element" style="padding: 10px">
-                {{ element.recipientName }}
+                {{ element.message }}
               </td>
             </ng-container>
 
             <ng-container matColumnDef="Accept">
               <th mat-header-cell *matHeaderCellDef>خيارات</th>
               <td mat-cell *matCellDef="let element; index as i">
-                <span class="btn btn-xs badge-primary">نشر</span>
+                <span
+                  class="btn btn-xs badge-primary"
+                  (click)="Accept(element.id)"
+                  >نشر</span
+                >
               </td>
             </ng-container>
             <ng-container matColumnDef="DisAccept">
               <th mat-header-cell *matHeaderCellDef></th>
               <td mat-cell *matCellDef="let element; index as i">
-                <span class="btn btn-xs badge-primary">عدم النشر</span>
+                <span
+                  class="btn btn-xs badge-primary"
+                  (click)="DisAccept(element.id)"
+                  >عدم النشر</span
+                >
               </td>
             </ng-container>
             <ng-container matColumnDef="delete">
               <th mat-header-cell *matHeaderCellDef></th>
               <td mat-cell *matCellDef="let element; index as i">
-                <span class="btn btn-xs badge-primary">حذف</span>
+                <span
+                  class="btn btn-xs badge-primary"
+                  (click)="delete(element.id)"
+                  >حذف</span
+                >
               </td>
             </ng-container>
 
