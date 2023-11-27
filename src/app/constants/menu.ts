@@ -539,6 +539,11 @@ const data: IMenuItem[] = [
         label: 'الأفرع',
         to: `${adminRoot}/setting/Branch`,
       },
+      {
+        icon: 'simple-icon-grid',
+        label: 'آراء العملاء',
+        to: `${adminRoot}/setting/clientMessage`,
+      },
     ],
   },
 ];

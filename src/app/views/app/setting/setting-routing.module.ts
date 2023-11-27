@@ -10,6 +10,7 @@ import { ImportsTypesComponent } from './imports-types/imports-types.component';
 import { PointSettingComponent } from './point-setting/point-setting.component';
 import { RegionComponent } from './region/region.component';
 import { ShipmentsTypesComponent } from './shipments-types/shipments-types.component';
+import { ClientMessageComponent } from './client-message/client-message.component';
 const routes: Routes = [
   {
     path: 'cities',
@@ -52,9 +53,15 @@ const routes: Routes = [
     component: PointSettingComponent,
     canActivate: [AuthGuard],
     data: { roles: [UserPermission.AddGroup, UserPermission.ShowGroup] }
-  }, {
+  },
+  {
     path: "Branch",
     component: BranchComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "clientMessage",
+    component: ClientMessageComponent,
     canActivate: [AuthGuard],
   }
 

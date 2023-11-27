@@ -25,10 +25,11 @@ import { NgxPrintModule } from 'ngx-print';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { BranchComponent } from './branch/branch.component';
 import { SharedModule } from "../../../shared/shared.module";
+import { ClientMessageComponent } from './client-message/client-message.component';
 
 
 @NgModule({
-    declarations: [CitiesComponent, ImportsTypesComponent, ExportsTypesComponent, ShipmentsTypesComponent, RegionComponent, GroupsComponent, PointSettingComponent, BranchComponent],
+    declarations: [CitiesComponent, ImportsTypesComponent, ExportsTypesComponent, ShipmentsTypesComponent, RegionComponent, GroupsComponent, PointSettingComponent, BranchComponent, ClientMessageComponent],
     providers: [ToolbarService],
     imports: [
         CommonModule,
