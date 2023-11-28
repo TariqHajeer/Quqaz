@@ -28,12 +28,12 @@ export class ClientMessageService {
     let params = new HttpParams();
     if (id)
       params = params.append('id', id as any);
-    return this.http.put<any>(this.controler + "Publish/", { params: params });
+    return this.http.put<any>(this.controler + "Publish/", id);
   }
   unPublishClientMessage(id: number) {
     let params = new HttpParams();
     if (id)
       params = params.append('id', id as any);
-    return this.http.put<any>(this.controler + "UnPublish/", { params: params });
+    return this.http.put<any>(this.controler + "UnPublish/", id);
   }
 }

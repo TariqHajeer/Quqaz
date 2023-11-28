@@ -12,13 +12,15 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./client-message.component.scss']
 })
 export class ClientMessageComponent implements OnInit {
-  displayedColumns: string[] = ["logo", "name", "message", "Accept", "DisAccept", "delete"];
+  displayedColumns: string[] = ["logo", "name", "message", "isPublished", "Accept"];
   dataSource;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   noDataFound: boolean = false;
   paging: Paging = new Paging();
   isPublished: boolean = false;
+  isUnPublished: boolean = false;
+
   constructor(
     private notifications: NotificationsService,
     private clientMessageService: ClientMessageService
@@ -28,7 +30,7 @@ export class ClientMessageComponent implements OnInit {
     this.getClientMessage();
   }
   getClientMessage() {
-    this.clientMessageService.getClientMessage(this.paging, this.isPublished).subscribe({
+    this.clientMessageService.getClientMessage(this.paging, this.isPublished ? true : this.isUnPublished ? false : null).subscribe({
       next: (data) => {
         this.dataSource = new MatTableDataSource(data.data);
       }
@@ -38,6 +40,7 @@ export class ClientMessageComponent implements OnInit {
     this.clientMessageService.publishClientMessage(id).subscribe({
       next: (data) => {
         this.getClientMessage();
+        this.notifications.create("", "تم النشر بنجاح", NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       }
     })
   }
@@ -46,6 +49,7 @@ export class ClientMessageComponent implements OnInit {
     this.clientMessageService.unPublishClientMessage(id).subscribe({
       next: (data) => {
         this.getClientMessage();
+        this.notifications.create("", "تم عدم النشر بنجاح", NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       }
     })
   }
@@ -53,6 +57,7 @@ export class ClientMessageComponent implements OnInit {
     this.clientMessageService.deleteClientMessage(id).subscribe({
       next: (data) => {
         this.getClientMessage();
+        this.notifications.create("", "تم الحذف بنجاح", NotificationType.Success, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       }
     })
   }
