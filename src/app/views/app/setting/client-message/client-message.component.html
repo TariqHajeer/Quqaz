@@ -95,8 +95,11 @@
       </div>
     </div>
     <mat-paginator
-      [pageSizeOptions]="[5, 10, 20]"
       showFirstLastButtons
+      [length]="total"
+      [pageSize]="paging.RowCount"
+      [pageSizeOptions]="paging.selectItemsPerPage"
+      (page)="switchPage($event)"
     ></mat-paginator>
     <simple-notifications></simple-notifications>
   </div>
