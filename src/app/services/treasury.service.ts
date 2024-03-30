@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class TreasuryService {
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient) { }
   controler = environment.baseUrl + 'api/Treasury/';
   Get() {
     return this.http.get<any>(this.controler);
@@ -28,16 +28,10 @@ export class TreasuryService {
     return this.http.post<any>(this.controler, treasury);
   }
   GiveMoney(id, data) {
-    let params = new FormData();
-    params.append('Amount', data.Amount);
-    params.append('Note', data.Note);
-    return this.http.patch<any>(this.controler + 'GiveMoney/' + id, params);
+    return this.http.post<any>(this.controler + 'GiveMoney/' + id, data);
   }
   GetMoney(id, data) {
-    let params = new FormData();
-    params.append('Amount', data.Amount);
-    params.append('Note', data.Note);
-    return this.http.patch<any>(this.controler + 'GetMoney/' + id, params);
+    return this.http.post<any>(this.controler + 'GetMoney/' + id, data);
   }
   DisActive(id) {
     return this.http.patch<any>(this.controler + 'DisActive', id);
@@ -58,5 +52,18 @@ export class TreasuryService {
   }
   CashMovmentId(id) {
     return this.http.get<any>(this.controler + 'CashMovment/' + id);
+  }
+  getTreasuryReport(fromDate, Todate, treasuryId) {
+
+    let params = new HttpParams();
+    if (fromDate)
+      params = params.append('DateRangeFilter.Start', fromDate);
+    if (Todate)
+      params = params.append('DateRangeFilter.End', Todate);
+    if (treasuryId)
+      params = params.append('TreasuryId', treasuryId);
+    return this.http.get<any>(this.controler + 'GetTreasuryReport', {
+      params: params,
+    });
   }
 }

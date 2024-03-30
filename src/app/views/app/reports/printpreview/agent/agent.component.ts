@@ -9,7 +9,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { environment } from 'src/environments/environment.prod';
 import { AuthService } from 'src/app/shared/auth.service';
-
+import Driver from 'src/app/Models/common/Driver';
+import {IMakeOrderInWay} from 'src/app/Models/order/IMakeOrderInWay';
 @Component({
   selector: 'app-agent',
   templateUrl: './agent.component.html',
@@ -35,8 +36,9 @@ export class AgentComponent implements OnInit {
     'ملاحظات العميل',
     'مـلاحظـــــات',
   ];
+  driver:Driver=new Driver();
   orders: any[] = [];
-  count = 0;
+  count:number = 0;
   agent;
   orderplaced;
   dateOfPrint = new Date();
@@ -50,7 +52,6 @@ export class AgentComponent implements OnInit {
     this.PrintNumberOrder = new PrintNumberOrder();
     this.orders = JSON.parse(localStorage.getItem('printordersagent'));
     this.orders = this.orders.sort((a, b) => a.code - b.code);
-    console.log(this.orders);
     this.agent = JSON.parse(localStorage.getItem('printagent'));
     this.orderplaced = this.orders.map((o) => o.orderplaced)[0];
     this.sumCost();
@@ -69,8 +70,6 @@ export class AgentComponent implements OnInit {
           }
         }
     }
-
-    // this.getPrintnumber()
   }
 
   sumCost() {
@@ -92,14 +91,15 @@ export class AgentComponent implements OnInit {
       this.showPrintbtn = true;
     }
   }
-  dateWithIds;
+  ordersIdsWithDriver:IMakeOrderInWay;
 
   afterPrint() {
     this.spinner.show();
-    this.dateWithIds = {
-      Ids: this.orders.map((o) => o.id),
-    };
-    this.orderservice.MakeOrderInWay(this.dateWithIds.Ids).subscribe(
+    this.ordersIdsWithDriver = {
+      ids: this.orders.map((o) => o.id),
+      driver:this.driver
+    }; 
+    this.orderservice.MakeOrderInWay(this.ordersIdsWithDriver).subscribe(
       (res) => {
         this.notifications.create(
           'success',
@@ -107,7 +107,7 @@ export class AgentComponent implements OnInit {
           NotificationType.Success,
           { theClass: 'success', timeOut: 6000, showProgressBar: false }
         );
-        this.printnumber = res.data;
+        this.printnumber = res;
         if (this.printnumber) this.showPrintnumber = true;
         else this.showPrintnumber = false;
         this.showPrintbtn = true;
@@ -151,7 +151,6 @@ export class AgentComponent implements OnInit {
     newWin?.document.close();
     setTimeout(function () {
       newWin?.close();
-      // location.reload();
     }, 1000);
   }
 }

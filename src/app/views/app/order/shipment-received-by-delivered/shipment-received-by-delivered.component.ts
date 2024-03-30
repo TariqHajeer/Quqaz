@@ -6,7 +6,6 @@ import { User } from 'firebase';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MoneyPalcedEnum } from 'src/app/Models/Enums/MoneyPalcedEnum';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
-import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { OrderState } from 'src/app/Models/order/order.model';
 import { Paging } from 'src/app/Models/paging';
@@ -14,6 +13,9 @@ import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
 import { SelectionModel } from '@angular/cdk/collections';
+import IIndex from 'src/app/shared/interfaces/IIndex';
+import moneyPlaceds from 'src/app/data/moneyPalced';
+import orderPlaceds from 'src/app/data/orderPlaced';
 @Component({
   selector: 'app-shipment-received-by-delivered',
   templateUrl: './shipment-received-by-delivered.component.html',
@@ -24,6 +26,7 @@ export class ShipmentReceivedByDeliveredComponent {
     'index',
     'code',
     'client',
+    'agent',
     'country',
     'cost',
     'isClientDiliverdMoney',
@@ -43,7 +46,7 @@ export class ShipmentReceivedByDeliveredComponent {
   getorder: GetOrder = new GetOrder();
   statu;
   MoenyPlacedId;
-  MoenyPlaced: any[] = [];
+  MoenyPlaced: IIndex[] = [];
   getMoenyPlaced: any[] = [];
   OrderplacedId;
   constructor(
@@ -55,9 +58,7 @@ export class ShipmentReceivedByDeliveredComponent {
     private spinner: NgxSpinnerService
   ) { }
   AgentId;
-
-  orderPlace: NameAndIdDto[] = [];
-  orderPleacedFilters: NameAndIdDto[] = [];
+  orderPlace: IIndex[] = [];
   Agents: User[] = [];
   paging: Paging;
   filtering: OrderFilter;
@@ -80,19 +81,16 @@ export class ShipmentReceivedByDeliveredComponent {
     this.filtering = new OrderFilter();
     this.dataSource = new MatTableDataSource([]);
     this.getorder = new GetOrder();
-    this.getorder.order.index = 0;
+    if (this.getorder && this.getorder.order)
+      this.getorder.order.index = 0;
   }
 
   GetMoenyPlaced() {
-    this.orderservice.MoenyPlaced().subscribe((res) => {
-      this.MoenyPlaced = res;
-      // this.getMoenyPlaced = [...res];
-    });
+    this.MoenyPlaced = [...moneyPlaceds];
+    this.getMoenyPlaced = [...moneyPlaceds];
   }
   getmony() {
-    this.orderservice.MoenyPlaced().subscribe((res) => {
-      this.MoenyPlaced = res;
-    });
+    this.MoenyPlaced = [...moneyPlaceds];
   }
   changeMoenyPlaced() {
     if (this.getorders.length != 0) {
@@ -120,14 +118,12 @@ export class ShipmentReceivedByDeliveredComponent {
     }
   }
   GetorderPlace() {
-    this.orderservice.orderPlace().subscribe((res) => {
-      this.orderPlace = res;
-      this.orderPlace = this.orderPleacedFilters = this.orderPlace.filter(
-        (o) =>
-          o.id == OrderplacedEnum.PartialReturned ||
-          o.id == OrderplacedEnum.Delivered
-      );
-    });
+    this.orderPlace = [...orderPlaceds];
+    this.orderPlace = this.orderPlace.filter(
+      (o) =>
+        o.id == OrderplacedEnum.PartialReturned ||
+        o.id == OrderplacedEnum.Delivered
+    );
   }
   changeOrderPlaced() {
     if (this.getorders.length != 0) {
@@ -142,7 +138,7 @@ export class ShipmentReceivedByDeliveredComponent {
       this.MoenyPlaced,
       "Delivered"
     );
-    this.MoenyPlacedId=this.getMoenyPlaced[0];
+    this.MoenyPlacedId = this.getMoenyPlaced[0];
   }
   getAgent() {
     this.userService.ActiveAgent().subscribe((res) => {
@@ -216,7 +212,7 @@ export class ShipmentReceivedByDeliveredComponent {
     this.getorder.MoenyPlaced = [...this.MoenyPlaced];
     this.getorder.OrderPlaced = [...this.orderPlace];
     this.getorder.canEditCount = true;
-    this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced,null,"Delivered");
+    this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced, null, "Delivered");
     this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced, "Delivered");
     this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced);
     this.orderplacedstate.unacceptable(this.getorder, this.MoenyPlaced);
@@ -373,18 +369,21 @@ export class ShipmentReceivedByDeliveredComponent {
     );
   }
 
-  count = 0;
-  agentCost;
-  deliveryCostCount;
+  count: number = 0;
+  agentCost: number = 0;
+  deliveryCostCount: number = 0;
+  totalCost: number = 0
   sumCost() {
     this.count = 0;
     this.deliveryCostCount = 0;
     this.agentCost = 0;
+    this.totalCost = 0;
     if (this.getorders)
       this.getorders.forEach((o) => {
         this.count += o.order.cost * 1;
         this.deliveryCostCount += o.order.deliveryCost * 1;
         this.agentCost += o.order.agentCost * 1;
+        this.totalCost += (o.order.cost - o.order.agentCost) * 1;
       });
     return this.count;
   }

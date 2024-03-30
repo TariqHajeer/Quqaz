@@ -1,18 +1,10 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  HostListener,
-  Input,
-  OnChanges,
-  OnInit,
-} from '@angular/core';
+import {ChangeDetectorRef,Component,HostListener,OnInit,} from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { UserLogin } from 'src/app/Models/userlogin.model';
 import { PrintNumberOrder } from 'src/app/Models/order/PrintNumberOrder.model';
 import { OrderService } from 'src/app/services/order.service';
 import * as jspdf from 'jspdf';
-import html2canvas from 'html2canvas';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment.prod';
@@ -218,7 +210,7 @@ export class SetPrintNumberComponent implements OnInit {
     var excelstructure = this.renameHeads(this.orders, this.heads, this.printnumber);
     this.convertToExcelService.exportAsExcelFile(
       excelstructure,
-      ' طباعة المندوب برقم' +' ( '+ this.printnumber+' ) '
+      ' طباعة المندوب برقم' + ' ( ' + this.printnumber + ' ) '
     );
   }
 }

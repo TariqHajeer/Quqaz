@@ -5,109 +5,34 @@ import { OrderFilter } from '../Models/order-filter.model';
 import { DateFiter, Paging } from '../Models/paging';
 import { OrderClientDontDiliverdMoney } from '../Models/order/order-client-dont-diliverd-money.model';
 import { Resend } from '../Models/order/resend.model';
+import { ReceiveOrdersToMyBranchDto, ReturnOrderToMainBranchDto, SelectOrder, TransferToSecondBranchDto } from '../Models/order/select-order.model';
+import { PrintTransferOrder } from 'src/app/Models/order/print-transfer-order.model';
 import { GetOrdersByAgentRegionAndCode } from '../Models/order/get-orders-by-agent-region-and-code.model';
-
+import { DeleiverMoneyForClientDto } from '../Models/order/deleiver-money-for-client-dto.model';
+import { IIdWithNote } from '../shared/interfaces/IIdWithNote';
+import { OrderForzenInWayFilter } from '../Models/order/order-forzen-in-way-filter.model';
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
   controler = environment.baseUrl + 'api/Order/';
+  selectOrder: SelectOrder = new SelectOrder();
+  transferToSecondBranchDto: TransferToSecondBranchDto = new TransferToSecondBranchDto();
+  returnOrderToMainBranchDto: ReturnOrderToMainBranchDto = new ReturnOrderToMainBranchDto();
+  deleiverMoneyForClientDto: DeleiverMoneyForClientDto = new DeleiverMoneyForClientDto();
+  orderClientDontDiliverdMoney: OrderClientDontDiliverdMoney = new OrderClientDontDiliverdMoney();
+  orderForzenInWayFilter: OrderForzenInWayFilter = new OrderForzenInWayFilter();
   constructor(public http: HttpClient) { }
   GetAll(filter: OrderFilter, paging: Paging) {
-    let params = new HttpParams();
-    if (filter.Code != undefined || filter.Code != null)
-      params = params.append('Code', filter.Code);
-    if (filter.AgentId != undefined || filter.AgentId != null)
-      params = params.append('AgentId', filter.AgentId);
-    if (filter.Phone != undefined || filter.Phone != null)
-      params = params.append('Phone', filter.Phone);
-    if (filter.CountryId != undefined || filter.CountryId != null)
-      params = params.append('CountryId', filter.CountryId);
-    if (filter.RegionId != undefined || filter.RegionId != null)
-      params = params.append('RegionId', filter.RegionId);
-    if (filter.ClientId != undefined || filter.ClientId != null)
-      params = params.append('ClientId', filter.ClientId);
-    if (filter.Note != undefined || filter.Note != null)
-      params = params.append('Note', filter.Note);
-    if (filter.RecipientName != undefined || filter.RecipientName != null)
-      params = params.append('RecipientName', filter.RecipientName);
-    if (filter.MonePlacedId != undefined || filter.MonePlacedId != null)
-      params = params.append('MonePlacedId', filter.MonePlacedId);
-    if (filter.OrderplacedId != undefined || filter.OrderplacedId != null)
-      params = params.append('OrderplacedId', filter.OrderplacedId);
-    if (filter.OrderState != undefined || filter.OrderState != null)
-      params = params.append('OrderState', filter.OrderState);
-    if (filter.CreatedBy != undefined || filter.CreatedBy != null)
-      params = params.append('CreatedBy', filter.CreatedBy);
-    if (
-      filter.IsClientDiliverdMoney != undefined ||
-      filter.IsClientDiliverdMoney != null
-    )
-      params = params.append(
-        'IsClientDiliverdMoney',
-        filter.IsClientDiliverdMoney
-      );
-    if (
-      filter.AgentPrintStartDate != undefined ||
-      filter.AgentPrintStartDate != null
-    )
-      params = params.append('AgentPrintStartDate', filter.AgentPrintStartDate);
-    if (
-      filter.AgentPrintEndDate != undefined ||
-      filter.AgentPrintEndDate != null
-    )
-      params = params.append('AgentPrintEndDate', filter.AgentPrintEndDate);
-    if (filter.AgentPrintNumber != undefined || filter.AgentPrintNumber != null)
-      params = params.append('AgentPrintNumber', filter.AgentPrintNumber);
-    if (paging.RowCount != undefined || paging.RowCount != null)
-      params = params.append('RowCount', paging.RowCount);
-
-    if (paging.Page != undefined || paging.Page != null)
-      params = params.append('Page', paging.Page);
-    if (filter.createdDateRangeFilter.start)
-      params = params.append(
-        'CreatedDateRangeFilter.start',
-        String(filter.createdDateRangeFilter.start)
-      );
-    if (filter.createdDateRangeFilter.end)
-      params = params.append(
-        'CreatedDateRangeFilter.end',
-        String(filter.createdDateRangeFilter.end)
-      );
+    let params = this.getHttpPramsFilteredForOrder(filter, paging);
     return this.http.get<any>(this.controler, { params: params });
   }
+  getInStockToTransferWithAgent(filter: OrderFilter, paging: Paging) {
+    let params = this.getHttpPramsFilteredForOrder(filter, paging);
+    return this.http.get<any>(this.controler + "GetInStockToTransferWithAgent", { params: params });
+  }
   WithoutPaging(filter: OrderFilter) {
-    let params = new HttpParams();
-    if (filter.Code != undefined || filter.Code != null)
-      params = params.append('Code', filter.Code);
-    if (filter.AgentId != undefined || filter.AgentId != null)
-      params = params.append('AgentId', filter.AgentId);
-    if (filter.Phone != undefined || filter.Phone != null)
-      params = params.append('Phone', filter.Phone);
-    if (filter.CountryId != undefined || filter.CountryId != null)
-      params = params.append('CountryId', filter.CountryId);
-    if (filter.CreatedDate != undefined || filter.CreatedDate != null)
-      params = params.append('CreatedDate', filter.CreatedDate);
-    if (filter.RegionId != undefined || filter.RegionId != null)
-      params = params.append('RegionId', filter.RegionId);
-    if (filter.ClientId != undefined || filter.ClientId != null)
-      params = params.append('ClientId', filter.ClientId);
-    if (filter.RecipientName != undefined || filter.RecipientName != null)
-      params = params.append('RecipientName', filter.RecipientName);
-    if (filter.MonePlacedId != undefined || filter.MonePlacedId != null)
-      params = params.append('MonePlacedId', filter.MonePlacedId);
-    if (filter.OrderplacedId != undefined || filter.OrderplacedId != null)
-      params = params.append('OrderplacedId', filter.OrderplacedId);
-    if (filter.CreatedBy != undefined || filter.CreatedBy != null)
-      params = params.append('CreatedBy', filter.CreatedBy);
-    if (
-      filter.IsClientDiliverdMoney != undefined ||
-      filter.IsClientDiliverdMoney != null
-    )
-      params = params.append(
-        'IsClientDiliverdMoney',
-        filter.IsClientDiliverdMoney
-      );
+    let params = this.getHttpPramsFilteredForOrder(filter);
     return this.http.get<any>(this.controler + 'WithoutPaging', {
       params: params,
     });
@@ -119,6 +44,9 @@ export class OrderService {
   Creat(item) {
     return this.http.post(this.controler, item);
   }
+  createOrderWithBranch(order) {
+    return this.http.post(this.controler + "CreateOrderWithBranch", order);
+  }
   createMultiple(item) {
     return this.http.post(this.controler + 'createMultiple', item);
   }
@@ -128,22 +56,10 @@ export class OrderService {
   Delete(id) {
     return this.http.delete(this.controler + id);
   }
-  orderPlace() {
-    return this.http.get<any>(this.controler + 'orderPlace');
-  }
-  MoenyPlaced() {
-    return this.http.get<any>(this.controler + 'MoenyPlaced');
-  }
   chekcCode(code, ClientId) {
     let params = new HttpParams();
-    params = params.append(
-      'code',
-      code != null || code != undefined ? code : null
-    );
-    params = params.append(
-      'clientid',
-      ClientId != null || ClientId != undefined ? ClientId : null
-    );
+    params = params.append('code', code != null || code != undefined ? code : null);
+    params = params.append('clientid', ClientId != null || ClientId != undefined ? ClientId : null);
     return this.http.get<any>(this.controler + 'chekcCode', { params: params });
   }
   CheckMulieCode(code, ClientId) {
@@ -165,13 +81,9 @@ export class OrderService {
     return this.http.get<any>(this.controler + 'NewOrderDontSned');
   }
   Accept(id) {
-    // let params = new HttpParams();
-    // params = params.append("id", id);
     return this.http.put<any>(this.controler + 'Accept', id);
   }
   DisAccept(id) {
-    // let params = new HttpParams();
-    // params = params.append("id", id);
     return this.http.put<any>(this.controler + 'DisAccept', id);
   }
   Acceptmultiple(ids) {
@@ -206,16 +118,16 @@ export class OrderService {
   DeleiverMoneyForClient(ids) {
     return this.http.put<any>(this.controler + 'DeleiverMoneyForClient', ids);
   }
+  DeleiverMoneyForClient2() {
+    return this.http.put<any>(this.controler + 'DeleiverMoneyForClient', this.deleiverMoneyForClientDto);
+  }
   OrdersUnacceptable(filter, paging) {
     let params = new HttpParams();
     if (filter.Code != undefined || filter.Code != null)
       params = params.append('Code', filter.Code);
     if (filter.ClientId != undefined || filter.ClientId != null)
       params = params.append('ClientId', filter.ClientId);
-    if (paging.RowCount != undefined || paging.RowCount != null)
-      params = params.append('RowCount', paging.RowCount);
-    if (paging.Page != undefined || paging.Page != null)
-      params = params.append('Page', paging.Page);
+    this.setPaging(paging, paging);
     return this.http.get<any>(this.controler + 'DisAccept', { params: params });
   }
   SetPrintNumber(number) {
@@ -226,10 +138,7 @@ export class OrderService {
   }
   GetEarning(paging: Paging, datefilter: DateFiter) {
     let params = new HttpParams();
-    if (paging.RowCount != undefined || paging.RowCount != null)
-      params = params.append('RowCount', paging.RowCount);
-    if (paging.Page != undefined || paging.Page != null)
-      params = params.append('Page', paging.Page);
+    params = this.setPaging(params, paging);
     if (datefilter.FromDate != undefined || datefilter.FromDate != null)
       params = params.append('FromDate', datefilter.FromDate);
     if (datefilter.ToDate != undefined || datefilter.ToDate != null)
@@ -237,11 +146,6 @@ export class OrderService {
     return this.http.get<any>(this.controler + 'GetEarnings', {
       params: params,
     });
-  }
-  ShipmentsNotReimbursedToTheClient(clientid) {
-    return this.http.get<any>(
-      this.controler + 'ShipmentsNotReimbursedToTheClient/' + clientid
-    );
   }
   ShortageOfCash(clientId) {
     let params = new HttpParams();
@@ -269,11 +173,8 @@ export class OrderService {
   }
 
   GetClientprint(paging, number, client, code) {
-    let params = new HttpParams();
-    if (paging.RowCount != undefined || paging.RowCount != null)
-      params = params.append('RowCount', paging.RowCount);
-    if (paging.Page != undefined || paging.Page != null)
-      params = params.append('Page', paging.Page);
+
+    let params = this.getHttpParmasByPaging(paging);
     if (number) params = params.append('number', number);
     if (code) params = params.append('code', code);
     if (client) params = params.append('clientName', client);
@@ -281,51 +182,18 @@ export class OrderService {
       params: params,
     });
   }
-  GetAgentPrint(paging, number, agent) {
-    let params = new HttpParams();
-    if (paging.RowCount != undefined || paging.RowCount != null)
-      params = params.append('RowCount', paging.RowCount);
-    if (paging.Page != undefined || paging.Page != null)
-      params = params.append('Page', paging.Page);
+  GetAgentPrint(paging, number, agent, code) {
+    let params = this.getHttpParmasByPaging(paging);
     if (number) params = params.append('number', number);
     if (agent) params = params.append('agnetName', agent);
+    if (code) params = params.append('code', code);
     return this.http.get<any>(this.controler + 'GetAgentPrint', {
       params: params,
     });
   }
-  ClientDontDiliverdMoney(item: OrderClientDontDiliverdMoney) {
-    let params = new HttpParams();
-
-    if (item.ClientId != undefined || item.ClientId != null)
-      params = params.append('ClientId', item.ClientId);
-    if (
-      item.ClientDoNotDeleviredMoney != undefined ||
-      item.ClientDoNotDeleviredMoney != null
-    )
-      params = params.append(
-        'ClientDoNotDeleviredMoney',
-        item.ClientDoNotDeleviredMoney
-      );
-    if (
-      item.IsClientDeleviredMoney != undefined ||
-      item.IsClientDeleviredMoney != null
-    )
-      params = params.append(
-        'IsClientDeleviredMoney',
-        item.IsClientDeleviredMoney
-      );
-    if (item.OrderPlacedId.length != 0) {
-      // params = params.append("OrderPlacedId", item.OrderPlacedId);
-      let index = 0;
-      item.OrderPlacedId.forEach((element) => {
-        var key = 'OrderPlacedId[' + index + ']';
-        params = params.append(key, element);
-        index++;
-      });
-    }
-    return this.http.get<any>(this.controler + 'OrdersDontFinished', {
-      params: params,
-    });
+  OrdersDontFinished() {
+    this.deleiverMoneyForClientDto.Filter = this.orderClientDontDiliverdMoney;
+    return this.http.post<any>(this.controler + 'OrdersDontFinished', this.orderClientDontDiliverdMoney);
   }
   OrderVicdanAgent(AgentId) {
     return this.http.get(this.controler + 'OrderVicdanAgent/' + AgentId);
@@ -410,11 +278,7 @@ export class OrderService {
     return this.http.get<any>(this.controler + 'ReceiptOfTheOrderStatus/' + id);
   }
   ReceiptOfTheOrderStatus(paging, code) {
-    let params = new HttpParams();
-    if (paging.RowCount != undefined || paging.RowCount != null)
-      params = params.append('RowCount', paging.RowCount);
-    if (paging.Page != undefined || paging.Page != null)
-      params = params.append('Page', paging.Page);
+    let params = this.getHttpParmasByPaging(paging);
     if (code) params = params.append('code', code);
     return this.http.get<any>(this.controler + 'ReceiptOfTheOrderStatus', {
       params: params,
@@ -422,6 +286,20 @@ export class OrderService {
   }
   GetCreatedByNames() {
     return this.http.get<any>(this.controler + 'GetCreatedByNames');
+  }
+
+  GetInStockToTransferToSecondBranch() {
+    return this.http.post<any>(this.controler + 'GetInStockToTransferToSecondBranch', this.selectOrder);
+  }
+  TransferToSecondBranch() {
+    this.transferToSecondBranchDto.selectedOrdersWithFitlerDto = this.selectOrder;
+    return this.http.put<any>(this.controler + 'TransferToSecondBranch', this.transferToSecondBranchDto);
+  }
+  PrintTransferToSecondBranch(printNumber) {
+    const httpOptions = {
+      responseType: 'blob' as 'json'
+    };
+    return this.http.get<any>(this.controler + 'PrintTransferToSecondBranch/' + printNumber, httpOptions);
   }
   GetReSendMultiple(code) {
     let params = new HttpParams();
@@ -432,6 +310,81 @@ export class OrderService {
   }
   PutReSendMultiple(resendArr: Resend[]) {
     return this.http.put<any>(this.controler + 'ReSendMultiple', resendArr);
+  }
+  GetOrdersComeToMyBranch(filter: OrderFilter, paging: Paging) {
+    let params = this.getHttpPramsFilteredForOrder(filter, paging);
+    return this.http.get<any>(this.controler + 'GetOrdersComeToMyBranch', { params: params });
+  }
+  ReceiveOrdersToMyBranch(receiveOrdersToMyBranch: ReceiveOrdersToMyBranchDto) {
+    return this.http.put<any>(this.controler + 'ReceiveOrdersToMyBranch', receiveOrdersToMyBranch);
+  }
+  DisApproveOrderComeToMyBranch(id: number) {
+    return this.http.put(this.controler + 'DisApproveOrderComeToMyBranch', id);
+  }
+  getNegativeAlert(paging: Paging): any {
+    let params = this.getHttpParmasByPaging(paging);
+    return this.http.get<any>(this.controler + "GetNegativeAlert", { params: params });
+  }
+  deleteNegativeAlert(id: number) {
+    return this.http.post<any>(this.controler + 'DeleteNegativeAlert', id);
+  }
+  getDisApproveOrdersReturnByBranch(paging: Paging): any {
+    let params = this.getHttpParmasByPaging(paging);
+    return this.http.get<any>(this.controler + "GetDisApproveOrdersReturnByBranch", { params: params });
+  }
+  GetOrderReturnedToSecondBranch() {
+    return this.http.post<any>(this.controler + 'GetOrdersReturnedToSecondBranch', this.selectOrder);
+  }
+  SendOrdersReturnedToSecondBranch() {
+    this.returnOrderToMainBranchDto.ExceptIds = this.selectOrder.ExceptIds;
+    this.returnOrderToMainBranchDto.IsSelectedAll = this.selectOrder.IsSelectedAll;
+    this.returnOrderToMainBranchDto.OrderFilter = this.selectOrder.OrderFilter;
+    this.returnOrderToMainBranchDto.Paging = this.selectOrder.Paging;
+    this.returnOrderToMainBranchDto.SelectedIds = this.selectOrder.SelectedIds;
+    return this.http.put<any>(this.controler + 'SendOrdersReturnedToSecondBranch', this.returnOrderToMainBranchDto);
+  }
+  PrintSendOrdersReturnedToSecondBranchReport(printNumber) {
+    const httpOptions = {
+      responseType: 'blob' as 'json'
+    };
+    return this.http.get<any>(this.controler + 'PrintSendOrdersReturnedToSecondBranchReport/' + printNumber, httpOptions);
+  }
+  PrintDeleiverMoneyForClient(printNumber) {
+    const httpOptions = {
+      responseType: 'blob' as 'json'
+    };
+    return this.http.get<any>(this.controler + 'PrintDeleiverMoneyForClient/' + printNumber, httpOptions);
+  }
+  SetDisApproveOrdersReturnByBranchInStore() {
+    this.transferToSecondBranchDto.selectedOrdersWithFitlerDto = this.selectOrder;
+    return this.http.post<any>(this.controler + 'SetDisApproveOrdersReturnByBranchInStore', this.selectOrder);
+  }
+  GetOrdersReturnedToMyBranch(paging: Paging, currentBranchId: number) {
+    let params = new HttpParams();
+    params = this.setPaging(params, paging);
+    params = params.append('currentBranchId', String(currentBranchId));
+    return this.http.get<any>(this.controler + 'GetOrdersReturnedToMyBranch', { params: params });
+  }
+  DisApproveReturnedToMyBranch(idWithNote: IIdWithNote) {
+    return this.http.put(this.controler + 'DisApproveReturnedToMyBranch', idWithNote);
+  }
+  ReceiveReturnedToMyBranch() {
+    this.transferToSecondBranchDto.selectedOrdersWithFitlerDto = this.selectOrder;
+    return this.http.post<any>(this.controler + 'ReceiveReturnedToMyBranch', this.selectOrder);
+  }
+  GetPrintsTransferToSecondBranch(paging: Paging, destinationBranchId: any) {
+    let params = this.getHttpParmasByPaging(paging);
+    if (destinationBranchId)
+      params = params.append('destinationBranchId', destinationBranchId);
+    return this.http.get<any>(this.controler + 'GetPrintsTransferToSecondBranch', { params: params });
+  }
+  orderDetials: PrintTransferOrder = new PrintTransferOrder();
+  GetPrintTransferToSecondBranchDetials(paging: Paging, id) {
+    let params = new HttpParams();
+    if (id)
+      params = params.append('id', id);
+    params = this.setPaging(params, paging);
+    return this.http.get<any>(this.controler + 'GetPrintTransferToSecondBranchDetials', { params: params });
   }
   GetOrdersByAgentRegionAndCode(getOrdersByAgentRegionAndCode: GetOrdersByAgentRegionAndCode) {
     let params = new HttpParams();
@@ -445,4 +398,139 @@ export class OrderService {
       params: params,
     });
   }
+  getHttpParmasByPaging(paging?: Paging): HttpParams {
+    let p = new HttpParams;
+    return p = this.setPaging(p, paging);
+  }
+  setPaging(params, paging?: Paging): HttpParams {
+
+    if (paging && paging.Page)
+      params = params.append('Page', paging.Page);
+    if (paging && paging.RowCount)
+      params = params.append('RowCount', paging.RowCount);
+    return params;
+  }
+  getHttpPramsFilteredForOrder(filter?: OrderFilter, paging?: Paging): HttpParams {
+    let params = new HttpParams();
+    if (filter?.Code)
+      params = params.append('Code', filter.Code);
+    if (filter?.AgentId)
+      params = params.append('AgentId', filter.AgentId.toString());
+    if (filter?.Phone)
+      params = params.append('Phone', filter.Phone);
+    if (filter?.CountryId)
+      params = params.append('CountryId', filter.CountryId.toString());
+    if (filter?.RegionId)
+      params = params.append('RegionId', filter.RegionId.toString());
+    if (filter?.ClientId)
+      params = params.append('ClientId', filter.ClientId.toString());
+    if (filter?.Note)
+      params = params.append('Note', filter.Note);
+    if (filter?.RecipientName)
+      params = params.append('RecipientName', filter.RecipientName);
+    if (filter?.MoneyPalced)
+      params = params.append('MoneyPalced', filter.MoneyPalced.toString());
+    if (filter?.Orderplaced)
+      params = params.append('Orderplaced', filter.Orderplaced.toString());
+    if (filter?.CreatedBy)
+      params = params.append('CreatedBy', filter.CreatedBy);
+    if (filter?.IsClientDiliverdMoney)
+      params = params.append('IsClientDiliverdMoney', filter.IsClientDiliverdMoney.toString());
+    if (filter?.CreatedDate)
+      params = params.append('CreatedDate', filter.CreatedDate);
+    if (filter?.OrderState)
+      params = params.append('OrderState', filter.OrderState.toString());
+    if (filter?.AgentPrintStartDate)
+      params = params.append('AgentPrintStartDate', filter.AgentPrintStartDate);
+    if (filter?.AgentPrintEndDate)
+      params = params.append('AgentPrintEndDate', filter.AgentPrintEndDate);
+    if (filter?.AgentPrintNumber)
+      params = params.append('AgentPrintNumber', filter.AgentPrintNumber.toString());
+    if (filter?.ClientPrintNumber)
+      params = params.append('ClientPrintNumber', filter.ClientPrintNumber.toString());
+    if (filter?.OriginalBranchId)
+      params = params.append('OriginalBranchId', filter.OriginalBranchId.toString());
+    if (filter?.createdDateRangeFilter.start)
+      params = params.append('createdDateRangeFilter.start', filter.createdDateRangeFilter.start.toString());
+    if (filter?.createdDateRangeFilter.end)
+      params = params.append('createdDateRangeFilter.end', filter.createdDateRangeFilter.end.toString());
+    params = this.setPaging(params, paging);
+
+    return params;
+  }
+  forzenInWay(paging: Paging) {
+    return this.http.post<any>(this.controler + 'ForzenInWay?RowCount=' + paging.RowCount + '&Page=' + paging.Page, this.orderForzenInWayFilter);
+  }
+  printFrozenInWay() {
+    const httpOptions = {
+      responseType: 'blob' as 'json'
+    };
+    return this.http.post<any>(this.controler + 'PrintFrozenInWay', this.orderForzenInWayFilter, httpOptions);
+  }
+  GetOrderInAllBranches(code: string) {
+    let params = new HttpParams();
+    if (code)
+      params = params.append('code', code);
+    return this.http.get<any>(this.controler + 'GetOrderInAllBranches', { params: params });
+  }
+  convertSelectOrderToFromData(formdata: FormData, selectOrder: SelectOrder): FormData {
+    if (selectOrder.ExceptIds) {
+      selectOrder.ExceptIds.forEach(s => {
+        formdata.append('ExceptIds[]', s);
+      });
+    }
+    if (selectOrder.IsSelectedAll)
+      formdata.append('IsSelectedAll', selectOrder.IsSelectedAll);
+
+    if (selectOrder.SelectedIds) {
+      selectOrder.SelectedIds.forEach(s => {
+        formdata.append('selectedIds[]', s);
+      })
+    }
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.AgentId)
+      formdata.append('AgentId', selectOrder.OrderFilter.AgentId.toString());
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.AgentPrintEndDate)
+      formdata.append('AgentPrintEndDate', selectOrder.OrderFilter.AgentPrintEndDate);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.AgentPrintNumber)
+      formdata.append('AgentPrintNumber', selectOrder.OrderFilter.AgentPrintNumber.toString());
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.AgentPrintStartDate)
+      formdata.append('AgentPrintStartDate', selectOrder.OrderFilter.AgentPrintStartDate);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.ClientId)
+      formdata.append('ClientId', selectOrder.OrderFilter.ClientId.toString());
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.ClientPrintNumber)
+      formdata.append('ClientPrintNumber', selectOrder.OrderFilter.ClientPrintNumber.toString());
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.Code)
+      formdata.append('Code', selectOrder.OrderFilter.Code);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.CountryId)
+      formdata.append('CountryId', selectOrder.OrderFilter.CountryId.toString());
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.CreatedBy)
+      formdata.append('CreatedBy', selectOrder.OrderFilter.CreatedBy);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.CreatedDate)
+      formdata.append('CreatedDate', selectOrder.OrderFilter.CreatedDate);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.IsClientDiliverdMoney)
+      formdata.append('IsClientDiliverdMoney', `${selectOrder.OrderFilter.IsClientDiliverdMoney}`);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.MoneyPalced)
+      formdata.append('MonePlaced', selectOrder.OrderFilter.MoneyPalced.toString());
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.Note)
+      formdata.append('Note', selectOrder.OrderFilter.Note);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.OrderState)
+      formdata.append('OrderState', selectOrder.OrderFilter.OrderState.toString());
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.Orderplaced)
+      formdata.append('Orderplaced', selectOrder.OrderFilter.Orderplaced.toString());
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.OriginalBranchId)
+      formdata.append('OriginalBranchId', selectOrder.OrderFilter.OriginalBranchId.toString());
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.Phone)
+      formdata.append('Phone', selectOrder.OrderFilter.Phone);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.RecipientName)
+      formdata.append('RecipientName', selectOrder.OrderFilter.RecipientName);
+    if (selectOrder.OrderFilter && selectOrder.OrderFilter.RegionId)
+      formdata.append('RegionId', selectOrder.OrderFilter.RegionId.toString());
+    if (selectOrder.Paging && selectOrder.Paging.Page)
+      formdata.append('Page', selectOrder.Paging.Page);
+    if (selectOrder.Paging && selectOrder.Paging.RowCount)
+      formdata.append('RowCount', selectOrder.Paging.RowCount);
+    return formdata;
+  }
+
+
 }

@@ -17,10 +17,11 @@ import { Client } from '../../client/client.model';
 import { ClientService } from '../../client/client.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
-import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { SignalRService } from 'src/app/services/signal-r.service';
 import { DateService } from 'src/app/services/date.service';
+import { IndexesTypeEnum } from 'src/app/Models/Enums/IndexesTypeEnum';
+import { IndexesService } from 'src/app/services/indexes.service';
 
 @Component({
   selector: 'app-view-new-order',
@@ -37,12 +38,11 @@ export class ViewNewOrderComponent implements OnInit {
 
   constructor(
     private OrderService: OrderService,
-    private clientService: ClientService,
-    private customerService: CustomService,
     private notifications: NotificationsService,
     private signalRService: SignalRService,
-    public dateService: DateService
-  ) {}
+    public dateService: DateService,
+    private indexesService: IndexesService
+  ) { }
   @ViewChild('infoModal') public infoModal: ModalDirective;
   selection = new SelectionModel<any>(true, []);
   selectOrders: any[] = [];
@@ -58,8 +58,8 @@ export class ViewNewOrderComponent implements OnInit {
     this.isAllSelected()
       ? this.selection.clear()
       : this.dataSource.data.forEach((row) => {
-          this.selection.select(row);
-        });
+        this.selection.select(row);
+      });
   }
 
   /** The label for the checkbox on the passed row */
@@ -68,9 +68,8 @@ export class ViewNewOrderComponent implements OnInit {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     this.checkboxId(row);
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.position + 1
-    }`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1
+      }`;
   }
   checkboxId(row) {
     if (this.selection.isSelected(row))
@@ -84,17 +83,16 @@ export class ViewNewOrderComponent implements OnInit {
   }
   ngOnInit(): void {
     this.get();
-    this.GetClient();
-    this.Getcities();
-    // this.order = new Order()
+    this.getIndexes();
   }
-  // ngOnChanges() {
-  //   this.print()
-  // }
-
+  getIndexes() {
+    this.indexesService.getIndexes([IndexesTypeEnum.Countries, IndexesTypeEnum.Clients]).subscribe(response => {
+      this.countries = response.countries;
+      this.clients = response.clients;
+    })
+  }
   get() {
     this.OrderService.GetNewOrder().subscribe((res) => {
-      // console.log(res)
       this.orders = res;
       this.orders.forEach((res) => {
         res.recipientPhones = res.recipientPhones.split(',');
@@ -129,31 +127,35 @@ export class ViewNewOrderComponent implements OnInit {
   Agents: User[] = [];
   IdsDto: IdsDto = new IdsDto();
   Ids: IdsDto[] = [];
+  clients: Client[] = [];
+  countries: City[] = [];
   MultiAgent(order) {
     this.order = order;
-    // console.log(order)
-    if (order.country.agnets.length == 1) {
-      this.AgentId = order.country.agnets[0].id;
+    let country = this.countries.find(c => c.id == order.country.id)
+    if (country.agents?.length == 1) {
+      this.AgentId = country.agents[0].id;
       this.Accept();
-    } else {
-      this.Agents = order.country.agnets;
+    } else if (country.requiredAgent) {
+      this.Agents = country.agents;
       this.infoModal.show();
+    }
+    else {
+      this.AgentId = null;
+      this.Accept();
     }
   }
   Accept() {
-    // console.log( this.order)
     this.IdsDto.OrderId = this.order.id;
     this.IdsDto.AgentId = this.AgentId;
-    if (!this.AgentId) return;
-    else
-      this.OrderService.Accept(this.IdsDto).subscribe((res) => {
-        // this.print(i)
-        this.signalRService.AdminNotification.newOrdersCount--;
-        this.IdsDto = new IdsDto();
-        this.AgentId = null;
-        this.get();
-        this.infoModal.hide();
-      });
+    // if (!this.AgentId) return;
+    // else
+    this.OrderService.Accept(this.IdsDto).subscribe((res) => {
+      this.signalRService.AdminNotification.newOrdersCount--;
+      this.IdsDto = new IdsDto();
+      this.AgentId = null;
+      this.get();
+      this.infoModal.hide();
+    });
   }
   AcceptAll() {
     if (this.selectOrders.length == 0) {
@@ -165,11 +167,25 @@ export class ViewNewOrderComponent implements OnInit {
       );
       return;
     }
+    this.selectOrders.forEach(order => {
+      order.country = this.countries.find(c => c.id == order.country.id)
+    })
+
     this.selectOrders = this.selectOrders.filter(
-      (o) => o.country.agnets.length == 1
+      (o) => (o.country.agents && o.country.agents.length == 1) || o.country.requiredAgent == false
     );
+
+    if (this.selectOrders?.length == 0) {
+      this.notifications.create(
+        'error',
+        '  يجب اختيار مندوب',
+        NotificationType.Error,
+        { theClass: 'success', timeOut: 6000, showProgressBar: false }
+      );
+      return;
+    }
     this.selectOrders.forEach((item) => {
-      this.IdsDto.AgentId = item.country.agnets[0].id;
+      this.IdsDto.AgentId = item.country.agents.length > 0 && item.country.requiredAgent ? item.country.agents[0].id : null;
       this.IdsDto.OrderId = item.id;
       this.Ids.push(this.IdsDto);
       this.IdsDto = new IdsDto();
@@ -189,7 +205,6 @@ export class ViewNewOrderComponent implements OnInit {
   }
   DisAcceptAll() {
     this.dateWithIds = new DateWithIds();
-    // this.dateWithIds.Date = moment().format()
     this.dateWithIds.Ids = this.selectOrders.map((o) => o.id);
     this.OrderService.DisAcceptmultiple(this.dateWithIds.Ids).subscribe((res) => {
       this.get();
@@ -217,18 +232,15 @@ export class ViewNewOrderComponent implements OnInit {
     this.OrderService.AddPrintNumberMultiple(
       this.selectOrders.map((o) => o.id)
     ).subscribe((res) => {
-      // console.log(res)
       this.dataSource.data.forEach((element) => {
         this.selectOrders.forEach((order) => {
           if (element.id == order.id) element.printedTimes += 1;
         });
       });
     });
-    // localStorage.setItem('printneworders', JSON.stringify(this.selectOrders))
-    // this.route.navigate(['app/order/newordersprint'])
     var divToPrint = document.getElementById('printAll');
     var css =
-        '@page { size: A5 landscape ;margin: 0px;color-adjust: exact;-webkit-print-color-adjust: exact;}',
+      '@page { size: A5 landscape ;margin: 0px;color-adjust: exact;-webkit-print-color-adjust: exact;}',
       style = document.createElement('style');
     style.type = 'text/css';
     style.media = 'print';
@@ -238,14 +250,12 @@ export class ViewNewOrderComponent implements OnInit {
     newWin?.document.open();
     newWin?.document.write(
       '<html dir="rtl"><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"><link rel="stylesheet/less" type="text/css" href="app/reports/printpreview/agent/agent.component.less" /></head><body onload="window.print()">' +
-        divToPrint?.innerHTML +
-        '</body></html>'
+      divToPrint?.innerHTML +
+      '</body></html>'
     );
     newWin?.document.close();
     setTimeout(function () {
       newWin?.close();
-      // location.reload();
-      // this.get()
     }, 2000);
   }
   dateWithId: DateWithIds<number>;
@@ -258,20 +268,15 @@ export class ViewNewOrderComponent implements OnInit {
     this.OrderService.DisAccept(this.dateWithId).subscribe((res) => {
       this.orders = this.orders.filter((o) => o.id != elementid);
       this.dataSource = new MatTableDataSource(this.orders);
-
-      // this.get()
     });
   }
   print(i, element) {
-    // this.order=element
     this.OrderService.AddPrintNumber(element.id).subscribe((res) => {
-      // console.log(res)
       element.printedTimes += 1;
     });
-    // element.show = true
     var divToPrint = document.getElementById('contentToConvert-' + i);
     var css =
-        '@page { size: A5 landscape ;margin: 0;color-adjust: exact;-webkit-print-color-adjust: exact;}',
+      '@page { size: A5 landscape ;margin: 0;color-adjust: exact;-webkit-print-color-adjust: exact;}',
       style = document.createElement('style');
     style.type = 'text/css';
     style.media = 'print';
@@ -281,29 +286,16 @@ export class ViewNewOrderComponent implements OnInit {
     newWin?.document.open();
     newWin?.document.write(
       '<html dir="rtl"><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"><link rel="stylesheet/less" type="text/css" href="app/reports/printpreview/agent/agent.component.less" /></head><body onload="window.print()">' +
-        divToPrint?.innerHTML +
-        '</body></html>'
+      divToPrint?.innerHTML +
+      '</body></html>'
     );
     newWin?.document.close();
     setTimeout(function () {
       newWin?.close();
-      // location.reload();
-      // this.get()
     }, 2000);
   }
-  cityapi = 'Country';
-  clients: Client[] = [];
-  cities: City[] = [];
-  GetClient() {
-    this.clientService.getClients().subscribe((res) => {
-      this.clients = res;
-    });
-  }
-  Getcities() {
-    this.customerService.getAll(this.cityapi).subscribe((res) => {
-      this.cities = res;
-    });
-  }
+
+
   code;
   CountryId;
   ClientId;
@@ -327,8 +319,4 @@ export class ViewNewOrderComponent implements OnInit {
       }
     }
   }
-  // @HostListener("window:afterprint", ["$event"])
-  // onafterPrint(event) {
-  //   console.log(event)
-  // }
 }

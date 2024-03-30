@@ -80,9 +80,9 @@
             {{ order.client?.name }}
           </td>
           <td>
-            <ng-select [(ngModel)]="order.CountryId" (change)="changeCountryResend(order)"
+            <ng-select  [(ngModel)]="order.CountryId" (change)="changeCountryResend(order)"
               [ngModelOptions]="{ standalone: true }" [clearable]="false" name="Country">
-              <ng-option *ngFor="let citie of order.Countries" [value]="citie.id">{{ citie.name }}</ng-option>
+              <ng-option *ngFor="let citie of getCounries(order)" [value]="citie.id">{{ citie.name }}</ng-option>
             </ng-select>
           </td>
           <td>
@@ -93,14 +93,12 @@
           </td>
           <td>
             <ng-select [(ngModel)]="order.AgnetId" [ngModelOptions]="{ standalone: true }" [clearable]="false"
-              name="Agent" placeholder="اختر مندوب">
+              name="Agent" placeholder="اختر مندوب" *ngIf="!order.disabledAgent">
               <ng-option *ngFor="let Agent of order.Agents" [value]="Agent.id">{{ Agent.name }}</ng-option>
             </ng-select>
           </td>
           <td>
-            <input type="text" class="form-control" [ngModelOptions]="{ standalone: true }"
-              oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-              [(ngModel)]="order.DeliveryCost" />
+            {{order.DeliveryCost}}
           </td>
           <td>
             <input type="text" class="form-control" [ngModelOptions]="{ standalone: true }" [(ngModel)]="order.note" />

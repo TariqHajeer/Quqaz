@@ -10,4 +10,6 @@ export class Resend {
     code:string="";
     client:any;
     note
+    disabledAgent:boolean;
+    branchId
 }

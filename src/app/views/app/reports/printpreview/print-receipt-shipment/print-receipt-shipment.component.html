@@ -238,7 +238,7 @@
 
           <td
             style="
-              width: 15%;
+              width: 12%;
               border: 1px black solid;
               padding: 5px;
               text-align: center;
@@ -248,7 +248,17 @@
           </td>
           <td
             style="
-              width: 17%;
+              width: 12%;
+              border: 1px black solid;
+              padding: 5px;
+              text-align: center;
+            "
+          >
+            {{ order.oldCost | number }}
+          </td>
+          <td
+            style="
+              width: 12%;
               border: 1px black solid;
               padding: 5px;
               text-align: center;
@@ -258,7 +268,7 @@
           </td>
           <td
             style="
-              width: 15%;
+              width: 12%;
               border: 1px black solid;
               padding: 5px;
               text-align: center;
@@ -268,7 +278,7 @@
           </td>
           <td
             style="
-              width: 10%;
+              width: 12%;
               border: 1px black solid;
               padding: 5px;
               text-align: center;
@@ -279,7 +289,7 @@
 
           <td
             style="
-              width: 15%;
+              width: 10%;
               border: 1px black solid;
               padding: 5px;
               text-align: center;
@@ -289,13 +299,22 @@
           </td>
           <td
             style="
-              width: 20%;
+              width: 10%;
               border: 1px black solid;
               padding: 5px;
               text-align: center;
             "
           >
             {{ order.moneyPlaced ? order.moneyPlaced.name : null }}
+          </td>
+          <td
+            style="
+              border: 1px black solid;
+              padding: 5px;
+              text-align: center;
+            "
+          >
+            {{ order.note }}
           </td>
         </tr>
 
@@ -317,7 +336,7 @@
           </td>
           <td
             style="border: 1px black solid; padding: 5px; text-align: center"
-            colspan="4"
+            colspan="6"
           ></td>
         </tr>
         <tr
@@ -336,7 +355,7 @@
       
         <td
           style="border: 1px black solid; padding: 5px; text-align: center"
-          colspan="5"
+          colspan="7"
         ></td>
       </tr>
       </tbody>

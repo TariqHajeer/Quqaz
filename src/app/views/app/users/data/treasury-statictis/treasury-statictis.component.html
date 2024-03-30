@@ -1,0 +1,380 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-pulse"
+  [fullScreen]="true"
+>
+  <p style="color: white"></p>
+</ngx-spinner>
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <label> من تاريخ</label>
+        <input
+          type="date"
+          class="form-control"
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="fromDate"
+          (ngModelChange)="getReport()"
+        />
+      </div>
+      <div class="col-md-6">
+        <label> الى تاريخ</label>
+        <input
+          type="date"
+          class="form-control"
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="toDate"
+          (ngModelChange)="getReport()"
+        />
+      </div>
+
+      <div class="col-12" *ngIf="treasuryReport">
+        <div class="row mt-2">
+          <div class="col-md-3 p-3">
+            <div class="card treasury-card bg-primary">
+              <div class="card-body">
+                <div class="p-2 w-100 d-flex justify-content-between">
+                  <div>تسديد العميل</div>
+                </div>
+                <div
+                  class="px-2 text-amount w-100 d-flex justify-content-between"
+                >
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="30"
+                      height="30"
+                      fill="currentColor"
+                      class="bi bi-credit-card-2-front"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M14 3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z"
+                      />
+                      <path
+                        d="M2 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    {{ treasuryReport?.clientPayment?.amount | number }}
+                  </div>
+                </div>
+                <div class="px-2 w-100 d-flex justify-content-between">
+                  <div>العدد</div>
+                  <div>
+                    {{ treasuryReport?.clientPayment?.count }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 p-3">
+            <div class="card treasury-card bg1">
+              <div class="card-body">
+                <div class="p-2 w-100 d-flex justify-content-between">
+                  <div>سند قبض</div>
+                </div>
+                <div
+                  class="px-2 text-amount w-100 d-flex justify-content-between"
+                >
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="30"
+                      height="30"
+                      fill="currentColor"
+                      class="bi bi-credit-card-2-front"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M14 3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z"
+                      />
+                      <path
+                        d="M2 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    {{ treasuryReport?.getReceipt?.amount | number }}
+                  </div>
+                </div>
+                <div class="px-2 w-100 d-flex justify-content-between">
+                  <div>العدد</div>
+                  <div>
+                    {{ treasuryReport?.getReceipt?.count }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 p-3">
+            <div class="card treasury-card bg2">
+              <div class="card-body">
+                <div class="p-2 w-100 d-flex justify-content-between">
+                  <div>سند دفع</div>
+                </div>
+                <div
+                  class="px-2 text-amount w-100 d-flex justify-content-between"
+                >
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="30"
+                      height="30"
+                      fill="currentColor"
+                      class="bi bi-credit-card-2-front"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M14 3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z"
+                      />
+                      <path
+                        d="M2 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    {{ treasuryReport?.payReceipt?.amount | number }}
+                  </div>
+                </div>
+                <div class="px-2 w-100 d-flex justify-content-between">
+                  <div>العدد</div>
+                  <div>
+                    {{ treasuryReport?.payReceipt?.count }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 p-3">
+            <div class="card treasury-card bg3">
+              <div class="card-body">
+                <div class="p-2 w-100 d-flex justify-content-between">
+                  <div>أخذ</div>
+                </div>
+                <div
+                  class="px-2 text-amount w-100 d-flex justify-content-between"
+                >
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="30"
+                      height="30"
+                      fill="currentColor"
+                      class="bi bi-credit-card-2-front"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M14 3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z"
+                      />
+                      <path
+                        d="M2 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    {{ treasuryReport?.take?.amount | number }}
+                  </div>
+                </div>
+                <div class="px-2 w-100 d-flex justify-content-between">
+                  <div>العدد</div>
+                  <div>
+                    {{ treasuryReport?.take?.count }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 p-3">
+            <div class="card treasury-card bg4">
+              <div class="card-body">
+                <div class="p-2 w-100 d-flex justify-content-between">
+                  <div>اعطاء</div>
+                </div>
+                <div
+                  class="px-2 text-amount w-100 d-flex justify-content-between"
+                >
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="30"
+                      height="30"
+                      fill="currentColor"
+                      class="bi bi-credit-card-2-front"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M14 3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z"
+                      />
+                      <path
+                        d="M2 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    {{ treasuryReport?.give?.amount | number }}
+                  </div>
+                </div>
+                <div class="px-2 w-100 d-flex justify-content-between">
+                  <div>العدد</div>
+                  <div>
+                    {{ treasuryReport?.give?.count }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 p-3">
+            <div class="card treasury-card bg5">
+              <div class="card-body">
+                <div class="p-2 w-100 d-flex justify-content-between">
+                  <div>الصادرات</div>
+                </div>
+                <div
+                  class="px-2 text-amount w-100 d-flex justify-content-between"
+                >
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="30"
+                      height="30"
+                      fill="currentColor"
+                      class="bi bi-credit-card-2-front"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M14 3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z"
+                      />
+                      <path
+                        d="M2 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    {{ treasuryReport?.outCome?.amount | number }}
+                  </div>
+                </div>
+                <div class="px-2 w-100 d-flex justify-content-between">
+                  <div>العدد</div>
+                  <div>
+                    {{ treasuryReport?.outCome?.count }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 p-3">
+            <div class="card treasury-card bg6">
+              <div class="card-body">
+                <div class="p-2 w-100 d-flex justify-content-between">
+                  <div>الواردات</div>
+                </div>
+                <div
+                  class="px-2 text-amount w-100 d-flex justify-content-between"
+                >
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="30"
+                      height="30"
+                      fill="currentColor"
+                      class="bi bi-credit-card-2-front"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M14 3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z"
+                      />
+                      <path
+                        d="M2 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    {{ treasuryReport?.income?.amount | number }}
+                  </div>
+                </div>
+                <div class="px-2 w-100 d-flex justify-content-between">
+                  <div>العدد</div>
+                  <div>
+                    {{ treasuryReport?.income?.count }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 p-3">
+            <div class="card treasury-card bg7">
+              <div class="card-body">
+                <div class="p-2 w-100 d-flex justify-content-between">
+                  <div>استلام الشحنات</div>
+                </div>
+                <div
+                  class="px-2 text-amount w-100 d-flex justify-content-between"
+                >
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="30"
+                      height="30"
+                      fill="currentColor"
+                      class="bi bi-credit-card-2-front"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M14 3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z"
+                      />
+                      <path
+                        d="M2 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    {{ treasuryReport?.reciveOrder?.amount | number }}
+                  </div>
+                </div>
+                <div class="px-2 w-100 d-flex justify-content-between">
+                  <div>العدد</div>
+                  <div>
+                    {{ treasuryReport?.reciveOrder?.count }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <ejs-chart
+          id="chart-container"
+          [primaryXAxis]="primaryXAxis"
+          [primaryYAxis]="primaryYAxis"
+          [title]="title"
+          [palettes]="palette"
+          style="height: 100%; width: 70%"
+          [tooltip]="tooltip"
+          (chartMouseClick)="chartMouseClick($event)"
+          #chart
+        >
+          <e-series-collection>
+            <e-series
+              [dataSource]="chartData"
+              type="Column"
+              xName="state"
+              yName="amount"
+              name="المبلغ"
+            ></e-series>
+            <e-series
+              [dataSource]="chartDataCount"
+              type="Column"
+              xName="state"
+              yName="count"
+              name="العدد"
+            ></e-series>
+          </e-series-collection>
+        </ejs-chart> -->
+      </div>
+    </div>
+  </div>
+</div>

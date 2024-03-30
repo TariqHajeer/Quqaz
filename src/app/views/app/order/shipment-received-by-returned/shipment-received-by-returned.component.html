@@ -89,7 +89,7 @@
           (ngModelChange)="changeOrderPlaced()"
           style="width: 120px; overflow: visible"
         >
-          <ng-option *ngFor="let order of orderPleacedFilters" [value]="order">{{
+          <ng-option *ngFor="let order of orderPlace" [value]="order">{{
             order.name
           }}</ng-option>
         </ng-select>
@@ -163,6 +163,19 @@
         {{ element.order.client.name }}
       </td>
     </ng-container>
+    <ng-container matColumnDef="agent">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        
+        style="padding-right: 10px"
+      >
+        المندوب
+      </th>
+      <td mat-cell *matCellDef="let element" style="padding-right: 10px">
+        {{ element.order.agent.name }}
+      </td>
+    </ng-container>
     <ng-container matColumnDef="country">
       <th mat-header-cell *matHeaderCellDef >المدينة</th>
       <td mat-cell *matCellDef="let element">
@@ -172,7 +185,19 @@
     <ng-container matColumnDef="cost">
       <th mat-header-cell *matHeaderCellDef >كلفة الشحنة</th>
       <td mat-cell *matCellDef="let element; index as j">
-       {{ element.order.cost }}
+        <h4 *ngIf="element.canEditCount">{{ element.order.cost }}</h4>
+        <input
+          type="text"
+          class="form-control"
+          [ngModelOptions]="{ standalone: true }"
+          *ngIf="!element.canEditCount"
+          [(ngModel)]="element.order.cost"
+          style="width: 100px"
+          (keyup)="sumCost()"
+          (ngModelChange)="changeCost(element, j)"
+          (keypress)="keyPressNumbers($event, element.order.cost)"
+        />
+        <h5 style="color: red">{{ element.messageCost }}</h5>
       </td>
     </ng-container>
 
@@ -219,8 +244,9 @@
           [ngModelOptions]="{ standalone: true }"
           [clearable]="false"
           id="i*2"
-          (change)="ChangeOrderplacedId(element, i)"
+          (ngModelChange)="ChangeOrderplacedId(element, i)"
           style="width: 120px; overflow: visible"
+          style="width: 90px;"
         >
           <ng-option
             *ngFor="let order of element.OrderPlaced"
@@ -231,7 +257,7 @@
       </td>
     </ng-container>
     <ng-container matColumnDef="monePlaced">
-      <th mat-header-cell *matHeaderCellDef >موقع المبلغ</th>
+      <th mat-header-cell *matHeaderCellDef>موقع المبلغ</th>
       <td mat-cell *matCellDef="let element; index as i">
         <ng-select
           appendTo="body"
@@ -240,8 +266,9 @@
           style="width: 120px"
           [clearable]="false"
           id="i*5"
-          [disabled]="element.order.orderplaced.id == 3||element.order.orderplaced.id ==4||element.order.orderplaced.id ==6"
+          [disabled]="element.order.orderplaced.id == 3"
           class="disabledselect"
+          style="width: 100px;"
         >
           <ng-option
             *ngFor="let moenyPlaced of element.MoenyPlaced"
@@ -270,8 +297,8 @@
           (keyup)="sumCost()"
           [(ngModel)]="element.order.deliveryCost"
           (ngModelChange)="changeDeliveryCost(element, i)"
-          style="width: 110px"
-          [disabled]="element.order.orderplaced.id == 3||element.order.orderplaced.id ==4||element.order.orderplaced.id ==6"
+          style="width: 80px"
+          [disabled]="element.order.orderplaced.id == 3"
         />
       </td>
     </ng-container>
@@ -284,7 +311,6 @@
           {{
             element.order.orderplaced.id == 5 ? "0" : element.order.agentCost
           }}
-          <!-- {{element.order.agentCost}} -->
         </h4>
         <input
           type="text"
@@ -294,8 +320,8 @@
           *ngIf="element.canEditDeliveryCost"
           (keyup)="sumCost()"
           [(ngModel)]="element.order.agentCost"
-          style="width: 110px"
-          [disabled]="element.order.orderplaced.id == 3||element.order.orderplaced.id ==4||element.order.orderplaced.id ==6"
+          style="width: 80px"
+          [disabled]="element.order.orderplaced.id == 3"
         />
       </td>
     </ng-container>
@@ -308,7 +334,7 @@
           [ngModelOptions]="{ standalone: true }"
           [(ngModel)]="element.order.note"
           style="width: 110px"
-          [disabled]="element.order.orderplaced.id == 3||element.order.orderplaced.id ==4||element.order.orderplaced.id ==6"
+          [disabled]="element.order.orderplaced.id == 3"
         />
       </td>
     </ng-container>
@@ -339,33 +365,23 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr
       mat-row
-      *matRowDef="let row; columns: displayedColumns"
-      (click)="selection.toggle(row)"
-    ></tr>
+      *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
-  <div class="row">
-    <div class="col-4"></div>
-    <div
-      class="col-4"
-      *ngIf="showcount"
-      style="font-size: 15px; text-align: right"
-    >
-      الإجمالي : {{ count }}
+  <div class="row" *ngIf="showcount" style="font-size: 15px; text-align: center;">
+    <div class="col-4"> الإجمالي :</div>
+    <div class="col-4">
+      {{ count }}
     </div>
-    <div
-      class="col-2"
-      *ngIf="showcount"
-      style="font-size: 15px; text-align: left"
-    >
+    <div class="col-1">
       {{ deliveryCostCount }}
     </div>
-    <div
-      class="col-2"
-      *ngIf="showcount"
-      style="font-size: 15px; text-align: left"
-    >
+    <div class="col-1">
       {{ agentCost }}
     </div>
+    <div class="col-2">
+      المجموع : {{totalCost}}
+    </div>
+
   </div>
   <h5 style="padding-top: 20px; padding-right: 10px" *ngIf="noDataFound">
     لايوجد بيانات للعرض

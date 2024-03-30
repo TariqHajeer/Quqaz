@@ -14,22 +14,22 @@ import { SelectionModel } from '@angular/cdk/collections';
 })
 export class OwedOrderComponent implements OnInit {
 
- 
-  displayedColumns: string[] = ['select','indexs', 'code', 'client','cost', 'country', 'region'];
-dataSource = new MatTableDataSource([]);
 
-constructor(
-  private orderservice: AgentOrderService,
-  public userService: UserService,
-  private notifications: NotificationsService,
-  public route: Router
-) { }
+  displayedColumns: string[] = ['select', 'indexs', 'code', 'client', 'cost', 'agentCost', 'country', 'region'];
+  dataSource = new MatTableDataSource([]);
 
-noDataFound: boolean = false
+  constructor(
+    private orderservice: AgentOrderService,
+    public userService: UserService,
+    private notifications: NotificationsService,
+    public route: Router
+  ) { }
 
-@Input() totalCount: number;
-selection = new SelectionModel<any>(true, []);
-orders:any[]=[]
+  noDataFound: boolean = false
+
+  @Input() totalCount: number;
+  selection = new SelectionModel<any>(true, []);
+  orders: any[] = []
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
@@ -38,7 +38,7 @@ orders:any[]=[]
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.orders=[]
+    this.orders = []
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => { this.selection.select(row) });
@@ -63,31 +63,31 @@ orders:any[]=[]
       this.orders = this.orders.filter(o => o != row)
     }
   }
-ngOnInit(): void {
-  localStorage.removeItem('printordersagent')
-  this.allFilter()
-}
-
-
-allFilter() {
-  this.orderservice.OwedOrder().subscribe(response => {
-    if (response)
-      if (response.length == 0)
-        this.noDataFound = true
-      else this.noDataFound = false
-    this.dataSource = new MatTableDataSource(response)
-    this.totalCount = response.length
-  },
-    err => {
-
-    });
-}
-print() {
-  if (this.noDataFound == true || this.orders.length == 0) {
-    this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
-    return
+  ngOnInit(): void {
+    localStorage.removeItem('printordersagent')
+    this.allFilter()
   }
-  localStorage.setItem('printordersagent', JSON.stringify(this.orders))
-  this.route.navigate(['app/agent/agentprint'])
-}
+
+
+  allFilter() {
+    this.orderservice.OwedOrder().subscribe(response => {
+      if (response)
+        if (response.length == 0)
+          this.noDataFound = true
+        else this.noDataFound = false
+      this.dataSource = new MatTableDataSource(response)
+      this.totalCount = response.length
+    },
+      err => {
+
+      });
+  }
+  print() {
+    if (this.noDataFound == true || this.orders.length == 0) {
+      this.notifications.create('error', '  يجب اختيار طلبات', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      return
+    }
+    localStorage.setItem('printordersagent', JSON.stringify(this.orders))
+    this.route.navigate(['app/agent/agentprint'])
+  }
 }

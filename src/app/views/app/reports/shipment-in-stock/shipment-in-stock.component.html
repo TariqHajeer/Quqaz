@@ -96,8 +96,7 @@
     </ng-container>
    
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-        (click)="selection.toggle(row)">
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
     </tr>
   </table>
  <!--
@@ -109,8 +108,8 @@
  <h5 style="padding-top: 20px; padding-right: 10px;"  *ngIf="noDataFound">لايوجد بيانات للعرض</h5>
   
   </div>
-<!-- <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
-[pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator> -->
+<mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
+[pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>
 
 
   <simple-notifications></simple-notifications>

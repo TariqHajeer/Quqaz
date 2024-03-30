@@ -59,7 +59,7 @@
                         <ng-select appendTo="body" [(ngModel)]="EditOrder.CountryId" style="width: 100px;"
                             (change)="changeCountryEdit()" [ngModelOptions]="{standalone: true}" [clearable]="false"
                             *ngIf="order.CanEdit" name="Country">
-                            <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
+                            <ng-option *ngFor="let citie of countries" [value]="citie.id">{{citie.name}}</ng-option>
                         </ng-select>
                         <div *ngIf="!EditOrder.CountryId && Editsubmitted&&order.CanEdit" class="message">المحافظة حقل
                             مطلوب</div>
@@ -68,8 +68,8 @@
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.RegionName}}</h4>
                         <ng-select appendTo="body" [(ngModel)]="EditOrder.RegionId" style="width: 100px;"
-                            [ngModelOptions]="{standalone: true}" [clearable]="false"
-                            *ngIf="order.CanEdit" name="Country">
+                            [ngModelOptions]="{standalone: true}" [clearable]="false" *ngIf="order.CanEdit"
+                            name="Country">
                             <ng-option *ngFor="let region of regions" [value]="region.id">{{region.name}}</ng-option>
                         </ng-select>
 
@@ -78,7 +78,7 @@
                         <h4 *ngIf="!order.CanEdit">{{order.AgentName}}</h4>
                         <ng-select [(ngModel)]="EditOrder.AgentId" [ngModelOptions]="{standalone: true}"
                             placeholder="اختر مندوب" *ngIf="order.CanEdit" [clearable]="false" name="Agent"
-                            style="width: 100px;">
+                            style="width: 100px;" [disabled]="disabledEditAgent">
                             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                         </ng-select>
                         <div *ngIf="!EditOrder.AgentId && Editsubmitted&&order.CanEdit" class="message">المندوب حقل
@@ -105,19 +105,12 @@
                     </td>
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.Cost}}</h4>
-                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                            style="width: 100px;" *ngIf="order.CanEdit"
-                            oninput="this.value = this.value.replace(/[^0-9.]-/g, '').replace(/(\..*)\./g, '$1');"
-                            [(ngModel)]="EditOrder.Cost" #Cost="ngModel">
-
-
+                            <app-cost-input [lable]="''" *ngIf="order.CanEdit" [(value)]="EditOrder.Cost"></app-cost-input>
                     </td>
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.DeliveryCost}}</h4>
-                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                            *ngIf="order.CanEdit" style="width: 100px;" [(ngModel)]="EditOrder.DeliveryCost">
-
+                        <app-delivery-cost-input *ngIf="order.CanEdit" [lable]="''"
+                         [name]="'editDeliveryCost'"   [(value)]="EditOrder.DeliveryCost"></app-delivery-cost-input>
                     </td>
 
 
@@ -196,7 +189,7 @@
                         <ng-select appendTo="body" (keydown.enter)="changed(2)" [(ngModel)]="Order.CountryId"
                             style="width: 100px;" (change)="changeCountry()" [ngModelOptions]="{standalone: true}"
                             [clearable]="false" name="Country">
-                            <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
+                            <ng-option *ngFor="let citie of countries" [value]="citie.id">{{citie.name}}</ng-option>
                         </ng-select>
                         <div *ngIf="!Order.CountryId && submitted" class="message">المحافظة حقل مطلوب</div>
 
@@ -204,8 +197,8 @@
                     <td>
 
                         <ng-select appendTo="body" (keydown.enter)="changed(3)" [(ngModel)]="Order.RegionId"
-                            style="width: 100px;" [ngModelOptions]="{standalone: true}"
-                            [clearable]="false" name="region">
+                            style="width: 100px;" [ngModelOptions]="{standalone: true}" [clearable]="false"
+                            name="region">
                             <ng-option *ngFor="let region of regions" [value]="region.id">{{region.name}}</ng-option>
                         </ng-select>
 
@@ -213,16 +206,17 @@
 
                     <td>
 
-                        <ng-select (keydown.enter)="changed(4)" [(ngModel)]="Order.AgentId"
+                        <ng-select (keydown.enter)="changed(4)"  [(ngModel)]="Order.AgentId"
                             [ngModelOptions]="{standalone: true}" [clearable]="false" name="Agent" style="width: 100px;"
-                            placeholder="اختر مندوب">
+                            placeholder="اختر مندوب" [disabled]="disabledAddAgent">
                             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                         </ng-select>
-                        <div *ngIf="!Order.AgentId && submitted" class="message">المندوب حقل مطلوب</div>
+                        <div *ngIf="!Order.AgentId && submitted&&!disabledAddAgent" class="message">المندوب حقل مطلوب</div>
 
                     </td>
                     <td>
-                        <input (keydown.enter)="changed(5)" type="text" maxlength="11" name="phoneadd"
+                        <input (keydown.enter)="changed(5)" type="text" maxlength="11"
+                            name="phoneadd" id="RecipientPhones"
                             oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
                             style="width: 100px;" class="form-control" [ngModelOptions]="{standalone: true}"
                             [(ngModel)]="Order.RecipientPhones" (keyup)="checkLengthPhoneNumber(Order.RecipientPhones)">
@@ -236,17 +230,14 @@
 
                     </td>
                     <td>
-                        <input (keydown.enter)="changed(6)" type="text" class="form-control"
-                            [ngModelOptions]="{standalone: true}"
-                            oninput="this.value = this.value.replace(/[^0-9.]-/g, '').replace(/(\..*)\./g, '$1');"
-                            style="width: 100px;" [(ngModel)]="Order.Cost">
-
+                        <app-cost-input [lable]="''" (onEnter)="changed(6)" [(value)]="Order.Cost"></app-cost-input>
                     </td>
                     <td>
-                        <input (keydown.enter)="changed(7)" type="text" class="form-control"
-                            [ngModelOptions]="{standalone: true}"
-                            oninput="this.value = this.value.replace(/[^0-9.]-/g, '').replace(/(\..*)\./g, '$1');"
-                            style="width: 100px;" [(ngModel)]="Order.DeliveryCost">
+
+                        <div class="w-100px">
+                            <app-delivery-cost-input [lable]="''" (onEnter)="changed(7)"
+                                [(value)]="Order.DeliveryCost"></app-delivery-cost-input>
+                        </div>
                     </td>
 
 

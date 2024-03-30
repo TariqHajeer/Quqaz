@@ -56,4 +56,7 @@ export class ClientService {
   GiveOrDiscountPoints(item){
     return this.http.post(this.controler+"GiveOrDiscountPoints",item)
   }
+  getClientByBranchId(branchId: number) {
+    return this.http.get<any>(this.controler + "GetClientByBranchId/" + branchId)
+  }
 }

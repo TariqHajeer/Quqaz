@@ -1,12 +1,7 @@
- <!-- [printStyle]="{div : {'color': 'red'}}"
- <button printSectionId="demo"
- styleSheetFile="/assets/css/vendor/bootstrap.min.css"[useExistingCss]="true"                                 
- ngxPrint>print page</button>-->
- <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff"
- type = "ball-pulse" [fullScreen] = "true">
-    <p style="color: white" > </p>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-pulse" [fullScreen]="true">
+    <p style="color: white"> </p>
 </ngx-spinner>
-<form (ngSubmit)="AddOrder()" >
+<form (ngSubmit)="AddOrder()">
 
     <div class="card">
         <div class="card-body">
@@ -15,14 +10,14 @@
                 <div class="col-md-3">
                     <label>كود الشحنة<span class="text-danger text-one align-bottom mx-1">*</span></label>
                     <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                    oninput="this.value = this.value.replace(/[^0-9.A-Za-z]/g, '').replace(/(\..*)\./g, '$1');"
-                    [(ngModel)]="Order.Code" (keyup)="CheckCode()" >
+                        oninput="this.value = this.value.replace(/[^0-9.A-Za-z]/g, '').replace(/(\..*)\./g, '$1');"
+                        [(ngModel)]="Order.Code" (keyup)="CheckCode()">
                     <div *ngIf="!Order.Code && submitted" class="invalid-tooltip">كود الشحنة حقل مطلوب</div>
 
                 </div>
                 <div class="col-md-3">
                     <label>العميل<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                    <ng-select  [(ngModel)]="Order.ClientId" (change)="CheckCode()" [ngModelOptions]="{standalone: true}"
+                    <ng-select [(ngModel)]="Order.ClientId" (change)="CheckCode()" [ngModelOptions]="{standalone: true}"
                         [closeOnSelect]="true" name="Client">
                         <ng-option *ngFor="let Client of clients" [value]="Client.id">{{Client.name}}</ng-option>
                     </ng-select>
@@ -34,9 +29,10 @@
             <div class="row w-100 align-items-end mb-3">
                 <div class="col-md-3">
                     <label>المدينة<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                    <ng-select appOnReturn (change)="changeIndex(2)" [(ngModel)]="Order.CountryId" (change)="changeCountry()"
-                        [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Country">
-                        <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
+                    <ng-select appOnReturn (change)="changeIndex(2)" [(ngModel)]="Order.CountryId"
+                        (change)="changeCountry()" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+                        name="Country">
+                        <ng-option *ngFor="let citie of countries" [value]="citie.id">{{citie.name}}</ng-option>
                     </ng-select>
                     <div *ngIf="!Order.CountryId && submitted" class="invalid-tooltip">المدينة حقل مطلوب</div>
                 </div>
@@ -44,266 +40,103 @@
 
                 <div class="col-md-3">
                     <label>المنطقة</label>
-                        <ng-select appOnReturn (change)="changeIndex(3)" [(ngModel)]="Order.RegionId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-                        name="Region" [addTag]="true">
+                    <ng-select appOnReturn (change)="changeIndex(3)" [(ngModel)]="Order.RegionId"
+                        [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Region" [addTag]="true">
                         <ng-option *ngFor="let region of Region" [value]="region.id">{{region.name}}</ng-option>
                     </ng-select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3" *ngIf="!disabledAgent">
                     <label>المندوب<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                    <ng-select appOnReturn (change)="changeIndex(4)" [(ngModel)]="Order.AgentId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
-                        name="Agent">
+                    <ng-select appOnReturn (change)="changeIndex(4)" [(ngModel)]="Order.AgentId"
+                        [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Agent">
                         <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                     </ng-select>
-                    <div *ngIf="!Order.AgentId && submitted" class="invalid-tooltip">المندوب حقل مطلوب</div>
+                    <select [ngModelOptions]="{standalone: true}" class="custom-select" [disabled]="true"
+                        *ngIf="disabledAgent">
+                        <option></option>
+                    </select>
+                    <div *ngIf="!(Order.AgentId||disabledAgent) && submitted" class="invalid-tooltip">المندوب حقل مطلوب
+                    </div>
                 </div>
             </div>
             <div class="row w-100 align-items-end mb-3">
                 <div class="col-md-3">
-                    <label>كلفة التوصيل</label>
-                    <input appOnReturn (change)="changeIndex(5)" type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                    [(ngModel)]="Order.DeliveryCost" >
+                    <app-delivery-cost-input [(value)]="Order.DeliveryCost"
+                        [change]="changeIndex(5)"></app-delivery-cost-input>
                 </div>
 
                 <div class="col-md-3">
-                    <label>الكلفة الكلية<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                    <input appOnReturn (change)="changeIndex(6)" type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                    oninput="this.value = this.value.replace(/[^0-9.]-/g, '').replace(/(\..-*)\./g, '$1');"
-                     [(ngModel)]="Order.Cost">
+                    <app-cost-input (onEnter)="changeIndex(6)" [(value)]="Order.Cost"
+                        [required]="true"></app-cost-input>
                     <div *ngIf="!Order.Cost && submitted" class="invalid-tooltip">الكلفة حقل مطلوب</div>
                 </div>
                 <div class="col-md-3">
                     <label>موقع المبلغ<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                    <select appOnReturn (change)="changeIndex(7)" [(ngModel)]="Order.MoenyPlacedId" [ngModelOptions]="{standalone: true}"
-                    class="custom-select"  style="font-size: 16px;" [disabled]="true">
-                       <option *ngFor="let moenyPlaced of MoenyPlaced" [value]="moenyPlaced.id">{{moenyPlaced.name}}</option>
-                       
-                     </select>
+                    <select appOnReturn (change)="changeIndex(7)" [(ngModel)]="Order.MoenyPlacedId"
+                        [ngModelOptions]="{standalone: true}" class="custom-select" style="font-size: 16px;"
+                        [disabled]="true">
+                        <option *ngFor="let moenyPlaced of MoenyPlaced" [value]="moenyPlaced.id">{{moenyPlaced.name}}
+                        </option>
+
+                    </select>
                     <div *ngIf="!Order.MoenyPlacedId && submitted" class="invalid-tooltip">موقع المبلغ حقل مطلوب</div>
-                   
                 </div>
                 <div class="col-md-3">
                     <label>حالة الشحنة<span class="text-danger text-one align-bottom mx-1">*</span></label>
-                   
-                    <select appOnReturn (change)="changeIndex(8)" [(ngModel)]="Order.OrderplacedId" style="font-size: 16px;" [ngModelOptions]="{standalone: true}"
-                    class="custom-select" [disabled]="true">
-                       <option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}</option>
-                       
-                     </select>
+                    <select appOnReturn (change)="changeIndex(8)" [(ngModel)]="Order.OrderplacedId"
+                        style="font-size: 16px;" [ngModelOptions]="{standalone: true}" class="custom-select"
+                        [disabled]="true">
+                        <option *ngFor="let order of orderPlace" [value]="order.id">{{order.name}}</option>
+
+                    </select>
                     <div *ngIf="!Order.OrderplacedId && submitted" class="invalid-tooltip">حالة الشحنة حقل مطلوب</div>
-
                 </div>
-
-             <!--    <div class="col-md-3">
-                    <label>العنوان</label>
-                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                        [(ngModel)]="Order.Address">
-                       <div *ngIf="!Order.Address && submitted" class="invalid-tooltip"> العنوان حقل مطلوب</div>
-
-                </div>-->
-
-
                 <div class="col-md-3">
                     <label>التاريخ</label>
-                    <input appOnReturn type="text" readonly (change)="changeIndex(9)" class="form-control" [ngModelOptions]="{standalone: true}"
-                        [(ngModel)]="Order.Date" name="Date" bsDatepicker [container]="'html'"
-                        [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
+                    <input appOnReturn type="text" readonly (change)="changeIndex(9)" class="form-control"
+                        [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.Date" name="Date" bsDatepicker
+                        [container]="'html'" [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
 
                 </div>
-             <!--   <div class="col-md-3">
-                    <label>تاريخ التسليم</label>
-                    <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
-                        [(ngModel)]="Order.DiliveryDate" name="DiliveryDate" bsDatepicker [container]="'html'"
-                        [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
-                       <div *ngIf="!Order.DiliveryDate && submitted" class="invalid-tooltip"> تاريخ التسليم حقل مطلوب</div>
-                </div>--> 
                 <div class="col-md-3">
                     <label>اسم المستلم</label>
-                    <input appOnReturn (change)="changeIndex(10)" type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                        [(ngModel)]="Order.RecipientName">
-                    </div>
-
-            </div>
-
-
-
-
-
-            <div class="row w-100 align-items-end mb-3">
-
-<!--
-                <div class="col-md-3">
-
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-                        data-whatever="@getbootstrap">نوع الطلبية</button>
-
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">نوع الطلبية</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>نوع <span
-                                                    class="text-danger text-one align-bottom mx-1">*</span></label>
-                                            <ng-select [items]="orderTypes"
-                                            [(ngModel)]="orderType"
-                                            bindLabel="name"[addTag]="true"
-                                            name='orderTypeSelect'
-                                            >
-                                            </ng-select>
-                                            <div *ngIf="!orderType && submitordertype" class="invalid-tooltip">النوع حقل مطلوب</div>
-
-                                        </div>
-                                        <div class="col-md-6">
-                                         
-                                            <label>العدد</label>
-                                            <input type="text"
-                                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                                class="form-control" [ngModelOptions]="{standalone: true}"
-                                                [(ngModel)]="count">
-                                                <div *ngIf="!count && submitordertype" class="invalid-tooltip">العدد حقل مطلوب</div>
-
-                                        </div>
-                                    </div>
-
-                                    <button type="button" class="btn btn-primary"
-                                        (click)="AddOrderType()">اضافة</button>
-
-                                    <table class="table">
-                                        <thead>
-                                            <th>
-                                                #
-                                            </th>
-                                            <th>
-                                                نوع الطلبية
-                                            </th>
-                                            <th>
-                                                العدد
-                                            </th>
-                                            <th>
-                                                
-                                            </th>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let OrderType of Order.OrderTypeDtos;let i=index">
-                                                <td>{{i+1}}
-
-                                                </td>
-                                                <td>
-                                                    <h4 *ngIf="!OrderType.CanEdit">{{OrderType.OrderTypeName}}
-                                                    </h4>
-                                                    <ng-select [items]="AllorderTypes" [(ngModel)]="EditorderType"
-                                                    *ngIf="OrderType.CanEdit" bindLabel="name" [addTag]="true" name='orderTypeSelect'>
-                                                    </ng-select>
-                                                    <div *ngIf="!orderType && submitordertype" class="message">
-                                                        النوع حقل
-                                                        مطلوب</div>
-                                                </td>
-                                                <td>
-                                                    <h4 *ngIf="!OrderType.CanEdit">{{OrderType.Count}}</h4>
-                                                    <input  type="text" 
-                                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                                        *ngIf="OrderType.CanEdit"  class="form-control"
-                                                        [ngModelOptions]="{standalone: true}"
-                                                        [(ngModel)]="Editcount">
-                                                    <div *ngIf="!count && submitordertype" class="message">العدد
-                                                        حقل
-                                                        مطلوب</div>
-                                                </td>
-                                                <td>
-                                                    <!--edit icone
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                        height="16" fill="currentColor"
-                                                        *ngIf="!OrderType.CanEdit" style="cursor: pointer;"
-                                                        class="bi bi-pencil" viewBox="0 0 16 16"
-                                                        (click)="EditOrderType(OrderType)">
-                                                        <path
-                                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                                                    </svg>
-
-                                                    <!--chech icon 
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                        height="16" fill="currentColor"
-                                                        (click)="SaveOrderType(OrderType)"
-                                                        *ngIf="OrderType.CanEdit" style="cursor: pointer;"
-                                                        class="bi bi-check2" viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
-                                                    </svg>
-                                                </td>
-
-                                                <td>
-                                                    <!--delete icone
-                                                    <svg (click)="deleteOrderType(OrderType)"
-                                                        xmlns="http://www.w3.org/2000/svg" width="16"
-                                                        height="16" *ngIf="!OrderType.CanEdit"
-                                                        fill="currentColor" class="bi bi-trash"
-                                                        viewBox="0 0 16 16" style="cursor: pointer;">
-                                                        <path
-                                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                                        <path fill-rule="evenodd"
-                                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                                    </svg>
-                                                    <!--cansle icone
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                        height="16" fill="currentColor" style="cursor: pointer;"
-                                                        (click)="CansleEditOrderType(OrderType)"
-                                                        *ngIf="OrderType.CanEdit" class="bi bi-x"
-                                                        viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                                    </svg>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">اغلاق</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    <input appOnReturn (change)="changeIndex(10)" type="text" class="form-control"
+                        [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.RecipientName">
                 </div>
-            -->
             </div>
+
             <div class="row w-100 align-items-end mb-3">
                 <!--add phones-->
                 <div *ngFor="let phone of Order.RecipientPhones;let i=index;trackBy: onTrackBy" class="col-md-3">
                     <ng-container>
                         <label>هاتف المستلم-{{i+1}}
-                            <span (click)="deletePhone(phone)"><i class="text-danger iconsminds-close" style="font-size: 18px;"></i></span>
+                            <span (click)="deletePhone(phone)"><i class="text-danger iconsminds-close"
+                                    style="font-size: 18px;"></i></span>
                         </label>
                         <input appOnReturn (change)="changeIndex(11)" type="text" maxlength="11"
                             oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
                             class="form-control" [ngModelOptions]="{standalone: true}"
-                            [(ngModel)]="Order.RecipientPhones[i]"(ngModelChange)="checkLengthPhoneNumberForEdit(Order.RecipientPhones[i])">
-                            <div class="invalid-tooltip" *ngIf="Order.RecipientPhones[i]&& checkLengthPhoneNumberForEdit(Order.RecipientPhones[i])">
-                                {{RecipientPhoneslengthEdit}}
-                              </div>
-                        </ng-container>
-                   
+                            [(ngModel)]="Order.RecipientPhones[i]"
+                            (ngModelChange)="checkLengthPhoneNumberForEdit(Order.RecipientPhones[i])">
+                        <div class="invalid-tooltip"
+                            *ngIf="Order.RecipientPhones[i]&& checkLengthPhoneNumberForEdit(Order.RecipientPhones[i])">
+                            {{RecipientPhoneslengthEdit}}
+                        </div>
+                    </ng-container>
+
                 </div>
                 <div class="col-md-3">
                     <label>هاتف المستلم<span class="text-danger text-one align-bottom mx-1">*</span></label>
                     <input appOnReturn (change)="changeIndex(12)" type="text" maxlength="11"
                         oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
-                        class="form-control"(ngModelChange)="checkLengthPhoneNumber(tempPhone)"
-                         [ngModelOptions]="{standalone: true}" [(ngModel)]="tempPhone">
-                    <div *ngIf="!tempPhone&&Order.RecipientPhones!=null&&Order.RecipientPhones!=undefined&&Order.RecipientPhones.length==0 && submitted" class="invalid-tooltip">هاتف
+                        class="form-control" (ngModelChange)="checkLengthPhoneNumber(tempPhone)"
+                        [ngModelOptions]="{standalone: true}" [(ngModel)]="tempPhone">
+                    <div *ngIf="!tempPhone&&Order.RecipientPhones!=null&&Order.RecipientPhones!=undefined&&Order.RecipientPhones.length==0 && submitted"
+                        class="invalid-tooltip">هاتف
                         المستلم حقل مطلوب</div>
-                        <div class="invalid-tooltip" *ngIf="tempPhone&& checkLengthPhoneNumber(tempPhone)">
-                            {{RecipientPhoneslength}}
-                          </div>
+                    <div class="invalid-tooltip" *ngIf="tempPhone&& checkLengthPhoneNumber(tempPhone)">
+                        {{RecipientPhoneslength}}
+                    </div>
 
                 </div>
 
@@ -316,11 +149,10 @@
 
                 <div class="col-md-12">
                     <label>ملاحظات</label>
-                    <input  appOnReturn (change)="changeIndex(13)" type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                        [(ngModel)]="Order.Note">
+                    <input appOnReturn (change)="changeIndex(13)" type="text" class="form-control"
+                        [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.Note">
                 </div>
             </div>
-
             <div class="row w-100">
                 <div class="col-3">
                     <button type="submit" class="btn btn-primary"> حفظ</button>
@@ -330,5 +162,3 @@
     </div>
     <simple-notifications></simple-notifications>
 </form>
-
-

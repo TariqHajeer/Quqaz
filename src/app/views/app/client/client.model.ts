@@ -16,9 +16,9 @@ export class Client {
   firstDate:any=new Date;
   note?:any;
   canDelete?:any;
-  phones?:any[]
-  mail
-  points:PointSetting[]
+  phones?:any[]=[];
+  mail;
+  points:PointSetting[]=[];
 }
 export class Account
     {

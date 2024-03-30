@@ -1,0 +1,18 @@
+<label *ngIf="lable">
+{{lable}}
+<span class="text-danger text-one align-bottom mx-1"*ngIf="required">*</span>
+</label>
+<input type="text"
+[(ngModel)]="value"
+(keypress)="numberOnly($event)"
+(keyup)="backspaceHandling($event)"
+(keydown)="keydownHandling($event)"
+[disabled]="disabled"
+[minlength]="minlengthInput"
+[maxlength]="maxlengthInput"
+[ngClass]="[ className ? className : 'form-control' ]"
+(keydown.enter)="onEnter.emit()"
+(blur)="onBlur.emit()"
+[placeholder]="placeholder"
+style="min-width: 100px;"
+>

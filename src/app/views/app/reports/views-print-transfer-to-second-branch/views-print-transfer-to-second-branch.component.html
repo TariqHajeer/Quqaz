@@ -1,0 +1,56 @@
+<h3>تقرير الشحنات المنقولة الى فرع اخر </h3>
+<div class="row">
+  <div class="col-md-3">
+    <label for="branche">الفرع</label>
+    <select class="form-control" (change)="Get()" name="branche" [(ngModel)]="destinationBranchId">
+      <option *ngFor="let branche of branches" [value]="branche.id">{{branche.name}}</option>
+    </select>
+  </div>
+  <!-- <div class="col-md-3">
+    <label for="code">الكود</label>
+   <input type="text" class="form-control" name="code" id="code"[(ngModel)]="code">
+  </div>
+  <div class="col-md-3">
+    <label for="moveNumber">رقم النقل</label>
+    <input type="text" class="form-control" name="moveNumber" id="moveNumber"[(ngModel)]="moveNumber">
+  </div> -->
+</div>
+<br>
+<div class="example-container mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%;"
+    (onPageSwitch)="switchPage($event)">
+    
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> تاريخ الادخال</th>
+      <td mat-cell *matCellDef="let element" style="padding: 10px;"> {{element.createdOnUtc| date: 'yyyy/MM/dd'}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="driverName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> اسم السائق</th>
+      <td mat-cell *matCellDef="let element" style="padding: 10px;"> {{element.driverName}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="destinationBranch">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> الفرع الوجهة </th>
+      <td mat-cell *matCellDef="let element" style="padding: 10px;"> {{element.destinationBranch}}</td>
+    </ng-container>
+    <ng-container matColumnDef="printNmber">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;">رقم الطباعة </th>
+      <td mat-cell *matCellDef="let element" style="padding: 10px;">
+        <a class="btn" style="color: rgb(2, 52, 128);" (click)="print(element)">{{element.id}}</a>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="printerName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 10px;"> المسؤول عن الطباعة</th>
+      <td mat-cell *matCellDef="let element" style="padding: 10px;"> {{element.printerName}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <h5 style="padding-top: 20px; padding-right: 10px;" *ngIf="noDataFound">لا يوجد بيانات للعرض</h5>
+
+</div>
+<mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"
+  [pageSizeOptions]="paging.selectItemsPerPage" (page)="switchPage($event)"></mat-paginator>

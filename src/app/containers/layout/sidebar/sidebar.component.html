@@ -2,7 +2,7 @@
     <div class="main-menu">
         <perfect-scrollbar class="scroll" [config]="{suppressScrollX: true}">
             <ul class="list-unstyled">
-                <li *ngFor="let item of filteredMenuItems(menuItems)" class="text-center"
+                <li *ngFor="let item of filteredMenuItems(menuItems)" class="text-center" style="word-break: break-all;"
                     [ngClass]="{'active': (selectedParentMenu === item.to && viewingParentMenu === '') || viewingParentMenu === item.to}">
 
                             <!-- if the item go to new page -->
@@ -54,12 +54,12 @@
                         <span class="badge badge-danger"*ngIf="sub.badge">{{sub.b&&sub.enabledadgeLable}}</span>
                     </a>
                     <a (click)="toggleCollapse(sub.to)" *ngIf="sub.subs && sub.subs.length > 0&&sub.enabled"
-                        [ngClass]="{'rotate-arrow-icon opacity-50 c-pointer': true, 'collapsed': closedCollapseList.includes(sub.to)}">
+                        [ngClass]="{'rotate-arrow-icon opacity-50 c-pointer': true, 'collapsed': !closedCollapseList.includes(sub.to)}">
                         <i class="simple-icon-arrow-down"></i>
                         <span class="d-inline-block">{{sub.label | translate}}</span>  &nbsp;
                         <span class="badge badge-danger"*ngIf="sub.badge">{{sub.badgeLable}}</span>
                     </a>
-                    <div [collapse]="closedCollapseList.includes(sub.to)" [isAnimated]="true">
+                    <div [collapse]="!closedCollapseList.includes(sub.to)" [isAnimated]="true">
                         <div *ngIf="sub.subs && sub.subs.length > 0&&sub.enabled">
                             <ul class="list-unstyled inner-level-menu">
                                 <li  *ngFor="let deepSub of filteredMenuItems(sub.subs)"
@@ -78,6 +78,31 @@
                             </ul>
                         </div>
                     </div>
+                    <!-- <mat-accordion>
+                        <mat-expansion-panel hideToggle>
+                          <mat-expansion-panel-header>
+                            <mat-panel-title>
+                              This is the expansion title
+                            </mat-panel-title>
+                            <mat-panel-description>
+                              This is a summary of the content
+                            </mat-panel-description>
+                          </mat-expansion-panel-header>
+                          <p>This is the primary content of the panel.</p>
+                        </mat-expansion-panel>
+                        <mat-expansion-panel (opened)="panelOpenState = true"
+                                             (closed)="panelOpenState = false">
+                          <mat-expansion-panel-header>
+                            <mat-panel-title>
+                              Self aware panel
+                            </mat-panel-title>
+                            <mat-panel-description>
+                              Currently I am {{panelOpenState ? 'open' : 'closed'}}
+                            </mat-panel-description>
+                          </mat-expansion-panel-header>
+                          <p>I'm visible because I am open</p>
+                        </mat-expansion-panel>
+                      </mat-accordion> -->
             </ul>
         </perfect-scrollbar>
     </div>

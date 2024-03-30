@@ -16,7 +16,6 @@ import { ExportsTypesComponent } from './exports-types/exports-types.component';
 import { ShipmentsTypesComponent } from './shipments-types/shipments-types.component';
 import { RegionComponent } from './region/region.component';
 import { GroupsComponent } from './groups/groups.component';
-import { MainCityComponent } from './main-city/main-city.component';
 import { PointSettingComponent } from './point-setting/point-setting.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -24,32 +23,34 @@ import { MatTableModule } from '@angular/material/table';
 import { DatePickerModule, DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { NgxPrintModule } from 'ngx-print';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { BranchComponent } from './branch/branch.component';
+import { SharedModule } from "../../../shared/shared.module";
+import { ClientMessageComponent } from './client-message/client-message.component';
 
 
 @NgModule({
-  declarations: [ CitiesComponent, ImportsTypesComponent, ExportsTypesComponent, ShipmentsTypesComponent, RegionComponent, GroupsComponent, MainCityComponent, PointSettingComponent],
-  imports: [
-    CommonModule,
-    SettingRoutingModule,
-    GridAllModule,
-    GridModule,
-    TranslateModule,
-    SimpleNotificationsModule.forRoot(),
-    BsDatepickerModule.forRoot(),
-    FormsModule,
-    ReactiveFormsModule,
-    NgSelectModule,
-    ModalModule.forRoot(),
-    MatTableModule,
-    MatCheckboxModule,
-    MatPaginatorModule,
-    NgxPrintModule,
-    DatePickerModule,
-    DateRangePickerModule,
-    NgxSpinnerModule,
-
-  ],
-  providers: [ToolbarService]
-
+    declarations: [CitiesComponent, ImportsTypesComponent, ExportsTypesComponent, ShipmentsTypesComponent, RegionComponent, GroupsComponent, PointSettingComponent, BranchComponent, ClientMessageComponent],
+    providers: [ToolbarService],
+    imports: [
+        CommonModule,
+        SettingRoutingModule,
+        GridAllModule,
+        GridModule,
+        TranslateModule,
+        SimpleNotificationsModule.forRoot(),
+        BsDatepickerModule.forRoot(),
+        FormsModule,
+        ReactiveFormsModule,
+        NgSelectModule,
+        ModalModule.forRoot(),
+        MatTableModule,
+        MatCheckboxModule,
+        MatPaginatorModule,
+        NgxPrintModule,
+        DatePickerModule,
+        DateRangePickerModule,
+        NgxSpinnerModule,
+        SharedModule
+    ]
 })
 export class SettingModule { }

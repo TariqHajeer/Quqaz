@@ -1,0 +1,158 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-pulse" [fullScreen]="true">
+    <p style="color: white"> </p>
+</ngx-spinner>
+<form (ngSubmit)="AddOrder()">
+
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title" style="color: rgb(0, 49, 112);"> اضافة طلب مع الفرع</h2>
+           <div class="row w-100 align-items-end mb-3">
+            <div class="col-md-3">
+                <label>الفرع<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                <ng-select [(ngModel)]="Order.branchId" (change)="changeBranch()" [ngModelOptions]="{standalone: true}"
+                    [closeOnSelect]="true" name="branch">
+                    <ng-option *ngFor="let branch of branches" [value]="branch.id">{{branch.name}}</ng-option>
+                </ng-select>
+                <div *ngIf="!Order.branchId && submitted" class="invalid-tooltip" >الفرع حقل مطلوب</div>
+            </div>
+            <div class="col-md-3">
+                <label>رقم طباعة الناقل</label>
+                <input type="number" [(ngModel)]="Order.transferToOtherBranchNumber" name="transferToOtherBranchNumber" calss="form-control"/>
+            </div>
+           </div>
+            <div class="row w-100 align-items-end mb-3">
+                <div class="col-md-3">
+                    <label>كود الشحنة<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                        oninput="this.value = this.value.replace(/[^0-9.A-Za-z]/g, '').replace(/(\..*)\./g, '$1');"
+                        [(ngModel)]="Order.Code" (keyup)="CheckCode()">
+                    <div *ngIf="!Order.Code && submitted" class="invalid-tooltip">كود الشحنة حقل مطلوب</div>
+
+                </div>
+                <div class="col-md-3">
+                    <label>العميل<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <ng-select [(ngModel)]="Order.ClientId" (change)="CheckCode()" [ngModelOptions]="{standalone: true}"
+                        [closeOnSelect]="true" name="Client">
+                        <ng-option *ngFor="let Client of clients" [value]="Client.id">{{Client.name}}</ng-option>
+                    </ng-select>
+                    <div *ngIf="!Order.ClientId && submitted" class="invalid-tooltip">العميل حقل مطلوب</div>
+                    <div *ngIf="showMessageCode" class="invalid-tooltip">يوجد شحنة مسبقا لهذا العميل بنفس الكود</div>
+
+                </div>
+            </div>
+            <div class="row w-100 align-items-end mb-3">
+                <div class="col-md-3">
+                    <label>المدينة<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <ng-select appOnReturn (change)="changeIndex(2)" [(ngModel)]="Order.CountryId"
+                        (change)="changeCountry()" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true"
+                        name="Country">
+                        <ng-option *ngFor="let citie of countries" [value]="citie.id">{{citie.name}}</ng-option>
+                    </ng-select>
+                    <div *ngIf="!Order.CountryId && submitted" class="invalid-tooltip">المدينة حقل مطلوب</div>
+                </div>
+
+
+                <div class="col-md-3">
+                    <label>المنطقة</label>
+                    <ng-select appOnReturn (change)="changeIndex(3)" [(ngModel)]="Order.RegionId"
+                        [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Region" [addTag]="true">
+                        <ng-option *ngFor="let region of Region" [value]="region.id">{{region.name}}</ng-option>
+                    </ng-select>
+                </div>
+                <div class="col-md-3" *ngIf="!disabledAgent">
+                    <label>المندوب<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <ng-select appOnReturn (change)="changeIndex(4)" [(ngModel)]="Order.AgentId"
+                        [ngModelOptions]="{standalone: true}" [closeOnSelect]="true" name="Agent">
+                        <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
+                    </ng-select>
+                    <select [ngModelOptions]="{standalone: true}" class="custom-select" [disabled]="true"
+                        *ngIf="disabledAgent">
+                        <option></option>
+                    </select>
+                    <div *ngIf="!(Order.AgentId||disabledAgent) && submitted" class="invalid-tooltip">المندوب حقل مطلوب
+                    </div>
+                </div>
+            </div>
+            <div class="row w-100 align-items-end mb-3">
+                <div class="col-md-3">
+                    <app-delivery-cost-input [(value)]="Order.DeliveryCost"
+                        [change]="changeIndex(5)"></app-delivery-cost-input>
+                </div>
+
+                <div class="col-md-3">
+                    <app-cost-input (onEnter)="changeIndex(6)" [(value)]="Order.Cost"
+                        [required]="true"></app-cost-input>
+                    <div *ngIf="!Order.Cost && submitted" class="invalid-tooltip">الكلفة حقل مطلوب</div>
+                </div>
+                <div class="col-md-3">
+                    <label>التاريخ</label>
+                    <input appOnReturn type="text" readonly (change)="changeIndex(9)" class="form-control"
+                        [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.Date" name="Date" bsDatepicker
+                        [container]="'html'" [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }">
+
+                </div>
+                <div class="col-md-3">
+                    <label>اسم المستلم</label>
+                    <input appOnReturn (change)="changeIndex(10)" type="text" class="form-control"
+                        [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.RecipientName">
+                </div>
+            </div>
+
+            <div class="row w-100 align-items-end mb-3">
+                <!--add phones-->
+                <div *ngFor="let phone of Order.RecipientPhones;let i=index;trackBy: onTrackBy" class="col-md-3">
+                    <ng-container>
+                        <label>هاتف المستلم-{{i+1}}
+                            <span (click)="deletePhone(phone)"><i class="text-danger iconsminds-close"
+                                    style="font-size: 18px;"></i></span>
+                        </label>
+                        <input appOnReturn (change)="changeIndex(11)" type="text" maxlength="11"
+                            oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
+                            class="form-control" [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="Order.RecipientPhones[i]"
+                            (ngModelChange)="checkLengthPhoneNumberForEdit(Order.RecipientPhones[i])">
+                        <div class="invalid-tooltip"
+                            *ngIf="Order.RecipientPhones[i]&& checkLengthPhoneNumberForEdit(Order.RecipientPhones[i])">
+                            {{RecipientPhoneslengthEdit}}
+                        </div>
+                    </ng-container>
+
+                </div>
+                <div class="col-md-3">
+                    <label>هاتف المستلم<span class="text-danger text-one align-bottom mx-1">*</span></label>
+                    <input appOnReturn (change)="changeIndex(12)" type="text" maxlength="11"
+                        oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
+                        class="form-control" (ngModelChange)="checkLengthPhoneNumber(tempPhone)"
+                        [ngModelOptions]="{standalone: true}" [(ngModel)]="tempPhone">
+                    <div *ngIf="!tempPhone&&Order.RecipientPhones!=null&&Order.RecipientPhones!=undefined&&Order.RecipientPhones.length==0 && submitted"
+                        class="invalid-tooltip">هاتف
+                        المستلم حقل مطلوب</div>
+                    <div class="invalid-tooltip" *ngIf="tempPhone&& checkLengthPhoneNumber(tempPhone)">
+                        {{RecipientPhoneslength}}
+                    </div>
+
+                </div>
+
+                <div class="col-2">
+                    <button type="button" class="btn" (click)="addNewPhone()"><i class="iconsminds-add  text-primary"
+                            style="font-size: 22px;"></i></button>
+                </div>
+            </div>
+            <div class="row w-100 align-items-end mb-3">
+
+                <div class="col-md-12">
+                    <label>ملاحظات</label>
+                    <input appOnReturn (change)="changeIndex(13)" type="text" class="form-control"
+                        [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.Note">
+                </div>
+            </div>
+
+            <div class="row w-100">
+                <div class="col-3">
+                    <button type="submit" class="btn btn-primary"> حفظ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <simple-notifications></simple-notifications>
+</form>

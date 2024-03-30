@@ -15,6 +15,7 @@ import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed
 import { UserService } from 'src/app/services/user.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AgentOrderService } from 'src/app/services/agent-order.service';
+import orderPlaceds from 'src/app/data/orderPlaced';
 
 
 @Component({
@@ -25,7 +26,7 @@ import { AgentOrderService } from 'src/app/services/agent-order.service';
 export class OrderByCodeComponent implements OnInit {
 
   displayedColumns: string[] = ['index', 'code', 'client', 'country'
-    , 'cost', 'orderplaced','deliveryCost',  'edit'];
+    , 'cost', 'orderplaced', 'edit'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
   Code
@@ -73,12 +74,10 @@ export class OrderByCodeComponent implements OnInit {
     this.getorder.order.index = 0;
   }
 
- 
+
   GetorderPlace() {
-    this.agentService.orderPlace().subscribe(res => {
-      this.orderPlace = res
-      this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
-    })
+    this.orderPlace = [...orderPlaceds];
+    this.orderPlace = this.orderPlace.filter(o => o.id != 1 && o.id != 2)
   }
   changeOrderPlaced() {
     if (this.getorders.length != 0) {
@@ -88,14 +87,14 @@ export class OrderByCodeComponent implements OnInit {
       })
       this.MoenyPlacedId = null
       this.getMoenyPlaced = this.orderplacedstate.ChangeOrderPlace(this.OrderplacedId.id, this.MoenyPlaced)
-    //  console.log( this.getMoenyPlaced )
+      //  console.log( this.getMoenyPlaced )
       // if (this.OrderplacedId.id == 4)
       //   this.getMoenyPlaced = [{ id: 2, name: "مندوب" }, { id: 4, name: "تم تسليمها/داخل الشركة" }]
 
     }
 
   }
- 
+
   showcount = false
   findorder
   Ordersfilter: any[] = []
@@ -182,7 +181,7 @@ export class OrderByCodeComponent implements OnInit {
     }
   }
   ChangeAllOrderplacedId(element, index) {
-    try{
+    try {
       this.orderplacedstate.canChangeCost(element, this.MoenyPlaced, this.temporderscost[index])
       this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced)
       this.orderplacedstate.onWay(element, this.MoenyPlaced)
@@ -190,11 +189,11 @@ export class OrderByCodeComponent implements OnInit {
       this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced)
       this.orderplacedstate.EditDeliveryCostAndAgentCost(element, this.tempdeliveryCost[index], this.tempagentCost[index])
       this.sumCost()
-    }catch{
+    } catch {
       this.notifications.create("error", "يوجد خطأ في 237", NotificationType.Error, { theClass: 'error', timeOut: 6000, showProgressBar: false });
 
     }
-   
+
   }
   ChangeOrderplacedId(element, index) {
     // this.GetMoenyPlaced()

@@ -5,64 +5,35 @@
     <div class="row">
       <div class="col-3">
         <label>من تاريخ</label>
-        <ejs-datepicker  name="FromDate" [(ngModel)]='FromDate' (ngModelChange)="changeRange()"
-         id="fromdate" placeholder='اختر تاريخ'>
+        <ejs-datepicker name="fromDate" [(ngModel)]='fromDate' (ngModelChange)="changeRange()" id="fromDate"
+          placeholder='اختر تاريخ'>
         </ejs-datepicker>
-  
+
       </div>
       <div class="col-3">
         <label>الى تاريخ</label>
-        <ejs-datepicker name="ToDate"[(ngModel)]='ToDate' (ngModelChange)="changeRange()"
-         id="todate" placeholder='اختر تاريخ'>
+        <ejs-datepicker name="toDate" [(ngModel)]='toDate' (ngModelChange)="changeRange()" id="toDate"
+          placeholder='اختر تاريخ'>
         </ejs-datepicker>
-  
       </div>
-      <div  class="col-3" *ngIf="showcount" > 
-        الإجمالي : {{totalEarinig}}
+      <div class="col-10"></div>
+      <div class="col-2">
+        الإجمالي :
+        <span [ngClass]="{'badge-success':totalEarinig>0,'badge-danger':totalEarinig<0}">{{totalEarinig}}</span>
       </div>
     </div>
-    
   </div>
 </div>
-
-
-
-<!--
-
-<ejs-chart style='display:block;' #chart [legendSettings]='legend' id='container' [primaryXAxis]='primaryXAxis'
-  [tooltip]='tooltip' [height]='height' [width]='width' (scrollEnd)='scrollEnd($event)' [primaryYAxis]='primaryYAxis'
-  [chartArea]='chartArea' [title]='title'>
-  <e-series-collection>
-    <e-series [dataSource]='data' [animation]='animation' type='Line' xName='x' yName='y'>
-    </e-series>
-  </e-series-collection>
-</ejs-chart> 
-<div class="row">
-  <div class="col-md-2">
-    <label>من تاريخ</label>
-    <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
-      [(ngModel)]="filtering.FromDate" bsDatepicker [container]="'html'"
-      [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }" (ngModelChange)="changeRange()">
-
-  </div>
-  <div class="col-md-2">
-    <label>الى تاريخ</label>
-    <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
-      [(ngModel)]="filtering.ToDate" bsDatepicker [container]="'html'"
-      [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD' }" (ngModelChange)="changeRange()">
-
-  </div>
-</div>-->
 <div class="example-container mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort (onPageSwitch)="switchPage($event)">
-
     <ng-container matColumnDef="code">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> كود </th>
       <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.code}}</td>
     </ng-container>
     <ng-container matColumnDef="orderplaced">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> حالة الشحنة</th>
-      <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.orderplaced!=null?element.orderplaced.name:null}}</td>
+      <td mat-cell *matCellDef="let element" style="padding:10px;">
+        {{element.orderplaced!=null?element.orderplaced.name:null}}</td>
     </ng-container>
     <ng-container matColumnDef="cost">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 10px;"> كلفة الشحنة </th>
@@ -82,15 +53,16 @@
     </ng-container>
     <ng-container matColumnDef="Earinig">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> الربح</th>
-      <td mat-cell *matCellDef="let element;index as i" style="padding:10px;"> {{GetEarning[i]}}</td>
+      <td mat-cell *matCellDef="let element;index as i" style="padding:10px;">
+        <span [ngClass]="{'badge-success':getEarning[i]>0,'badge-danger':getEarning[i]<0}">{{getEarning[i]}}</span>
+      </td>
     </ng-container>
-
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
 
-  <h5 style="padding-top: 20px; padding-right: 10px;" *ngIf="noDataFound">  لايوجد بيانات للعرض</h5>
+  <h5 style="padding-top: 20px; padding-right: 10px;" *ngIf="noDataFound"> لايوجد بيانات للعرض</h5>
 
 </div>
 <mat-paginator showFirstLastButtons [length]="totalCount" [pageSize]="paging.RowCount"

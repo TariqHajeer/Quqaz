@@ -20,6 +20,7 @@ export class User {
       UserStatics:UserStatics
       isActive:boolean
       countries
+      branchesIds: number[]=[];
 }
 export class UserStatics
 {

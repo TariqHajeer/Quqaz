@@ -15,10 +15,9 @@ export class CreateMultipleOrder {
     RecipientPhones:string
     ClientId:number
     ClientName:string
-   // Amount:number
     CanEdit:boolean=false 
     showEditMessageCode:boolean=false 
-    DeliveryCost:number
+    DeliveryCost:number=0
     Note:string
     Date:Date=new Date
 }

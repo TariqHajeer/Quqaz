@@ -1,0 +1,41 @@
+<div style="width: 100%;background-color: white;">
+    <div class="card-body">
+        <div class="d-flex justify-content-between">
+            <h3 class="card-title">اضافة طلبات متعددة </h3>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary"> حفظ</button>
+
+        </div>
+    </div>
+    <br />
+    <div class="example-container">
+        <table class="table">
+            <thead>
+                <th>#</th>
+                <th>كود الشحنة</th>
+                <th>اسم العميل</th>
+                <th>المحافظة</th>
+                <th>المنقطة</th>
+                <th>اسم المندوب</th>
+                <th>رقم الهاتف </th>
+                <th>الكلفة الكلية</th>
+                <th>كلفة التوصيل</th>
+                <th>ملاحظات</th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let order of orders;index as i">
+                    <td>{{i}}</td>
+                    <td>
+                        <h4 *ngIf="!order.CanEdit">{{order.Code}}</h4> 
+                    </td>
+                    <td>
+                        
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

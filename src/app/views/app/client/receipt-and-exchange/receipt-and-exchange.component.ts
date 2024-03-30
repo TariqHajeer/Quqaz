@@ -20,65 +20,65 @@ export class CreateReceiptAndExchangeComponent implements OnInit {
   constructor(private clientService: ClientService,
     public sanitizer: DomSanitizer,
     private spinner: NgxSpinnerService,
-    private authService:AuthService) { }
-    userName: any =  this.authService.getUser();
+    private authService: AuthService) { }
+  userName: any = this.authService.getUser();
 
   ngOnInit(): void {
     this.client = new CreateReceiptAndExchange()
-    this.client.client=new Client
-    this.client.Amount=0
-    this.client.client=JSON.parse(localStorage.getItem('client'))
+    this.client.client = new Client
+    this.client.Amount = 0
+    this.client.client = JSON.parse(localStorage.getItem('client'))
   }
-  Account:Account
-  client: CreateReceiptAndExchange 
+  Account: Account
+  client: CreateReceiptAndExchange
   // address = "اربيل - برايتي - قرب ماركيت آيه "
   companyPhone = "07714400880"
-  showButton=true
+  showButton = true
   dateOfPrint = moment().format()
-  agentPhone=environment.companyPhones[1]
-  address=environment.Address
-  whatsapp=environment.whatsapp
-  instgram=environment.instgram
-  facebook=environment.Facebook
+  agentPhone = environment.companyPhones[1]
+  address = environment.Address
+  whatsapp = environment.whatsapp
+  instgram = environment.instgram
+  facebook = environment.Facebook
   printpay() {
     //صرف
-    this.client.date=this.dateOfPrint
-    this.client.ClinetId=  this.client.client.id
-    this.client.IsPay = true
-    this.client.Amount =-1*Number( this.client.Amount)
-    if(!this.client.Manager||!this.client.About||!this.client.Amount){
-      return
+    if (!this.client.Manager || !this.client.About || !this.client.Amount) {
+      return;
     }
-    else
-    this.spinner.show()
-    this.clientService.Account(this.client).subscribe(res=>{
-      this.spinner.hide()
-      this.client.id=res as number
-      this.showButton=false
-    }, err => {
-      this.spinner.hide()
-    })
-   
-
+    else {
+      this.client.date = this.dateOfPrint;
+      this.client.ClinetId = this.client.client.id;
+      this.client.IsPay = true;
+      this.client.Amount = -1 * Number(this.client.Amount);
+      this.spinner.show();
+      this.clientService.Account(this.client).subscribe(res => {
+        this.spinner.hide();
+        this.client.id = res as number;
+        this.showButton = false;
+      }, err => {
+        this.spinner.hide();
+      })
+    }
   }
   printcatch() {
     //قبض
-    this.client.ClinetId=  this.client.client.id
-    this.client.IsPay = false
-    this.client.Amount =1*Number( this.client.Amount)
-    this.client.date=this.dateOfPrint
-    if(!this.client.Manager||!this.client.About||!this.client.Amount){
-      return
+    if (!this.client.Manager || !this.client.About || !this.client.Amount) {
+      return;
     }
-    else
-    this.spinner.show()
-    this.clientService.Account(this.client).subscribe(res=>{
-      this.spinner.hide()
-      this.client.id=res as number
-      this.showButton=false
-    }, err => {
-      this.spinner.hide()
-    })
+    else {
+      this.client.ClinetId = this.client.client.id;
+      this.client.IsPay = false;
+      this.client.Amount = 1 * Number(this.client.Amount);
+      this.client.date = this.dateOfPrint;
+      this.spinner.show();
+      this.clientService.Account(this.client).subscribe(res => {
+        this.spinner.hide();
+        this.client.id = res as number;
+        this.showButton = false;
+      }, err => {
+        this.spinner.hide();
+      })
+    }
   }
   @HostListener('window:keydown', ['$event'])
   onKeyPress($event: KeyboardEvent) {
@@ -91,7 +91,7 @@ export class CreateReceiptAndExchangeComponent implements OnInit {
     const elementToPrint = document.getElementById('contentToConvert'); //The html element to become a pdf
     const pdf = new jspdf('p', 'mm', 'a4');
     pdf.addHTML(elementToPrint, () => {
-      pdf.save( this.dateOfPrint+'.pdf');
+      pdf.save(this.dateOfPrint + '.pdf');
     });
   }
   print() {

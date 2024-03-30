@@ -61,7 +61,7 @@
       <div class="col-2">
         <label>موقع المبلغ</label>
         <ng-select appendTo="body" [(ngModel)]="MoenyPlacedId" [ngModelOptions]="{standalone: true}"
-          style="width: 140px;" [clearable]="false" (ngModelChange)="changeMoenyPlaced()" name="MonePlaced">
+          style="width: 140px;" [clearable]="false" (ngModelChange)="total()" name="MonePlaced">
           <ng-option *ngFor="let moenyPlaced of getMoenyPlaced" [value]="moenyPlaced">{{moenyPlaced.name}}
           </ng-option>
         </ng-select>
@@ -189,7 +189,7 @@
         </ng-container>-->
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
     </tr>
   </table>
   <!--

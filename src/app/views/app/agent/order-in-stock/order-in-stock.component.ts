@@ -8,9 +8,9 @@ import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { Paging } from 'src/app/Models/paging';
 import { User } from 'src/app/Models/user/user.model';
-import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
 import { AgentOrderService } from 'src/app/services/agent-order.service';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 
 @Component({
   selector: 'app-order-in-stock',
@@ -85,20 +85,10 @@ noDataFound: boolean = false
 ngOnInit(): void {
   localStorage.removeItem('printordersagent')
   localStorage.removeItem('printagent')
-  // this.getAgent()
-  //this.GetorderPlace()
   this.paging = new Paging
   this.filtering = new OrderFilter
   this.allFilter()
 }
-
-// GetorderPlace() {
-//   this.orderservice.orderPlace().subscribe(res => {
-//     this.orderPlace = res
-//     this.orderPlace = this.orderPlace.filter(o => o.id == 3 || o.id == 2)
-
-//   })
-// }
 getAgent() {
   this.userService.ActiveAgent().subscribe(res => {
     this.Agents = res
@@ -120,17 +110,11 @@ switchPage(event: PageEvent) {
   this.paging.allItemsLength = event.length
   this.paging.RowCount = event.pageSize
   this.paging.Page = event.pageIndex + 1
-  //this.allFilter();
 }
 allFilter() {
-  this.filtering.OrderplacedId = 2
+  this.filtering.Orderplaced =OrderplacedEnum.Store;
   this.orderservice.InStock().subscribe(response => {
-    // if (response)
-    //   if (response.data.length == 0)
-    //     this.noDataFound = true
-    //   else this.noDataFound = false
     this.dataSource = new MatTableDataSource(response)
-    //this.dataSource.data = this.dataSource.data.filter(d => d.agent.id == this.AgentId)
     this.totalCount = response.length
   },
     err => {

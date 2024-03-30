@@ -25,11 +25,13 @@ export class PrintReceiptShipmentComponent implements OnInit {
     'ترقيم',
     'كود',
     'كلفة الشحنة',
+    'المبلغ القديم',
     'كلفة توصيل المندوب',
     'العميل',
     'المندوب ',
     'حالة الشحنة',
     'موقع المبلغ',
+    'ملاحظات'
   ];
   cost = 0;
   agentCost = 0;

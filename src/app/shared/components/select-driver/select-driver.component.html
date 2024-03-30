@@ -1,0 +1,5 @@
+<label>اسم السائق</label>
+<ng-select [items]="drivers" bindLabel="name" [addTag]="addDriver" [multiple]="false"
+    placeholder="اختر اسم السائق او قم باضافة اسم الى القائمة" [(ngModel)]="driver"
+    (ngModelChange)="changeValue($event)">
+</ng-select>

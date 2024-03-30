@@ -14,6 +14,8 @@ import { GetOrder, OrderPlacedStateService } from 'src/app/services/order-placed
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
 import { SelectionModel } from '@angular/cdk/collections';
+import orderPlaceds from 'src/app/data/orderPlaced';
+import moneyPlaceds from 'src/app/data/moneyPalced';
 
 @Component({
   selector: 'app-shipment-received-by-agent',
@@ -25,6 +27,7 @@ export class ShipmentReceivedByAgentComponent {
     'index',
     'code',
     'client',
+    'agent',
     'country',
     'cost',
     'isClientDiliverdMoney',
@@ -47,16 +50,7 @@ export class ShipmentReceivedByAgentComponent {
   MoenyPlaced: any[] = [];
   getMoenyPlaced: any[] = [];
   OrderplacedId;
-  constructor(
-    private orderservice: OrderService,
-    public userService: UserService,
-    private notifications: NotificationsService,
-    public route: Router,
-    public orderplacedstate: OrderPlacedStateService,
-    private spinner: NgxSpinnerService
-  ) { }
   AgentId;
-
   orderPlace: NameAndIdDto[] = [];
   orderPleacedFilters: NameAndIdDto[] = [];
   Agents: User[] = [];
@@ -71,8 +65,25 @@ export class ShipmentReceivedByAgentComponent {
   tempisClientDiliverdMoney: any[] = [];
   orderstates: OrderState[] = [];
   orderstate: OrderState = new OrderState();
+  tempOrders: any[] = [];
   @Input() totalCount: number;
-
+  showcount = false;
+  findorder;
+  Ordersfilter: any[] = [];
+  showTable: boolean = false;
+  count: number = 0;
+  agentCost: number = 0;
+  deliveryCostCount: number = 0;
+  totalCost: number = 0;
+  constructor(
+    private orderservice: OrderService,
+    public userService: UserService,
+    private notifications: NotificationsService,
+    public route: Router,
+    public orderplacedstate: OrderPlacedStateService,
+    private spinner: NgxSpinnerService
+  ) { }
+  
   ngOnInit(): void {
     this.getAgent();
     this.GetMoenyPlaced();
@@ -85,15 +96,10 @@ export class ShipmentReceivedByAgentComponent {
   }
 
   GetMoenyPlaced() {
-    this.orderservice.MoenyPlaced().subscribe((res) => {
-      this.MoenyPlaced = res;
-      // this.getMoenyPlaced = [...res];
-    });
+    this.MoenyPlaced = [...moneyPlaceds];
   }
   getmony() {
-    this.orderservice.MoenyPlaced().subscribe((res) => {
-      this.MoenyPlaced = res;
-    });
+    this.MoenyPlaced = [...moneyPlaceds];
   }
   changeMoenyPlaced() {
     if (this.getorders.length != 0) {
@@ -129,14 +135,13 @@ export class ShipmentReceivedByAgentComponent {
     }
   }
   GetorderPlace() {
-    this.orderservice.orderPlace().subscribe((res) => {
-      this.orderPlace = res;
-      this.orderPlace = this.orderPleacedFilters = this.orderPlace.filter(
-        (o) =>
-          o.id == OrderplacedEnum.PartialReturned ||
-          o.id == OrderplacedEnum.Delivered
-      );
-    });
+    this.orderPlace = [...orderPlaceds];
+    this.orderPlace = this.orderPleacedFilters = this.orderPlace.filter(
+      (o) =>
+        o.id == OrderplacedEnum.PartialReturned ||
+        o.id == OrderplacedEnum.Delivered
+    );
+
   }
   changeOrderPlaced() {
     if (this.getorders.length != 0) {
@@ -144,23 +149,20 @@ export class ShipmentReceivedByAgentComponent {
         o.order.orderplaced = { ...this.OrderplacedId };
         this.ChangeAllOrderplacedId(o, this.getorders.indexOf(o));
       });
-      }
+    }
     this.MoenyPlacedId = null;
     this.getMoenyPlaced = this.orderplacedstate.ChangeOrderPlace(
       this.OrderplacedId.id,
       this.MoenyPlaced,
       "WithAgent"
     );
-    this.MoenyPlacedId=this.getMoenyPlaced[0];
+    this.MoenyPlacedId = this.getMoenyPlaced[0];
   }
   getAgent() {
     this.userService.ActiveAgent().subscribe((res) => {
       this.Agents = res;
     });
   }
-  showcount = false;
-  findorder;
-  Ordersfilter: any[] = [];
   addOrder() {
     this.Ordersfilter = [];
     this.showTable = false;
@@ -225,8 +227,8 @@ export class ShipmentReceivedByAgentComponent {
     this.getorder.MoenyPlaced = [...this.MoenyPlaced];
     this.getorder.OrderPlaced = [...this.orderPlace];
     this.getorder.canEditCount = true;
-    this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced,null,"WithAgent");
-    this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced,"WithAgent");
+    this.orderplacedstate.canChangeCost(this.getorder, this.MoenyPlaced, null, "WithAgent");
+    this.orderplacedstate.sentDeliveredHanded(this.getorder, this.MoenyPlaced, "WithAgent");
     this.orderplacedstate.onWay(this.getorder, this.MoenyPlaced);
     this.orderplacedstate.unacceptable(this.getorder, this.MoenyPlaced);
     this.orderplacedstate.isClientDiliverdMoney(
@@ -294,7 +296,6 @@ export class ShipmentReceivedByAgentComponent {
     this.Code = '';
     this.getorder = new GetOrder();
   }
-  showTable: boolean = false;
   add(order) {
     this.findorder = this.Ordersfilter.filter((o) => o == order);
     this.addOrders();
@@ -320,7 +321,7 @@ export class ShipmentReceivedByAgentComponent {
         this.temporderscost[index],
         "WithAgent"
       );
-      this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced,"WithAgent");
+      this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced, "WithAgent");
       this.orderplacedstate.onWay(element, this.MoenyPlaced);
       this.orderplacedstate.unacceptable(element, this.MoenyPlaced);
       this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced, "WithAgent");
@@ -350,7 +351,7 @@ export class ShipmentReceivedByAgentComponent {
       this.temporderscost[index],
       "WithAgent"
     );
-    this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced,"WithAgent");
+    this.orderplacedstate.sentDeliveredHanded(element, this.MoenyPlaced, "WithAgent");
     this.orderplacedstate.onWay(element, this.MoenyPlaced);
     this.orderplacedstate.unacceptable(element, this.MoenyPlaced);
     this.orderplacedstate.isClientDiliverdMoney(element, this.MoenyPlaced, "WithAgent");
@@ -382,18 +383,18 @@ export class ShipmentReceivedByAgentComponent {
     );
   }
 
-  count = 0;
-  agentCost;
-  deliveryCostCount;
+
   sumCost() {
     this.count = 0;
     this.deliveryCostCount = 0;
     this.agentCost = 0;
+    this.totalCost = 0;
     if (this.getorders)
       this.getorders.forEach((o) => {
         this.count += o.order.cost * 1;
         this.deliveryCostCount += o.order.deliveryCost * 1;
         this.agentCost += o.order.agentCost * 1;
+        this.totalCost += (o.order.cost - o.order.agentCost) * 1;
       });
     return this.count;
   }
@@ -436,7 +437,6 @@ export class ShipmentReceivedByAgentComponent {
       }
     );
   }
-  tempOrders: any[] = [];
   CancelOrder(order) {
     this.getorders = this.getorders.filter((o) => o.order.id != order.order.id);
     var index = 0;

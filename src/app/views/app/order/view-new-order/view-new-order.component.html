@@ -26,7 +26,7 @@
 
                         <ng-select appendTo="body" [(ngModel)]="CountryId" [ngModelOptions]="{standalone: true}"
                             (ngModelChange)="codeFillter()" [clearable]="false" name="Country">
-                            <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
+                            <ng-option *ngFor="let citie of countries" [value]="citie.id">{{citie.name}}</ng-option>
                         </ng-select>
 
                     </div>
@@ -41,7 +41,6 @@
                     <div class="col-md-2">
                         <button type="button" class="btn btn-primary"
                         (click)="printAll()">  طباعة</button>
-                        <app-receipts-new-orders id="printAll" [hidden]="true" [orders]="selectOrders"></app-receipts-new-orders>
                     </div>
                 </div>
             </div>

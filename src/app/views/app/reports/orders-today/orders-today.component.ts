@@ -10,16 +10,14 @@ import { City } from 'src/app/Models/Cities/city.Model';
 import { OrderStateEnum } from 'src/app/Models/Enums/OrderStateEnum';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
-import { Order, OrderState } from 'src/app/Models/order/order.model';
-import { Resend } from 'src/app/Models/order/resend.model';
+import { Order } from 'src/app/Models/order/order.model';
 import { Paging } from 'src/app/Models/paging';
 import { Region } from 'src/app/Models/Regions/region.model';
 import { User } from 'src/app/Models/user/user.model';
-import { CustomService } from 'src/app/services/custom.service';
 import { OrderService } from 'src/app/services/order.service';
-import { UserService } from 'src/app/services/user.service';
 import { Client } from '../../client/client.model';
-import { ClientService } from '../../client/client.service';
+import { IndexesTypeEnum } from 'src/app/Models/Enums/IndexesTypeEnum';
+import { IndexesService } from 'src/app/services/indexes.service';
 
 @Component({
   selector: 'app-orders-today',
@@ -44,7 +42,7 @@ export class OrdersTodayComponent implements OnInit {
   orderPlace: NameAndIdDto[] = []
   MoenyPlaced: NameAndIdDto[] = []
   clients: Client[] = []
-  cities: City[] = []
+  countries: City[] = []
   Regions: Region[] = []
   tempRegions: Region[] = []
   Agents: User[] = []
@@ -52,19 +50,16 @@ export class OrdersTodayComponent implements OnInit {
   regionapi = "Region"
   constructor(private orderservice: OrderService,
     private router: Router,
-    private clientService: ClientService
-    , private customerService: CustomService,
-    private userService: UserService,
     public spinner: NgxSpinnerService,
-    private notifications: NotificationsService,) { }
+    private notifications: NotificationsService,
+    private indexesService: IndexesService,
+  ) { }
 
   ngOnInit(): void {
     this.paging = new Paging
     this.filtering = new OrderFilter
+    this.getIndexes();
     this.allFilter()
-    this.GetClient()
-    this.GetCities()
-    this.GetRegion()
     localStorage.removeItem('printordersagent')
     localStorage.removeItem('printagent')
 
@@ -115,6 +110,12 @@ export class OrdersTodayComponent implements OnInit {
     this.paging.Page = event.pageIndex + 1;
     this.allFilter();
   }
+  getIndexes() {
+    this.indexesService.getIndexes([IndexesTypeEnum.Countries, IndexesTypeEnum.Clients]).subscribe(response => {
+      this.countries = response.countries;
+      this.clients = response.clients;
+    })
+  }
   allFilter() {
     this.spinner.show()
     this.orderservice.GetAll(this.filtering, this.paging).subscribe(response => {
@@ -127,12 +128,7 @@ export class OrdersTodayComponent implements OnInit {
           element.monePlaced.name = "لديك مبلغ مع العميل"
           element.orderplaced.name = "لديك مبلغ مع العميل"
         }
-        else if (element.orderStateId == OrderStateEnum.Finished) {
-          //element.monePlaced = this.MoenyPlaced.find(m => m.id == 4)
-          //  element.orderplaced = this.orderPlace.find(o => o.id == 4)
-        }
       });
-      // this.orders = response.data
       this.sumCost()
       this.dataSource = new MatTableDataSource(response.data)
       this.selection.clear()
@@ -163,35 +159,18 @@ export class OrdersTodayComponent implements OnInit {
     return this.count
   }
 
-  GetClient() {
-    this.clientService.getClients().subscribe(res => {
-      this.clients = res
-    })
-  }
-  GetCities() {
-    this.customerService.getAll(this.cityapi).subscribe(res => {
-      this.cities = res
-    })
-  }
-  GetRegion() {
-    this.customerService.getAll(this.regionapi).subscribe(res => {
-      this.Regions = res
-      this.tempRegions = res
-    })
-  }
+
   changeCountry() {
     this.Regions = []
     this.filtering.RegionId = null
-    this.Regions = this.tempRegions.filter(r => r.country.id == this.filtering.CountryId)
-    if (this.Regions.length != 0)
-      this.filtering.RegionId = this.Regions[0].id
+    let country = this.countries.find(c => c.id == this.filtering.CountryId)
+    this.Regions = country.regions;
   }
   print() {
     if (this.noDataFound == true || this.orders.length == 0) {
       this.notifications.create('error', '   لم يتم اختيار طلبات ', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
       return
     }
-    // localStorage.setItem('printagent',JSON.stringify(this.Agents.find(c=>c.id==this.AgentId)))
     localStorage.setItem('printordersagent', JSON.stringify(this.orders))
     this.router.navigate(['app/reports/printagentpreview'])
 

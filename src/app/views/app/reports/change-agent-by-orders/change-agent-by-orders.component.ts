@@ -4,13 +4,13 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
-import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
 import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { Paging } from 'src/app/Models/paging';
 import { User } from 'src/app/Models/user/user.model';
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
 import { CustomService } from 'src/app/services/custom.service';
+import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 
 @Component({
   selector: 'app-change-agent-by-orders',
@@ -110,7 +110,8 @@ export class ChangeAgentByOrdersComponent implements OnInit {
       var city = this.cities.find((a) => a.id == this.filtering.CountryId);
       this.newAgents = [];
       this.newAgentId = null;
-      this.newAgents = city.agnets.filter(
+      console.log(city);
+      this.newAgents = city.agents.filter(
         (a) => a.id != this.filtering.AgentId
       );
       this.allFilter();
@@ -137,25 +138,21 @@ export class ChangeAgentByOrdersComponent implements OnInit {
     this.paging.allItemsLength = event.length;
     this.paging.RowCount = event.pageSize;
     this.paging.Page = event.pageIndex + 1;
-    //this.allFilter();
   }
   allFilter() {
     if (!this.filtering.AgentId || !this.filtering.CountryId) return;
-    this.filtering.OrderplacedId = 2;
+    this.filtering.Orderplaced = OrderplacedEnum.Store;
     this.orderservice.WithoutPaging(this.filtering).subscribe(
       (response) => {
         if (response)
           if (response.data.length == 0) this.noDataFound = true;
           else this.noDataFound = false;
         this.dataSource = new MatTableDataSource(response.data);
-        //this.dataSource.data = this.dataSource.data.filter(d => d.agent.id == this.AgentId)
         this.totalCount = response.total;
       },
       (err) => {}
     );
   }
-  // agent = this.orders.map(o => o.agent)[0]
-  // orderplaced = this.orders.map(o => o.orderplaced)[0]
   moveOrder: {
     NewAgentId: number;
     Ids: number[];

@@ -41,6 +41,12 @@ import { ShowRecetptShipmentsComponent } from './show-recetpt-shipments/show-rec
 import { PrintReceiptShipmentComponent } from './printpreview/print-receipt-shipment/print-receipt-shipment.component';
 import { ShowTreasuryComponent } from './show-treasury/show-treasury.component';
 import { CashMovmentComponent } from './cash-movment/cash-movment.component';
+import { ViewsPrintTransferToSecondBranchComponent } from './views-print-transfer-to-second-branch/views-print-transfer-to-second-branch.component';
+import { ViewsPrintTransferToSecondBranchByIdComponent } from './views-print-transfer-to-second-branch-by-id/views-print-transfer-to-second-branch-by-id.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { PrintOrdersDontFinishedComponent } from './printpreview/print-orders-dont-finished/print-orders-dont-finished.component';
+import { ViewPrintOrdersDontFinishedComponent } from './view-print-orders-dont-finished/view-print-orders-dont-finished.component';
+import { ViewPrintOrdersDontFinishedDetilsComponent } from './view-print-orders-dont-finished-detils/view-print-orders-dont-finished-detils.component';
 @NgModule({
   declarations: [ShipmentInStockComponent,
     ClientOrderComponent,
@@ -67,7 +73,12 @@ import { CashMovmentComponent } from './cash-movment/cash-movment.component';
     ShowRecetptShipmentsComponent,
     PrintReceiptShipmentComponent,
     ShowTreasuryComponent,
-    CashMovmentComponent,],
+    CashMovmentComponent,
+    ViewsPrintTransferToSecondBranchComponent,
+    ViewsPrintTransferToSecondBranchByIdComponent,
+    PrintOrdersDontFinishedComponent,
+    ViewPrintOrdersDontFinishedComponent,
+    ViewPrintOrdersDontFinishedDetilsComponent,],
   imports: [
     CommonModule,
     ReportsRoutingModule,
@@ -82,8 +93,7 @@ import { CashMovmentComponent } from './cash-movment/cash-movment.component';
     DatePickerModule,
     DateRangePickerModule,
     NgxSpinnerModule,
-
-
+    SharedModule
   ]
   , providers: [CategoryService, DateTimeService, ScrollBarService, LineSeriesService, ColumnSeriesService,
     ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService, LegendService, TooltipService,], schemas: [CUSTOM_ELEMENTS_SCHEMA]

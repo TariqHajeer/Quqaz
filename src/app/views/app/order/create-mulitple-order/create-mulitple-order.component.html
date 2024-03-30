@@ -29,15 +29,15 @@
 
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.Code}}</h4>
-                        <input  type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                             [(ngModel)]="EditOrder.Code" (keyup)="CheckCodeForEdit(order)" style="width: 100px;"
                             oninput="this.value = this.value.replace(/[^0-9.A-Za-z]/g, '').replace(/(\..*)\./g, '$1');"
-                            *ngIf="order.CanEdit" >
+                            *ngIf="order.CanEdit">
                         <div *ngIf="!EditOrder.Code && Editsubmitted&&order.CanEdit" class="message">كود الشحنة حقل
                             مطلوب</div>
 
                     </td>
-                    
+
                     <td>
                         <h4 *ngIf="!order.CanEdit">{{order.ClientName}}</h4>
                         <ng-select appendTo="body" [(ngModel)]="EditOrder.ClientId" (change)="CheckCodeForEdit(order)"
@@ -58,7 +58,7 @@
                         <ng-select appendTo="body" [(ngModel)]="EditOrder.CountryId" style="width: 100px;"
                             (change)="changeCountryEdit()" [ngModelOptions]="{standalone: true}" [clearable]="false"
                             *ngIf="order.CanEdit" name="Country">
-                            <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
+                            <ng-option *ngFor="let citie of countries" [value]="citie.id">{{citie.name}}</ng-option>
                         </ng-select>
                         <div *ngIf="!EditOrder.CountryId && Editsubmitted&&order.CanEdit" class="message">المحافظة حقل
                             مطلوب</div>
@@ -67,8 +67,9 @@
 
                     <td>
                         <h4 *ngIf="!order.CanEdit">{{order.AgentName}}</h4>
-                        <ng-select [(ngModel)]="EditOrder.AgentId" [ngModelOptions]="{standalone: true}"placeholder="اختر مندوب"
-                            *ngIf="order.CanEdit" [clearable]="false" name="Agent" style="width: 100px;">
+                        <ng-select [(ngModel)]="EditOrder.AgentId" [ngModelOptions]="{standalone: true}"
+                            placeholder="اختر مندوب" *ngIf="order.CanEdit" [clearable]="false" name="Agent"
+                            style="width: 100px;" [disabled]="disabledEditAgent">
                             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                         </ng-select>
                         <div *ngIf="!EditOrder.AgentId && Editsubmitted&&order.CanEdit" class="message">المندوب حقل
@@ -84,39 +85,31 @@
                             *ngIf="order.CanEdit" style="width: 100px;" class="form-control"
                             [ngModelOptions]="{standalone: true}" [(ngModel)]="EditOrder.RecipientPhones"
                             (keyup)="checkLengthPhoneNumberForEdit(EditOrder.RecipientPhones)">
-                        <div *ngIf="!EditOrder.RecipientPhones&& Editsubmitted&&order.CanEdit" class="message">رقم الهاتف
+                        <div *ngIf="!EditOrder.RecipientPhones&& Editsubmitted&&order.CanEdit" class="message">رقم
+                            الهاتف
                             حقل مطلوب</div>
-                            <div class="message" *ngIf="EditOrder.RecipientPhones&&checkLengthPhoneNumberForEdit(EditOrder.RecipientPhones)&&order.CanEdit">
-                                {{RecipientPhoneslengthEdit}}
-                            </div>
+                        <div class="message"
+                            *ngIf="EditOrder.RecipientPhones&&checkLengthPhoneNumberForEdit(EditOrder.RecipientPhones)&&order.CanEdit">
+                            {{RecipientPhoneslengthEdit}}
+                        </div>
 
                     </td>
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.Cost}}</h4>
-                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                            style="width: 100px;" *ngIf="order.CanEdit"
-                            oninput="this.value = this.value.replace(/[^0-9.]-/g, '').replace(/(\..*)\./g, '$1');"
-                            [(ngModel)]="EditOrder.Cost" #Cost="ngModel">
-                      
-
+                        <app-cost-input [lable]="''" [(value)]="EditOrder.Cost" *ngIf="order.CanEdit"></app-cost-input>
                     </td>
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.DeliveryCost}}</h4>
-                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                            *ngIf="order.CanEdit"  style="width: 100px;"
-                            [(ngModel)]="EditOrder.DeliveryCost" >
-
+                        <app-delivery-cost-input *ngIf="order.CanEdit" [lable]="''"
+                            [(value)]="EditOrder.DeliveryCost"></app-delivery-cost-input>
                     </td>
-                  
-                   
+
 
                     <td (click)="Edit(order)">
                         <h4 *ngIf="!order.CanEdit">{{order.Note}}</h4>
                         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                            [(ngModel)]="EditOrder.Note"  style="width: 100px;"
-                            *ngIf="order.CanEdit" >
-                       
+                            [(ngModel)]="EditOrder.Note" style="width: 100px;" *ngIf="order.CanEdit">
+
 
                     </td>
 
@@ -166,11 +159,11 @@
                         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" #code
                             [(ngModel)]="Order.Code" tabindex="0" (keyup)="CheckCode()"
                             oninput="this.value = this.value.replace(/[^0-9.A-Za-z]/g, '').replace(/(\..*)\./g, '$1');"
-                            style="width: 100px;"(keydown.enter)="changed(0)">
+                            style="width: 100px;" (keydown.enter)="changed(0)">
                         <div *ngIf="!Order.Code && submitted" class="message">كود الشحنة حقل مطلوب</div>
                     </td>
                     <td>
-                        <ng-select  appendTo="body"  [(ngModel)]="Order.ClientId" (change)="CheckCode();"
+                        <ng-select appendTo="body" [(ngModel)]="Order.ClientId" (change)="CheckCode();"
                             (keydown.enter)="changed(1)" style="width: 125px;" [ngModelOptions]="{standalone: true}"
                             [clearable]="false" name="Client">
                             <ng-option *ngFor="let Client of clients" [value]="Client.id">{{Client.name}}
@@ -178,14 +171,15 @@
                         </ng-select>
                         <div *ngIf="!Order.ClientId && submitted" class="message">العميل حقل مطلوب</div>
 
-                            <div *ngIf="showMessageCode" class="message">يوجد شحنة مسبقا لهذا العميل بنفس الكود</div>
+                        <div *ngIf="showMessageCode" class="message">يوجد شحنة مسبقا لهذا العميل بنفس الكود</div>
 
                     </td>
                     <td>
 
-                        <ng-select appendTo="body" (keydown.enter)="changed(2)" [(ngModel)]="Order.CountryId" style="width: 100px;" (change)="changeCountry()"
-                            [ngModelOptions]="{standalone: true}" [clearable]="false" name="Country">
-                            <ng-option *ngFor="let citie of cities" [value]="citie.id">{{citie.name}}</ng-option>
+                        <ng-select appendTo="body" (keydown.enter)="changed(2)" [(ngModel)]="Order.CountryId"
+                            style="width: 100px;" (change)="changeCountry()" [ngModelOptions]="{standalone: true}"
+                            [clearable]="false" name="Country">
+                            <ng-option *ngFor="let citie of countries" [value]="citie.id">{{citie.name}}</ng-option>
                         </ng-select>
                         <div *ngIf="!Order.CountryId && submitted" class="message">المحافظة حقل مطلوب</div>
 
@@ -193,46 +187,48 @@
 
                     <td>
 
-                        <ng-select (keydown.enter)="changed(3)" [(ngModel)]="Order.AgentId" [ngModelOptions]="{standalone: true}" [clearable]="false"
-                       name="Agent" style="width: 100px;"placeholder="اختر مندوب" >
+                        <ng-select (keydown.enter)="changed(3)" [(ngModel)]="Order.AgentId"
+                            [ngModelOptions]="{standalone: true}" [clearable]="false" name="Agent" style="width: 100px;"
+                            placeholder="اختر مندوب" [disabled]="disabledAddAgent">
                             <ng-option *ngFor="let Agent of Agents" [value]="Agent.id">{{Agent.name}}</ng-option>
                         </ng-select>
-                        <div *ngIf="!Order.AgentId && submitted" class="message">المندوب حقل مطلوب</div>
+                        <div *ngIf="!Order.AgentId && submitted &&!disabledAddAgent" class="message">المندوب حقل مطلوب</div>
 
                     </td>
                     <td>
-                        <input (keydown.enter)="changed(4)" type="text" maxlength="11"name="phoneadd"
+                        <input (keydown.enter)="changed(4)" type="text" maxlength="11" name="phoneadd"
                             oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');"
                             style="width: 100px;" class="form-control" [ngModelOptions]="{standalone: true}"
                             [(ngModel)]="Order.RecipientPhones" (keyup)="checkLengthPhoneNumber(Order.RecipientPhones)">
                         <div *ngIf="!Order.RecipientPhones&& submitted" class="message">رقم الهاتف
                             حقل مطلوب
                         </div>
-                        <div class="message" *ngIf="Order.RecipientPhones&& checkLengthPhoneNumber(Order.RecipientPhones)">
+                        <div class="message"
+                            *ngIf="Order.RecipientPhones&& checkLengthPhoneNumber(Order.RecipientPhones)">
                             {{RecipientPhoneslength}}
                         </div>
-                           
-                    </td>
-                    <td>
-                        <input (keydown.enter)="changed(5)" type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                            oninput="this.value = this.value.replace(/[^0-9.]-/g, '').replace(/(\..*)\./g, '$1');"
-                             style="width: 100px;" [(ngModel)]="Order.Cost">
 
                     </td>
                     <td>
-                        <input (keydown.enter)="changed(6)" type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                        oninput="this.value = this.value.replace(/[^0-9.]-/g, '').replace(/(\..*)\./g, '$1');"
-                         style="width: 100px;" [(ngModel)]="Order.DeliveryCost" >
+                        <div style="width: 100px;">
+                            <app-cost-input [lable]="''" (onEnter)="changed(5)" [(value)]="Order.Cost"></app-cost-input>
+                        </div>
                     </td>
-                 
-                   
-                    <td> 
-                        <input (keydown.enter)="changed(7)" type="text" class="form-control" [ngModelOptions]="{standalone: true}"
-                         [(ngModel)]="Order.Note"  style="width: 100px;" >
-                       
+                    <td>
+                        <div class="w-100px">
+                            <app-delivery-cost-input [lable]="''" (onEnter)="changed(6)"
+                                [(value)]="Order.DeliveryCost"></app-delivery-cost-input>
+                        </div>
                     </td>
 
-                  
+
+                    <td>
+                        <input (keydown.enter)="changed(7)" type="text" class="form-control"
+                            [ngModelOptions]="{standalone: true}" [(ngModel)]="Order.Note" style="width: 100px;">
+
+                    </td>
+
+
 
                     <td>
                         <button type="button" class="btn" (click)="onEnter()"><i class="iconsminds-add  text-primary"
@@ -246,7 +242,6 @@
 </div>
 
 <simple-notifications></simple-notifications>
-<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff"
- type = "ball-pulse" [fullScreen] = "true">
-    <p style="color: white" > </p>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-pulse" [fullScreen]="true">
+    <p style="color: white"> </p>
 </ngx-spinner>

@@ -4,8 +4,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
-import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
-import { OrderFilter } from 'src/app/Models/order-filter.model';
 import { Paging } from 'src/app/Models/paging';
 import { User } from 'src/app/Models/user/user.model';
 import { OrderService } from 'src/app/services/order.service';
@@ -81,7 +79,6 @@ export class MoveOrdersComponent implements OnInit {
     })
   }
   paging: Paging
-  // filtering: OrderFilter
   noDataFound: boolean = false
 
   @Input() totalCount: number;
@@ -89,18 +86,8 @@ export class MoveOrdersComponent implements OnInit {
   ngOnInit(): void {
     this.getAgent()
     this.Getcities()
-    // //this.GetorderPlace()
     this.paging = new Paging
-    // this.filtering = new OrderFilter
   }
-
-  // GetorderPlace() {
-  //   this.orderservice.orderPlace().subscribe(res => {
-  //     this.orderPlace = res
-  //     this.orderPlace = this.orderPlace.filter(o => o.id == 3 || o.id == 2)
-
-  //   })
-  // }
   getAgent() {
     this.userService.ActiveAgent().subscribe(res => {
       this.Agents = res
@@ -111,7 +98,6 @@ export class MoveOrdersComponent implements OnInit {
     this.paging.allItemsLength = event.length
     this.paging.RowCount = event.pageSize
     this.paging.Page = event.pageIndex + 1
-    //this.allFilter();
   }
   get() {
     this.orderservice.TrakingOrder(this.AgentId, this.CountryId).subscribe(response => {
