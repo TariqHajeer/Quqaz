@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { tap } from 'rxjs/operators';
 import { Paging } from 'src/app/Models/paging';
 import { UserLogin } from 'src/app/Models/userlogin.model';
+import { BranchDetailsService } from 'src/app/services/branch-details.service';
 import { OrderService } from 'src/app/services/order.service';
 import { AuthService } from 'src/app/shared/auth.service';
 import { environment } from 'src/environments/environment';
@@ -27,13 +29,20 @@ export class PrintOrdersComponent implements OnInit {
     private notifications: NotificationsService,
     private authService: AuthService,
     private router: Router,
-    public spinner: NgxSpinnerService) { }
+    public spinner: NgxSpinnerService,
+    private activeBranchDetais: BranchDetailsService
+  ) { }
 
   ngOnInit(): void {
     this.getOrders();
+    this.activeBranchDetais.getBranch().pipe(
+      tap(data => {
+        this.address = data.address;
+        this.companyPhone = data.phoneNumber;
+      })).subscribe();
   }
 
-  getInStockToTransferToSecondBranch(){
+  getInStockToTransferToSecondBranch() {
     this.orderservice.GetInStockToTransferToSecondBranch().subscribe(response => {
       if (this.orderservice.selectOrder.Paging.Page == 1)
         this.orders = response.data;
@@ -52,8 +61,8 @@ export class PrintOrdersComponent implements OnInit {
   getOrders() {
     if (this.orderservice.selectOrder.SelectedIds.length == 0 && this.orderservice.selectOrder.IsSelectedAll == false)
       this.router.navigate(['/app/order/transferToSecondBranch']);
-      this.orderservice.selectOrder.Paging=new Paging();
-      this.getInStockToTransferToSecondBranch();
+    this.orderservice.selectOrder.Paging = new Paging();
+    this.getInStockToTransferToSecondBranch();
   }
   seeMore() {
     this.orderservice.selectOrder.Paging.Page += 1;

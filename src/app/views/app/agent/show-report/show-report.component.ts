@@ -9,6 +9,8 @@ import { environment } from 'src/environments/environment';
 import * as jspdf from 'jspdf';
 import { AgentOrderService } from 'src/app/services/agent-order.service';
 import * as moment from 'moment';
+import { tap } from 'rxjs/operators';
+import { BranchDetailsService } from 'src/app/services/branch-details.service';
 
 @Component({
   selector: 'app-show-report',
@@ -23,7 +25,9 @@ export class ShowReportComponent implements OnInit {
     public sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef,
     private spinner: NgxSpinnerService,
-    public getroute: ActivatedRoute
+    public getroute: ActivatedRoute,
+    private activeBranchDetais: BranchDetailsService
+
 
 
   ) { }
@@ -40,6 +44,11 @@ export class ShowReportComponent implements OnInit {
   companyPhone = environment.companyPhones[0] + " - " + environment.companyPhones[1]
   ngOnInit(): void {
     this.changeDeleiverMoneyForClient()
+    this.activeBranchDetais.getBranch().pipe(
+      tap(data => {
+        this.address = data.address;
+        this.companyPhone = data.phoneNumber;
+      })).subscribe();
   }
 
   sumCost() {

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef,Component,HostListener,OnInit,} from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit, } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { UserLogin } from 'src/app/Models/userlogin.model';
@@ -11,6 +11,8 @@ import { environment } from 'src/environments/environment.prod';
 import { DateService } from 'src/app/services/date.service';
 import { ConvertToExcelService } from 'src/app/services/convert-to-excel.service';
 import { formatDate } from '@angular/common';
+import { BranchDetailsService } from 'src/app/services/branch-details.service';
+import { tap } from 'rxjs/operators';
 @Component({
   selector: 'app-set-print-number',
   templateUrl: './set-print-number.component.html',
@@ -25,7 +27,9 @@ export class SetPrintNumberComponent implements OnInit {
     private spinner: NgxSpinnerService,
     public getroute: ActivatedRoute,
     public dateService: DateService,
-    public convertToExcelService: ConvertToExcelService
+    public convertToExcelService: ConvertToExcelService,
+    private activeBranchDetais: BranchDetailsService
+
   ) { }
   heads = [
     'ترقيم',
@@ -52,6 +56,11 @@ export class SetPrintNumberComponent implements OnInit {
     environment.companyPhones[0] + ' - ' + environment.companyPhones[1];
   ngOnInit(): void {
     this.changeDeleiverMoneyForClient();
+    this.activeBranchDetais.getBranch().pipe(
+      tap(data => {
+        this.address = data.address;
+        this.companyPhone = data.phoneNumber;
+      })).subscribe();
   }
 
   sumCost() {

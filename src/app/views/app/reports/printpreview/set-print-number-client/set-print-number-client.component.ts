@@ -11,6 +11,8 @@ import { ActivatedRoute } from '@angular/router';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { environment } from 'src/environments/environment.prod';
 import { DateService } from 'src/app/services/date.service';
+import { BranchDetailsService } from 'src/app/services/branch-details.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-set-print-number-client',
@@ -26,7 +28,9 @@ export class SetPrintNumberClientComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private recepitservce: ReciptService,
     public getroute: ActivatedRoute,
-    public dateService: DateService
+    public dateService: DateService,
+    private activeBranchDetais: BranchDetailsService
+
 
   ) { }
   heads = ['ترقيم', 'كود', 'الإجمالي', 'المحافظة ', 'موقع المبلغ', 'حالة الشحنة ', 'الهاتف', 'ملاحظات']
@@ -40,7 +44,7 @@ export class SetPrintNumberClientComponent implements OnInit {
   reports: any[] = []
   clientCalc = 0
   address = environment.Address
-  companyPhone = environment.companyPhones[0]+" - "+ environment.companyPhones[1]
+  companyPhone = environment.companyPhones[0] + " - " + environment.companyPhones[1]
   orderplaced: any[] = [
     { id: 3, name: "في الطريق" },
     { id: 4, name: "تم التسليم" },
@@ -50,7 +54,12 @@ export class SetPrintNumberClientComponent implements OnInit {
   ]
   ngOnInit(): void {
 
-    this.changeDeleiverMoneyForClient()
+    this.changeDeleiverMoneyForClient();
+    this.activeBranchDetais.getBranch().pipe(
+      tap(data => {
+        this.address = data.address;
+        this.companyPhone = data.phoneNumber;
+      })).subscribe();
   }
 
   deliveryCostCount
@@ -62,7 +71,7 @@ export class SetPrintNumberClientComponent implements OnInit {
       this.orders.forEach(o => {
         this.count += o.total
         this.deliveryCostCount += o.deliveCost
-       this.clientCalc+=o.payForClient
+        this.clientCalc += o.payForClient
       })
 
     return this.count
@@ -108,7 +117,7 @@ export class SetPrintNumberClientComponent implements OnInit {
     this.orderservice.GetOrderByClientPrintNumber(this.printnumber).subscribe(res => {
       console.log(res)
       // this.reciptClient()
-      this.points=res.discount
+      this.points = res.discount
       this.showPrintbtn = true
       this.spinner.hide()
       this.orders = res.orders
@@ -129,7 +138,7 @@ export class SetPrintNumberClientComponent implements OnInit {
     }, err => {
       this.spinner.hide()
       this.showPrintbtn = false
-      this.notifications.create('success', err.error.messges?err.error.messges[0]:'حدث خطأ ما يرجى المحاولة مجددا', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
+      this.notifications.create('success', err.error.messges ? err.error.messges[0] : 'حدث خطأ ما يرجى المحاولة مجددا', NotificationType.Error, { theClass: 'success', timeOut: 6000, showProgressBar: false });
 
     })
 

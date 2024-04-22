@@ -1,8 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { tap } from 'rxjs/operators';
 import { ReceiptOfTheOrderStatus } from 'src/app/Models/order/receipt-of-the-order-status.model';
 import { UserLogin } from 'src/app/Models/userlogin.model';
+import { BranchDetailsService } from 'src/app/services/branch-details.service';
 import { OrderService } from 'src/app/services/order.service';
 import { AuthService } from 'src/app/shared/auth.service';
 import { environment } from 'src/environments/environment';
@@ -16,8 +18,10 @@ export class PrintReceiptShipmentComponent implements OnInit {
     private orderService: OrderService,
     public getroute: ActivatedRoute,
     public sanitizer: DomSanitizer,
-    private authService:AuthService
-  ) {}
+    private authService: AuthService,
+    private activeBranchDetais: BranchDetailsService
+
+  ) { }
   id: number;
   receiptOfTheOrderStatus: ReceiptOfTheOrderStatus =
     new ReceiptOfTheOrderStatus();
@@ -45,6 +49,11 @@ export class PrintReceiptShipmentComponent implements OnInit {
   noDataFound: boolean = false;
   ngOnInit(): void {
     this.get();
+    this.activeBranchDetais.getBranch().pipe(
+      tap(data => {
+        this.address = data.address;
+        this.companyPhone = data.phoneNumber;
+      })).subscribe();
   }
   get() {
     this.getroute.params.subscribe((par) => {
@@ -60,7 +69,7 @@ export class PrintReceiptShipmentComponent implements OnInit {
   print() {
     var divToPrint = document.getElementById('contentToConvert');
     var css =
-        '@page { size: A4 landscape;color-adjust: exact;-webkit-print-color-adjust: exact;} @media print {table{margin-bottom:10%;}}',
+      '@page { size: A4 landscape;color-adjust: exact;-webkit-print-color-adjust: exact;} @media print {table{margin-bottom:10%;}}',
       style = document.createElement('style');
     style.type = 'text/css';
     style.media = 'print';
@@ -70,8 +79,8 @@ export class PrintReceiptShipmentComponent implements OnInit {
     newWin?.document.open();
     newWin?.document.write(
       '<html dir="rtl"><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"><link rel="stylesheet/less" type="text/css" href="app/reports/printpreview/agent/agent.component.less" /></head><body onload="window.print()">' +
-        divToPrint?.innerHTML +
-        '</body></html>'
+      divToPrint?.innerHTML +
+      '</body></html>'
     );
     newWin?.document.close();
     setTimeout(function () {

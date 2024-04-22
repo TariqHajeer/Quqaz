@@ -9,6 +9,8 @@ import { DateWithId } from 'src/app/Models/order/order.model';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { environment } from 'src/environments/environment.prod';
 import { AuthService } from 'src/app/shared/auth.service';
+import { BranchDetailsService } from 'src/app/services/branch-details.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-print-order-in-company',
@@ -20,8 +22,10 @@ export class PrintOrderInCompanyComponent implements OnInit {
     private orderservice: OrderService,
     private notifications: NotificationsService,
     public sanitizer: DomSanitizer,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private activeBranchDetais: BranchDetailsService
+
+  ) { }
   // 'موقع المبلغ', 'حالة الشحنة '
   heads = [
     'ترقيم',
@@ -59,6 +63,11 @@ export class PrintOrderInCompanyComponent implements OnInit {
       this.Ids.push(o.order.id);
     });
     this.sumCost();
+    this.activeBranchDetais.getBranch().pipe(
+      tap(data => {
+        this.address = data.address;
+        this.companyPhone = data.phoneNumber;
+      })).subscribe();
   }
   deliveryCostCount;
   sumCost() {
@@ -113,7 +122,7 @@ export class PrintOrderInCompanyComponent implements OnInit {
             .GetOrderByClientPrintNumber(res.printNumber)
             .subscribe(
               (res) => {
-                if (res&&res.orders.length>0) {
+                if (res && res.orders.length > 0) {
                   this.notifications.create(
                     'success',
                     'تم تسليم الطلبيات  بنجاح',
@@ -208,7 +217,7 @@ export class PrintOrderInCompanyComponent implements OnInit {
   print() {
     var divToPrint = document.getElementById('contentToConvert');
     var css =
-        '@page { size: A4 landscape;color-adjust: exact;-webkit-print-color-adjust: exact; }',
+      '@page { size: A4 landscape;color-adjust: exact;-webkit-print-color-adjust: exact; }',
       style = document.createElement('style');
     style.type = 'text/css';
     style.media = 'print';
@@ -218,8 +227,8 @@ export class PrintOrderInCompanyComponent implements OnInit {
     newWin?.document.open();
     newWin?.document.write(
       '<html dir="rtl"><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"><link rel="stylesheet/less" type="text/css" href="app/reports/printpreview/agent/agent.component.less" /></head><body onload="window.print()">' +
-        divToPrint?.innerHTML +
-        '</body></html>'
+      divToPrint?.innerHTML +
+      '</body></html>'
     );
     newWin?.document.close();
     setTimeout(function () {

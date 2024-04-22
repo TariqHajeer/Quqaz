@@ -10,7 +10,9 @@ import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
 import { environment } from 'src/environments/environment.prod';
 import { AuthService } from 'src/app/shared/auth.service';
 import Driver from 'src/app/Models/common/Driver';
-import {IMakeOrderInWay} from 'src/app/Models/order/IMakeOrderInWay';
+import { IMakeOrderInWay } from 'src/app/Models/order/IMakeOrderInWay';
+import { map, tap } from 'rxjs/operators';
+import { BranchDetailsService } from 'src/app/services/branch-details.service';
 @Component({
   selector: 'app-agent',
   templateUrl: './agent.component.html',
@@ -22,8 +24,10 @@ export class AgentComponent implements OnInit {
     private notifications: NotificationsService,
     public sanitizer: DomSanitizer,
     private authService: AuthService,
-    private spinner: NgxSpinnerService
-  ) {}
+    private spinner: NgxSpinnerService,
+    private activeBranchDetais: BranchDetailsService
+
+  ) { }
   heads = [
     'ترقيم',
     'كود',
@@ -36,16 +40,16 @@ export class AgentComponent implements OnInit {
     'ملاحظات العميل',
     'مـلاحظـــــات',
   ];
-  driver:Driver=new Driver();
+  driver: Driver = new Driver();
   orders: any[] = [];
-  count:number = 0;
+  count: number = 0;
   agent;
   orderplaced;
   dateOfPrint = new Date();
   userName: UserLogin = this.authService.getUser();
   printnumber;
   PrintNumberOrder: PrintNumberOrder;
-  address = environment.Address;
+  address;
   companyPhone =
     environment.companyPhones[0] + ' - ' + environment.companyPhones[1];
   ngOnInit(): void {
@@ -70,6 +74,12 @@ export class AgentComponent implements OnInit {
           }
         }
     }
+    this.activeBranchDetais.getBranch().pipe(
+      tap(data => {
+        this.address = data.address;
+        this.companyPhone = data.phoneNumber;
+      })).subscribe();
+
   }
 
   sumCost() {
@@ -91,14 +101,14 @@ export class AgentComponent implements OnInit {
       this.showPrintbtn = true;
     }
   }
-  ordersIdsWithDriver:IMakeOrderInWay;
+  ordersIdsWithDriver: IMakeOrderInWay;
 
   afterPrint() {
     this.spinner.show();
     this.ordersIdsWithDriver = {
       ids: this.orders.map((o) => o.id),
-      driver:this.driver
-    }; 
+      driver: this.driver
+    };
     this.orderservice.MakeOrderInWay(this.ordersIdsWithDriver).subscribe(
       (res) => {
         this.notifications.create(
@@ -135,7 +145,7 @@ export class AgentComponent implements OnInit {
   print() {
     var divToPrint = document.getElementById('contentToConvert');
     var css =
-        '@page { size: A4 landscape;color-adjust: exact;-webkit-print-color-adjust: exact;} @media print {table{margin-bottom:10%;}}',
+      '@page { size: A4 landscape;color-adjust: exact;-webkit-print-color-adjust: exact;} @media print {table{margin-bottom:10%;}}',
       style = document.createElement('style');
     style.type = 'text/css';
     style.media = 'print';
@@ -145,8 +155,8 @@ export class AgentComponent implements OnInit {
     newWin?.document.open();
     newWin?.document.write(
       '<html dir="rtl"><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"><link rel="stylesheet/less" type="text/css" href="app/reports/printpreview/agent/agent.component.less" /></head><body onload="window.print()">' +
-        divToPrint?.innerHTML +
-        '</body></html>'
+      divToPrint?.innerHTML +
+      '</body></html>'
     );
     newWin?.document.close();
     setTimeout(function () {

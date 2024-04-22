@@ -8,6 +8,13 @@ export class UserLogin {
   expiry: any;
   policy: any;
   haveTreasury: boolean;
-  branches: NameAndIdDto[]=[];
-  branche: NameAndIdDto;
+  branches: Branch[] = [];
+  branche: Branch;
+}
+export interface Branch {
+  address: string;
+  countryName: string;
+  id: number;
+  name: string;
+  phoneNumber: any;
 }
