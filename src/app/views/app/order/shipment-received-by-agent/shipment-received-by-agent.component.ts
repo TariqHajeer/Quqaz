@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
-import { User } from 'firebase';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MoneyPalcedEnum } from 'src/app/Models/Enums/MoneyPalcedEnum';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
@@ -16,6 +15,7 @@ import { UserService } from 'src/app/services/user.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import orderPlaceds from 'src/app/data/orderPlaced';
 import moneyPlaceds from 'src/app/data/moneyPalced';
+import { User } from 'src/app/Models/user/user.model';
 
 @Component({
   selector: 'app-shipment-received-by-agent',
