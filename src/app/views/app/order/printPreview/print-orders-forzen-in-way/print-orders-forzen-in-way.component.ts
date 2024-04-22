@@ -14,6 +14,8 @@ import { ReciptService } from 'src/app/services/recipt.service';
 import { AuthService } from 'src/app/shared/auth.service';
 import { environment } from 'src/environments/environment';
 import { Client } from '../../../client/client.model';
+import { BranchDetailsService } from 'src/app/services/branch-details.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-print-orders-forzen-in-way',
@@ -39,12 +41,19 @@ export class PrintOrdersForzenInWayComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private authService: AuthService,
     private router: Router,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private activeBranchDetais: BranchDetailsService
+
   ) { }
 
 
   ngOnInit(): void {
     this.getOrders();
+    this.activeBranchDetais.getBranch().pipe(
+      tap(data => {
+        this.address = data.address;
+        this.companyPhone = data.phoneNumber;
+      })).subscribe();
   }
 
 

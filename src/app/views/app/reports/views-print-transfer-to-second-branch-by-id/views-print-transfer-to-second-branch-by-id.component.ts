@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { tap } from 'rxjs/operators';
 import { Paging } from 'src/app/Models/paging';
+import { BranchDetailsService } from 'src/app/services/branch-details.service';
 import { OrderService } from 'src/app/services/order.service';
 import { AuthService } from 'src/app/shared/auth.service';
 import { environment } from 'src/environments/environment';
@@ -24,22 +26,29 @@ export class ViewsPrintTransferToSecondBranchByIdComponent implements OnInit {
   showSeeMore: boolean;
   paging: Paging = new Paging;
   driverName: string = this.orderservice.orderDetials.driverName;
-  id:any;
+  id: any;
   constructor(public orderservice: OrderService,
     private notifications: NotificationsService,
     public spinner: NgxSpinnerService,
     private auth: AuthService,
-    public getroute: ActivatedRoute
-    ) { }
+    public getroute: ActivatedRoute,
+    private activeBranchDetais: BranchDetailsService
+
+  ) { }
 
   ngOnInit(): void {
     this.getOrders();
+    this.activeBranchDetais.getBranch().pipe(
+      tap(data => {
+        this.address = data.address;
+        this.companyPhone = data.phoneNumber;
+      })).subscribe();
   }
   getOrders() {
     this.getroute.params.subscribe(par => {
       this.id = par['id'] as any
     });
-    this.orderservice.GetPrintTransferToSecondBranchDetials(this.paging,this.id).subscribe(response => {
+    this.orderservice.GetPrintTransferToSecondBranchDetials(this.paging, this.id).subscribe(response => {
       if (this.paging.Page == 1)
         this.orders = response.data;
       else

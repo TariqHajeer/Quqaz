@@ -9,6 +9,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
 import * as moment from 'moment';
 import { AuthService } from 'src/app/shared/auth.service';
+import { tap } from 'rxjs/operators';
+import { BranchDetailsService } from 'src/app/services/branch-details.service';
 
 @Component({
   selector: 'app-receipt-and-exchange',
@@ -20,7 +22,9 @@ export class CreateReceiptAndExchangeComponent implements OnInit {
   constructor(private clientService: ClientService,
     public sanitizer: DomSanitizer,
     private spinner: NgxSpinnerService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private activeBranchDetais: BranchDetailsService
+  ) { }
   userName: any = this.authService.getUser();
 
   ngOnInit(): void {
@@ -28,6 +32,11 @@ export class CreateReceiptAndExchangeComponent implements OnInit {
     this.client.client = new Client
     this.client.Amount = 0
     this.client.client = JSON.parse(localStorage.getItem('client'))
+    this.activeBranchDetais.getBranch().pipe(
+      tap(data => {
+        this.address = data.address;
+        this.companyPhone = data.phoneNumber;
+      })).subscribe();
   }
   Account: Account
   client: CreateReceiptAndExchange

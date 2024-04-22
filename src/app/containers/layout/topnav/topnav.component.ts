@@ -6,9 +6,9 @@ import { LangService, Language } from 'src/app/shared/lang.service';
 import { environment } from 'src/environments/environment';
 import { getThemeColor, setThemeColor } from 'src/app/utils/util';
 import { AuthService } from 'src/app/shared/auth.service';
-import { UserLogin } from 'src/app/Models/userlogin.model';
+import { Branch, UserLogin } from 'src/app/Models/userlogin.model';
 import { NameAndIdDto } from 'src/app/Models/name-and-id-dto.model';
-
+import { BranchDetailsService } from '../../../services/branch-details.service';
 @Component({
   selector: 'app-topnav',
   templateUrl: './topnav.component.html',
@@ -29,7 +29,8 @@ export class TopnavComponent implements OnInit, OnDestroy {
     private sidebarService: SidebarService,
     private authService: AuthService,
     private router: Router,
-    private langService: LangService
+    private langService: LangService,
+    private activeBranchDetais: BranchDetailsService
   ) {
     this.languages = this.langService.supportedLanguages;
     this.currentLanguage = this.langService.languageShorthand;
@@ -83,6 +84,7 @@ export class TopnavComponent implements OnInit, OnDestroy {
         console.error(`An error occurred: ${err.message}`);
       }
     );
+    this.activeBranchDetais.setBranch(this.authService.getUser().branche)
   }
 
   ngOnDestroy(): void {
@@ -190,9 +192,10 @@ export class TopnavComponent implements OnInit, OnDestroy {
   profile() {
     this.router.navigate(['/app/user/profile']);
   }
-  selectBranche(item: NameAndIdDto) {
+  selectBranche(item: Branch) {
     this.user.branche = item;
     this.authService.setAuthenticatedUser(this.user);
+    this.activeBranchDetais.setBranch(this.user.branche);
     this.router.navigate(['/app/HomePage/start'])
       .then(() => {
         window.location.reload();

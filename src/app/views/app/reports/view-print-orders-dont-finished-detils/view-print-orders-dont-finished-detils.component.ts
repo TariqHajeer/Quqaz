@@ -14,6 +14,8 @@ import { AuthService } from 'src/app/shared/auth.service';
 import { environment } from 'src/environments/environment';
 import { Client } from '../../client/client.model';
 import { Paging } from 'src/app/Models/paging';
+import { BranchDetailsService } from 'src/app/services/branch-details.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-view-print-orders-dont-finished-detils',
@@ -59,12 +61,19 @@ export class ViewPrintOrdersDontFinishedDetilsComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private recepitservce: ReciptService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private activeBranchDetais: BranchDetailsService
+
   ) { }
 
 
   ngOnInit(): void {
     this.getOrders();
+    this.activeBranchDetais.getBranch().pipe(
+      tap(data => {
+        this.address = data.address;
+        this.companyPhone = data.phoneNumber;
+      })).subscribe();
   }
   reciptClient() {
     if (
