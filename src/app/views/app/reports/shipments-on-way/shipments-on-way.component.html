@@ -174,30 +174,19 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> اخر رقم طباعة للمندوب</th>
       <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.order.agentPrintNumber}}</td>
     </ng-container>
+    <ng-container matColumnDef="agentPrintDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> تاريخ الكشف للمندوب</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.order.agentPrintDate| date:'yy-MM-dd'}}</td>
+    </ng-container>
     <ng-container matColumnDef="clientPrintNumber">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> اخر رقم طباعة للعميل</th>
       <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.order.clientPrintNumber}}</td>
     </ng-container>
-    <!-- <ng-container matColumnDef="edit">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            <button (click)="saveEdit()" class="btn btn-primary"> حفظ</button>
-    
-          </th>
-          <td mat-cell *matCellDef="let element">
-    
-          </td>
-        </ng-container>-->
-
+  
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;">
     </tr>
   </table>
-  <!--
-       <mat-paginator [length]="100"
-      [pageSize]="10"
-      [pageSizeOptions]="[ 10, 25,50, 100]">
-    </mat-paginator>
-     -->
   <h5 style="padding-top: 20px; padding-right: 10px;" *ngIf="noDataFound">لايوجد بيانات للعرض</h5>
 
 </div>

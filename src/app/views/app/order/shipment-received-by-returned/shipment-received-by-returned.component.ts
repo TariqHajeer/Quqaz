@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
-import { User } from 'firebase';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MoneyPalcedEnum } from 'src/app/Models/Enums/MoneyPalcedEnum';
 import { OrderplacedEnum } from 'src/app/Models/Enums/OrderplacedEnum';
@@ -16,6 +15,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import IIndex from 'src/app/shared/interfaces/IIndex';
 import moneyPlaceds from 'src/app/data/moneyPalced';
 import orderPlaceds from 'src/app/data/orderPlaced';
+import { User } from 'src/app/Models/user/user.model';
 
 
 @Component({

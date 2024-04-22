@@ -25,7 +25,7 @@ import moneyPlaceds from 'src/app/data/moneyPalced';
 export class ShipmentsOnWayComponent implements OnInit {
 
   displayedColumns: string[] = ['select', 'index', 'code', 'client', 'country', 'region'
-    , 'agentCost', 'cost', 'deliveryCost', 'isClientDiliverdMoney', 'orderplaced', 'monePlaced', 'agentPrintNumber', 'clientPrintNumber'];
+    , 'agentCost', 'cost', 'deliveryCost', 'isClientDiliverdMoney', 'orderplaced', 'monePlaced', 'agentPrintNumber','agentPrintDate', 'clientPrintNumber'];
   dataSource = new MatTableDataSource([]);
   ids: any[] = []
   orders: any[] = []

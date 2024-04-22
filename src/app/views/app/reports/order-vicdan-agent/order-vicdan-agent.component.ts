@@ -21,7 +21,7 @@ export class OrderVicdanAgentComponent implements OnInit {
   AgentId
   Agents: User[] = []
   displayedColumns: string[] = ['select', 'code', 'client', 'cost', 'country', 'region'
-    , 'orderplaced'];
+    , 'orderplaced',"agentPrintNumber","agentPrintDate"];
   dataSource = new MatTableDataSource([]);
   count = 0
   showcount = false

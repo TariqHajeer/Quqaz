@@ -66,7 +66,14 @@
               <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> حالة الشحنة</th>
               <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.orderplaced!=null?element.orderplaced.name:null}}</td>
             </ng-container>
-           
+           <ng-container matColumnDef="agentPrintNumber">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> رقم الكشف</th>
+              <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.agentPrintNumber}}</td>
+            </ng-container>
+            <ng-container matColumnDef="agentPrintDate">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding:10px;"> تاريخ الكشف</th>
+              <td mat-cell *matCellDef="let element" style="padding:10px;"> {{element.agentPrintDate  | date:'yyyy-MM-dd'}}</td>
+            </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;">
             </tr>
