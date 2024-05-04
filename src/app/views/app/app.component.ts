@@ -12,12 +12,12 @@ export class AppComponent implements OnInit, OnDestroy {
   sidebar: ISidebar;
   subscription: Subscription;
   constructor(private sidebarService: SidebarService,
-    private authService: AuthService,private _router: Router,) {
+    private authService: AuthService, private _router: Router,) {
   }
   ngOnInit() {
 
     if (!this.authService.getUser())
-      return this._router.navigate(['/home']);
+      return this._router.navigate(['/user/login']);
     var user = this.authService.authenticatedUser
     if (user == null || (user.expiry && (new Date().getTime() - user.expiry > 7 * 60 * 60 * 1000))) {
       return this.authService.signOut();
