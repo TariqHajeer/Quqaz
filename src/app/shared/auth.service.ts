@@ -24,7 +24,7 @@ export interface IPasswordReset {
 export class AuthService implements OnDestroy {
   private localStorageKey: string = 'kokazUser';
   private permissionlocalStorageKey: string = 'permissions';
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void { }
 
   constructor(
     private http: HttpClient,
@@ -42,7 +42,7 @@ export class AuthService implements OnDestroy {
     this.resetAuthenticated();
     localStorage.removeItem('token');
     localStorage.removeItem('kokazUser');
-    this.rout.navigate(['/home']);
+    this.rout.navigate(['/user/login']);
   }
 
   public get authenticatedUser(): any {
@@ -57,11 +57,11 @@ export class AuthService implements OnDestroy {
     var user = this.authenticatedUser;
   }
 
-  register(credentials: ICreateCredentials) {}
+  register(credentials: ICreateCredentials) { }
 
-  sendPasswordEmail(email) {}
+  sendPasswordEmail(email) { }
 
-  resetPassword(credentials: IPasswordReset) {}
+  resetPassword(credentials: IPasswordReset) { }
   setAuthenticatedUser(userData: UserLogin) {
     this.localStorageService.setItem(this.localStorageKey, userData);
     this.setPermission(userData.privileges);

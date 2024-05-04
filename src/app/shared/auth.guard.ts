@@ -27,14 +27,14 @@ export class AuthGuard implements CanActivate, CanActivateChild {
           return true;
         } else {
           // this.router.navigate(['/unauthorized']);
-          this.router.navigate(['/home']);
+          this.router.navigate(['/user/login']);
           return false;
         }
       } else {
         return true;
       }
     } else {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/user/login']);
       return false;
     }
   }
@@ -48,18 +48,19 @@ export class AuthGuard implements CanActivate, CanActivateChild {
           this.groupService.GetPrivileges().subscribe(res => {
             var pr = res.filter(p => route.data.roles.filter(r => p.sysName == r).length > 0)
             localStorage.setItem('route', JSON.stringify(pr))
-            var user=localStorage.getItem('user')
-            if(user=='client')
-            this.router.navigate(['/home']);
-            else if(user=='employee')
-            this.router.navigate(['/unauthorized']);          })
+            var user = localStorage.getItem('user')
+            if (user == 'client')
+              this.router.navigate(['/user/login']);
+            else if (user == 'employee')
+              this.router.navigate(['/unauthorized']);
+          })
           return false
         }
       } else {
         return true;
       }
     } else {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/user/login']);
       return false;
     }
   }
